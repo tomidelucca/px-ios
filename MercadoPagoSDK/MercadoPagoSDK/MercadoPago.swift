@@ -315,6 +315,22 @@ public class MercadoPago : NSObject {
         return nil
     }
 	
+	public class func getImage(name: String) -> UIImage? {
+		var bundle = getBundle()
+		if (UIDevice.currentDevice().systemVersion as NSString).compare("8.0", options: NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending {
+			var nameArr = split(name) {$0 == "."}
+			var imageExtension : String = nameArr[1]
+			var imageName : String = nameArr[0]
+			var filePath = bundle?.pathForResource(name, ofType: imageExtension)
+			if filePath != nil {
+				return UIImage(contentsOfFile: filePath!)
+			} else {
+				return nil
+			}
+		}
+		return UIImage(named:name, inBundle: bundle, compatibleWithTraitCollection:nil)
+	}
+	
 	public class func screenBoundsFixedToPortraitOrientation() -> CGRect {
 		var screenSize : CGRect = UIScreen.mainScreen().bounds
 		if NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1 && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {

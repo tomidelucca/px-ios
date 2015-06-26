@@ -614,6 +614,7 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK21MPUserIdTableViewCell")
 @class PaymentMethodsViewController;
 @class PromoViewController;
 @class Token;
+@class UIImage;
 @class UINavigationController;
 
 SWIFT_CLASS("_TtC14MercadoPagoSDK11MercadoPago")
@@ -646,6 +647,7 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK11MercadoPago")
 - (void)getPromos:(void (^ __nonnull)(NSArray * __nullable))success failure:(void (^ __nullable)(NSError * __nonnull))failure;
 + (BOOL)isCardPaymentType:(NSString * __nonnull)paymentTypeId;
 + (NSBundle * __nullable)getBundle;
++ (UIImage * __nullable)getImage:(NSString * __nonnull)name;
 + (CGRect)screenBoundsFixedToPortraitOrientation;
 + (void)showAlertViewWithError:(NSError * __nullable)error nav:(UINavigationController * __nullable)nav;
 @end

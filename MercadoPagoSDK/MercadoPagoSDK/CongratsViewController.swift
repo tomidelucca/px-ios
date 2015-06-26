@@ -119,13 +119,13 @@ public class CongratsViewController : UIViewController, UITableViewDataSource, U
     
     public func _setIcon(payment: Payment) {
         if payment.status == "approved" {
-            self.icon.image = UIImage(named:"ic_approved", inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.icon.image = MercadoPago.getImage("ic_approved")
         } else if payment.status == "pending" {
-            self.icon.image = UIImage(named:"ic_pending", inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.icon.image = MercadoPago.getImage("ic_pending")
         } else if payment.status == "in_process" {
-            self.icon.image = UIImage(named:"ic_pending", inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.icon.image = MercadoPago.getImage("ic_pending")
         } else if payment.status == "rejected" {
-            self.icon.image = UIImage(named:"ic_rejected", inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.icon.image = MercadoPago.getImage("ic_rejected")
         }
     }
     
@@ -157,10 +157,10 @@ public class CongratsViewController : UIViewController, UITableViewDataSource, U
     public func setPaymentMethodDescription(payment: Payment) {
         if payment.card != nil && payment.card.paymentMethod != nil {
         self.congratsPaymentMethodCell!.lblPaymentInfo.text = "terminada en".localized + " " + payment.card!.lastFourDigits!
-            self.congratsPaymentMethodCell.imgPayment.image = UIImage(named: "icoTc_" + payment.card!.paymentMethod!._id, inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.congratsPaymentMethodCell.imgPayment.image = MercadoPago.getImage("icoTc_" + payment.card!.paymentMethod!._id)
         } else if self.paymentMethod != nil {
             self.congratsPaymentMethodCell!.lblPaymentInfo.text = self.paymentMethod!.name
-            self.congratsPaymentMethodCell.imgPayment.image = UIImage(named: "icoTc_" + self.paymentMethod._id, inBundle: bundle, compatibleWithTraitCollection:nil)
+            self.congratsPaymentMethodCell.imgPayment.image = MercadoPago.getImage("icoTc_" + self.paymentMethod._id)
         }
     }
     

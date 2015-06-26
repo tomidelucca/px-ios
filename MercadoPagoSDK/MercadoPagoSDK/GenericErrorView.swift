@@ -25,7 +25,7 @@ public class GenericErrorView : UIView {
         self.minimumHeight = 40
         
         self.backgroundImageView = UIImageView(frame: CGRectMake(-1, -1 * kArrowHeight, self.frame.size.width + 1, self.frame.size.height + kArrowHeight))
-        self.backgroundImageView.image = UIImage(named: "ErrorBackground.png", inBundle: self.bundle, compatibleWithTraitCollection: nil)?.stretchableImageWithLeftCapWidth(0, topCapHeight: 20)
+        self.backgroundImageView.image = MercadoPago.getImage("ErrorBackground.png")!.stretchableImageWithLeftCapWidth(0, topCapHeight: 20)
         self.backgroundImageView.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
         self.backgroundImageView.contentMode = UIViewContentMode.ScaleToFill
         self.backgroundImageView.layer.cornerRadius = 0

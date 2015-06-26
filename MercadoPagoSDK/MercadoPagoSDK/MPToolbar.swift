@@ -29,12 +29,12 @@ public class MPToolbar : UIToolbar {
 		//  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
 		let doneButton = UIBarButtonItem(title: "OK", style: UIBarButtonItemStyle.Plain, target: self, action: "done")
 		
-		let prev = UIBarButtonItem(image: UIImage(named: "IQButtonBarArrowLeft", inBundle: MercadoPago.getBundle(), compatibleWithTraitCollection: nil), style: UIBarButtonItemStyle.Plain, target: self, action: "prev")
+		let prev = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowLeft"), style: UIBarButtonItemStyle.Plain, target: self, action: "prev")
 		
 		let fixed = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
 		fixed.width = 23
 		
-		let next = UIBarButtonItem(image: UIImage(named: "IQButtonBarArrowRight", inBundle: MercadoPago.getBundle(), compatibleWithTraitCollection: nil), style: UIBarButtonItemStyle.Plain, target: self, action: "next")
+		let next = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowRight"), style: UIBarButtonItemStyle.Plain, target: self, action: "next")
 		
 		prev.enabled = prevEnabled
 		next.enabled = nextEnabled

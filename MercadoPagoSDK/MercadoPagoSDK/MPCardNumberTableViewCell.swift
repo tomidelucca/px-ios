@@ -59,7 +59,7 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
         if String.isNullOrEmpty(pmId) {
             self.cardNumberImageView.hidden = true
         } else {
-            self.cardNumberImageView.image = UIImage(named: "icoTc_" + pmId!, inBundle: MercadoPago.getBundle(), compatibleWithTraitCollection:nil)
+            self.cardNumberImageView.image = MercadoPago.getImage("icoTc_" + pmId!)
             self.cardNumberImageView.hidden = false
         }
     }

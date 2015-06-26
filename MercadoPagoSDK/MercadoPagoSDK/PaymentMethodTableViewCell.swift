@@ -31,6 +31,6 @@ public class PaymentMethodTableViewCell : UITableViewCell {
     }
 
     public func setImageWithName(imageName : String) {
-        self.paymentMethodImage.image = UIImage(named: imageName, inBundle: MercadoPago.getBundle(), compatibleWithTraitCollection: nil)
+        self.paymentMethodImage.image = MercadoPago.getImage(imageName)
     }
 }
