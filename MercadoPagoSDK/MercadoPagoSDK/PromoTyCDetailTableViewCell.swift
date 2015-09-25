@@ -24,9 +24,9 @@ public class PromoTyCDetailTableViewCell: UITableViewCell {
     }
 	
 	public func setLabelWithIssuerName(issuer: String, legals: String) {
-		var s = NSMutableAttributedString(string: "\(issuer): \(legals)")
-		let atts : [NSObject : AnyObject] = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 15)!]
-		s.addAttributes(atts, range: NSMakeRange(0, count(issuer)))
+		let s = NSMutableAttributedString(string: "\(issuer): \(legals)")
+		let atts : [String : AnyObject] = [NSFontAttributeName: UIFont(name: "HelveticaNeue-Bold", size: 15)!]
+		s.addAttributes(atts, range: NSMakeRange(0, issuer.characters.count))
 		self.tycLabel.attributedText = s
 	}
 	

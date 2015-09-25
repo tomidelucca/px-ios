@@ -43,7 +43,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
         self.callback = callback
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -111,7 +111,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 	
 	func willShowKeyboard(notification: NSNotification) {
 		let s:NSValue? = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)
-		var keyboardBounds :CGRect = s!.CGRectValue()
+		let keyboardBounds :CGRect = s!.CGRectValue()
 		
 		// resize content insets.
 		let contentInsets = UIEdgeInsetsMake(64, 0.0, keyboardBounds.size.height, 0)
@@ -156,7 +156,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 	
 	public func prev(object: AnyObject?) {
 		if object != nil {
-			var index = getIndexForObject(object!)
+			let index = getIndexForObject(object!)
 			if index >= 1 {
 				focusAndScrollForIndex(index-1)
 			}
@@ -165,7 +165,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 	
 	public func next(object: AnyObject?) {
 		if object != nil {
-			var index = getIndexForObject(object!)
+			let index = getIndexForObject(object!)
 			if index < self.inputsCells.count - 1 {
 				focusAndScrollForIndex(index+1)
 			}
@@ -174,15 +174,15 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 	
 	public func done(object: AnyObject?) {
 		if object != nil {
-			var index = getIndexForObject(object!)
+			let index = getIndexForObject(object!)
 			if index < self.inputsCells.count {
 				let textField = self.inputsCells[index][0] as? UITextField!
-				let cell = self.inputsCells[index][1] as? ErrorTableViewCell!
+				_ = self.inputsCells[index][1] as? ErrorTableViewCell!
 				if textField != nil {
 					textField!.resignFirstResponder()
 				}
 				let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-				scrollToRow(indexPath!)
+				scrollToRow(indexPath)
 			}
 		}
 	}
@@ -190,7 +190,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
     public func prepareTableView() {
 		self.inputsCells = NSMutableArray()
 		
-		var cardNumberNib = UINib(nibName: "MPCardNumberTableViewCell", bundle: MercadoPago.getBundle())
+		let cardNumberNib = UINib(nibName: "MPCardNumberTableViewCell", bundle: MercadoPago.getBundle())
 		self.tableView.registerNib(cardNumberNib, forCellReuseIdentifier: "cardNumberCell")
 		self.cardNumberCell = self.tableView.dequeueReusableCellWithIdentifier("cardNumberCell") as! MPCardNumberTableViewCell
 		self.cardNumberCell.height = 55.0
@@ -201,21 +201,21 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 		self.cardNumberCell.cardNumberTextField.inputAccessoryView = MPToolbar(prevEnabled: false, nextEnabled: true, delegate: self, textFieldContainer: self.cardNumberCell.cardNumberTextField)
 		self.inputsCells.addObject([self.cardNumberCell.cardNumberTextField, self.cardNumberCell])
 		
-		var expirationDateNib = UINib(nibName: "MPExpirationDateTableViewCell", bundle: MercadoPago.getBundle())
+		let expirationDateNib = UINib(nibName: "MPExpirationDateTableViewCell", bundle: MercadoPago.getBundle())
 		self.tableView.registerNib(expirationDateNib, forCellReuseIdentifier: "expirationDateCell")
 		self.expirationDateCell = self.tableView.dequeueReusableCellWithIdentifier("expirationDateCell") as! MPExpirationDateTableViewCell
 		self.expirationDateCell.height = 55.0
 		self.expirationDateCell.expirationDateTextField.inputAccessoryView = MPToolbar(prevEnabled: true, nextEnabled: true, delegate: self, textFieldContainer: self.expirationDateCell.expirationDateTextField)
 		self.inputsCells.addObject([self.expirationDateCell.expirationDateTextField, self.expirationDateCell])
 		
-		var cardholderNameNib = UINib(nibName: "MPCardholderNameTableViewCell", bundle: MercadoPago.getBundle())
+		let cardholderNameNib = UINib(nibName: "MPCardholderNameTableViewCell", bundle: MercadoPago.getBundle())
 		self.tableView.registerNib(cardholderNameNib, forCellReuseIdentifier: "cardholderNameCell")
 		self.cardholderNameCell = self.tableView.dequeueReusableCellWithIdentifier("cardholderNameCell") as! MPCardholderNameTableViewCell
 		self.cardholderNameCell.height = 55.0
 		self.cardholderNameCell.cardholderNameTextField.inputAccessoryView = MPToolbar(prevEnabled: true, nextEnabled: true, delegate: self, textFieldContainer: self.cardholderNameCell.cardholderNameTextField)
 		self.inputsCells.addObject([self.cardholderNameCell.cardholderNameTextField, self.cardholderNameCell])
 		
-		var userIdNib = UINib(nibName: "MPUserIdTableViewCell", bundle: MercadoPago.getBundle())
+		let userIdNib = UINib(nibName: "MPUserIdTableViewCell", bundle: MercadoPago.getBundle())
 		self.tableView.registerNib(userIdNib, forCellReuseIdentifier: "userIdCell")
 		self.userIdCell = self.tableView.dequeueReusableCellWithIdentifier("userIdCell") as! MPUserIdTableViewCell
 		self.userIdCell._setIdentificationTypes(self.identificationTypes)
@@ -232,7 +232,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
     
     public func submitForm() {
         
-        var cardToken = CardToken(cardNumber: self.cardNumberCell.getCardNumber(), expirationMonth: self.expirationDateCell.getExpirationMonth(), expirationYear: self.expirationDateCell.getExpirationYear(), securityCode: nil, cardholderName: self.cardholderNameCell.getCardholderName(), docType: self.userIdCell.getUserIdType(), docNumber: self.userIdCell.getUserIdValue())
+        let cardToken = CardToken(cardNumber: self.cardNumberCell.getCardNumber(), expirationMonth: self.expirationDateCell.getExpirationMonth(), expirationYear: self.expirationDateCell.getExpirationYear(), securityCode: nil, cardholderName: self.cardholderNameCell.getCardholderName(), docType: self.userIdCell.getUserIdType(), docNumber: self.userIdCell.getUserIdValue())
         
         self.view.addSubview(self.loadingView)
         
@@ -277,7 +277,10 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 		}
 		
 		if self.tableView.respondsToSelector(Selector("setSeparatorInset:")) {
-			self.tableView.layoutMargins = UIEdgeInsetsZero
+			if #available(iOS 8.0, *) {
+			    self.tableView.layoutMargins = UIEdgeInsetsZero
+			} else {
+			}
 		}
 	}
 	
@@ -287,7 +290,10 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 		}
 		
 		if cell.respondsToSelector(Selector("setSeparatorInset:")) {
-			cell.layoutMargins = UIEdgeInsetsZero
+			if #available(iOS 8.0, *) {
+			    cell.layoutMargins = UIEdgeInsetsZero
+			} else {
+			}
 		}
 	}
 	
@@ -311,12 +317,11 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
     public func validateForm(cardToken : CardToken) -> Bool {
         
         var result : Bool = true
-        var focusSet : Bool = false
         
         // Validate card number
         let errorCardNumber = cardToken.validateCardNumber(paymentMethod!)
         if  errorCardNumber != nil {
-            self.cardNumberCell.setError(errorCardNumber!.userInfo!["cardNumber"] as? String)
+            self.cardNumberCell.setError(errorCardNumber!.userInfo["cardNumber"] as? String)
             result = false
         } else {
             self.cardNumberCell.setError(nil)
@@ -325,7 +330,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
         // Validate expiry date
         let errorExpiryDate = cardToken.validateExpiryDate()
         if errorExpiryDate != nil {
-            self.expirationDateCell.setError(errorExpiryDate!.userInfo!["expiryDate"] as? String)
+            self.expirationDateCell.setError(errorExpiryDate!.userInfo["expiryDate"] as? String)
             result = false
         } else {
             self.expirationDateCell.setError(nil)
@@ -334,7 +339,7 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
         // Validate card holder name
         let errorCardholder = cardToken.validateCardholderName()
         if errorCardholder != nil {
-            self.cardholderNameCell.setError(errorCardholder!.userInfo!["cardholder"] as? String)
+            self.cardholderNameCell.setError(errorCardholder!.userInfo["cardholder"] as? String)
             result = false
         } else {
             self.cardholderNameCell.setError(nil)
@@ -350,10 +355,10 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
         }
         
         if errorIdentificationType != nil {
-            self.userIdCell.setError(errorIdentificationType!.userInfo!["identification"] as? String)
+            self.userIdCell.setError(errorIdentificationType!.userInfo["identification"] as? String)
             result = false
         } else if errorIdentificationNumber != nil {
-            self.userIdCell.setError(errorIdentificationNumber!.userInfo!["identification"] as? String)
+            self.userIdCell.setError(errorIdentificationNumber!.userInfo["identification"] as? String)
             result = false
         } else {
             self.userIdCell.setError(nil)

@@ -31,7 +31,7 @@ public class MPExpirationDateTableViewCell : ErrorTableViewCell, UITextFieldDele
         self.expirationDateTextField.keyboardType = UIKeyboardType.NumberPad
     }
     
-    required public  init(coder aDecoder: NSCoder) {
+    required public  init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -39,20 +39,27 @@ public class MPExpirationDateTableViewCell : ErrorTableViewCell, UITextFieldDele
         if String.isNullOrEmpty(self.expirationDateTextField.text) {
             return 0
         }
-        
-        var monthStr = split(self.expirationDateTextField.text!) {$0 == "/"}[0] as NSString
-        monthStr = monthStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        return monthStr.integerValue
+		
+		if self.expirationDateTextField.text != nil {
+			var monthStr : NSString = self.expirationDateTextField.text!.characters.split {$0 == "/"}.map(String.init)[0] as String
+			monthStr = monthStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+			return monthStr.integerValue
+		}
+		return 0
     }
     
     public func getExpirationYear() -> Int {
         if String.isNullOrEmpty(self.expirationDateTextField.text) {
             return 0
         }
-        
-        var yearStr = split(self.expirationDateTextField.text!) {$0 == "/"}[1] as NSString
-        yearStr = yearStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-        return yearStr.integerValue
+		
+		if self.expirationDateTextField.text != nil {
+			var yearStr : NSString = self.expirationDateTextField.text!.characters.split {$0 == "/"}.map(String.init)[1] as String
+			yearStr = yearStr.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+			return yearStr.integerValue
+		}
+		
+        return 0
     }
     
     public func setTextFieldDelegate(delegate : UITextFieldDelegate) {
@@ -64,23 +71,25 @@ public class MPExpirationDateTableViewCell : ErrorTableViewCell, UITextFieldDele
         if !Regex("^[0-9]$").test(string) && string != "" {
             return false
         }
-        
-        var txtAfterUpdate:NSString = textField.text as NSString
-        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-		var str : String = ""
-        if txtAfterUpdate.length <= 7 {
-			var date : NSString = txtAfterUpdate.stringByReplacingOccurrencesOfString(" ", withString:"")
-			date = date.stringByReplacingOccurrencesOfString("/", withString:"")
-			if date.length >= 1 && date.length <= 4 {
-				for i in 0...(date.length-1) {
-					if i == 2 {
-						str = str + " / "
+		if textField.text != nil {
+			var txtAfterUpdate : NSString = textField.text!
+			txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+			var str : String = ""
+			if txtAfterUpdate.length <= 7 {
+				var date : NSString = txtAfterUpdate.stringByReplacingOccurrencesOfString(" ", withString:"")
+				date = date.stringByReplacingOccurrencesOfString("/", withString:"")
+				if date.length >= 1 && date.length <= 4 {
+					for i in 0...(date.length-1) {
+						if i == 2 {
+							str = str + " / "
+						}
+						str = str + String(format: "%C", date.characterAtIndex(i))
 					}
-					str = str + String(format: "%C", date.characterAtIndex(i))
 				}
+				self.expirationDateTextField.text = str
 			}
-			self.expirationDateTextField.text = str
 		}
+		
 		return false
     }
 }

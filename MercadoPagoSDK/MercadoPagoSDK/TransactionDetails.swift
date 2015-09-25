@@ -18,7 +18,7 @@ public class TransactionDetails : NSObject {
     public var totalPaidAmount : Double = 0
     
     public class func fromJSON(json : NSDictionary) -> TransactionDetails {
-        var transactionDetails : TransactionDetails = TransactionDetails()
+        let transactionDetails : TransactionDetails = TransactionDetails()
         if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
             transactionDetails.couponAmount = JSON(json["coupon_amount"]!).asDouble!
         }

@@ -13,7 +13,7 @@ public class CardToken : NSObject {
     
     let MIN_LENGTH_NUMBER : Int = 10
     let MAX_LENGTH_NUMBER : Int = 19
-    let now = NSCalendar.currentCalendar().components(NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth, fromDate: NSDate())
+    let now = NSCalendar.currentCalendar().components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit], fromDate: NSDate())
     
     public var cardNumber : String?
     public var securityCode : String?
@@ -56,11 +56,9 @@ public class CardToken : NSObject {
     }
     
     public func validateCardNumber() -> NSError? {
-        
-        var userInfo : [String : String]?
         if String.isNullOrEmpty(cardNumber) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "Ingresa el número de la tarjeta de crédito".localized])
-        } else if count(self.cardNumber!) < MIN_LENGTH_NUMBER || count(self.cardNumber!) > MAX_LENGTH_NUMBER {
+        } else if self.cardNumber!.characters.count < MIN_LENGTH_NUMBER || self.cardNumber!.characters.count > MAX_LENGTH_NUMBER {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "invalid_field".localized])
         } else {
             return nil
@@ -85,7 +83,7 @@ public class CardToken : NSObject {
             } else {
                 
                 // Validate card length
-                if (count(cardNumber!) != setting?.cardNumber.length) {
+                if (cardNumber!.characters.count != setting?.cardNumber.length) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
@@ -114,7 +112,7 @@ public class CardToken : NSObject {
     }
     
     public func validateSecurityCode(securityCode: String?) -> NSError? {
-        if String.isNullOrEmpty(self.securityCode) || count(self.securityCode!) < 3 || count(self.securityCode!) > 4 {
+        if String.isNullOrEmpty(self.securityCode) || self.securityCode!.characters.count < 3 || self.securityCode!.characters.count > 4 {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : "invalid_field".localized])
         } else {
             return nil
@@ -127,7 +125,7 @@ public class CardToken : NSObject {
             return validSecurityCode
         } else {
             let range = Range(start: cardNumber!.startIndex,
-                end: advance(cardNumber!.startIndex, 6))
+                end: cardNumber!.characters.startIndex.advancedBy(6))
             return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber!.substringWithRange(range))
         }
     }
@@ -136,7 +134,7 @@ public class CardToken : NSObject {
         let setting : Setting? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
         // Validate security code length
         let cvvLength = setting?.securityCode.length
-        if ((cvvLength != 0) && (count(securityCode) != cvvLength)) {
+        if ((cvvLength != 0) && (securityCode.characters.count != cvvLength)) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: "\(cvvLength)")])
         } else {
             return nil
@@ -205,7 +203,7 @@ public class CardToken : NSObject {
     public func validateIdentificationNumber(identificationType: IdentificationType?) -> NSError? {
         if identificationType != nil {
             if cardholder?.identification != nil && cardholder?.identification?.number != nil {
-                let len = count(cardholder!.identification!.number!)
+                let len = cardholder!.identification!.number!.characters.count
                 let min = identificationType!.minLength
                 let max = identificationType!.maxLength
                 if min != 0 && max != 0 {
@@ -246,9 +244,11 @@ public class CardToken : NSObject {
         if year < 100 && year >= 0 {
             let currentYear : String = String(now.year)
             let range = Range(start: currentYear.startIndex,
-                end: advance(currentYear.endIndex, -2))
+                end: currentYear.characters.endIndex.advancedBy(-2))
             let prefix : String = currentYear.substringWithRange(range)
-            return String(prefix + String(year)).toInt()!
+			
+			let nsReturn : NSString = prefix + String(year)
+            return nsReturn.integerValue
         }
         return year
     }
@@ -256,12 +256,12 @@ public class CardToken : NSObject {
     public func checkLuhn(cardNumber : String) -> Bool {
         var sum : Int = 0
         var alternate = false
-        if count(cardNumber) == 0 {
+        if cardNumber.characters.count == 0 {
             return false
         }
         
-        for var index = (count(cardNumber)-1); index >= 0; index-- {
-            let range = NSRange(location: index, length: 1)
+        for var index = (cardNumber.characters.count-1); index >= 0; index-- {
+            _ = NSRange(location: index, length: 1)
             var s = cardNumber as NSString
             s = s.substringWithRange(NSRange(location: index, length: 1))
             var n : Int = s.integerValue
@@ -281,8 +281,8 @@ public class CardToken : NSObject {
     }
     
     public func getBin() -> String? {
-        let range = Range(start: cardNumber!.startIndex, end: advance(cardNumber!.startIndex, 6))
-        var bin :String? = count(cardNumber!) >= 6 ? cardNumber!.substringWithRange(range) : nil
+        let range = Range(start: cardNumber!.startIndex, end: cardNumber!.characters.startIndex.advancedBy(6))
+        let bin :String? = cardNumber!.characters.count >= 6 ? cardNumber!.substringWithRange(range) : nil
         return bin
     }
     

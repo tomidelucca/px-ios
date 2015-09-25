@@ -22,7 +22,7 @@ extension UIDevice {
 	
 	var videoCameraAvailable: Bool {
 		let picker : UIImagePickerController = UIImagePickerController()
-		var sourceTypes : Array? = UIImagePickerController.availableMediaTypesForSourceType(picker.sourceType)
+		let sourceTypes : Array? = UIImagePickerController.availableMediaTypesForSourceType(picker.sourceType)
 		if sourceTypes == nil {
 			return false
 		}
@@ -72,13 +72,21 @@ extension UIDevice {
 	}
 	
 	var totalDiskSpace: NSNumber? {
-		var fattributes : NSDictionary = NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory(), error: nil)!
-		return fattributes.objectForKey(NSFileSystemSize) as? NSNumber
+		do {
+			let fattributes : NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
+			return fattributes.objectForKey(NSFileSystemSize) as? NSNumber
+		} catch {
+			return nil
+		}
 	}
 	
 	var freeDiskSpace: NSNumber? {
-		var fattributes : NSDictionary = NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory(), error: nil)!
-		return fattributes.objectForKey(NSFileSystemFreeSize) as? NSNumber
+		do {
+			let fattributes : NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
+			return fattributes.objectForKey(NSFileSystemFreeSize) as? NSNumber
+		} catch {
+			return nil
+		}
 	}
 	
 	var platform: String {

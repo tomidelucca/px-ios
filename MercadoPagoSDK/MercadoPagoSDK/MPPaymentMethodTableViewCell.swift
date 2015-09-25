@@ -23,7 +23,7 @@ public class MPPaymentMethodTableViewCell : UITableViewCell {
 		self.paymentMethodTitleLabel.text = "Medio de pago".localized
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 	
@@ -45,7 +45,7 @@ public class MPPaymentMethodTableViewCell : UITableViewCell {
         if card == nil || paymentMethod == nil {
 			setEmptyPaymentMethod()
         } else {
-            let range = Range(start: advance(card!.cardNumber!.endIndex, -4),
+            let range = Range(start: card!.cardNumber!.characters.endIndex.advancedBy(-4),
                 end: card!.cardNumber!.endIndex)
             let lastFourDigits : String = card!.cardNumber!.substringWithRange(range)
             self.cardTextLabel.text = paymentMethod!.name + " " + "terminada en".localized + " " + lastFourDigits

@@ -83,7 +83,7 @@ public class PromosTyCViewController: UIViewController, UITableViewDataSource, U
 	}
 	
 	func tyCCellAtIndexPath(indexPath: NSIndexPath) -> PromoTyCDetailTableViewCell {
-		var cell = self.tableView.dequeueReusableCellWithIdentifier("PromoTyCDetailTableViewCell", forIndexPath: indexPath) as! PromoTyCDetailTableViewCell
+		let cell = self.tableView.dequeueReusableCellWithIdentifier("PromoTyCDetailTableViewCell", forIndexPath: indexPath) as! PromoTyCDetailTableViewCell
 		self.configureTyCCell(cell, atIndexPath: indexPath)
 		return cell
 	}

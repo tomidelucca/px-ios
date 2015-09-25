@@ -15,7 +15,7 @@ public class Installment : NSObject {
     public var paymentTypeId : String!
     
     public class func fromJSON(json : NSDictionary) -> Installment {
-        var installment : Installment = Installment()
+        let installment : Installment = Installment()
         installment.paymentMethodId = JSON(json["payment_method_id"]!).asString
         installment.paymentTypeId = JSON(json["payment_type_id"]!).asString
         

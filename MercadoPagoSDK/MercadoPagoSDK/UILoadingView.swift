@@ -26,7 +26,7 @@ public class UILoadingView : UIView {
 		
 	}
 	
-	required public init(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
@@ -39,7 +39,7 @@ public class UILoadingView : UIView {
 	
 	override public func layoutSubviews() {
 		self.label.sizeToFit()
-		var labelSize: CGSize = self.label.frame.size
+		let labelSize: CGSize = self.label.frame.size
 		var labelFrame: CGRect = CGRect()
 		labelFrame.size = labelSize
 		self.label.frame = labelFrame
@@ -51,7 +51,7 @@ public class UILoadingView : UIView {
 		// horizontally align
 		labelFrame = self.label.frame
 		var spinnerFrame: CGRect = self.spinner.frame
-		var totalWidth: CGFloat = spinnerFrame.size.width + 5 + labelSize.width
+		let totalWidth: CGFloat = spinnerFrame.size.width + 5 + labelSize.width
 		spinnerFrame.origin.x = self.bounds.origin.x + (self.bounds.size.width - totalWidth) / 2
 		labelFrame.origin.x = spinnerFrame.origin.x + spinnerFrame.size.width + 5
 		self.label.frame = labelFrame

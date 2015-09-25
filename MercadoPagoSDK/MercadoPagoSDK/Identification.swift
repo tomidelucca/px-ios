@@ -23,7 +23,7 @@ public class Identification : NSObject {
     }
     
     public class func fromJSON(json : NSDictionary) -> Identification {
-        var identification : Identification = Identification()
+        let identification : Identification = Identification()
         identification.type = JSON(json["type"]!).asString
         identification.number = JSON(json["number"]!).asString
         return identification

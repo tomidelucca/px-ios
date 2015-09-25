@@ -36,7 +36,7 @@ public class PayerCost : NSObject {
     }
     
     public class func fromJSON(json : NSDictionary) -> PayerCost {
-        var payerCost : PayerCost = PayerCost()
+        let payerCost : PayerCost = PayerCost()
 		if json["installments"] != nil && !(json["installments"]! is NSNull) {
 			payerCost.installments = JSON(json["installments"]!).asInt!
 		}

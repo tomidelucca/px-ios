@@ -10,24 +10,24 @@ import Foundation
 
 public class Address : NSObject {
     public var streetName : String?
-    public var streetNumber : Int64?
+    public var streetNumber : NSNumber?
     public var zipCode : String?
     
     public override init () {
                 super.init()
     }
     
-    public init (streetName: String?, streetNumber: Int64?, zipCode : String?) {
+    public init (streetName: String?, streetNumber: NSNumber?, zipCode : String?) {
         self.streetName = streetName
         self.streetNumber = streetNumber
         self.zipCode = zipCode
     }
     
     public class func fromJSON(json : NSDictionary) -> Address {
-        var address : Address = Address()
+        let address : Address = Address()
         address.streetName = JSON(json["street_name"]!).asString
         if json["street_number"] != nil && !(json["street_number"]! is NSNull) {
-			address.streetNumber = (json["street_number"] as? NSString)?.longLongValue
+			address.streetNumber = NSNumber(longLong: (json["street_number"] as? NSString)!.longLongValue)
         }
         address.zipCode = JSON(json["zip_code"]!).asString
         return address

@@ -15,7 +15,7 @@ public class FeesDetail : NSObject {
     public var type : String!
     
     public class func fromJSON(json : NSDictionary) -> FeesDetail {
-        var fd : FeesDetail = FeesDetail()
+        let fd : FeesDetail = FeesDetail()
         fd.type = JSON(json["type"]!).asString
         fd.feePayer = JSON(json["fee_payer"]!).asString
 		if json["amount"] != nil && !(json["amount"]! is NSNull) {

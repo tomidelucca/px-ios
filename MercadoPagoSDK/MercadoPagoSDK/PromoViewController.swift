@@ -20,7 +20,7 @@ public class PromoViewController: UIViewController, UITableViewDataSource, UITab
 	
 	var bundle : NSBundle? = MercadoPago.getBundle()
 	
-	required public init(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
@@ -78,7 +78,7 @@ public class PromoViewController: UIViewController, UITableViewDataSource, UITab
 	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if self.promos != nil && self.promos.count > 0 {
 			if indexPath.row < self.promos.count {
-				var promoCell : PromoTableViewCell = tableView.dequeueReusableCellWithIdentifier("PromoTableViewCell", forIndexPath: indexPath) as! PromoTableViewCell
+				let promoCell : PromoTableViewCell = tableView.dequeueReusableCellWithIdentifier("PromoTableViewCell", forIndexPath: indexPath) as! PromoTableViewCell
 				promoCell.setPromoInfo(self.promos[indexPath.row])
 				return promoCell
 			} else {

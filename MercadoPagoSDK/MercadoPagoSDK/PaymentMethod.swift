@@ -41,7 +41,7 @@ public class PaymentMethod : Serializable {
     }
     
     public class func fromJSON(json : NSDictionary) -> PaymentMethod {
-        var paymentMethod : PaymentMethod = PaymentMethod()
+        let paymentMethod : PaymentMethod = PaymentMethod()
         paymentMethod._id = JSON(json["id"]!).asString
         paymentMethod.name = JSON(json["name"]!).asString
 

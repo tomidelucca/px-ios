@@ -29,7 +29,7 @@ public class InstallmentsViewController : UIViewController, UITableViewDataSourc
         self.callback = callback
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -52,7 +52,7 @@ public class InstallmentsViewController : UIViewController, UITableViewDataSourc
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
-        var installmentNib = UINib(nibName: "InstallmentTableViewCell", bundle: self.bundle)
+       let installmentNib = UINib(nibName: "InstallmentTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "installmentCell")
         
         self.tableView.estimatedRowHeight = 44.0
@@ -66,7 +66,7 @@ public class InstallmentsViewController : UIViewController, UITableViewDataSourc
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var pccell : InstallmentTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("installmentCell") as! InstallmentTableViewCell
+        let pccell : InstallmentTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("installmentCell") as! InstallmentTableViewCell
         
         let payerCost : PayerCost = self.payerCosts![indexPath.row]
         pccell.fillWithPayerCost(payerCost, amount: amount)

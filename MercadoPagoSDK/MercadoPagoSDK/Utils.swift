@@ -15,7 +15,7 @@ class Utils {
         }
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = split(string) {$0 == "T"}
+        var dateArr = string.characters.split {$0 == "T"}.map(String.init)
         return dateFormatter.dateFromString(dateArr[0])
     }
 }

@@ -41,7 +41,7 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
         return identificationTypes.count
     }
     
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return identificationTypes[row].name
     }
     
@@ -66,11 +66,13 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
             (identificationType!.type! != "number" && Regex("^[0-9]$").test(string))) && string != "") {
                 return false
             }
-            var txtAfterUpdate:NSString = textField.text as NSString
-            txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-            if txtAfterUpdate.length <= self.identificationType?.maxLength {
-                    return true
-            }
+			if textField.text != nil {
+				var txtAfterUpdate: NSString = textField.text!
+				txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+				if txtAfterUpdate.length <= self.identificationType?.maxLength {
+					return true
+				}
+			}
             return false
         }
         return false
@@ -108,7 +110,7 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
         }
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         pickerIdentificationType.hidden = true
     }

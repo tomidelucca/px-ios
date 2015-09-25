@@ -48,7 +48,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         self.callback = callback
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -97,7 +97,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
 	
 	func willShowKeyboard(notification: NSNotification) {
 		let s:NSValue? = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)
-		var keyboardBounds :CGRect = s!.CGRectValue()
+		let keyboardBounds :CGRect = s!.CGRectValue()
 		
 		// resize content insets.
 		let contentInsets = UIEdgeInsetsMake(64, 0.0, keyboardBounds.size.height, 0)
@@ -114,15 +114,15 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
 	}
     
     func declareAndInitCells() {
-        var paymentMethodNib = UINib(nibName: "MPPaymentMethodTableViewCell", bundle: MercadoPago.getBundle())
+        let paymentMethodNib = UINib(nibName: "MPPaymentMethodTableViewCell", bundle: MercadoPago.getBundle())
         self.tableview.registerNib(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
         self.paymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("paymentMethodCell") as! MPPaymentMethodTableViewCell
         
-        var emptyPaymentMethodNib = UINib(nibName: "MPPaymentMethodEmptyTableViewCell", bundle: MercadoPago.getBundle())
+        let emptyPaymentMethodNib = UINib(nibName: "MPPaymentMethodEmptyTableViewCell", bundle: MercadoPago.getBundle())
         self.tableview.registerNib(emptyPaymentMethodNib, forCellReuseIdentifier: "emptyPaymentMethodCell")
         self.emptyPaymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("emptyPaymentMethodCell") as! MPPaymentMethodEmptyTableViewCell
 
-        var securityCodeNib = UINib(nibName: "MPSecurityCodeTableViewCell", bundle: MercadoPago.getBundle())
+        let securityCodeNib = UINib(nibName: "MPSecurityCodeTableViewCell", bundle: MercadoPago.getBundle())
         self.tableview.registerNib(securityCodeNib, forCellReuseIdentifier: "securityCodeCell")
         self.securityCodeCell = self.tableview.dequeueReusableCellWithIdentifier("securityCodeCell") as! MPSecurityCodeTableViewCell
     }
@@ -172,28 +172,30 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
             if self.cards != nil {
                 if self.cards!.count > 0 {
                     let customerPaymentMethodsViewController = CustomerCardsViewController(cards: self.cards, callback: getCustomerPaymentMethodCallback(paymentMethodsViewController))
-                    showViewController(customerPaymentMethodsViewController, sender: self)
+                    showViewController(customerPaymentMethodsViewController)
                 } else {
-                    showViewController(paymentMethodsViewController, sender: self)
+                    showViewController(paymentMethodsViewController)
                 }
             }
         }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String)-> Bool {
-        var txtAfterUpdate:NSString = self.securityCodeCell.securityCodeTextField.text as NSString
-        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-        
-        if txtAfterUpdate.length < self.securityCodeLength {
-            self.navigationItem.rightBarButtonItem?.enabled = false
-            return true
-        } else if txtAfterUpdate.length == self.securityCodeLength {
-            self.navigationItem.rightBarButtonItem?.enabled = true
-            return true
-        }
+        var txtAfterUpdate : NSString? = self.securityCodeCell.securityCodeTextField.text
+		if txtAfterUpdate != nil {
+			txtAfterUpdate = txtAfterUpdate!.stringByReplacingCharactersInRange(range, withString: string)
+			
+			if txtAfterUpdate!.length < self.securityCodeLength {
+				self.navigationItem.rightBarButtonItem?.enabled = false
+				return true
+			} else if txtAfterUpdate!.length == self.securityCodeLength {
+				self.navigationItem.rightBarButtonItem?.enabled = true
+				return true
+			}
+		}
         return false
     }
-    
+	
     func getCustomerPaymentMethodCallback(paymentMethodsViewController : PaymentMethodsViewController) -> (selectedCard: Card?) -> Void {
         return {(selectedCard: Card?) -> Void in
             if selectedCard != nil {
@@ -205,7 +207,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.tableview.reloadData()
                 self.navigationController!.popViewControllerAnimated(true)
             } else {
-                self.showViewController(paymentMethodsViewController, sender: self)
+                self.showViewController(paymentMethodsViewController)
             }
         }
     }
@@ -218,7 +220,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
 				self.securityCodeRequired = self.securityCodeLength != 0
             }
-            self.showViewController(MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: self.publicKey!, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()), sender: self)
+            self.showViewController(MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: self.publicKey!, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()))
         }
     }
     
@@ -249,22 +251,22 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         if selectedCard != nil {
             let securityCode = self.securityCodeRequired ? securityCodeCell.securityCodeTextField.text : nil
             
-            let savedCardToken : SavedCardToken = SavedCardToken(cardId: String(format:"%ld",selectedCard!._id), securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
+            let savedCardToken : SavedCardToken = SavedCardToken(cardId: selectedCard!._id.stringValue, securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
             
             if savedCardToken.validate() {
                 // Send card id to get token id
                 self.view.addSubview(self.loadingView)
                 mercadoPago.createToken(savedCardToken, success: getCreatePaymentCallback(), failure: nil)
             } else {
-                println("Invalid data")
+                print("Invalid data")
                 return
             }
         } else {
             self.selectedCardToken!.securityCode = self.securityCodeCell.securityCodeTextField.text
             let error : NSError? = self.selectedCardToken?.validateSecurityCodeWithPaymentMethod(self.selectedPaymentMethod!)
             if  error != nil {
-                var alert = UIAlertView(title: "Error",
-                    message: error!.userInfo?["securityCode"] as? String,
+                let alert = UIAlertView(title: "Error",
+                    message: error!.userInfo["securityCode"] as? String,
                     delegate: nil,
                     cancelButtonTitle: "OK")
                 alert.show()
@@ -275,5 +277,13 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
     }
+	
+	func showViewController(vc: UIViewController) {
+		if #available(iOS 8.0, *) {
+			self.showViewController(vc, sender: self)
+		} else {
+			self.navigationController?.pushViewController(vc, animated: true)
+		}
+	}
 
 }

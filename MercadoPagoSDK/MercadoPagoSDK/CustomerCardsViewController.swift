@@ -24,7 +24,7 @@ public class CustomerCardsViewController : UIViewController, UITableViewDataSour
         self.callback = callback
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -44,7 +44,7 @@ public class CustomerCardsViewController : UIViewController, UITableViewDataSour
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
         
-        var paymentMethodNib = UINib(nibName: "PaymentMethodTableViewCell", bundle: self.bundle)
+        let paymentMethodNib = UINib(nibName: "PaymentMethodTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
         
         self.tableView.delegate = self
@@ -58,7 +58,7 @@ public class CustomerCardsViewController : UIViewController, UITableViewDataSour
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("paymentMethodCell") as! PaymentMethodTableViewCell
+        let pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("paymentMethodCell") as! PaymentMethodTableViewCell
         
         let paymentRow : PaymentMethodRow = items[indexPath.row]
         pmcell.setLabel(paymentRow.label!)
@@ -78,7 +78,7 @@ public class CustomerCardsViewController : UIViewController, UITableViewDataSour
     public func loadCards() {
         self.items = [PaymentMethodRow]()
         for (card) in cards! {
-            var paymentMethodRow = PaymentMethodRow()
+            let paymentMethodRow = PaymentMethodRow()
             paymentMethodRow.card = card
             paymentMethodRow.label = card.paymentMethod!.name + " " + "terminada en".localized + " " + card.lastFourDigits!
             paymentMethodRow.icon = "icoTc_" + card.paymentMethod!._id

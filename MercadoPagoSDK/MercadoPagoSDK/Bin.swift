@@ -18,7 +18,7 @@ public class Bin : Serializable {
     }
     
     public class func fromJSON(json : NSDictionary) -> Bin {
-        var bin : Bin = Bin()
+        let bin : Bin = Bin()
         bin.exclusionPattern = JSON(json["exclusion_pattern"]!).asString
         bin.installmentsPattern = JSON(json["installments_pattern"]!).asString
         bin.pattern = JSON(json["pattern"]!).asString

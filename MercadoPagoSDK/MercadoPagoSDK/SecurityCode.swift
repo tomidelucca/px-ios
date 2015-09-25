@@ -14,7 +14,7 @@ public class SecurityCode : Serializable {
     public var mode : String!
     
     public class func fromJSON(json : NSDictionary) -> SecurityCode {
-        var securityCode : SecurityCode = SecurityCode()
+        let securityCode : SecurityCode = SecurityCode()
         if json["length"] != nil && !(json["length"]! is NSNull) {
             securityCode.length = (json["length"]! as? Int)!
         }

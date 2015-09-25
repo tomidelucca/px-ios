@@ -26,7 +26,7 @@ public class CongratsViewController : UIViewController, UITableViewDataSource, U
     
     var bundle : NSBundle? = MercadoPago.getBundle()
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

@@ -16,7 +16,7 @@ public class IdentificationType : NSObject {
     public var maxLength : Int = 0
     
     public class func fromJSON(json : NSDictionary) -> IdentificationType {
-        var identificationType : IdentificationType = IdentificationType()
+        let identificationType : IdentificationType = IdentificationType()
         identificationType._id = JSON(json["id"]!).asString
         identificationType.name = JSON(json["name"]!).asString
         identificationType.type = JSON(json["type"]!).asString

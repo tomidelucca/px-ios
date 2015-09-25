@@ -27,7 +27,7 @@ public class IssuersViewController: UIViewController, UITableViewDataSource, UIT
         self.callback = callback
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -60,7 +60,7 @@ public class IssuersViewController: UIViewController, UITableViewDataSource, UIT
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
         
-        var issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
+        let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")
         
         self.tableView.delegate = self
@@ -72,7 +72,7 @@ public class IssuersViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("issuerCell") as! IssuerTableViewCell
+        let issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("issuerCell") as! IssuerTableViewCell
         
         let issuer : Issuer = items[indexPath.row]
         issuerCell.fillWithIssuer(issuer)

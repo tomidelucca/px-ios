@@ -47,12 +47,12 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
 		
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     public func getCardNumber() -> String! {
-        return self.cardNumberTextField.text.stringByReplacingOccurrencesOfString(" ", withString:"")
+        return self.cardNumberTextField.text!.stringByReplacingOccurrencesOfString(" ", withString:"")
     }
     
     public func setIcon(pmId : String?) {
@@ -86,40 +86,43 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
             spaces = 2
         }
         
-        var txtAfterUpdate:NSString = textField.text as NSString
-        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-        if txtAfterUpdate.length <= maxLength+spaces {
-            if txtAfterUpdate.length > 4 {
-                let cardNumber : NSString = txtAfterUpdate.stringByReplacingOccurrencesOfString(" ", withString:"")
-                if maxLength == 16 {
-                    // 4 4 4 4
-                    var mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
-                    for i in 0...(cardNumber.length-1) {
-                        if i > 0 && i%4 == 0 {
-                            mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
-                        } else {
-                            mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
-                        }
-                    }
-                    self.cardNumberTextField.text = mutableString as String
-                    return false
-                } else if maxLength == 15 {
-                    // 4 6 5
-                    var mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
-                    for i in 0...(cardNumber.length-1) {
-                        if i == 4 || i == 10 {
-                            mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
-                        } else {
-                            mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
-                        }
-                    }
-                    self.cardNumberTextField.text = mutableString as String
-                    return false
-                }
-            }
-            return true
-        }
+		
+		if textField.text != nil {
+			var txtAfterUpdate : NSString = textField.text!
+			txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+			if txtAfterUpdate.length <= maxLength+spaces {
+				if txtAfterUpdate.length > 4 {
+					let cardNumber : NSString = txtAfterUpdate.stringByReplacingOccurrencesOfString(" ", withString:"")
+					if maxLength == 16 {
+						// 4 4 4 4
+						let mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
+						for i in 0...(cardNumber.length-1) {
+							if i > 0 && i%4 == 0 {
+								mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
+							} else {
+								mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
+							}
+						}
+						self.cardNumberTextField.text = mutableString as String
+						return false
+					} else if maxLength == 15 {
+						// 4 6 5
+						let mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
+						for i in 0...(cardNumber.length-1) {
+							if i == 4 || i == 10 {
+								mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
+							} else {
+								mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
+							}
+						}
+						self.cardNumberTextField.text = mutableString as String
+						return false
+					}
+				}
+				return true
+			}
+		}
         return false
     }
-    
+	
 }

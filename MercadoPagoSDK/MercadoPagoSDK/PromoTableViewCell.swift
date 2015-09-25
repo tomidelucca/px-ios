@@ -22,20 +22,22 @@ public class PromoTableViewCell: UITableViewCell {
 		super.awakeFromNib()
 	}
 	
-	required public init(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
 	public func setPromoInfo(promo: Promo!) {
-		var placeholderImage = "empty_tc"
+		let placeholderImage = "empty_tc"
 		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil {
-			var imgURL: NSURL = NSURL(string: promo.url)!
+			let imgURL: NSURL = NSURL(string: promo.url)!
 			let request: NSURLRequest = NSURLRequest(URL: imgURL)
 			NSURLConnection.sendAsynchronousRequest(
 				request, queue: NSOperationQueue.mainQueue(),
-				completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
+				completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
 					if error == nil {
-						self.issuerImageView.image = UIImage(data: data)
+						self.issuerImageView.image = UIImage(data: data!)
+					} else {
+						self.issuerImageView.image = UIImage(named: placeholderImage)
 					}
 			})
 		}

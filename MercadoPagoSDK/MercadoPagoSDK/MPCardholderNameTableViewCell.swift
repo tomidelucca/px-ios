@@ -29,13 +29,13 @@ public class MPCardholderNameTableViewCell : ErrorTableViewCell {
     }
     
     
-    required public  init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     
     public func getCardholderName() -> String! {
-		return self.cardholderNameTextField.text != nil ? self.cardholderNameTextField.text.uppercaseString : nil
+		return self.cardholderNameTextField.text != nil ? self.cardholderNameTextField.text!.uppercaseString : nil
     }
     
     public func setTextFieldDelegate(delegate : UITextFieldDelegate) {

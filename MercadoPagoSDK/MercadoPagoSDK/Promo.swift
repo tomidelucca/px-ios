@@ -19,7 +19,7 @@ public class Promo {
 	
 	public class func fromJSON(json : NSDictionary) -> Promo {
 		
-		var promo : Promo = Promo()
+		let promo : Promo = Promo()
 		promo.promoId = json["id"] as? String
 		
 		if let issuerDic = json["issuer"] as? NSDictionary {
@@ -52,7 +52,7 @@ public class Promo {
 		}
 		let dateFormatter = NSDateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
-		var dateArr = split(string) {$0 == "T"}
+		var dateArr = string.characters.split {$0 == "T"}.map(String.init)
 		return dateFormatter.dateFromString(dateArr[0])
 	}
 }

@@ -16,7 +16,7 @@ public class CurrenciesUtil {
         "CLP" : Currency(_id: "CLP", description: "Peso chileno", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
         "COP" : Currency(_id: "COP", description: "Peso colombiano", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
         "MXN" : Currency(_id: "MXN", description: "Peso mexicano", symbol: "$", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ","),
-        "VEF" : Currency(_id: "VEF", description: "Bolipublic var fuerte", symbol: "BsF", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
+		"VEF" : Currency(_id: "VEF", description: "Bolivar fuerte", symbol: "BsF", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
         ]}
  
     public class func formatNumber(amount: Double, currencyId: String) -> String? {
@@ -27,7 +27,7 @@ public class CurrenciesUtil {
         if currency != nil {
     
             // Set formatters
-            var formatter : NSNumberFormatter = NSNumberFormatter()
+            let formatter : NSNumberFormatter = NSNumberFormatter()
             formatter.decimalSeparator = String(currency!.decimalSeparator)
             formatter.groupingSeparator = String(currency!.thousandsSeparator)
             formatter.numberStyle = .NoStyle

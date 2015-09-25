@@ -24,18 +24,17 @@ extension String {
     }
     
     static public func isDigitsOnly(a: String) -> Bool {
-        if let n = a.toInt() {
-            return true
-        } else {
-            return false
-        }
+		if Regex.init("^[0-9]*$").test(a) {
+			return true
+		} else {
+			return false
+		}
     }
     
     subscript (i: Int) -> String {
         
-        if count(self) > i {
-            
-            return String(Array(self)[i])
+        if self.characters.count > i {
+            return String(self[self.startIndex.advancedBy(i)])
         }
         
         return ""
@@ -43,6 +42,6 @@ extension String {
     
     public func indexAt(theInt:Int)->String.Index {
         
-        return advance(self.startIndex, theInt)
+        return self.characters.startIndex.advancedBy(theInt)
     }
 }

@@ -10,14 +10,14 @@ import Foundation
 
 public class Payer {
     public var email : String!
-    public var _id : Int64 = 0
+    public var _id : NSNumber = 0
     public var identification : Identification!
     public var type : String!
     
     public class func fromJSON(json : NSDictionary) -> Payer {
-        var payer : Payer = Payer()
+        let payer : Payer = Payer()
 		if json["id"] != nil && !(json["id"]! is NSNull) {
-			payer._id = (json["id"] as? NSString)!.longLongValue
+			payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
 		}
         payer.email = JSON(json["email"]!).asString
         payer.type = JSON(json["type"]!).asString

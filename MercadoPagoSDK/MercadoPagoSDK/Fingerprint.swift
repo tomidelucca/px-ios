@@ -23,7 +23,7 @@ public class Fingerprint : NSObject {
     }
     
     public func deviceFingerprint() -> [String : AnyObject] {
-        var device : UIDevice = UIDevice.currentDevice()
+        let device : UIDevice = UIDevice.currentDevice()
         var dictionary : [String : AnyObject] = [String : AnyObject]()
 		dictionary["os"] = "iOS"
 		let devicesId : [AnyObject]? = devicesID()
@@ -42,8 +42,8 @@ public class Fingerprint : NSObject {
         }
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        var width = NSString(format: "%.0f", screenSize.width)
-        var height = NSString(format: "%.0f", screenSize.height)
+        let width = NSString(format: "%.0f", screenSize.width)
+        let height = NSString(format: "%.0f", screenSize.height)
         
         dictionary["resolution"] =  "\(width)x\(height)"
         
@@ -128,7 +128,7 @@ public class Fingerprint : NSObject {
             }
         }
         else {
-            let vendorId : String = UIDevice.currentDevice().identifierForVendor.UUIDString
+            let vendorId : String = UIDevice.currentDevice().identifierForVendor!.UUIDString
             let uuid : String = NSUUID().UUIDString
             
             var dicVendor : [String : AnyObject] = ["name" : "vendor_id"]

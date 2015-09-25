@@ -26,7 +26,7 @@ public class GenericErrorView : UIView {
         
         self.backgroundImageView = UIImageView(frame: CGRectMake(-1, -1 * kArrowHeight, self.frame.size.width + 1, self.frame.size.height + kArrowHeight))
         self.backgroundImageView.image = MercadoPago.getImage("ErrorBackground.png")!.stretchableImageWithLeftCapWidth(0, topCapHeight: 20)
-        self.backgroundImageView.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+        self.backgroundImageView.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
         self.backgroundImageView.contentMode = UIViewContentMode.ScaleToFill
         self.backgroundImageView.layer.cornerRadius = 0
         self.backgroundImageView.layer.masksToBounds = false
@@ -42,16 +42,16 @@ public class GenericErrorView : UIView {
 
     }
 
-	required public init(coder aDecoder: NSCoder) {
+	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
  
     public func setErrorMessage(errorMessage: String) {
-        var maxSize : CGSize = CGSizeMake(self.errorLabel.frame.size.width, CGFloat.max)
+        let maxSize : CGSize = CGSizeMake(self.errorLabel.frame.size.width, CGFloat.max)
         
-        var textRect : CGRect = (errorMessage as NSString).boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: self.errorLabel.font], context: nil)
+        let textRect : CGRect = (errorMessage as NSString).boundingRectWithSize(maxSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName: self.errorLabel.font], context: nil)
         
-        var newSize : CGSize = textRect.size
+        let newSize : CGSize = textRect.size
         
         var viewHeight : CGFloat = newSize.height + 2*kErrorOffset
         if viewHeight < self.minimumHeight {

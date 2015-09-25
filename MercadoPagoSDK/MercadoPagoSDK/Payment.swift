@@ -39,11 +39,11 @@ public class Payment : NSObject {
     public var transactionDetails : TransactionDetails!
     public var collectorId : String!
     public var couponAmount : Double = 0
-    public var differentialPricingId : Int64 = 0
+    public var differentialPricingId : NSNumber = 0
     public var issuerId : Int = 0
     
     public class func fromJSON(json : NSDictionary) -> Payment {
-        var payment : Payment = Payment()
+        let payment : Payment = Payment()
 		
 		if json["id"] != nil && !(json["id"]! is NSNull) {
 			payment._id = (json["id"]! as? Int)!
@@ -143,7 +143,7 @@ public class Payment : NSObject {
 			payment.couponAmount = JSON(json["coupon_amount"]!).asDouble!
 		}
 		if json["differential_pricing_id"] != nil && !(json["differential_pricing_id"]! is NSNull) {
-			payment.differentialPricingId = (json["differential_pricing_id"] as? NSString)!.longLongValue
+			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"] as? NSString)!.longLongValue)
 		}
 		
 		if json["issuer_id"] != nil && !(json["issuer_id"]! is NSNull) {
@@ -158,7 +158,7 @@ public class Payment : NSObject {
         }
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = split(string) {$0 == "T"}
+        var dateArr = string.characters.split {$0 == "T"}.map(String.init)
         return dateFormatter.dateFromString(dateArr[0])
     }
 }

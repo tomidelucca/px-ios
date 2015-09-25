@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-public class MercadoPago : NSObject {
+public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     public class var PUBLIC_KEY : String {
         return "public_key"
@@ -51,6 +51,8 @@ public class MercadoPago : NSObject {
     public init (publicKey: String) {
         self.publicKey = publicKey
     }
+	
+	static var temporalNav : UINavigationController?
     
     public init (keyType: String?, key: String?) {
         if keyType != nil && key != nil {
@@ -96,7 +98,7 @@ public class MercadoPago : NSObject {
 		return PromoViewController(publicKey: merchantPublicKey)
 	}
 	
-    public class func startVaultViewController(merchantPublicKey: String, merchantBaseUrl: String?, merchantGetCustomerUri: String?, merchantAccessToken: String?, amount: Double, supportedPaymentTypes: [String], callback: (paymentMethod: PaymentMethod, tokenId: String?, issuerId: Int64?, installments: Int) -> Void) -> VaultViewController {
+    public class func startVaultViewController(merchantPublicKey: String, merchantBaseUrl: String?, merchantGetCustomerUri: String?, merchantAccessToken: String?, amount: Double, supportedPaymentTypes: [String], callback: (paymentMethod: PaymentMethod, tokenId: String?, issuerId: NSNumber?, installments: Int) -> Void) -> VaultViewController {
         
         return VaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
     }
@@ -164,7 +166,7 @@ public class MercadoPago : NSObject {
                         }
                     }
                 } else {
-                    var paymentMethods = jsonResult as? NSArray
+                    let paymentMethods = jsonResult as? NSArray
                     var pms : [PaymentMethod] = [PaymentMethod]()
                     if paymentMethods != nil {
                         for i in 0..<paymentMethods!.count {
@@ -196,7 +198,7 @@ public class MercadoPago : NSObject {
                         }
                     }
                 } else {
-                    var identificationTypesResult = jsonResult as? NSArray?
+                    let identificationTypesResult = jsonResult as? NSArray?
                     var identificationTypes : [IdentificationType] = [IdentificationType]()
                     if identificationTypesResult != nil {
                         for var i = 0; i < identificationTypesResult!!.count; i++ {
@@ -215,7 +217,7 @@ public class MercadoPago : NSObject {
         }
     }
     
-    public func getInstallments(bin: String, amount: Double, issuerId: Int64?, paymentTypeId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getInstallments(bin: String, amount: Double, issuerId: NSNumber?, paymentTypeId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
         
         if self.publicKey != nil {
             let service : PaymentService = PaymentService(baseURL: MP_API_BASE_URL)
@@ -228,7 +230,7 @@ public class MercadoPago : NSObject {
                         }
                     }
                 } else {
-                    var paymentMethods = jsonResult as? NSArray
+                    let paymentMethods = jsonResult as? NSArray
                     var installments : [Installment] = [Installment]()
                     if paymentMethods != nil && paymentMethods?.count > 0 {
                         if let dic = paymentMethods![0] as? NSDictionary {
@@ -236,7 +238,7 @@ public class MercadoPago : NSObject {
                         }
 						success(installments: installments)
 					} else {
-						var error : NSError = NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_NOT_INSTALLMENTS_FOUND, userInfo: ["message": "NOT_INSTALLMENTS_FOUND".localized + "\(amount)"])
+						let error : NSError = NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_NOT_INSTALLMENTS_FOUND, userInfo: ["message": "NOT_INSTALLMENTS_FOUND".localized + "\(amount)"])
 						failure?(error: error)
 					}
                 }
@@ -261,7 +263,7 @@ public class MercadoPago : NSObject {
                         }
                     }
                 } else {
-                    var issuersArray = jsonResult as? NSArray
+                    let issuersArray = jsonResult as? NSArray
                     var issuers : [Issuer] = [Issuer]()
                     if issuersArray != nil {
                         for i in 0..<issuersArray!.count {
@@ -284,7 +286,7 @@ public class MercadoPago : NSObject {
 		// TODO: Está hecho para MLA fijo porque va a cambiar la URL para que dependa de una API y una public key
 		let service : PromosService = PromosService(baseURL: MP_API_BASE_URL)
 		service.getPromos(public_key: self.publicKey!, success: { (jsonResult) -> Void in
-			var promosArray = jsonResult as? NSArray?
+			let promosArray = jsonResult as? NSArray?
 			var promos : [Promo] = [Promo]()
 			if promosArray != nil {
 				for var i = 0; i < promosArray!!.count; i++ {
@@ -306,33 +308,35 @@ public class MercadoPago : NSObject {
     }
 	
     public class func getBundle() -> NSBundle? {
-        var bundle : NSBundle? = nil
-        var privatePath = NSBundle.mainBundle().privateFrameworksPath
+		let privatePath : NSString? = NSBundle.mainBundle().privateFrameworksPath
         if privatePath != nil {
-            var path = privatePath!.stringByAppendingPathComponent("MercadoPagoSDK.framework")
+            let path = privatePath!.stringByAppendingPathComponent("MercadoPagoSDK.framework")
             return NSBundle(path: path)
         }
         return nil
     }
 	
 	public class func getImage(name: String) -> UIImage? {
-		var bundle = getBundle()
+		let bundle = getBundle()
 		if (UIDevice.currentDevice().systemVersion as NSString).compare("8.0", options: NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending {
-			var nameArr = split(name) {$0 == "."}
-			var imageExtension : String = nameArr[1]
-			var imageName : String = nameArr[0]
-			var filePath = bundle?.pathForResource(name, ofType: imageExtension)
+			var nameArr = name.characters.split {$0 == "."}.map(String.init)
+			let imageExtension : String = nameArr[1]
+			let filePath = bundle?.pathForResource(name, ofType: imageExtension)
 			if filePath != nil {
 				return UIImage(contentsOfFile: filePath!)
 			} else {
 				return nil
 			}
 		}
-		return UIImage(named:name, inBundle: bundle, compatibleWithTraitCollection:nil)
+		if #available(iOS 8.0, *) {
+		    return UIImage(named:name, inBundle: bundle, compatibleWithTraitCollection:nil)
+		} else {
+		}
+		return nil
 	}
 	
 	public class func screenBoundsFixedToPortraitOrientation() -> CGRect {
-		var screenSize : CGRect = UIScreen.mainScreen().bounds
+		let screenSize : CGRect = UIScreen.mainScreen().bounds
 		if NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1 && UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication().statusBarOrientation) {
 			return CGRectMake(0.0, 0.0, screenSize.height, screenSize.width)
 		}
@@ -344,25 +348,23 @@ public class MercadoPago : NSObject {
         var msg : String? = msgDefault
         
         if error != nil {
-            msg = error!.userInfo!["message"] as? String
+            msg = error!.userInfo["message"] as? String
         }
-        
-        let alert = UIAlertController()
-        alert.title = "MercadoPago Error"
-		alert.message = "Error = \(msg != nil ? msg! : msgDefault)"
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { action in
-            switch action.style{
-            case .Default:
-                nav!.popViewControllerAnimated(true)
-            case .Cancel:
-                println("cancel")
-            case .Destructive:
-                println("destructive")
-            }
-        }))
-        nav!.presentViewController(alert, animated: true, completion: nil)
-        
 
+		MercadoPago.temporalNav = nav
+		
+		let alert = UIAlertView()
+        alert.title = "MercadoPago Error"
+		alert.delegate = self
+		alert.message = "Error = \(msg != nil ? msg! : msgDefault)"
+		alert.addButtonWithTitle("OK")
+		alert.show()
     }
+	
+	public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+		if buttonIndex == 0 {
+			MercadoPago.temporalNav?.popViewControllerAnimated(true)
+		}
+	}
     
 }

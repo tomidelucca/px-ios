@@ -11,16 +11,16 @@ import MercadoPagoSDK
 
 class FinalVaultViewController : AdvancedVaultViewController {
 
-    var finalCallback : ((paymentMethod: PaymentMethod, token: String?, issuerId: Int64?, installments: Int) -> Void)?
+    var finalCallback : ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?
  
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: [String], callback: (paymentMethod: PaymentMethod, token: String?, issuerId: Int64?, installments: Int) -> Void) {
-        super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
-        self.finalCallback = callback
-    }
+	
+	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: [String], callback: ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?) {
+		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
+		self.finalCallback = callback
+	}
    
     override func getSelectionCallbackPaymentMethod() -> (paymentMethod : PaymentMethod) -> Void {
         return { (paymentMethod : PaymentMethod) -> Void in
@@ -37,11 +37,11 @@ class FinalVaultViewController : AdvancedVaultViewController {
                     let issuerViewController = MercadoPago.startIssuersViewController(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!,
                         callback: { (issuer: Issuer) -> Void in
                             self.selectedIssuer = issuer
-                            self.showViewController(newCardViewController, sender: self)
+                            self.showViewController(newCardViewController)
                     })
-                    self.showViewController(issuerViewController, sender: self)
+                    self.showViewController(issuerViewController)
                 } else {
-                    self.showViewController(newCardViewController, sender: self)
+                    self.showViewController(newCardViewController)
                 }
             } else {
                 self.tableview.reloadData()

@@ -9,16 +9,16 @@
 import Foundation
 
 public class Issuer : NSObject {
-    public var _id : Int64?
+    public var _id : NSNumber?
     public var name : String?
     
     public class func fromJSON(json : NSDictionary) -> Issuer {
-        var issuer : Issuer = Issuer()
+        let issuer : Issuer = Issuer()
         if json["id"] != nil && !(json["id"]! is NSNull) {
 			if let issuerIdStr = json["id"]! as? NSString {
-				issuer._id = issuerIdStr.longLongValue
+				issuer._id = NSNumber(longLong: issuerIdStr.longLongValue)
 			} else {
-				issuer._id = (json["id"] as? NSNumber)?.longLongValue
+				issuer._id = NSNumber(longLong: (json["id"] as? NSNumber)!.longLongValue)
 			}
         }
         issuer.name = JSON(json["name"]!).asString

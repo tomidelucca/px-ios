@@ -14,12 +14,12 @@ public class PaymentService : MercadoPagoService {
         self.request(uri, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
     }
 
-    public func getInstallments(method: String = "GET", uri : String = "/v1/payment_methods/installments", public_key : String, bin : String, amount: Double, issuer_id: Int64?, payment_type_id: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getInstallments(method: String = "GET", uri : String = "/v1/payment_methods/installments", public_key : String, bin : String, amount: Double, issuer_id: NSNumber?, payment_type_id: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         var params : String = "public_key=" + public_key
             params = params + "&bin=" + bin
             params = params + "&amount=" + String(format:"%.2f", amount)
         if issuer_id != nil {
-            params = params + "&issuer.id=" + String(format:"%d", issuer_id!)
+            params = params + "&issuer.id=" + issuer_id!.stringValue
         }
             params = params + "&payment_type_id=" + payment_type_id
         self.request(uri, params: params, body: nil, method: method, success: success, failure: failure)

@@ -9,7 +9,7 @@
 import Foundation
 
 public class MerchantPayment : NSObject {
-    public var cardIssuerId : Int64 = 0
+    public var cardIssuerId : NSNumber = 0
     public var cardToken : String!
     public var campaignId : Int = 0
     public var installments : Int = 0
@@ -21,7 +21,7 @@ public class MerchantPayment : NSObject {
         super.init()
     }
     
-    public init(item: Item, installments: Int, cardIssuerId: Int64, token: String, paymentMethodId: String, campaignId: Int, merchantAccessToken: String) {
+    public init(item: Item, installments: Int, cardIssuerId: NSNumber, token: String, paymentMethodId: String, campaignId: Int, merchantAccessToken: String) {
         self.item = item
         self.installments = installments
         self.cardIssuerId = cardIssuerId
@@ -33,7 +33,7 @@ public class MerchantPayment : NSObject {
     
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
-            "card_issuer_id": self.cardIssuerId == 0 ? JSON.null : NSNumber(longLong: self.cardIssuerId),
+            "card_issuer_id": self.cardIssuerId == 0 ? JSON.null : self.cardIssuerId,
             "card_token": self.cardToken == nil ? JSON.null : self.cardToken!,
             "campaign_id": self.campaignId == 0 ? JSON.null : String(self.campaignId),
             "item": self.item == nil ? JSON.null : JSON.parse(self.item!.toJSONString()).mutableCopyOfTheObject(),

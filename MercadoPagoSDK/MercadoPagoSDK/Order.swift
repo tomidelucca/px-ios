@@ -13,7 +13,7 @@ public class Order : NSObject {
     public var type : String!
     
     public class func fromJSON(json : NSDictionary) -> Order {
-        var order : Order = Order()
+        let order : Order = Order()
 		if json["id"] != nil && !(json["id"]! is NSNull) {
 			order._id = (json["id"] as? Int)!
 		}

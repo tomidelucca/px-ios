@@ -12,7 +12,7 @@ import UIKit
 public class Customer : NSObject {
     public var address : Address?
     public var cards : [Card]?
-    public var defaultCard : Int64?
+    public var defaultCard : NSNumber?
     public var _description : String?
     public var dateCreated : NSDate?
     public var dateLastUpdated : NSDate?
@@ -27,14 +27,16 @@ public class Customer : NSObject {
     public var registrationDate : NSDate?
     
     public class func fromJSON(json : NSDictionary) -> Customer {
-        var customer : Customer = Customer()
+        let customer : Customer = Customer()
         customer._id = json["id"] as! String!
         customer.liveMode = json["live_mode"] as? Bool!
         customer.email = json["email"] as? String!
         customer.firstName = json["first_name"] as? String!
         customer.lastName = json["last_name"] as? String!
         customer._description = json["description"] as? String!
-        customer.defaultCard = (json["default_card"] as? NSString)?.longLongValue
+		if json["default_card"] != nil {
+			customer.defaultCard = NSNumber(longLong: (json["default_card"] as? NSString)!.longLongValue)
+		}
         if let identificationDic = json["identification"] as? NSDictionary {
             customer.identification = Identification.fromJSON(identificationDic)
         }

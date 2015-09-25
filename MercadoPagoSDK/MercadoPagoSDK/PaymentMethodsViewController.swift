@@ -27,7 +27,7 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
         self.callback = callback
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -75,7 +75,7 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
                 MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
         })
         
-        var paymentMethodNib = UINib(nibName: "PaymentMethodTableViewCell", bundle: self.bundle)
+        let paymentMethodNib = UINib(nibName: "PaymentMethodTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
         
         self.tableView.delegate = self
@@ -87,7 +87,7 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("paymentMethodCell") as! PaymentMethodTableViewCell
+        let pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("paymentMethodCell") as! PaymentMethodTableViewCell
         
         let paymentMethod : PaymentMethod = items[indexPath.row]
         pmcell.setLabel(paymentMethod.name)

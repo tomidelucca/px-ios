@@ -13,7 +13,7 @@ public class Phone : NSObject {
     public var number : String?
     
     public class func fromJSON(json : NSDictionary) -> Phone {
-        var phone : Phone = Phone()
+        let phone : Phone = Phone()
         phone.areaCode = JSON(json["area_code"]!).asString
         phone.number = JSON(json["number"]!).asString
         return phone

@@ -24,8 +24,8 @@ public class MercadoPagoService : NSObject {
             url += "?" + params!
         }
         
-        var finalURL: NSURL = NSURL(string: url)!
-        var request: NSMutableURLRequest = NSMutableURLRequest()
+        let finalURL: NSURL = NSURL(string: url)!
+        let request: NSMutableURLRequest = NSMutableURLRequest()
         request.URL = finalURL
         request.HTTPMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -35,21 +35,22 @@ public class MercadoPagoService : NSObject {
 
 		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		
-		NSURLConnection.sendAsynchronousRequest(request, queue:
-            NSOperationQueue.mainQueue(), completionHandler: {(response:
-                NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-				
+		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-				
 				if error == nil {
-                    success(jsonResult: NSJSONSerialization.JSONObjectWithData(data,
-                        options:NSJSONReadingOptions.MutableContainers, error: nil))
-                }
-                else {
+					do
+					{
+						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
+							options:NSJSONReadingOptions.MutableContainers))
+					} catch {
+						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: 1, userInfo: nil)
+						failure!(error: e)
+					}
+                } else {
                     if failure != nil {
-                        failure!(error: error)
+                        failure!(error: error!)
                     }
                 }
-        })
+        }
     }
 }

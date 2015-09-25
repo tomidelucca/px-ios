@@ -18,7 +18,7 @@ public class Refund : NSObject {
     public var uniqueSequenceNumber : String!
     
     public class func fromJSON(json : NSDictionary) -> Refund {
-        var refund : Refund = Refund()
+        let refund : Refund = Refund()
 		if json["id"] != nil && !(json["id"]! is NSNull) {
 			refund._id = (json["id"] as? Int)!
 		}
