@@ -44,9 +44,16 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
-    public class func getViewForPaymentTypeSelected(paymentType : PaymentTypeId) -> UIViewController? {
-        if paymentType.isCard() {
+    
+    internal class func getViewForPaymentMethodSelected(paymentMethodSearchItem : PaymentMethodSearchItem) -> UIViewController? {
+        let paymentType = PaymentTypeId(rawValue: paymentMethodSearchItem.idPaymentMethodSearchItem)
+        if paymentType!.isCard() {
             // new Card
+            let ccPaymentMethod = PaymentMethod()
+            ccPaymentMethod.paymentTypeId = paymentType
+            return MPStepBuilder.startNewCardStep(ccPaymentMethod, callback: { (cardToken: CardToken) -> Void in
+                //Congrats
+            })
         } else if paymentType == PaymentTypeId.ATM || paymentType == PaymentTypeId.BANK_TRANFER {
             // off payment
         } else if paymentType == PaymentTypeId.DIGITAL_CURRENCY {
@@ -55,11 +62,7 @@ public class MPStepBuilder : NSObject {
             //wallet
         }
         return nil
-    }
-    
-    internal class func getViewForPaymentMethodSelected(paymentMethodSearchItem : PaymentMethodSearchItem) -> UIViewController? {
-        //ver que onda
-       return nil
+
     }
 }
 

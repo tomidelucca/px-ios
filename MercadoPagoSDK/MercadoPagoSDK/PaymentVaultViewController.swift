@@ -60,16 +60,15 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         self.paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
         
         if paymentMethodsSearch == nil {
-            let paymentMethodsSearchService = PaymentMethodSearchService()
-            paymentMethodsSearchService.getPaymentMethods(nil, excludedPaymentMethods: nil, public_key: self.publicKey!, success: { (paymentMethodSearch : PaymentMethodSearch) -> Void in
+            MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearch: PaymentMethodSearch) -> Void in
                 self.paymentMethodsSearch = paymentMethodSearch.groups
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
-
+                
                 self.paymentsTable.reloadData()
-                }) { (error) -> Void in
-                    
-            }
+                }, failure: { (error) -> Void in
+                    //TODO
+            })
         } else {
             self.paymentsTable.delegate = self
             self.paymentsTable.dataSource = self
@@ -91,11 +90,8 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let paymentSearchItemSelected = self.paymentMethodsSearch[indexPath.row]
         if (paymentSearchItemSelected.type == PaymentMethodSearchItemType.GROUP) {
-            
             self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, callback: self.callback!), animated: true)
-        } else  if (paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE) {
-            self.navigationController!.pushViewController(MPStepBuilder.getViewForPaymentTypeSelected(PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!)!, animated: true)
-        } else if (paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD) {
+        } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE || paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
             self.navigationController!.pushViewController(MPStepBuilder.getViewForPaymentMethodSelected(paymentSearchItemSelected)!, animated: true)
         }
 

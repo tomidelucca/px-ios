@@ -495,6 +495,7 @@
 		0F9883191AD2A97A00F750F0 /* MercadoPagoSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				76062BFD1C4D84660067A14B /* Services */,
 				0F98831C1AD2A97A00F750F0 /* MercadoPagoSDKTests.swift */,
 				0F98831A1AD2A97A00F750F0 /* Supporting Files */,
 			);
@@ -869,6 +870,13 @@
 				76062BDC1C4D24050067A14B /* PaymentSearchRowTableViewCell.xib */,
 			);
 			name = PaymentSearchCell;
+			sourceTree = "<group>";
+		};
+		76062BFD1C4D84660067A14B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		76743C7D1C46A1CB00120347 /* Checkout */ = {

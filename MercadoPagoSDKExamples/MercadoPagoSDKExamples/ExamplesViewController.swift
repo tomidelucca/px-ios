@@ -77,22 +77,20 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 4:
-            self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, excludedPaymentTypes: nil, excludedPaymentMethods :nil, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
+            self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
-            
-          
-         
 		case 5:
-			self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
+			self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
 				self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
 			}))
 		case 6:
 			//self.showViewController(MercadoPago.startPromosViewController())
-            self.showViewController(MPFlowBuilder.startVaultViewController(1000.0, excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuerId, installments) -> Void in
+            self.showViewController(MPFlowBuilder.startVaultViewController(1000.0, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: { (paymentMethod, tokenId, issuerId, installments) -> Void in
                 print("do something")
             }))
         case 7:
+            MercadoPagoContext.setPublicKey("6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2")
             self.showViewController(MPFlowBuilder.starCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (payment:MerchantPayment) -> Void in
                 
             }))

@@ -27,12 +27,12 @@ public class PaymentMethodSearchItem {
             pmSearchItem.type = PaymentMethodSearchItemType(rawValue: JSON(json["type"]!).asString!)
         }
         
-        if json["iconName"] != nil && !(json["iconName"]! is NSNull) {
-            pmSearchItem.iconName = JSON(json["iconName"]!).asString!
+        if json["icon_name"] != nil && !(json["icon_name"]! is NSNull) {
+            pmSearchItem.iconName = JSON(json["icon_name"]!).asString!
         }
         
         if json["description"] != nil && !(json["description"]! is NSNull) {
-            pmSearchItem.iconName = JSON(json["description"]!).asString!
+            pmSearchItem.description = JSON(json["description"]!).asString!
         }
         
         var children = [PaymentMethodSearchItem]()

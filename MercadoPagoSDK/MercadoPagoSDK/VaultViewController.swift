@@ -42,10 +42,9 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
     public var securityCodeLength : Int = 0
     public var bin : String?
     
-    public var excludedPaymentTypes : Set<PaymentTypeId>?
-    public var excludedPaymentMethods : [PaymentMethod]?
+    public var supportedPaymentTypes : Set<PaymentTypeId>?
     
-    init(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
             
         super.init(nibName: "VaultViewController", bundle: bundle)
             
@@ -55,8 +54,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
         self.publicKey = MercadoPagoContext.publicKey()
             
         self.amount = amount
-        self.excludedPaymentTypes = excludedPaymentTypes
-        self.excludedPaymentMethods = excludedPaymentMethods
+        self.supportedPaymentTypes = supportedPaymentTypes
         self.callback = callback
     }
     
@@ -336,51 +334,37 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func getPaymentMethodsViewController() -> PaymentMethodsViewController {
-        //TODO : UPDATE ME!!!!!!!!
-        //@deprecated - verify
-        /*
-        return MercadoPago.startPaymentMethodsViewController(self.publicKey!, supportedPaymentTypes: self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
-        self.selectedPaymentMethod = paymentMethod
-        if MercadoPago.isCardPaymentType(paymentMethod.paymentTypeId) {
-        self.selectedCard = nil
-        if paymentMethod.settings != nil && paymentMethod.settings.count > 0 {
-        self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
-        self.securityCodeRequired = self.securityCodeLength != 0
-        }
+       return MPStepBuilder.startPaymentMethodsStep(self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
+            self.selectedPaymentMethod = paymentMethod
+            if paymentMethod.paymentTypeId.isCard() {
+                self.selectedCard = nil
+                if paymentMethod.settings != nil && paymentMethod.settings.count > 0 {
+                    self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
+                    self.securityCodeRequired = self.securityCodeLength != 0
+                }
         
-        let newCardViewController = MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: self.publicKey!, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: { (cardToken: CardToken) -> Void in
-        self.selectedCardToken = cardToken
-        self.bin = self.selectedCardToken?.getBin()
-        self.loadPayerCosts()
-        self.navigationController!.popToViewController(self, animated: true)
+                let newCardViewController = MPStepBuilder.startNewCardStep(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: { (cardToken: CardToken) -> Void in
+                    self.selectedCardToken = cardToken
+                    self.bin = self.selectedCardToken?.getBin()
+                    self.loadPayerCosts()
+                    self.navigationController!.popToViewController(self, animated: true)
+                })
+        
+                if self.selectedPaymentMethod!.isIssuerRequired() {
+                    let issuerViewController = MPStepBuilder.startIssuersStep(self.selectedPaymentMethod!,
+                        callback: { (issuer: Issuer) -> Void in
+                            self.selectedIssuer = issuer
+                            self.showViewController(newCardViewController)
+                    })
+                    self.showViewController(issuerViewController)
+                } else {
+                    self.showViewController(newCardViewController)
+                }
+            } else {
+                self.tableview.reloadData()
+                self.navigationController!.popToViewController(self, animated: true)
+            }
         })
-        
-        if self.selectedPaymentMethod!.isIssuerRequired() {
-        let issuerViewController = MercadoPago.startIssuersViewController(self.publicKey!, paymentMethod: self.selectedPaymentMethod!,
-        callback: { (issuer: Issuer) -> Void in
-        self.selectedIssuer = issuer
-        self.showViewController(newCardViewController)
-        })
-        self.showViewController(issuerViewController)
-        } else {
-        self.showViewController(newCardViewController)
-        }
-        } else {
-        self.tableview.reloadData()
-        self.navigationController!.popToViewController(self, animated: true)
-        }
-        })*/
-        let paymentMethodsSearchService =  PaymentMethodSearchService()
-        
-        paymentMethodsSearchService.getPaymentMethods(nil, excludedPaymentMethods: nil, public_key: self.publicKey!, success: { (jsonResult) -> Void in
-            let paymentMethodSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
-            print(paymentMethodSearch)
-            }) { (error) -> Void in
-                //TODO: ver error
-        }
-        let pmVC = PaymentMethodsViewController()
-        pmVC.publicKey = self.publicKey
-        return pmVC
     }
     
 }

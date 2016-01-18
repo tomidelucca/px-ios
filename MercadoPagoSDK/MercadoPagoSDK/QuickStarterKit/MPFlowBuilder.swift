@@ -11,10 +11,10 @@ import Foundation
 public class MPFlowBuilder : NSObject {
     
     
-    
-    public class func startVaultViewController(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
+    @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
+    public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
         
-        return VaultViewController(amount: amount, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods : excludedPaymentMethods, callback: callback)
+        return VaultViewController(amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
         
     }
     

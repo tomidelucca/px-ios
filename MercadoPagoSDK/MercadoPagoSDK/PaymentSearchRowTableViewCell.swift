@@ -32,9 +32,8 @@ class PaymentSearchRowTableViewCell: UITableViewCell {
     }
     
     func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem){
-        //TODO :NO deberia ser asi!!
-        self.paymentTitle.text = paymentSearchItem.iconName
-//        self.paymentIcon.image = MercadoPago.getImage(paymentSearchItem.iconName)
+        self.paymentTitle.text = paymentSearchItem.description
+        self.paymentIcon.image = MercadoPago.getImage("oxxo")//MercadoPago.getImage(paymentSearchItem.iconName)
         
     }
 }
