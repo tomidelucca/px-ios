@@ -9,6 +9,9 @@
 import Foundation
 
 public class PaymentMethod : Serializable {
+    
+
+       
     public var _id : String!
     public var name : String!
     public var paymentTypeId : String!

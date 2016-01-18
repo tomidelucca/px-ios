@@ -17,13 +17,13 @@ class AdvancedVaultViewController : SimpleVaultViewController {
     var amount : Double = 0
     
     var selectedIssuer : Issuer? = nil
-    var advancedCallback : ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?
+    var advancedCallback : ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: [String], callback: ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?) {
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
         super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
         advancedCallback = callback
         self.amount = amount
@@ -37,7 +37,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
                 self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
                 self.securityCodeRequired = self.securityCodeLength != 0
             }
-            let newCardViewController = MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
+            let newCardViewController = MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
             
             if self.selectedPaymentMethod!.isIssuerRequired() {
                 let issuerViewController = MercadoPago.startIssuersViewController(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!,
@@ -173,7 +173,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
         // Create token
         if selectedCard != nil {
             
-            let savedCardToken : SavedCardToken = SavedCardToken(cardId: selectedCard!._id.stringValue, securityCode: securityCodeCell.securityCodeTextField.text!)
+            let savedCardToken : SavedCardToken = SavedCardToken(card: selectedCard!, securityCode: securityCodeCell.securityCodeTextField.text!, securityCodeRequired : self.securityCodeRequired)
             
             if savedCardToken.validate() {
                 // Send card id to get token id
@@ -183,7 +183,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
 				
                 mercadoPago.createToken(savedCardToken, success: {(token: Token?) -> Void in
 					self.loadingView.removeFromSuperview()
-                    self.advancedCallback!(paymentMethod: self.selectedPaymentMethod!, token: token?._id, issuerId: self.selectedIssuer?._id, installments: installments)
+                    self.advancedCallback!(paymentMethod: self.selectedPaymentMethod!, token: token?._id, issuer: self.selectedIssuer, installments: installments)
                 }, failure: nil)
             } else {
                 print("Invalid data")
@@ -197,7 +197,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
 			
             mercadoPago.createNewCardToken(self.selectedCardToken!, success: {(token: Token?) -> Void in
 					self.loadingView.removeFromSuperview()
-                    self.advancedCallback!(paymentMethod: self.selectedPaymentMethod!, token: token?._id, issuerId: self.selectedIssuer?._id, installments: installments)
+                    self.advancedCallback!(paymentMethod: self.selectedPaymentMethod!, token: token?._id, issuer: self.selectedIssuer, installments: installments)
             }, failure: nil)
         }
     }

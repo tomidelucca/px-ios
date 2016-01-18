@@ -20,9 +20,9 @@ public class SavedCardToken : NSObject {
         self.securityCode = securityCode
     }
     
-    public init(cardId : String, securityCode : String?, securityCodeRequired: Bool) {
+    public init(card : Card, securityCode : String?, securityCodeRequired: Bool) {
         super.init()
-        self.cardId = cardId
+        self.cardId = card.idCard.stringValue
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
     }

@@ -9,37 +9,34 @@
 import Foundation
 
 public class MerchantPayment : NSObject {
-    public var cardIssuerId : NSNumber = 0
-    public var cardToken : String!
+    public var cardIssuer : Issuer?
+    public var cardTokenId : String!
     public var campaignId : Int = 0
     public var installments : Int = 0
-    public var item : Item!
+    public var items : [Item]
     public var merchantAccessToken : String!
-    public var paymentMethodId : String!
-    
-    public override init() {
-        super.init()
-    }
-    
-    public init(item: Item, installments: Int, cardIssuerId: NSNumber, token: String, paymentMethodId: String, campaignId: Int, merchantAccessToken: String) {
-        self.item = item
+    public var paymentMethod : PaymentMethod!
+
+  
+    public init(items: [Item], installments: Int, cardIssuer: Issuer?, tokenId: String, paymentMethod: PaymentMethod, campaignId: Int) {
+        self.items = items
         self.installments = installments
-        self.cardIssuerId = cardIssuerId
-        self.cardToken = token
-        self.paymentMethodId = paymentMethodId
+        self.cardIssuer = cardIssuer
+        self.cardTokenId = tokenId
+        self.paymentMethod = paymentMethod
         self.campaignId = campaignId
-        self.merchantAccessToken = merchantAccessToken
+        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
     }
     
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
-            "card_issuer_id": self.cardIssuerId == 0 ? JSON.null : self.cardIssuerId,
-            "card_token": self.cardToken == nil ? JSON.null : self.cardToken!,
+            "card_issuer_id": self.cardIssuer?._id == 0 ? JSON.null : (self.cardIssuer?._id)!,
+            "card_token": self.cardTokenId == nil ? JSON.null : self.cardTokenId!,
             "campaign_id": self.campaignId == 0 ? JSON.null : String(self.campaignId),
-            "item": self.item == nil ? JSON.null : JSON.parse(self.item!.toJSONString()).mutableCopyOfTheObject(),
+            "item": JSON(self.items[0]),
             "installments" : self.installments == 0 ? JSON.null : self.installments,
             "merchant_access_token" : self.merchantAccessToken == nil ? JSON.null : self.merchantAccessToken!,
-            "payment_method_id" : self.paymentMethodId == nil ? JSON.null : self.paymentMethodId!
+            "payment_method_id" : self.paymentMethod._id == nil ? JSON.null : self.paymentMethod._id!
         ]
         return JSON(obj).toString()
     }

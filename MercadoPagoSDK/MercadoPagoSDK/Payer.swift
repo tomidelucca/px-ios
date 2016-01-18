@@ -8,11 +8,15 @@
 
 import Foundation
 
-public class Payer {
+public class Payer : NSObject {
     public var email : String!
     public var _id : NSNumber = 0
     public var identification : Identification!
     public var type : String!
+    
+    public override init(){
+        super.init()
+    }
     
     public class func fromJSON(json : NSDictionary) -> Payer {
         let payer : Payer = Payer()

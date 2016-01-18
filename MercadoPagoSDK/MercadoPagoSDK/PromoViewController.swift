@@ -24,13 +24,9 @@ public class PromoViewController: UIViewController, UITableViewDataSource, UITab
 		super.init(coder: aDecoder)
 	}
 	
-	public init(publicKey: String) {
-		super.init(nibName: "PromoViewController", bundle: self.bundle)
-		self.publicKey = publicKey
-	}
-	
 	public init() {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
+		self.publicKey = MercadoPagoContext.publicKey()
 	}
 	
 	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {

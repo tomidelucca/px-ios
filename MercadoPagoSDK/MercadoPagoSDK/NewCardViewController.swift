@@ -34,12 +34,12 @@ public class NewCardViewController : UIViewController, UITableViewDataSource, UI
 	
 	var inputsCells : NSMutableArray!
 	
-    init(keyType: String, key: String, paymentMethod: PaymentMethod, requireSecurityCode: Bool, callback: ((cardToken: CardToken) -> Void)?) {
+    init(paymentMethod: PaymentMethod, requireSecurityCode: Bool, callback: ((cardToken: CardToken) -> Void)?) {
         super.init(nibName: "NewCardViewController", bundle: bundle)
         self.paymentMethod = paymentMethod
         self.requireSecurityCode = requireSecurityCode
-        self.key = key
-        self.keyType = keyType
+        self.key = MercadoPagoContext.keyValue()
+        self.keyType = MercadoPagoContext.keyType()
         self.callback = callback
     }
     

@@ -16,7 +16,7 @@ public class MerchantServer : NSObject {
     }
     
     public class func getCustomer(merchantBaseUrl : String, merchantGetCustomerUri : String,  merchantAccessToken : String, success: (customer: Customer) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: merchantBaseUrl, getCustomerUri: merchantGetCustomerUri)
+        let service : MerchantService = MerchantService(baseURL: merchantBaseUrl)
 
         service.getCustomer(merchant_access_token: merchantAccessToken, success: {(jsonResult: AnyObject?) -> Void in
             var cust : Customer? = nil
@@ -38,7 +38,7 @@ public class MerchantServer : NSObject {
     }
     
     public class func createPayment(merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: merchantBaseUrl, createPaymentUri: merchantPaymentUri)
+        let service : MerchantService = MerchantService(baseURL: MercadoPagoContext.paymentURI())
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
@@ -63,4 +63,30 @@ public class MerchantServer : NSObject {
             }
         }, failure: failure)
     }
+    
+    public class func createPreference(preference : CheckoutPreference, success: (checkoutPreference: CheckoutPreference) -> Void, failure: ((error: NSError) -> Void)?) {
+        
+        let service : MerchantService = MerchantService(baseURL: MercadoPagoContext.baseURL())
+        
+        service.createPreference(preference: preference, success: { (jsonResult: AnyObject?) -> Void in
+            var checkoutPreference : CheckoutPreference? = nil
+            
+            if let preferenceDic = jsonResult as? NSDictionary {
+                if preferenceDic["error"] != nil && failure != nil {
+                    failure!(error : NSError(domain: "mercadopago.merchantServer.createPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message" : "PREFERENCE_ERROR".localized]))
+                } else {
+                    if preferenceDic.allKeys.count > 0 {
+                        checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
+                        success(checkoutPreference: checkoutPreference!)
+                    }
+                }
+            }
+            
+            failure?(error: NSError(domain: "mercadopago.sdk.merchantServer.createPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+            
+            }, failure: failure)
+        
+    }
+    
+    
 }

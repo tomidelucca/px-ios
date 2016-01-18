@@ -18,7 +18,7 @@ public class Card : NSObject {
     public var expirationMonth : Int = 0
     public var expirationYear : Int = 0
     public var firstSixDigits : String?
-    public var _id : NSNumber = 0
+    public var idCard : NSNumber = 0
     public var lastFourDigits : String?
     public var paymentMethod : PaymentMethod?
     public var issuer : Issuer?
@@ -40,7 +40,7 @@ public class Card : NSObject {
 			card.expirationMonth = JSON(json["expiration_year"]!).asInt!
 		}
 		if json["id"] != nil && !(json["id"]! is NSNull) {
-			card._id = NSNumber(longLong: (json["id"]! as? NSString)!.longLongValue)
+			card.idCard = NSNumber(longLong: (json["id"]! as? NSString)!.longLongValue)
 		}
         card.lastFourDigits = JSON(json["last_four_digits"]!).asString
         card.firstSixDigits = JSON(json["first_six_digits"]!).asString

@@ -16,7 +16,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var getCustomerUri: String?
     var merchantAccessToken: String?
     var callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?
-    var supportedPaymentTypes: [String]?
+    var supportedPaymentTypes: Set<PaymentTypeId>?
     
     @IBOutlet weak var tableview : UITableView!
     
@@ -38,7 +38,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var securityCodeLength : Int = 0
     var bin : String?
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, supportedPaymentTypes: [String], callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?) {
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, supportedPaymentTypes: Set<PaymentTypeId>, callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?) {
         super.init(nibName: "SimpleVaultViewController", bundle: nil)
         self.publicKey = merchantPublicKey
         self.baseUrl = merchantBaseUrl
@@ -167,7 +167,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             
-            let paymentMethodsViewController = MercadoPago.startPaymentMethodsViewController(self.publicKey!, supportedPaymentTypes: self.supportedPaymentTypes!, callback: getSelectionCallbackPaymentMethod())
+            let paymentMethodsViewController = MercadoPago.startPaymentMethodsViewController(self.supportedPaymentTypes!, callback: getSelectionCallbackPaymentMethod())
             
             if self.cards != nil {
                 if self.cards!.count > 0 {
@@ -220,7 +220,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
 				self.securityCodeRequired = self.securityCodeLength != 0
             }
-            self.showViewController(MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: self.publicKey!, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()))
+            self.showViewController(MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()))
         }
     }
     
@@ -251,7 +251,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         if selectedCard != nil {
             let securityCode = self.securityCodeRequired ? securityCodeCell.securityCodeTextField.text : nil
             
-            let savedCardToken : SavedCardToken = SavedCardToken(cardId: selectedCard!._id.stringValue, securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
+            let savedCardToken : SavedCardToken = SavedCardToken(card: selectedCard!, securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
             
             if savedCardToken.validate() {
                 // Send card id to get token id

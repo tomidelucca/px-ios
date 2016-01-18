@@ -15,14 +15,14 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [PaymentMethod]!
-    var supportedPaymentTypes: [String]!
+    var supportedPaymentTypes: Set<PaymentTypeId>!
     var bundle : NSBundle? = MercadoPago.getBundle()
     
     var callback : ((paymentMethod : PaymentMethod) -> Void)?
     
-    init(merchantPublicKey: String, supportedPaymentTypes: [String], callback:(paymentMethod: PaymentMethod) -> Void) {
+    init(supportedPaymentTypes: Set<PaymentTypeId>, callback:(paymentMethod: PaymentMethod) -> Void) {
         super.init(nibName: "PaymentMethodsViewController", bundle: bundle)
-        self.publicKey = merchantPublicKey
+        self.publicKey = MercadoPagoContext.publicKey()
         self.supportedPaymentTypes = supportedPaymentTypes
         self.callback = callback
     }
@@ -60,10 +60,8 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
                     var pms : [PaymentMethod] = [PaymentMethod]()
                     if self.supportedPaymentTypes != nil {
                         for pm in paymentMethods! {
-                            for supported in self.supportedPaymentTypes! {
-                                if supported == pm.paymentTypeId {
-                                    pms.append(pm)
-                                }
+                            if self.supportedPaymentTypes.contains(PaymentTypeId(rawValue: pm.paymentTypeId)!) {
+                                pms.append(pm)
                             }
                         }
                     }

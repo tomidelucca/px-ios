@@ -19,7 +19,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
     var amount : Double = 0
     var bundle : NSBundle? = MercadoPago.getBundle()
     
-    public var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuerId: NSNumber?, installments: Int) -> Void)?
+    public var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)?
     
     // Input controls
     @IBOutlet weak private var tableview : UITableView!
@@ -42,14 +42,16 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
     public var securityCodeLength : Int = 0
     public var bin : String?
     
-    public var supportedPaymentTypes : [String]?
+    public var supportedPaymentTypes : Set<PaymentTypeId>?
     
-    init(merchantPublicKey: String, merchantBaseUrl: String?, merchantGetCustomerUri: String?, merchantAccessToken: String?, amount: Double, supportedPaymentTypes: [String], callback: (paymentMethod: PaymentMethod, tokenId: String?, issuerId: NSNumber?, installments: Int) -> Void) {
+    init( amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "VaultViewController", bundle: bundle)
-        self.merchantBaseUrl = merchantBaseUrl
-        self.getCustomerUri = merchantGetCustomerUri
-        self.merchantAccessToken = merchantAccessToken
-        self.publicKey = merchantPublicKey
+
+        self.merchantBaseUrl = MercadoPagoContext.baseURL()
+        self.getCustomerUri =  MercadoPagoContext.customerURI()
+        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
+        self.publicKey = MercadoPagoContext.publicKey()
+        
         self.amount = amount
         self.callback = callback
         self.supportedPaymentTypes = supportedPaymentTypes
@@ -290,7 +292,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
                 
                 let securityCode = self.securityCodeRequired ? securityCodeCell.securityCodeTextField.text : nil
                 
-                let savedCardToken : SavedCardToken = SavedCardToken(cardId: selectedCard!._id.stringValue, securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
+                let savedCardToken : SavedCardToken = SavedCardToken(card: selectedCard!, securityCode: securityCode, securityCodeRequired: self.securityCodeRequired)
                 
                 if savedCardToken.validate() {
                     // Send card id to get token id
@@ -303,7 +305,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
 						
 						let installments = self.selectedPayerCost == nil ? 0 : self.selectedPayerCost!.installments
 						
-                        self.callback!(paymentMethod: self.selectedPaymentMethod!, tokenId: tokenId, issuerId: self.selectedIssuer?._id, installments: installments)
+                        self.callback!(paymentMethod: self.selectedPaymentMethod!, tokenId: tokenId, issuer: self.selectedIssuer!, installments: installments)
                         }, failure: { (error: NSError?) -> Void in
                             MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
                     })
@@ -322,7 +324,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
 					
 					let installments = self.selectedPayerCost == nil ? 0 : self.selectedPayerCost!.installments
 					
-                    self.callback!(paymentMethod: self.selectedPaymentMethod!, tokenId: tokenId, issuerId: self.selectedIssuer?._id, installments: installments)
+                    self.callback!(paymentMethod: self.selectedPaymentMethod!, tokenId: tokenId, issuer: self.selectedIssuer, installments: installments)
                     }, failure: { (error: NSError?) -> Void in
                         MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
                 })
@@ -331,7 +333,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
     }
     
     func getPaymentMethodsViewController() -> PaymentMethodsViewController {
-        return MercadoPago.startPaymentMethodsViewController(self.publicKey!, supportedPaymentTypes: self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
+        return MercadoPago.startPaymentMethodsViewController(self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
             if MercadoPago.isCardPaymentType(paymentMethod.paymentTypeId) {
                 self.selectedCard = nil
@@ -340,7 +342,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
                     self.securityCodeRequired = self.securityCodeLength != 0
                 }
                 
-                let newCardViewController = MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: self.publicKey!, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: { (cardToken: CardToken) -> Void in
+                let newCardViewController = MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: { (cardToken: CardToken) -> Void in
                     self.selectedCardToken = cardToken
                     self.bin = self.selectedCardToken?.getBin()
                     self.loadPayerCosts()

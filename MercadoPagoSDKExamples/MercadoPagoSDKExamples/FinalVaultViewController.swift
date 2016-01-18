@@ -11,13 +11,13 @@ import MercadoPagoSDK
 
 class FinalVaultViewController : AdvancedVaultViewController {
 
-    var finalCallback : ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?
+    var finalCallback : ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 	
-	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: [String], callback: ((paymentMethod: PaymentMethod, token: String?, issuerId: NSNumber?, installments: Int) -> Void)?) {
+	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
 		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
 		self.finalCallback = callback
 	}
@@ -31,7 +31,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
                     self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
                     self.securityCodeRequired = self.securityCodeLength != 0
                 }
-                let newCardViewController = MercadoPago.startNewCardViewController(MercadoPago.PUBLIC_KEY, key: ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
+                let newCardViewController = MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
                 
                 if self.selectedPaymentMethod!.isIssuerRequired() {
                     let issuerViewController = MercadoPago.startIssuersViewController(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!,

@@ -20,9 +20,9 @@ public class IssuersViewController: UIViewController, UITableViewDataSource, UIT
     
     var bundle: NSBundle? = MercadoPago.getBundle()
 
-    init(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) {
+    init(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) {
         super.init(nibName: "IssuersViewController", bundle: bundle)
-        self.publicKey = merchantPublicKey
+        self.publicKey = MercadoPagoContext.publicKey()
         self.paymentMethod = paymentMethod
         self.callback = callback
     }
