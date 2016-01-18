@@ -14,7 +14,7 @@ public class PaymentMethod : Serializable {
        
     public var _id : String!
     public var name : String!
-    public var paymentTypeId : String!
+    public var paymentTypeId : PaymentTypeId!
     public var settings : [Setting]!
     public var additionalInfoNeeded : [String]!
     
@@ -49,7 +49,7 @@ public class PaymentMethod : Serializable {
         paymentMethod.name = JSON(json["name"]!).asString
 
 		if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
-			paymentMethod.paymentTypeId = json["payment_type_id"] as? String
+			paymentMethod.paymentTypeId = PaymentTypeId(rawValue: json["payment_type_id"] as! String)
 		}
 		
         var settings : [Setting] = [Setting]()

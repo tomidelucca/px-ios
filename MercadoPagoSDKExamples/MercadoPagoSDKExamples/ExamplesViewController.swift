@@ -59,7 +59,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
         switch indexPath.row {
         case 0:
-            self.showViewController(MercadoPago.startPaymentMethodsViewController(PaymentType.allPaymentIDs, callback: { (paymentMethod: PaymentMethod) -> Void in
+            self.showViewController(MPStepBuilder.startPaymentMethodsStep(PaymentType.allPaymentIDs, callback: { (paymentMethod: PaymentMethod) -> Void in
                 self.showViewController(ExamplesUtils.startCardActivity(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: paymentMethod, callback: {(token: Token?) -> Void in
                     self.createPayment(token!._id, paymentMethod: paymentMethod, installments: 1, cardIssuer: nil, discount: nil)
                 }))}))
@@ -77,24 +77,24 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 4:
-            self.showViewController(MercadoPago.startVaultViewController(ExamplesUtils.AMOUNT, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
+            self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, excludedPaymentTypes: nil, excludedPaymentMethods :nil, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
             
           
          
 		case 5:
-			self.showViewController(MercadoPago.startVaultViewController(ExamplesUtils.AMOUNT, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
+			self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
 				self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
 			}))
 		case 6:
 			//self.showViewController(MercadoPago.startPromosViewController())
-            self.showViewController(MPFlowBuilder.startVaultViewController(1000.0, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: { (paymentMethod, tokenId, issuerId, installments) -> Void in
+            self.showViewController(MPFlowBuilder.startVaultViewController(1000.0, excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuerId, installments) -> Void in
                 print("do something")
             }))
         case 7:
-            self.showViewController(MPFlowBuilder.starCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (payment:Payment, paymentMethod : PaymentMethod) -> Void in
-                self.showViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: paymentMethod))
+            self.showViewController(MPFlowBuilder.starCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (payment:MerchantPayment) -> Void in
+                
             }))
         default:
             print("Otra opcion")
@@ -115,7 +115,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     func createPayment(token: String?, paymentMethod: PaymentMethod, installments: Int, cardIssuer: Issuer?, discount: Discount?) {
         if token != nil {
             ExamplesUtils.createPayment(token!, installments: installments, cardIssuer: cardIssuer, paymentMethod: paymentMethod, callback: { (payment: Payment) -> Void in
-                self.showViewController(MercadoPago.startCongratsViewController(payment, paymentMethod: paymentMethod))
+                self.showViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: paymentMethod))
             })
         } else {
             print("no tengo token")

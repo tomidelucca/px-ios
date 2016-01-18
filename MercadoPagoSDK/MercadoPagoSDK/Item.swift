@@ -44,7 +44,7 @@ public class Item : NSObject {
         }
         
         if json["quantity"] != nil && !(json["quantity"]! is NSNull) {
-                item.quantity =  JSON(json["quantity"]!).asInt!
+            item.quantity =  JSON(json["quantity"]!).asInt!
         }
         
         if json["unit_price"] != nil && !(json["unit_price"]! is NSNull) {

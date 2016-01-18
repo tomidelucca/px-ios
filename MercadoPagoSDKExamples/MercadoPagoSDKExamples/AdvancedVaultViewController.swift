@@ -37,10 +37,10 @@ class AdvancedVaultViewController : SimpleVaultViewController {
                 self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
                 self.securityCodeRequired = self.securityCodeLength != 0
             }
-            let newCardViewController = MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
+            let newCardViewController = MPStepBuilder.startNewCardStep(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
             
             if self.selectedPaymentMethod!.isIssuerRequired() {
-                let issuerViewController = MercadoPago.startIssuersViewController(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!,
+                let issuerViewController = MPStepBuilder.startIssuersStep(self.selectedPaymentMethod!,
                     callback: { (issuer: Issuer) -> Void in
                         self.selectedIssuer = issuer
 						self.showViewController(newCardViewController)
@@ -141,7 +141,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
         
         let issuerId = self.selectedIssuer != nil ? self.selectedIssuer!._id : nil
      
-        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: issuerId, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId!, success: {(installments: [Installment]?) -> Void in
+        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: issuerId, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId!.rawValue, success: {(installments: [Installment]?) -> Void in
             if installments != nil {
                 self.payerCosts = installments![0].payerCosts
                 self.tableview.reloadData()
@@ -158,7 +158,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
             super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         } else if indexPath.row == 1 {
 
-            self.showViewController(MercadoPago.startInstallmentsViewController(payerCosts!, amount: amount, callback: { (payerCost: PayerCost?) -> Void in
+            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, callback: { (payerCost: PayerCost?) -> Void in
                 self.selectedPayerCost = payerCost
                 self.tableview.reloadData()
                 self.navigationController!.popToViewController(self, animated: true)

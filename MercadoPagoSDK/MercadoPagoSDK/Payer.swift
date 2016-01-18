@@ -20,9 +20,9 @@ public class Payer : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Payer {
         let payer : Payer = Payer()
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
-		}
+        if json["id"] != nil && !(json["id"]! is NSNull) {
+            payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
+        }
         payer.email = JSON(json["email"]!).asString
         payer.type = JSON(json["type"]!).asString
         if let identificationDic = json["identification"] as? NSDictionary {

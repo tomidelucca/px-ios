@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class MPStepBuilder : NSObject {
     
@@ -43,10 +44,22 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
+    public class func getViewForPaymentTypeSelected(paymentType : PaymentTypeId) -> UIViewController? {
+        if paymentType.isCard() {
+            // new Card
+        } else if paymentType == PaymentTypeId.ATM || paymentType == PaymentTypeId.BANK_TRANFER {
+            // off payment
+        } else if paymentType == PaymentTypeId.DIGITAL_CURRENCY {
+            //bitcoin
+        } else if paymentType == PaymentTypeId.ACCOUNT_MONEY {
+            //wallet
+        }
+        return nil
+    }
     
-
-    
-    
-    
+    internal class func getViewForPaymentMethodSelected(paymentMethodSearchItem : PaymentMethodSearchItem) -> UIViewController? {
+        //ver que onda
+       return nil
+    }
 }
 

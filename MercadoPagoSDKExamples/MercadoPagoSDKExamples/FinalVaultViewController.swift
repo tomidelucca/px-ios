@@ -25,16 +25,16 @@ class FinalVaultViewController : AdvancedVaultViewController {
     override func getSelectionCallbackPaymentMethod() -> (paymentMethod : PaymentMethod) -> Void {
         return { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
-            if MercadoPago.isCardPaymentType(paymentMethod.paymentTypeId) {
+            if paymentMethod.paymentTypeId!.isCard() {
                 self.selectedCard = nil
                 if paymentMethod.settings != nil && paymentMethod.settings.count > 0 {
                     self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
                     self.securityCodeRequired = self.securityCodeLength != 0
                 }
-                let newCardViewController = MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
+                let newCardViewController = MPStepBuilder.startNewCardStep(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback())
                 
                 if self.selectedPaymentMethod!.isIssuerRequired() {
-                    let issuerViewController = MercadoPago.startIssuersViewController(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: self.selectedPaymentMethod!,
+                    let issuerViewController = MPStepBuilder.startIssuersStep(self.selectedPaymentMethod!,
                         callback: { (issuer: Issuer) -> Void in
                             self.selectedIssuer = issuer
                             self.showViewController(newCardViewController)
@@ -50,7 +50,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
         }
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.selectedCard == nil && self.selectedCardToken == nil) || (self.selectedPaymentMethod != nil && !MercadoPago.isCardPaymentType(self.selectedPaymentMethod!.paymentTypeId)) {
+        if (self.selectedCard == nil && self.selectedCardToken == nil) || (self.selectedPaymentMethod != nil && !self.selectedPaymentMethod!.paymentTypeId!.isCard()) {
             return 1
         }
         else if self.selectedPayerCost == nil {
@@ -68,7 +68,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
                 return self.emptyPaymentMethodCell
             } else {
                 self.paymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("paymentMethodCell") as! MPPaymentMethodTableViewCell
-                if !MercadoPago.isCardPaymentType(self.selectedPaymentMethod!.paymentTypeId) {
+                if !self.selectedPaymentMethod!.paymentTypeId!.isCard() {
                     self.paymentMethodCell.fillWithPaymentMethod(self.selectedPaymentMethod!)                    
                 }
                 else if self.selectedCardToken != nil {

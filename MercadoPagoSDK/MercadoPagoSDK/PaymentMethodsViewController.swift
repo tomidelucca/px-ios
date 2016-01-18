@@ -60,7 +60,7 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
                     var pms : [PaymentMethod] = [PaymentMethod]()
                     if self.supportedPaymentTypes != nil {
                         for pm in paymentMethods! {
-                            if self.supportedPaymentTypes.contains(PaymentTypeId(rawValue: pm.paymentTypeId)!) {
+                            if self.supportedPaymentTypes.contains(pm.paymentTypeId) {
                                 pms.append(pm)
                             }
                         }

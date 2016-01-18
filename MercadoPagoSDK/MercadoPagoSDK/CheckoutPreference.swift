@@ -9,7 +9,7 @@
 import UIKit
 
 public class CheckoutPreference : NSObject {
-
+    
     public var id : String!
     public var items : [Item]?
     public var payer : Payer?
@@ -22,7 +22,7 @@ public class CheckoutPreference : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> CheckoutPreference {
         let preference : CheckoutPreference = CheckoutPreference()
-
+        
         if json["id"] != nil && !(json["id"]! is NSNull) {
             preference.id = (json["id"]! as? String)
         }
@@ -61,9 +61,28 @@ public class CheckoutPreference : NSObject {
         return amount
     }
     
-    public func getPaymentTypeIdsSupported() -> Set<PaymentTypeId> {
-        let ptIds = PaymentType.allPaymentIDs.subtract(paymentMethods!.excludedPaymentTypes!)
-        return ptIds
+    public func getInstallments() -> Int {
+        if self.paymentMethods != nil {
+            if (self.paymentMethods!.installments != nil) {
+                return self.paymentMethods!.installments!
+            } else if (self.paymentMethods!.defaultInstallments != nil) {
+                return self.paymentMethods!.defaultInstallments!
+            }
+        }
+        return 1
     }
- 
+    
+    public func getExcludedPaymentTypes() -> Set<PaymentTypeId>? {
+        if (self.paymentMethods != nil && self.paymentMethods!.excludedPaymentTypes != nil) {
+            return self.paymentMethods!.excludedPaymentTypes
+        }
+        return nil
+    }
+    
+    public func getExcludedPaymentMethods() -> [PaymentMethod]? {
+        if (self.paymentMethods != nil && self.paymentMethods!.excludedPaymentMethods != nil) {
+            return self.paymentMethods!.excludedPaymentMethods
+        }
+        return nil
+    }
 }

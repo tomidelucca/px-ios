@@ -12,15 +12,21 @@ public class MPFlowBuilder : NSObject {
     
     
     
-    public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
+    public class func startVaultViewController(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
         
-        return VaultViewController( amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
+        return VaultViewController(amount: amount, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods : excludedPaymentMethods, callback: callback)
         
     }
     
-    public class func starCheckoutViewController(preference: CheckoutPreference, callback: (Payment, PaymentMethod) -> Void) -> CheckoutViewController {
+    public class func starCheckoutViewController(preference: CheckoutPreference, callback: (MerchantPayment) -> Void) -> CheckoutViewController {
        
         return CheckoutViewController(preference: preference, callback: callback)
+        
+    }
+    
+    public class func startPaymentVaultViewController(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> PaymentVaultViewController {
+        
+        return PaymentVaultViewController(amount: amount, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, callback:callback)
         
     }
     

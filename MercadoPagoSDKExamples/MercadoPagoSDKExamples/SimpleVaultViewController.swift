@@ -167,7 +167,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             
-            let paymentMethodsViewController = MercadoPago.startPaymentMethodsViewController(self.supportedPaymentTypes!, callback: getSelectionCallbackPaymentMethod())
+            let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(self.supportedPaymentTypes!, callback: getSelectionCallbackPaymentMethod())
             
             if self.cards != nil {
                 if self.cards!.count > 0 {
@@ -220,7 +220,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
 				self.securityCodeRequired = self.securityCodeLength != 0
             }
-            self.showViewController(MercadoPago.startNewCardViewController(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()))
+            self.showViewController(MPStepBuilder.startNewCardStep(self.selectedPaymentMethod!, requireSecurityCode: self.securityCodeRequired, callback: self.getNewCardCallback()))
         }
     }
     

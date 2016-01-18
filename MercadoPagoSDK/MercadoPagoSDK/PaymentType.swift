@@ -38,6 +38,10 @@ public enum PaymentTypeId :String {
     case ATM = "atm"
     case DIGITAL_CURRENCY = "digital_currency"
     case PREPAID_CARD = "prepaid_card"
+    
+    public func isCard() -> Bool {
+        return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
+    }
 }
 
 
