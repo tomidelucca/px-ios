@@ -45,24 +45,29 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    internal class func getViewForPaymentMethodSelected(paymentMethodSearchItem : PaymentMethodSearchItem) -> UIViewController? {
+    internal class func getViewForPaymentMethodSelected(paymentMethodSearchItem : PaymentMethodSearchItem, callback: (UIViewController)-> Void)  {
         let paymentType = PaymentTypeId(rawValue: paymentMethodSearchItem.idPaymentMethodSearchItem)
         if paymentType!.isCard() {
             // new Card
-            let ccPaymentMethod = PaymentMethod()
-            ccPaymentMethod.paymentTypeId = paymentType
-            return MPStepBuilder.startNewCardStep(ccPaymentMethod, callback: { (cardToken: CardToken) -> Void in
-                //Congrats
+            MPServicesBuilder.getPaymentMethods({ (var paymentMethods) -> Void in
+                //TODO: uses first cc found
+                paymentMethods = paymentMethods!.filter({$0.paymentTypeId == paymentType})
+                callback(MPStepBuilder.startNewCardStep(paymentMethods![0], callback: { (cardToken: CardToken) -> Void in
+                    //Congrats
+                }))
+                }, failure: { (error) -> Void in
+                    //TODO
             })
         } else if paymentType == PaymentTypeId.ATM || paymentType == PaymentTypeId.BANK_TRANFER {
             // off payment
+            callback(ConfirmOfflinePaymentViewController())
         } else if paymentType == PaymentTypeId.DIGITAL_CURRENCY {
             //bitcoin
+
         } else if paymentType == PaymentTypeId.ACCOUNT_MONEY {
             //wallet
+    
         }
-        return nil
-
     }
 }
 

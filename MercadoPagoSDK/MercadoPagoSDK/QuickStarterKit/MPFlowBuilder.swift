@@ -19,7 +19,6 @@ public class MPFlowBuilder : NSObject {
     }
     
     public class func starCheckoutViewController(preference: CheckoutPreference, callback: (MerchantPayment) -> Void) -> CheckoutViewController {
-       
         return CheckoutViewController(preference: preference, callback: callback)
         
     }

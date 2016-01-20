@@ -10,8 +10,9 @@ import UIKit
 
 class PaymentSearchRowTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var paymentIcon: UIImageView!
     @IBOutlet weak var paymentTitle: UILabel!
+    
+    @IBOutlet weak var paymentIcon: UIImageView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,7 +34,11 @@ class PaymentSearchRowTableViewCell: UITableViewCell {
     
     func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem){
         self.paymentTitle.text = paymentSearchItem.description
-        self.paymentIcon.image = MercadoPago.getImage("oxxo")//MercadoPago.getImage(paymentSearchItem.iconName)
-        
+        let iconImage = MercadoPago.getImage(paymentSearchItem.iconName)
+        if (iconImage != nil) {
+            let tintedImage = iconImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            self.paymentIcon.image = tintedImage
+            self.paymentIcon.tintColor = UIColor().blueMercadoPago()
+        }
     }
 }

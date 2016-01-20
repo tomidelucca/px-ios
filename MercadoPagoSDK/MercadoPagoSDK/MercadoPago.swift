@@ -125,37 +125,6 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-    public func getPaymentMethods(success: (paymentMethods: [PaymentMethod]?) -> Void, failure: ((error: NSError) -> Void)?) {
-        
-        if self.publicKey != nil {
-            let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
-            service.getPaymentMethods(public_key: self.publicKey!, success: {(jsonResult: AnyObject?) -> Void in
-                if let errorDic = jsonResult as? NSDictionary {
-                    if errorDic["error"] != nil {
-                        if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
-                        }
-                    }
-                } else {
-                    let paymentMethods = jsonResult as? NSArray
-                    var pms : [PaymentMethod] = [PaymentMethod]()
-                    if paymentMethods != nil {
-                        for i in 0..<paymentMethods!.count {
-                            if let pmDic = paymentMethods![i] as? NSDictionary {
-                                pms.append(PaymentMethod.fromJSON(pmDic))
-                            }
-                        }
-                    }
-                    success(paymentMethods: pms)
-                }
-                }, failure: failure)
-        } else {
-            if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
-            }
-        }
-    }
-    
     public func getIdentificationTypes(success: (identificationTypes: [IdentificationType]?) -> Void, failure: ((error: NSError) -> Void)?) {
         
         if self.publicKey != nil {

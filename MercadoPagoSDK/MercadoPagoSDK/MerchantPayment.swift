@@ -10,7 +10,7 @@ import Foundation
 
 public class MerchantPayment : NSObject {
     public var issuer : Issuer?
-    public var cardTokenId : String!
+    public var cardTokenId : String?
     public var campaignId : Int = 0
     public var installments : Int = 0
     public var items : [Item]
@@ -18,7 +18,7 @@ public class MerchantPayment : NSObject {
     public var paymentMethod : PaymentMethod!
 
   
-    public init(items: [Item], installments: Int, issuer: Issuer?, tokenId: String, paymentMethod: PaymentMethod, campaignId: Int) {
+    public init(items: [Item], installments: Int, issuer: Issuer?, tokenId: String?, paymentMethod: PaymentMethod, campaignId: Int) {
         self.items = items
         self.installments = installments
         self.issuer = issuer

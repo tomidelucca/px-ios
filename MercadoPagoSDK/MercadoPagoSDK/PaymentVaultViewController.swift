@@ -54,10 +54,13 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "¿Cómo quieres pagar?"
         
         let paymentMethodSearchNib = UINib(nibName: "PaymentSearchRowTableViewCell", bundle: self.bundle)
+        let paymentSearchTitleNib = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
+        
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
-        self.paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
+        self.paymentsTable.registerNib(paymentSearchTitleNib, forCellReuseIdentifier: "paymentSearchTitleNib")
         
         if paymentMethodsSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearch: PaymentMethodSearch) -> Void in
@@ -75,6 +78,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
 
             self.paymentsTable.reloadData()
         }
+
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,19 +86,44 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
-        paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row])
+        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
+
+        if currentPaymentMethod.iconName != nil {
+            let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
+            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row])
+            
+            return paymentSearchCell
+        }
+        
+        let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleNib") as! PaymentTitleViewCell
+        paymentSearchCell.paymentTitle.text = currentPaymentMethod.description
         return paymentSearchCell
+        
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let paymentSearchItemSelected = self.paymentMethodsSearch[indexPath.row]
+        self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
         if (paymentSearchItemSelected.type == PaymentMethodSearchItemType.GROUP) {
             self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, callback: self.callback!), animated: true)
-        } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE || paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
-            self.navigationController!.pushViewController(MPStepBuilder.getViewForPaymentMethodSelected(paymentSearchItemSelected)!, animated: true)
-        }
+        } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
+            self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
 
+                //Payment method chosen: cc or offline payment
+                if paymentMethod.paymentTypeId.isCard() {
+                    self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
+                        //TODO: hardcoded values
+                        self.navigationController?.popViewControllerAnimated(true)
+                        self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                    }), animated: true)
+                } else {
+                    //Offline payments
+                        self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                }
+                
+            }), animated: true)
+        }
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -103,7 +132,6 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     

@@ -53,8 +53,7 @@ public class PaymentMethodsViewController : UIViewController, UITableViewDataSou
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
         
-        let mercadoPago : MercadoPago = MercadoPago(publicKey: self.publicKey!)
-        mercadoPago.getPaymentMethods({(paymentMethods: [PaymentMethod]?) -> Void in
+        MPServicesBuilder.getPaymentMethods({(paymentMethods: [PaymentMethod]?) -> Void in
                 self.items = [PaymentMethod]()
                 if paymentMethods != nil {
                     var pms : [PaymentMethod] = [PaymentMethod]()
