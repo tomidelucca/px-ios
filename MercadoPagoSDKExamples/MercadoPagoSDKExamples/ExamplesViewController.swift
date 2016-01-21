@@ -38,6 +38,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.title = "MercadoPago SDK"
         self.tableview.delegate = self
         self.tableview.dataSource = self
+        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -90,7 +92,6 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("do something")
             }))
         case 7:
-            MercadoPagoContext.setPublicKey("6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2")
             self.showViewController(MPFlowBuilder.starCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (payment:MerchantPayment) -> Void in
                 
             }))

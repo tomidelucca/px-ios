@@ -21,7 +21,6 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     var bundle = MercadoPago.getBundle()
     
-    
     var paymentSearchCell : PaymentSearchRowTableViewCell!
     
     @IBOutlet weak var paymentsTable: UITableView!
@@ -104,7 +103,9 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let paymentSearchItemSelected = self.paymentMethodsSearch[indexPath.row]
         self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
-        if (paymentSearchItemSelected.type == PaymentMethodSearchItemType.GROUP) {
+        
+        if (paymentSearchItemSelected.children.count > 0) {
+            self.navigationController?.popViewControllerAnimated(true)
             self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, callback: self.callback!), animated: true)
         } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
@@ -112,18 +113,66 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
 
                 //Payment method chosen: cc or offline payment
                 if paymentMethod.paymentTypeId.isCard() {
-                    self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
-                        //TODO: hardcoded values
-                        self.navigationController?.popViewControllerAnimated(true)
-                        self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
-                    }), animated: true)
+                    self.creditCardPyamentFlow(paymentMethod)
                 } else {
-                    //Offline payments
-                        self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                    //Offline payments - sucursales
+                    //TODO: si sucursal == payment methods no deberia entrar aca
+                    self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
                 }
                 
             }), animated: true)
+        } else if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
+            if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
+                //wallet
+            } else {
+                // atm-ticket // cc
+
+            }
         }
+    }
+    
+    public func creditCardPyamentFlow(paymentMethod: PaymentMethod){
+        self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
+        self.navigationController?.popViewControllerAnimated(true)
+        
+        if paymentMethod.isIssuerRequired() {
+            self.navigationController?.pushViewController(MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                    MPServicesBuilder.getInstallments(cardToken.getBin()!, amount: self.amount, issuer: issuer, paymentTypeId: paymentMethod.paymentTypeId, success: { (installments) -> Void in
+                        MPStepBuilder.startInstallmentsStep(installments![0].payerCosts, amount: self.amount, callback: { (payerCost) -> Void in
+                            MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
+                                self.callback!(paymentMethod: paymentMethod, tokenId: token!._id, issuer: issuer, installments: payerCost!.installments)
+                                }, failure: { (error) -> Void in
+                                    
+                            })
+                            
+                        })
+                        }, failure: { (error) -> Void in
+                            //TODO
+                    })
+                })
+            }), animated: true)
+        } else {
+            //TODO
+            MPServicesBuilder.getInstallments(cardToken.getBin()!, amount: self.amount, issuer: nil, paymentTypeId: paymentMethod.paymentTypeId, success: { (installments) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                self.navigationController?.pushViewController(MPStepBuilder.startInstallmentsStep(installments![0].payerCosts, amount: self.amount, callback: { (payerCost) -> Void in
+                    MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
+                        self.navigationController?.popViewControllerAnimated(true)
+                        self.callback!(paymentMethod: paymentMethod, tokenId: token!._id, issuer: nil, installments: payerCost!.installments)
+                        }, failure: { (error) -> Void in
+                            
+                    })
+                }), animated: true)
+                
+                }, failure: { (error) -> Void in
+                    //TODO
+            })
+
+            }
+        }), animated: true)
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -108,10 +108,10 @@ public class MPServicesBuilder : NSObject {
        
     }
     
-    public class func getInstallments(bin: String, amount: Double, issuer: Issuer, paymentTypeId: PaymentTypeId, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func getInstallments(bin: String, amount: Double, issuer: Issuer?, paymentTypeId: PaymentTypeId, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)?) {
         
             let service : PaymentService = PaymentService(baseURL: MPServicesBuilder.MP_API_BASE_URL)
-            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer._id, payment_type_id: paymentTypeId.rawValue, success: {(jsonResult: AnyObject?) -> Void in
+            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_type_id: paymentTypeId.rawValue, success: {(jsonResult: AnyObject?) -> Void in
                 
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
@@ -182,7 +182,7 @@ public class MPServicesBuilder : NSObject {
 
         
     public class func createPayment(merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoContext.paymentURI())
+        let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             

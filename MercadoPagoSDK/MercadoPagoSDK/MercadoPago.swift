@@ -307,9 +307,9 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-    public class func createMPPayment(payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: MP_API_BASE_URL)
-        service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
+    public class func createMPPayment(payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+        let service : MerchantService = MerchantService()
+        service.createMPPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
             if let paymentDic = jsonResult as? NSDictionary {

@@ -41,6 +41,7 @@ public class Payment : NSObject {
     public var couponAmount : Double = 0
     public var differentialPricingId : NSNumber = 0
     public var issuerId : Int = 0
+    public var tokenId : String?
     
     public class func fromJSON(json : NSDictionary) -> Payment {
         let payment : Payment = Payment()
@@ -149,7 +150,24 @@ public class Payment : NSObject {
 		if json["issuer_id"] != nil && !(json["issuer_id"]! is NSNull) {
 			payment.issuerId = (json["issuer_id"] as? NSString)!.integerValue
 		}
+        
+        if json["token"] != nil && !(json["token"]! is NSNull) {
+            payment.tokenId = (json["token"] as? String)! 
+        }
         return payment
+    }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "transaction_amount": self.transactionAmount,
+            "token": self.tokenId == nil ? "" : self.tokenId!,
+            "description": self._description,
+            //TODO : should be plural
+            //            "items": JSON(self.items[0]),
+            "installments" : self.installments == 0 ? 0 : self.installments,
+            "payment_method_id" : self.paymentMethodId
+        ]
+        return JSON(obj).toString()
     }
     
     public class func getDateFromString(string: String!) -> NSDate! {

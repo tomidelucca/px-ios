@@ -16,7 +16,7 @@ public class MerchantServer : NSObject {
     }
     
     public class func getCustomer(merchantBaseUrl : String, merchantGetCustomerUri : String,  merchantAccessToken : String, success: (customer: Customer) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: merchantBaseUrl)
+        let service : MerchantService = MerchantService()
 
         service.getCustomer(merchant_access_token: merchantAccessToken, success: {(jsonResult: AnyObject?) -> Void in
             var cust : Customer? = nil
@@ -38,7 +38,7 @@ public class MerchantServer : NSObject {
     }
     
     public class func createPayment(merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoContext.paymentURI())
+        let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
@@ -66,7 +66,7 @@ public class MerchantServer : NSObject {
     
     public class func createPreference(preference : CheckoutPreference, success: (checkoutPreference: CheckoutPreference) -> Void, failure: ((error: NSError) -> Void)?) {
         
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoContext.baseURL())
+        let service : MerchantService = MerchantService()
         
         service.createPreference(preference: preference, success: { (jsonResult: AnyObject?) -> Void in
             var checkoutPreference : CheckoutPreference? = nil

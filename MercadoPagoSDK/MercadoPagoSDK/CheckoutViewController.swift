@@ -16,7 +16,7 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
     var bundle : NSBundle? = MercadoPago.getBundle()
     var callback : (MerchantPayment -> Void)!
     var paymentMethod : PaymentMethod?
-    var installments : Int?
+    var installments : Int = 0
     var issuer : Issuer?
     var tokenId : String?
     
@@ -87,15 +87,22 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
             self.tokenId = tokenId
             self.issuer = issuer
             self.installments = installments
+            
             self.checkoutTable.reloadData()
         }
         self.navigationController?.pushViewController(vaultVC, animated: true)
     }
     
     internal func confirmPayment(){
-        let merchantPayment = MerchantPayment(items: self.preference!.items!, installments: self.installments!, issuer: self.issuer!, tokenId: self.tokenId, paymentMethod: self.paymentMethod!, campaignId: 0)
-        MercadoPago.createMPPayment(merchantPayment, success: { (payment) -> Void in
-            MPStepBuilder.startCongratsStep(payment, paymentMethod: self.paymentMethod!)
+        let payment = Payment()
+        payment.transactionAmount = self.preference!.getAmount()
+        payment.tokenId = self.tokenId
+        payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
+        payment.paymentMethodId = self.paymentMethod!._id
+        payment._description = "description"
+    
+        MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
+            self.navigationController?.pushViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: self.paymentMethod!), animated: true)
             }) { (error) -> Void in
                 //TODO
                 

@@ -13,7 +13,7 @@ public class MerchantService : MercadoPagoService {
     
     public var data: NSMutableData = NSMutableData()
     
-    override init (baseURL : String) {
+    init() {
         super.init(baseURL: MercadoPagoContext.baseURL())
     }
 
@@ -23,6 +23,11 @@ public class MerchantService : MercadoPagoService {
     
     public func createPayment(method : String = "POST", payment : MerchantPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.request(MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
+    }
+    
+    public func createMPPayment(method : String = "POST", payment : Payment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+        self.baseURL = MercadoPago.MP_API_BASE_URL
+        self.request(MercadoPago.MP_PAYMENTS_URI + "?access_token=" + MercadoPagoContext.merchantAccessToken(), params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
     }
     
     public func createPreference(method : String = "POST", preference : CheckoutPreference, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {

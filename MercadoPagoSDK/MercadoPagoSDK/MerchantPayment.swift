@@ -33,7 +33,8 @@ public class MerchantPayment : NSObject {
             "card_issuer_id": self.issuer == nil ? JSON.null : (self.issuer)!,
             "card_token": self.cardTokenId == nil ? JSON.null : self.cardTokenId!,
             "campaign_id": self.campaignId == 0 ? JSON.null : String(self.campaignId),
-            "item": JSON(self.items[0]),
+            //TODO : should be plural
+//            "items": JSON(self.items[0]),
             "installments" : self.installments == 0 ? JSON.null : self.installments,
             "merchant_access_token" : self.merchantAccessToken == nil ? JSON.null : self.merchantAccessToken!,
             "payment_method_id" : self.paymentMethod._id == nil ? JSON.null : self.paymentMethod._id!
