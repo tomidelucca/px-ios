@@ -141,11 +141,11 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         }
     }
     
+    //TODO: reemplazar por nuevo form de tc
     public func creditCardPyamentFlow(paymentMethod: PaymentMethod){
         self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
         self.navigationController?.popViewControllerAnimated(true)
         
-            //TODO: reemplazar por nuevo form de tc
         if paymentMethod.isIssuerRequired() {
             self.navigationController?.pushViewController(MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
