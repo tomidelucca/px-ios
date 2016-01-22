@@ -23,14 +23,17 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     var paymentSearchCell : PaymentSearchRowTableViewCell!
     
+    private var tintColor = true
+    
     @IBOutlet weak var paymentsTable: UITableView!
     
-    init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
-
+        self.title = title
+        self.tintColor = false
         self.amount = amount
         self.paymentMethodsSearch = paymentMethodSearch
         self.callback = callback
@@ -53,7 +56,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "¿Cómo quieres pagar?"
+        if self.title == nil || self.title!.isEmpty {
+            self.title = "¿Cómo quieres pagar?"
+        }
+        
         
         let paymentMethodSearchNib = UINib(nibName: "PaymentSearchRowTableViewCell", bundle: self.bundle)
         let paymentSearchTitleNib = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
@@ -63,7 +69,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         
         if paymentMethodsSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearch: PaymentMethodSearch) -> Void in
-                self.paymentMethodsSearch = paymentMethodSearch.groups
+                self.paymentMethodsSearch = paymentMethodSearch.groups.filter({$0.active})
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
                 
@@ -89,7 +95,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
 
         if currentPaymentMethod.iconName != nil {
             let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
-            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row])
+            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], tintColor: self.tintColor)
             
             return paymentSearchCell
         }
@@ -104,9 +110,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         let paymentSearchItemSelected = self.paymentMethodsSearch[indexPath.row]
         self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
         
+        
         if (paymentSearchItemSelected.children.count > 0) {
             self.navigationController?.popViewControllerAnimated(true)
-            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, callback: self.callback!), animated: true)
+            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, title:paymentSearchItemSelected.childrenHeader, callback: self.callback!), animated: true)
         } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
@@ -126,7 +133,9 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
                 //wallet
             } else {
                 // atm-ticket // cc
-
+                let paymentMethod = PaymentMethod()
+                paymentMethod.name = paymentSearchItemSelected.description
+                self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
             }
         }
     }

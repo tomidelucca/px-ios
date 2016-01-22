@@ -14,6 +14,8 @@ class PaymentSearchRowTableViewCell: UITableViewCell {
     
     @IBOutlet weak var paymentIcon: UIImageView!
     
+    @IBOutlet weak var paymentComment: UILabel!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -32,13 +34,22 @@ class PaymentSearchRowTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem){
+    func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, tintColor : Bool){
         self.paymentTitle.text = paymentSearchItem.description
         let iconImage = MercadoPago.getImage(paymentSearchItem.iconName)
         if (iconImage != nil) {
-            let tintedImage = iconImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-            self.paymentIcon.image = tintedImage
-            self.paymentIcon.tintColor = UIColor().blueMercadoPago()
+            if tintColor {
+                let tintedImage = iconImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                self.paymentIcon.image = tintedImage
+                self.paymentIcon.tintColor = UIColor().blueMercadoPago()
+            } else {
+                self.paymentIcon.image = iconImage
+            }
+        }
+        if paymentSearchItem.comment != nil {
+            self.paymentComment.text = paymentSearchItem.comment
+        } else {
+            self.paymentComment.hidden = true
         }
     }
 }
