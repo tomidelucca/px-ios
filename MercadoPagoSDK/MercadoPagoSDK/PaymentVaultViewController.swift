@@ -18,6 +18,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     var excludedPaymentMethods : [PaymentMethod]!
     var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)!
     var paymentMethodsSearch : [PaymentMethodSearchItem]!
+    var paymentMethodSearchParent : PaymentMethodSearchItem?
     
     var bundle = MercadoPago.getBundle()
     
@@ -27,7 +28,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     @IBOutlet weak var paymentsTable: UITableView!
     
-    init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -35,6 +36,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         self.title = title
         self.tintColor = false
         self.amount = amount
+        self.paymentMethodSearchParent = paymentMethodSearchParent
         self.paymentMethodsSearch = paymentMethodSearch
         self.callback = callback
     }
@@ -113,7 +115,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         
         if (paymentSearchItemSelected.children.count > 0) {
             self.navigationController?.popViewControllerAnimated(true)
-            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, title:paymentSearchItemSelected.childrenHeader, callback: self.callback!), animated: true)
+            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: self.callback!), animated: true)
         } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
@@ -122,9 +124,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
                 if paymentMethod.paymentTypeId.isCard() {
                     self.creditCardPyamentFlow(paymentMethod)
                 } else {
-                    //Offline payments - sucursales
-                    //TODO: si sucursal == payment methods no deberia entrar aca
-                    self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                    //ERROR : No deberia ser distinto de cc sin children
                 }
                 
             }), animated: true)
@@ -132,7 +132,8 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
             if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
                 //wallet
             } else {
-                // atm-ticket // cc
+                // TODO: if cc -> necesito el parent para buscar el pm! :(
+                // atm-ticket
                 let paymentMethod = PaymentMethod()
                 paymentMethod.name = paymentSearchItemSelected.description
                 self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
@@ -144,6 +145,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
         self.navigationController?.popViewControllerAnimated(true)
         
+            //TODO: reemplazar por nuevo form de tc
         if paymentMethod.isIssuerRequired() {
             self.navigationController?.pushViewController(MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
