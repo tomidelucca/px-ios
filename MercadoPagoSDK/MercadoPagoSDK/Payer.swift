@@ -14,6 +14,14 @@ public class Payer : NSObject {
     public var identification : Identification!
     public var type : String!
     
+    init(_id : NSNumber, email: String, type : String, identification: Identification){
+        super.init()
+        self._id = _id
+        self.email = email
+        self.type = type
+        self.identification = identification
+    }
+    
     public override init(){
         super.init()
     }

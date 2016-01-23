@@ -22,6 +22,7 @@ public class MercadoPagoContext {
     
     var merchant_access_token: String = ""
     
+    //TODO : complete with default preference_uri
     var preference_uri: String = ""
     
     var payment_uri: String = ""
@@ -61,6 +62,12 @@ public class MercadoPagoContext {
     public class func setCustomerURI(customer_uri : String){
         
         sharedInstance.customer_uri = customer_uri
+        
+    }
+    
+    public class func setPreferenceURI(preference_uri : String){
+        
+        sharedInstance.preference_uri = preference_uri
         
     }
     

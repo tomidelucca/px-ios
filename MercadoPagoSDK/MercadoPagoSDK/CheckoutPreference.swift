@@ -10,11 +10,18 @@ import UIKit
 
 public class CheckoutPreference : NSObject {
     
-    public var id : String!
+    public var _id : String!
     public var items : [Item]?
     public var payer : Payer?
     public var paymentMethods : PreferencePaymentMethods?
     //shipments
+    
+    public init(items : [Item], payer : Payer, paymentMethods : PreferencePaymentMethods?){
+        super.init()
+        self.items = items
+        self.payer = payer
+        self.paymentMethods = paymentMethods
+    }
     
     public override init(){
         super.init()
@@ -24,7 +31,7 @@ public class CheckoutPreference : NSObject {
         let preference : CheckoutPreference = CheckoutPreference()
         
         if json["id"] != nil && !(json["id"]! is NSNull) {
-            preference.id = (json["id"]! as? String)
+            preference._id = (json["id"]! as? String)
         }
         
         if json["payer"] != nil && !(json["payer"]! is NSNull) {

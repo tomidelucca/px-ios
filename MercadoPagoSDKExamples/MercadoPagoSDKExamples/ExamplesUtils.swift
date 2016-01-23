@@ -97,8 +97,7 @@ class ExamplesUtils {
         // Create items
         let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
-        var items = [Item]()
-        items.append(item_1)
+        var items = [Item](item_1)
         
         //Create Payer
         let payer = Payer()
@@ -106,11 +105,9 @@ class ExamplesUtils {
         payer.email = "thisis@nemail.com"
         
         //Create CheckoutPreference
-        let preference = CheckoutPreference()
-        preference.id = ExamplesUtils.PREF_ID_MOCK
-        preference.items = items
-        preference.payer = payer
-        
+        let preference = CheckoutPreference(items: items, payer: Payer, paymentMethods: nil)
+        preference._id = ExamplesUtils.PREF_ID_MOCK, 
+    
         return preference
     }
 }

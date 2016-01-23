@@ -31,6 +31,10 @@ public class MerchantService : MercadoPagoService {
     }
     
     public func createPreference(method : String = "POST", preference : CheckoutPreference, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+        //TODO: set proper default base url
+        if self.baseURL.isEmpty {
+            self.baseURL = MercadoPago.MP_API_BASE_URL
+        }
         self.request(MercadoPagoContext.preferenceURI(), params: nil, body: preference.toJSONString(), method: method, success: success, failure: failure)
     }
 }
