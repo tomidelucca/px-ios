@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  <title>Payments Types and Payment Methods available</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+          <img src="images/logo-mercadopago.png" alt="logoMp">
+
+          <div class="right">
+              <img class="centered" src="images/logo_ios.png" alt="logoiOS" height="50" width="50">
+          </div>
+      </div>
+    </header>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Payments Types and Payment Methods available</h1>
+          <div>Payment types and methods will differ according the public key of your country. You can use this payment info to <a href="checkout_flow.html">exclude payment types and methods in a preference and in the checkout flow.</a></div>
+
+          <div>
+            <h2>Payment Types</h2>
+            <p>The payment types available are:</p>
+            <ul>
+              <li>credit_card</li>
+              <li>debit_card</li>
+              <li>prepaid_card</li>
+              <li>account_money</li>
+              <li>ticket</li>
+              <li>bank_transfer</li>
+              <li>atm</li>
+              <li>digital_currency</li>
+            </ul>
+
+            <p>You can exclude payment types using the enum <h style="color:blue">PaymentTypeId</h> provided by the SDK:</p>
+            <pre class="prettyprint">
+              public enum PaymentTypeId :String {
+                case DEBIT_CARD = "debit_card"
+                case CREDIT_CARD = "credit_card"
+                case ACCOUNT_MONEY = "account_money"
+                case TICKET = "ticket"
+                case BANK_TRANFER = "bank_transfer"
+                case ATM = "atm"
+                case DIGITAL_CURRENCY = "digital_currency"
+                case PREPAID_CARD = "prepaid_card"
+              }
+          </pre>
+          </div>
+
+          <div>
+            <h2>Payment Methods Available</h2>
+            <p>Check the payment types available for your country with the <h ref=https://www.mercadopago.com.ar/developers/es/api-docs/custom-checkout/payment-methods/>following API</h>.</p>
+            <p>For example if you want to check out the payment methods available for Brasil you need to complete the api call with siteId as MLB.</p>
+            <div>
+              <img class="centered" src="images/screenshots/payment_methods_get_api_call.png" alt="pm_list"/>
+            </div>
+
+            <p>You can exclude payment methods in the checkout flow, specifying those payment method ids in the excludedPaymentMethods attribute when you can create a CheckoutPreference.</p>
+          </div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/mreverter/sdk-android" class="button"><small>View project on</small> GitHub</a>
+
+          <a href="https://github.com/mreverter/sdk-android/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/mreverter/sdk-android/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/mreverter/sdk-android"></a> is maintained by <a href="https://github.com/mreverter">mreverter</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </body>
+</html>

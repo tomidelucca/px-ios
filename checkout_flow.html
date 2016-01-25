@@ -30,10 +30,12 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-
-          <h1>Complete Checkout flow tool</h1>
+          <div>
+            <h1>Complete Checkout flow tool</h1>
+          </div>
 
           <div>
+            <h3>Create a Checkout Preference</h3>
             <p>First you need to create a checkout preference with all payment related information: </p>
             <pre class="prettyprint">
               // Create items to purchase
@@ -46,18 +48,21 @@
               let payer = Payer(_id : 1, email : "thisis@nemail.com")
 
               //Create payment methods constraints if needed
+              let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["amex"], excludedPaymentTypes: [PaymentTypeId.ATM], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
 
               //Create shipment information
 
               //Create CheckoutPreference
-              let preference = CheckoutPreference(items: items, payer: payer)
+              let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: preferencePaymentMethods)
 
           </pre>
+          <p>The preference payment methods will exclude those payment methods or types you don't want to display in your app. This property is not mandatory. You can check our <a href="payment_types_available.html">payment methods and payment types availables</a> for more information.</p>
           </div>
 
           <div>
+            <h3/>Configure server settings</h3>
             <p>Now you need to create the preference in Mercado Pago to start the checkout flow.</p>
-            <p>In order to do this, you’ll have to set up your server with MercadoPago Server SDK, and then add your base URL, and preference URI and access token:</p>
+            <p>In order to do this, you’ll have to set up your server with <h ref="https://www.mercadopago.com.ar/developers/es/tools/">MercadoPago Server SDK</h>, and then add your base URL, preference URI and access token:</p>
             <pre class="prettyprint">
 
               MercadoPagoContext.
@@ -71,8 +76,11 @@
 
             </pre>
             <p><b>Note:</b> If you do not set the <b>base url of your server</b> and <b>preference uri</b>, the checkout preference will be created in Mercado Pago without sending any information to your server.</p>
+          </div>
 
-            <p>Now you have to send the checkout preference to your server and start the checkout flow with the preference retrieved:</p>
+          <div>
+            <h3>Send checkout preference and start checkout flow</h3>
+            <p>Once you have your server settings configured (or not in case you just want to post the preference into mercado pago), you need to send the checkout preference and start the checkout flow with the preference retrieved:</p>
 
             <pre class="prettyprint">
               MerchantServer.createPreference(preference: preference, success: { (checkoutPreference) -> Void in
@@ -87,55 +95,12 @@
 
             <p>Keep in mind that the line <h style="color:blue">MPFlowBuilder.starCheckoutViewController</h> returns a <h style="color:blue">UIViewController</h>. You can start the checkout flow at any point with this line only, but always with the checkout preference created with a proper id as a parameter.</p>
 
-        
-          <p><b>Let's see!</b></p>
-          <p>First the user selects a payment method:</p>
-          <img class="centered" src="images/iosScreens/select_pm.png" alt="pm_list">
+
+          <p><b>Let's take a look!</b></p>
+          <p>First the user selects how he would like to pay (the payment methods available will differ according to your country or your preference settings): </p>
+          <img class="centered" src="images/iosScreens/payment_method_search_main.png" alt="pm_list">
           <br>
-          <p>Next step: add card information</p>
-          <img class="centered" src="images/iosScreens/card_form.png" alt="new_card">
-          <br>
-          <p>Check information before paying:</p>
-          <img class="centered" src="images/iosScreens/confirm_payment.png" alt="confirm_payment">
-          <br>
-          <h2>Merchant’s customers</h2>
-
-          <p>With MercadoPago SDK, you can manage your customer's information easily.
-            By giving to each customer an id and syncing it with MercadoPago, we can handle your users information
-            (preferred cards, address, name, email, etc.).
-            In order to do this, you’ll have to set up your server with
-            <a href="https://www.mercadopago.com.ar/developers/es/tools/">MercadoPago Server SDK</a>,
-            and then add <b>your base URL</b>,
-            customer URI and access token:</p>
-
-          <pre class="prettyprint">
-
-            MercadoPagoContext.
-              setMerchantAccessToken(--YOUR ACCESS TOKEN--)
-
-            MercadoPagoContext.
-              setBaseURL(-- YOUR BASE URL --)
-
-            MercadoPagoContext.
-              setCustomerURI(-- YOUR CUSTOMER URI --)
-
-          </pre>
-          <br>
-          <p>When registered customer’s saved cards are found, this flavor takes the default one and starts the payment flow showing it:</p>
-          <img class="centered" src="images/screenshots/customer_card.png" alt="customer_card">
-          <p class="image_footer">Saved card example</p>
-          <br>
-          <p>When touching on the saved card, another screen with a list of the customer’s saved cards is shown.<br>
-          If a new card is needed, the user can start the data-collection flow (it’s up to you whether to use the step by step flow or guessing form).
-          </p>
-
-          <img class="centered" src="images/screenshots/other_pm_selection.png" alt="other_pm_selection">
-          <p class="image_footer">A list of saved cards would be shown here, and also the option to pay in another way
-          </p>
-          <br>
-          <p>And finally, you get in the callback the information to make a payment...</p>
-
-          <p>To create a payment, have a look at: <a href="make_payment.html">Make a payment</a></p>
+          <p>Next step: CC && ATM && CONFIRM </p>
 
         </section>
 
