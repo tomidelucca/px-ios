@@ -10,12 +10,24 @@ import UIKit
 
 public class PreferencePaymentMethods: NSObject {
 
-    var excludedPaymentMethods : [PaymentMethod]?
+    var excludedPaymentMethods : [String]?
     var excludedPaymentTypes : Set<PaymentTypeId>?
-    var defaultPaymentMethodId : PaymentMethod?
+    var defaultPaymentMethodId : String?
     var installments : Int?
     var defaultInstallments : Int?
     
+    public override init(){
+        super.init()
+    }
+    
+    public init(excludedPaymentMethods : [String]?, excludedPaymentTypes: Set<PaymentTypeId>?, defaultPaymentMethodId: String?, installments : Int?, defaultInstallments : Int?){
+        super.init()
+        self.excludedPaymentMethods =  excludedPaymentMethods
+        self.excludedPaymentTypes = excludedPaymentTypes
+        self.defaultPaymentMethodId = defaultPaymentMethodId
+        self.installments = installments
+        self.defaultInstallments = defaultInstallments
+    }
     
     public class func fromJSON(json : NSDictionary) -> PreferencePaymentMethods {
         let preferencePaymentMethods = PreferencePaymentMethods()
@@ -39,7 +51,7 @@ public class PreferencePaymentMethods: NSObject {
         }
         
         if json["default_payment_method_id"] != nil && !(json["default_payment_method_id"]! is NSNull) {
-            preferencePaymentMethods.defaultPaymentMethodId = PaymentMethod.fromJSON(json["default_payment_method_id"]! as! NSDictionary)
+            preferencePaymentMethods.defaultPaymentMethodId = JSON(json["default_payment_method_id"]!).asString
         }
         
         if json["installments"] != nil && !(json["installments"]! is NSNull) {

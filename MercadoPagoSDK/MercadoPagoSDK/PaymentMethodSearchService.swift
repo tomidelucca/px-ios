@@ -18,13 +18,14 @@ public class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: MP_SEARCH_BASE_URL)
     }
     
-    public func getPaymentMethods(excludedPaymentTypes : Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getPaymentMethods(excludedPaymentTypes : Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)?) {
         var params = "public_key=" + MercadoPagoContext.publicKey()
         if excludedPaymentTypes != nil {
-            params = "&excluded_payment_types=" + String(excludedPaymentTypes)
+            params = "&excluded_payment_types=[" + String(excludedPaymentTypes) + "]"
         }
         if excludedPaymentMethods != nil {
-            params = "&excluded_payment_methods=" + String(excludedPaymentMethods)
+            let excludedPaymentMethodsParams = excludedPaymentMethods!.joinWithSeparator(",")
+            params = "&excluded_payment_methods=[" + excludedPaymentMethodsParams + "]"
         }
         self.request(MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             success(paymentMethodSearch : PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary))

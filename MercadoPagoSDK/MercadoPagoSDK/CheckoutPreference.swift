@@ -86,7 +86,7 @@ public class CheckoutPreference : NSObject {
         return nil
     }
     
-    public func getExcludedPaymentMethods() -> [PaymentMethod]? {
+    public func getExcludedPaymentMethods() -> [String]? {
         if (self.paymentMethods != nil && self.paymentMethods!.excludedPaymentMethods != nil) {
             return self.paymentMethods!.excludedPaymentMethods
         }

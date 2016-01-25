@@ -15,7 +15,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     var publicKey : String!
     var amount : Double!
     var excludedPaymentTypes : Set<PaymentTypeId>!
-    var excludedPaymentMethods : [PaymentMethod]!
+    var excludedPaymentMethods : [String]!
     var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)!
     var paymentMethodsSearch : [PaymentMethodSearchItem]!
     var paymentMethodSearchParent : PaymentMethodSearchItem?
@@ -41,7 +41,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         self.callback = callback
     }
     
-    init(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [PaymentMethod]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuerId: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuerId: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -70,8 +70,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         self.paymentsTable.registerNib(paymentSearchTitleNib, forCellReuseIdentifier: "paymentSearchTitleNib")
         
         if paymentMethodsSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearch: PaymentMethodSearch) -> Void in
-                self.paymentMethodsSearch = paymentMethodSearch.groups.filter({$0.active})
+            MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+                //Filter active groups
+                self.paymentMethodsSearch = paymentMethodSearchResponse.groups.filter({$0.active})
+                
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
                 
