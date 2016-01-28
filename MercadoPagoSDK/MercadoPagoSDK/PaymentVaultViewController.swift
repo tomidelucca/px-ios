@@ -119,26 +119,29 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
             self.navigationController?.popViewControllerAnimated(true)
             self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: self.callback!), animated: true)
         } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
-            self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
-                self.navigationController?.popViewControllerAnimated(true)
-
-                //Payment method chosen: cc or offline payment
-                if paymentMethod.paymentTypeId.isCard() {
-                    self.creditCardPyamentFlow(paymentMethod)
-                } else {
-                    //ERROR : No deberia ser distinto de cc sin children
-                }
-                
-            }), animated: true)
+            
+            let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
+            
+            if paymentTypeId!.isCard() {
+                //cc form
+            } else {
+                self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                    //TODO : verificar que con off issuer/installments es asi
+                    self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                }), animated: true)
+            }
         } else if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
             if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
                 //wallet
             } else {
-                // TODO: if cc -> necesito el parent para buscar el pm! :(
-                // atm-ticket
+                // TODO: if cc -> necesito el parent/payment type para buscar el pm! :(
+                // atm-ticket 
+                //if atm-ticket -bitcoin
                 let paymentMethod = PaymentMethod()
                 paymentMethod.name = paymentSearchItemSelected.description
                 self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+                //else if cc
             }
         }
     }
