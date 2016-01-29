@@ -123,7 +123,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
-                //cc form
+                self.cardFlow(PaymentType(paymentTypeId: paymentTypeId!))
             } else {
                 self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
                     self.navigationController?.popViewControllerAnimated(true)
@@ -146,48 +146,9 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         }
     }
     
-    //TODO: reemplazar por nuevo form de tc
-    public func creditCardPyamentFlow(paymentMethod: PaymentMethod){
-        self.navigationController?.pushViewController(MPStepBuilder.startNewCardStep(paymentMethod, requireSecurityCode: true, callback: { (cardToken) -> Void in
-        self.navigationController?.popViewControllerAnimated(true)
-        
-        if paymentMethod.isIssuerRequired() {
-            self.navigationController?.pushViewController(MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
-                self.navigationController?.popViewControllerAnimated(true)
-                MPStepBuilder.startIssuersStep(paymentMethod, callback: { (issuer) -> Void in
-                    self.navigationController?.popViewControllerAnimated(true)
-                    MPServicesBuilder.getInstallments(cardToken.getBin()!, amount: self.amount, issuer: issuer, paymentTypeId: paymentMethod.paymentTypeId, success: { (installments) -> Void in
-                        MPStepBuilder.startInstallmentsStep(installments![0].payerCosts, amount: self.amount, callback: { (payerCost) -> Void in
-                            MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
-                                self.callback!(paymentMethod: paymentMethod, tokenId: token!._id, issuer: issuer, installments: payerCost!.installments)
-                                }, failure: { (error) -> Void in
-                                    
-                            })
-                            
-                        })
-                        }, failure: { (error) -> Void in
-                            //TODO
-                    })
-                })
-            }), animated: true)
-        } else {
-            //TODO
-            MPServicesBuilder.getInstallments(cardToken.getBin()!, amount: self.amount, issuer: nil, paymentTypeId: paymentMethod.paymentTypeId, success: { (installments) -> Void in
-                self.navigationController?.popViewControllerAnimated(true)
-                self.navigationController?.pushViewController(MPStepBuilder.startInstallmentsStep(installments![0].payerCosts, amount: self.amount, callback: { (payerCost) -> Void in
-                    MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
-                        self.navigationController?.popViewControllerAnimated(true)
-                        self.callback!(paymentMethod: paymentMethod, tokenId: token!._id, issuer: nil, installments: payerCost!.installments)
-                        }, failure: { (error) -> Void in
-                            
-                    })
-                }), animated: true)
-                
-                }, failure: { (error) -> Void in
-                    //TODO
-            })
-
-            }
+    public func cardFlow(paymentType: PaymentType){
+        self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
+            
         }), animated: true)
     }
     

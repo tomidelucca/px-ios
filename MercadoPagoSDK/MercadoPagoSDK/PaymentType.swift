@@ -19,6 +19,11 @@ public class PaymentType: NSObject {
         super.init()
     }
     
+    public init(paymentTypeId : PaymentTypeId){
+        super.init()
+        self.paymentTypeId = paymentTypeId
+    }
+    
     public class func fromJSON(json : NSDictionary) -> PaymentType {
         let paymentType = PaymentType()
         if json["id"] != nil && !(json["id"]! is NSNull) {
