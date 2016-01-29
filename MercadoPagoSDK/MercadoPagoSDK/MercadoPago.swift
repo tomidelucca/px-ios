@@ -307,6 +307,21 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
+    public class func getImageFor(paymentMethod : PaymentMethod) -> UIImage?{
+        return MercadoPago.getImage("icoTc_" + paymentMethod._id)
+    }
+    
+    public class func getColorFor(paymentMethod : PaymentMethod) -> UIColor?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let stringColor = pmConfig.valueForKey("first_color") as! String
+        //let intColor = Int(stringColor)
+        return UIColor(netHex:Int(stringColor, radix: 16)!)
+        
+    }
+    
     public class func createMPPayment(payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
         let service : MerchantService = MerchantService()
         service.createMPPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in

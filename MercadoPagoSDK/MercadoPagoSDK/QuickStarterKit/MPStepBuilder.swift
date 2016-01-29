@@ -44,5 +44,10 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
+    public class func startCreditCardForm(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController {
+        
+        return CardFormViewController(paymentType : paymentType , callback : callback)
+    }
+    
 }
 

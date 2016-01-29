@@ -34,6 +34,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController!.navigationBar.translucent = false
         self.title = "MercadoPago SDK"
         self.tableview.delegate = self
         self.tableview.dataSource = self
@@ -60,10 +61,15 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
         switch indexPath.row {
         case 0:
-            self.showViewController(MPStepBuilder.startPaymentMethodsStep(PaymentType.allPaymentIDs, callback: { (paymentMethod: PaymentMethod) -> Void in
+            
+            self.showViewController(MPStepBuilder.startCreditCardForm(nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                print(paymentMethod.name)
+            }))
+            
+/*            self.showViewController(MPStepBuilder.startPaymentMethodsStep(PaymentType.allPaymentIDs, callback: { (paymentMethod: PaymentMethod) -> Void in
                 self.showViewController(ExamplesUtils.startCardActivity(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: paymentMethod, callback: {(token: Token?) -> Void in
                     self.createPayment(token!._id, paymentMethod: paymentMethod, installments: 1, cardIssuer: nil, discount: nil)
-                }))}))
+                }))}))*/
         case 1:
             self.showViewController(ExamplesUtils.startSimpleVaultActivity(ExamplesUtils.MERCHANT_PUBLIC_KEY, merchantBaseUrl: ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantGetCustomerUri: ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI, merchantAccessToken: ExamplesUtils.MERCHANT_ACCESS_TOKEN, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: Token?) -> Void in
                     self.createPayment(token!._id, paymentMethod: paymentMethod, installments: 1, cardIssuer: nil, discount: nil)
