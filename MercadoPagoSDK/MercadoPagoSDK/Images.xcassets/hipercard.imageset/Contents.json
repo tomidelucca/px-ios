@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "hipercard.png",
+      "filename" : "icoTc_hipercard.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_hipercard@2x.png",
       "scale" : "2x"
     },
     {

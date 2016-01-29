@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "cencosud.png",
+      "filename" : "icoTc_cencosud.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_cencosud@2x.png",
       "scale" : "2x"
     },
     {

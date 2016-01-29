@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "elo.png",
+      "filename" : "icoTc_elo.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_elo@2x.png",
       "scale" : "2x"
     },
     {

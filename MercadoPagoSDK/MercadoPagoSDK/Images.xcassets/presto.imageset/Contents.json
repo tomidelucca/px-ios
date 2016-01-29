@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "presto.png",
+      "filename" : "icoTc_presto.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_presto@2x.png",
       "scale" : "2x"
     },
     {

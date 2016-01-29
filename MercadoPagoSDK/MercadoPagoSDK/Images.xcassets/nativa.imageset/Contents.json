@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "nativa.png",
+      "filename" : "icoTc_nativa.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_nativa@2x.png",
       "scale" : "2x"
     },
     {

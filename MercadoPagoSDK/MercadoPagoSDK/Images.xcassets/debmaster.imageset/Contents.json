@@ -1,12 +1,16 @@
 {
   "images" : [
     {
+      "idiom" : "universal"
+    },
+    {
       "idiom" : "universal",
-      "filename" : "debmaster.png",
+      "filename" : "icoTc_debmaster.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_debmaster@2x.png",
       "scale" : "2x"
     },
     {

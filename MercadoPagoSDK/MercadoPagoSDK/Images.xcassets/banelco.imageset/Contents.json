@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "banelco.png",
+      "filename" : "icoTc_banelco.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icoTc_banelco@2x.png",
       "scale" : "2x"
     },
     {
