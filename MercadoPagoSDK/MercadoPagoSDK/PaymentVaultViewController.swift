@@ -71,9 +71,8 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         
         if paymentMethodsSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
-                //Filter active groups
-                self.paymentMethodsSearch = paymentMethodSearchResponse.groups.filter({$0.active})
-                
+
+                self.paymentMethodsSearch = paymentMethodSearchResponse.groups
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
                 
@@ -96,10 +95,13 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
-
-        if currentPaymentMethod.iconName != nil {
+        let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
+        let isPaymentMethod = currentPaymentMethod.type == PaymentMethodSearchItemType.PAYMENT_METHOD
+        let tintColor = self.tintColor && !isPaymentMethod
+        
+        if iconImage != nil {
             let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
-            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], tintColor: self.tintColor)
+            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
             
             return paymentSearchCell
         }

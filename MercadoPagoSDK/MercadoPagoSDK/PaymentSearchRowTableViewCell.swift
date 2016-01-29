@@ -34,18 +34,17 @@ class PaymentSearchRowTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, tintColor : Bool){
+    func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, iconImage: UIImage, tintColor : Bool){
         self.paymentTitle.text = paymentSearchItem.description
-        let iconImage = MercadoPago.getImage(paymentSearchItem.iconName)
-        if (iconImage != nil) {
-            if tintColor {
-                let tintedImage = iconImage!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                self.paymentIcon.image = tintedImage
-                self.paymentIcon.tintColor = UIColor().blueMercadoPago()
-            } else {
-                self.paymentIcon.image = iconImage
-            }
+        if tintColor {
+            let tintedImage = iconImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+            self.paymentIcon.image = tintedImage
+            self.paymentIcon.tintColor = UIColor().blueMercadoPago()
+        } else {
+            self.paymentIcon.image = iconImage
+            self.paymentTitle.hidden = true
         }
+    
         if paymentSearchItem.comment != nil {
             self.paymentComment.text = paymentSearchItem.comment
         } else {

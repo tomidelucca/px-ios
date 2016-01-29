@@ -14,9 +14,7 @@ public class PaymentMethodSearchItem {
     public var type : PaymentMethodSearchItemType!
     public var description : String!
     public var comment : String?
-    public var iconName : String!
     public var childrenHeader : String?
-    public var active : Bool!
     public var children : [PaymentMethodSearchItem] = []
     
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearchItem {
@@ -26,17 +24,8 @@ public class PaymentMethodSearchItem {
             pmSearchItem.idPaymentMethodSearchItem = JSON(json["id"]!).asString
         }
         
-        if json["active"] != nil && !(json["active"]! is NSNull) {
-            pmSearchItem.active = JSON(json["active"]!).asBool
-        }
-
-        
         if json["type"] != nil && !(json["type"]! is NSNull) {
             pmSearchItem.type = PaymentMethodSearchItemType(rawValue: JSON(json["type"]!).asString!)
-        }
-        
-        if json["icon_name"] != nil && !(json["icon_name"]! is NSNull) {
-            pmSearchItem.iconName = JSON(json["icon_name"]!).asString!
         }
         
         if json["description"] != nil && !(json["description"]! is NSNull) {
