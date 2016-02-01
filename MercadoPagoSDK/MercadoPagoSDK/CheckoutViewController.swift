@@ -39,6 +39,10 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+
+        self.title = "¿Cómo quieres pagar?".localized
+        self.navigationController?.navigationBar.tintColor = UIColor().blueMercadoPago()
+        
         let checkoutPaymentCell = UINib(nibName: "CheckoutPaymentCellTableViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(checkoutPaymentCell, forCellReuseIdentifier: "checkoutPaymentCell")
         
@@ -65,6 +69,7 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCellWithIdentifier("checkoutPaymentCell", forIndexPath: indexPath) as! CheckoutPaymentCellTableViewCell
     
         if self.paymentMethod != nil {
+            //TODO : complete flow
             cell.paymentDescription.text = self.paymentMethod!.name
             cell.paymentIcon.image = MercadoPago.getImage(self.paymentMethod!.name.lowercaseString)
             self.confirmPaymentButton.hidden = false

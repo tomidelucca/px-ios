@@ -22,7 +22,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     var bundle = MercadoPago.getBundle()
     
-    var paymentSearchCell : PaymentSearchRowTableViewCell!
+    var paymentSearchCell : PaymentSearchCell!
     
     private var tintColor = true
     
@@ -63,11 +63,13 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         }
         
         
-        let paymentMethodSearchNib = UINib(nibName: "PaymentSearchRowTableViewCell", bundle: self.bundle)
+        let paymentMethodSearchNib = UINib(nibName: "PaymentSearchCell", bundle: self.bundle)
         let paymentSearchTitleNib = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
+        let offlinePaymentMethodNib = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
         
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
         self.paymentsTable.registerNib(paymentSearchTitleNib, forCellReuseIdentifier: "paymentSearchTitleNib")
+        self.paymentsTable.registerNib(offlinePaymentMethodNib, forCellReuseIdentifier: "offlinePaymentMethodNib")
         
         if paymentMethodsSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
@@ -97,13 +99,21 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
         let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
         let isPaymentMethod = currentPaymentMethod.type == PaymentMethodSearchItemType.PAYMENT_METHOD
-        let tintColor = self.tintColor && !isPaymentMethod
+        let tintColor = self.tintColor && (!isPaymentMethod || currentPaymentMethod.isBitcoin())
+        
         
         if iconImage != nil {
-            let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchRowTableViewCell
-            paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
+            if self.paymentMethodSearchParent != nil && self.paymentMethodSearchParent!.isOfflinePayment(){
+                let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodNib") as! OfflinePaymentMethodCell
+                offlinePaymentCell.iconImage.image = iconImage!
+                offlinePaymentCell.comment.text = currentPaymentMethod.comment!
+                return offlinePaymentCell
+            } else {
+                let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
+                paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
             
-            return paymentSearchCell
+                return paymentSearchCell
+            }
         }
         
         let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleNib") as! PaymentTitleViewCell
@@ -137,8 +147,6 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
             if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
                 //wallet
             } else {
-                // TODO: if cc -> necesito el parent/payment type para buscar el pm! :(
-                // atm-ticket 
                 //if atm-ticket -bitcoin
                 let paymentMethod = PaymentMethod()
                 paymentMethod.name = paymentSearchItemSelected.description
@@ -155,7 +163,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        if paymentMethodSearchParent != nil && paymentMethodSearchParent!.isOfflinePayment() {
+            return 80
+        }
+        return 52
     }
     
     public override func didReceiveMemoryWarning() {

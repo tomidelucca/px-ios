@@ -8,8 +8,12 @@
 
 import UIKit
 
-class PaymentMethodCell: UITableViewCell {
+class OfflinePaymentMethodCell: UITableViewCell {
 
+    @IBOutlet weak var iconImage: UIImageView!
+    
+    @IBOutlet weak var comment: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

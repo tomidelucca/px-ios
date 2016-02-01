@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentSearchRowTableViewCell: UITableViewCell {
+class PaymentSearchCell: UITableViewCell {
     
     @IBOutlet weak var paymentTitle: UILabel!
     

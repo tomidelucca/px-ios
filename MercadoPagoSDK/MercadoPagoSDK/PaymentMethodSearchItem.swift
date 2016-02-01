@@ -53,6 +53,15 @@ public class PaymentMethodSearchItem {
         return pmSearchItem
     }
     
+    public func isOfflinePayment() -> Bool {
+        return PaymentTypeId.offlinePayments().contains(self.idPaymentMethodSearchItem)
+    }
+    
+    public func isBitcoin() -> Bool {
+        //TODO: update
+        return self.idPaymentMethodSearchItem == "bitcoin"//PaymentTypeId.DIGITAL_CURRENCY.rawValue
+    }
+    
 }
 
 public enum PaymentMethodSearchItemType : String {
