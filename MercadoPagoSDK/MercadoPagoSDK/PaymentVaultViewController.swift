@@ -28,7 +28,7 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     @IBOutlet weak var paymentsTable: UITableView!
     
-    init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    internal init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -58,10 +58,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
         if self.title == nil || self.title!.isEmpty {
             self.title = "¿Cómo quieres pagar?"
         }
-        
         
         let paymentMethodSearchNib = UINib(nibName: "PaymentSearchCell", bundle: self.bundle)
         let paymentSearchTitleNib = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
@@ -98,12 +98,11 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
         let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
-        let isPaymentMethod = currentPaymentMethod.type == PaymentMethodSearchItemType.PAYMENT_METHOD
-        let tintColor = self.tintColor && (!isPaymentMethod || currentPaymentMethod.isBitcoin())
+        let tintColor = self.tintColor && (!currentPaymentMethod.isPaymentMethod() || currentPaymentMethod.isBitcoin())
         
         
         if iconImage != nil {
-            if self.paymentMethodSearchParent != nil && self.paymentMethodSearchParent!.isOfflinePayment(){
+            if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin(){
                 let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodNib") as! OfflinePaymentMethodCell
                 offlinePaymentCell.iconImage.image = iconImage!
                 offlinePaymentCell.comment.text = currentPaymentMethod.comment!
@@ -128,8 +127,10 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
         
         
         if (paymentSearchItemSelected.children.count > 0) {
-            self.navigationController?.popViewControllerAnimated(true)
-            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: self.callback!), animated: true)
+            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
+            }), animated: true)
         } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -150,20 +151,22 @@ public class PaymentVaultViewController: UIViewController, UITableViewDataSource
                 //if atm-ticket -bitcoin
                 let paymentMethod = PaymentMethod()
                 paymentMethod.name = paymentSearchItemSelected.description
+                self.navigationController?.popViewControllerAnimated(true)
                 self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
                 //else if cc
             }
         }
     }
     
-    public func cardFlow(paymentType: PaymentType){
+    internal func cardFlow(paymentType: PaymentType){
         self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            
+            //TODO
         }), animated: true)
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if paymentMethodSearchParent != nil && paymentMethodSearchParent!.isOfflinePayment() {
+        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
+        if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
             return 80
         }
         return 52

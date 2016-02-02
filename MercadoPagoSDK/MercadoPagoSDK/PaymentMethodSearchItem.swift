@@ -58,8 +58,11 @@ public class PaymentMethodSearchItem {
     }
     
     public func isBitcoin() -> Bool {
-        //TODO: update
-        return self.idPaymentMethodSearchItem == "bitcoin"//PaymentTypeId.DIGITAL_CURRENCY.rawValue
+        return self.idPaymentMethodSearchItem == "bitcoin"
+    }
+    
+    public func isPaymentMethod() -> Bool {
+        return self.type == PaymentMethodSearchItemType.PAYMENT_METHOD
     }
     
 }

@@ -12,7 +12,7 @@ public class PaymentMethodSearchService: MercadoPagoService {
     
     //TODO : verify URIS
     public let MP_SEARCH_BASE_URL = "http://private-6c157-chonativof2.apiary-mock.com"
-    public let MP_SEARCH_PAYMENTS_URI = "/checkout/v1/payment_methods/search/options?public_key=6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
+    public let MP_SEARCH_PAYMENTS_URI = "/checkout/v1/payment_methods/search/options/MLA?public_key=444a9ef5-8a6b-429f-abdf-587639155d88"
     
     public init(){
         super.init(baseURL: MP_SEARCH_BASE_URL)

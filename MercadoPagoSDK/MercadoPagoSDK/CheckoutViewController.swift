@@ -86,8 +86,7 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
     }
 
     internal func startPaymentVault(){
-        let vaultVC = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods()) { (paymentMethod, tokenId, issuer, installments) -> Void in
-            self.navigationController?.popViewControllerAnimated(true)
+        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods()) { (paymentMethod, tokenId, issuer, installments) -> Void in
             self.paymentMethod = paymentMethod
             self.tokenId = tokenId
             self.issuer = issuer
@@ -95,7 +94,8 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
             
             self.checkoutTable.reloadData()
         }
-        self.navigationController?.pushViewController(vaultVC, animated: true)
+        
+        self.navigationController?.pushViewController(paymentVault, animated: true)
     }
     
     internal func confirmPayment(){

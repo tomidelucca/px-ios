@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp">
-                        <rect key="frame" x="20" y="40" width="144" height="27"/>
+                        <rect key="frame" x="11" y="40" width="144" height="27"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="27" id="suQ-Vc-wMR"/>
                         </constraints>
@@ -31,26 +31,27 @@
                         <color key="highlightedColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OZb-wU-Z1Q">
-                        <rect key="frame" x="20" y="37" width="269" height="2"/>
+                        <rect key="frame" x="11" y="37" width="278" height="2"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="2" id="oUn-7y-T3x"/>
                         </constraints>
                     </view>
-                    <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" image="bancomer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="20" y="6" width="78" height="48"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" image="bancomer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="11" y="9" width="123" height="27"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="mqj-6e-jeg"/>
+                            <constraint firstAttribute="height" constant="27" id="mqj-6e-jeg"/>
                         </constraints>
+                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="OZb-wU-Z1Q" secondAttribute="trailing" constant="12" id="1tN-Lx-pqg"/>
                     <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="top" secondItem="OZb-wU-Z1Q" secondAttribute="bottom" constant="1" id="GFp-7E-EBg"/>
-                    <constraint firstItem="N1r-JA-UCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="P7O-8H-ico"/>
-                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="Xed-As-edT"/>
-                    <constraint firstItem="OZb-wU-Z1Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="a2W-DD-q6y"/>
+                    <constraint firstItem="N1r-JA-UCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="P7O-8H-ico"/>
+                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="Xed-As-edT"/>
+                    <constraint firstItem="OZb-wU-Z1Q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="a2W-DD-q6y"/>
                     <constraint firstItem="OZb-wU-Z1Q" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="e2C-Cv-PL1"/>
                     <constraint firstItem="OZb-wU-Z1Q" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" constant="1" id="gyh-Am-pKI"/>
                 </constraints>
@@ -63,6 +64,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="bancomer" width="62" height="22"/>
+        <image name="bancomer" width="123" height="44"/>
     </resources>
 </document>

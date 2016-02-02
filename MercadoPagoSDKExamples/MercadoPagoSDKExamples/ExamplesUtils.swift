@@ -106,7 +106,7 @@ class ExamplesUtils {
         payer.email = "thisis@nemail.com"
         
         //Preference payment methods
-        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo"], excludedPaymentTypes: nil, defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
+        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo"], excludedPaymentTypes: [PaymentTypeId.PREPAID_CARD, PaymentTypeId.ATM, PaymentTypeId.BITCOIN], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
         
         //Create CheckoutPreference
         let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: preferencePaymentMethods)

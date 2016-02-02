@@ -2,12 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "santander-IOS.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "santander-@2X.png",
       "scale" : "2x"
     },
     {
