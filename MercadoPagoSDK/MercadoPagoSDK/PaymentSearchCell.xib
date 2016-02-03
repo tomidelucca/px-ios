@@ -16,14 +16,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ticket" translatesAutoresizingMaskIntoConstraints="NO" id="2q1-kd-sJr">
-                        <rect key="frame" x="11" y="17" width="50" height="34"/>
+                        <rect key="frame" x="11" y="17" width="44" height="34"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="27H-Ou-nsb"/>
+                            <constraint firstAttribute="width" constant="44" id="27H-Ou-nsb"/>
                             <constraint firstAttribute="height" constant="34" id="V2o-bf-tBh"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tarjeta de Credito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzT-wo-4e8">
-                        <rect key="frame" x="71" y="14" width="265" height="39"/>
+                        <rect key="frame" x="65" y="14" width="271" height="39"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="39" id="0sA-sx-Tcu"/>
                         </constraints>
@@ -32,7 +32,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comentario" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEg-3W-JOE">
-                        <rect key="frame" x="71" y="46" width="61" height="14"/>
+                        <rect key="frame" x="65" y="46" width="61" height="14"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>

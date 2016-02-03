@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentVaultViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var merchantBaseUrl : String!
     var merchantAccessToken : String!

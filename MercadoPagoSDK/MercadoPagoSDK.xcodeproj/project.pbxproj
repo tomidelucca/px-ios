@@ -274,6 +274,8 @@
 		76134AB91C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76134AB61C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift */; };
 		76134ABA1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */; };
 		76134ABB1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */; };
+		761B893A1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
+		761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
 		76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* CheckoutPreference.swift */; };
 		76743C781C45A24600120347 /* PreferencePaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PreferencePaymentMethods.swift */; };
 		76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C751C45A00E00120347 /* CheckoutPreference.swift */; };
@@ -457,6 +459,7 @@
 		76062C281C4EBBF50067A14B /* CheckoutPaymentCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutPaymentCellTableViewCell.xib; sourceTree = "<group>"; };
 		76134AB61C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflinePaymentMethodCell.swift; sourceTree = "<group>"; };
 		76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfflinePaymentMethodCell.xib; sourceTree = "<group>"; };
+		761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewController.swift; sourceTree = "<group>"; };
 		76743C751C45A00E00120347 /* CheckoutPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutPreference.swift; sourceTree = "<group>"; };
 		76743C771C45A24600120347 /* PreferencePaymentMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencePaymentMethods.swift; sourceTree = "<group>"; };
 		76743C7A1C46951100120347 /* PaymentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
@@ -950,6 +953,7 @@
 				76062C261C4EBBD90067A14B /* CheckoutPaymentCell */,
 				76743C801C46A21C00120347 /* CheckoutViewController.swift */,
 				76062C231C4EBA060067A14B /* CheckoutViewController.xib */,
+				761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */,
 			);
 			name = Checkout;
 			sourceTree = "<group>";
@@ -1236,6 +1240,7 @@
 				0F98838B1AD2AB6000F750F0 /* PaymentMethodRow.swift in Sources */,
 				0F98836F1AD2AB6000F750F0 /* Discount.swift in Sources */,
 				0F9883321AD2AB3C00F750F0 /* MerchantServer.swift in Sources */,
+				761B893A1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */,
 				76743C7B1C46951100120347 /* PaymentType.swift in Sources */,
 				0F9883591AD2AB6000F750F0 /* ApiException.swift in Sources */,
 				0FC4FC331B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
@@ -1349,6 +1354,7 @@
 				0F98838E1AD2AB6000F750F0 /* Phone.swift in Sources */,
 				0F98841A1AD2AE2700F750F0 /* MPCardNumberTableViewCell.swift in Sources */,
 				0F9883741AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
+				761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */,
 				0F9883961AD2AB6000F750F0 /* Setting.swift in Sources */,
 				76743C7C1C4695EA00120347 /* PaymentType.swift in Sources */,
 				0F98836A1AD2AB6000F750F0 /* Currency.swift in Sources */,

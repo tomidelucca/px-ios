@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CheckoutViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
+public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var preference : CheckoutPreference?
     var publicKey : String!
@@ -41,19 +41,24 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
         super.viewDidLoad()
 
         self.title = "¿Cómo quieres pagar?".localized
-        self.navigationController?.navigationBar.tintColor = UIColor().blueMercadoPago()
-        
+
         let checkoutPaymentCell = UINib(nibName: "CheckoutPaymentCellTableViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(checkoutPaymentCell, forCellReuseIdentifier: "checkoutPaymentCell")
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
-        
+
         self.confirmPaymentButton.layer.cornerRadius = 6
         self.confirmPaymentButton.clipsToBounds = true
         self.confirmPaymentButton.addTarget(self, action: "confirmPayment", forControlEvents: UIControlEvents.TouchDown)
 
         self.cancelPaymentButton.addTarget(self, action: "cancelPayment", forControlEvents: UIControlEvents.TouchDown)
+        
+        self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
+        self.navigationItem.leftBarButtonItem?.action = Selector("clearMercadoPagoStyle")
+        self.navigationItem.leftBarButtonItem?.target = self
+            
+            
         self.startPaymentVault()
     }
     
@@ -106,6 +111,7 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
         payment.paymentMethodId = self.paymentMethod!._id
         payment._description = "description"
     
+        clearMercadoPagoStyle()
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
             self.navigationController?.pushViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: self.paymentMethod!), animated: true)
             }) { (error) -> Void in
@@ -115,7 +121,10 @@ public class CheckoutViewController: UIViewController,UITableViewDataSource, UIT
     }
     
     internal func cancelPayment(){
+        clearMercadoPagoStyle()
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+
     
 }
