@@ -87,7 +87,7 @@ extension UIColor {
     {
     return UIColorFromRGB(0xEBEBF0)
     }
-    
+
     public func white() -> UIColor
     {
     return UIColorFromRGB(0xFFFFFF)

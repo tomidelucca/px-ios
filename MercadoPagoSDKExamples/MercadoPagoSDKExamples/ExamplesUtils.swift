@@ -50,6 +50,10 @@ class ExamplesUtils {
         return "id1"
     }
     
+    class var ITEM_TITLE : String {
+        return "Item title"
+    }
+    
     class var ITEM_QUANTITY : Int {
         return 1
     }
@@ -80,7 +84,7 @@ class ExamplesUtils {
     
     class func createPayment(token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: (payment: Payment) -> Void) {
         // Set item
-        let item : Item = Item(_id: ExamplesUtils.ITEM_ID, quantity: ExamplesUtils.ITEM_QUANTITY,
+        let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
 
 		//let issuerId : NSNumber = cardIssuerId == nil ? 0 : cardIssuerId!
@@ -95,7 +99,7 @@ class ExamplesUtils {
     class func createCheckoutPreference() -> CheckoutPreference {
         
         // Create items
-        let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, quantity: ExamplesUtils.ITEM_QUANTITY,
+        let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, title : ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
         var items = [Item]()
         items.append(item_1)

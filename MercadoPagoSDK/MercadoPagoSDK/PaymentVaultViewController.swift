@@ -149,7 +149,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 //wallet
             } else {
                 //if atm-ticket -bitcoin
+                //TODO: ir a buscarlo!!!
                 let paymentMethod = PaymentMethod()
+                paymentMethod._id = paymentSearchItemSelected.description
                 paymentMethod.name = paymentSearchItemSelected.description
                 self.navigationController?.popViewControllerAnimated(true)
                 self.callback!(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)

@@ -7,9 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckoutViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
-                <outlet property="cancelPaymentButton" destination="RaG-ia-GKc" id="ABT-5m-Ax5"/>
                 <outlet property="checkoutTable" destination="VkR-tF-r3h" id="kaW-PX-wOT"/>
-                <outlet property="confirmPaymentButton" destination="b70-K8-Hjw" id="XwN-bl-1HZ"/>
+                <outlet property="confirmPaymentButton" destination="QT6-3G-7Ay" id="3vl-II-5th"/>
                 <outlet property="view" destination="iN0-l3-epB" id="tys-3c-Cgk"/>
             </connections>
         </placeholder>
@@ -18,41 +17,47 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VkR-tF-r3h">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="471"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" sectionIndexMinimumDisplayRowCount="2" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="VkR-tF-r3h">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="454"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RaG-ia-GKc">
-                    <rect key="frame" x="273" y="552" width="54" height="28"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="Cancelar"/>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b70-K8-Hjw">
-                    <rect key="frame" x="232" y="506" width="137" height="21"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <inset key="contentEdgeInsets" minX="5" minY="3" maxX="5" maxY="3"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QT6-3G-7Ay">
+                    <rect key="frame" x="20" y="530" width="560" height="40"/>
+                    <color key="backgroundColor" red="0.0" green="0.69803921568627447" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="9Up-tK-PSD"/>
+                    </constraints>
+                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal">
                         <attributedString key="attributedTitle">
-                            <fragment content="Confirmar Pago">
+                            <fragment content="Pagar">
                                 <attributes>
-                                    <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                    <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
                     </state>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago" textAlignment="center" lineBreakMode="clip" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmX-s5-sQr">
+                    <rect key="frame" x="20" y="474" width="560" height="36"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="b70-K8-Hjw" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="1bC-VN-lBh"/>
-                <constraint firstItem="b70-K8-Hjw" firstAttribute="top" secondItem="VkR-tF-r3h" secondAttribute="bottom" constant="23" id="IiE-BF-lQV"/>
-                <constraint firstAttribute="bottom" secondItem="RaG-ia-GKc" secondAttribute="bottom" constant="20" id="P9e-Bt-F7g"/>
+                <constraint firstItem="QT6-3G-7Ay" firstAttribute="top" secondItem="fmX-s5-sQr" secondAttribute="bottom" constant="20" id="ALO-VN-Gou"/>
+                <constraint firstItem="QT6-3G-7Ay" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DJp-Er-Bah"/>
+                <constraint firstAttribute="bottom" secondItem="QT6-3G-7Ay" secondAttribute="bottom" constant="30" id="N20-U6-adv"/>
                 <constraint firstAttribute="trailing" secondItem="VkR-tF-r3h" secondAttribute="trailing" id="bcE-Ea-ktO"/>
+                <constraint firstItem="fmX-s5-sQr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="btR-jF-tP3"/>
+                <constraint firstAttribute="trailing" secondItem="fmX-s5-sQr" secondAttribute="trailing" constant="20" id="d5m-H3-DGA"/>
+                <constraint firstItem="QT6-3G-7Ay" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="gpa-3R-hfd"/>
+                <constraint firstItem="fmX-s5-sQr" firstAttribute="top" secondItem="VkR-tF-r3h" secondAttribute="bottom" constant="20" id="lFq-Xh-18z"/>
                 <constraint firstItem="VkR-tF-r3h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mGX-dt-3bu"/>
-                <constraint firstItem="RaG-ia-GKc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mkY-Nm-206"/>
-                <constraint firstItem="RaG-ia-GKc" firstAttribute="top" secondItem="b70-K8-Hjw" secondAttribute="bottom" constant="25" id="pxu-Jy-Wez"/>
                 <constraint firstItem="VkR-tF-r3h" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rod-pZ-Y1h"/>
+                <constraint firstAttribute="trailing" secondItem="QT6-3G-7Ay" secondAttribute="trailing" constant="20" id="uOi-Cy-uVa"/>
             </constraints>
             <point key="canvasLocation" x="387" y="243"/>
         </view>

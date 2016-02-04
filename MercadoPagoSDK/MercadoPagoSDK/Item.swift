@@ -20,9 +20,10 @@ public class Item : NSObject {
         super.init()
     }
     
-    public init(_id: String, quantity: Int, unitPrice: Double) {
+    public init(_id: String, title : String, quantity: Int, unitPrice: Double) {
         super.init()
         self._id = _id
+        self.title = title
         self.quantity = quantity
         self.unitPrice = unitPrice
         

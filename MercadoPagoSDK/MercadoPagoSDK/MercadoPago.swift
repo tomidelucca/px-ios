@@ -308,7 +308,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
     public class func getImageFor(paymentMethod : PaymentMethod) -> UIImage?{
-        return MercadoPago.getImage("icoTc_" + paymentMethod._id)
+        return MercadoPago.getImage(paymentMethod.name.lowercaseString)
     }
     
     public class func getColorFor(paymentMethod : PaymentMethod) -> UIColor?{
