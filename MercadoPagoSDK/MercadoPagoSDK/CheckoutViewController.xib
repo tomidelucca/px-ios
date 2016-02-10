@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckoutViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="checkoutTable" destination="VkR-tF-r3h" id="kaW-PX-wOT"/>
-                <outlet property="confirmPaymentButton" destination="QT6-3G-7Ay" id="3vl-II-5th"/>
+                <outlet property="confirmPaymentButton" destination="QT6-3G-7Ay" id="cRp-OP-IYV"/>
                 <outlet property="view" destination="iN0-l3-epB" id="tys-3c-Cgk"/>
             </connections>
         </placeholder>

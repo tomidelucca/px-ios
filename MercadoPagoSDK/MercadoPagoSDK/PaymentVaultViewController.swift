@@ -25,6 +25,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var paymentSearchCell : PaymentSearchCell!
     
     private var tintColor = true
+
     
     @IBOutlet weak var paymentsTable: UITableView!
     
@@ -64,12 +65,20 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
         
         let paymentMethodSearchNib = UINib(nibName: "PaymentSearchCell", bundle: self.bundle)
-        let paymentSearchTitleNib = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
-        let offlinePaymentMethodNib = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
-        
+        let paymentSearchTitleCell = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
+        let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
+        let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
+    
+            //TODO:  volar estos NIBs
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
-        self.paymentsTable.registerNib(paymentSearchTitleNib, forCellReuseIdentifier: "paymentSearchTitleNib")
-        self.paymentsTable.registerNib(offlinePaymentMethodNib, forCellReuseIdentifier: "offlinePaymentMethodNib")
+        self.paymentsTable.registerNib(paymentSearchTitleCell, forCellReuseIdentifier: "paymentSearchTitleCell")
+        self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
+        self.paymentsTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
+        
+        self.navigationItem.rightBarButtonItem?.action = Selector("togglePreferenceDescription")
+        self.navigationItem.rightBarButtonItem?.target = self
+        
+        self.paymentsTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0);
         
         if paymentMethodsSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
@@ -92,18 +101,47 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return self.displayPreferenceDescription ? 1 : 0
+        }
         return self.paymentMethodsSearch.count
     }
     
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0 : 20
+    }
+    
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return displayPreferenceDescription ? 120 : 0
+        }
+        
+        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
+        if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
+            return 80
+        }
+        return 52
+    }
+
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // Preference description section
+        if indexPath.section == 0 {
+            let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
+            preferenceDescriptionCell.preferenceDescription.text = "lalala"
+            return preferenceDescriptionCell
+        }
+        
         let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
         let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
         let tintColor = self.tintColor && (!currentPaymentMethod.isPaymentMethod() || currentPaymentMethod.isBitcoin())
         
-        
         if iconImage != nil {
             if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin(){
-                let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodNib") as! OfflinePaymentMethodCell
+                let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
                 offlinePaymentCell.iconImage.image = iconImage!
                 offlinePaymentCell.comment.text = currentPaymentMethod.comment!
                 return offlinePaymentCell
@@ -115,7 +153,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             }
         }
         
-        let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleNib") as! PaymentTitleViewCell
+        let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleCell") as! PaymentTitleViewCell
         paymentSearchCell.paymentTitle.text = currentPaymentMethod.description
         return paymentSearchCell
         
@@ -166,17 +204,16 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }), animated: true)
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
-        if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
-            return 80
-        }
-        return 52
-    }
+
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    internal func togglePreferenceDescription(){
+        self.togglePreferenceDescription(self.paymentsTable)
+    }
+    
     
     
 }

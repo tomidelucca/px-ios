@@ -37,7 +37,7 @@ class PreferenceDescriptionTableViewCell: UITableViewCell {
     }
     
     internal func fillRowWithPreference(preference : CheckoutPreference){
-        self.preferenceAmount.text = String(preference.getAmount())
+        self.preferenceAmount.text = "$" + String(preference.getAmount())
         self.preferenceDescription.text = preference.items![0].title
     
     }

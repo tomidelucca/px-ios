@@ -10,6 +10,8 @@ import UIKit
 
 public class MercadoPagoUIViewController: UIViewController {
 
+    internal var displayPreferenceDescription = false
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,25 +24,29 @@ public class MercadoPagoUIViewController: UIViewController {
         //Custom back button with shopping cart
         var shoppingCartImage = MercadoPago.getImage("regular_payment")
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
-        let backButton = UIBarButtonItem()
-        backButton.image = shoppingCartImage
-        backButton.title = ""
-        backButton.target = self
-        backButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.backBarButtonItem = backButton
+        let shoppingCartButton = UIBarButtonItem()
+        shoppingCartButton.image = shoppingCartImage
+        shoppingCartButton.title = ""
+        shoppingCartButton.target = self
+        shoppingCartButton.tintColor = UIColor.whiteColor()
+        
+        self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
     
     internal func clearMercadoPagoStyle(){
         //Navigation bar colors
         self.navigationController!.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-        
         self.navigationController?.navigationBar.barTintColor = nil
         
         //Custom back button with shopping cart
-        self.navigationItem.backBarButtonItem = nil
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
+    
+    internal func togglePreferenceDescription(table : UITableView){
+        displayPreferenceDescription = !displayPreferenceDescription
+        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+    }
+
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

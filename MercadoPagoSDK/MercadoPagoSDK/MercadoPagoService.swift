@@ -21,7 +21,7 @@ public class MercadoPagoService : NSObject {
         
         var url = baseURL + uri
         if params != nil {
-            url += "?" + params!
+        //    url += "?" + params!
         }
         
         let finalURL: NSURL = NSURL(string: url)!

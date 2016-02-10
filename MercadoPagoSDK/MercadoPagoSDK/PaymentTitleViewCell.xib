@@ -15,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="352" height="51"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tarjeta de Debito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPi-Pc-77H">
-                        <rect key="frame" x="18" y="6" width="349" height="40"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tarjeta de Debito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPi-Pc-77H">
+                        <rect key="frame" x="18" y="6" width="316" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="Ywn-3L-qKG"/>
                         </constraints>

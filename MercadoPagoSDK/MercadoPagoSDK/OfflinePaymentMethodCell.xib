@@ -37,7 +37,7 @@
                             <constraint firstAttribute="height" constant="2" id="oUn-7y-T3x"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" image="bancomer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="bancomer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
                         <rect key="frame" x="11" y="9" width="123" height="27"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
                         <constraints>
