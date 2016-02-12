@@ -88,14 +88,17 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
         if self.merchantBaseUrl != nil && self.getCustomerUri != nil {
             
             self.view.addSubview(self.loadingView)
+
+
             
-            MerchantServer.getCustomer(self.merchantBaseUrl!, merchantGetCustomerUri: self.getCustomerUri!, merchantAccessToken: self.merchantAccessToken!, success: { (customer: Customer) -> Void in
+            MerchantServer.getCustomer(self.merchantBaseUrl!, success: { (customer: Customer) -> Void in
                 self.cards = customer.cards
                 self.loadingView.removeFromSuperview()
                 self.tableview.reloadData()
                 }, failure: { (error: NSError?) -> Void in
                     MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
             })
+            
         } else {
             self.tableview.reloadData()
         }
@@ -298,7 +301,7 @@ public class VaultViewController : UIViewController, UITableViewDataSource, UITa
                 if savedCardToken.validate() {
                     // Send card id to get token id
                     self.view.addSubview(self.loadingView)
-                    mercadoPago.createToken(savedCardToken, success: {(token: Token?) -> Void in
+                    MPServicesBuilder.createToken(savedCardToken, success: {(token: Token?) -> Void in
                         var tokenId : String? = nil
                         if token != nil {
                             tokenId = token!._id

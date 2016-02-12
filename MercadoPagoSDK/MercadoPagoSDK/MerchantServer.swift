@@ -15,10 +15,10 @@ public class MerchantServer : NSObject {
         
     }
     
-    public class func getCustomer(merchantBaseUrl : String, merchantGetCustomerUri : String,  merchantAccessToken : String, success: (customer: Customer) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func getCustomer(merchantBaseUrl : String, success: (customer: Customer) -> Void, failure: ((error: NSError) -> Void)?) {
         let service : MerchantService = MerchantService()
-
-        service.getCustomer(merchant_access_token: merchantAccessToken, success: {(jsonResult: AnyObject?) -> Void in
+        service.baseURL = merchantBaseUrl
+        service.getCustomer(success: {(jsonResult: AnyObject?) -> Void in
             var cust : Customer? = nil
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {

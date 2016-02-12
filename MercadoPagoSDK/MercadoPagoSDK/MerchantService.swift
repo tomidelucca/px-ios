@@ -17,8 +17,8 @@ public class MerchantService : MercadoPagoService {
         super.init(baseURL: MercadoPagoContext.baseURL())
     }
 
-    public func getCustomer(method : String = "GET", merchant_access_token : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        self.request(MercadoPagoContext.customerURI(), params: "merchant_access_token=" + merchant_access_token, body: nil, method: method, success: success, failure: failure)
+    public func getCustomer(method : String = "GET", success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+        self.request(MercadoPagoContext.customerURI(), params: "merchant_access_token=" + MercadoPagoContext.merchantAccessToken(), body: nil, method: method, success: success, failure: failure)
     }
     
     public func createPayment(method : String = "POST", payment : MerchantPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {

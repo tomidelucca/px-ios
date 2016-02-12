@@ -68,8 +68,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let paymentSearchTitleCell = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
         let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
         let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
+        let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
     
-            //TODO:  volar estos NIBs
+        self.paymentsTable.registerNib(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
         self.paymentsTable.registerNib(paymentSearchTitleCell, forCellReuseIdentifier: "paymentSearchTitleCell")
         self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
@@ -131,7 +132,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         // Preference description section
         if indexPath.section == 0 {
             let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
-            preferenceDescriptionCell.preferenceDescription.text = "lalala"
+            preferenceDescriptionCell.preferenceDescription.text = "Item test"
             return preferenceDescriptionCell
         }
         
@@ -151,6 +152,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             
                 return paymentSearchCell
             }
+        }
+        
+        if currentPaymentMethod.comment != nil {
+            let paymentSearchTitleAndCommentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentTitleAndCommentCell") as! PaymentTitleAndCommentViewCell
+            paymentSearchTitleAndCommentCell.fillRowWith(currentPaymentMethod.description, paymentComment: currentPaymentMethod.comment!)
+            return paymentSearchTitleAndCommentCell
         }
         
         let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleCell") as! PaymentTitleViewCell

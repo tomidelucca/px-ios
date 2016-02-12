@@ -37,8 +37,8 @@
                             <constraint firstAttribute="height" constant="2" id="oUn-7y-T3x"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="bancomer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="11" y="9" width="123" height="27"/>
+                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="11" y="9" width="192" height="27"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="27" id="mqj-6e-jeg"/>
@@ -63,7 +63,4 @@
             <point key="canvasLocation" x="466" y="580.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="bancomer" width="123" height="44"/>
-    </resources>
 </document>
