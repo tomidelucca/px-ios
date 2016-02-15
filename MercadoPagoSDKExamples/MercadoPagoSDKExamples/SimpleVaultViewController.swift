@@ -68,7 +68,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         
         declareAndInitCells()
         
-        MerchantServer.getCustomer(self.baseUrl!, merchantGetCustomerUri: self.getCustomerUri!, merchantAccessToken: self.merchantAccessToken!, success: { (customer: Customer) -> Void in
+        MerchantServer.getCustomer(self.baseUrl!, success: { (customer: Customer) -> Void in
                 self.cards = customer.cards
                 self.loadingView.removeFromSuperview()
                 self.tableview.reloadData()

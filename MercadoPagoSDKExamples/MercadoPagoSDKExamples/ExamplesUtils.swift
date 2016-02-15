@@ -11,10 +11,10 @@ import MercadoPagoSDK
 
 class ExamplesUtils {
     class var MERCHANT_PUBLIC_KEY : String {
-		return "444a9ef5-8a6b-429f-abdf-587639155d88"
+		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
 		// "444a9ef5-8a6b-429f-abdf-587639155d88" // AR
 		// "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
-		// "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+		 "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
 		// "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
 		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
     }
@@ -96,7 +96,7 @@ class ExamplesUtils {
         MerchantServer.createPayment(ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantPaymentUri: ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI, payment: payment, success: callback, failure: nil)
     }
     
-    class func createCheckoutPreference() -> CheckoutPreference {
+    class func createCheckoutPreferenceWithNoExclusions() -> CheckoutPreference {
         
         // Create items
         let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, title : ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
@@ -108,14 +108,25 @@ class ExamplesUtils {
         let payer = Payer()
         payer._id = 2
         payer.email = "thisis@nemail.com"
-        
-        //Preference payment methods
-        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo"], excludedPaymentTypes: [PaymentTypeId.PREPAID_CARD, PaymentTypeId.ATM, PaymentTypeId.BITCOIN], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
+
         
         //Create CheckoutPreference
-        let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: preferencePaymentMethods)
+        let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
         preference._id = ExamplesUtils.PREF_ID_MOCK
     
         return preference
     }
+    
+    class func createCheckoutPreference() -> CheckoutPreference {
+    
+        let preference = self.createCheckoutPreferenceWithNoExclusions()
+        
+        //Preference payment methods
+        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo", "bancomer"], excludedPaymentTypes: [PaymentTypeId.DEBIT_CARD], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
+        
+        preference.paymentMethods = preferencePaymentMethods
+        
+        return preference
+    }
+
 }

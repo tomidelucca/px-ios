@@ -15,13 +15,7 @@ public class MercadoPagoUIViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        //Navigation bar colors
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-        
-        //Custom back button with shopping cart
+        //Create custom back button with shopping cart
         var shoppingCartImage = MercadoPago.getImage("regular_payment")
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
@@ -29,17 +23,27 @@ public class MercadoPagoUIViewController: UIViewController {
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
-        
         self.navigationItem.rightBarButtonItem = shoppingCartButton
+    }
+    
+    internal func loadMPStyles(){
+        //Navigation bar colors
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+    }
+    
+    internal func clearMercadoPagoStyleAndGoBack(){
+        self.navigationController?.popViewControllerAnimated(true)
+        self.clearMercadoPagoStyle()
     }
     
     internal func clearMercadoPagoStyle(){
         //Navigation bar colors
-        self.navigationController!.navigationBar.titleTextAttributes = nil
+        self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
-        
-        //Custom back button with shopping cart
-        self.navigationController?.popToRootViewControllerAnimated(true)
+      
     }
     
     internal func togglePreferenceDescription(table : UITableView){

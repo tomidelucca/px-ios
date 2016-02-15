@@ -68,10 +68,14 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.rightBarButtonItem?.target = self
         
         //Clear styles before goind out of SDK
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyle")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
         self.navigationItem.leftBarButtonItem?.target = self
         
         self.startPaymentVault()
+    }
+    
+    override public func viewWillAppear(animated: Bool) {
+        self.loadMPStyles()
     }
     
     override public func didReceiveMemoryWarning() {
@@ -118,14 +122,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             //TODO : solo funciona con offlinePayment
                 let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                 cell.fillRowWithPaymentMethod(self.paymentMethod!)
-                let leftMargin = UIView(frame: CGRectMake(0, 0, 8, 100))
-                leftMargin.backgroundColor = UIColor().backgroundColor()
-            
-                cell.contentView.addSubview(leftMargin)
-                
-                let rightMargin = UIView(frame: CGRectMake(cell.frame.width - 8, 0, 8, 100))
-                rightMargin.backgroundColor = UIColor().backgroundColor()
-                cell.contentView.addSubview(rightMargin)
                 return cell
         } else {
 
@@ -162,7 +158,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         payment.paymentMethodId = self.paymentMethod!._id
         payment._description = "description"
     
-        clearMercadoPagoStyle()
+        clearMercadoPagoStyleAndGoBack()
+        //TODO remove me
+        self.navigationController?.popViewControllerAnimated(true)
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
             self.navigationController?.pushViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: self.paymentMethod!), animated: true)
             }) { (error) -> Void in
@@ -172,7 +170,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func cancelPayment(){
-        clearMercadoPagoStyle()
+        clearMercadoPagoStyleAndGoBack()
         self.navigationController?.popViewControllerAnimated(true)
     }
     
