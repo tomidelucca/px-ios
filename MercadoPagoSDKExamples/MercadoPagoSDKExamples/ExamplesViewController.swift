@@ -101,7 +101,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }))
         case 8:
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
 
             }))

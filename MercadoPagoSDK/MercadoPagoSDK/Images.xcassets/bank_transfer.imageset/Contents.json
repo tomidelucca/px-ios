@@ -1,16 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
-      "filename" : "icoTc_bank_transfer.png",
+      "filename" : "uEA01-transfer.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icoTc_bank_transfer@2x.png",
       "scale" : "2x"
     },
     {

@@ -16,9 +16,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var amount : Double!
     var excludedPaymentTypes : Set<PaymentTypeId>!
     var excludedPaymentMethods : [String]!
+    var currencyId : String?
+    var purchaseTitle : String!
     var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)!
     var paymentMethodsSearch : [PaymentMethodSearchItem]!
     var paymentMethodSearchParent : PaymentMethodSearchItem?
+    var backCallback : (Void -> Void)?
     
     var bundle = MercadoPago.getBundle()
     
@@ -45,7 +48,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, currencyId: String?, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void, backCallback : (Void->Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -53,10 +56,13 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.amount = amount
         self.excludedPaymentTypes = excludedPaymentTypes
         self.excludedPaymentMethods = excludedPaymentMethods
+        self.purchaseTitle = purchaseTitle
+        self.currencyId = currencyId
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
             self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
+        self.backCallback = backCallback
     }
     
     required  public init(coder aDecoder: NSCoder) {
@@ -86,28 +92,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.navigationItem.rightBarButtonItem!.target = self
         self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         self.navigationItem.leftBarButtonItem?.target = self
         
         self.paymentsTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0);
         
-        if paymentMethodsSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
-
-                self.paymentMethodsSearch = paymentMethodSearchResponse.groups
-                self.paymentsTable.delegate = self
-                self.paymentsTable.dataSource = self
-                
-                self.paymentsTable.reloadData()
-                }, failure: { (error) -> Void in
-                    //TODO
-            })
-        } else {
-            self.paymentsTable.delegate = self
-            self.paymentsTable.dataSource = self
-
-            self.paymentsTable.reloadData()
-        }
+        loadPaymentMethodGroups()
 
     }
     
@@ -150,7 +140,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         // Preference description section
         if indexPath.section == 0 {
             let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
-            preferenceDescriptionCell.preferenceDescription.text = "Item test"
+            preferenceDescriptionCell.preferenceDescription.text = self.purchaseTitle
             return preferenceDescriptionCell
         }
         
@@ -221,10 +211,37 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
+    private func loadPaymentMethodGroups(){
+        if paymentMethodsSearch == nil {
+            MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+                
+                self.paymentMethodsSearch = paymentMethodSearchResponse.groups
+                self.paymentsTable.delegate = self
+                self.paymentsTable.dataSource = self
+                
+                self.paymentsTable.reloadData()
+                }, failure: { (error) -> Void in
+                    //TODO
+            })
+        } else {
+            self.paymentsTable.delegate = self
+            self.paymentsTable.dataSource = self
+            
+            self.paymentsTable.reloadData()
+        }
+    
+    }
+    
     internal func cardFlow(paymentType: PaymentType){
         self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
             //TODO
         }), animated: true)
+    }
+    
+    internal func executeBack(){
+        self.clearMercadoPagoStyle()
+        self.backCallback?()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     public override func didReceiveMemoryWarning() {
