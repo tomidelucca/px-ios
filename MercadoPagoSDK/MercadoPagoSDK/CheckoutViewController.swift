@@ -136,7 +136,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
 
     internal func startPaymentVault(){
-        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: preference?.items![0].currencyId, purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods()) { (paymentMethod, tokenId, issuer, installments) -> Void in
+        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: (preference?.items![0].currencyId), purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             self.paymentMethod = paymentMethod
             self.tokenId = tokenId
             self.issuer = issuer
@@ -145,7 +145,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.reviewAndConfirmContent.insert("OfflinePayment")
             
             self.checkoutTable.reloadData()
-        }
+        })
         
         self.navigationController?.pushViewController(paymentVault, animated: true)
     }

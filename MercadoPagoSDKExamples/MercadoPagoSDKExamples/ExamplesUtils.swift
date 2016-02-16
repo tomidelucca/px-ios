@@ -122,7 +122,7 @@ class ExamplesUtils {
         let preference = self.createCheckoutPreferenceWithNoExclusions()
         
         //Preference payment methods
-        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo", "bancomer"], excludedPaymentTypes: [PaymentTypeId.DEBIT_CARD], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
+        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo", "bancomer_ticket"], excludedPaymentTypes: [PaymentTypeId.DEBIT_CARD], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
         
         preference.paymentMethods = preferencePaymentMethods
         

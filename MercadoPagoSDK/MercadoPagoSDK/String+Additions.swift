@@ -44,4 +44,11 @@ extension String {
         
         return self.characters.startIndex.advancedBy(theInt)
     }
+    
+    public func trimSpaces()-> String {
+        
+        var stringTrimmed = self.stringByReplacingOccurrencesOfString(" ", withString: "")
+        stringTrimmed = stringTrimmed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return stringTrimmed
+    }
 }

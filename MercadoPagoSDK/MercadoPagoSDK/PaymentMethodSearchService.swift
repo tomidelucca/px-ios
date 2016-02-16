@@ -21,11 +21,11 @@ public class PaymentMethodSearchService: MercadoPagoService {
         var params = "public_key=" + MercadoPagoContext.publicKey()
         if excludedPaymentTypes != nil {
             let excludedPaymentTypesParams = excludedPaymentTypes!.map({$0.rawValue}).joinWithSeparator(",")
-            params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams)
+            params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }
         if excludedPaymentMethods != nil {
             let excludedPaymentMethodsParams = excludedPaymentMethods!.joinWithSeparator(",")
-            params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams
+            params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
         }
         self.request(MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             success(paymentMethodSearch : PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary))
