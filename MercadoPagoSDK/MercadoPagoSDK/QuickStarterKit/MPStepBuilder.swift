@@ -40,6 +40,10 @@ public class MPStepBuilder : NSObject {
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
     }
     
+    public class func startCongratsWithInstructionsStep(paymentMethod: PaymentMethod) -> CongratsWithInstructionsViewController {
+        return CongratsWithInstructionsViewController(paymentMethod: paymentMethod)
+    }
+    
     public class func startPromosStep() -> PromoViewController {
         return PromoViewController()
     }

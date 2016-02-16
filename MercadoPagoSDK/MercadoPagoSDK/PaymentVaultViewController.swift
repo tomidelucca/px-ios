@@ -201,12 +201,15 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         } else if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
             if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
                 //wallet
+            } else if paymentSearchItemSelected.idPaymentMethodSearchItem == "digital_currency" {
+            
             } else {
                 //if atm-ticket -bitcoin
                 //TODO: ir a buscarlo!!!
                 let paymentMethod = PaymentMethod()
                 paymentMethod._id = paymentSearchItemSelected.idPaymentMethodSearchItem
                 paymentMethod.name = paymentSearchItemSelected.description
+                paymentMethod.paymentTypeId = PaymentTypeId(rawValue: self.paymentMethodSearchParent!.idPaymentMethodSearchItem)
                 self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
                 //else if cc
             }

@@ -30,7 +30,7 @@ public class PaymentMethodSearchService: MercadoPagoService {
         self.request(MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             success(paymentMethodSearch : PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary))
             },  failure: { (error) -> Void in
-                
+                //TODO
         })
     }
     

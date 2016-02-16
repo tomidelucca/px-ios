@@ -157,12 +157,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
         payment.paymentMethodId = self.paymentMethod!._id
         payment._description = "description"
-    
-        clearMercadoPagoStyleAndGoBack()
-        //TODO remove me
-        self.navigationController?.popViewControllerAnimated(true)
+
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
-            self.navigationController?.pushViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: self.paymentMethod!), animated: true)
+            
+            if self.paymentMethod!.isOfflinePaymentMethod() {
+                self.navigationController?.pushViewController(MPStepBuilder.startCongratsWithInstructionsStep(self.paymentMethod!), animated: true)
+            } else {
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            
             }) { (error) -> Void in
                 //TODO
                 

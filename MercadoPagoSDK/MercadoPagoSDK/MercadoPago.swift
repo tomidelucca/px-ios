@@ -323,7 +323,8 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
     public class func createMPPayment(payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService()
+        //TODO
+        /*let service : MerchantService = MerchantService()
         service.createMPPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
@@ -346,5 +347,6 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                     failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                 }
             }
-            }, failure: failure)
+            }, failure: failure)*/
+        success(payment: payment)
     }}

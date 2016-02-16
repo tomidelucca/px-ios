@@ -129,4 +129,9 @@ public class PaymentMethod : Serializable {
         }
     }
     
+    
+    public func isOfflinePaymentMethod() -> Bool {
+        return self.paymentTypeId.isOfflinePayment()
+    }
+    
 }
