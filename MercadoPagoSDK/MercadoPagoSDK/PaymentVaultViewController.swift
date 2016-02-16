@@ -21,7 +21,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)!
     var paymentMethodsSearch : [PaymentMethodSearchItem]!
     var paymentMethodSearchParent : PaymentMethodSearchItem?
-    var backCallback : (Void -> Void)?
+    var defaultInstallments : Int?
+    var installments : Int?
     
     var bundle = MercadoPago.getBundle()
     
@@ -48,7 +49,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, currencyId: String?, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void, backCallback : (Void->Void)? = nil) {
+    init(amount: Double, currencyId: String?, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, installments : Int, defaultInstallments : Int, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -62,7 +63,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
-        self.backCallback = backCallback
+        self.installments = installments
+        self.defaultInstallments = defaultInstallments
     }
     
     required  public init(coder aDecoder: NSCoder) {
@@ -240,7 +242,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     internal func executeBack(){
         self.clearMercadoPagoStyle()
-        self.backCallback?()
         self.navigationController?.popViewControllerAnimated(true)
     }
     

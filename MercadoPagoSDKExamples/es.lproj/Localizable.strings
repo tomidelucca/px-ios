@@ -26,3 +26,4 @@
 "step8_title" = "Flujo de Checkout con preferencia sin metodos de pago excluidos";
 "step9_title" = "Payment Vault with no payment options excluded";
 "step10_title" = "Checkout flow with cash, prepaid and debit cards excluded";
+"step11_title" = "Payment Vault with installments";

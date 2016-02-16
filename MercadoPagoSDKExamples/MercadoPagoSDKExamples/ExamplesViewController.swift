@@ -14,7 +14,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak private var tableview : UITableView!
 	
     let examples : [String] = ["step1_title".localized, "step2_title".localized, "step3_title".localized, "step4_title".localized,
-    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized]
+    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -110,6 +110,10 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
         case 9:
             self.showViewController(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
+                
+            }))
+        case 10:
+            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
             }))
         default:
