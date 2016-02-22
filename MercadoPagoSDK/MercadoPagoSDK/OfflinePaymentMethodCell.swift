@@ -24,6 +24,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     
     internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod){
         self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
+        self.comment.text = paymentMethod.comment
     }
     
 }

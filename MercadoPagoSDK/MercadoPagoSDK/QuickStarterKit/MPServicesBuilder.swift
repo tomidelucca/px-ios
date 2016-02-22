@@ -214,6 +214,12 @@ public class MPServicesBuilder : NSObject {
     
     }
     
+    public class func getInstructionsByPaymentId(paymentId : String, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
+        let instructionsService = InstructionsService()
+        instructionsService.getInstructionsForPaymentId(paymentId, success:  { (instruction) -> Void in
+            success(instruction: instruction)
+        }, failure : failure)
+    }
 
     
     

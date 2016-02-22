@@ -83,12 +83,15 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
         let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
         let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
+        let offlinePaymentWithImageCell = UINib(nibName: "PaymentMethodImageViewCell", bundle: self.bundle)
     
         self.paymentsTable.registerNib(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
         self.paymentsTable.registerNib(paymentSearchTitleCell, forCellReuseIdentifier: "paymentSearchTitleCell")
         self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
         self.paymentsTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
+        self.paymentsTable.registerNib(offlinePaymentWithImageCell, forCellReuseIdentifier: "offlinePaymentWithImageCell")
+        
         
         //Configure navigation item button
         self.navigationItem.rightBarButtonItem!.target = self
@@ -151,11 +154,17 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let tintColor = self.tintColor && (!currentPaymentMethod.isPaymentMethod() || currentPaymentMethod.isBitcoin())
         
         if iconImage != nil {
-            if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin(){
-                let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
-                offlinePaymentCell.iconImage.image = iconImage!
-                offlinePaymentCell.comment.text = currentPaymentMethod.comment!
-                return offlinePaymentCell
+            if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
+                if currentPaymentMethod.comment != nil && currentPaymentMethod.comment!.characters.count > 0 {
+                    let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
+                    offlinePaymentCell.iconImage.image = iconImage!
+                    offlinePaymentCell.comment.text = currentPaymentMethod.comment!
+                    return offlinePaymentCell
+                } else {
+                    let offlinePaymentCellWithImage = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentWithImageCell") as! PaymentMethodImageViewCell
+                    offlinePaymentCellWithImage.paymentMethodImage.image = iconImage
+                    return offlinePaymentCellWithImage
+                }
             } else {
                 let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
                 paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
@@ -208,7 +217,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 //TODO: ir a buscarlo!!!
                 let paymentMethod = PaymentMethod()
                 paymentMethod._id = paymentSearchItemSelected.idPaymentMethodSearchItem
-                paymentMethod.name = paymentSearchItemSelected.description
+                paymentMethod.comment = paymentSearchItemSelected.comment
                 paymentMethod.paymentTypeId = PaymentTypeId(rawValue: self.paymentMethodSearchParent!.idPaymentMethodSearchItem)
                 self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
                 //else if cc

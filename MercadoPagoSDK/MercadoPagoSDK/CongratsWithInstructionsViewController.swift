@@ -27,12 +27,12 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "bankTransferInstructionsFooterCell", "footer_height" : 64],
     ]
     
-    var paymentMethod : PaymentMethod?
+    var paymentId : String!
     var bundle = MercadoPago.getBundle()
     
-    public init(paymentMethod : PaymentMethod) {
+    public init(paymentId : String) {
         super.init(nibName: "CongratsWithInstructionsViewController", bundle: bundle)
-        self.paymentMethod = paymentMethod
+        self.paymentId = paymentId
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -45,21 +45,19 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0)
         
         if currentInstruction == nil {
-            let instructionsService = InstructionsService()
+            registerAllCells()
             //TODO : parameter should be paymentID!!!!
-            instructionsService.getInstructionsForPaymentMethodId(paymentMethod!._id) { (instruction) -> Void in
+            MPServicesBuilder.getInstructionsByPaymentId(paymentId, success: { (instruction) -> Void in
                 self.currentInstruction = instruction
                 self.congratsTable.delegate = self
                 self.congratsTable.dataSource = self
                 self.congratsTable.reloadData()
-            }
-            registerAllCells()
+                }, failure: { (error) -> Void in
+                    //TODO
+            })
         } else {
             self.congratsTable.reloadData()
         }
-        
-        
-        
         
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
@@ -95,10 +93,10 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         if indexPath.section == 1 {
-            return self.resolveInstructionsBodyViewCell(self.paymentMethod!._id)!
+            return self.resolveInstructionsBodyViewCell(self.paymentId)!
         }
         
-        return self.resolveInstructionsFooter(self.paymentMethod!._id)!
+        return self.resolveInstructionsFooter(self.paymentId)!
         
     }
     
@@ -107,7 +105,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 0 {
             return 182
         }
-        return indexPath.section == 1 ? self.resolveInstructionsBodyHeightForRow(self.paymentMethod!._id) : self.resolveInstructionsFooterHeight(self.paymentMethod!._id)
+        return indexPath.section == 1 ? self.resolveInstructionsBodyHeightForRow(self.paymentId) : self.resolveInstructionsFooterHeight(self.paymentId)
     }
 
     

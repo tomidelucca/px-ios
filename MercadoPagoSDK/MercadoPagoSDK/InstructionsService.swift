@@ -17,12 +17,10 @@ public class InstructionsService: MercadoPagoService {
         super.init(baseURL: MP_INSTRUCTIONS_URL)
     }
     
-    public func getInstructionsForPaymentMethodId(paymentId : String, success : (instruction :Instruction) -> Void){
+    public func getInstructionsForPaymentId(paymentId : String, success : (instruction :Instruction) -> Void, failure: ((error: NSError) -> Void)?){
     
         self.request(MP_INSTRUCTIONS_URI + "/" + paymentId, params: nil, body: nil, method: "GET", success: { (jsonResult) -> Void in
             success(instruction : Instruction.fromJSON(jsonResult as! NSDictionary))
-            }) { (error) -> Void in
-                //TODO
-        }
+        }, failure: failure)
     }
 }

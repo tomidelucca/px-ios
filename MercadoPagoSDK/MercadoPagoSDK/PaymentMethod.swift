@@ -14,6 +14,7 @@ public class PaymentMethod : Serializable {
        
     public var _id : String!
     public var name : String!
+    public var comment : String!
     public var paymentTypeId : PaymentTypeId!
     public var settings : [Setting]!
     public var additionalInfoNeeded : [String]!

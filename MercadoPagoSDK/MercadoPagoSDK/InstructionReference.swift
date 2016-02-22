@@ -32,7 +32,7 @@ public class InstructionReference: NSObject {
             reference.value = [String]()
             let values = json["value"] as! NSArray
             for val in values {
-                reference.value.append(String(val as! NSNumber))
+                reference.value.append(String(val))
             }
             
         }

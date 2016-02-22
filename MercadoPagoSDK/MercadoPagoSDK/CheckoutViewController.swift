@@ -120,7 +120,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
-          //  preferenceDescriptionCell.selectionStyle = .UITableViewCellSelectionStyleNone
+            preferenceDescriptionCell.selectionStyle = UITableViewCellSelectionStyle.None
             return preferenceDescriptionCell
         }
     
@@ -171,7 +171,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
             
             if self.paymentMethod!.isOfflinePaymentMethod() {
-                self.navigationController?.pushViewController(MPStepBuilder.startCongratsWithInstructionsStep(self.paymentMethod!), animated: true)
+                //TODO : enviar paymentId!!!
+                self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(self.paymentMethod!._id), animated: true)
             } else {
                 self.navigationController?.popViewControllerAnimated(true)
             }
