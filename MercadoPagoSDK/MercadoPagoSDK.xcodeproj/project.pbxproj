@@ -306,10 +306,10 @@
 		7656C9F41C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9F11C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.swift */; };
 		7656C9F51C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F21C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib */; };
 		7656C9F61C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F21C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib */; };
-		7656C9F91C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift */; };
-		7656C9FA1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift */; };
-		7656C9FB1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib */; };
-		7656C9FC1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib */; };
+		7656C9F91C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift */; };
+		7656C9FA1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift */; };
+		7656C9FB1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib */; };
+		7656C9FC1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib */; };
 		7656C9FF1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9FD1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift */; };
 		7656CA001C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656C9FD1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift */; };
 		7656CA011C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656C9FE1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.xib */; };
@@ -543,8 +543,8 @@
 		761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		7656C9F11C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsFooterWithSecondaryInfoViewCell.swift; sourceTree = "<group>"; };
 		7656C9F21C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsFooterWithSecondaryInfoViewCell.xib; sourceTree = "<group>"; };
-		7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsFooterWithTerciaryInfoViewCell.swift; sourceTree = "<group>"; };
-		7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsFooterWithTerciaryInfoViewCell.xib; sourceTree = "<group>"; };
+		7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsFooterWithTertiaryInfoViewCell.swift; sourceTree = "<group>"; };
+		7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsFooterWithTertiaryInfoViewCell.xib; sourceTree = "<group>"; };
 		7656C9FD1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankTransferInstructionsFooterViewCell.swift; sourceTree = "<group>"; };
 		7656C9FE1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankTransferInstructionsFooterViewCell.xib; sourceTree = "<group>"; };
 		7656CA161C7644F10043BDB2 /* Instruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
@@ -1095,8 +1095,8 @@
 				76151B781C73ABEF007DF0E3 /* DefaultInstructionsFooterViewCell.xib */,
 				7656C9F11C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.swift */,
 				7656C9F21C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib */,
-				7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift */,
-				7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib */,
+				7656C9F71C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift */,
+				7656C9F81C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib */,
 				7656C9FD1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.swift */,
 				7656C9FE1C761C660043BDB2 /* BankTransferInstructionsFooterViewCell.xib */,
 			);
@@ -1294,7 +1294,7 @@
 				0F9884031AD2ADEE00F750F0 /* IssuersViewController.xib in Resources */,
 				0FC4FC351B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.xib in Resources */,
 				0F9883D41AD2AD5500F750F0 /* CongratsPaymentMethodTableViewCell.xib in Resources */,
-				7656C9FB1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib in Resources */,
+				7656C9FB1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */,
 				0F9883EE1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
@@ -1356,7 +1356,7 @@
 				76151B7C1C73ABEF007DF0E3 /* DefaultInstructionsFooterViewCell.xib in Resources */,
 				76FD24841C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */,
 				0F9883D51AD2AD5500F750F0 /* CongratsPaymentMethodTableViewCell.xib in Resources */,
-				7656C9FC1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.xib in Resources */,
+				7656C9FC1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */,
 				0F9883EF1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76062BDA1C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				0FC4FC241B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
@@ -1435,7 +1435,7 @@
 				0F98835B1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F98838D1AD2AB6000F750F0 /* Phone.swift in Sources */,
 				0F98835D1AD2AB6000F750F0 /* Card.swift in Sources */,
-				7656C9F91C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift in Sources */,
+				7656C9F91C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */,
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
 				76882AD61C4FBAD900B440B1 /* PaymentTitleViewCell.swift in Sources */,
 				0FC4FC1B1B0FAD0600CF7148 /* PromosService.swift in Sources */,
@@ -1547,7 +1547,7 @@
 				76151B901C74C8DA007DF0E3 /* SimpleInstructionsViewCell.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
-				7656C9FA1C761A8F0043BDB2 /* InstructionsFooterWithTerciaryInfoViewCell.swift in Sources */,
+				7656C9FA1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */,
 				76151B961C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift in Sources */,
 				76E92F841C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift in Sources */,
 				0F9884381AD2AE6200F750F0 /* InstallmentsViewController.swift in Sources */,

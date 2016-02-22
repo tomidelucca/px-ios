@@ -40,8 +40,8 @@ public class MPStepBuilder : NSObject {
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
     }
     
-    public class func startInstructionsStep(paymentId: String) -> InstructionsViewController {
-        return InstructionsViewController(paymentId: paymentId)
+    public class func startInstructionsStep(payment: Payment, callback : (payment : Payment) -> Void) -> InstructionsViewController {
+        return InstructionsViewController(payment: payment, callback : callback)
     }
     
     public class func startPromosStep() -> PromoViewController {

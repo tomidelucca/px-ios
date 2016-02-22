@@ -15,7 +15,7 @@ public class MercadoPagoUIViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        //Create custom back button with shopping cart
+        //Create custom button with shopping cart
         var shoppingCartImage = MercadoPago.getImage("regular_payment")
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
@@ -24,6 +24,7 @@ public class MercadoPagoUIViewController: UIViewController {
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem = shoppingCartButton
+    
     }
     
     internal func loadMPStyles(){
@@ -34,9 +35,14 @@ public class MercadoPagoUIViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
     }
     
-    internal func clearMercadoPagoStyleAndGoBack(){
-        self.navigationController?.popViewControllerAnimated(true)
+    internal func clearMercadoPagoStyleAndGoBackAnimated(){
         self.clearMercadoPagoStyle()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    internal func clearMercadoPagoStyleAndGoBack(){
+        self.clearMercadoPagoStyle()
+        self.navigationController?.popViewControllerAnimated(false)
     }
     
     internal func clearMercadoPagoStyle(){
@@ -54,8 +60,25 @@ public class MercadoPagoUIViewController: UIViewController {
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    override public func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
+}
 
+extension UINavigationController {
+
+    override public func shouldAutorotate() -> Bool {
+        return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate())
+    }
+    
+    override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return self.viewControllers.last!.supportedInterfaceOrientations()
+    }
 }

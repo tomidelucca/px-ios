@@ -14,7 +14,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var publicKey : String!
     var accessToken : String!
     var bundle : NSBundle? = MercadoPago.getBundle()
-    var callback : (MerchantPayment -> Void)!
+    var callback : (Payment -> Void)!
     var paymentMethod : PaymentMethod?
     var installments : Int = 0
     var issuer : Issuer?
@@ -26,7 +26,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     @IBOutlet weak var confirmPaymentButton: UIButton!
     
-    init(preference : CheckoutPreference, callback : (MerchantPayment -> Void)){
+    init(preference : CheckoutPreference, callback : (Payment -> Void)){
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.preference = preference
         self.publicKey = MercadoPagoContext.publicKey()
@@ -72,7 +72,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.rightBarButtonItem?.target = self
         
         //Clear styles before leaving SDK
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBackAnimated")
         self.navigationItem.leftBarButtonItem?.target = self
         
         self.startPaymentVault()
@@ -83,6 +83,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if self.paymentMethod != nil {
             self.confirmPaymentButton.hidden = false
         }
+        
     }
     
     override public func didReceiveMemoryWarning() {
@@ -156,7 +157,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             
             self.checkoutTable.reloadData()
         })
-        
         self.navigationController?.pushViewController(paymentVault, animated: true)
     }
     
@@ -169,10 +169,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         payment._description = "description"
 
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
-            
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
-                self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(self.paymentMethod!._id), animated: true)
+                self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyleAndGoBack()
+                    self.callback(payment)
+                }), animated: true)
             } else {
                 self.navigationController?.popViewControllerAnimated(true)
             }
@@ -181,11 +183,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 //TODO
                 
         }
-    }
-    
-    internal func cancelPayment(){
-        clearMercadoPagoStyleAndGoBack()
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
     internal func togglePreferenceDescription(){
