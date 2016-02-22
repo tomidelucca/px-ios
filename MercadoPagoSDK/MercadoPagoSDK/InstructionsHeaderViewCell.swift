@@ -11,9 +11,9 @@ import UIKit
 class InstructionsHeaderViewCell: UITableViewCell {
 
 
+    @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var instructionsHeaderIcon: UIImageView!
     
-    @IBOutlet weak var instructionsHeaderTitle: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         let tintedImage = instructionsHeaderIcon.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
@@ -23,8 +23,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+
     
 }

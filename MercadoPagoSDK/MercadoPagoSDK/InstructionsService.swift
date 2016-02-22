@@ -10,13 +10,17 @@ import UIKit
 
 public class InstructionsService: MercadoPagoService {
 
-    public let MP_INSTRUCTIONS_URL = ""
-    public let MP_INSTRUCTIONS_URI = ""
+    public let MP_INSTRUCTIONS_URL = "http://private-69c94c-instructionsapi.apiary-mock.com"
+    public let MP_INSTRUCTIONS_URI = "/instructions/v1"
     
-    public func getInstructionsForPaymentMethodId(paymentMethodId : Int){
+    public init(){
+        super.init(baseURL: MP_INSTRUCTIONS_URL)
+    }
     
-        self.request(MP_INSTRUCTIONS_URL + MP_INSTRUCTIONS_URI, params: String(paymentMethodId), body: nil, method: "GET", success: { (jsonResult) -> Void in
-
+    public func getInstructionsForPaymentMethodId(paymentId : String, success : (instruction :Instruction) -> Void){
+    
+        self.request(MP_INSTRUCTIONS_URI + "/" + paymentId, params: nil, body: nil, method: "GET", success: { (jsonResult) -> Void in
+            success(instruction : Instruction.fromJSON(jsonResult as! NSDictionary))
             }) { (error) -> Void in
                 //TODO
         }

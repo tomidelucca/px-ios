@@ -15,6 +15,7 @@ public class Item : NSObject {
     public var title : String!
     public var currencyId : String!
     public var categoryId : String!
+    public var pictureUrl : String!
     
     internal override init(){
         super.init()
@@ -62,6 +63,10 @@ public class Item : NSObject {
         
         if json["category_id"] != nil && !(json["category_id"]! is NSNull) {
             item.categoryId =  JSON(json["category_id"]!).asString
+        }
+        
+        if json["picture_url"] != nil && !(json["picture_url"]! is NSNull) {
+            item.pictureUrl =  JSON(json["picture_url"]!).asString
         }
         
         return item

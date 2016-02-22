@@ -8,9 +8,13 @@
 
 import UIKit
 
-class CongratsInstructionsFooterViewCell: UITableViewCell {
+class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
     @IBOutlet weak var clockIcon: UIImageView!
+    @IBOutlet weak var secondaryInfoTitle: UILabel!
+    
+    @IBOutlet weak var acreditationMessage: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         let tintedImage = self.clockIcon.image?.imageWithRenderingMode(.AlwaysTemplate)
@@ -22,6 +26,12 @@ class CongratsInstructionsFooterViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func fillCell(instruction: Instruction) -> UITableViewCell {
+        self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
+        self.acreditationMessage.text = instruction.accreditationMessage
+        return self
     }
     
 }

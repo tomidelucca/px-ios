@@ -146,7 +146,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 		if #available(iOS 8.0, *) {
 			self.showViewController(vc, sender: self)
 		} else {
-			self.navigationController?.pushViewController(vc, animated: true)
+			self.navigationController?.pushViewController(vc, animated: false)
 		}
 	}
 	

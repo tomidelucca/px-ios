@@ -1,23 +1,24 @@
 //
-//  SelectPaymentMethodCell.swift
+//  InstructionsTwoLabelsViewCell.swift
 //  MercadoPagoSDK
 //
-//  Created by Maria cristina rodriguez on 12/2/16.
+//  Created by Maria cristina rodriguez on 17/2/16.
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
 import UIKit
 
-class SelectPaymentMethodCell: UITableViewCell {
+class InstructionsTwoLabelsViewCell: UITableViewCell {
 
-    @IBOutlet weak var selectPaymentMethodLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectPaymentMethodLabel.text = "Seleccione método de pago...".localized
+        // Initialization code
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
     }
     
 }

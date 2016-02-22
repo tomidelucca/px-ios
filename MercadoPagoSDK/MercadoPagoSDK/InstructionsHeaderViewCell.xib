@@ -39,8 +39,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="headerTitle" destination="OFl-GB-Vax" id="MoB-OY-eU9"/>
                 <outlet property="instructionsHeaderIcon" destination="pQH-7U-0U5" id="9eN-dz-paX"/>
-                <outlet property="instructionsHeaderTitle" destination="OFl-GB-Vax" id="S0J-3I-hls"/>
             </connections>
             <point key="canvasLocation" x="227.5" y="260"/>
         </tableViewCell>

@@ -51,8 +51,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.registerNib(offlinePaymentMethodNib, forCellReuseIdentifier: "offlinePaymentCell")
         let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
+        let selectPaymentMethodCell = UINib(nibName: "SelectPaymentMethodCell", bundle: self.bundle)
+        self.checkoutTable.registerNib(selectPaymentMethodCell, forCellReuseIdentifier: "selectPaymentMethodCell")
 
-        self.checkoutTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0);
+        self.checkoutTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0)
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -60,14 +62,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.confirmPaymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
         self.confirmPaymentButton.layer.cornerRadius = 5
         self.confirmPaymentButton.clipsToBounds = true
-        
         self.confirmPaymentButton.setAttributedTitle(NSAttributedString(string: "Pagar $".localized +  String(preference!.getAmount())), forState: .Normal)
+        if self.paymentMethod == nil {
+            self.confirmPaymentButton.hidden = true
+        }
         
         //Shopping cart button
         self.navigationItem.rightBarButtonItem?.action = Selector("togglePreferenceDescription")
         self.navigationItem.rightBarButtonItem?.target = self
         
-        //Clear styles before goind out of SDK
+        //Clear styles before leaving SDK
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
         self.navigationItem.leftBarButtonItem?.target = self
         
@@ -76,6 +80,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     override public func viewWillAppear(animated: Bool) {
         self.loadMPStyles()
+        if self.paymentMethod != nil {
+            self.confirmPaymentButton.hidden = false
+        }
     }
     
     override public func didReceiveMemoryWarning() {
@@ -94,7 +101,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             }
             return 0
         }
-        return CGFloat(100 * self.reviewAndConfirmContent.count)
+        return 100
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -105,7 +112,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if section == 0 {
             return self.displayPreferenceDescription ? 1 : 0
         }
-        return reviewAndConfirmContent.count
+        return 1
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -113,25 +120,28 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
+          //  preferenceDescriptionCell.selectionStyle = .UITableViewCellSelectionStyleNone
             return preferenceDescriptionCell
         }
     
-        let emptyCell = UITableViewCell()
-        
         if self.paymentMethod != nil {
             //TODO : solo funciona con offlinePayment
                 let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                 cell.fillRowWithPaymentMethod(self.paymentMethod!)
                 return cell
-        } else {
-
         }
-        return emptyCell
+        
+        return tableView.dequeueReusableCellWithIdentifier("selectPaymentMethodCell", forIndexPath: indexPath) as! SelectPaymentMethodCell
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
-        self.startPaymentVault()
+        if indexPath.section == 0 {
+            self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
+        } else {
+            self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
+            self.startPaymentVault()
+        }
+        
     }
     
 
@@ -142,7 +152,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.issuer = issuer
             self.installments = installments
             
-            self.reviewAndConfirmContent.insert("OfflinePayment")
+            self.reviewAndConfirmContent.insert("paymentInfo")
             
             self.checkoutTable.reloadData()
         })
