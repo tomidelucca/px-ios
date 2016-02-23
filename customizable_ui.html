@@ -244,7 +244,20 @@
             })
             </pre>
 
-        </section>
+          </pre>
+          <p>Keep in mind payment types <i>are not the same as payment methods</i>. We provide information about <a href="payment_types_available.html">payment methods and payment types available</a></p>
+
+          <h3>Instructions for offline payment method</h3>
+          <p>When a buyer pays with an offline payment method such as ticket or bank transfer, you need to show him instructions with the steps needed to complete the payment.</p>
+          <p>To retrieve the instructions according to the payment, you can use the following service:</p>
+          <pre class="prettyprint">
+            MPServicesBuilder.getInstructionsByPaymentId(payment, success: { (instruction : Instruction) -> Void in
+                // In the instruction object you have all the information to display the correct instructions according to the payment details
+                }, failure: { (error) -> Void in
+                    // Handle error here
+            })
+          </pre>
+          <p>The payment object is obtained when you <a href="make_a_payment.html">make a payment</a></p>
 
         <aside id="sidebar">
           <a href="https://github.com/mreverter/sdk-android" class="button"><small>View project on</small> GitHub</a>
@@ -261,6 +274,9 @@
           <p class="repo-owner"><a href="https://github.com/mreverter/sdk-android"></a> is maintained by <a href="https://github.com/mreverter">mreverter</a>.</p>
         </aside>
       </div>
+
     </div>
+    </div>
+    </section>
   </body>
 </html>
