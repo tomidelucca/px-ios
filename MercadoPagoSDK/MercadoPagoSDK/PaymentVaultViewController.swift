@@ -218,6 +218,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 let paymentMethod = PaymentMethod()
                 paymentMethod._id = paymentSearchItemSelected.idPaymentMethodSearchItem
                 paymentMethod.comment = paymentSearchItemSelected.comment
+                //TODO: esto explota si pm esta en origen
                 paymentMethod.paymentTypeId = PaymentTypeId(rawValue: self.paymentMethodSearchParent!.idPaymentMethodSearchItem)
                 self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
                 //else if cc

@@ -48,8 +48,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if currentInstruction == nil {
             registerAllCells()
-            //TODO : parameter should be paymentID!!!!
-            MPServicesBuilder.getInstructionsByPaymentId(payment.paymentMethodId, success: { (instruction) -> Void in
+            MPServicesBuilder.getInstructionsByPaymentId(payment._id, success: { (instruction) -> Void in
                 self.currentInstruction = instruction
                 self.congratsTable.delegate = self
                 self.congratsTable.dataSource = self

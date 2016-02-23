@@ -54,10 +54,7 @@ public class CheckoutPreference : NSObject {
     
     public func toJSONString() -> String {
         //TODO
-        let obj:[String:AnyObject] = [
-            "items": (self.items != nil && self.items!.count > 0) ? self.items! : JSON.null
-        ]
-        return JSON(obj).toString()
+        return ""
     }
     
     public func getAmount() -> Double {
