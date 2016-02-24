@@ -27,10 +27,11 @@ public class MercadoPagoContext {
     
     var payment_uri: String = ""
     
-    private class var PUBLIC_KEY : String {
+    public class var PUBLIC_KEY : String {
         return "public_key"
     }
-    private class var PRIVATE_KEY : String {
+    
+    public class var PRIVATE_KEY : String {
         return "private_key"
     }
 

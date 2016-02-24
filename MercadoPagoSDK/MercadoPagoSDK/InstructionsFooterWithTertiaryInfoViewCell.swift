@@ -1,5 +1,5 @@
 //
-//  FooterWithTerciaryInfoViewCell.swift
+//  FooterWithTertiaryInfoViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 18/2/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InstructionsFooterWithTerciaryInfoViewCell: UITableViewCell, InstructionsFillmentDelegate {
+class InstructionsFooterWithTertiaryInfoViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
     @IBOutlet weak var clockIcon: UIImageView!
     

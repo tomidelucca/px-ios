@@ -18,7 +18,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = ["oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 137, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
-        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTerciaryInfoFooterCell", "footer_height" : 190],
+        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 190],
         "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "telecom" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
@@ -27,12 +27,14 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "bankTransferInstructionsFooterCell", "footer_height" : 64],
     ]
     
-    var paymentId : String!
+    var payment : Payment!
+    var callback : ((Payment) -> Void)!
     var bundle = MercadoPago.getBundle()
     
-    public init(paymentId : String) {
+    public init(payment : Payment, callback : (Payment) -> Void) {
         super.init(nibName: "CongratsWithInstructionsViewController", bundle: bundle)
-        self.paymentId = paymentId
+        self.payment = payment
+        self.callback = callback
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -46,8 +48,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if currentInstruction == nil {
             registerAllCells()
-            //TODO : parameter should be paymentID!!!!
-            MPServicesBuilder.getInstructionsByPaymentId(paymentId, success: { (instruction) -> Void in
+            MPServicesBuilder.getInstructionsByPaymentId(payment._id, success: { (instruction) -> Void in
                 self.currentInstruction = instruction
                 self.congratsTable.delegate = self
                 self.congratsTable.dataSource = self
@@ -59,9 +60,8 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             self.congratsTable.reloadData()
         }
         
-        self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBack")
-        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finalizar".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "finishInstructions")
     }
 
     override public func didReceiveMemoryWarning() {
@@ -93,10 +93,10 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         if indexPath.section == 1 {
-            return self.resolveInstructionsBodyViewCell(self.paymentId)!
+            return self.resolveInstructionsBodyViewCell(self.payment.paymentMethodId)!
         }
         
-        return self.resolveInstructionsFooter(self.paymentId)!
+        return self.resolveInstructionsFooter(self.payment.paymentMethodId)!
         
     }
     
@@ -105,7 +105,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 0 {
             return 182
         }
-        return indexPath.section == 1 ? self.resolveInstructionsBodyHeightForRow(self.paymentId) : self.resolveInstructionsFooterHeight(self.paymentId)
+        return indexPath.section == 1 ? self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId) : self.resolveInstructionsFooterHeight(self.payment.paymentMethodId)
     }
 
     
@@ -136,6 +136,11 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         return instructionBodyHeight
     }
     
+    internal func finishInstructions(){
+        self.clearMercadoPagoStyleAndGoBack()
+        self.callback(self.payment)
+    }
+    
     internal func registerAllCells() {
 
         // Create cell nibs
@@ -149,7 +154,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let instructionsTwoLabelsWithButtonCell = UINib(nibName: "InstructionsTwoLabelsAndButtonViewCell", bundle: self.bundle)
         
         let defaultInstructionsFooterCell = UINib(nibName: "DefaultInstructionsFooterViewCell", bundle: self.bundle)
-        let instructionFooterWithTerciaryInfoCell = UINib(nibName: "InstructionsFooterWithTerciaryInfoViewCell", bundle: self.bundle)
+        let instructionFooterWithTertiaryInfoCell = UINib(nibName: "InstructionsFooterWithTertiaryInfoViewCell", bundle: self.bundle)
         let instructionFooterWithSecondaryInfoCell = UINib(nibName: "InstructionsFooterWithSecondaryInfoViewCell", bundle: self.bundle)
         let bankTransferInstructionFooterCell = UINib(nibName: "BankTransferInstructionsFooterViewCell", bundle: self.bundle)
         
@@ -164,7 +169,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.registerNib(instructionsTwoLabelsWithButtonCell, forCellReuseIdentifier: "instructionsTwoLabelsAndButtonViewCell")
         
         self.congratsTable.registerNib(defaultInstructionsFooterCell, forCellReuseIdentifier: "defaultInstructionsFooterCell")
-        self.congratsTable.registerNib(instructionFooterWithTerciaryInfoCell, forCellReuseIdentifier: "intructionsWithTerciaryInfoFooterCell")
+        self.congratsTable.registerNib(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
         self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
         self.congratsTable.registerNib(bankTransferInstructionFooterCell, forCellReuseIdentifier: "bankTransferInstructionsFooterCell")
     }

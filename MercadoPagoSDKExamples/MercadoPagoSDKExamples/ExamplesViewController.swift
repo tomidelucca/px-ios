@@ -97,7 +97,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("do something")
             }))
         case 7:
-            self.showViewController(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:MerchantPayment) -> Void in
+            self.showViewController(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
