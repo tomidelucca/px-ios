@@ -240,6 +240,10 @@
 		0FE3E3801AE706B600C27B97 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE3E37E1AE706B600C27B97 /* Utils.swift */; };
 		0FE3E38D1AE7174600C27B97 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE3E38C1AE7174600C27B97 /* Serializable.swift */; };
 		0FE3E38E1AE7174600C27B97 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE3E38C1AE7174600C27B97 /* Serializable.swift */; };
+		1529D96C1C7C8EC000880C29 /* blue_promo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1529D96A1C7C8EC000880C29 /* blue_promo.png */; };
+		1529D96D1C7C8EC000880C29 /* green_promo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1529D96B1C7C8EC000880C29 /* green_promo.png */; };
+		1529D96E1C7C8EC500880C29 /* blue_promo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1529D96A1C7C8EC000880C29 /* blue_promo.png */; };
+		1529D96F1C7C8EC500880C29 /* green_promo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1529D96B1C7C8EC000880C29 /* green_promo.png */; };
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
 		155692D21C47DA1200521403 /* PreferencePaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PreferencePaymentMethods.swift */; };
 		15EFA3391C4423DA007D67D0 /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA3351C4423DA007D67D0 /* MercadoPagoContext.swift */; };
@@ -511,6 +515,8 @@
 		0FDB3DAD1B1683610047A4D4 /* MPToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPToolbar.swift; sourceTree = "<group>"; };
 		0FE3E37E1AE706B600C27B97 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		0FE3E38C1AE7174600C27B97 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
+		1529D96A1C7C8EC000880C29 /* blue_promo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_promo.png; sourceTree = "<group>"; };
+		1529D96B1C7C8EC000880C29 /* green_promo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_promo.png; sourceTree = "<group>"; };
 		15EFA3351C4423DA007D67D0 /* MercadoPagoContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoContext.swift; sourceTree = "<group>"; };
 		15EFA3361C4423DA007D67D0 /* MPFlowBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPFlowBuilder.swift; sourceTree = "<group>"; };
 		15EFA3371C4423DA007D67D0 /* MPServicesBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPServicesBuilder.swift; sourceTree = "<group>"; };
@@ -1143,6 +1149,8 @@
 		76FD246F1C5BFE45008C5DC0 /* GuessingForm */ = {
 			isa = PBXGroup;
 			children = (
+				1529D96A1C7C8EC000880C29 /* blue_promo.png */,
+				1529D96B1C7C8EC000880C29 /* green_promo.png */,
 				76FD24701C5BFEA1008C5DC0 /* CardBackView.swift */,
 				76FD24711C5BFEA1008C5DC0 /* CardBackView.xib */,
 				76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */,
@@ -1218,7 +1226,7 @@
 				TargetAttributes = {
 					0F9883091AD2A97A00F750F0 = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = T9VUHG6RU2;
+						DevelopmentTeam = VEJH2LY77Z;
 					};
 					0F9883141AD2A97A00F750F0 = {
 						CreatedOnToolsVersion = 6.2;
@@ -1265,6 +1273,7 @@
 				76B64B1E1C75F91D00300F50 /* InstructionsWithButtonViewCell.xib in Resources */,
 				0F9884391AD2AE6200F750F0 /* InstallmentsViewController.xib in Resources */,
 				0F9883E01AD2AD5500F750F0 /* CongratsViewController.xib in Resources */,
+				1529D96D1C7C8EC000880C29 /* green_promo.png in Resources */,
 				0F9883DC1AD2AD5500F750F0 /* PaymentDateTableViewCell.xib in Resources */,
 				0FC4FC2F1B0FB32400CF7148 /* PromoEmptyTableViewCell.xib in Resources */,
 				76151B6F1C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib in Resources */,
@@ -1298,6 +1307,7 @@
 				0F9883EE1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
+				1529D96C1C7C8EC000880C29 /* blue_promo.png in Resources */,
 				0F98841B1AD2AE2700F750F0 /* MPExpirationDateTableViewCell.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				7656CA351C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib in Resources */,
@@ -1321,6 +1331,7 @@
 				76151B921C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib in Resources */,
 				0F9884581AD2AEF800F750F0 /* MPPaymentMethodTableViewCell.xib in Resources */,
 				76062BE01C4D24050067A14B /* PaymentSearchCell.xib in Resources */,
+				1529D96E1C7C8EC500880C29 /* blue_promo.png in Resources */,
 				76151B981C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */,
 				76B64B191C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */,
 				0F98843A1AD2AE6200F750F0 /* InstallmentsViewController.xib in Resources */,
@@ -1345,6 +1356,7 @@
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
 				7656CA361C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib in Resources */,
 				0F9884241AD2AE2700F750F0 /* MPUserIdTableViewCell.xib in Resources */,
+				1529D96F1C7C8EC500880C29 /* green_promo.png in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
 				0F9883D11AD2AD5500F750F0 /* PaymentTotalTableViewCell.xib in Resources */,
 				76B64B251C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
@@ -1762,6 +1774,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1772,6 +1785,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1782,7 +1796,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1793,6 +1808,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};

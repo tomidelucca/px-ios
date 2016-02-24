@@ -99,7 +99,7 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
         
-        applyPlainShadow(cardView)
+       // applyPlainShadow(cardView)
 
     }
 
@@ -474,8 +474,8 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
     func setupInputAccessoryView() {
         let navBar = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
         navBar.barStyle = UIBarStyle.Default;
-        navBar.backgroundColor = cardView.backgroundColor;
-        navBar.alpha = 0.9;
+        navBar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        navBar.alpha = 1;
         //replace viewWidth with view controller width
         let navItem = UINavigationItem()
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "closeKeyboard")
@@ -634,8 +634,8 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         }
     }
     
-    let defaultColorText = UIColor(netHex:0x6C6C6C)
-    let highlightedColorText = UIColor(netHex:0x00FF00)
+    let defaultColorText = UIColor(netHex:0x333333)
+    let highlightedColorText = UIColor(netHex:0x999999)
     let errorColorText = UIColor(netHex:0xFF0000)
     
     func delightedLabels(){
