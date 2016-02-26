@@ -12,6 +12,7 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
 
     var bundle : NSBundle? = MercadoPago.getBundle()
     
+    @IBOutlet weak var promoButton: UIButton!
     @IBOutlet weak var cardView: UIView!
     var cardViewBack:UIView?
  
@@ -98,8 +99,6 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
-        
-       // applyPlainShadow(cardView)
 
     }
 
@@ -152,10 +151,16 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
                 if(!isAmexCard()){
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+                        self.promoButton.alpha = 0
+                        self.promoButton.enabled = false
+                        UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
+                            self.prepareCVVLabelForEdit()
+                        })
                     }
+                }else{
+                    self.prepareCVVLabelForEdit()
                 }
-                self.prepareCVVLabelForEdit()
+                
             }
              updateLabelsFontColors()
         }else{
@@ -165,12 +170,19 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
                 if(!isAmexCard()){
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+                       
+                        UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
+                            self.prepareNumberLabelForEdit()
+                            self.promoButton.alpha = 1
+                            self.promoButton.enabled = true
+                        })
                         
                     }
+                }else{
+                    self.prepareNumberLabelForEdit()
                 }
                
-                self.prepareNumberLabelForEdit()
+               
                 closeKeyboard()
                 makeToken()
             }
@@ -508,6 +520,8 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         switch editingLabel! {
             
         case cardNumberLabel! :
+            self.promoButton.alpha = 0
+            self.promoButton.enabled = false
             UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
             self.prepareCVVLabelForEdit()
             
@@ -517,8 +531,11 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         prepareNameLabelForEdit()
             
         case cvvLabel! :
-            
-        UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+           
+            UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
+                self.promoButton.alpha = 1
+                self.promoButton.enabled = true
+            })
         
             prepareExpirationLabelForEdit()
         default : return
@@ -534,6 +551,8 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
             
         case expirationDateLabel! :
             if(!isAmexCard()){
+                self.promoButton.alpha = 0
+                self.promoButton.enabled = false
                UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
             }
             
@@ -541,7 +560,10 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
             
         case cvvLabel! :
             if(!isAmexCard()){
-              UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion:  { (completion) -> Void in
+                    self.promoButton.alpha = 1
+                    self.promoButton.enabled = true
+                })
             }
             
             self.prepareNumberLabelForEdit()
@@ -692,6 +714,8 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         let errorCVV = cardtoken.validateSecurityCode()
         if((errorCVV) != nil){
             markErrorLabel(cvvLabel!)
+            self.promoButton.alpha = 0
+            self.promoButton.enabled = false
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
             return
         }
@@ -727,4 +751,23 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         return yy
     }
     
+    
+    
+    //BUTTON 
+    func configureButton()
+    {
+
+       // promoButton.titleLabel!.font =  UIFont.boldSystemFontOfSize(8)
+      //  promoButton.titleLabel!.text = "VER BANCOS CON MSI"
+        promoButton.backgroundColor = UIColor.whiteColor()
+        promoButton.layer.cornerRadius = 0.5 * promoButton.bounds.size.width
+        promoButton.layer.borderColor = UIColor(netHex: 0x359FDB).CGColor
+        promoButton.layer.borderWidth = 2.0
+        promoButton.clipsToBounds = true
+    }
+    
+    override public func viewDidLayoutSubviews() {
+        configureButton()
+    }
+
 }

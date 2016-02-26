@@ -30,8 +30,7 @@ import UIKit
         view.frame = bounds
         view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view);
-        
-        let circlePath = UIBezierPath(arcCenter: cardCVV.center, radius: CGFloat(20), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
+             let circlePath = UIBezierPath(arcCenter:cardCVV.center, radius: CGFloat(25), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
@@ -41,9 +40,11 @@ import UIKit
         //you can change the stroke color
         shapeLayer.strokeColor = UIColor.redColor().CGColor
         //you can change the line width
-        shapeLayer.lineWidth = 3.0
+        shapeLayer.lineWidth = 4.0
         
-        view.layer.addSublayer(shapeLayer)
+        cardCVV.layer.addSublayer(shapeLayer)
+        
+        
     }
     
         

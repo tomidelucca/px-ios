@@ -2,6 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>debmaster</key>
+	<dict>
+		<key>first_color</key>
+		<string>ffeb96</string>
+		<key>image_name</key>
+		<string>icoTc_master</string>
+	</dict>
+	<key>debvisa</key>
+	<dict>
+		<key>first_color</key>
+		<string>2591d9</string>
+		<key>image_name</key>
+		<string>icoTc_visa</string>
+	</dict>
 	<key>visa</key>
 	<dict>
 		<key>first_color</key>
