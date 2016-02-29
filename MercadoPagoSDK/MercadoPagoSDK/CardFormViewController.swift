@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CardFormViewController: UIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate{
+public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate{
 
     var bundle : NSBundle? = MercadoPago.getBundle()
     
@@ -45,7 +45,6 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
     
     
     public init(paymentType : PaymentType?, callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
-        
         super.init(nibName: "CardFormViewController", bundle: self.bundle)
         self.paymentType = paymentType
         self.edgesForExtendedLayout = .All
@@ -599,10 +598,18 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
             return nil
         }
         for (_, value) in paymentMethods!.enumerate() {
-          
-            if (value.conformsToBIN(getBIN()!)){
-                return value.cloneWithBIN(getBIN()!)
+            if (paymentType != nil){
+                if (value.paymentTypeId == paymentType?.paymentTypeId){
+                    if (value.conformsToBIN(getBIN()!)){
+                        return value.cloneWithBIN(getBIN()!)
+                    }
+                }
+            }else{
+                if (value.conformsToBIN(getBIN()!)){
+                    return value.cloneWithBIN(getBIN()!)
+                }
             }
+            
         }
         return nil
     }
@@ -687,7 +694,7 @@ public class CardFormViewController: UIViewController , UITextFieldDelegate , UI
         
         let cardtoken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
         
-        if (paymentMethod != nil){
+        if (paymentMethod != nil){ 
             let errorMethod = cardtoken.validateCardNumber(paymentMethod!)
             if((errorMethod) != nil){
                 markErrorLabel(cardNumberLabel!)

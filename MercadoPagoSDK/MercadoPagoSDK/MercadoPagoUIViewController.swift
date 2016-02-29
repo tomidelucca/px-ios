@@ -24,7 +24,12 @@ public class MercadoPagoUIViewController: UIViewController {
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem = shoppingCartButton
-    
+
+                self.loadMPStyles()
+    }
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.loadMPStyles()
     }
     
     internal func loadMPStyles(){

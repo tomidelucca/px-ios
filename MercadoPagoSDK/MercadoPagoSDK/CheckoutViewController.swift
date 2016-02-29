@@ -148,6 +148,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     internal func startPaymentVault(){
         let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: (preference?.items![0].currencyId), purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.navigationController?.popToViewController(self, animated: true)
             self.paymentMethod = paymentMethod
             self.tokenId = tokenId
             self.issuer = issuer

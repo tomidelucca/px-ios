@@ -44,7 +44,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentMethodSearchParent = paymentMethodSearchParent
         self.paymentMethodsSearch = paymentMethodSearch
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
-            self.navigationController?.popViewControllerAnimated(true)
+     //       self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
     }
@@ -60,7 +60,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.purchaseTitle = purchaseTitle
         self.currencyId = currencyId
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
-            self.navigationController?.popViewControllerAnimated(true)
+      //      self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
         self.installments = installments
@@ -250,6 +250,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal func cardFlow(paymentType: PaymentType){
         self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
             //TODO
+            //self.navigationController?.popViewControllerAnimated(true)
+            self.callback!(paymentMethod: paymentMethod, tokenId: token?._id, issuer: issuer, installments: 1)
         }), animated: true)
     }
     

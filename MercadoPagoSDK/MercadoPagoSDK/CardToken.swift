@@ -83,7 +83,7 @@ public class CardToken : NSObject {
             } else {
                 
                 // Validate card length
-                if (cardNumber!.characters.count != setting?.cardNumber.length) {
+                if (cardNumber!.trimSpaces().characters.count != setting?.cardNumber.length) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
@@ -91,7 +91,7 @@ public class CardToken : NSObject {
                 }
                 
                 // Validate luhn
-                if "standard" == setting?.cardNumber.validation && !checkLuhn(cardNumber!) {
+                if "standard" == setting?.cardNumber.validation && !checkLuhn((cardNumber?.trimSpaces())!) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }

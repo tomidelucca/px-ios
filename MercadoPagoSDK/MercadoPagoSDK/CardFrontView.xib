@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -39,10 +40,6 @@
                 </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/AA" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrP-jA-FVI">
                     <rect key="frame" x="148" y="103" width="80" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="80" id="2LO-xi-ILU"/>
-                        <constraint firstAttribute="height" constant="22" id="ofl-sR-n8i"/>
-                    </constraints>
                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -88,19 +85,21 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="rrP-jA-FVI" secondAttribute="trailing" constant="12" id="13S-cX-cEy"/>
                 <constraint firstAttribute="trailing" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="97" id="2hI-ql-fQl"/>
+                <constraint firstItem="rrP-jA-FVI" firstAttribute="baseline" secondItem="pR5-vU-TU9" secondAttribute="baseline" id="AOt-3g-FQQ"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="7:24" id="Aie-cO-xa7"/>
                 <constraint firstItem="9ot-jZ-HOX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Bea-OU-p4T"/>
+                <constraint firstItem="rrP-jA-FVI" firstAttribute="firstBaseline" secondItem="pR5-vU-TU9" secondAttribute="firstBaseline" id="H06-2R-sps"/>
                 <constraint firstAttribute="bottom" secondItem="97O-co-oz8" secondAttribute="bottom" constant="52" id="IA1-0s-caX"/>
                 <constraint firstAttribute="trailing" secondItem="y6l-UX-KQ5" secondAttribute="trailing" constant="12" id="Jlp-HD-09b"/>
+                <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="5" id="TlV-UI-jRP"/>
                 <constraint firstItem="pR5-vU-TU9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Vdf-kZ-c3S"/>
                 <constraint firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" constant="12" id="bll-Jo-8PY"/>
                 <constraint firstAttribute="trailing" secondItem="9ot-jZ-HOX" secondAttribute="trailing" constant="12" id="cXq-E3-I2k"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="l95-EC-c7L"/>
                 <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="19" id="n3L-v5-CVb"/>
-                <constraint firstAttribute="bottom" secondItem="rrP-jA-FVI" secondAttribute="bottom" constant="19" id="pHa-8k-03B"/>
                 <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ud7-S9-gmz"/>
+                <constraint firstItem="rrP-jA-FVI" firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" id="w2M-bt-87O"/>
                 <constraint firstItem="9ot-jZ-HOX" firstAttribute="top" secondItem="y6l-UX-KQ5" secondAttribute="bottom" constant="12" id="xny-XS-xlX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
