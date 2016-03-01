@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class Instruction: NSObject {
+public class Instruction: Equatable {
     
     var title : String!
     var accreditationMessage : String!
@@ -65,4 +65,19 @@ public class Instruction: NSObject {
 
         return instruction
     }
+}
+
+
+
+public func ==(obj1: Instruction, obj2: Instruction) -> Bool {
+    let areEqual =
+    obj1.title == obj2.title &&
+    obj1.accreditationMessage == obj2.accreditationMessage &&
+    obj1.references == obj2.references &&
+    obj1.info == obj2.info &&
+    obj1.secondaryInfo! == obj2.secondaryInfo! &&
+    obj1.tertiaryInfo! == obj2.tertiaryInfo! &&
+    obj1.actions! == obj2.actions!
+    
+    return areEqual
 }

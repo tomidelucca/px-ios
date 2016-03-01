@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class InstructionReference: NSObject {
+public class InstructionReference: Equatable {
 
     var label : String!
     var value : [String]!
@@ -43,6 +43,15 @@ public class InstructionReference: NSObject {
         
         return reference
     }
-    
-    
 }
+
+
+public func ==(obj1: InstructionReference, obj2: InstructionReference) -> Bool {
+    let areEqual =
+    obj1.label == obj2.label &&
+    obj1.value == obj2.value &&
+    obj1.separator == obj2.separator
+    
+    return areEqual
+}
+

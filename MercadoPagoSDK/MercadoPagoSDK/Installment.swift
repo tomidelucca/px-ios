@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Installment : NSObject {
+public class Installment : Equatable {
     public var issuer : Issuer!
     public var payerCosts : [PayerCost]!
     public var paymentMethodId : String!
@@ -36,4 +36,15 @@ public class Installment : NSObject {
         return installment
     }
     
+}
+
+public func ==(obj1: Installment, obj2: Installment) -> Bool {
+    
+    let areEqual =
+    obj1.issuer == obj2.issuer &&
+    obj1.payerCosts == obj2.payerCosts &&
+    obj1.paymentMethodId == obj2.paymentMethodId &&
+    obj1.paymentTypeId == obj2.paymentTypeId
+    
+    return areEqual
 }

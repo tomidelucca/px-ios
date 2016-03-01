@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InstructionAction: NSObject {
+class InstructionAction: Equatable {
     
     var label: String
     var url : String
@@ -29,4 +29,12 @@ class InstructionAction: NSObject {
     
     */
     
+}
+public func ==(obj1: InstructionAction, obj2: InstructionAction) -> Bool {
+    let areEqual =
+    obj1.label == obj2.label &&
+        obj1.url == obj2.url &&
+        obj1.tag == obj2.tag
+    
+    return areEqual
 }

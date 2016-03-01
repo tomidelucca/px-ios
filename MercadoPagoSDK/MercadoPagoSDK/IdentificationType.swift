@@ -8,12 +8,14 @@
 
 import Foundation
 
-public class IdentificationType : NSObject {
+public class IdentificationType : Equatable {
     public var _id : String?
     public var name : String?
     public var type : String?
     public var minLength : Int = 0
     public var maxLength : Int = 0
+    
+    
     
     public class func fromJSON(json : NSDictionary) -> IdentificationType {
         let identificationType : IdentificationType = IdentificationType()
@@ -30,4 +32,16 @@ public class IdentificationType : NSObject {
 		
         return identificationType
     }
+}
+
+public func ==(obj1: IdentificationType, obj2: IdentificationType) -> Bool {
+    
+    let areEqual =
+        obj1._id == obj2._id &&
+        obj1.name == obj2.name &&
+        obj1.type == obj2.type &&
+        obj1.minLength == obj2.minLength &&
+        obj1.maxLength == obj2.maxLength
+    
+    return areEqual
 }

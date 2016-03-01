@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Card : NSObject {
+public class Card : Equatable {
     
     public var cardHolder : Cardholder?
     public var customerId : String?
@@ -24,10 +24,7 @@ public class Card : NSObject {
     public var issuer : Issuer?
     public var securityCode : SecurityCode?
     
-    public override init() {
-                super.init()
-    }
-    
+
    public class func fromJSON(json : NSDictionary) -> Card {
         let card : Card = Card()
         if json["customer_id"] != nil && !(json["customer_id"]! is NSNull) {
@@ -73,3 +70,23 @@ public class Card : NSObject {
         }
     }
 }
+
+
+
+public func ==(obj1: Card, obj2: Card) -> Bool {
+    
+    let areEqual =
+        obj1.cardHolder == obj2.cardHolder &&
+        obj1.customerId == obj2.customerId &&
+        obj1.dateCreated == obj2.dateCreated &&
+        obj1.dateLastUpdated == obj2.dateLastUpdated &&
+        obj1.expirationMonth == obj2.expirationMonth &&
+        obj1.firstSixDigits == obj2.firstSixDigits &&
+        obj1.idCard == obj2.idCard &&
+        obj1.lastFourDigits == obj2.lastFourDigits &&
+        obj1.paymentMethod == obj2.paymentMethod &&
+        obj1.issuer == obj2.issuer &&
+        obj1.securityCode == obj2.securityCode
+    return areEqual
+}
+

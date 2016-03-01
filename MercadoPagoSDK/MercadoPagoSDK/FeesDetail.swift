@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FeesDetail : NSObject {
+public class FeesDetail : Equatable {
     public var amount : Double = 0
     public var amountRefunded : Double = 0
     public var feePayer : String!
@@ -27,4 +27,17 @@ public class FeesDetail : NSObject {
         return fd
     }
     
+}
+
+public func ==(obj1: Discount, obj2: Discount) -> Bool {
+    
+    let areEqual =
+        obj1.amountOff == obj2.amountOff &&
+        obj1.couponAmount == obj2.couponAmount &&
+        obj1.currencyId == obj2.currencyId &&
+        obj1._id == obj2._id &&
+        obj1.name == obj2.name &&
+        obj1.percentOff == obj2.percentOff
+    
+    return areEqual
 }

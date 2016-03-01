@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CheckoutPreference : NSObject {
+public class CheckoutPreference : Equatable {
     
     public var _id : String!
     public var items : [Item]?
@@ -16,16 +16,12 @@ public class CheckoutPreference : NSObject {
     public var paymentMethods : PreferencePaymentMethods?
     //shipments
     
-    public init(items : [Item], payer : Payer, paymentMethods : PreferencePaymentMethods?){
-        super.init()
+    public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PreferencePaymentMethods? = nil){
         self.items = items
         self.payer = payer
         self.paymentMethods = paymentMethods
     }
     
-    public override init(){
-        super.init()
-    }
     
     public class func fromJSON(json : NSDictionary) -> CheckoutPreference {
         let preference : CheckoutPreference = CheckoutPreference()
@@ -90,3 +86,16 @@ public class CheckoutPreference : NSObject {
         return nil
     }
 }
+
+public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
+    
+    let areEqual =
+        obj1._id == obj2._id &&
+        obj1.items! == obj2.items! &&
+        obj1.payer == obj2.payer &&
+        obj1.paymentMethods == obj2.paymentMethods
+    
+    return areEqual
+}
+
+

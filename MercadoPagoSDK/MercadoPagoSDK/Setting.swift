@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Setting : Serializable {
+public class Setting : Equatable {
     public var bin : Bin!
     public var cardNumber : CardNumber!
     public var securityCode : SecurityCode!
@@ -36,4 +36,14 @@ public class Setting : Serializable {
         setting.securityCode = SecurityCode.fromJSON(json["security_code"]! as! NSDictionary)
         return setting
     }
+}
+
+public func ==(obj1: Setting, obj2: Setting) -> Bool {
+    
+    let areEqual =
+    obj1.bin == obj2.bin &&
+    obj1.cardNumber == obj2.cardNumber &&
+    obj1.securityCode == obj2.securityCode
+    
+    return areEqual
 }

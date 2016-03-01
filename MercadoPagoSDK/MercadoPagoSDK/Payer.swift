@@ -8,22 +8,17 @@
 
 import Foundation
 
-public class Payer : NSObject {
+public class Payer : Equatable {
     public var email : String!
     public var _id : NSNumber = 0
     public var identification : Identification!
     public var type : String!
     
-    init(_id : NSNumber, email: String, type : String, identification: Identification){
-        super.init()
-        self._id = _id
+    init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
+        self._id = _id!
         self.email = email
         self.type = type
         self.identification = identification
-    }
-    
-    public override init(){
-        super.init()
     }
     
     public class func fromJSON(json : NSDictionary) -> Payer {
@@ -38,5 +33,17 @@ public class Payer : NSObject {
         }
         return payer
     }
-    
 }
+
+
+public func ==(obj1: Payer, obj2: Payer) -> Bool {
+    
+    let areEqual =
+    obj1._id == obj2._id &&
+    obj1.email == obj2.email &&
+    obj1.identification == obj2.identification &&
+    obj1.type == obj2.type
+    
+    return areEqual
+}
+

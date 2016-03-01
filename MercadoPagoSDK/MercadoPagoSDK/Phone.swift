@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Phone : NSObject {
+public class Phone : Equatable {
     public var areaCode : String?
     public var number : String?
     
@@ -18,4 +18,13 @@ public class Phone : NSObject {
         phone.number = JSON(json["number"]!).asString
         return phone
     }
+}
+
+public func ==(obj1: Phone, obj2: Phone) -> Bool {
+    
+    let areEqual =
+    obj1.areaCode == obj2.areaCode &&
+    obj1.number == obj2.number
+    
+    return areEqual
 }

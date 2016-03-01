@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Item : NSObject {
+public class Item : Equatable {
     public var _id : String!
     public var quantity : Int = 0
     public var unitPrice : Double = 0
@@ -17,12 +17,8 @@ public class Item : NSObject {
     public var categoryId : String!
     public var pictureUrl : String!
     
-    internal override init(){
-        super.init()
-    }
-    
-    public init(_id: String, title : String, quantity: Int, unitPrice: Double) {
-        super.init()
+
+    public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0) {
         self._id = _id
         self.title = title
         self.quantity = quantity
@@ -71,4 +67,19 @@ public class Item : NSObject {
         
         return item
     }
+}
+
+
+public func ==(obj1: Item, obj2: Item) -> Bool {
+    
+    let areEqual =
+        obj1._id == obj2._id &&
+        obj1.quantity == obj2.quantity &&
+        obj1.unitPrice == obj2.unitPrice &&
+        obj1.title == obj2.title &&
+        obj1.currencyId == obj2.currencyId &&
+        obj1.categoryId == obj2.categoryId &&
+        obj1.pictureUrl == obj2.pictureUrl
+    
+    return areEqual
 }

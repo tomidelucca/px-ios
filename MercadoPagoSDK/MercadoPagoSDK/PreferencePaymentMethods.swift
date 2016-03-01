@@ -8,20 +8,14 @@
 
 import UIKit
 
-public class PreferencePaymentMethods: NSObject {
-
+public class PreferencePaymentMethods: Equatable {
     var excludedPaymentMethods : [String]?
     var excludedPaymentTypes : Set<PaymentTypeId>?
     var defaultPaymentMethodId : String?
     var installments : Int?
     var defaultInstallments : Int?
-    
-    public override init(){
-        super.init()
-    }
-    
-    public init(excludedPaymentMethods : [String]?, excludedPaymentTypes: Set<PaymentTypeId>?, defaultPaymentMethodId: String?, installments : Int?, defaultInstallments : Int?){
-        super.init()
+
+    public init(excludedPaymentMethods : [String]? = nil, excludedPaymentTypes: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, installments : Int? = 0, defaultInstallments : Int? = 0){
         self.excludedPaymentMethods =  excludedPaymentMethods
         self.excludedPaymentTypes = excludedPaymentTypes
         self.defaultPaymentMethodId = defaultPaymentMethodId
@@ -64,10 +58,18 @@ public class PreferencePaymentMethods: NSObject {
         
         return preferencePaymentMethods
     }
-
-    
- 
-    
-
-    
 }
+
+public func ==(obj1: PreferencePaymentMethods, obj2: PreferencePaymentMethods) -> Bool {
+    
+    let areEqual =
+    obj1.excludedPaymentMethods == obj2.excludedPaymentMethods &&
+    obj1.excludedPaymentTypes == obj2.excludedPaymentTypes &&
+    obj1.defaultPaymentMethodId == obj2.defaultPaymentMethodId &&
+    obj1.installments == obj2.installments &&
+    obj1.defaultInstallments == obj2.defaultInstallments
+    
+    return areEqual
+}
+
+

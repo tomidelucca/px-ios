@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Order : NSObject {
+public class Order : Equatable {
     public var _id : Int = 0
     public var type : String!
     
@@ -20,4 +20,13 @@ public class Order : NSObject {
         order.type = json["type"] as? String
         return order
     }
+}
+
+public func ==(obj1: Order, obj2: Order) -> Bool {
+    
+    let areEqual =
+    obj1._id == obj2._id &&
+    obj1.type == obj2.type
+    
+    return areEqual
 }

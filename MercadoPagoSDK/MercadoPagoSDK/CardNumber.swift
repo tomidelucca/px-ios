@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CardNumber : Serializable {
+public class CardNumber : Equatable {
     public var length : Int = 0
     public var validation : String!
     
@@ -21,4 +21,14 @@ public class CardNumber : Serializable {
         return cardNumber
     }
     
+}
+
+
+public func ==(obj1: CardNumber, obj2: CardNumber) -> Bool {
+    
+    let areEqual =
+    obj1.length == obj2.length &&
+    obj1.validation == obj2.validation
+    
+    return areEqual
 }

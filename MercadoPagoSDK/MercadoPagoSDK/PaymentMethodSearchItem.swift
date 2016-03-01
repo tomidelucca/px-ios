@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentMethodSearchItem {
+public class PaymentMethodSearchItem : Equatable {
     
     public var idPaymentMethodSearchItem : String!
     public var type : PaymentMethodSearchItemType!
@@ -71,4 +71,16 @@ public enum PaymentMethodSearchItemType : String {
     case GROUP = "group"
     case PAYMENT_TYPE = "payment_type"
     case PAYMENT_METHOD = "payment_method"
+}
+
+public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> Bool {
+    let areEqual =
+    obj1.idPaymentMethodSearchItem == obj2.idPaymentMethodSearchItem &&
+    obj1.type == obj2.type &&
+    obj1.description == obj2.description &&
+    obj1.comment == obj2.comment &&
+    obj1.childrenHeader == obj2.childrenHeader &&
+    obj1.children == obj2.children
+    
+    return areEqual
 }
