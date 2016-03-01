@@ -45,9 +45,31 @@ class MockBuilder: NSObject {
         return paymentMethod
     }
     
+    class func buildSecurityCode() -> SecurityCode {
+        let securityCode = SecurityCode()
+        securityCode.length = 3
+        securityCode.mode = "mode"
+        securityCode.cardLocation = "back"
+        return securityCode
+    }
+    
+    class func buildIdentification() -> Identification {
+        let identification = Identification()
+        identification.type = "type"
+        identification.number = "number"
+        return identification
+    }
+    
+    class func buildCard() -> Card {
+        let card = Card()
+        card.idCard = 1234567890
+        return card
+    }
+    
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
     }
+    
     
     class func getMockPaymentTypeIds() -> Set<PaymentTypeId>{
         return Set([PaymentTypeId.BITCOIN, PaymentTypeId.ACCOUNT_MONEY])
