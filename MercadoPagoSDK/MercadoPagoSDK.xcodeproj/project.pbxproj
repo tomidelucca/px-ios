@@ -248,6 +248,7 @@
 		1529D9A61C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */; };
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
 		155692D21C47DA1200521403 /* PreferencePaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PreferencePaymentMethods.swift */; };
+		15714BAA1C85CC800019945E /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15EFA3391C4423DA007D67D0 /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA3351C4423DA007D67D0 /* MercadoPagoContext.swift */; };
 		15EFA33A1C4423DA007D67D0 /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA3351C4423DA007D67D0 /* MercadoPagoContext.swift */; };
 		15EFA33B1C4423DA007D67D0 /* MPFlowBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA3361C4423DA007D67D0 /* MPFlowBuilder.swift */; };
@@ -328,8 +329,6 @@
 		7656CA1E1C7646600043BDB2 /* InstructionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656CA1C1C7646600043BDB2 /* InstructionAction.swift */; };
 		7656CA201C764EA50043BDB2 /* InstructionsFillmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656CA1F1C764EA50043BDB2 /* InstructionsFillmentDelegate.swift */; };
 		7656CA211C764EA50043BDB2 /* InstructionsFillmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656CA1F1C764EA50043BDB2 /* InstructionsFillmentDelegate.swift */; };
-		7656CA341C7B53DF0043BDB2 /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656CA311C7B53DF0043BDB2 /* PaymentMethodImageViewCell.swift */; };
-		7656CA361C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7656CA321C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib */; };
 		7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767254591C7CB0EC00EB5EBA /* BaseTest.swift */; };
 		7672545F1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */; };
 		767254641C7CB18200EB5EBA /* MercadoPagoContextTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767254621C7CB18200EB5EBA /* MercadoPagoContextTest.swift */; };
@@ -567,8 +566,6 @@
 		7656CA191C7645450043BDB2 /* InstructionReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionReference.swift; sourceTree = "<group>"; };
 		7656CA1C1C7646600043BDB2 /* InstructionAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionAction.swift; sourceTree = "<group>"; };
 		7656CA1F1C764EA50043BDB2 /* InstructionsFillmentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsFillmentDelegate.swift; sourceTree = "<group>"; };
-		7656CA311C7B53DF0043BDB2 /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaymentMethodImageViewCell.swift; path = ../../PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
-		7656CA321C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PaymentMethodImageViewCell.xib; path = ../../PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
 		767254591C7CB0EC00EB5EBA /* BaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
 		7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutPreferenceTest.swift; sourceTree = "<group>"; };
 		767254621C7CB18200EB5EBA /* MercadoPagoContextTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoContextTest.swift; sourceTree = "<group>"; };
@@ -1054,6 +1051,8 @@
 		76062BCE1C4D200F0067A14B /* PaymentSearchCells */ = {
 			isa = PBXGroup;
 			children = (
+				15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */,
+				15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */,
 				76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */,
 				76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */,
 				76062BDB1C4D24050067A14B /* PaymentSearchCell.swift */,
@@ -1062,8 +1061,6 @@
 				76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */,
 				76E92F811C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift */,
 				76E92F821C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib */,
-				7656CA311C7B53DF0043BDB2 /* PaymentMethodImageViewCell.swift */,
-				7656CA321C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib */,
 			);
 			name = PaymentSearchCells;
 			sourceTree = "<group>";
@@ -1109,8 +1106,6 @@
 		761B893F1C637D9E0015D0BE /* ReviewAndConfirmCells */ = {
 			isa = PBXGroup;
 			children = (
-				15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */,
-				15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */,
 				761B89401C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift */,
 				761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */,
 				76E2B07B1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift */,
@@ -1437,7 +1432,6 @@
 				0F98844A1AD2AEC000F750F0 /* MPInstallmentsTableViewCell.xib in Resources */,
 				0F9883D91AD2AD5500F750F0 /* PaymentIDTableViewCell.xib in Resources */,
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
-				7656CA361C7B53DF0043BDB2 /* PaymentMethodImageViewCell.xib in Resources */,
 				0F9884241AD2AE2700F750F0 /* MPUserIdTableViewCell.xib in Resources */,
 				1529D96F1C7C8EC500880C29 /* green_promo.png in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
@@ -1614,7 +1608,6 @@
 				76062BCB1C4D1F450067A14B /* PaymentMethodSearchService.swift in Sources */,
 				7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */,
 				0F98844C1AD2AEC000F750F0 /* MPInstallmentsTableViewCell.swift in Sources */,
-				7656CA341C7B53DF0043BDB2 /* PaymentMethodImageViewCell.swift in Sources */,
 				15EFA33A1C4423DA007D67D0 /* MercadoPagoContext.swift in Sources */,
 				0F9883801AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,
 				0F9883621AD2AB6000F750F0 /* CardIssuer.swift in Sources */,
@@ -1641,6 +1634,7 @@
 				7656CA211C764EA50043BDB2 /* InstructionsFillmentDelegate.swift in Sources */,
 				0F9883331AD2AB3C00F750F0 /* MerchantServer.swift in Sources */,
 				0FE3E3801AE706B600C27B97 /* Utils.swift in Sources */,
+				15714BAA1C85CC800019945E /* PaymentMethodImageViewCell.swift in Sources */,
 				76882AD81C4FBDB500B440B1 /* PaymentTitleViewCell.swift in Sources */,
 				76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				76151B901C74C8DA007DF0E3 /* SimpleInstructionsViewCell.swift in Sources */,
@@ -1919,6 +1913,7 @@
 				);
 				INFOPLIST_FILE = MercadoPagoSDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1933,6 +1928,7 @@
 				);
 				INFOPLIST_FILE = MercadoPagoSDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
