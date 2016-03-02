@@ -15,7 +15,7 @@ class PreferencePaymentMethodsTest: BaseTest {
     func testInit(){
         let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: paymentmethodIds, excludedPaymentTypes: MockBuilder.getMockPaymentTypeIds(), defaultPaymentMethodId: "visa", installments: 12, defaultInstallments: 1)
         XCTAssertEqual(preferencePaymentMethods.excludedPaymentMethods!, paymentmethodIds)
-        XCTAssertEqual(preferencePaymentMethods.excludedPaymentTypes, MockBuilder.getMockPaymentTypeIds())
+        XCTAssertEqual(preferencePaymentMethods.excludedPaymentTypes!, MockBuilder.getMockPaymentTypeIds())
         XCTAssertEqual(preferencePaymentMethods.defaultPaymentMethodId, "visa")
         XCTAssertEqual(preferencePaymentMethods.installments, 12)
         XCTAssertEqual(preferencePaymentMethods.defaultInstallments, 1)

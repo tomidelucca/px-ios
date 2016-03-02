@@ -17,7 +17,7 @@ class CardTokenTest: BaseTest {
         
         XCTAssertEqual(cardToken.cardNumber, "cardNumber")
         XCTAssertEqual(cardToken.expirationMonth, 1)
-        XCTAssertEqual(cardToken.expirationYear, 20)
+        XCTAssertEqual(cardToken.expirationYear, 2020)
         XCTAssertEqual(cardToken.securityCode, "123")
         XCTAssertNotNil(cardToken.cardholder)
         XCTAssertEqual(cardToken.cardholder?.name, "cardholderName")

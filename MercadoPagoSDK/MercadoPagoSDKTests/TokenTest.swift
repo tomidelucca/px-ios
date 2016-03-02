@@ -28,7 +28,7 @@ class TokenTest: BaseTest {
         XCTAssertEqual(token.securityCodeLength, 3)
         XCTAssertEqual(token.expirationMonth, 1)
         XCTAssertEqual(token.expirationYear, 20)
-        XCTAssertEqual(token.lastModifiedDate, modificationDate)
+        XCTAssertEqual(token.lastModifiedDate, modificationDate)
         XCTAssertEqual(token.dueDate, dueDate)
         
     }

@@ -11,7 +11,7 @@ import XCTest
 class PaymentMethodSearchitemTest: BaseTest {
     
     
-    func testIsOfflinePayment() -> Bool {
+    func testIsOfflinePayment() {
         let offlinePaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("bank_transfer")
 
         XCTAssertTrue(offlinePaymentMethodSearchItem.isOfflinePayment())
@@ -21,7 +21,7 @@ class PaymentMethodSearchitemTest: BaseTest {
         
     }
     
-    func testIsBitcoin() -> Bool {
+    func testIsBitcoin() {
         let bitcoinPm = MockBuilder.buildPaymentMethodSearchItem("bitcoin")
         
         XCTAssertTrue(bitcoinPm.isBitcoin())
@@ -32,7 +32,7 @@ class PaymentMethodSearchitemTest: BaseTest {
     }
     
 
-    func testIsPaymentMethod() -> Bool {
+    func testIsPaymentMethod()  {
         let oxxoPm = MockBuilder.buildPaymentMethodSearchItem("oxxo", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
         
         XCTAssertTrue(oxxoPm.isPaymentMethod())

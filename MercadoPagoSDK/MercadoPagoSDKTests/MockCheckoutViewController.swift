@@ -17,13 +17,6 @@ class MockCheckoutViewController: CheckoutViewController {
         super.init(preference: preference, callback: callback)
     }
     
-    override func viewDidLoad() {
-        self.checkoutTable = UITableView(frame: CGRect(x: 1, y: 1, width: 2, height: 2))
-        self.confirmPaymentButton = UIButton()
-        super.loadView()
-        super.viewDidLoad()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
