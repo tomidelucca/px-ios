@@ -29,15 +29,12 @@ public class FeesDetail : Equatable {
     
 }
 
-public func ==(obj1: Discount, obj2: Discount) -> Bool {
+public func ==(obj1: FeesDetail, obj2: FeesDetail) -> Bool {
     
     let areEqual =
-        obj1.amountOff == obj2.amountOff &&
-        obj1.couponAmount == obj2.couponAmount &&
-        obj1.currencyId == obj2.currencyId &&
-        obj1._id == obj2._id &&
-        obj1.name == obj2.name &&
-        obj1.percentOff == obj2.percentOff
-    
+        obj1.amount == obj2.amount &&
+        obj1.amountRefunded == obj2.amountRefunded &&
+        obj1.feePayer == obj2.feePayer &&
+        obj1.type == obj2.type
     return areEqual
 }

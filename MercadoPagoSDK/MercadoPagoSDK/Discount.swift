@@ -48,6 +48,7 @@ public class Discount : Equatable {
     
     
 }
+
 public func ==(obj1: Discount, obj2: Discount) -> Bool {
     
     let areEqual =

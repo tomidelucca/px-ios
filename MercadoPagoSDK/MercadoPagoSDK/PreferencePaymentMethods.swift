@@ -63,7 +63,7 @@ public class PreferencePaymentMethods: Equatable {
 public func ==(obj1: PreferencePaymentMethods, obj2: PreferencePaymentMethods) -> Bool {
     
     let areEqual =
-    obj1.excludedPaymentMethods == obj2.excludedPaymentMethods &&
+    obj1.excludedPaymentMethods! == obj2.excludedPaymentMethods! &&
     obj1.excludedPaymentTypes == obj2.excludedPaymentTypes &&
     obj1.defaultPaymentMethodId == obj2.defaultPaymentMethodId &&
     obj1.installments == obj2.installments &&

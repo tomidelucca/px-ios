@@ -76,8 +76,8 @@ public func ==(obj1: Instruction, obj2: Instruction) -> Bool {
     obj1.references == obj2.references &&
     obj1.info == obj2.info &&
     obj1.secondaryInfo! == obj2.secondaryInfo! &&
-    obj1.tertiaryInfo! == obj2.tertiaryInfo! &&
-    obj1.actions! == obj2.actions!
+    obj1.tertiaryInfo! == obj2.tertiaryInfo!
+  
     
     return areEqual
 }
