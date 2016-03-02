@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InstructionAction: NSObject {
+class InstructionAction  {
     
     var label: String
     var url : String
@@ -30,3 +30,4 @@ class InstructionAction: NSObject {
     */
     
 }
+

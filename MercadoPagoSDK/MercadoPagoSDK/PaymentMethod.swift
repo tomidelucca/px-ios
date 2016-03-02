@@ -8,10 +8,8 @@
 
 import Foundation
 
-public class PaymentMethod : Serializable {
+public class PaymentMethod : Equatable {
     
-
-       
     public var _id : String!
     public var name : String!
     public var comment : String!
@@ -136,3 +134,17 @@ public class PaymentMethod : Serializable {
     }
     
 }
+
+public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
+    
+    let areEqual =
+    obj1._id == obj2._id &&
+    obj1.name == obj2.name &&
+    obj1.comment == obj2.comment &&
+    obj1.paymentTypeId == obj2.paymentTypeId &&
+    obj1.settings == obj2.settings &&
+    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded
+    
+    return areEqual
+}
+

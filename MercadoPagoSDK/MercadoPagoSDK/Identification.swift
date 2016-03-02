@@ -8,16 +8,12 @@
 
 import Foundation
 
-public class Identification : NSObject {
+public class Identification : Equatable {
     public var type : String?
     public var number : String?
+
     
-    public override init() {
-        super.init()
-    }
-    
-    public init (type: String?, number : String?) {
-        super.init()
+    public init (type: String? = nil, number : String? = nil) {
         self.type = type
         self.number = number
     }
@@ -36,4 +32,13 @@ public class Identification : NSObject {
         ]
         return JSON(obj).toString()
     }
+}
+
+public func ==(obj1: Identification, obj2: Identification) -> Bool {
+    
+    let areEqual =
+        obj1.type == obj2.type &&
+        obj1.number == obj2.number
+    
+    return areEqual
 }

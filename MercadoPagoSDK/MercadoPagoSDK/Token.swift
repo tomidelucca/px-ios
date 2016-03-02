@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Token : NSObject {
+public class Token : Equatable {
 	public var _id : String!
 	public var publicKey : String!
 	public var cardId : String!
@@ -27,8 +27,7 @@ public class Token : NSObject {
 	public init (_id: String, publicKey: String, cardId: String!, luhnValidation: String!, status: String!,
 		usedDate: String!, cardNumberLength: Int, creationDate: NSDate!, truncCardNumber: String!,
 		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: NSDate!,
-		dueDate: NSDate?) {
-			super.init()
+		dueDate: NSDate?) { 
 			self._id = _id
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -74,3 +73,27 @@ extension NSDictionary {
 		return (dictValue == nil || dictValue is NSNull) ? false : true
 	}
 }
+
+
+
+public func ==(obj1: Token, obj2: Token) -> Bool {
+    
+    let areEqual =
+    obj1._id == obj2._id &&
+    obj1.publicKey == obj2.publicKey &&
+    obj1.cardId == obj2.cardId &&
+    obj1.luhnValidation == obj2.luhnValidation &&
+    obj1.status == obj2.status &&
+    obj1.usedDate == obj2.usedDate &&
+    obj1.cardNumberLength == obj2.cardNumberLength &&
+    obj1.creationDate == obj2.creationDate &&
+    obj1.truncCardNumber == obj2.truncCardNumber &&
+    obj1.securityCodeLength == obj2.securityCodeLength &&
+    obj1.expirationMonth == obj2.expirationMonth &&
+    obj1.expirationYear == obj2.expirationYear &&
+    obj1.lastModifiedDate == obj2.lastModifiedDate &&
+    obj1.dueDate == obj2.dueDate
+    
+    return areEqual
+}
+

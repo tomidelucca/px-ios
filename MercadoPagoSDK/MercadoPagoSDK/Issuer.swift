@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Issuer : NSObject {
+public class Issuer : Equatable {
     public var _id : NSNumber?
     public var name : String?
     
@@ -24,4 +24,13 @@ public class Issuer : NSObject {
         issuer.name = JSON(json["name"]!).asString
         return issuer
     }
+}
+
+public func ==(obj1: Issuer, obj2: Issuer) -> Bool {
+    
+    let areEqual =
+        obj1._id == obj2._id &&
+        obj1.name == obj2.name
+    
+    return areEqual
 }

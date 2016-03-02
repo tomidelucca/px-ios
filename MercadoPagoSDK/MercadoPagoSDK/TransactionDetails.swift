@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TransactionDetails : NSObject {
+public class TransactionDetails : Equatable {
     public var couponAmount : Double = 0
     public var externalResourceUrl : String!
     public var financialInstitution : String!
@@ -39,3 +39,23 @@ public class TransactionDetails : NSObject {
         return transactionDetails
     }
 }
+
+
+
+public func ==(obj1: TransactionDetails, obj2: TransactionDetails) -> Bool {
+    let areEqual =
+    obj1.couponAmount == obj2.couponAmount &&
+    obj1.couponAmount == obj2.couponAmount &&
+    obj1.externalResourceUrl == obj2.externalResourceUrl &&
+    obj1.financialInstitution == obj2.financialInstitution &&
+    obj1.installmentAmount == obj2.installmentAmount &&
+    obj1.netReceivedAmount == obj2.netReceivedAmount &&
+    obj1.overpaidAmount == obj2.overpaidAmount &&
+    obj1.totalPaidAmount == obj2.totalPaidAmount
+    
+    return areEqual
+}
+
+
+
+

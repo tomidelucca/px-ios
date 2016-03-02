@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Refund : NSObject {
+public class Refund : Equatable {
     public var amount : Double = 0
     public var dateCreated : NSDate!
     public var _id : Int = 0
@@ -34,4 +34,18 @@ public class Refund : NSObject {
         return refund
     }
     
+}
+
+public func ==(obj1: Refund, obj2: Refund) -> Bool {
+    
+    let areEqual =
+    obj1.amount == obj2.amount &&
+    obj1.dateCreated == obj2.dateCreated &&
+    obj1._id == obj2._id &&
+    obj1.metadata == obj2.metadata &&
+    obj1.paymentId == obj2.paymentId &&
+    obj1.source == obj2.source &&
+    obj1.uniqueSequenceNumber == obj2.uniqueSequenceNumber
+    
+    return areEqual
 }

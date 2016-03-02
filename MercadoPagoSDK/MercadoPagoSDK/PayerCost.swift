@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PayerCost : NSObject {
+public class PayerCost : Equatable {
     public var installments : Int = 0
     public var installmentRate : Double = 0
     public var labels : [String]!
@@ -18,10 +18,10 @@ public class PayerCost : NSObject {
     public var installmentAmount : Double = 0
     public var totalAmount : Double = 0
     
-    public init (installments : Int, installmentRate : Double, labels : [String],
-        minAllowedAmount : Double, maxAllowedAmount : Double, recommendedMessage: String!, installmentAmount: Double, totalAmount: Double) {
-            super.init()
-            self.installments = installments
+    public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],
+        minAllowedAmount : Double = 0, maxAllowedAmount : Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
+
+        self.installments = installments
         self.installmentRate = installmentRate
         self.labels = labels
         self.minAllowedAmount = minAllowedAmount
@@ -31,10 +31,7 @@ public class PayerCost : NSObject {
         self.totalAmount = totalAmount
     }
     
-    public override init() {
-        super.init()
-    }
-    
+  
     public class func fromJSON(json : NSDictionary) -> PayerCost {
         let payerCost : PayerCost = PayerCost()
 		if json["installments"] != nil && !(json["installments"]! is NSNull) {
@@ -59,3 +56,20 @@ public class PayerCost : NSObject {
         return payerCost
     }
 }
+
+
+public func ==(obj1: PayerCost, obj2: PayerCost) -> Bool {
+    
+    let areEqual =
+    obj1.installments == obj2.installments &&
+        obj1.installmentRate == obj2.installmentRate &&
+        obj1.labels == obj2.labels &&
+        obj1.minAllowedAmount == obj2.minAllowedAmount &&
+        obj1.maxAllowedAmount == obj2.maxAllowedAmount &&
+        obj1.recommendedMessage == obj2.recommendedMessage &&
+        obj1.installmentAmount == obj2.installmentAmount &&
+        obj1.totalAmount == obj2.totalAmount
+    
+    return areEqual
+}
+

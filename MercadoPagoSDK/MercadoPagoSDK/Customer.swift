@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Customer : NSObject {
+public class Customer : Equatable {
     public var address : Address?
     public var cards : [Card]?
     public var defaultCard : NSNumber?
@@ -62,3 +62,30 @@ public class Customer : NSObject {
         return customer
     }
 }
+
+
+
+
+public func ==(obj1: Customer, obj2: Customer) -> Bool {
+    
+    let areEqual =
+        obj1.address! == obj2.address! &&
+        obj1.cards! == obj2.cards! &&
+        obj1.defaultCard! == obj2.defaultCard! &&
+        obj1._description == obj2._description &&
+        obj1.dateCreated == obj2.dateCreated &&
+        obj1.dateLastUpdated == obj2.dateLastUpdated &&
+        obj1.email == obj2.email &&
+        obj1.firstName == obj2.firstName &&
+        obj1._id == obj2._id &&
+        obj1.identification == obj2.identification &&
+        obj1.lastName == obj2.lastName &&
+        obj1.liveMode == obj2.liveMode &&
+        obj1.metadata == obj2.metadata &&
+        obj1.phone == obj2.phone &&
+        obj1.registrationDate == obj2.registrationDate
+    return areEqual
+}
+
+
+

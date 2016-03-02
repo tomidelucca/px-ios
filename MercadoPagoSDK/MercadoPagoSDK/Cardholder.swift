@@ -8,13 +8,11 @@
 
 import Foundation
 
-public class Cardholder : NSObject {
+public class Cardholder : Equatable {
     public var name : String?
     public var identification : Identification?
     
-    public override init () {
-                super.init()
-    }
+ 
     
     public class func fromJSON(json : NSDictionary) -> Cardholder {
         let cardholder : Cardholder = Cardholder()
@@ -30,4 +28,13 @@ public class Cardholder : NSObject {
         ]
         return JSON(obj).toString()
     }
+}
+
+public func ==(obj1: Cardholder, obj2: Cardholder) -> Bool {
+    
+    let areEqual =
+    obj1.name == obj2.name &&
+    obj1.identification == obj2.identification
+    
+    return areEqual
 }
