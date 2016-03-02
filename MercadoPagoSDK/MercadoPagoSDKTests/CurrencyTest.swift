@@ -14,7 +14,7 @@ class CurrencyTest: BaseTest {
         let currency = Currency(_id: "id", description: "description", symbol: "symbol", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ",")
         
         XCTAssertEqual(currency._id, "id")
-        XCTAssertEqual(currency.description, "description")
+        XCTAssertEqual(currency._description, "description")
         XCTAssertEqual(currency.symbol, "symbol")
         XCTAssertEqual(currency.decimalPlaces, 2)
         XCTAssertEqual(currency.decimalSeparator, ".")

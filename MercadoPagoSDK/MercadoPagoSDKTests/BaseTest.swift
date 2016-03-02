@@ -19,4 +19,10 @@ class BaseTest: XCTestCase {
         super.tearDown()
     }
     
+    func simulateViewDidLoadFor(viewController : UIViewController){
+        let _ = viewController.view
+    }
+    
+    
+    
 }
