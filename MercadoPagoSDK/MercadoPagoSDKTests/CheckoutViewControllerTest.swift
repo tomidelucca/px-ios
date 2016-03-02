@@ -52,8 +52,11 @@ class CheckoutViewControllerTest: BaseTest {
         // Check preference description
         XCTAssertTrue(checkoutViewController!.displayPreferenceDescription)
         let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
-        XCTAssertEqual(preferenceDescriptionCell.preferenceDescription, self.checkoutViewController?.preference?.items![0].title!)
-        XCTAssertEqual(preferenceDescriptionCell.preferenceAmount, "$" + String(self.preference?.getAmount()))
+        XCTAssertEqual(preferenceDescriptionCell.preferenceDescription.text, self.checkoutViewController?.preference?.items![0].title!)
+        let preferenceAmount = preferenceDescriptionCell.preferenceAmount.text
+        
+        let amountInCHOVC = self.checkoutViewController?.preference?.getAmount()
+        XCTAssertEqual(preferenceAmount!, "$\(amountInCHOVC!)")
         //TODO:verify image path        XCTAssertEqual(preferenceDescriptionCell.shoppingCartIcon.pa,
         
         // Check empty select payment method cell

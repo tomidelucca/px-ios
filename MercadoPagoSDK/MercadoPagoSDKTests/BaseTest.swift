@@ -20,6 +20,8 @@ class BaseTest: XCTestCase {
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController){
+        let nav = UINavigationController()
+        nav.pushViewController(viewController, animated: false)
         let _ = viewController.view
     }
     
