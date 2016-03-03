@@ -33,12 +33,21 @@ class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDeleg
     }
     
     func fillCell(instruction : Instruction) -> UITableViewCell {
-        self.referenceLabelFirst.text  = instruction.references[0].label.uppercaseString
-        self.referenceValueFirst.text = instruction.references[0].getFullReferenceValue()
-        self.referenceLabelSecond.text = instruction.references[1].label.uppercaseString
-        self.referenceValueSecond.text = instruction.references[1].getFullReferenceValue()
-        self.referenceLabelThird.text = instruction.references[2].label.uppercaseString
-        self.referenceValueThird.text = instruction.references[2].getFullReferenceValue()
+        if instruction.references != nil && instruction.references.count > 0 {
+            self.referenceLabelFirst.text  = instruction.references[0].label.uppercaseString
+            self.referenceValueFirst.text = instruction.references[0].getFullReferenceValue()
+            
+            if instruction.references.count > 1 {
+                self.referenceLabelSecond.text = instruction.references[1].label.uppercaseString
+                self.referenceValueSecond.text = instruction.references[1].getFullReferenceValue()
+            }
+            
+            if instruction.references.count > 2 {
+                self.referenceLabelThird.text = instruction.references[2].label.uppercaseString
+                self.referenceValueThird.text = instruction.references[2].getFullReferenceValue()
+            }
+            
+        }
         return self
     }
     

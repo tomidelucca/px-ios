@@ -25,8 +25,15 @@ class SimpleInstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate 
     }
     
     func fillCell(instruction : Instruction) -> UITableViewCell {
-        self.infoTitle.text = instruction.info[0]
-        self.referenceValue.text = instruction.references[0].getFullReferenceValue()
+        
+        if instruction.info != nil && instruction.info.count > 0 {
+            self.infoTitle.text = instruction.info[0]
+        }
+        
+        if instruction.references != nil && instruction.references.count > 0 {
+            self.referenceValue.text = instruction.references[0].getFullReferenceValue()
+        }
+        
         return self
     }
     

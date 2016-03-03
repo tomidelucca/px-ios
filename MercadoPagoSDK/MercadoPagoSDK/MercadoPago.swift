@@ -248,6 +248,9 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
     public class func getBundle() -> NSBundle? {
+        
+       return NSBundle(forClass:MercadoPago.self)
+        
         let privatePath : NSString? = NSBundle.mainBundle().privateFrameworksPath
         if privatePath != nil {
             let path = privatePath!.stringByAppendingPathComponent("MercadoPagoSDK.framework")
@@ -349,4 +352,13 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             }
             }, failure: failure)*/
         success(payment: payment)
-    }}
+    }
+    
+    internal class func openURL(url : String){
+        let currentURL = NSURL(string: url)
+        if (currentURL != nil && UIApplication.sharedApplication().canOpenURL(currentURL!)) {
+            UIApplication.sharedApplication().openURL(currentURL!)
+        }
+    }
+}
+

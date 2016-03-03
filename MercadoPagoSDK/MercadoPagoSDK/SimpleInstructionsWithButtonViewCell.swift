@@ -28,10 +28,14 @@ class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillment
     }
     
     func fillCell(instruction : Instruction) -> UITableViewCell {
-        self.title.text  = instruction.info[0]
-        self.referenceLabel.text = instruction.references[0].label.uppercaseString
-        self.referenceValue.text = instruction.references[0].getFullReferenceValue()
-       
+        if instruction.info != nil && instruction.info.count > 0 {
+            self.title.text  = instruction.info[0]
+        }
+        
+        if instruction.references != nil && instruction.references.count > 0 {
+            self.referenceLabel.text = instruction.references[0].label.uppercaseString
+            self.referenceValue.text = instruction.references[0].getFullReferenceValue()
+        }
         return self
     }
     
