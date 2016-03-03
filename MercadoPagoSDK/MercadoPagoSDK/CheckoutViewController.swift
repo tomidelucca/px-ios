@@ -172,8 +172,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
-                payment._id = 1826446924
-                payment.paymentMethodId = "bancomer_bank_transfer"
+                payment._id = 1826290155
+                payment.paymentMethodId = "banamex_bank_transfer"
                 self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyleAndGoBack()
                     self.callback(payment)

@@ -29,7 +29,10 @@ class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDe
     }
     
     func fillCell(instruction: Instruction) -> UITableViewCell {
-        self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
+        if instruction.secondaryInfo != nil && instruction.secondaryInfo?.count > 0 {
+            self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
+            
+        }
         self.acreditationMessage.text = instruction.accreditationMessage
         return self
     }

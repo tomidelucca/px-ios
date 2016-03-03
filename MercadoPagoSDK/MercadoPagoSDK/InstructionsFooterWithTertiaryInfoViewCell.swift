@@ -30,9 +30,19 @@ class InstructionsFooterWithTertiaryInfoViewCell: UITableViewCell, InstructionsF
     }
     
     func fillCell(instruction: Instruction) -> UITableViewCell {
-        self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
-        self.secondaryInfoSubtitle.text = instruction.secondaryInfo![1]
-        self.secondayInfoComment.text = instruction.secondaryInfo![2]
+        if instruction.secondaryInfo != nil && instruction.secondaryInfo!.count > 0 {
+            self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
+            
+            if instruction.secondaryInfo?.count > 1 {
+                self.secondaryInfoSubtitle.text = instruction.secondaryInfo![1]
+            }
+            
+            if instruction.secondaryInfo!.count > 2 {
+                self.secondayInfoComment.text = instruction.secondaryInfo![2]
+            }
+            
+        }
+
         self.acreditationMessage.text = instruction.accreditationMessage
         return self
     }

@@ -28,9 +28,9 @@ public class InstructionReference: Equatable {
             reference.label = json["label"] as! String
         }
         
-        if json["value"] != nil && !(json["value"]! is NSNull) {
+        if json["field_value"] != nil && !(json["field_value"]! is NSNull) {
             reference.value = [String]()
-            let values = json["value"] as! NSArray
+            let values = json["field_value"] as! NSArray
             for val in values {
                 reference.value.append(String(val))
             }

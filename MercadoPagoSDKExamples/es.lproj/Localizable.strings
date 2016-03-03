@@ -23,7 +23,7 @@
 "step5_title" = "Flujo de pagos completo";
 "step6_title" = "Flujo de pagos completo sin tarjetas guardadas";
 "step7_title" = "Promociones";
-"step8_title" = "Flujo de Checkout con preferencia sin metodos de pago excluidos";
-"step9_title" = "Payment Vault with no payment options excluded";
-"step10_title" = "Checkout flow with cash, prepaid and debit cards excluded";
-"step11_title" = "Payment Vault with installments";
+"step8_title" = "Checkout";
+"step9_title" = "Payment Vault";
+"step10_title" = "Checkout excluyendo efectivo, tarjetas prepaid y debit";
+"step11_title" = "Payment Vault con installments";

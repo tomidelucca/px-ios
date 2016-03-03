@@ -10,8 +10,8 @@ import UIKit
 
 public class Instruction: Equatable {
     
-    var title : String!
-    var accreditationMessage : String!
+    var title : String = ""
+    var accreditationMessage : String = ""
     var references : [InstructionReference]!
     var info : [String]!
     var secondaryInfo : [String]?

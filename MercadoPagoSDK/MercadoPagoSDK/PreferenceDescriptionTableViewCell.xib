@@ -23,7 +23,7 @@
                             <constraint firstAttribute="height" constant="90" id="idW-bf-GeC"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shopping_cart" translatesAutoresizingMaskIntoConstraints="NO" id="B2E-SA-UmH">
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="regular_payment" translatesAutoresizingMaskIntoConstraints="NO" id="B2E-SA-UmH">
                         <rect key="frame" x="43" y="30" width="40" height="40"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -81,6 +81,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="shopping_cart" width="64" height="64"/>
+        <image name="regular_payment" width="30" height="25"/>
     </resources>
 </document>

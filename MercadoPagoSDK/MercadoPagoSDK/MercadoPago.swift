@@ -352,4 +352,13 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             }
             }, failure: failure)*/
         success(payment: payment)
-    }}
+    }
+    
+    internal class func openURL(url : String){
+        let currentURL = NSURL(string: url)
+        if (currentURL != nil && UIApplication.sharedApplication().canOpenURL(currentURL!)) {
+            UIApplication.sharedApplication().openURL(currentURL!)
+        }
+    }
+}
+

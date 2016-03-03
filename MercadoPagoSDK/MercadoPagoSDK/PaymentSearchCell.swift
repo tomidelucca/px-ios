@@ -13,8 +13,7 @@ class PaymentSearchCell: UITableViewCell {
     @IBOutlet weak var paymentTitle: UILabel!
     
     @IBOutlet weak var paymentIcon: UIImageView!
-    
-    @IBOutlet weak var paymentComment: UILabel!
+
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -45,10 +44,5 @@ class PaymentSearchCell: UITableViewCell {
             self.paymentTitle.hidden = true
         }
     
-        if paymentSearchItem.comment != nil {
-            self.paymentComment.text = paymentSearchItem.comment
-        } else {
-            self.paymentComment.hidden = true
-        }
     }
 }

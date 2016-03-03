@@ -17,7 +17,7 @@ class ExamplesUtils {
 //		 "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
 		// "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
 		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
-        "TEST-b130744e-3dc5-4809-b027-599109307f1e"
+        "TEST-5999d034-afe5-4005-b22f-dccb5b576d55"
     }
     class var MERCHANT_MOCK_BASE_URL : String {
         return "https://www.mercadopago.com"
@@ -91,7 +91,7 @@ class ExamplesUtils {
 		//let issuerId : NSNumber = cardIssuerId == nil ? 0 : cardIssuerId!
 		
         // Set merchant payment
-        let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, issuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
+        let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
         
         // Create payment
         MerchantServer.createPayment(ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantPaymentUri: ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI, payment: payment, success: callback, failure: nil)
