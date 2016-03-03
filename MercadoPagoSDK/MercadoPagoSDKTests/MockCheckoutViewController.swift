@@ -12,6 +12,7 @@ import UIKit
 class MockCheckoutViewController: CheckoutViewController {
     
     var paymentVaultLoaded = false
+    var preferenceDescriptionDisplayed = false
     
     override init(preference : CheckoutPreference, callback : (Payment -> Void)){
         super.init(preference: preference, callback: callback)
@@ -24,4 +25,5 @@ class MockCheckoutViewController: CheckoutViewController {
     override internal func startPaymentVault(){
         paymentVaultLoaded = true
     }
+    
 }
