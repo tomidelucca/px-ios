@@ -183,7 +183,7 @@ public class Payment : Equatable {
 
 
 
-public var binaryMode : Bool!
+
 public func ==(obj1: Payment, obj2: Payment) -> Bool {
     
     let areEqual =

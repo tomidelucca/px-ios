@@ -1072,49 +1072,41 @@
 		15E7D6E51C85D4F900101872 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				15E7D6E61C85EE4700101872 /* init */,
 				0F9883351AD2AB6000F750F0 /* Address.swift */,
+				0F9883371AD2AB6000F750F0 /* Bin.swift */,
+				0F9883381AD2AB6000F750F0 /* Card.swift */,
+				0F9883391AD2AB6000F750F0 /* Cardholder.swift */,
+				0F98833B1AD2AB6000F750F0 /* CardNumber.swift */,
 				76743C751C45A00E00120347 /* CheckoutPreference.swift */,
-				0F9883441AD2AB6000F750F0 /* Identification.swift */,
+				0F98833F1AD2AB6000F750F0 /* Customer.swift */,
 				0F9883411AD2AB6000F750F0 /* Discount.swift */,
+				0F9883421AD2AB6000F750F0 /* FeesDetail.swift */,
+				0F9883441AD2AB6000F750F0 /* Identification.swift */,
+				0F9883451AD2AB6000F750F0 /* IdentificationType.swift */,
+				0F9883461AD2AB6000F750F0 /* Installment.swift */,
+				7656CA161C7644F10043BDB2 /* Instruction.swift */,
+				7656CA1C1C7646600043BDB2 /* InstructionAction.swift */,
+				7656CA191C7645450043BDB2 /* InstructionReference.swift */,
+				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
 				0F9883481AD2AB6000F750F0 /* Item.swift */,
+				0F98834A1AD2AB6000F750F0 /* Order.swift */,
 				0F98834B1AD2AB6000F750F0 /* Payer.swift */,
 				0F98834C1AD2AB6000F750F0 /* PayerCost.swift */,
+				0F98834D1AD2AB6000F750F0 /* Payment.swift */,
 				0F98834E1AD2AB6000F750F0 /* PaymentMethod.swift */,
+				76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */,
+				76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */,
 				76743C7A1C46951100120347 /* PaymentType.swift */,
 				0F9883501AD2AB6000F750F0 /* Phone.swift */,
 				76743C771C45A24600120347 /* PreferencePaymentMethods.swift */,
+				0FC4FC171B0FAA6400CF7148 /* Promo.swift */,
 				0F9883511AD2AB6000F750F0 /* Refund.swift */,
+				0F9883531AD2AB6000F750F0 /* SecurityCode.swift */,
 				0F9883541AD2AB6000F750F0 /* Setting.swift */,
 				0F9883551AD2AB6000F750F0 /* Token.swift */,
 				0F9883561AD2AB6000F750F0 /* TransactionDetails.swift */,
-				76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */,
-				76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */,
-				7656CA191C7645450043BDB2 /* InstructionReference.swift */,
-				7656CA1C1C7646600043BDB2 /* InstructionAction.swift */,
 			);
 			name = Json;
-			sourceTree = "<group>";
-		};
-		15E7D6E61C85EE4700101872 /* init */ = {
-			isa = PBXGroup;
-			children = (
-				0F9883381AD2AB6000F750F0 /* Card.swift */,
-				0F9883371AD2AB6000F750F0 /* Bin.swift */,
-				0F9883391AD2AB6000F750F0 /* Cardholder.swift */,
-				0F98833B1AD2AB6000F750F0 /* CardNumber.swift */,
-				0F98833F1AD2AB6000F750F0 /* Customer.swift */,
-				0F9883421AD2AB6000F750F0 /* FeesDetail.swift */,
-				0F9883451AD2AB6000F750F0 /* IdentificationType.swift */,
-				0F9883461AD2AB6000F750F0 /* Installment.swift */,
-				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
-				0F98834A1AD2AB6000F750F0 /* Order.swift */,
-				0F98834D1AD2AB6000F750F0 /* Payment.swift */,
-				0F9883531AD2AB6000F750F0 /* SecurityCode.swift */,
-				0FC4FC171B0FAA6400CF7148 /* Promo.swift */,
-				7656CA161C7644F10043BDB2 /* Instruction.swift */,
-			);
-			name = init;
 			sourceTree = "<group>";
 		};
 		15EFA3341C4423DA007D67D0 /* QuickStarterKit */ = {
@@ -1222,8 +1214,8 @@
 		7672545C1C7CB12800EB5EBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */,
 				76EC47C31C85DCA10086FA53 /* AddressTest.swift */,
+				7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */,
 				76EC47C51C85E1EA0086FA53 /* BinTest.swift */,
 				76EC47C71C85E2330086FA53 /* CardTest.swift */,
 				76EC47C91C85E3C80086FA53 /* CardholderTest.swift */,
