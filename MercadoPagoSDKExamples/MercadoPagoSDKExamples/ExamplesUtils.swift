@@ -91,7 +91,7 @@ class ExamplesUtils {
 		//let issuerId : NSNumber = cardIssuerId == nil ? 0 : cardIssuerId!
 		
         // Set merchant payment
-        let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, issuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
+        let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
         
         // Create payment
         MerchantServer.createPayment(ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantPaymentUri: ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI, payment: payment, success: callback, failure: nil)

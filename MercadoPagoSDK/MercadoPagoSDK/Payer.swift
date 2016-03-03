@@ -14,7 +14,9 @@ public class Payer : Equatable {
     public var identification : Identification!
     public var type : String!
     
-    init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
+    
+    
+    public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
         self._id = _id!
         self.email = email
         self.type = type

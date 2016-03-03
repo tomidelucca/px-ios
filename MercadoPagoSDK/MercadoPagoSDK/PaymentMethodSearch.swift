@@ -15,6 +15,7 @@ public class PaymentMethodSearch: Equatable {
     
 
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearch {
+        print(String(json))
         let pmSearch = PaymentMethodSearch()
         
         var groups = [PaymentMethodSearchItem]()
