@@ -26,22 +26,24 @@ public class PreferencePaymentMethods: Equatable {
     public class func fromJSON(json : NSDictionary) -> PreferencePaymentMethods {
         let preferencePaymentMethods = PreferencePaymentMethods()
         
-        var excludedPaymentMethods = [PaymentMethod]()
+        var excludedPaymentMethods = [String]()
         if let pmArray = json["excluded_payment_methods"] as? NSArray {
             for i in 0..<pmArray.count {
-                if let pmDic = pmArray[i] as? NSDictionary {
-                    excludedPaymentMethods.append(PaymentMethod.fromJSON(pmDic))
+                if let pmDic = pmArray[i] as? String {
+                    excludedPaymentMethods.append(pmDic)
                 }
             }
+            preferencePaymentMethods.excludedPaymentMethods = excludedPaymentMethods
         }
         
-        var excludedPaymentTypes = [PaymentType]()
+        var excludedPaymentTypes = Set<PaymentTypeId>()
         if let ptArray = json["excluded_payment_types"] as? NSArray {
             for i in 0..<ptArray.count {
-                if let ptDic = ptArray[i] as? NSDictionary {
-                    excludedPaymentTypes.append(PaymentType.fromJSON(ptDic))
+                if let ptDic = ptArray[i] as? String {
+                    excludedPaymentTypes.insert(PaymentTypeId(rawValue: ptDic)!)
                 }
             }
+            preferencePaymentMethods.excludedPaymentTypes = Set<PaymentTypeId>(excludedPaymentTypes)
         }
         
         if json["default_payment_method_id"] != nil && !(json["default_payment_method_id"]! is NSNull) {

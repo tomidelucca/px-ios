@@ -44,26 +44,28 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertEqual(checkoutViewController!.preference, self.preference)
         
         // Check screen atributes are displayed properly
-        checkScreenAttributes()
+        checkInitialScreenAttributes()
         
     }
     
-    func checkScreenAttributes(){
+    func checkInitialScreenAttributes(){
         // Check preference description
         XCTAssertTrue(checkoutViewController!.displayPreferenceDescription)
         let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
         XCTAssertEqual(preferenceDescriptionCell.preferenceDescription.text, self.checkoutViewController?.preference?.items![0].title!)
         let preferenceAmount = preferenceDescriptionCell.preferenceAmount.text
-        
         let amountInCHOVC = self.checkoutViewController?.preference?.getAmount()
         XCTAssertEqual(preferenceAmount!, "$\(amountInCHOVC!)")
-        //TODO:verify image path        XCTAssertEqual(preferenceDescriptionCell.shoppingCartIcon.pa,
+        let purchaseImage = MercadoPago.getImage(preference!.items![0].pictureUrl)
+        XCTAssertEqual(purchaseImage, preferenceDescriptionCell.shoppingCartIcon.image)
+    
         
         // Check empty select payment method cell
         let cell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! SelectPaymentMethodCell
         XCTAssertEqual(cell.selectPaymentMethodLabel!.text,"Seleccione método de pago...")
-        XCTAssertTrue(checkoutViewController!.confirmPaymentButton.hidden)
         
+        // Check  confirm payment button is hidden
+        XCTAssertTrue(checkoutViewController!.confirmPaymentButton.hidden)
         
     }
     
