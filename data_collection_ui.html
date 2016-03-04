@@ -33,7 +33,7 @@
             <h1>Data-collection UI</h1>
             <p>We offer you solutions to collect both payment methods and shipping information. Using this flavor, once collected this information, you'll have to make a payment by yourself (if curious, have a look at <a href="make_payment.html">Make a payment</a>).</p>
             <p>Here, you'll learn:</p>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#guessing_form">How to launch a card from with guessing</a><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#guessing_form">How to launch a card from with guessing?</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#launch_payment_vault">How to launch a payment method selection flow</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#payment_vault_ui">How our UI looks like</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#get_payment_method_data">How to get collected data in your launcher activity</a><br>
@@ -41,15 +41,13 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#payment_method_defaults">How to set a default payment method</a><br>
 
 
-            <h2><a name="guessing_form"></a>Payment methods data collection UI</h2>
+            <h2><a name="guessing_form"></a>How to launch a card from with guessing?</h2>
 
             <p>Add this code to launch the solution:</p>
             <pre class="prettyprint">
-              // Obtain the root view controller for payment vault flow
-              let viewController = MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-                // After displaying the payment vault flow, you'll get paymentMethod, tokenId (for credit card), issuer (if necessary) and installments chosen by the buyer
-                // Here you can make the payment with the info retrieved
-             })
+              MPStepBuilder.startCreditCardForm(nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                print(paymentMethod.name)
+            })
             </pre>
             <p><a name="payment_vault_ui"></a><b>Let's see!</b></p>
             <p>The following screen is shown:</p>
