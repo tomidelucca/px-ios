@@ -11,5 +11,10 @@ import XCTest
 class DiscountTest: BaseTest {
     
 
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Discount")!
+        let discountFromJSON = Discount.fromJSON(json)
+        XCTAssertEqual(discountFromJSON, discountFromJSON)
+    }
     
 }

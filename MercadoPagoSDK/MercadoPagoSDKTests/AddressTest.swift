@@ -16,6 +16,14 @@ class AddressTest: BaseTest {
         XCTAssertEqual(address.streetNumber, 111)
         XCTAssertEqual(address.zipCode, "zipCode")
     
+        
+        
+    }
+    
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Address")!
+        let addressFromJSON = Address.fromJSON(json)
+        XCTAssertEqual(addressFromJSON, addressFromJSON)  
     }
     
     

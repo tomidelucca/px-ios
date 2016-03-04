@@ -11,4 +11,12 @@ import XCTest
 class BinTest: BaseTest {
     
     
+    
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Bin")!
+        let binFromJSON = Bin.fromJSON(json)
+        XCTAssertEqual(binFromJSON, binFromJSON)
+    }
+    
+    
 }

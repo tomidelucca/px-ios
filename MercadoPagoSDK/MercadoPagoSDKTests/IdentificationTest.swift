@@ -16,4 +16,11 @@ class IdentificationTest: BaseTest {
         XCTAssertEqual(identification.number, "number")
     }
     
+    
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Identification")!
+        let identificationFromJSON = Identification.fromJSON(json)
+        XCTAssertEqual(identificationFromJSON, identificationFromJSON)
+    }
+    
 }

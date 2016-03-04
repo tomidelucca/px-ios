@@ -16,4 +16,6 @@ class CardIssuerTest: BaseTest {
         XCTAssertEqual(cardIssuer.name, "name")
         XCTAssertEqual(cardIssuer.labels, ["label1", "label2"])
     }
+    
+    
 }

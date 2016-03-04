@@ -14,4 +14,11 @@ class InstallmentTest: BaseTest {
     
     }
     
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Installment")!
+        let installmentFromJSON = Installment.fromJSON(json)
+        XCTAssertEqual(installmentFromJSON, installmentFromJSON)
+    }
+    
+    
 }

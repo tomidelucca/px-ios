@@ -5,7 +5,7 @@
 	<key>Address</key>
 	<string>{
 &quot;street_name&quot;: &quot;street_name&quot;,
-&quot;street_number&quot;: &quot;street_number&quot;,
+&quot;street_number&quot;: &quot;0&quot;,
 &quot;zip_code&quot;: &quot;zip_code&quot;
 }</string>
 	<key>Bin</key>
@@ -13,8 +13,8 @@
 	<key>Card</key>
 	<string>{
 &quot;customer_id&quot;: &quot;customer_id&quot;,
-&quot;expiration_month&quot;: &quot;4&quot;,
-&quot;expiration_year&quot;: &quot;20&quot;,
+&quot;expiration_month&quot;: 4,
+&quot;expiration_year&quot;: 20,
 &quot;id&quot;: &quot;4&quot;,
 &quot;last_four_digits&quot;: &quot;4444&quot;,
 &quot;first_six_digits&quot;: &quot;451234&quot;,
@@ -24,7 +24,7 @@
 }
 ,
 &quot;security_code&quot;: {
-&quot;length&quot;: &quot;0&quot;,
+&quot;length&quot;: 0,
 &quot;card_location&quot;: &quot;card_location&quot;,
 &quot;mode&quot;: &quot;mode&quot;
 }
@@ -59,7 +59,7 @@
 	<key>CardNumber</key>
 	<string>{
 &quot;validation&quot;: &quot;validation&quot;,
-&quot;length&quot;: &quot;0&quot;
+&quot;length&quot;: 0
 }</string>
 	<key>Customer</key>
 	<string>{
@@ -89,8 +89,8 @@
 &quot;date_registered&quot;: &quot;0&quot;,
 &quot;cards&quot;: [{
 &quot;customer_id&quot;: &quot;customer_id&quot;,
-&quot;expiration_month&quot;: &quot;4&quot;,
-&quot;expiration_year&quot;: &quot;20&quot;,
+&quot;expiration_month&quot;: 4,
+&quot;expiration_year&quot;: 20,
 &quot;id&quot;: &quot;4&quot;,
 &quot;last_four_digits&quot;: &quot;4444&quot;,
 &quot;first_six_digits&quot;: &quot;451234&quot;,
@@ -100,7 +100,7 @@
 }
 ,
 &quot;security_code&quot;: {
-&quot;length&quot;: &quot;0&quot;,
+&quot;length&quot;: 0,
 &quot;card_location&quot;: &quot;card_location&quot;,
 &quot;mode&quot;: &quot;mode&quot;
 }
@@ -130,7 +130,7 @@
 &quot;amount_off&quot;: &quot;0&quot;,
 &quot;coupon_amount&quot;: &quot;0&quot;,
 &quot;currency_id&quot;: &quot;0&quot;,
-&quot;id&quot;: &quot;0&quot;,
+&quot;id&quot;: 0,
 &quot;name&quot;: &quot;name&quot;,
 &quot;percent_off&quot;: &quot;0&quot;
 }
@@ -139,8 +139,8 @@
 	<string>{
 &quot;type&quot;: &quot;type&quot;,
 &quot;fee_payer&quot;: &quot;fee_payer&quot;,
-&quot;amount&quot;: &quot;0&quot;,
-&quot;amount_refunded&quot;: &quot;0&quot;
+&quot;amount&quot;: 0,
+&quot;amount_refunded&quot;: 0
 }</string>
 	<key>Identification</key>
 	<string>{
@@ -178,7 +178,11 @@
 	<string>{
 &quot;title&quot;: &quot;title&quot;,
 &quot;accreditation_message&quot;: &quot;accreditation_message&quot;,
-&quot;references&quot;: &quot;xxxxxxxxxxxxxxxxxxxxx&quot;,
+&quot;references&quot;: [{
+&quot;label&quot;: &quot;label&quot;,
+&quot;value&quot;: [&quot;value&quot;],
+&quot;separator&quot;: &quot;separator&quot;
+}],
 &quot;info&quot;: [&quot;info&quot;],
 &quot;secondary_info&quot;: [&quot;secondary_info&quot;],
 &quot;tertiary_info&quot;: [&quot;tertiary_info&quot;]
@@ -560,24 +564,17 @@
 }</string>
 	<key>SecurityCode</key>
 	<string>{
-&quot;length&quot;: &quot;0&quot;,
+&quot;length&quot;: 40,
+&quot;card_location&quot;: &quot;card_location&quot;,
+&quot;mode&quot;: &quot;mode&quot;
+}</string>
+	<key>Setting</key>
+	<string>{
+&quot;length&quot;: 0,
 &quot;card_location&quot;: &quot;card_location&quot;,
 &quot;mode&quot;: &quot;mode&quot;
 }
 </string>
-	<key>Setting</key>
-	<string>{
-&quot;bin&quot;: {&quot;pattern&quot;: &quot;4&quot;,&quot;exclusion_pattern&quot;: &quot;(487017)&quot;,&quot;installments_pattern&quot;: &quot;4&quot;},
-&quot;card_number&quot;: {
-&quot;validation&quot;: &quot;validation&quot;,
-&quot;length&quot;: &quot;0&quot;
-},
-&quot;security_code&quot;: {
-&quot;length&quot;: &quot;0&quot;,
-&quot;card_location&quot;: &quot;card_location&quot;,
-&quot;mode&quot;: &quot;mode&quot;
-}
-}</string>
 	<key>Token</key>
 	<string>{
 &quot;id&quot;: &quot;id&quot;,
