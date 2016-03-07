@@ -49,6 +49,32 @@
                 print(paymentMethod.name)
             })
             </pre>
+            <p>You can set the paymentType that you want, or just included all of them. See the signature of "MPStepBuilder.startCreditCardForm"</p>
+            <pre class="prettyprint">
+              startCreditCardForm(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod,
+                        token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController
+
+            </pre>
+
+            <p>Payment Type ids : </p>
+            <pre class="prettyprint">
+                DEBIT_CARD
+                CREDIT_CARD
+                ACCOUNT_MONEY
+                TICKET
+                BANK_TRANSFER
+                ATM
+                BITCOIN
+                PREPAID_CARD
+            </pre>
+
+              <p>Example pre setting CREDIT_CARD</p>
+              <pre class="prettyprint">
+                MPStepBuilder.startCreditCardForm(PaymentType.CREDIT_CARD, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                  print(paymentMethod.name)
+              })
+              </pre>
+
             <p><a name="payment_vault_ui"></a><b>Let's see!</b></p>
             <p>The following screen is shown:</p>
             <img class="centered" src="images/isoScreenshots/revamp-groups.png" alt="revamp-inicio">
