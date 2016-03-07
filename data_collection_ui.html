@@ -43,12 +43,17 @@
 
             <h2><a name="guessing_form"></a>How to launch a card from with guessing?</h2>
 
+
+<p> <img src="images/isoScreenshots/guessing1.png" alt="revamp-inicio"><img src="images/isoScreenshots/guessing2.png" alt="revamp-inicio"><img src="images/isoScreenshots/guessing3.png" alt="revamp-inicio"><img src="images/isoScreenshots/guessing4.png" alt="revamp-inicio"></p>
+
+
             <p>Add this code to launch the solution:</p>
             <pre class="prettyprint">
               MPStepBuilder.startCreditCardForm(nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
                 print(paymentMethod.name)
             })
             </pre>
+            <img class="centered" src="images/isoScreenshots/revamp-groups.png" alt="revamp-inicio">
             <p>You can set the paymentType that you want, or just included all of them. See the signature of "MPStepBuilder.startCreditCardForm"</p>
             <pre class="prettyprint">
               startCreditCardForm(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod,
@@ -65,8 +70,7 @@
                 BANK_TRANSFER
                 ATM
                 BITCOIN
-                PREPAID_CARD
-            </pre>
+                PREPAID_CARD</pre>
 
               <p>Example pre setting CREDIT_CARD</p>
               <pre class="prettyprint">
