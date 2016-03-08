@@ -33,11 +33,62 @@
             <h1>Data-collection UI</h1>
             <p>We offer you solutions to collect both payment methods and shipping information. Using this flavor, once collected this information, you'll have to make a payment by yourself (if curious, have a look at <a href="make_payment.html">Make a payment</a>).</p>
             <p>Here, you'll learn:</p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#guessing_form">How to launch a card from with guessing?</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#launch_payment_vault">How to launch a payment method selection flow</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#payment_vault_ui">How our UI looks like</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#get_payment_method_data">How to get collected data in your launcher activity</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#payment_method_exclusions">How exclude payment methods, payment types and more</a><br>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#payment_method_defaults">How to set a default payment method</a><br>
+
+
+            <h2><a name="guessing_form"></a>How to launch a card from with guessing?</h2>
+
+
+<p> <img src="images/isoScreenshots/guessing1.png" alt="g1"><img src="images/isoScreenshots/guessing2.png" alt="g2"><img src="images/isoScreenshots/guessing3.png" alt="g3"><img src="images/isoScreenshots/guessing4.png" alt="g4"></p>
+
+
+            <p>Add this code to launch the solution:</p>
+            <pre class="prettyprint">
+              MPStepBuilder.startCreditCardForm(nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                print(paymentMethod.name)
+            })
+            </pre>
+            <img class="centered" src="images/isoScreenshots/revamp-groups.png" alt="revamp-inicio">
+            <p>You can set the paymentType that you want, or just included all of them. See the signature of "MPStepBuilder.startCreditCardForm"</p>
+            <pre class="prettyprint">
+              startCreditCardForm(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod,
+                        token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController
+
+            </pre>
+
+            <p>Payment Type ids : </p>
+            <pre class="prettyprint">
+                DEBIT_CARD
+                CREDIT_CARD
+                ACCOUNT_MONEY
+                TICKET
+                BANK_TRANSFER
+                ATM
+                BITCOIN
+                PREPAID_CARD</pre>
+
+              <p>Example pre setting CREDIT_CARD</p>
+              <pre class="prettyprint">
+                MPStepBuilder.startCreditCardForm(PaymentType.CREDIT_CARD, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                  print(paymentMethod.name)
+              })
+              </pre>
+
+            <p><a name="payment_vault_ui"></a><b>Let's see!</b></p>
+            <p>The following screen is shown:</p>
+            <img class="centered" src="images/isoScreenshots/revamp-groups.png" alt="revamp-inicio">
+            <p class="image_footer">Payment method choise example</p>
+            <p>Your users can visualize their purchase information by clicking on the shopping cart icon:</p>
+            <img class="centered" src="images/screenshots/revamp-shopping_cart.png" alt="revamp-shopping_cart">
+            <p class="image_footer">Information shown when clicking on icon in the upper right corner of the screen</p>
+
+            <p>Within this screen, your user will be able to choose a payment method by going into the shown options, as we'll see in the following sections.</p>
+
 
 
           <h2><a name="launch_payment_vault"></a>Payment methods data collection UI</h2>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MercadoPagoSDKExamplesTests/TestDataManager.swift"
+            timestampString = "478468807.624749"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "getJSONFor(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../MercadoPagoSDK/MercadoPagoSDK/PaymentType.swift"
+            timestampString = "478632769.315163"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "fromJSON(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDKTests.PaymentType.fromJSON (MercadoPagoSDKTests.PaymentType.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDKTests.PaymentType"
+                  moduleName = "MercadoPagoSDKTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentType.swift"
+                  timestampString = "478728467.541999"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDK.PaymentType.fromJSON (MercadoPagoSDK.PaymentType.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDK.PaymentType"
+                  moduleName = "MercadoPagoSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/PaymentType.swift"
+                  timestampString = "478728467.54416"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../MercadoPagoSDK/MercadoPagoSDK/TransactionDetails.swift"
+            timestampString = "478632795.417755"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "fromJSON(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDKTests.TransactionDetails.fromJSON (MercadoPagoSDKTests.TransactionDetails.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDKTests.TransactionDetails"
+                  moduleName = "MercadoPagoSDKTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/TransactionDetails.swift"
+                  timestampString = "478728467.54257"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDK.TransactionDetails.fromJSON (MercadoPagoSDK.TransactionDetails.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDK.TransactionDetails"
+                  moduleName = "MercadoPagoSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/TransactionDetails.swift"
+                  timestampString = "478728467.544616"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../MercadoPagoSDK/MercadoPagoSDK/Instruction.swift"
+            timestampString = "478728392.201858"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "fromJSON(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDKTests.Instruction.fromJSON (MercadoPagoSDKTests.Instruction.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDKTests.Instruction"
+                  moduleName = "MercadoPagoSDKTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/Instruction.swift"
+                  timestampString = "478728467.54293"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "3823">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static MercadoPagoSDK.Instruction.fromJSON (MercadoPagoSDK.Instruction.Type)(__ObjC.NSDictionary) -&gt; MercadoPagoSDK.Instruction"
+                  moduleName = "MercadoPagoSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dtejo/Documents/Projects/Private/px-ios/MercadoPagoSDK/MercadoPagoSDK/Instruction.swift"
+                  timestampString = "478728467.544975"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "3823">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
