@@ -17,7 +17,8 @@ public class MercadoPagoService : NSObject {
         self.baseURL = baseURL
     }
     
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func request(uri: String, params: String?, body: AnyObject?, method: String, success: (jsonResult: AnyObject?) -> Void,
+        failure: ((error: NSError) -> Void)?) {
         
         var url = baseURL + uri
         if params != nil {

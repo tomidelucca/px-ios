@@ -14,7 +14,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak private var tableview : UITableView!
 	
     let examples : [String] = ["step1_title".localized, "step2_title".localized, "step3_title".localized, "step4_title".localized,
-    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized]
+    "step5_title".localized, "step6_title".localized, "step7_title".localized, "step8_title".localized, "step9_title".localized, "step10_title".localized, "step11_title".localized, "step12_title".localized, "step13_title".localized]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -102,9 +102,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
         case 8:
             
-            let excludedPaymentMethods = ["banamex_ticket, bancomer_ticket"]
-            
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
 
             }))
@@ -113,8 +111,29 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }))
         case 10:
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
+            
+            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
+            }))
+        case 11:
+            let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
+            let excludedPaymentTypes = Set([PaymentTypeId.BANK_TRANSFER, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
+            
+            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+                
+            }))
+        case 12:
+            let excludedPaymentMethods = ["bancomer_bank_transfer", "banamex_bank_transfer"]
+            let excludedPaymentTypes = Set([PaymentTypeId.CREDIT_CARD, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
+            
+            let preference = ExamplesUtils.createCheckoutPreference()
+            preference.paymentMethods?.excludedPaymentMethods = excludedPaymentMethods
+            preference.paymentMethods!.excludedPaymentTypes = excludedPaymentTypes
+
+            
+            self.showViewController(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
+
             }))
         default:
             print("Otra opcion")

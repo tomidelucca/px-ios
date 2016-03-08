@@ -14,7 +14,7 @@ class MockBuilder: NSObject {
         let preference = CheckoutPreference()
         preference._id = "xxx"
         preference.items = [self.buildItem("itemId", quantity: 1, unitPrice: 10), self.buildItem("itemId2", quantity: 2, unitPrice: 10)]
-        preference.payer = self.buildPayer(1, type: "type")
+        preference.payer = Payer.fromJSON(MockManager.getMockFor("Payer")!)
         return preference
     }
     
@@ -40,7 +40,7 @@ class MockBuilder: NSObject {
     
     
     class func buildPaymentMethod(id : String) -> PaymentMethod {
-        let paymentMethod = PaymentMethod()
+        let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
         return paymentMethod
     }

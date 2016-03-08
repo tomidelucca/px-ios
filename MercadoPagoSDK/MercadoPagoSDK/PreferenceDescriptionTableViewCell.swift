@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreferenceDescriptionTableViewCell: UITableViewCell {
+public class PreferenceDescriptionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var preferenceDescription: UILabel!
     
@@ -17,7 +17,7 @@ class PreferenceDescriptionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shoppingCartIconContainer: UIView!
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         let tintedImage = self.shoppingCartIcon.image!.imageWithRenderingMode(.AlwaysTemplate)
@@ -30,7 +30,7 @@ class PreferenceDescriptionTableViewCell: UITableViewCell {
     
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override public func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

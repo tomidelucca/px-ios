@@ -130,7 +130,7 @@ public class PaymentMethod : Equatable {
     
     
     public func isOfflinePaymentMethod() -> Bool {
-        return self.paymentTypeId.isOfflinePayment()
+        return self.paymentTypeId != nil && self.paymentTypeId.isOfflinePayment()
     }
     
 }

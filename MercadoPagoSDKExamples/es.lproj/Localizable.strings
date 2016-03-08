@@ -25,5 +25,7 @@
 "step7_title" = "Promociones";
 "step8_title" = "Checkout";
 "step9_title" = "Payment Vault";
-"step10_title" = "Checkout excluyendo efectivo, tarjetas prepaid y debit";
-"step11_title" = "Payment Vault con installments";
+"step10_title" = "Checkout excluyendo Oxxo, Bancomer BT y Debito";
+"step11_title" = "Payment Vault con installments, excluyendo todo efectivo menos Oxxo";
+"step12_title" = "Payment Vault, Tarjeta de credito solamente disponible";
+"step13_title" = "Checkout solo con Serfin BT";

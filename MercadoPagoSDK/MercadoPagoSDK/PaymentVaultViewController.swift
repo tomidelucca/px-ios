@@ -197,35 +197,40 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 
                 self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
             }), animated: true)
-        } else  if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
+        } else {
+            self.optionSelected(paymentSearchItemSelected)
+        }
+    }
+    
+    internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true){
+        if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
-                self.cardFlow(PaymentType(paymentTypeId: paymentTypeId!))
+                self.cardFlow(PaymentType(paymentTypeId: paymentTypeId!), animated : animated)
             } else {
                 self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
                     //TODO : verificar que con off issuer/installments es asi
                     self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
-                }), animated: true)
+                }), animated: animated)
             }
         } else if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_METHOD {
             if paymentSearchItemSelected.idPaymentMethodSearchItem == "account_money" {
-                //wallet
-            } else if paymentSearchItemSelected.idPaymentMethodSearchItem == "digital_currency" {
-            
+                //MP wallet
+            } else if paymentSearchItemSelected.idPaymentMethodSearchItem == "bitcoin" {
+                
             } else {
-                //if atm-ticket -bitcoin
-                //TODO: ir a buscarlo!!!
-                let paymentMethod = PaymentMethod()
-                paymentMethod._id = paymentSearchItemSelected.idPaymentMethodSearchItem
-                paymentMethod.comment = paymentSearchItemSelected.comment
-                //TODO: esto explota si pm esta en origen
-                paymentMethod.paymentTypeId = PaymentTypeId(rawValue: self.paymentMethodSearchParent!.idPaymentMethodSearchItem)
-                self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
-                //else if cc
+                MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+                    let paymentMethodSelected = paymentMethods?.filter({ return $0._id == paymentSearchItemSelected.idPaymentMethodSearchItem})[0]
+                    self.callback(paymentMethod: paymentMethodSelected!, tokenId: nil, issuer: nil, installments: 1)
+                    
+                    }, failure: { (error) -> Void in
+                        //TODO
+                })
             }
         }
+    
     }
     
     private func loadPaymentMethodGroups(){
@@ -233,6 +238,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             MPServicesBuilder.searchPaymentMethods(self.excludedPaymentTypes, excludedPaymentMethods: self.excludedPaymentMethods, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 
                 self.paymentMethodsSearch = paymentMethodSearchResponse.groups
+                if self.paymentMethodsSearch.count == 1 {
+                    self.optionSelected(self.paymentMethodsSearch[0], animated: false)
+                }
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
                 
@@ -249,12 +257,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     }
     
-    internal func cardFlow(paymentType: PaymentType){
+    internal func cardFlow(paymentType: PaymentType, animated : Bool){
         self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
             //TODO
             self.navigationController?.popViewControllerAnimated(true)
             self.callback!(paymentMethod: paymentMethod, tokenId: token?._id, issuer: issuer, installments: 1)
-        }), animated: true)
+        }), animated: animated)
     }
     
     internal func executeBack(){

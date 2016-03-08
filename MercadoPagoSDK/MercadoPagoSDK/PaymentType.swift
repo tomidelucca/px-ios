@@ -41,7 +41,7 @@ public enum PaymentTypeId :String {
     case TICKET = "ticket"
     case BANK_TRANSFER = "bank_transfer"
     case ATM = "atm"
-    case BITCOIN = "bitcoin"
+    case BITCOIN = "digital_currency"
     case PREPAID_CARD = "prepaid_card"
     
     public func isCard() -> Bool {

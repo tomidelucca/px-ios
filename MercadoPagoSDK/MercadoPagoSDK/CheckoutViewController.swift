@@ -186,6 +186,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     self.callback(payment)
                 }), animated: true)
             } else {
+                self.clearMercadoPagoStyleAndGoBack()
                 self.navigationController?.popViewControllerAnimated(true)
             }
             

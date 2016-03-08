@@ -29,6 +29,9 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertEqual(paymentVaultViewController!.merchantAccessToken,  MercadoPagoContext.merchantAccessToken())
         XCTAssertNil(paymentVaultViewController?.paymentMethodsSearch)
         
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
+        
+        
     }
     
 }

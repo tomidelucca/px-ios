@@ -9,8 +9,8 @@
 import UIKit
 
 public class PreferencePaymentMethods: Equatable {
-    var excludedPaymentMethods : [String]?
-    var excludedPaymentTypes : Set<PaymentTypeId>?
+    public var excludedPaymentMethods : [String]?
+    public var excludedPaymentTypes : Set<PaymentTypeId>?
     var defaultPaymentMethodId : String?
     var installments : Int?
     var defaultInstallments : Int?
