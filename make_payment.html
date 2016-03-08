@@ -31,7 +31,7 @@
           <h1>Make a payment</h1>
           <p>To create a payment, the basic information needed is:</p>
           <ul>
-            <li>MercadoPago’s token</li>
+            <li>Credit card token</li>
             <li>Payment method</li>
             <li>Issuer (if needed, some payment methods don’t need it to be sent)</li>
           </ul>
@@ -43,32 +43,46 @@
           <br>
           <p>Create a MerchantPayment object:</p>
          <pre class="prettyprint">
-            MerchantServer.createPayment(activity, DUMMY_MERCHANT_BASE_URL, DUMMY_MERCHANT_CREATE_PAYMENT_URI, payment, new Callback&lt;Payment&gt;() {
-               @Override
-               public void success(Payment payment, Response response) {
-                   new MercadoPago.StartActivityBuilder()  //when payment creation suceeded, you can launch our payment result UI
-                           .setActivity(activity)
-                           .setPayment(payment)
-                           .setPaymentMethod(paymentMethod)
-                           .startCongratsActivity();
-               }
-               @Override
-               public void failure(RetrofitError error) {
-                   LayoutUtil.showRegularLayout(activity);
-                   Toast.makeText(activity, error.getMessage(), Toast.LENGTH_LONG).show();
-               }
-            });
+           MerchantServer.createPayment("url", merchantPaymentUri: "paymentUri", payment: merchantPayment, success: { (payment) -> Void in
+             // Handle payment created here
+           }) { (error) -> Void in
+             // Handle error here
+           }
         </pre>
         <br>
-        <p>And finally, aleluya!</p>
-        <img class="centered" src="images/screenshots/congratulations.png" alt="congratualtions">
-        <br>
-        <p>Also, payments could remain pending...</p>
-        <img class="centered" src="images/screenshots/pending_payment.png" alt="pending_payment">
+        <h1>Display payment result</h1>
 
-        <p>...or be rejected:</p>
-        <img class="centered" src="images/screenshots/rejected_payment.png" alt="rejected_payment">
-        <br>
+       We recommend to use our UI solutions to display the payment result. The result should be different for instant payments or offline payment methods, such as atm or ticket.
+
+       You can check wheter a payment is automatic or not and start a corresponding UI as follows:
+       <pre class="prettyprint">
+         let viewControllerToDisplayAfterPayment : UIViewController
+         if paymentMethod.isCard() {
+           viewControllerToDisplayAfterPayment = MPStepBuilder.startCongratsStep(payment, paymentMethod: paymentMethod)
+         } else {
+           // Offline Payment
+           viewControllerToDisplayAfterPayment = MPStepBuilder.startInstructionsStep(payment, callback: { (payment) -> Void in
+             // Handle payment retrieved after instructions were displayed
+           })
+         }
+         self.navigationController?.pushViewController(viewControllerToDisplayAfterPayment, animated: true)
+      </pre>
+      <br>
+      <h2>Online payments</h2>
+      <p>If the payment method was online, you'll see a congrats screen:</p>
+       <img class="centered" src="images/screenshots/congratulations.png" alt="congratualtions">
+       <br>
+       <p>Also, payments could remain pending...</p>
+       <img class="centered" src="images/screenshots/pending_payment.png" alt="pending_payment">
+
+       <p>...or be rejected:</p>
+       <img class="centered" src="images/screenshots/rejected_payment.png" alt="rejected_payment">
+       <br>
+       <h2>Offline payments</h2>
+       <p>If the payment method was offline, you'll see a screen with instructions like:</p>
+       <img class="centered" src="images/screenshots/revamp-instructions.png" alt="congratualtions">
+       <br>
+
         <p>You can implement your own UI to show the result of the payment. <b><i>Payment</i></b> has a "status" attribute, that could be one of the following:</p>
         <p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;approved<br>
