@@ -79,6 +79,15 @@
                     <constraint firstItem="xqg-B6-Ysx" firstAttribute="top" secondItem="o0l-Fi-5l2" secondAttribute="bottom" constant="12" id="unF-cg-I4U"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="firstReferenceLabel" destination="xqg-B6-Ysx" id="h6F-7f-pgd"/>
+                <outlet property="firstReferenceValue" destination="vaq-2z-cTo" id="DXY-HE-Rrz"/>
+                <outlet property="infoTitle" destination="o0l-Fi-5l2" id="3E3-qh-KJY"/>
+                <outlet property="secondReferenceLabel" destination="OhL-we-ZXP" id="PNq-97-mCG"/>
+                <outlet property="secondReferenceValue" destination="4H6-pM-y8w" id="hKf-AH-rUO"/>
+                <outlet property="thirdReferenceLabel" destination="845-Us-WBm" id="8UU-cY-5s0"/>
+                <outlet property="thirdReferenceValue" destination="KWs-oE-awP" id="vex-Dg-4Ce"/>
+            </connections>
             <point key="canvasLocation" x="402" y="241"/>
         </tableViewCell>
     </objects>

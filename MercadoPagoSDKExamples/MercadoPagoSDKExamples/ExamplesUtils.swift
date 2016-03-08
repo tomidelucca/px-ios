@@ -102,6 +102,7 @@ class ExamplesUtils {
         // Create items
         let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, title : ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
+        item_1.currencyId = "MXN"
         var items = [Item]()
         items.append(item_1)
         

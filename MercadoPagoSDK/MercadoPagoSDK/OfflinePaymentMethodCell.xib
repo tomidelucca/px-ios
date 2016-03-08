@@ -16,15 +16,12 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp">
-                        <rect key="frame" x="8" y="55" width="311" height="16"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="16" id="suQ-Vc-wMR"/>
-                        </constraints>
+                        <rect key="frame" x="8" y="46" width="311" height="25"/>
                         <attributedString key="attributedText">
                             <fragment content="Se acreditará en 7 días">
                                 <attributes>
-                                    <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="14" name="HelveticaNeue-Light"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -41,6 +38,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" id="9Bz-2Y-wq2"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Y8d-Nr-Ptp" secondAttribute="trailing" id="MHS-3g-u6a"/>
                     <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="NRN-S7-Wkm"/>
                     <constraint firstItem="N1r-JA-UCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="XHx-am-Hzd"/>
@@ -48,6 +46,7 @@
                     <constraint firstItem="N1r-JA-UCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ofq-qN-7vU"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="comment" destination="Y8d-Nr-Ptp" id="EFp-5M-bfU"/>
                 <outlet property="iconImage" destination="N1r-JA-UCo" id="Oyg-0Z-EUi"/>

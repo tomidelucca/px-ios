@@ -38,11 +38,11 @@ class InstructionsTwoLabelsAndButtonViewCell: UITableViewCell, InstructionsFillm
         }
         
         if instruction.references != nil && instruction.references.count > 0 {
-            self.referenceLabelFirst.text = instruction.references[0].label
+            self.referenceLabelFirst.text = instruction.references[0].label.uppercaseString
             self.referenceValueFirst.text = instruction.references[0].getFullReferenceValue()
             
             if (instruction.references.count > 1) {
-                self.referenceLabelSecond.text = instruction.references[1].label
+                self.referenceLabelSecond.text = instruction.references[1].label.uppercaseString
                 self.referenceValueSecond.text = instruction.references[1].getFullReferenceValue()
             }
         }

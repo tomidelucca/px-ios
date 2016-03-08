@@ -62,6 +62,13 @@
                     <constraint firstAttribute="trailingMargin" secondItem="Egg-41-tvn" secondAttribute="trailing" constant="10" id="umt-qk-s0j"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="firstReferenceTitle" destination="Egg-41-tvn" id="58A-Cf-6tp"/>
+                <outlet property="firstReferenceValue" destination="nAN-hX-P6g" id="YLw-UP-2DC"/>
+                <outlet property="infoTitle" destination="b5V-Nu-HgE" id="FXU-r6-K4j"/>
+                <outlet property="secondReferenceTitle" destination="5NQ-jo-2jq" id="3yA-sl-Lef"/>
+                <outlet property="secondReferenceValue" destination="l2R-az-ntX" id="tTg-i8-sQO"/>
+            </connections>
             <point key="canvasLocation" x="233" y="174.5"/>
         </tableViewCell>
     </objects>

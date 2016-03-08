@@ -21,7 +21,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 190],
         "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
-        "telecom" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
+        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "bankTransferInstructionsFooterCell", "footer_height" : 64],
@@ -48,7 +48,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if currentInstruction == nil {
             registerAllCells()
-            MPServicesBuilder.getInstructionsByPaymentId(payment._id, success: { (instruction) -> Void in
+            MPServicesBuilder.getInstructionsByPaymentId(payment._id, paymentMethodId: payment.paymentMethodId, success: { (instruction) -> Void in
                 self.currentInstruction = instruction
                 self.congratsTable.delegate = self
                 self.congratsTable.dataSource = self

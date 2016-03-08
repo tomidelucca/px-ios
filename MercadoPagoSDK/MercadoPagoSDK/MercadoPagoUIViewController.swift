@@ -20,12 +20,14 @@ public class MercadoPagoUIViewController: UIViewController {
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
+        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
+        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem = shoppingCartButton
 
-                self.loadMPStyles()
+        self.loadMPStyles()
     }
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,7 +36,8 @@ public class MercadoPagoUIViewController: UIViewController {
     
     internal func loadMPStyles(){
         //Navigation bar colors
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let titleDict: NSDictionary = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
+
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
@@ -59,7 +62,7 @@ public class MercadoPagoUIViewController: UIViewController {
     
     internal func togglePreferenceDescription(table : UITableView){
         displayPreferenceDescription = !displayPreferenceDescription
-        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Top)
     }
 
     

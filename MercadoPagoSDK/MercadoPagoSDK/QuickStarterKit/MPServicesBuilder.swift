@@ -214,9 +214,9 @@ public class MPServicesBuilder : NSObject {
     
     }
     
-    public class func getInstructionsByPaymentId(paymentId : Int, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
+    public class func getInstructionsByPaymentId(paymentId : Int, paymentMethodId : String, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
         let instructionsService = InstructionsService()
-        instructionsService.getInstructionsForPaymentId(paymentId, success:  { (instruction) -> Void in
+        instructionsService.getInstructionsForPaymentId(paymentId, paymentMethodId: paymentMethodId, success:  { (instruction) -> Void in
             success(instruction: instruction)
         }, failure : failure)
     }

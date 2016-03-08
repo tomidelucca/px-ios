@@ -16,7 +16,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var amount : Double!
     var excludedPaymentTypes : Set<PaymentTypeId>!
     var excludedPaymentMethods : [String]!
-    var currencyId : String?
+    var currencyId : String!
     var purchaseTitle : String!
     var callback : ((paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void)!
     var paymentMethodsSearch : [PaymentMethodSearchItem]!
@@ -33,7 +33,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     @IBOutlet weak var paymentsTable: UITableView!
     
-    internal init(amount: Double, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    internal init(amount: Double, currencyId : String, purchaseTitle : String, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -41,15 +41,17 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.title = title
         self.tintColor = false
         self.amount = amount
+        self.purchaseTitle = purchaseTitle
+        self.currencyId = currencyId
         self.paymentMethodSearchParent = paymentMethodSearchParent
         self.paymentMethodsSearch = paymentMethodSearch
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
-     //       self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
     }
     
-    init(amount: Double, currencyId: String?, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, installments : Int, defaultInstallments : Int, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, currencyId: String, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, installments : Int, defaultInstallments : Int, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
@@ -60,7 +62,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.purchaseTitle = purchaseTitle
         self.currencyId = currencyId
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
-      //      self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
             callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
         }
         self.installments = installments
@@ -97,10 +99,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.navigationItem.rightBarButtonItem!.target = self
         self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
-        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         
-        self.paymentsTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0);
+        self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
+        
         
         loadPaymentMethodGroups()
 
@@ -191,7 +193,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         
         
         if (paymentSearchItemSelected.children.count > 0) {
-            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+            self.navigationController?.pushViewController(PaymentVaultViewController(amount: self.amount, currencyId : self.currencyId!, purchaseTitle : self.purchaseTitle, paymentMethodSearch: paymentSearchItemSelected.children, paymentMethodSearchParent: paymentSearchItemSelected, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
                 
                 self.callback(paymentMethod: paymentMethod, tokenId: nil, issuer: nil, installments: 1)
             }), animated: true)
@@ -250,7 +252,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal func cardFlow(paymentType: PaymentType){
         self.navigationController?.pushViewController(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
             //TODO
-            //self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
             self.callback!(paymentMethod: paymentMethod, tokenId: token?._id, issuer: issuer, installments: 1)
         }), animated: true)
     }

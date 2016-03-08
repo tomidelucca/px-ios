@@ -54,13 +54,14 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         let selectPaymentMethodCell = UINib(nibName: "SelectPaymentMethodCell", bundle: self.bundle)
         self.checkoutTable.registerNib(selectPaymentMethodCell, forCellReuseIdentifier: "selectPaymentMethodCell")
 
-        self.checkoutTable.contentInset = UIEdgeInsetsMake(-35.0, 0.0, 0.0, 0.0)
+        
+        self.checkoutTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.checkoutTable.bounds.size.width, 0.01))
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         
         self.confirmPaymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
-        self.confirmPaymentButton.layer.cornerRadius = 5
+        self.confirmPaymentButton.layer.cornerRadius = 4
         self.confirmPaymentButton.clipsToBounds = true
         self.confirmPaymentButton.setAttributedTitle(NSAttributedString(string: "Pagar $".localized +  String(preference!.getAmount())), forState: .Normal)
         if self.paymentMethod == nil {
@@ -74,6 +75,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         //Clear styles before leaving SDK
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBackAnimated")
         self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
         
         self.startPaymentVault()
     }
@@ -147,7 +149,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
 
     internal func startPaymentVault(){
-        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: (preference?.items![0].currencyId), purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+
+        //TODO : currency no deberia venir de item!
+        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: (preference?.items![0].currencyId)!, purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             self.navigationController?.popToViewController(self, animated: true)
             self.paymentMethod = paymentMethod
             self.tokenId = tokenId
@@ -158,6 +162,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             
             self.checkoutTable.reloadData()
         })
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         self.navigationController?.pushViewController(paymentVault, animated: true)
     }
     
@@ -173,7 +178,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
                 payment._id = 1826290155
-                payment.paymentMethodId = "banamex_bank_transfer"
+                if payment.paymentMethodId == "telecom" {
+                    payment.paymentMethodId = "telecomm"
+                }
                 self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyleAndGoBack()
                     self.callback(payment)

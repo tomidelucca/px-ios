@@ -24,6 +24,7 @@
                     <constraint firstItem="5d5-66-hic" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="uk4-zX-Wqu"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="paymentMethodImage" destination="5d5-66-hic" id="VqP-d4-PaB"/>
             </connections>

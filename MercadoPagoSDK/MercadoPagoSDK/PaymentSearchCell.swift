@@ -17,6 +17,7 @@ class PaymentSearchCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.separatorInset = UIEdgeInsetsZero
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +31,6 @@ class PaymentSearchCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
     }
     
     func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, iconImage: UIImage, tintColor : Bool){
