@@ -2,6 +2,152 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>groups_one_option</key>
+	<string></string>
+	<key>groups</key>
+	<string>{
+  &quot;groups&quot;: [
+    {
+      &quot;type&quot;: &quot;group&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;cards&quot;,
+      &quot;description&quot;: &quot;Tarjetas&quot;,
+      &quot;children_header&quot;: &quot;¿Con que tarjeta?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;debit_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta de débito&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;credit_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta de crédito&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;prepaid_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta prepaga de MercadoPago&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;payment_type&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;bank_transfer&quot;,
+      &quot;description&quot;: &quot;Transferencia Bancaria&quot;,
+      &quot;children_header&quot;: &quot;¿Cuál es tu banco?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;serfin_bank_transfer&quot;,
+          &quot;description&quot;: &quot;Santander&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;banamex_bank_transfer&quot;,
+          &quot;description&quot;: &quot;Banamex&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;bancomer_bank_transfer&quot;,
+          &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;payment_type&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;ticket&quot;,
+      &quot;description&quot;: &quot;Efectivo&quot;,
+      &quot;children_header&quot;: &quot;¿Dónde quieres pagar?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;oxxo&quot;,
+          &quot;description&quot;: &quot;Oxxo&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;serfin_ticket&quot;,
+          &quot;description&quot;: &quot;Santander&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;banamex_ticket&quot;,
+          &quot;description&quot;: &quot;Banamex&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;bancomer_ticket&quot;,
+          &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;7eleven&quot;,
+          &quot;description&quot;: &quot;7eleven&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;gestopago&quot;,
+          &quot;description&quot;: &quot;Gestopago&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;telecomm&quot;,
+          &quot;description&quot;: &quot;Telecomm&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;payment_method&quot;,
+      &quot;comment&quot;: &quot;Se acreditará en 2 hábiles&quot;,
+      &quot;id&quot;: &quot;bitcoin&quot;,
+      &quot;description&quot;: &quot;Bitcoin&quot;,
+      &quot;children_header&quot;: null,
+      &quot;children&quot;: null
+    }
+  ]
+}</string>
 	<key>Address</key>
 	<string>{
 &quot;street_name&quot;: &quot;street_name&quot;,

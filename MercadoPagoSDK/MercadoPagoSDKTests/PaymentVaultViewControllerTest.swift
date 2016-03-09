@@ -31,6 +31,16 @@ class PaymentVaultViewControllerTest: BaseTest {
         
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
+        XCTAssertNotNil(self.paymentVaultViewController?.paymentMethodsSearch)
+        XCTAssertTrue(self.paymentVaultViewController?.paymentMethodsSearch!.count > 1)
+        XCTAssertNotNil(self.paymentVaultViewController?.paymentsTable)
+        // Verify preference description row
+        XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(0) == 0)
+        // Payments options
+        XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(1) > 0)
+        
+        
+        
         
     }
     
