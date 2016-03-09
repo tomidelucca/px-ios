@@ -221,8 +221,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             } else if paymentSearchItemSelected.idPaymentMethodSearchItem == "bitcoin" {
                 
             } else {
+                // Offline Payment Method
                 MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                     let paymentMethodSelected = paymentMethods?.filter({ return $0._id == paymentSearchItemSelected.idPaymentMethodSearchItem})[0]
+                    paymentMethodSelected!.comment = paymentSearchItemSelected.comment
                     self.callback(paymentMethod: paymentMethodSelected!, tokenId: nil, issuer: nil, installments: 1)
                     
                     }, failure: { (error) -> Void in

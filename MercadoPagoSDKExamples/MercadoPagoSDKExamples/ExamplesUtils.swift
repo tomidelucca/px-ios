@@ -52,7 +52,7 @@ class ExamplesUtils {
     }
     
     class var ITEM_TITLE : String {
-        return "Item title"
+        return "This is the title for an item purchased, extremely long so you can test how a long title will be displayed in the app"
     }
     
     class var ITEM_QUANTITY : Int {
