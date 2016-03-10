@@ -62,7 +62,7 @@ public class MercadoPagoUIViewController: UIViewController {
     
     internal func togglePreferenceDescription(table : UITableView){
         displayPreferenceDescription = !displayPreferenceDescription
-        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Top)
+        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Middle)
     }
 
     

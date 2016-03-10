@@ -56,8 +56,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
         
-        
-        self.checkoutTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.checkoutTable.bounds.size.width, 0.01))
         self.checkoutTable.separatorStyle = UITableViewCellSeparatorStyle.None
         
         self.checkoutTable.delegate = self
@@ -84,7 +82,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : 10
+        if section == 0 && displayPreferenceDescription {
+            return 0.1
+        }
+        return 20
     }
     
     
