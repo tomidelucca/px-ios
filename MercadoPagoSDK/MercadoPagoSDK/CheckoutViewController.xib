@@ -17,14 +17,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" sectionIndexMinimumDisplayRowCount="2" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="VkR-tF-r3h">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="546"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 1999-2016 Procesado por MercadoPago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ADv-Vz-bhT">
+                    <rect key="frame" x="10" y="566" width="580" height="14"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="VkR-tF-r3h" secondAttribute="bottom" id="X4v-nf-qWl"/>
+                <constraint firstItem="ADv-Vz-bhT" firstAttribute="top" secondItem="VkR-tF-r3h" secondAttribute="bottom" constant="20" id="2j6-9M-aDf"/>
+                <constraint firstItem="ADv-Vz-bhT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="CEP-x1-uBn"/>
                 <constraint firstAttribute="trailing" secondItem="VkR-tF-r3h" secondAttribute="trailing" id="bcE-Ea-ktO"/>
+                <constraint firstAttribute="bottom" secondItem="ADv-Vz-bhT" secondAttribute="bottom" constant="20" id="cb4-3x-eZk"/>
+                <constraint firstAttribute="trailing" secondItem="ADv-Vz-bhT" secondAttribute="trailing" constant="10" id="kP2-9E-CZd"/>
                 <constraint firstItem="VkR-tF-r3h" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mGX-dt-3bu"/>
                 <constraint firstItem="VkR-tF-r3h" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rod-pZ-Y1h"/>
             </constraints>

@@ -56,7 +56,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
         
-        self.checkoutTable.separatorStyle = UITableViewCellSeparatorStyle.None
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -88,7 +87,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         return 20
     }
     
-    
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             if self.displayPreferenceDescription {
@@ -102,14 +100,14 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         } else if indexPath.row == 1 {
             return 60
         }
-        return 150
+        return 180
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
-    
+
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return self.displayPreferenceDescription ? 1 : 0
@@ -149,6 +147,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
         termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+
         return termsAndConditionsButton
     }
     
