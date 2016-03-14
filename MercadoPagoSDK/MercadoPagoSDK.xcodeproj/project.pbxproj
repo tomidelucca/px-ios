@@ -248,6 +248,10 @@
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
 		155692D21C47DA1200521403 /* PreferencePaymentMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PreferencePaymentMethods.swift */; };
 		15714BAA1C85CC800019945E /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
+		157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
+		157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */; };
+		157AA6841C970C0600CC9B43 /* PaymentDescriptionFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA64641C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.xib */; };
+		157AA6851C970C0A00CC9B43 /* PaymentDescriptionFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64631C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.swift */; };
 		15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18B1C88B2E4007D0C4E /* MockManager.swift */; };
 		15A7B18E1C88BFDF007D0C4E /* CardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18D1C88BFDF007D0C4E /* CardTest.swift */; };
 		15E7D6E81C87164E00101872 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
@@ -1563,6 +1567,7 @@
 				0F9884181AD2AE2700F750F0 /* MPCardNumberTableViewCell.xib in Resources */,
 				0FC4FC2A1B0FB2B200CF7148 /* PromosTyCTableViewCell.xib in Resources */,
 				0F98842C1AD2AE3100F750F0 /* NewCardViewController.xib in Resources */,
+				157AA6841C970C0600CC9B43 /* PaymentDescriptionFooterTableViewCell.xib in Resources */,
 				0F9884461AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.xib in Resources */,
 				76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				0FC4FC3C1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
@@ -1577,6 +1582,7 @@
 				1529D96F1C7C8EC500880C29 /* green_promo.png in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
 				0F9883D11AD2AD5500F750F0 /* PaymentTotalTableViewCell.xib in Resources */,
+				157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */,
 				76B64B251C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
 				761B89451C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib in Resources */,
 				0F9884041AD2ADEE00F750F0 /* IssuersViewController.xib in Resources */,
@@ -1862,6 +1868,7 @@
 				76FD247A1C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				76EC47E61C85F3070086FA53 /* PayerTest.swift in Sources */,
 				0F98838E1AD2AB6000F750F0 /* Phone.swift in Sources */,
+				157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */,
 				0F98841A1AD2AE2700F750F0 /* MPCardNumberTableViewCell.swift in Sources */,
 				0F9883741AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
 				76151B661C737608007DF0E3 /* CongratsWithInstructionsViewController.swift in Sources */,
@@ -1892,6 +1899,7 @@
 				0FC4FC2E1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				76EC47CC1C85E3E60086FA53 /* CardIssuerTest.swift in Sources */,
 				0F9883E91AD2ADB000F750F0 /* PaymentMethodTableViewCell.swift in Sources */,
+				157AA6851C970C0A00CC9B43 /* PaymentDescriptionFooterTableViewCell.swift in Sources */,
 				767254681C7CB2AB00EB5EBA /* CheckoutViewControllerTest.swift in Sources */,
 				0F98841E1AD2AE2700F750F0 /* MPExpirationDateTableViewCell.swift in Sources */,
 				0F9883781AD2AB6000F750F0 /* IdentificationType.swift in Sources */,

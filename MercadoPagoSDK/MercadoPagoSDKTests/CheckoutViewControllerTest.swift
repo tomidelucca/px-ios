@@ -68,8 +68,6 @@ class CheckoutViewControllerTest: BaseTest {
         let cell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! SelectPaymentMethodCell
         XCTAssertEqual(cell.selectPaymentMethodLabel!.text,"Seleccione método de pago...")*/
         
-        // Check  confirm payment button is hidden
-        XCTAssertTrue(checkoutViewController!.confirmPaymentButton.hidden)
         
     }
     
