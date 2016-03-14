@@ -55,18 +55,57 @@ class CheckoutViewControllerTest: BaseTest {
         let sections = checkoutViewController?.numberOfSectionsInTableView((checkoutViewController?.checkoutTable)!)
         XCTAssertEqual(sections, 2)
         
-      /*  let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
+        checkoutViewController?.checkoutTable.reloadData()
+        XCTAssertNotNil(checkoutViewController?.checkoutTable)
+        
+        let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
         XCTAssertEqual(preferenceDescriptionCell.preferenceDescription.text, self.checkoutViewController?.preference?.items![0].title!)
         let preferenceAmount = preferenceDescriptionCell.preferenceAmount.text
         let amountInCHOVC = self.checkoutViewController?.preference?.getAmount()
         XCTAssertEqual(preferenceAmount!, "$\(amountInCHOVC!)")
-        let purchaseImage = MercadoPago.getImage(preference!.items![0].pictureUrl)
-        XCTAssertEqual(purchaseImage, preferenceDescriptionCell.shoppingCartIcon.image)
-    
         
-        // Check empty select payment method cell
-        let cell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! SelectPaymentMethodCell
-        XCTAssertEqual(cell.selectPaymentMethodLabel!.text,"Seleccione método de pago...")*/
+        let pmSelectionCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath:  NSIndexPath(forRow: 0, inSection: 1)) as! SelectPaymentMethodCell
+        XCTAssertEqual(pmSelectionCell.selectPaymentMethodLabel.text, "Seleccione método de pago...".localized)
+        
+        let paymentTotalCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath:  NSIndexPath(forRow: 1, inSection: 1)) as! PaymentDescriptionFooterTableViewCell
+        XCTAssertEqual(paymentTotalCell.paymentTotalDescription.text, "Total a pagar $".localized + "\(amountInCHOVC!)")
+        
+        let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as!TermsAndConditionsViewCell
+        XCTAssertNotNil(termsAndConditionsCell)
+        
+        
+    }
+    
+    func testTogglePreferenceDescription(){
+        self.simulateViewDidLoadFor(self.checkoutViewController!)
+        XCTAssertTrue(self.checkoutViewController!.displayPreferenceDescription)
+        self.checkoutViewController?.togglePreferenceDescription()
+        XCTAssertFalse(self.checkoutViewController!.displayPreferenceDescription)
+        
+    }
+    
+    func testTestConfirmPayment(){
+        self.simulateViewDidLoadFor(self.checkoutViewController!)
+        self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("oxxo")
+        self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.TICKET
+        self.checkoutViewController!.confirmPayment()
+    }
+    
+    func testViewWillLoad(){
+        self.checkoutViewController?.viewWillAppear(true)
+        XCTAssertTrue(self.checkoutViewController!.mpStylesLoaded)
+    }
+    
+    func testOfflinePaymentMethodSelectedCell(){
+        self.simulateViewDidLoadFor(self.checkoutViewController!)
+        self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("bancomer_ticket")
+        self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.TICKET
+        self.checkoutViewController!.paymentMethod!.comment = "comment"
+        
+        let paymentMethodCell = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
+        XCTAssertEqual(checkoutViewController?.title, "Revisa si está todo bien...".localized)
+        let cellComment = paymentMethodCell.comment.text!
+        XCTAssertEqual(cellComment, self.checkoutViewController!.paymentMethod!.comment!)
         
         
     }

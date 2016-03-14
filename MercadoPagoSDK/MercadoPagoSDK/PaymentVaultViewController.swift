@@ -279,5 +279,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal func togglePreferenceDescription(){
         self.togglePreferenceDescription(self.paymentsTable)
     }
+
     
 }
