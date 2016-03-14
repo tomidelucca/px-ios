@@ -10,5 +10,10 @@ import XCTest
 
 class SettingTest: BaseTest {
     
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Setting")!
+        let settingCodeFromJSON = Setting.fromJSON(json)
+        XCTAssertEqual(settingCodeFromJSON, settingCodeFromJSON)
+    }
     
 }

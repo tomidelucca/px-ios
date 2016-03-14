@@ -64,7 +64,7 @@ public func ==(obj1: Promo, obj2: Promo) -> Bool {
     obj1.issuer == obj2.issuer &&
     obj1.recommendedMessage == obj2.recommendedMessage &&
     obj1.paymentMethods == obj2.paymentMethods &&
-    obj1.legals == obj2.legals &&
+  //  obj1.legals == obj2.legals &&
     obj1.url == obj2.url
     
     return areEqual

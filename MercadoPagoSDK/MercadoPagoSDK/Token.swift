@@ -85,14 +85,14 @@ public func ==(obj1: Token, obj2: Token) -> Bool {
     obj1.luhnValidation == obj2.luhnValidation &&
     obj1.status == obj2.status &&
     obj1.usedDate == obj2.usedDate &&
-    obj1.cardNumberLength == obj2.cardNumberLength &&
-    obj1.creationDate == obj2.creationDate &&
+   // obj1.cardNumberLength == obj2.cardNumberLength &&
+  //  obj1.creationDate == obj2.creationDate &&
     obj1.truncCardNumber == obj2.truncCardNumber &&
     obj1.securityCodeLength == obj2.securityCodeLength &&
     obj1.expirationMonth == obj2.expirationMonth &&
     obj1.expirationYear == obj2.expirationYear &&
-    obj1.lastModifiedDate == obj2.lastModifiedDate &&
-    obj1.dueDate == obj2.dueDate
+    obj1.lastModifiedDate == obj2.lastModifiedDate// &&
+  //  obj1.dueDate == obj2.dueDate
     
     return areEqual
 }

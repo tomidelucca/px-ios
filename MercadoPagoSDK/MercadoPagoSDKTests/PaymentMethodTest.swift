@@ -13,4 +13,10 @@ class PaymentMethodTest: BaseTest {
     func testIsIssuerRequired(){
         
     }
+} 
+
+func testFromJSON(){
+    let json : NSDictionary = MockManager.getMockFor("PaymentMethod")!
+    let paymentMethodFromJSON = PaymentMethodSearchItem.fromJSON(json)
+    XCTAssertEqual(paymentMethodFromJSON, paymentMethodFromJSON)
 }

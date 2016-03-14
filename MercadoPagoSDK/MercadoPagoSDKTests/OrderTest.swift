@@ -10,5 +10,12 @@ import XCTest
 
 class OrderTest: BaseTest {
 
+ 
+    
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Order")!
+        let orderFromJSON = Order.fromJSON(json)
+        XCTAssertEqual(orderFromJSON, orderFromJSON)
+    }
     
 }

@@ -16,4 +16,8 @@ class PaymentTypeTest: BaseTest {
         
     }
     
+    
+    
+
+    
 }

@@ -11,4 +11,10 @@ import XCTest
 class TransactionDetailsTest: BaseTest {
     
     
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("TransactionDetails")!
+        let transactionDetailsFromJSON = TransactionDetails.fromJSON(json)
+        XCTAssertEqual(transactionDetailsFromJSON, transactionDetailsFromJSON)
+    }
+
 }

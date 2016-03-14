@@ -32,4 +32,10 @@ class PaymentTest: BaseTest {
         }
     }
     
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Payment")!
+        let paymentFromJSON = Payment.fromJSON(json)
+        XCTAssertEqual(paymentFromJSON, paymentFromJSON)
+    }
+    
 }

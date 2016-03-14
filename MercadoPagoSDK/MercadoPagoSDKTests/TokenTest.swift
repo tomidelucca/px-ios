@@ -33,4 +33,9 @@ class TokenTest: BaseTest {
         
     }
     
+    func testFromJSON(){
+        let json : NSDictionary = MockManager.getMockFor("Token")!
+        let tokenCodeFromJSON = Token.fromJSON(json)
+        XCTAssertEqual(tokenCodeFromJSON, tokenCodeFromJSON)
+    }
 }

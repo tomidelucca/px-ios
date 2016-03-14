@@ -188,7 +188,7 @@ public func ==(obj1: Payment, obj2: Payment) -> Bool {
     
     let areEqual =
     obj1.tokenId == obj2.tokenId &&
-    obj1.binaryMode == obj2.binaryMode &&
+    //obj1.binaryMode == obj2.binaryMode &&
     obj1.issuerId == obj2.issuerId &&
     obj1.differentialPricingId == obj2.differentialPricingId &&
     obj1.couponAmount == obj2.couponAmount &&
@@ -205,21 +205,21 @@ public func ==(obj1: Payment, obj2: Payment) -> Bool {
     obj1.payer == obj2.payer &&
     obj1.order == obj2.order &&
     obj1.notificationUrl == obj2.notificationUrl &&
-    obj1.moneyReleaseDate == obj2.moneyReleaseDate &&
-    obj1.metadata == obj2.metadata &&
-    obj1.liveMode == obj2.liveMode &&
+  //  obj1.moneyReleaseDate == obj2.moneyReleaseDate &&
+   // obj1.metadata == obj2.metadata &&
+  //  obj1.liveMode == obj2.liveMode &&
     obj1.installments == obj2.installments &&
     obj1._id == obj2._id &&
     obj1.feesDetails == obj2.feesDetails &&
     obj1.externalReference == obj2.externalReference &&
     obj1._description == obj2._description &&
-    obj1.dateLastUpdated == obj2.dateLastUpdated &&
-    obj1.dateCreated == obj2.dateCreated &&
-    obj1.dateApproved == obj2.dateApproved &&
+   // obj1.dateLastUpdated == obj2.dateLastUpdated &&
+    //obj1.dateCreated == obj2.dateCreated &&
+  //  obj1.dateApproved == obj2.dateApproved &&
     obj1.currencyId == obj2.currencyId &&
-    obj1.card == obj2.card &&
-    obj1.captured == obj2.captured &&
-    obj1.callForAuthorizeId == obj2.callForAuthorizeId
+    obj1.card == obj2.card //&&
+    //obj1.captured == obj2.captured &&
+   // obj1.callForAuthorizeId == obj2.callForAuthorizeId
     
     return areEqual
 }
