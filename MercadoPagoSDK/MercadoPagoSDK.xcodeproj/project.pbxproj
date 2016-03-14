@@ -336,6 +336,7 @@
 		7656F5221C9725710076A14D /* PaymentDescriptionFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA64641C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.xib */; };
 		7656F5231C97258C0076A14D /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		7656F5251C9726A60076A14D /* PaymentMethodSearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656F5241C9726A60076A14D /* PaymentMethodSearchServiceTest.swift */; };
+		7656F5261C9742470076A14D /* PaymentTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */; };
 		7672545B1C7CB0EC00EB5EBA /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767254591C7CB0EC00EB5EBA /* BaseTest.swift */; };
 		7672545F1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672545D1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift */; };
 		767254641C7CB18200EB5EBA /* MercadoPagoContextTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767254621C7CB18200EB5EBA /* MercadoPagoContextTest.swift */; };
@@ -1561,6 +1562,7 @@
 				1529D96E1C7C8EC500880C29 /* blue_promo.png in Resources */,
 				76151B981C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */,
 				76B64B191C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */,
+				7656F5261C9742470076A14D /* PaymentTitleViewCell.xib in Resources */,
 				0F98843A1AD2AE6200F750F0 /* InstallmentsViewController.xib in Resources */,
 				76151B701C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib in Resources */,
 				0F9883E11AD2AD5500F750F0 /* CongratsViewController.xib in Resources */,

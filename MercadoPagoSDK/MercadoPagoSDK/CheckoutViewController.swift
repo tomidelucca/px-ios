@@ -192,9 +192,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
                 payment._id = 1826290155
-                if payment.paymentMethodId == "telecom" {
-                    payment.paymentMethodId = "telecomm"
-                }
                 self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyleAndGoBack()
                     self.callback(payment)
@@ -212,10 +209,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func togglePreferenceDescription(){
         self.togglePreferenceDescription(self.checkoutTable)
-        
-     //   if self.displayPreferenceDescription {
-//            self.checkoutTable.reloadData()
-       // }
     }
     
 }
