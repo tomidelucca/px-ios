@@ -18,7 +18,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = ["oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 137, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
-        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 190],
+        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 200],
         "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
