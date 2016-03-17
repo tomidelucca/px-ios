@@ -55,6 +55,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="ZhC-tP-w0C" secondAttribute="trailing" constant="10" id="ubp-cf-lf4"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="acreditationMessage" destination="cx9-db-AyN" id="HUg-3S-Nnj"/>
                 <outlet property="clockIcon" destination="SPw-T8-EjX" id="WmV-8q-PR7"/>

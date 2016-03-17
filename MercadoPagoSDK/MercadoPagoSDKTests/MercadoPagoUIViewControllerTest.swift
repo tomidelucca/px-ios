@@ -1,0 +1,33 @@
+//
+//  MercadoPagoUIViewControllerTest.swift
+//  MercadoPagoSDK
+//
+//  Created by Maria cristina rodriguez on 15/3/16.
+//  Copyright © 2016 MercadoPago. All rights reserved.
+//
+
+import XCTest
+
+class MercadoPagoUIViewControllerTest: BaseTest {
+    
+    let viewController = MercadoPagoUIViewController()
+
+    override func setUp() {
+        self.simulateViewDidLoadFor(self.viewController)
+    }
+
+    func testClearMercadoPagoStyleAndGoBack(){
+        self.setUp()
+        self.viewController.clearMercadoPagoStyleAndGoBack()
+        XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.titleTextAttributes == nil)
+        XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.barTintColor == nil)
+    }
+    
+    func testClearMercadoPagoStyleAndGoBackAnimated(){
+        self.setUp()
+        self.viewController.clearMercadoPagoStyleAndGoBackAnimated()
+        XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.titleTextAttributes == nil)
+        XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.barTintColor == nil)
+    }
+    
+}

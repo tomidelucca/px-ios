@@ -65,6 +65,7 @@
                     <constraint firstItem="ljZ-V3-wZ9" firstAttribute="top" secondItem="g7e-cP-gQZ" secondAttribute="bottom" constant="16" id="sQY-53-74S"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="acreditationMessage" destination="l8B-8M-37j" id="yLg-hk-N5V"/>
                 <outlet property="clockIcon" destination="ljZ-V3-wZ9" id="3q9-aM-pqJ"/>

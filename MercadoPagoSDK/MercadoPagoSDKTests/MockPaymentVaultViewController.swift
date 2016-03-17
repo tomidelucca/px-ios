@@ -43,6 +43,7 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
     }
     
     internal override func cardFlow(paymentType: PaymentType, animated : Bool){
+        super.cardFlow(paymentType, animated: true)
         self.cardFlowStarted = true
     }
 

@@ -10,6 +10,14 @@ import Foundation
 
 class MockBuilder: NSObject {
     
+    internal class var MOCK_PAYMENT_ID : Int {
+        return 1826290155
+    }
+    
+    internal class var MOCK_PUBLIC_KEY : String {
+        return "TEST-5999d034-afe5-4005-b22f-dccb5b576d55"
+    }
+    
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
         preference._id = "xxx"
@@ -66,6 +74,13 @@ class MockBuilder: NSObject {
         return card
     }
     
+    class func buildPayment(paymentMethodId : String) -> Payment {
+        let payment = Payment()
+        payment._id = self.MOCK_PAYMENT_ID
+        payment.paymentMethodId = paymentMethodId
+        return payment
+    }
+    
     
     class func buildPaymentMethodSearchItem(paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
         let paymentMethodSearchItem = PaymentMethodSearchItem()
@@ -83,5 +98,10 @@ class MockBuilder: NSObject {
     
     class func getMockPaymentTypeIds() -> Set<PaymentTypeId>{
         return Set([PaymentTypeId.BITCOIN, PaymentTypeId.ACCOUNT_MONEY])
+    }
+    
+    class func buildPaymentType() -> PaymentType{
+        let creditCardPaymentTypeId = PaymentTypeId.CREDIT_CARD
+        return PaymentType(paymentTypeId: creditCardPaymentTypeId)
     }
 }

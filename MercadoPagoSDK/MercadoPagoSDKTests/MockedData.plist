@@ -2,17 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>groups_one_option</key>
-	<string>{
-	&quot;groups&quot;: [{
-		&quot;type&quot;: &quot;payment_type&quot;,
-		&quot;comment&quot;: &quot;&quot;,
-		&quot;id&quot;: &quot;credit_card&quot;,
-		&quot;description&quot;: &quot;Tarjeta de crédito&quot;,
-		&quot;children_header&quot;: null,
-		&quot;children&quot;: null
-	}]
-}</string>
 	<key>groups</key>
 	<string>{
   &quot;groups&quot;: [
@@ -156,6 +145,17 @@
       &quot;children&quot;: null
     }
   ]
+}</string>
+	<key>groups_one_option</key>
+	<string>{
+	&quot;groups&quot;: [{
+		&quot;type&quot;: &quot;payment_type&quot;,
+		&quot;comment&quot;: &quot;&quot;,
+		&quot;id&quot;: &quot;credit_card&quot;,
+		&quot;description&quot;: &quot;Tarjeta de crédito&quot;,
+		&quot;children_header&quot;: null,
+		&quot;children&quot;: null
+	}]
 }</string>
 	<key>Address</key>
 	<string>{

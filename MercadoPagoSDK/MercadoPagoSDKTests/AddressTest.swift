@@ -15,9 +15,6 @@ class AddressTest: BaseTest {
         XCTAssertEqual(address.streetName, "name")
         XCTAssertEqual(address.streetNumber, 111)
         XCTAssertEqual(address.zipCode, "zipCode")
-    
-        
-        
     }
     
     func testFromJSON(){

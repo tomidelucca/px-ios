@@ -18,8 +18,20 @@ public class MercadoPagoService: NSObject {
     
     public func request(uri: String, params: String?, body: AnyObject?, method: String, success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
-            //TODO
-            let jsonResponse = MockManager.getMockFor("groups")
-            success(jsonResult: jsonResponse)
+            var finalUri = uri
+            if params != nil {
+                finalUri = finalUri + "?" + params!
+            }
+            do {
+                let jsonResponse = try MockManager.getMockResponseFor(finalUri, method: method)
+                if (jsonResponse != nil && jsonResponse!["error"] != nil){
+                    failure!(error: NSError(domain: uri, code: 400, userInfo: nil))
+                    return
+                }
+                success(jsonResult: jsonResponse)
+            } catch {
+                failure!(error: NSError(domain: uri, code: 400, userInfo: nil))
+            }
+            
     }
 }
