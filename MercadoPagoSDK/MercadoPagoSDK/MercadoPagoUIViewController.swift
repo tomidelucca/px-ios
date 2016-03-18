@@ -61,6 +61,11 @@ public class MercadoPagoUIViewController: UIViewController {
     }
     
     internal func togglePreferenceDescription(table : UITableView){
+        if displayPreferenceDescription {
+            self.rightButtonShoppingCart()
+        } else {
+            self.rightButtonClose()
+        }
         displayPreferenceDescription = !displayPreferenceDescription
         table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Middle)
     }
@@ -76,6 +81,40 @@ public class MercadoPagoUIViewController: UIViewController {
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.Portrait
+    }
+    
+    public func rightButtonClose(){
+        let action = self.navigationItem.rightBarButtonItem?.action
+        var shoppingCartImage = MercadoPago.getImage("iconClose")
+        shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
+        let shoppingCartButton = UIBarButtonItem()
+        shoppingCartButton.image = shoppingCartImage
+        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
+        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+        shoppingCartButton.title = ""
+        shoppingCartButton.target = self
+        shoppingCartButton.tintColor = UIColor.whiteColor()
+        if action != nil {
+            shoppingCartButton.action = action!
+        }
+        self.navigationItem.rightBarButtonItem = shoppingCartButton
+    }
+    
+    public func rightButtonShoppingCart(){
+        let action = self.navigationItem.rightBarButtonItem?.action
+        var shoppingCartImage = MercadoPago.getImage("regular_payment")
+        shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
+        let shoppingCartButton = UIBarButtonItem()
+        shoppingCartButton.image = shoppingCartImage
+        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
+        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
+        shoppingCartButton.title = ""
+        shoppingCartButton.target = self
+        shoppingCartButton.tintColor = UIColor.whiteColor()
+        if action != nil {
+            shoppingCartButton.action = action!
+        }
+        self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
     
 }
