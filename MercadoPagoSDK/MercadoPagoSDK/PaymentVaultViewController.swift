@@ -35,14 +35,18 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     internal init(amount: Double, currencyId : String, purchaseTitle : String, paymentMethodSearch : [PaymentMethodSearchItem], paymentMethodSearchParent : PaymentMethodSearchItem, title: String!, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
-        self.merchantBaseUrl = MercadoPagoContext.baseURL()
-        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
+        self.merchantBaseUrl = MercadoPagoContext.baseURL() //distinta de null y vacia
+        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()//Distinta de null y vacio
+        //Installment > 0
+        
+        //Vaidar que no excluyo todos los payment method
+        
         self.publicKey = MercadoPagoContext.publicKey()
         self.title = title
         self.tintColor = false
-        self.amount = amount
-        self.purchaseTitle = purchaseTitle
-        self.currencyId = currencyId
+        self.amount = amount // mayor o igual a 0
+        self.purchaseTitle = purchaseTitle // que sea distinto de null y vacio
+        self.currencyId = currencyId // arg, brasil, chile, colombia, mexico, venezuela, eeuu
         self.paymentMethodSearchParent = paymentMethodSearchParent
         self.paymentMethodsSearch = paymentMethodSearch
         self.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in

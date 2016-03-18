@@ -11,10 +11,38 @@ import UIKit
 public class CheckoutPreference : Equatable {
     
     public var _id : String!
-    public var items : [Item]?
+    public var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
+                               // que cada item no sea nulo, que su cantidad sea 1 o mayor
+                                // que el precio no sea nulo, ni menor o igual a cero
+                                // currency no nula
+                                // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
     public var payer : Payer?
-    public var paymentMethods : PreferencePaymentMethods?
+    public var paymentMethods : PreferencePaymentMethods? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+                                                        // excluded_payment_method < payment_methods
+                                                        //excluded_payment_types < payment_types
+    
+    
+    
+    
+    
     //shipments
+    
+    //DATE ACTIVE = expiration_date_from
+    //DATE EXPIRATION = expiration_date_to
+    // que el dia actual caiga en ese rango (de activacion) OJO!!! PUEDEN SER NULAS LAS FECHAS, en ese caso, no mueren nunca, y siempre es valida la preference
+    
+    public func validate() -> Bool{
+    
+        if(items == nil){
+            return false
+        }
+        if(items?.count == 0){
+            return false
+        }
+        //VALIDAR CADA ITEM
+        //VALIDAR PREFERENCE PAYMENT METHOD
+        return true
+    }
     
     public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PreferencePaymentMethods? = nil){
         self.items = items

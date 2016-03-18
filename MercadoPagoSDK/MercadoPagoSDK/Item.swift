@@ -9,6 +9,13 @@
 import Foundation
 
 public class Item : Equatable {
+    
+    // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
+    // que cada item no sea nulo, que su cantidad sea 1 o mayor
+    // que el precio no sea nulo, ni menor o igual a cero
+    // currency no nula
+    // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
+
     public var _id : String!
     public var quantity : Int = 0
     public var unitPrice : Double = 0
@@ -17,7 +24,21 @@ public class Item : Equatable {
     public var categoryId : String!
     public var pictureUrl : String!
     
+    public func validate() -> Bool{
+        
+        if(quantity <= 0){
+            return false
+        }
+        if(unitPrice <= 0){
+            return false
+        }
+        //VALIDAR CADA ITEM
+        //VALIDAR PREFERENCE PAYMENT METHOD
+        return true
+    }
 
+    
+    
     public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0) {
         self._id = _id
         self.title = title
