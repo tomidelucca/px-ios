@@ -14,7 +14,8 @@ class PaymentVaultViewControllerTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes:  MockBuilder.getMockPaymentTypeIds(), excludedPaymentMethods: ["visa"], installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+        MercadoPagoContext.setPublicKey("TEST-5999d034-afe5-4005-b22f-dccb5b576d55")
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             
         })
     }
@@ -93,6 +94,31 @@ class PaymentVaultViewControllerTest: BaseTest {
 
     }
     
+    func testDrawinfOfflinePaymentMethodCell(){
+        
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
+        
+        XCTAssertTrue(self.paymentVaultViewController!.paymentMethodsSearch.count > 1)
+        
+        let bankTransferOptionSelected = self.paymentVaultViewController!.paymentMethodsSearch[1] as PaymentMethodSearchItem
+        let bankTransferOptions = bankTransferOptionSelected.children
+        XCTAssertTrue(bankTransferOptions.count > 0)
+        
+        let offlinePaymentMethods = PaymentMethodSearch.fromJSON(MockManager.getMockFor("groups")!).groups[1].children
+
+        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearch: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, title: "Payment Vault Title") { (paymentMethod, tokenId, issuer, installments) -> Void in
+            
+        }
+        
+        self.simulateViewDidLoadFor(paymentVault)
+        XCTAssertEqual(paymentVault.title, "Payment Vault Title")
+        XCTAssertEqual(paymentVault.paymentMethodsSearch, bankTransferOptions)
+        let bankTransferOptionCell = paymentVault.tableView(paymentVault.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
+        XCTAssertNotNil(bankTransferOptionCell)
+        XCTAssertEqual(bankTransferOptionCell.comment.text, offlinePaymentMethods[0].comment)
+        
+    }
+    
     func testViewWillAppear(){
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         self.paymentVaultViewController!.viewWillAppear(true)
@@ -139,14 +165,12 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testOptionSelectedPaymentMethodOffline(){
-        var paymentMethodOffSelected = false
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
         
         self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
-            paymentMethodOffSelected = true
         }
         
         self.paymentVaultViewController!.optionSelected(pmSearchItem)
@@ -164,6 +188,50 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertTrue(self.paymentVaultViewController!.cardFlowStarted)
     }
     
+    func testOptionSelectedOfflinePaymentMethod(){
+        
+        let pmSearchItem = PaymentMethodSearchItem()
+        pmSearchItem.comment = "comment"
+        pmSearchItem.idPaymentMethodSearchItem = "oxxo"
+        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
+
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+            
+        }
+        self.paymentVaultViewController!.optionSelected(pmSearchItem)
+        //TODO: TEST EXPECTATION DE CALLBACK :|
+
+    }
+    
+    func testOptionSelectedBitcoin(){
+
+        
+        let pmSearchItem = PaymentMethodSearchItem()
+        pmSearchItem.comment = "comment"
+        pmSearchItem.idPaymentMethodSearchItem = "bitcoin"
+        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
+        
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+           
+        }
+        self.paymentVaultViewController!.optionSelected(pmSearchItem)
+    }
+        
+    func testOptionSelectedPaymentGroup(){
+        
+        let pmSearchItem = PaymentMethodSearchItem()
+        pmSearchItem.comment = "comment"
+        pmSearchItem.idPaymentMethodSearchItem = "ticket"
+        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_TYPE
+        
+        self.paymentVaultViewController!.optionSelected(pmSearchItem)
+    }
+    
+    func testCardFlow(){
+        self.paymentVaultViewController!.cardFlow(MockBuilder.buildPaymentType(), animated: true)
+        XCTAssertTrue(self.paymentVaultViewController!.cardFlowStarted)
+        
+    }
 }
 
 

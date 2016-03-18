@@ -21,7 +21,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 200],
         "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116],
-        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
+        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 264, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 200],
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 168],
@@ -69,7 +69,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,11 +77,11 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return  section == 1 ? 20 : 0.00000000000000001
+        return  section == 1 ? 20 : 0.01
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.00000000000000001
+        return 0.01
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -89,15 +89,29 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
             instructionsHeaderCell.headerTitle.text = self.currentInstruction!.title
+            instructionsHeaderCell.layer.shadowOffset = CGSizeMake(0, 1)
+            instructionsHeaderCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+            instructionsHeaderCell.layer.shadowRadius = 3
+            instructionsHeaderCell.layer.shadowOpacity = 0.6
             return instructionsHeaderCell
         }
         
         if indexPath.section == 1 {
-            return self.resolveInstructionsBodyViewCell(self.payment.paymentMethodId)!
+            let bodyViewCell = self.resolveInstructionsBodyViewCell(self.payment.paymentMethodId)!
+            return bodyViewCell
         }
         
-        return self.resolveInstructionsFooter(self.payment.paymentMethodId)!
+        if indexPath.section == 2 {
+            let footer = self.resolveInstructionsFooter(self.payment.paymentMethodId)!
+            footer.layer.shadowOffset = CGSizeMake(0, 1)
+            footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+            footer.layer.shadowRadius = 3
+            footer.layer.shadowOpacity = 0.6
+            return footer
+        }
         
+        let copyrightCell =  self.congratsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
+        return copyrightCell
     }
     
     
@@ -105,7 +119,12 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 0 {
             return 182
         }
-        return indexPath.section == 1 ? self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId) : self.resolveInstructionsFooterHeight(self.payment.paymentMethodId)
+        if indexPath.section == 1  {
+            return self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId)
+        } else if indexPath.section == 2 {
+            return self.resolveInstructionsFooterHeight(self.payment.paymentMethodId)
+        }
+        return 60
     }
 
     
@@ -156,7 +175,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let defaultInstructionsFooterCell = UINib(nibName: "DefaultInstructionsFooterViewCell", bundle: self.bundle)
         let instructionFooterWithTertiaryInfoCell = UINib(nibName: "InstructionsFooterWithTertiaryInfoViewCell", bundle: self.bundle)
         let instructionFooterWithSecondaryInfoCell = UINib(nibName: "InstructionsFooterWithSecondaryInfoViewCell", bundle: self.bundle)
-        let bankTransferInstructionFooterCell = UINib(nibName: "BankTransferInstructionsFooterViewCell", bundle: self.bundle)
+        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
         
         // Register cell nibs in table
         self.congratsTable.registerNib(instructionsHeaderCell, forCellReuseIdentifier: "instructionsHeaderCell")
@@ -171,6 +190,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.registerNib(defaultInstructionsFooterCell, forCellReuseIdentifier: "defaultInstructionsFooterCell")
         self.congratsTable.registerNib(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
         self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
-        self.congratsTable.registerNib(bankTransferInstructionFooterCell, forCellReuseIdentifier: "bankTransferInstructionsFooterCell")
+        self.congratsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
     }
 }

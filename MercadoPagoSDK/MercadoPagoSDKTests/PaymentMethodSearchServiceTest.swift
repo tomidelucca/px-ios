@@ -12,24 +12,50 @@ class PaymentMethodSearchServiceTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testProperURLS() {
+        XCTAssertEqual(PaymentMethodSearchService().MP_SEARCH_BASE_URL, "https://api.mercadopago.com")
+        XCTAssertEqual(PaymentMethodSearchService().MP_SEARCH_PAYMENTS_URI, "/checkout/beta/v1/payment_methods/search/options")
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testMPServicePaymentMethodSearch() {
+        let expectation = expectationWithDescription("paymentMethodSearchService")
+        MPServicesBuilder.searchPaymentMethods(nil, excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
+            expectation.fulfill()
+            }) { (error) -> Void in
         }
+        waitForExpectationsWithTimeout(10.0, handler: nil)
     }
+    
+    func testMPServicePaymentMethodSearchWithExcludedPaymentTypes() {
+        let expectation = expectationWithDescription("paymentMethodSearchService")
+        MPServicesBuilder.searchPaymentMethods(MockBuilder.getMockPaymentTypeIds(), excludedPaymentMethods: nil, success: { (PaymentMethodSearch) -> Void in
+            expectation.fulfill()
+            }) { (error) -> Void in
+        }
+        waitForExpectationsWithTimeout(10.0, handler: nil)
+    }
+    
+    func testMPServicePaymentMethodSearchWithPaymentMethodIdsExcluded() {
+        let expectation = expectationWithDescription("paymentMethodSearchService")
+        MPServicesBuilder.searchPaymentMethods(nil, excludedPaymentMethods: ["amex", "oxxo"], success: { (PaymentMethodSearch) -> Void in
+            expectation.fulfill()
+            }) { (error) -> Void in
+        }
+        waitForExpectationsWithTimeout(10.0, handler: nil)
+    }
+    
+    func testMPServicePaymentMethodSearchWithPaymentMethodIdsAndPaymentTypesExcluded() {
+        let expectation = expectationWithDescription("paymentMethodSearchService")
+        MPServicesBuilder.searchPaymentMethods(MockBuilder.getMockPaymentTypeIds(), excludedPaymentMethods: ["amex", "oxxo"], success: { (PaymentMethodSearch) -> Void in
+            expectation.fulfill()
+            }) { (error) -> Void in
+        }
+        waitForExpectationsWithTimeout(10.0, handler: nil)
+    }
+    
     
 }

@@ -18,6 +18,9 @@ public class InstructionReference: Equatable {
         if separator == nil  {
             self.separator = ""
         }
+        if value.count == 0 {
+            return ""
+        }
         let referenceFullValue : NSString = value.reduce("", combine: {($0 as String) + self.separator + $1})
         return referenceFullValue.substringFromIndex(self.separator.characters.count)
     }

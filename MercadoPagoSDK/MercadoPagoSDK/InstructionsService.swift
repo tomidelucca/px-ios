@@ -19,8 +19,8 @@ public class InstructionsService: MercadoPagoService {
     
     public func getInstructionsForPaymentId(paymentId : Int, paymentMethodId: String, success : (instruction :Instruction) -> Void, failure: ((error: NSError) -> Void)?){
     
-        let params = "payment_id=" + String(paymentId) + "&public_key=" + MercadoPagoContext.publicKey() + "&payment_method_id=" + paymentMethodId
-        self.request(MP_INSTRUCTIONS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
+        let params =  "public_key=" + MercadoPagoContext.publicKey() + "&payment_method_id=" + paymentMethodId
+        self.request(MP_INSTRUCTIONS_URI + "/" + String(paymentId), params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             success(instruction : Instruction.fromJSON(jsonResult as! NSDictionary))
         }, failure: failure)
     }

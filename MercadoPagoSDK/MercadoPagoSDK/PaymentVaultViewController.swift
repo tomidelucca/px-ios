@@ -227,10 +227,13 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             } else {
                 // Offline Payment Method
                 MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
-                    let paymentMethodSelected = paymentMethods?.filter({ return $0._id == paymentSearchItemSelected.idPaymentMethodSearchItem})[0]
-                    paymentMethodSelected!.comment = paymentSearchItemSelected.comment
-                    self.callback(paymentMethod: paymentMethodSelected!, tokenId: nil, issuer: nil, installments: 1)
-                    
+                        if paymentMethods?.count > 0 {
+                            let paymentMethodSelected = paymentMethods?.filter({ return $0._id == paymentSearchItemSelected.idPaymentMethodSearchItem})[0]
+                            paymentMethodSelected!.comment = paymentSearchItemSelected.comment
+                            self.callback(paymentMethod: paymentMethodSelected!, tokenId: nil, issuer: nil, installments: 1)
+                        } else {
+                            //TODO
+                        }
                     }, failure: { (error) -> Void in
                         //TODO
                 })
