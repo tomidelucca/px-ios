@@ -56,12 +56,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     
     public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
         updateLabelsFontColors()
         
     }
     
     public override func viewDidAppear(animated: Bool) {
+        
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Numero".localized
@@ -73,8 +75,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 // Mensaje de error correspondiente, ver que hacemos con el flujo
         }
     }
+  
     override public func viewDidLoad() {
         super.viewDidLoad()
+    
         textBox.autocorrectionType = UITextAutocorrectionType.No
          textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
@@ -124,6 +128,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     public func editingChanged(textField:UITextField){
 
+        print(textField.font)
         if(editingLabel == cardNumberLabel){
             editingLabel?.text = formatCardNumberText(textField.text!)
             self.updateCardSkin()

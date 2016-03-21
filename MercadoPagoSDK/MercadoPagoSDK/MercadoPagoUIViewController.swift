@@ -29,11 +29,52 @@ public class MercadoPagoUIViewController: UIViewController {
 
         self.loadMPStyles()
     }
+    var lastDefaultFont : String?
+    
+    static func loadFont(fontName: String) -> Bool {
+        
+        
+        if let path = MercadoPago.getBundle()!.pathForResource(fontName, ofType: "ttf")
+        {
+            if let inData = NSData(contentsOfFile: path)
+            {
+                var error: Unmanaged<CFError>?
+                let cfdata = CFDataCreate(nil, UnsafePointer<UInt8>(inData.bytes), inData.length)
+                if let provider = CGDataProviderCreateWithCFData(cfdata) {
+                    if let font = CGFontCreateWithDataProvider(provider) {
+                        if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+                            print("Failed to load font: \(error)")
+                        }
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        print(UIFont.familyNames().count)
+        for family: String in UIFont.familyNames()
+        {
+            print("\(family)")
+            for names: String in UIFont.fontNamesForFamilyName(family)
+            {
+                print("== \(names)")
+            }
+        }
+        lastDefaultFont = UILabel.appearance().substituteFontName
+        UILabel.appearance().substituteFontName = "ProximaNova-Light"
+        
         self.loadMPStyles()
     }
     
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+       UILabel.appearance().substituteFontName = lastDefaultFont!
+    }
     internal func loadMPStyles(){
         //Navigation bar colors
         let titleDict: NSDictionary = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
@@ -89,4 +130,14 @@ extension UINavigationController {
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return self.viewControllers.last!.supportedInterfaceOrientations()
     }
+}
+
+
+extension UILabel {
+    
+    var substituteFontName : String {
+        get { return self.font.fontName }
+        set { self.font = UIFont(name: newValue, size: self.font.pointSize) }
+    }
+    
 }

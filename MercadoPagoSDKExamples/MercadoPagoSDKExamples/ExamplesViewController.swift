@@ -34,13 +34,17 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController!.navigationBar.translucent = false
         self.title = "MercadoPago SDK"
         self.tableview.delegate = self
         self.tableview.dataSource = self
         MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
+        
+      
 
     }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return examples.count
