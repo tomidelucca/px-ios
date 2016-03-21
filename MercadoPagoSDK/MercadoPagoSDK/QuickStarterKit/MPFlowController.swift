@@ -10,7 +10,7 @@ import UIKit
 
 public class MPFlowController: NSObject {
 
-    static let sharedInstance = MPFlowController()
+    static var sharedInstance = MPFlowController()
     
     var navigationController : UINavigationController?
     
@@ -29,7 +29,8 @@ public class MPFlowController: NSObject {
     
     public class func dismiss(flag : Bool){
         self.sharedInstance.navigationController!.dismissViewControllerAnimated(flag) { () -> Void in
-            
+            // Override sharedInstance
+            self.sharedInstance = MPFlowController()
         }
     }
 

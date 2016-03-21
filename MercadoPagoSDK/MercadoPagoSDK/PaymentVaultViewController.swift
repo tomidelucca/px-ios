@@ -275,7 +275,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal func cardFlow(paymentType: PaymentType, animated : Bool){
         MPFlowController.push(MPStepBuilder.startCreditCardForm(paymentType, callback: { (paymentMethod, token, issuer, installment) -> Void in
             //TODO
-            MPFlowController.pop(false)
             self.callback!(paymentMethod: paymentMethod, tokenId: token?._id, issuer: issuer, installments: 1)
         }))
     }

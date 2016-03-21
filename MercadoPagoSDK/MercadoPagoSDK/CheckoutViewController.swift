@@ -66,7 +66,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.rightBarButtonItem?.target = self
         
         //Clear styles before leaving SDK
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBackAnimated")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
 
@@ -171,7 +171,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func startPaymentVault(){
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         MPFlowController.popToRoot(true)
-//        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     internal func confirmPayment(){
@@ -192,11 +191,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 }))
             } else {
                 self.clearMercadoPagoStyleAndGoBack()
-                self.navigationController?.popViewControllerAnimated(true)
+                MPFlowController.dismiss(true)
             }}) { (error) -> Void in
                 //TODO
                 
         }
+    }
+    
+    internal func executeBack(){
+        self.clearMercadoPagoStyle()
+        MPFlowController.popToRoot(true)
     }
     
     internal func togglePreferenceDescription(){

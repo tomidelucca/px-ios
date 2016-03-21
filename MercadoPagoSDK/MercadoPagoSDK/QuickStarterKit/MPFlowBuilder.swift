@@ -47,13 +47,14 @@ public class MPFlowBuilder : NSObject {
                 callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
             })
         }
+        paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     
     internal class func startPaymentVaultInCheckout(amount: Double, currencyId: String, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, defaultPaymentMethodId : String?,installments : Int = 1, defaultInstallments : Int = 1, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
         
         let paymentVault = PaymentVaultViewController(amount: amount, currencyId: currencyId, purchaseTitle: purchaseTitle, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: defaultPaymentMethodId, installments: installments, defaultInstallments: defaultInstallments, callback: callback)
-        
+        paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     

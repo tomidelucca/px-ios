@@ -15,11 +15,12 @@ public class MercadoPagoUIViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.loadMPStyles()
+        
         //Create custom button with shopping cart
         rightButtonShoppingCart()
-
-        self.loadMPStyles()
     }
+    
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
