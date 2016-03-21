@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
 public class MPFlowBuilder : NSObject {
-    
     
     @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
     public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
@@ -17,19 +17,46 @@ public class MPFlowBuilder : NSObject {
         return VaultViewController(amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
         
     }
+
     
-    public class func startCheckoutViewController(preference: CheckoutPreference, callback: (Payment) -> Void) -> CheckoutViewController {
-        return CheckoutViewController(preference: preference, callback: callback)
-        
+    public class func startCheckoutViewController(preference: CheckoutPreference, callback: (Payment) -> Void) -> UINavigationController {
+            return MPFlowBuilder.startPaymentVaultInCheckout(preference.getAmount(), currencyId: "MXN", purchaseTitle: "title", excludedPaymentTypes: preference.getExcludedPaymentTypes(), excludedPaymentMethods: preference.getExcludedPaymentMethods(), defaultPaymentMethodId: preference.getDefaultPaymentMethodId(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+                
+                let checkoutVC = CheckoutViewController(preference: preference, callback: { (payment : Payment) -> Void in
+                    callback(payment)
+                })
+                checkoutVC.paymentMethod = paymentMethod
+                checkoutVC.installments = installments
+                checkoutVC.issuer = issuer
+                checkoutVC.tokenId = tokenId
+                checkoutVC.callback = {(payment: Payment) -> Void in
+                    checkoutVC.dismissViewControllerAnimated(true, completion: { () -> Void in
+                        callback(payment)
+                    })
+                }
+               MPFlowController.push(checkoutVC)
+            })
     }
     
-    public class func startPaymentVaultViewController(amount: Double, currencyId: String, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, installments : Int = 1, defaultInstallments : Int = 1, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> PaymentVaultViewController {
+    public class func startPaymentVaultViewController(amount: Double, currencyId: String, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, defaultPaymentMethodId : String?,installments : Int = 1, defaultInstallments : Int = 1, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
         
-        return PaymentVaultViewController(amount: amount, currencyId: currencyId, purchaseTitle: purchaseTitle, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, installments: installments, defaultInstallments: defaultInstallments, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId: currencyId, purchaseTitle: purchaseTitle, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: defaultPaymentMethodId, installments: installments, defaultInstallments: defaultInstallments, callback: callback)
         
+        paymentVault.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+            paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
+                callback(paymentMethod: paymentMethod, tokenId: tokenId, issuer: issuer, installments: installments)
+            })
+        }
+        return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     
+    internal class func startPaymentVaultInCheckout(amount: Double, currencyId: String, purchaseTitle : String, excludedPaymentTypes: Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, defaultPaymentMethodId : String?,installments : Int = 1, defaultInstallments : Int = 1, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
+        
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId: currencyId, purchaseTitle: purchaseTitle, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: defaultPaymentMethodId, installments: installments, defaultInstallments: defaultInstallments, callback: callback)
+        
+        return MPFlowController.createNavigationControllerWith(paymentVault)
+    }
     
-    
+
 
 }

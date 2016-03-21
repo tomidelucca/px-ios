@@ -113,6 +113,31 @@ public class CheckoutPreference : Equatable {
         }
         return nil
     }
+
+    public func getDefaultPaymentMethodId() -> String? {
+        if (self.paymentMethods != nil && self.paymentMethods!.defaultPaymentMethodId != nil && self.paymentMethods!.defaultPaymentMethodId!.isNotEmpty) {
+            return self.paymentMethods!.defaultPaymentMethodId
+        }
+        return nil
+    }
+    
+    internal class func wrapPrefenceWithSettings(amount : Double, title : String, currencyId : String, excludedPaymentMethods : [String]?, excludedPaymentTypes : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, installmensts : Int?, defaultInstallments : Int?) -> CheckoutPreference {
+        let item = Item()
+        item.unitPrice = amount
+        item.title = title
+        item.currencyId = currencyId
+        var items = [Item]()
+        items.append(item)
+        let preference = CheckoutPreference()
+        preference.items = items
+        preference.setPaymentMethods(excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, installmensts: installmensts, defaultInstallments: defaultInstallments)
+        return preference
+    }
+    
+    private func setPaymentMethods(excludedPaymentMethods : [String]?, excludedPaymentTypes : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, installmensts : Int?, defaultInstallments : Int?) {
+        self.paymentMethods = PreferencePaymentMethods(excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, installments: installmensts, defaultInstallments: defaultInstallments)
+        
+    }
 }
 
 public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {

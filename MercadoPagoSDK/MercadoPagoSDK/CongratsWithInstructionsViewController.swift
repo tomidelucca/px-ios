@@ -63,6 +63,10 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finalizar".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "finishInstructions")
     }
+    
+    override public func viewWillDisappear(animated: Bool) {
+        self.clearMercadoPagoStyle()
+    }
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -156,7 +160,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func finishInstructions(){
-        self.clearMercadoPagoStyleAndGoBack()
         self.callback(self.payment)
     }
     

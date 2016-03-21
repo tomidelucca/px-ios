@@ -16,16 +16,7 @@ public class MercadoPagoUIViewController: UIViewController {
         super.viewDidLoad()
         
         //Create custom button with shopping cart
-        var shoppingCartImage = MercadoPago.getImage("regular_payment")
-        shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
-        let shoppingCartButton = UIBarButtonItem()
-        shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
-        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
-        shoppingCartButton.title = ""
-        shoppingCartButton.target = self
-        shoppingCartButton.tintColor = UIColor.whiteColor()
-        self.navigationItem.rightBarButtonItem = shoppingCartButton
+        rightButtonShoppingCart()
 
         self.loadMPStyles()
     }

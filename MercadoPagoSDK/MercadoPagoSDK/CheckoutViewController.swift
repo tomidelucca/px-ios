@@ -69,8 +69,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "clearMercadoPagoStyleAndGoBackAnimated")
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
-        
-        self.startPaymentVault()
+
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -170,21 +169,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
 
     internal func startPaymentVault(){
-
-        //TODO : currency no deberia venir de item!
-        let paymentVault = MPFlowBuilder.startPaymentVaultViewController((preference?.getAmount())!, currencyId: (preference?.items![0].currencyId)!, purchaseTitle: (preference?.items![0].title)!, excludedPaymentTypes: preference!.getExcludedPaymentTypes(), excludedPaymentMethods: preference!.getExcludedPaymentMethods(), callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-            self.navigationController?.popToViewController(self, animated: true)
-            self.paymentMethod = paymentMethod
-            self.tokenId = tokenId
-            self.issuer = issuer
-            self.installments = installments
-            
-            self.reviewAndConfirmContent.insert("paymentInfo")
-            
-            self.checkoutTable.reloadData()
-        })
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
-        self.navigationController?.pushViewController(paymentVault, animated: true)
+        MPFlowController.popToRoot(true)
+//        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     internal func confirmPayment(){
@@ -199,16 +186,14 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
                 payment._id = 1826290155
-                self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                    self.clearMercadoPagoStyleAndGoBack()
+                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyle()
                     self.callback(payment)
-                }), animated: true)
+                }))
             } else {
                 self.clearMercadoPagoStyleAndGoBack()
                 self.navigationController?.popViewControllerAnimated(true)
-            }
-            
-            }) { (error) -> Void in
+            }}) { (error) -> Void in
                 //TODO
                 
         }

@@ -101,30 +101,30 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("do something")
             }))
         case 7:
-            self.showViewController(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:Payment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
             
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, defaultPaymentMethodId : nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
 
             }))
         case 9:
-            self.showViewController(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
                 
             }))
         case 10:
             let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
             
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
             }))
         case 11:
             let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
             let excludedPaymentTypes = Set([PaymentTypeId.BANK_TRANSFER, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
             
-            self.showViewController(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId : nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
             }))
         case 12:
@@ -136,7 +136,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             preference.paymentMethods!.excludedPaymentTypes = excludedPaymentTypes
 
             
-            self.showViewController(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
 
             }))
         default:
@@ -169,9 +169,16 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 		if #available(iOS 8.0, *) {
 			self.showViewController(vc, sender: self)
 		} else {
-			self.navigationController?.pushViewController(vc, animated: false)
+            vc.navigationController!.pushViewController(vc, animated: false)
 		}
+        
 	}
+    
+    func presentNavigation(vc: UINavigationController) {
+        self.presentViewController(vc, animated: true) { () -> Void in
+        
+        }
+    }
 	
     func getDiscount() {
         
