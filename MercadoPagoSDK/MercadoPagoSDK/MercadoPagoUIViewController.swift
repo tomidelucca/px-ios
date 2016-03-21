@@ -29,8 +29,10 @@ public class MercadoPagoUIViewController: UIViewController {
 
         self.loadMPStyles()
     }
-    var lastDefaultFont : String?
-    
+    var lastDefaultFontLabel : String?
+    var lastDefaultFontTextField : String?
+    var lastDefaultFontButton : String?
+
     static func loadFont(fontName: String) -> Bool {
         
         
@@ -56,28 +58,25 @@ public class MercadoPagoUIViewController: UIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
-        print(UIFont.familyNames().count)
-        for family: String in UIFont.familyNames()
-        {
-            print("\(family)")
-            for names: String in UIFont.fontNamesForFamilyName(family)
-            {
-                print("== \(names)")
-            }
-        }
-        lastDefaultFont = UILabel.appearance().substituteFontName
+        lastDefaultFontLabel = UILabel.appearance().substituteFontName
+        lastDefaultFontTextField = UITextField.appearance().substituteFontName
+        lastDefaultFontButton  = UIButton.appearance().substituteFontName
         UILabel.appearance().substituteFontName = "ProximaNova-Light"
-        
+        UITextField.appearance().substituteFontName = "ProximaNova-Light"
+        UIButton.appearance().substituteFontName = "ProximaNova-Light"
         self.loadMPStyles()
+        
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-       UILabel.appearance().substituteFontName = lastDefaultFont!
+       UILabel.appearance().substituteFontName = lastDefaultFontLabel!
+        UITextField.appearance().substituteFontName = lastDefaultFontTextField!
+        UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }
     internal func loadMPStyles(){
         //Navigation bar colors
-        let titleDict: NSDictionary = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
 
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
@@ -180,3 +179,26 @@ extension UILabel {
     }
     
 }
+extension UITextField {
+    
+    var substituteFontName : String {
+        get { return self.font!.fontName }
+        set { self.font = UIFont(name: newValue, size: self.font!.pointSize) }
+    }
+    
+}
+
+
+
+extension UIButton {
+    
+    var substituteFontName : String {
+        get { return self.titleLabel!.font.fontName }
+        set {if (self.titleLabel != nil){
+            self.titleLabel!.font = UIFont(name: newValue, size: self.titleLabel!.font.pointSize) 
+            }
+            }
+    }
+    
+}
+

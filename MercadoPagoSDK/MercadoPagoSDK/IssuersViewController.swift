@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IssuersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class IssuersViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var publicKey : String?
     var paymentMethod: PaymentMethod?

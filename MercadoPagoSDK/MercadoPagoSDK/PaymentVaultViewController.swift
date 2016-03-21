@@ -113,10 +113,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     override public func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.loadMPStyles()
     }
     
     override public func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
     }
     

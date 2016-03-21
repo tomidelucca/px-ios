@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class CustomerCardsViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class CustomerCardsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class CongratsViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+public class CongratsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     var payment: Payment!
     var paymentMethod: PaymentMethod!

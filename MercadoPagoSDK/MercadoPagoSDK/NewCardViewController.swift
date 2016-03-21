@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class NewCardViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, KeyboardDelegate {
+public class NewCardViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, KeyboardDelegate {
     
     // ViewController parameters
     var key : String?

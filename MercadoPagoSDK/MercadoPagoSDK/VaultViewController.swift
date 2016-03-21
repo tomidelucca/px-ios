@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class VaultViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class VaultViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // ViewController parameters
     var publicKey: String?

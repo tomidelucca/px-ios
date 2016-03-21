@@ -74,6 +74,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     override public func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.loadMPStyles()
     }
     

@@ -770,7 +770,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     {
 
        // promoButton.titleLabel!.font =  UIFont.boldSystemFontOfSize(8)
-      //  promoButton.titleLabel!.text = "VER BANCOS CON MSI"
+        promoButton.titleLabel!.text = "VER BANCOS CON MSI"
         promoButton.backgroundColor = UIColor.whiteColor()
         promoButton.layer.cornerRadius = 0.5 * promoButton.bounds.size.width
         promoButton.layer.borderColor = UIColor(netHex: 0x359FDB).CGColor

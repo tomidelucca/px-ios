@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-public class PromoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 	
 	var publicKey : String?
 	

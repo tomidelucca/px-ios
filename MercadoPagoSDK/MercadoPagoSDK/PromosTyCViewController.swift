@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PromosTyCViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+public class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
 	@IBOutlet weak private var tableView : UITableView!
 	
