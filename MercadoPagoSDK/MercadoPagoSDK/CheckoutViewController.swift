@@ -37,11 +37,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     override public func viewDidLoad() {
+
         super.viewDidLoad()
 
         //Display preference description by default
         self.displayPreferenceDescription = true
-
+        
         self.title = "¿Cómo quieres pagar?".localized
 
         //Register rows
@@ -126,7 +127,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
         if indexPath.row == 0 {
             if self.paymentMethod != nil {
-                self.title = "Revisa si está todo bien...".localized
+                if self.paymentMethod!.isOfflinePaymentMethod() {
+                    self.title = "Revisa si está todo bien...".localized
+                } else {
+                    self.title = "Tantito más y terminas…".localized
+                }
+
                 //TODO : solo funciona con offlinePayment
                 let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                 cell.fillRowWithPaymentMethod(self.paymentMethod!)
