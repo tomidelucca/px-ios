@@ -31,17 +31,24 @@ public class CheckoutPreference : Equatable {
     //DATE EXPIRATION = expiration_date_to
     // que el dia actual caiga en ese rango (de activacion) OJO!!! PUEDEN SER NULAS LAS FECHAS, en ese caso, no mueren nunca, y siempre es valida la preference
     
-    public func validate() -> Bool{
+    public func validate() -> String?{
+    
     
         if(items == nil){
-            return false
+            return "No hay items".localized
         }
         if(items?.count == 0){
-            return false
+            return "No hay items".localized
         }
         //VALIDAR CADA ITEM
+        let currencyIdAllItems = items![0].currencyId
+        for (_, value) in items!.enumerate() {
+            if(value.currencyId != currencyIdAllItems){
+                 return "Los items tienen diferente moneda".localized
+            }
+        }
         //VALIDAR PREFERENCE PAYMENT METHOD
-        return true
+        return nil
     }
     
     public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PreferencePaymentMethods? = nil){

@@ -15,6 +15,23 @@ public class PreferencePaymentMethods: Equatable {
     var installments : Int?
     var defaultInstallments : Int?
 
+    //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    // excluded_payment_method < payment_methods
+    //excluded_payment_types < payment_types
+    
+    public func validate() -> Bool{
+        if (installments <= 0){
+            return false
+        }
+        if (PaymentType.allPaymentIDs.count <= excludedPaymentTypes?.count){
+            return false
+        }
+
+        return true
+    }
+    
+
+    
     public init(excludedPaymentMethods : [String]? = nil, excludedPaymentTypes: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, installments : Int? = 0, defaultInstallments : Int? = 0){
         self.excludedPaymentMethods =  excludedPaymentMethods
         self.excludedPaymentTypes = excludedPaymentTypes
