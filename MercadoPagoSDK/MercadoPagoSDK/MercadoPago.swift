@@ -350,7 +350,6 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 }
             }
             }, failure: failure)
-        success(payment: payment)
     }
     
     internal class func openURL(url : String){

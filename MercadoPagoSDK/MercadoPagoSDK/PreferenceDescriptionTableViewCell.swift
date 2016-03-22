@@ -14,7 +14,7 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shoppingCartIcon: UIImageView!
     @IBOutlet weak var preferenceAmount: UILabel!
-    
+
     @IBOutlet weak var shoppingCartIconContainer: UIView!
     
     override public func awakeFromNib() {
@@ -37,12 +37,15 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     }
     
     internal func fillRowWithPreference(preference : CheckoutPreference){
-        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(preference.getAmount()))
-        self.preferenceDescription.text = preference.items![0].title
-        if preference.items![0].pictureUrl != nil {
-            self.shoppingCartIcon.image = MercadoPago.getImage(preference.items![0].pictureUrl)
-        }
+        self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.items![0].title, pictureUrl: preference.items![0].pictureUrl)
+    }
     
+    internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?){
+        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount))
+        self.preferenceDescription.text = purchaseTitle
+        if pictureUrl != nil {
+            self.shoppingCartIcon.image = MercadoPago.getImage(pictureUrl!)
+        }
     }
     
 }

@@ -60,11 +60,11 @@ class ExamplesUtils {
     }
     
     class var ITEM_UNIT_PRICE : Double {
-        return 100.00
+        return 1000.00
     }
  
     class var PREF_ID_MOCK : String {
-        return "167834996-099394f5-1e5a-4a43-b4aa-26e4bd60e0f2"
+        return "167833503-8a98d77e-425a-4817-ae0b-6a429b832ba6"
     }
     
     class func startCardActivity(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (token: Token?) -> Void) -> CardViewController {

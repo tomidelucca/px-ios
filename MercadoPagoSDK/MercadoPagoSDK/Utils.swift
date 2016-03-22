@@ -21,6 +21,19 @@ class Utils {
     }
     
     class func getAttributedAmount(formattedString : String) -> NSAttributedString {
+        let cents = getCents(formattedString)
+        let amount = getAmount(formattedString)
+        
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 20)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 10)!,NSForegroundColorAttributeName: UIColor.whiteColor(), NSBaselineOffsetAttributeName : 7]
+
+        let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
+        let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        attributedAmount.appendAttributedString(attributedCents)
+        return attributedAmount
+    }
+    
+    class func getCents(formattedString : String) -> String {
         let range = formattedString.rangeOfString(".")
         let centsIndex = range!.startIndex.advancedBy(1)
         var cents = formattedString.substringFromIndex(centsIndex)
@@ -31,16 +44,14 @@ class Utils {
                 missingZeros = missingZeros - 1
             }
         }
+        return cents
+    }
+    
+    class func getAmount(formattedString : String) -> String {
+        let range = formattedString.rangeOfString(".")
         var amount = formattedString.substringToIndex(range!.startIndex)
         amount = "$" + amount
-        
-        
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 18)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 8)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
-
-        let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
-        let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
-        attributedAmount.appendAttributedString(attributedCents)
-        return attributedAmount
+        return amount
     }
+
 }

@@ -158,8 +158,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         // Preference description section
         if indexPath.section == 0 {
             let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
-            preferenceDescriptionCell.preferenceDescription.text = self.purchaseTitle
-            preferenceDescriptionCell.preferenceAmount.attributedText = Utils.getAttributedAmount(String(self.amount))
+            preferenceDescriptionCell.fillRowWithSettings(self.amount, purchaseTitle: self.purchaseTitle, pictureUrl: nil)
             return preferenceDescriptionCell
         }
         

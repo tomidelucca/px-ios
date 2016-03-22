@@ -58,7 +58,7 @@ public class Instruction: Equatable {
         }
         
         if json["actions"] != nil && !(json["actions"]! is NSNull) {
-            //TODO parse actions
+            instruction.actions = (json["actions"] as! Array).map({InstructionAction.fromJSON($0)})
         }
         
 
