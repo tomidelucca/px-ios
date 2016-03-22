@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Utils {
     class func getDateFromString(string: String!) -> NSDate! {

@@ -272,7 +272,7 @@
     }
   ]
 }</string>
-	<key>GET/checkout/beta/v1/payment_methods/search/options?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;excluded_payment_types=digital_currency,account_money</key>
+	<key>GET/checkout/beta/v1/payment_methods/search/options?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;excluded_payment_types=account_money,digital_currency</key>
 	<string>{
   &quot;groups&quot;: [
     {

@@ -15,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="317" height="65"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="banamex_bank_transfer" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-66-hic">
-                        <rect key="frame" x="18" y="23" width="94" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banamex_bank_transfer" translatesAutoresizingMaskIntoConstraints="NO" id="5d5-66-hic">
+                        <rect key="frame" x="18" y="22" width="94" height="21"/>
                     </imageView>
                 </subviews>
                 <constraints>

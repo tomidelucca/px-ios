@@ -43,7 +43,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
-    static let MP_PAYMENTS_URI = "/v1/payments"
+    static let MP_PAYMENTS_URI = "/checkout/beta/v1/native_payment"
     
     public var privateKey : String?
     public var publicKey : String?
@@ -325,10 +325,9 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
-    public class func createMPPayment(payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        //TODO
-        /*let service : MerchantService = MerchantService()
-        service.createMPPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
+    public class func createMPPayment(params : String, payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+        let service : MerchantService = MerchantService()
+        service.createMPPayment(params : params, payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
             if let paymentDic = jsonResult as? NSDictionary {
@@ -350,7 +349,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                     failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                 }
             }
-            }, failure: failure)*/
+            }, failure: failure)
         success(payment: payment)
     }
     
