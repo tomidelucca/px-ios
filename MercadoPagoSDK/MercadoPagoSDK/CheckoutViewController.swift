@@ -119,9 +119,11 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
         if indexPath.section == 0 {
+            self.rightButtonClose()
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
             preferenceDescriptionCell.selectionStyle = UITableViewCellSelectionStyle.None
+
             return preferenceDescriptionCell
         }
     
@@ -181,7 +183,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         payment.paymentMethodId = self.paymentMethod!._id
         payment._description = "description"
 
-        MercadoPago.createMPPayment(payment, success: { (payment) -> Void in
+        var params = "public_key=" + MercadoPagoContext.publicKey() + "&email=" + (self.preference?.payer!.email!)! + "&pref_id=" + self.preference!._id!
+        params = params + "&payment_method=" + payment.paymentMethodId
+        MercadoPago.createMPPayment(params, payment: payment, success: { (payment) -> Void in
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 //TODO : enviar paymentId!!!
                 payment._id = 1826290155

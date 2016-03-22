@@ -15,7 +15,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     override func setUp() {
         super.setUp()
         MercadoPagoContext.setPublicKey("TEST-5999d034-afe5-4005-b22f-dccb5b576d55")
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             
         })
     }
