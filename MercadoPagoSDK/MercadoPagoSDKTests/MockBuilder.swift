@@ -18,6 +18,10 @@ class MockBuilder: NSObject {
         return "TEST-5999d034-afe5-4005-b22f-dccb5b576d55"
     }
     
+    class var PREF_ID_MOCK : String {
+        return "167833503-bbb3c69e-d91e-4328-9f50-169a06ebc749"
+    }
+    
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
         preference._id = "xxx"

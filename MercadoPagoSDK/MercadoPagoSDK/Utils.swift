@@ -20,21 +20,23 @@ class Utils {
         return dateFormatter.dateFromString(dateArr[0])
     }
     
-    class func getAttributedAmount(formattedString : String) -> NSAttributedString {
-        let cents = getCents(formattedString)
-        let amount = getAmount(formattedString)
-        
+    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String) -> NSAttributedString {
+        let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
+        let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
+
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 20)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 10)!,NSForegroundColorAttributeName: UIColor.whiteColor(), NSBaselineOffsetAttributeName : 7]
 
+        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
-        attributedAmount.appendAttributedString(attributedCents)
-        return attributedAmount
+        attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(attributedCents)
+        return attributedSymbol
     }
     
-    class func getCents(formattedString : String) -> String {
-        let range = formattedString.rangeOfString(".")
+    class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
+        let range = formattedString.rangeOfString(decimalSeparator)
         let centsIndex = range!.startIndex.advancedBy(1)
         var cents = formattedString.substringFromIndex(centsIndex)
         if cents.isEmpty || cents.characters.count < 2 {
@@ -47,11 +49,36 @@ class Utils {
         return cents
     }
     
-    class func getAmount(formattedString : String) -> String {
-        let range = formattedString.rangeOfString(".")
-        var amount = formattedString.substringToIndex(range!.startIndex)
-        amount = "$" + amount
-        return amount
+    class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
+        let range = formattedString.rangeOfString(decimalSeparator)
+        let amount : String
+        if range != nil {
+            amount = formattedString.substringToIndex(range!.startIndex)
+        } else {
+            amount = formattedString
+        }
+        
+        let length = amount.characters.count
+        if length <= 3 {
+            return amount
+        }
+        
+        var finalAmountStr = ""
+        
+        var cantSeparators = length % 3 + (Int(length / 3))
+        var separatorPosition = length % 3
+        var initialPosition = amount.startIndex
+        
+        while cantSeparators > 0 && separatorPosition <= length {
+            let range = initialPosition..<amount.startIndex.advancedBy(separatorPosition)
+            finalAmountStr.appendContentsOf(amount.substringWithRange(range))
+            finalAmountStr.appendContentsOf(String(thousandSeparator))
+            cantSeparators = cantSeparators - 1
+            initialPosition = amount.startIndex.advancedBy(separatorPosition)
+            separatorPosition = separatorPosition + 3
+        }
+
+        return finalAmountStr.substringToIndex(finalAmountStr.startIndex.advancedBy(finalAmountStr.characters.count-1))
     }
 
 }

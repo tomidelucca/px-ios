@@ -17,29 +17,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="sZ0-8u-QXV">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="546"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <color key="sectionIndexBackgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="sectionIndexTrackingBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 1999-2016 Procesado por MercadoPago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8AI-Qo-09f">
-                    <rect key="frame" x="10" y="566" width="580" height="14"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="sZ0-8u-QXV" secondAttribute="bottom" id="23U-43-qTQ"/>
                 <constraint firstItem="sZ0-8u-QXV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Dc3-AE-BXC"/>
-                <constraint firstAttribute="bottom" secondItem="8AI-Qo-09f" secondAttribute="bottom" constant="20" id="KTs-Eu-ktb"/>
                 <constraint firstItem="sZ0-8u-QXV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TOb-ag-tZz"/>
-                <constraint firstAttribute="trailing" secondItem="8AI-Qo-09f" secondAttribute="trailing" constant="10" id="cHL-6a-frB"/>
                 <constraint firstAttribute="trailing" secondItem="sZ0-8u-QXV" secondAttribute="trailing" id="eME-ha-GnE"/>
-                <constraint firstItem="8AI-Qo-09f" firstAttribute="top" secondItem="sZ0-8u-QXV" secondAttribute="bottom" constant="20" id="eb2-aD-2nY"/>
-                <constraint firstItem="8AI-Qo-09f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="egJ-If-agx"/>
             </constraints>
         </view>
     </objects>
