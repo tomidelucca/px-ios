@@ -12,7 +12,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
     
     
-    @IBOutlet weak var promoButton: UIButton!
+    @IBOutlet weak var promoButton: MPButton!
     @IBOutlet weak var cardView: UIView!
     var cardViewBack:UIView?
  
@@ -29,7 +29,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cvvLabelEmpty: Bool = true
 
     var editingLabel : MPLabel?
-    @IBOutlet weak var textBox: UITextField!
+    @IBOutlet weak var textBox: MPTextField!
    
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?

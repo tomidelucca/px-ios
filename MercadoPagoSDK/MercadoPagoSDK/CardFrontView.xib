@@ -46,24 +46,15 @@
                     <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ot-jZ-HOX">
-                    <rect key="frame" x="12" y="62" width="216" height="34"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwN-Cd-QgM" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                            <rect key="frame" x="220" y="0.0" width="0.0" height="34"/>
-                            <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="22"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwN-Cd-QgM" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="12" y="12" width="166" height="34"/>
                     <constraints>
-                        <constraint firstItem="KwN-Cd-QgM" firstAttribute="top" secondItem="9ot-jZ-HOX" secondAttribute="top" id="BnK-LZ-d4a"/>
-                        <constraint firstAttribute="height" constant="34" id="IJ8-UI-mlk"/>
-                        <constraint firstAttribute="trailing" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="-4" id="lHc-Xg-RdA"/>
-                        <constraint firstAttribute="bottom" secondItem="KwN-Cd-QgM" secondAttribute="bottom" id="yMh-BC-dhD"/>
+                        <constraint firstAttribute="height" constant="34" id="A5h-09-9nO"/>
                     </constraints>
-                </view>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97O-co-oz8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                     <rect key="frame" x="8" y="69" width="220" height="23"/>
                     <constraints>
@@ -86,21 +77,21 @@
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="97" id="2hI-ql-fQl"/>
+                <constraint firstItem="y6l-UX-KQ5" firstAttribute="leading" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="9F2-gE-Wqs"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="baseline" secondItem="pR5-vU-TU9" secondAttribute="baseline" id="AOt-3g-FQQ"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="7:24" id="Aie-cO-xa7"/>
-                <constraint firstItem="9ot-jZ-HOX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Bea-OU-p4T"/>
+                <constraint firstItem="KwN-Cd-QgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="GI6-sb-N2Y"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="firstBaseline" secondItem="pR5-vU-TU9" secondAttribute="firstBaseline" id="H06-2R-sps"/>
                 <constraint firstAttribute="bottom" secondItem="97O-co-oz8" secondAttribute="bottom" constant="52" id="IA1-0s-caX"/>
                 <constraint firstAttribute="trailing" secondItem="y6l-UX-KQ5" secondAttribute="trailing" constant="12" id="Jlp-HD-09b"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="5" id="TlV-UI-jRP"/>
                 <constraint firstItem="pR5-vU-TU9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Vdf-kZ-c3S"/>
                 <constraint firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" constant="12" id="bll-Jo-8PY"/>
-                <constraint firstAttribute="trailing" secondItem="9ot-jZ-HOX" secondAttribute="trailing" constant="12" id="cXq-E3-I2k"/>
+                <constraint firstItem="KwN-Cd-QgM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="gNV-ri-9hp"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="l95-EC-c7L"/>
                 <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="19" id="n3L-v5-CVb"/>
                 <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ud7-S9-gmz"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" id="w2M-bt-87O"/>
-                <constraint firstItem="9ot-jZ-HOX" firstAttribute="top" secondItem="y6l-UX-KQ5" secondAttribute="bottom" constant="12" id="xny-XS-xlX"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -109,7 +100,7 @@
                     <integer key="value" value="5"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
-            <point key="canvasLocation" x="330" y="207.5"/>
+            <point key="canvasLocation" x="331" y="207"/>
         </view>
     </objects>
 </document>

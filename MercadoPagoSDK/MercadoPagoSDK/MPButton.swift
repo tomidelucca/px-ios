@@ -1,5 +1,5 @@
 //
-//  MPTextField.swift
+//  MPButton.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 3/28/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MPTextField: UITextField {
+public class MPButton: UIButton {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -18,20 +18,25 @@ public class MPTextField: UITextField {
     }
     */
     
+    
     override init(frame: CGRect){
         super.init(frame: frame)
-        if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
-            
+        if (self.titleLabel != nil){
+            if (self.titleLabel!.font != nil){
+                self.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: (self.titleLabel!.font.pointSize))
+            }
         }
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
-            
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        if (self.titleLabel != nil){
+            if (self.titleLabel!.font != nil){
+                                self.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: (self.titleLabel!.font.pointSize))
+            }
         }
     }
+
 
 }

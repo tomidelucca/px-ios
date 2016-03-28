@@ -12,7 +12,7 @@ import UIKit
 public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
     @IBOutlet weak private var cardNumberLabel: MPLabel!
     @IBOutlet weak private var cardNumberImageView: UIImageView!
-    @IBOutlet weak public var cardNumberTextField: UITextField!
+    @IBOutlet weak public var cardNumberTextField: MPTextField!
     public var setting : Setting!
 	
 	public var keyboardDelegate : KeyboardDelegate!

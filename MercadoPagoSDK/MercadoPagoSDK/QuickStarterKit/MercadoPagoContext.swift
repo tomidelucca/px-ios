@@ -39,10 +39,14 @@ public class MercadoPagoContext {
         return !sharedInstance.private_key.isEmpty
     }
     
-    private init() {} //This prevents others from using the default '()' initializer for this class.
+    private init() {
+    
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+    } //This prevents others from using the default '()' initializer for this class.
 
     
     public class func setPrivateKey(private_key : String){
+        
         
         sharedInstance.private_key = private_key
         

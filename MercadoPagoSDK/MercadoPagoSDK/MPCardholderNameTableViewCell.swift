@@ -11,7 +11,7 @@ import UIKit
 
 public class MPCardholderNameTableViewCell : ErrorTableViewCell {
     @IBOutlet weak private var cardholderNameLabel: MPLabel!
-    @IBOutlet weak public var cardholderNameTextField: UITextField!
+    @IBOutlet weak public var cardholderNameTextField: MPTextField!
 	
 	public override func focus() {
 		if !self.cardholderNameTextField.isFirstResponder() {

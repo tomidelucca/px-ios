@@ -11,7 +11,7 @@ import UIKit
 
 public class MPPaymentMethodTableViewCell : UITableViewCell {
 	@IBOutlet weak private var paymentMethodTitleLabel : MPLabel!
-    @IBOutlet weak private var cardTextLabel : UITextField!
+    @IBOutlet weak private var cardTextLabel : MPTextField!
     @IBOutlet weak private var cardIcon : UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {

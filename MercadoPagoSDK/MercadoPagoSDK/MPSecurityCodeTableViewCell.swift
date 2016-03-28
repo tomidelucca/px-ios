@@ -12,7 +12,7 @@ import UIKit
 public class MPSecurityCodeTableViewCell : ErrorTableViewCell {
     @IBOutlet weak private var securityCodeLabel: MPLabel!
     @IBOutlet weak private var securityCodeInfoLabel: MPLabel!
-    @IBOutlet weak public var securityCodeTextField: UITextField!
+    @IBOutlet weak public var securityCodeTextField: MPTextField!
     @IBOutlet weak private var securityCodeImageView: UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {

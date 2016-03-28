@@ -20,7 +20,7 @@ extension String {
 /**
 A TextFieldEffects object is a control that displays editable text and contains the boilerplates to setup unique animations for text entrey and display. You typically use this class the same way you use UITextField.
 */
-public class TextFieldEffects : UITextField {
+public class TextFieldEffects : MPTextField {
     
     /**
     UILabel that holds all the placeholder information

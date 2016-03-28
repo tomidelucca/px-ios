@@ -21,7 +21,7 @@ public class MPLabel: UILabel {
     
     override init(frame: CGRect){
         super.init(frame: frame)
-        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        
         if(self.font != nil) {
             self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
             
@@ -30,7 +30,7 @@ public class MPLabel: UILabel {
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+
         if(self.font != nil) {
             self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
             

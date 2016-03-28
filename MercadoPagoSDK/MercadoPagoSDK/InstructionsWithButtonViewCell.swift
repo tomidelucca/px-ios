@@ -10,7 +10,7 @@ import UIKit
 
 class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var button: MPButton!
     @IBOutlet weak var referenceLabelFirst: MPLabel!
     
     @IBOutlet weak var referenceValueFirst: MPLabel!

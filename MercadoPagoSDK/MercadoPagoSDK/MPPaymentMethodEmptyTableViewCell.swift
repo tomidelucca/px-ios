@@ -10,7 +10,7 @@ import UIKit
 
 public class MPPaymentMethodEmptyTableViewCell: UITableViewCell {
 
-    @IBOutlet weak private var cardTextLabel : UITextField!
+    @IBOutlet weak private var cardTextLabel : MPTextField!
     @IBOutlet weak var titleLabel: MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {

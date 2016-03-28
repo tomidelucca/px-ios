@@ -11,7 +11,7 @@ import UIKit
 
 public class MPExpirationDateTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
     @IBOutlet weak private var expirationDateLabel: MPLabel!
-    @IBOutlet weak public var expirationDateTextField: UITextField!
+    @IBOutlet weak public var expirationDateTextField: MPTextField!
 	
 	public override func focus() {
 		if !self.expirationDateTextField.isFirstResponder() {

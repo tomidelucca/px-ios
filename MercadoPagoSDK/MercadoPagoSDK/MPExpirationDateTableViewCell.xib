@@ -21,7 +21,7 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM/AA" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k6k-s8-sme">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM/AA" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k6k-s8-sme" customClass="MPTextField" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="8" y="27" width="304" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="7NF-k5-3wA"/>

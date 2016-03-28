@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var nav: UINavigationController?
 
-    let publickey = "444a9ef5-8a6b-429f-abdf-587639155d88"
+   // let publickey = "444a9ef5-8a6b-429f-abdf-587639155d88"
  
-    
+    let publickey = "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
     
     func application(application: UIApplication,
             didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
