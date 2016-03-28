@@ -11,8 +11,8 @@ import UIKit
 public class PromoTableViewCell: UITableViewCell {
 
 	@IBOutlet weak public var issuerImageView: UIImageView!
-	@IBOutlet weak public var sharesSubtitle: UILabel!
-	@IBOutlet weak public var paymentMethodsSubtitle: UILabel!
+	@IBOutlet weak public var sharesSubtitle: MPLabel!
+	@IBOutlet weak public var paymentMethodsSubtitle: MPLabel!
 	
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

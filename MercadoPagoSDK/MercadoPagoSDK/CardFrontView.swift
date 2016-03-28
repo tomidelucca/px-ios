@@ -13,10 +13,10 @@ import UIKit
   var view:UIView!;
     
     @IBOutlet weak var cardLogo: UIImageView!
-    @IBOutlet weak var cardExpirationDate: UILabel!
-    @IBOutlet weak var cardName: UILabel!
-   @IBOutlet weak var cardNumber: UILabel!
-    @IBOutlet weak var cardCVV: UILabel!
+    @IBOutlet weak var cardExpirationDate: MPLabel!
+    @IBOutlet weak var cardName: MPLabel!
+   @IBOutlet weak var cardNumber: MPLabel!
+    @IBOutlet weak var cardCVV: MPLabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

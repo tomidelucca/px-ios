@@ -11,14 +11,14 @@ import UIKit
 class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
     @IBOutlet weak var button: UIButton!
-    @IBOutlet weak var referenceLabelFirst: UILabel!
+    @IBOutlet weak var referenceLabelFirst: MPLabel!
     
-    @IBOutlet weak var referenceValueFirst: UILabel!
-    @IBOutlet weak var referenceLabelSecond: UILabel!
+    @IBOutlet weak var referenceValueFirst: MPLabel!
+    @IBOutlet weak var referenceLabelSecond: MPLabel!
     
-    @IBOutlet weak var referenceValueSecond: UILabel!
-    @IBOutlet weak var referenceLabelThird: UILabel!
-    @IBOutlet weak var referenceValueThird: UILabel!
+    @IBOutlet weak var referenceValueSecond: MPLabel!
+    @IBOutlet weak var referenceLabelThird: MPLabel!
+    @IBOutlet weak var referenceValueThird: MPLabel!
     
     
     override func awakeFromNib() {

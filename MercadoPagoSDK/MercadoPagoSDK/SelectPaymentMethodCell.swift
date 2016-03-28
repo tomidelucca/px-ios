@@ -10,7 +10,7 @@ import UIKit
 
 class SelectPaymentMethodCell: UITableViewCell {
 
-    @IBOutlet weak var selectPaymentMethodLabel: UILabel!
+    @IBOutlet weak var selectPaymentMethodLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectPaymentMethodLabel.text = "Seleccione método de pago...".localized

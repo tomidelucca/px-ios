@@ -10,7 +10,7 @@ import UIKit
 
 public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate{
 
-    var bundle : NSBundle? = MercadoPago.getBundle()
+    
     
     @IBOutlet weak var promoButton: UIButton!
     @IBOutlet weak var cardView: UIView!
@@ -19,16 +19,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cardFront : CardFrontView?
     var cardBack : CardBackView?
     
-    var cardNumberLabel: UILabel?
+    var cardNumberLabel: MPLabel?
     var numberLabelEmpty: Bool = true
-    var nameLabel: UILabel?
+    var nameLabel: MPLabel?
     var nameLabelEmpty: Bool = true
-    var expirationDateLabel: UILabel?
+    var expirationDateLabel: MPLabel?
     var expirationLabelEmpty: Bool = true
-    var cvvLabel: UILabel?
+    var cvvLabel: MPLabel?
     var cvvLabelEmpty: Bool = true
 
-    var editingLabel : UILabel?
+    var editingLabel : MPLabel?
     @IBOutlet weak var textBox: UITextField!
    
     var paymentMethods : [PaymentMethod]?
@@ -45,7 +45,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     public init(paymentType : PaymentType?, callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
-        super.init(nibName: "CardFormViewController", bundle: self.bundle)
+        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentType = paymentType
         self.edgesForExtendedLayout = .All
         self.callback = callback

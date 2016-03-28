@@ -10,20 +10,20 @@ import UIKit
 
 class InstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
-    @IBOutlet weak var infoTitle: UILabel!
+    @IBOutlet weak var infoTitle: MPLabel!
     
-    @IBOutlet weak var firstReferenceLabel: UILabel!
+    @IBOutlet weak var firstReferenceLabel: MPLabel!
     
-    @IBOutlet weak var firstReferenceValue: UILabel!
+    @IBOutlet weak var firstReferenceValue: MPLabel!
     
-    @IBOutlet weak var secondReferenceLabel: UILabel!
+    @IBOutlet weak var secondReferenceLabel: MPLabel!
     
-    @IBOutlet weak var secondReferenceValue: UILabel!
+    @IBOutlet weak var secondReferenceValue: MPLabel!
     
     
-    @IBOutlet weak var thirdReferenceLabel: UILabel!
+    @IBOutlet weak var thirdReferenceLabel: MPLabel!
     
-    @IBOutlet weak var thirdReferenceValue: UILabel!
+    @IBOutlet weak var thirdReferenceValue: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

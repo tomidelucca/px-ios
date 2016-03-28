@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class MPPaymentMethodTableViewCell : UITableViewCell {
-	@IBOutlet weak private var paymentMethodTitleLabel : UILabel!
+	@IBOutlet weak private var paymentMethodTitleLabel : MPLabel!
     @IBOutlet weak private var cardTextLabel : UITextField!
     @IBOutlet weak private var cardIcon : UIImageView!
     

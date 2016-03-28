@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public class MPSecurityCodeTableViewCell : ErrorTableViewCell {
-    @IBOutlet weak private var securityCodeLabel: UILabel!
-    @IBOutlet weak private var securityCodeInfoLabel: UILabel!
+    @IBOutlet weak private var securityCodeLabel: MPLabel!
+    @IBOutlet weak private var securityCodeInfoLabel: MPLabel!
     @IBOutlet weak public var securityCodeTextField: UITextField!
     @IBOutlet weak private var securityCodeImageView: UIImageView!
     

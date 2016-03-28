@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class PaymentMethodTableViewCell : UITableViewCell {
-    @IBOutlet private weak var paymentMethodLabel : UILabel!
+    @IBOutlet private weak var paymentMethodLabel : MPLabel!
     @IBOutlet private var paymentMethodImage : UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {

@@ -10,7 +10,7 @@ import UIKit
 
 public class PromosTyCTableViewCell: UITableViewCell {
 
-	@IBOutlet weak private var title: UILabel!
+	@IBOutlet weak private var title: MPLabel!
 	
     override public func awakeFromNib() {
         super.awakeFromNib()

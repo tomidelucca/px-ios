@@ -10,8 +10,8 @@ import UIKit
 
 public class PaymentDateTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lblTitle: UILabel!
-    @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var lblTitle: MPLabel!
+    @IBOutlet weak var lblDate: MPLabel!
 
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

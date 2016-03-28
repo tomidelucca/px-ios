@@ -10,8 +10,8 @@ import UIKit
 
 public class PaymentTotalTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lblTotal: UILabel!
-    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblTotal: MPLabel!
+    @IBOutlet weak var lblTitle: MPLabel!
 	
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

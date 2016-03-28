@@ -10,10 +10,10 @@ import UIKit
 
 public class PreferenceDescriptionTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var preferenceDescription: UILabel!
+    @IBOutlet weak var preferenceDescription: MPLabel!
     
     @IBOutlet weak var shoppingCartIcon: UIImageView!
-    @IBOutlet weak var preferenceAmount: UILabel!
+    @IBOutlet weak var preferenceAmount: MPLabel!
 
     @IBOutlet weak var shoppingCartIconContainer: UIView!
     

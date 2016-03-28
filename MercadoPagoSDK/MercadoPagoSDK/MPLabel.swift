@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MPLabel: UILabel {
+public class MPLabel: UILabel {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -18,4 +18,25 @@ class MPLabel: UILabel {
     }
     */
 
+    
+    override init(frame: CGRect){
+        super.init(frame: frame)
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        if(self.font != nil) {
+            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
+            
+        }
+     }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        if(self.font != nil) {
+            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
+            
+        }
+    }
+  
+    
+    
 }

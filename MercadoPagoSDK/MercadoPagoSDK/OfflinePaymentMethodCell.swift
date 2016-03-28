@@ -12,7 +12,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
     @IBOutlet weak var iconImage: UIImageView!
     
-    @IBOutlet weak var comment: UILabel!
+    @IBOutlet weak var comment: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

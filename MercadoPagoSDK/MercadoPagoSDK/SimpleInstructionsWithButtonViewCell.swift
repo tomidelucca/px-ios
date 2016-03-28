@@ -11,10 +11,10 @@ import UIKit
 class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
     
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var referenceLabel: UILabel!
-    @IBOutlet weak var button: UIButton!
-    @IBOutlet weak var referenceValue: UILabel!
+    @IBOutlet weak var title: MPLabel!
+    @IBOutlet weak var referenceLabel: MPLabel!
+    @IBOutlet weak var button: MPLabel!
+    @IBOutlet weak var referenceValue: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

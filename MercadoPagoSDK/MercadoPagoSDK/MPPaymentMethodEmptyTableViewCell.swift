@@ -11,7 +11,7 @@ import UIKit
 public class MPPaymentMethodEmptyTableViewCell: UITableViewCell {
 
     @IBOutlet weak private var cardTextLabel : UITextField!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

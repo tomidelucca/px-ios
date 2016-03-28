@@ -11,7 +11,7 @@ import UIKit
 class InstructionsHeaderViewCell: UITableViewCell {
 
 
-    @IBOutlet weak var headerTitle: UILabel!
+    @IBOutlet weak var headerTitle: MPLabel!
     @IBOutlet weak var instructionsHeaderIcon: UIImageView!
     
     override func awakeFromNib() {

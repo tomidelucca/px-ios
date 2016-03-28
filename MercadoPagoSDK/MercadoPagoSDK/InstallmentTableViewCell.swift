@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class InstallmentTableViewCell : UITableViewCell {
-    @IBOutlet private weak var installmentsLabel : UILabel!
+    @IBOutlet private weak var installmentsLabel : MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

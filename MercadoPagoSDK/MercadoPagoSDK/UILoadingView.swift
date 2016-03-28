@@ -30,9 +30,9 @@ public class UILoadingView : UIView {
 		super.init(coder: aDecoder)
 	}
 	
-	public var label : UILabel = {
-		var l = UILabel()
-		l.font = UIFont(name: "HelveticaNeue", size: 15)
+	public var label : MPLabel = {
+		var l = MPLabel()
+		//l.font = UIFont(name: "HelveticaNeue", size: 15)
 		return l
 		}()
 	public var spinner: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)

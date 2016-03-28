@@ -10,9 +10,9 @@ import UIKit
 
 public class CongratsPaymentMethodTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var imgPayment: UIImageView!
-    @IBOutlet weak var lblPaymentInfo: UILabel!
+    @IBOutlet weak var lblPaymentInfo: MPLabel!
 
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)

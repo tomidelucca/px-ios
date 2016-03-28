@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentDescriptionFooterTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var paymentTotalDescription: UILabel!
+    @IBOutlet weak var paymentTotalDescription: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -9,7 +9,7 @@
 import UIKit
 
 public class IssuerTableViewCell: UITableViewCell {
-    @IBOutlet private weak var issuerLabel : UILabel!
+    @IBOutlet private weak var issuerLabel : MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

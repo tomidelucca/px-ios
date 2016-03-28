@@ -11,7 +11,7 @@ import UIKit
 class PaymentTitleViewCell: UITableViewCell {
 
 
-    @IBOutlet weak var paymentTitle: UILabel!
+    @IBOutlet weak var paymentTitle: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

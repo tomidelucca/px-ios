@@ -51,30 +51,23 @@ public class MercadoPagoUIViewController: UIViewController {
         super.viewWillAppear(animated)
         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
         
-        lastDefaultFontLabel = UILabel.appearance().substituteFontName
-        lastDefaultFontTextField = UITextField.appearance().substituteFontName
-        lastDefaultFontButton  = UIButton.appearance().substituteFontName
+    //    lastDefaultFontLabel = UILabel.appearance().substituteFontName
+    //    lastDefaultFontTextField = UITextField.appearance().substituteFontName
+    //    lastDefaultFontButton  = UIButton.appearance().substituteFontName
         
-        UILabel.appearance().substituteFontName = "ProximaNova-Light"
-        UITextField.appearance().substituteFontName = "ProximaNova-Light"
-        UIButton.appearance().substituteFontName = "ProximaNova-Light"
+   //     UILabel.appearance().substituteFontName = "ProximaNova-Light"
+   //     UITextField.appearance().substituteFontName = "ProximaNova-Light"
+   //     UIButton.appearance().substituteFontName = "ProximaNova-Light"
         self.loadMPStyles()
         
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-<<<<<<< HEAD
-        print(lastDefaultFontLabel)
-        print(lastDefaultFontTextField)
-        print(lastDefaultFontButton)
-        
-     //  UILabel.appearance().substituteFontName = "Helveca"
-=======
-        UILabel.appearance().substituteFontName = lastDefaultFontLabel!
->>>>>>> 3b50aeccce3d30c72c7086d8c8bffbf58208dcea
-        UITextField.appearance().substituteFontName = lastDefaultFontTextField!
-        UIButton.appearance().substituteFontName = lastDefaultFontButton!
+
+     //   UILabel.appearance().substituteFontName = lastDefaultFontLabel!
+     //  UITextField.appearance().substituteFontName = lastDefaultFontTextField!
+     //  UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }
     
     internal func loadMPStyles(){
@@ -174,6 +167,8 @@ extension UINavigationController {
 }
 
 
+/*
+
 extension UILabel {
     
     var substituteFontName : String {
@@ -204,4 +199,4 @@ extension UIButton {
     }
     
 }
-
+*/

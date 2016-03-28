@@ -10,7 +10,7 @@ import UIKit
 
 class TermsAndConditionsViewCell: UITableViewCell {
 
-    @IBOutlet weak var termsAndConditionsLabel: UILabel!
+    @IBOutlet weak var termsAndConditionsLabel: MPLabel!
     @IBOutlet weak var paymentButton: UIButton!
     
     override func awakeFromNib() {

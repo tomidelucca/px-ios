@@ -25,7 +25,7 @@ public class TextFieldEffects : UITextField {
     /**
     UILabel that holds all the placeholder information
     */
-    public let placeholderLabel = UILabel()
+    public let placeholderLabel = MPLabel()
     
     /**
     Creates all the animations that are used to leave the textfield in the "entering text" state.

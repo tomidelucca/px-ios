@@ -15,9 +15,9 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
     var paymentMethod: PaymentMethod!
     
     @IBOutlet weak var icon: UIImageView!
-    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblDescription: MPLabel!
     
     var paymentTotalCell : PaymentTotalTableViewCell!
     var congratsPaymentMethodCell : CongratsPaymentMethodTableViewCell!

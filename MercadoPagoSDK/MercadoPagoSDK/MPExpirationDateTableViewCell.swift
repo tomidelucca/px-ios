@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class MPExpirationDateTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
-    @IBOutlet weak private var expirationDateLabel: UILabel!
+    @IBOutlet weak private var expirationDateLabel: MPLabel!
     @IBOutlet weak public var expirationDateTextField: UITextField!
 	
 	public override func focus() {

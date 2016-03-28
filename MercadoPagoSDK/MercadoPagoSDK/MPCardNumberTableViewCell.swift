@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
-    @IBOutlet weak private var cardNumberLabel: UILabel!
+    @IBOutlet weak private var cardNumberLabel: MPLabel!
     @IBOutlet weak private var cardNumberImageView: UIImageView!
     @IBOutlet weak public var cardNumberTextField: UITextField!
     public var setting : Setting!

@@ -10,11 +10,11 @@ import UIKit
 
 class InstructionsTwoLabelsViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
-    @IBOutlet weak var infoTitle: UILabel!
-    @IBOutlet weak var firstReferenceTitle: UILabel!
-    @IBOutlet weak var firstReferenceValue: UILabel!
-    @IBOutlet weak var secondReferenceTitle: UILabel!
-    @IBOutlet weak var secondReferenceValue: UILabel!
+    @IBOutlet weak var infoTitle: MPLabel!
+    @IBOutlet weak var firstReferenceTitle: MPLabel!
+    @IBOutlet weak var firstReferenceValue: MPLabel!
+    @IBOutlet weak var secondReferenceTitle: MPLabel!
+    @IBOutlet weak var secondReferenceValue: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

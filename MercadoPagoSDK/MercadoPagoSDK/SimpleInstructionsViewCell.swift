@@ -10,8 +10,8 @@ import UIKit
 
 class SimpleInstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
-    @IBOutlet weak var infoTitle: UILabel!
-    @IBOutlet weak var referenceValue: UILabel!
+    @IBOutlet weak var infoTitle: MPLabel!
+    @IBOutlet weak var referenceValue: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

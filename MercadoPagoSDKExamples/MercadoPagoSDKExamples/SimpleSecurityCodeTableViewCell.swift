@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 class SimpleSecurityCodeTableViewCell: ErrorTableViewCell {
-    @IBOutlet weak private var securityCodeLabel: UILabel!
+    @IBOutlet weak private var securityCodeLabel: MPLabel!
     @IBOutlet weak var securityCodeTextField: UITextField!
 	
 	

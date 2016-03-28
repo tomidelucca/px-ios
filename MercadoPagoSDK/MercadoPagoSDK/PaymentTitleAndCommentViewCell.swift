@@ -10,9 +10,9 @@ import UIKit
 
 class PaymentTitleAndCommentViewCell: UITableViewCell {
 
-    @IBOutlet weak var paymentTitle: UILabel!
+    @IBOutlet weak var paymentTitle: MPLabel!
     
-    @IBOutlet weak var paymentComment: UILabel!
+    @IBOutlet weak var paymentComment: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

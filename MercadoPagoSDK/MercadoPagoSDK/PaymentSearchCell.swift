@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentSearchCell: UITableViewCell {
     
-    @IBOutlet weak var paymentTitle: UILabel!
+    @IBOutlet weak var paymentTitle: MPLabel!
     
     @IBOutlet weak var paymentIcon: UIImageView!
 

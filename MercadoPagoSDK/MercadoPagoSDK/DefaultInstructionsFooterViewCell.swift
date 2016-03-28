@@ -11,9 +11,9 @@ import UIKit
 class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
     @IBOutlet weak var clockIcon: UIImageView!
-    @IBOutlet weak var secondaryInfoTitle: UILabel!
+    @IBOutlet weak var secondaryInfoTitle: MPLabel!
     
-    @IBOutlet weak var acreditationMessage: UILabel!
+    @IBOutlet weak var acreditationMessage: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

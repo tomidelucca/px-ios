@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-    @IBOutlet weak private var userIdTypeLabel: UILabel!
-    @IBOutlet weak private var userIdValueLabel: UILabel!
+    @IBOutlet weak private var userIdTypeLabel: MPLabel!
+    @IBOutlet weak private var userIdValueLabel: MPLabel!
     @IBOutlet weak public var userIdTypeTextField: UITextField!
     @IBOutlet weak public var userIdValueTextField: UITextField!
     

@@ -16,7 +16,7 @@ public class GenericErrorView : UIView {
     let kLabelXOffset : CGFloat = 12
     
     var backgroundImageView : UIImageView!
-    var errorLabel : UILabel!
+    var errorLabel : MPLabel!
     var minimumHeight : CGFloat = 0
     var bundle : NSBundle? = MercadoPago.getBundle()
     
@@ -32,7 +32,7 @@ public class GenericErrorView : UIView {
         self.backgroundImageView.layer.masksToBounds = false
         self.addSubview(self.backgroundImageView)
         
-        self.errorLabel = UILabel(frame: CGRectMake(kLabelXOffset, 0, self.frame.size.width - 2*kLabelXOffset, self.frame.size.height))
+        self.errorLabel = MPLabel(frame: CGRectMake(kLabelXOffset, 0, self.frame.size.width - 2*kLabelXOffset, self.frame.size.height))
         self.errorLabel.numberOfLines = 0
         self.errorLabel.textColor = UIColor().errorCellColor()
         self.errorLabel.font = UIFont(name: "HelveticaNeue-Light", size: 13)
