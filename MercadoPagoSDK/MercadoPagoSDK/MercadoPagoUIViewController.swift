@@ -50,9 +50,11 @@ public class MercadoPagoUIViewController: UIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        
         lastDefaultFontLabel = UILabel.appearance().substituteFontName
         lastDefaultFontTextField = UITextField.appearance().substituteFontName
         lastDefaultFontButton  = UIButton.appearance().substituteFontName
+        
         UILabel.appearance().substituteFontName = "ProximaNova-Light"
         UITextField.appearance().substituteFontName = "ProximaNova-Light"
         UIButton.appearance().substituteFontName = "ProximaNova-Light"
@@ -62,7 +64,11 @@ public class MercadoPagoUIViewController: UIViewController {
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-       UILabel.appearance().substituteFontName = lastDefaultFontLabel!
+        print(lastDefaultFontLabel)
+        print(lastDefaultFontTextField)
+        print(lastDefaultFontButton)
+        
+     //  UILabel.appearance().substituteFontName = "Helveca"
         UITextField.appearance().substituteFontName = lastDefaultFontTextField!
         UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }

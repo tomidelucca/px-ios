@@ -52,6 +52,12 @@ public class MPStepBuilder : NSObject {
         
         return CardFormViewController(paymentType : paymentType , callback : callback)
     }
+    /*
+    public class func startPaymentInstallment(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) -> PaymentInstallmentsViewController {
+        
+        return PaymentInstallmentsViewController(paymentType : paymentType , callback : callback)
+    }*/
+    
     
 }
 
