@@ -64,14 +64,19 @@ public class MercadoPagoUIViewController: UIViewController {
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+<<<<<<< HEAD
         print(lastDefaultFontLabel)
         print(lastDefaultFontTextField)
         print(lastDefaultFontButton)
         
      //  UILabel.appearance().substituteFontName = "Helveca"
+=======
+        UILabel.appearance().substituteFontName = lastDefaultFontLabel!
+>>>>>>> 3b50aeccce3d30c72c7086d8c8bffbf58208dcea
         UITextField.appearance().substituteFontName = lastDefaultFontTextField!
         UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }
+    
     internal func loadMPStyles(){
         //Navigation bar colors
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]

@@ -41,7 +41,8 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     }
     
     internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?){
-        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount))
+        //TODO : deberia venir de servicio
+        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$")
         self.preferenceDescription.text = purchaseTitle
         if pictureUrl != nil {
             self.shoppingCartIcon.image = MercadoPago.getImage(pictureUrl!)

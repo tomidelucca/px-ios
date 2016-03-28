@@ -56,7 +56,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.registerNib(paymentDescriptionFooter, forCellReuseIdentifier: "paymentDescriptionFooter")
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
-        
+        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
+        self.checkoutTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -71,11 +72,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
 
     }
-    
-    override public func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.loadMPStyles()
-    }
+
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -169,7 +166,17 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
     }
     
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return (section == 1) ? 60 : 0
+    }
 
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 1 {
+            return self.checkoutTable.dequeueReusableCellWithIdentifier("copyrightCell")
+        }
+        return nil
+    }
+    
     internal func startPaymentVault(){
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         MPFlowController.popToRoot(true)
@@ -183,12 +190,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         payment.paymentMethodId = self.paymentMethod!._id
         payment._description = "description"
 
-        var params = "public_key=" + MercadoPagoContext.publicKey() + "&email=" + (self.preference?.payer!.email!)! + "&pref_id=" + self.preference!._id!
-        params = params + "&payment_method=" + payment.paymentMethodId
-        MercadoPago.createMPPayment(params, payment: payment, success: { (payment) -> Void in
+
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, payment: payment, success: { (payment) -> Void in
             if self.paymentMethod!.isOfflinePaymentMethod() {
-                //TODO : enviar paymentId!!!
-                payment._id = 1826290155
                 MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyle()
                     self.callback(payment)
@@ -196,10 +200,14 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             } else {
                 self.clearMercadoPagoStyleAndGoBack()
                 MPFlowController.dismiss(true)
-            }}) { (error) -> Void in
-                //TODO
+            }}, failure : { (error) -> Void in
+                //TODO : NO DEBERIA HACER ESTO, PERO HOY FALLA EL PAGO => es solo para ver instrucciones
+                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyle()
+                    self.callback(payment)
                 
-        }
+                }))
+        })
     }
     
     internal func executeBack(){

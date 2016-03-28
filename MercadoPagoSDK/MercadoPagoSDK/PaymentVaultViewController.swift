@@ -90,6 +90,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
         let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
         let offlinePaymentWithImageCell = UINib(nibName: "PaymentMethodImageViewCell", bundle: self.bundle)
+        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
     
         self.paymentsTable.registerNib(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
@@ -97,6 +98,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
         self.paymentsTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
         self.paymentsTable.registerNib(offlinePaymentWithImageCell, forCellReuseIdentifier: "offlinePaymentWithImageCell")
+        self.paymentsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
         
         
         //Configure navigation item button
@@ -117,16 +119,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
 
     }
     
-    override public func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.loadMPStyles()
-    }
-    
-    override public func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.clearMercadoPagoStyle()
-    }
-    
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return self.displayPreferenceDescription ? 1 : 0
@@ -136,6 +128,16 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
+    }
+    
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return (section == 1) ? 60 : 0
+    }
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == 1 {
+            return self.paymentsTable.dequeueReusableCellWithIdentifier("copyrightCell")
+        }
+        return nil
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

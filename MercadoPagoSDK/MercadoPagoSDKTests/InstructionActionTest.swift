@@ -10,12 +10,6 @@ import XCTest
 
 class InstructionActionTest: BaseTest {
     
-    func testInit(){
-        let instructionAction = InstructionAction(label: "label", url: "url", tag: "tag")
-        XCTAssertEqual(instructionAction.label, "label")
-        XCTAssertEqual(instructionAction.url, "url")
-        XCTAssertEqual(instructionAction.tag, "tag")
-    }
     
     
 }
