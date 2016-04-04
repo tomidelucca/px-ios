@@ -171,7 +171,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
         
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
         }
         
         self.paymentVaultViewController!.optionSelected(pmSearchItem)
@@ -196,7 +196,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
 
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
             
         }
         self.paymentVaultViewController!.optionSelected(pmSearchItem)
@@ -212,7 +212,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "bitcoin"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
         
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
            
         }
         self.paymentVaultViewController!.optionSelected(pmSearchItem)

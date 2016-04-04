@@ -329,9 +329,17 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&email=" + email + "&pref_id=" + preferenceId
         params = params + "&payment_method_id=" + paymentMethod._id
         
-         params = params + "&istallment=" + String(payerCost!.installments)
-         params = params + "&issuer_id=" + String(issuer!._id)
-         params = params + "&token_id=" + token!._id
+        if payerCost != nil {
+            params = params + "&istallment=" + String(payerCost!.installments)
+        }
+        
+        if issuer != nil {
+            params = params + "&issuer_id=" + String(issuer!._id)
+        }
+        
+        if token != nil {
+            params = params + "&token_id=" + token!._id
+        }
         
         let service : MerchantService = MerchantService()
         service.createMPPayment(params : params, success: {(jsonResult: AnyObject?) -> Void in
