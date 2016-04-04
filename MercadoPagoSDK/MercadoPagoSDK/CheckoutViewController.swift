@@ -18,12 +18,11 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentMethod : PaymentMethod?
     var installments : Int = 0
     var issuer : Issuer?
-<<<<<<< HEAD
     var cardToken : CardToken?
-=======
-    var tokenId : String?
     var paymentButton : MPButton?
->>>>>>> b616420491dc2911ad75005feb6e71d096008610
+
+    
+    var payerCost : PayerCost?
     
     private var reviewAndConfirmContent = Set<String>()
     
@@ -188,42 +187,73 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func confirmPayment(){
-<<<<<<< HEAD
+
         
-=======
         self.paymentButton!.alpha = 0.4
         self.paymentButton!.enabled = false
 
->>>>>>> b616420491dc2911ad75005feb6e71d096008610
-        let payment = Payment()
-        payment.transactionAmount = self.preference!.getAmount()
-        payment.tokenId = self.tokenId
-        payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
-        payment.paymentMethodId = self.paymentMethod!._id
-        payment._description = self.preference!.items![0].title
+        // TODO VER SI ES OFF OR ON y crear el token en caso de ser online y mandarlo
+        
 
-
-        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, payment: payment, success: { (payment) -> Void in
-            //TODO : remove!
-            payment._id = 1826446924
-            if self.paymentMethod!.isOfflinePaymentMethod() {
-                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                    self.clearMercadoPagoStyle()
-                    self.callback(payment)
-                }))
-            } else {
-                self.clearMercadoPagoStyleAndGoBack()
-                MPFlowController.dismiss(true)
-            }}, failure : { (error) -> Void in
-                //TODO : remove / payment failed
-                payment._id = 1826446924
-                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                    self.clearMercadoPagoStyle()
-                    self.callback(payment)
-                }))
+        if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
+            self.confirmPaymentOff()
+        }else{
+            //TODO 
             
+                 MPServicesBuilder.createNewCardToken(self.cardToken!, success: { (token) -> Void in
+                    let payment = Payment()
+                    payment.transactionAmount = self.preference!.getAmount()
+                    payment.tokenId = token?._id
+                    payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
+                    payment.paymentMethodId = self.paymentMethod!._id
+                    payment._description = self.preference!.items![0].title
+                    self.confirmPaymentOn(payment, token: token!)
+                 }) { (error) -> Void in
+                     print("Falla!")
+             }
+        }
+        
+        
+       
+    }
+    
+    internal func confirmPaymentOff(){
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : nil, payerCost: nil, issuer: nil,success: { (payment) -> Void in
+            MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyle()
+                    self.callback(payment)
+                }))
+           }, failure : { (error) -> Void in
+                //TODO : remove / payment failed
+            let payment = Payment()
+            payment.transactionAmount = self.preference!.getAmount()
+            payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
+            payment.paymentMethodId = self.paymentMethod!._id
+            payment._description = self.preference!.items![0].title
+            payment._id = 1826446924
+                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyle()
+                    self.callback(payment)
+                }))
+                
         })
     }
+    
+    internal func confirmPaymentOn(payment : Payment , token : Token){
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : token, payerCost:payerCost , issuer: self.issuer,success: { (payment) -> Void in
+            
+                self.clearMercadoPagoStyleAndGoBack()
+                MPFlowController.dismiss(true)
+            }, failure : { (error) -> Void in
+                //TODO : remove / payment failed
+                MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.clearMercadoPagoStyle()
+                    self.callback(payment)
+                }))
+                
+        })
+    }
+
     
     internal func executeBack(){
         self.clearMercadoPagoStyle()

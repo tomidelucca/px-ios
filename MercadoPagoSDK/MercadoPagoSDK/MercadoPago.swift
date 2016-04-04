@@ -325,9 +325,13 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
-    public class func createMPPayment(email : String, preferenceId : String, payment : Payment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token?, payerCost: PayerCost?, issuer: Issuer?, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&email=" + email + "&pref_id=" + preferenceId
-        params = params + "&payment_method_id=" + payment.paymentMethodId
+        params = params + "&payment_method_id=" + paymentMethod._id
+        
+         params = params + "&istallment=" + String(payerCost!.installments)
+         params = params + "&issuer_id=" + String(issuer!._id)
+         params = params + "&token_id=" + token!._id
         
         let service : MerchantService = MerchantService()
         service.createMPPayment(params : params, success: {(jsonResult: AnyObject?) -> Void in
@@ -354,6 +358,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             }
             }, failure: failure)
     }
+    
     
     internal class func openURL(url : String){
         let currentURL = NSURL(string: url)
