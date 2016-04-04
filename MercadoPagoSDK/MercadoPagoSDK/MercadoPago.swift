@@ -330,7 +330,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         params = params + "&payment_method_id=" + payment.paymentMethodId
         
         let service : MerchantService = MerchantService()
-        service.createMPPayment(params : params, payment: payment, success: {(jsonResult: AnyObject?) -> Void in
+        service.createMPPayment(params : params, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
             if let paymentDic = jsonResult as? NSDictionary {
