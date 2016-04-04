@@ -141,7 +141,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : 20
+        return section == 0 ? 0 : 10
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -51,23 +51,12 @@ public class MercadoPagoUIViewController: UIViewController {
         super.viewWillAppear(animated)
         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
         
-    //    lastDefaultFontLabel = UILabel.appearance().substituteFontName
-    //    lastDefaultFontTextField = UITextField.appearance().substituteFontName
-    //    lastDefaultFontButton  = UIButton.appearance().substituteFontName
-        
-   //     UILabel.appearance().substituteFontName = "ProximaNova-Light"
-   //     UITextField.appearance().substituteFontName = "ProximaNova-Light"
-   //     UIButton.appearance().substituteFontName = "ProximaNova-Light"
         self.loadMPStyles()
         
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-
-     //   UILabel.appearance().substituteFontName = lastDefaultFontLabel!
-     //  UITextField.appearance().substituteFontName = lastDefaultFontTextField!
-     //  UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }
     
     internal func loadMPStyles(){
@@ -138,12 +127,10 @@ public class MercadoPagoUIViewController: UIViewController {
     
     public func rightButtonShoppingCart(){
         let action = self.navigationItem.rightBarButtonItem?.action
-        var shoppingCartImage = MercadoPago.getImage("regular_payment")
+        var shoppingCartImage = MercadoPago.getImage("iconCart")
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
-        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
@@ -166,37 +153,3 @@ extension UINavigationController {
     }
 }
 
-
-/*
-
-extension UILabel {
-    
-    var substituteFontName : String {
-        get { return self.font.fontName }
-        set { self.font = UIFont(name: newValue, size: self.font.pointSize) }
-    }
-    
-}
-extension UITextField {
-    
-    var substituteFontName : String {
-        get { return self.font!.fontName }
-        set { self.font = UIFont(name: newValue, size: self.font!.pointSize) }
-    }
-    
-}
-
-
-
-extension UIButton {
-    
-    var substituteFontName : String {
-        get { return self.titleLabel!.font.fontName }
-        set {if (self.titleLabel != nil){
-            self.titleLabel!.font = UIFont(name: newValue, size: self.titleLabel!.font.pointSize) 
-            }
-            }
-    }
-    
-}
-*/
