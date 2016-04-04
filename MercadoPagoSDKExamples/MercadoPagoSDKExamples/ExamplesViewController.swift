@@ -65,15 +65,23 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
         switch indexPath.row {
         case 0:
-            /*
-            self.showViewController( MPStepBuilder.startPaymentInstallment( nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
-                print(paymentMethod.name)
-            }))
-*/
             
+            
+            
+            
+            self.showViewController( MPStepBuilder.startCreditCardForm( nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
+                print(paymentMethod.name)
+                self.showViewController(MPStepBuilder.startPaymentInstallment(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (installment) -> Void in
+                    print("OK!")
+                }))
+            }))
+
+            
+            /*
             self.showViewController(MPStepBuilder.startCreditCardForm(nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
                 print(paymentMethod.name)
             }))
+*/
             /*
           self.showViewController(MPStepBuilder.startPaymentMethodsStep(PaymentType.allPaymentIDs, callback: { (paymentMethod: PaymentMethod) -> Void in
                 self.showViewController(ExamplesUtils.startCardActivity(ExamplesUtils.MERCHANT_PUBLIC_KEY, paymentMethod: paymentMethod, callback: {(token: Token?) -> Void in

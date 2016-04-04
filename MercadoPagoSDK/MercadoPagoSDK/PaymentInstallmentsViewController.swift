@@ -20,10 +20,11 @@ public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Int?,minInstallments : Int?, callback : ((installment: Installment) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : Token?,amount : Double?,minInstallments : Int?, callback : ((installment: Installment) -> Void)) {
         super.init(nibName: "PaymentInstallmentsViewController", bundle: self.bundle)
      
         self.edgesForExtendedLayout = .All
+        MPServicesBuilder.getInstallments(cardToken, amount: <#T##Double#>, issuer: <#T##Issuer?#>, paymentTypeId: <#T##PaymentTypeId#>, success: <#T##(installments: [Installment]?) -> Void#>, failure: <#T##((error: NSError) -> Void)?##((error: NSError) -> Void)?##(error: NSError) -> Void#>)
 
     }
     
