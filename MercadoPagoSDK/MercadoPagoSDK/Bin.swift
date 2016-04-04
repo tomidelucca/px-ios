@@ -1,5 +1,5 @@
 //
-//  Bin.swift
+//  BinMask.swift
 //  MercadoPagoSDK
 //
 //  Created by Matias Gualino on 6/3/15.
@@ -8,23 +8,23 @@
 
 import Foundation
 
-public class Bin : Equatable {
+public class BinMask : Equatable {
     public var exclusionPattern : String!
     public var installmentsPattern : String!
     public var pattern : String!
     
 
-    public class func fromJSON(json : NSDictionary) -> Bin {
-        let bin : Bin = Bin()
-        bin.exclusionPattern = JSON(json["exclusion_pattern"]!).asString
-        bin.installmentsPattern = JSON(json["installments_pattern"]!).asString
-        bin.pattern = JSON(json["pattern"]!).asString
-        return bin
+    public class func fromJSON(json : NSDictionary) -> BinMask {
+        let binMask : BinMask = BinMask()
+        binMask.exclusionPattern = JSON(json["exclusion_pattern"]!).asString
+        binMask.installmentsPattern = JSON(json["installments_pattern"]!).asString
+        binMask.pattern = JSON(json["pattern"]!).asString
+        return binMask
     }
 }
 
 
-public func ==(obj1: Bin, obj2: Bin) -> Bool {
+public func ==(obj1: BinMask, obj2: BinMask) -> Bool {
     
     let areEqual =
         obj1.exclusionPattern == obj2.exclusionPattern &&

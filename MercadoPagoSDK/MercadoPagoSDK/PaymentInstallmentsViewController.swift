@@ -24,7 +24,11 @@ public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
         super.init(nibName: "PaymentInstallmentsViewController", bundle: self.bundle)
      
         self.edgesForExtendedLayout = .All
-        MPServicesBuilder.getInstallments(cardToken, amount: <#T##Double#>, issuer: <#T##Issuer?#>, paymentTypeId: <#T##PaymentTypeId#>, success: <#T##(installments: [Installment]?) -> Void#>, failure: <#T##((error: NSError) -> Void)?##((error: NSError) -> Void)?##(error: NSError) -> Void#>)
+        MPServicesBuilder.getInstallments("547492", amount: 10000, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+            self.tableView.reloadData()
+            }) { (error) -> Void in
+                print("error!")
+        }
 
     }
     

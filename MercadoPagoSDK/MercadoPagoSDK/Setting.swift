@@ -9,7 +9,7 @@
 import Foundation
 
 public class Setting : Equatable {
-    public var bin : Bin!
+    public var binMask : BinMask!
     public var cardNumber : CardNumber!
     public var securityCode : SecurityCode!
     
@@ -18,8 +18,8 @@ public class Setting : Equatable {
         if settings != nil && settings.count > 0 {
             for setting in settings {
                 
-                if "" != bin && Regex(setting.bin!.pattern! + ".*").test(bin) &&
-                    (String.isNullOrEmpty(setting.bin!.exclusionPattern) || !Regex(setting.bin!.exclusionPattern! + ".*").test(bin!)) {
+                if "" != bin && Regex(setting.binMask!.pattern! + ".*").test(bin) &&
+                    (String.isNullOrEmpty(setting.binMask!.exclusionPattern) || !Regex(setting.binMask!.exclusionPattern! + ".*").test(bin!)) {
                     selectedSetting = setting
                 }
             }
@@ -29,7 +29,7 @@ public class Setting : Equatable {
     
     public class func fromJSON(json : NSDictionary) -> Setting {
         let setting : Setting = Setting()
-        setting.bin = Bin.fromJSON(json["bin"]!  as! NSDictionary)
+        setting.binMask = BinMask.fromJSON(json["bin"]!  as! NSDictionary)
         if json["card_number"] != nil && !(json["card_number"]! is NSNull) {
             setting.cardNumber = CardNumber.fromJSON(json["card_number"]! as! NSDictionary)
         }
@@ -41,7 +41,7 @@ public class Setting : Equatable {
 public func ==(obj1: Setting, obj2: Setting) -> Bool {
     
     let areEqual =
-    obj1.bin == obj2.bin &&
+    obj1.binMask == obj2.binMask &&
     obj1.cardNumber == obj2.cardNumber &&
     obj1.securityCode == obj2.securityCode
     
