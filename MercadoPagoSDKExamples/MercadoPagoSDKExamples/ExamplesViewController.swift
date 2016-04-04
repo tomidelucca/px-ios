@@ -70,7 +70,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             
             self.showViewController( MPStepBuilder.startCreditCardForm( nil, callback: { (paymentMethod, token, issuer, installment) -> Void in
-                print(paymentMethod.name)
+          //      print(paymentMethod.name)
+                print(token?.truncCardNumber)
                 self.showViewController(MPStepBuilder.startPaymentInstallment(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (installment) -> Void in
                     print("OK!")
                 }))

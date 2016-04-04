@@ -18,7 +18,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentMethod : PaymentMethod?
     var installments : Int = 0
     var issuer : Issuer?
-    var tokenId : String?
+    var cardToken : CardToken?
     
     private var reviewAndConfirmContent = Set<String>()
     
@@ -183,6 +183,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func confirmPayment(){
+        
         let payment = Payment()
         payment.transactionAmount = self.preference!.getAmount()
         payment.tokenId = self.tokenId
