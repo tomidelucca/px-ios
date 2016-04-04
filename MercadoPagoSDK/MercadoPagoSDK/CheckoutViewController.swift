@@ -18,7 +18,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentMethod : PaymentMethod?
     var installments : Int = 0
     var issuer : Issuer?
+<<<<<<< HEAD
     var cardToken : CardToken?
+=======
+    var tokenId : String?
+    var paymentButton : MPButton?
+>>>>>>> b616420491dc2911ad75005feb6e71d096008610
     
     private var reviewAndConfirmContent = Set<String>()
     
@@ -152,7 +157,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
         termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
-
+        self.paymentButton = termsAndConditionsButton.paymentButton
         return termsAndConditionsButton
     }
     
@@ -183,16 +188,24 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func confirmPayment(){
+<<<<<<< HEAD
         
+=======
+        self.paymentButton!.alpha = 0.4
+        self.paymentButton!.enabled = false
+
+>>>>>>> b616420491dc2911ad75005feb6e71d096008610
         let payment = Payment()
         payment.transactionAmount = self.preference!.getAmount()
         payment.tokenId = self.tokenId
         payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
         payment.paymentMethodId = self.paymentMethod!._id
-        payment._description = "description"
+        payment._description = self.preference!.items![0].title
 
 
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, payment: payment, success: { (payment) -> Void in
+            //TODO : remove!
+            payment._id = 1826446924
             if self.paymentMethod!.isOfflinePaymentMethod() {
                 MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyle()
@@ -202,12 +215,13 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.clearMercadoPagoStyleAndGoBack()
                 MPFlowController.dismiss(true)
             }}, failure : { (error) -> Void in
-                //TODO : NO DEBERIA HACER ESTO, PERO HOY FALLA EL PAGO => es solo para ver instrucciones
+                //TODO : remove / payment failed
+                payment._id = 1826446924
                 MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyle()
                     self.callback(payment)
-                
                 }))
+            
         })
     }
     

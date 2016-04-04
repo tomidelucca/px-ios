@@ -97,8 +97,9 @@ public class Payment : Equatable {
             }
         }
         payment.feesDetails = feesDetails
-        if let cardDic = json["card"] as? NSDictionary {
-            payment.card = Card.fromJSON(cardDic)
+        let cardDic = json["card"] as? NSDictionary
+        if cardDic != nil && cardDic?.count > 0 {
+            payment.card = Card.fromJSON(cardDic!)
         }
         if let orderDic = json["order"] as? NSDictionary {
             payment.order = Order.fromJSON(orderDic)
