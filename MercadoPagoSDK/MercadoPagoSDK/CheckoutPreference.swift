@@ -145,6 +145,14 @@ public class CheckoutPreference : Equatable {
         self.paymentMethods = PreferencePaymentMethods(excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, installments: installmensts, defaultInstallments: defaultInstallments)
         
     }
+    
+    public func getTitle() -> String {
+        return self.items![0].title
+    }
+    
+    public func getCurrencyId() -> String {
+        return self.items![0].currencyId
+    }
 }
 
 public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {

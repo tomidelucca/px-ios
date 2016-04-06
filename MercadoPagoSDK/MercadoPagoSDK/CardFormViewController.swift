@@ -102,6 +102,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
+        
+        //Remove rightButton
+        self.navigationItem.rightBarButtonItem = nil
 
     }
 

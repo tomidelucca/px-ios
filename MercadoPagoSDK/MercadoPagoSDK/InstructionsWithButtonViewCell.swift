@@ -34,17 +34,15 @@ class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDeleg
     
     func fillCell(instruction : Instruction) -> UITableViewCell {
         if instruction.references != nil && instruction.references.count > 0 {
-            self.referenceLabelFirst.text  = instruction.references[0].label.uppercaseString
-            self.referenceValueFirst.text = instruction.references[0].getFullReferenceValue()
+
+            MPCellValidator.fillInstructionReference(instruction.references[0], label: self.referenceLabelFirst, referenceValueLabel: self.referenceValueFirst)
             
             if instruction.references.count > 1 {
-                self.referenceLabelSecond.text = instruction.references[1].label.uppercaseString
-                self.referenceValueSecond.text = instruction.references[1].getFullReferenceValue()
+                MPCellValidator.fillInstructionReference(instruction.references[1], label: self.referenceLabelSecond, referenceValueLabel: self.referenceValueSecond)
             }
             
             if instruction.references.count > 2 {
-                self.referenceLabelThird.text = instruction.references[2].label.uppercaseString
-                self.referenceValueThird.text = instruction.references[2].getFullReferenceValue()
+                MPCellValidator.fillInstructionReference(instruction.references[2], label: self.referenceLabelThird, referenceValueLabel: self.referenceValueThird)
             }
             
             if instruction.actions != nil && instruction.actions?.count > 0 {

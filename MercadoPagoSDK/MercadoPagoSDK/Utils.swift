@@ -20,12 +20,12 @@ class Utils {
         return dateFormatter.dateFromString(dateArr[0])
     }
     
-    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String) -> NSAttributedString {
+    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 20)!,NSForegroundColorAttributeName: UIColor.whiteColor()]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "HelveticaNeue-Light", size: 10)!,NSForegroundColorAttributeName: UIColor.whiteColor(), NSBaselineOffsetAttributeName : 7]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: fontSize)!,NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -37,8 +37,12 @@ class Utils {
     
     class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
         let range = formattedString.rangeOfString(decimalSeparator)
-        let centsIndex = range!.startIndex.advancedBy(1)
-        var cents = formattedString.substringFromIndex(centsIndex)
+        var cents = ""
+        if range != nil {
+            let centsIndex = range!.startIndex.advancedBy(1)
+            cents = formattedString.substringFromIndex(centsIndex)
+        }
+
         if cents.isEmpty || cents.characters.count < 2 {
             var missingZeros = 2 - cents.characters.count
             while missingZeros > 0 {
@@ -50,14 +54,12 @@ class Utils {
     }
     
     class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
-        let range = formattedString.rangeOfString(decimalSeparator)
-        let amount : String
-        if range != nil {
-            amount = formattedString.substringToIndex(range!.startIndex)
-        } else {
-            amount = formattedString
+        
+        if formattedString.containsString(thousandSeparator){
+            return formattedString
         }
         
+        let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
         if length <= 3 {
             return amount
@@ -79,6 +81,19 @@ class Utils {
         }
 
         return finalAmountStr.substringToIndex(finalAmountStr.startIndex.advancedBy(finalAmountStr.characters.count-1))
+    }
+    
+    /**
+     Extract only amount digits
+     Ex: formattedString = "1000.00" with decimalSeparator = "."
+     returns 1000
+    **/
+    class func getAmountDigits(formattedString : String, decimalSeparator : String) -> String {
+        let range = formattedString.rangeOfString(decimalSeparator)
+        if range != nil {
+            return formattedString.substringToIndex(range!.startIndex)
+        }
+        return formattedString
     }
 
 }

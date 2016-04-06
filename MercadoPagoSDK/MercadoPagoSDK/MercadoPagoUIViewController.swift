@@ -61,11 +61,23 @@ public class MercadoPagoUIViewController: UIViewController {
     
     internal func loadMPStyles(){
         //Navigation bar colors
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "ProximaNova-Light", size: 18)!]
 
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+        
+        self.navigationItem.hidesBackButton = true
+        
+        
+        let backButton = UIBarButtonItem()
+        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.style = UIBarButtonItemStyle.Bordered
+        backButton.target = self
+        backButton.tintColor = UIColor.whiteColor()
+        backButton.action = "executeBack"
+        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
     internal func clearMercadoPagoStyleAndGoBackAnimated(){
@@ -115,7 +127,6 @@ public class MercadoPagoUIViewController: UIViewController {
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
         shoppingCartButton.style = UIBarButtonItemStyle.Bordered
-        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
@@ -140,6 +151,15 @@ public class MercadoPagoUIViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
     
+    internal func executeBack(){
+        self.clearMercadoPagoStyle()
+        if MPFlowController.isRoot(self) {
+            MPFlowController.dismiss(true)
+        } else {
+            MPFlowController.pop(true)
+        }
+    }
+
 }
 
 extension UINavigationController {

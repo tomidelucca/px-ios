@@ -33,8 +33,7 @@ class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillment
         }
         
         if instruction.references != nil && instruction.references.count > 0 {
-            self.referenceLabel.text = instruction.references[0].label.uppercaseString
-            self.referenceValue.text = instruction.references[0].getFullReferenceValue()
+            MPCellValidator.fillInstructionReference(instruction.references[0], label: self.referenceLabel, referenceValueLabel: self.referenceValue)
         }
         return self
     }

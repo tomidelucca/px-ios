@@ -32,12 +32,11 @@ class InstructionsTwoLabelsViewCell: UITableViewCell, InstructionsFillmentDelega
         }
         
         if instruction.references != nil && instruction.references.count > 0 {
-            self.firstReferenceTitle.text = instruction.references[0].label.uppercaseString
-            self.firstReferenceValue.text = instruction.references[0].getFullReferenceValue()
             
+            MPCellValidator.fillInstructionReference(instruction.references[0], label: firstReferenceTitle, referenceValueLabel: firstReferenceValue)
+        
             if instruction.references.count > 1 {
-                self.secondReferenceTitle.text = instruction.references[1].label.uppercaseString
-                self.secondReferenceValue.text = instruction.references[1].getFullReferenceValue()
+                    MPCellValidator.fillInstructionReference(instruction.references[1], label: secondReferenceTitle, referenceValueLabel: secondReferenceValue)
             }
         }
         

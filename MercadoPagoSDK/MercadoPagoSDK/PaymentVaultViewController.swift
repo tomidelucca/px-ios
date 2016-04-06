@@ -105,16 +105,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.navigationItem.rightBarButtonItem!.target = self
         self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         
-        //Clear styles before leaving SDK
-        if self == self.navigationController?.viewControllers[0] {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
-            self.navigationItem.leftBarButtonItem?.target = self
-            self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
-        }
-
         self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
         
-
+        
         loadPaymentMethodGroups()
 
     }
@@ -279,11 +272,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             self.callback!(paymentMethod: paymentMethod, cardToken: cardToken, issuer: issuer, installments: 1)
         }))
     }
-    
-    internal func executeBack(){
-        self.clearMercadoPagoStyle()
-        MPFlowController.dismiss(true)
-    }
+
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

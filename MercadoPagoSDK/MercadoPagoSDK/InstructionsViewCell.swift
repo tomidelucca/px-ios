@@ -40,16 +40,13 @@ class InstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate {
         }
         
         if instruction.references != nil && instruction.references.count > 0 {
-            self.firstReferenceLabel.text = instruction.references[0].label.uppercaseString
-            self.firstReferenceValue.text = instruction.references[0].getFullReferenceValue()
+            MPCellValidator.fillInstructionReference(instruction.references[0], label: firstReferenceLabel, referenceValueLabel: firstReferenceValue)
             
             if instruction.references.count > 1 {
-                self.secondReferenceLabel.text = instruction.references[1].label.uppercaseString
-                self.secondReferenceValue.text = instruction.references[1].getFullReferenceValue()
+                 MPCellValidator.fillInstructionReference(instruction.references[1], label: secondReferenceLabel, referenceValueLabel: secondReferenceValue)
                 
                 if instruction.references.count > 2 {
-                    self.thirdReferenceLabel.text = instruction.references[2].label.uppercaseString
-                    self.thirdReferenceValue.text = instruction.references[2].getFullReferenceValue()
+                    MPCellValidator.fillInstructionReference(instruction.references[2], label: thirdReferenceLabel, referenceValueLabel: thirdReferenceValue)
                 }
             }
             

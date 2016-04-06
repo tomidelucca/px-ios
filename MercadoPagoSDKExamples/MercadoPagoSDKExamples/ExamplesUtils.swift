@@ -19,10 +19,10 @@ class ExamplesUtils {
 		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
         
             
-        //"TEST-b130744e-3dc5-4809-b027-599109307f1e"
+        "TEST-b130744e-3dc5-4809-b027-599109307f1e"
             
         //USUARIO AXEL
-        "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
+    //    "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
     }
     class var MERCHANT_MOCK_BASE_URL : String {
         return "https://www.mercadopago.com"

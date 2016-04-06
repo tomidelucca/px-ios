@@ -68,15 +68,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         //Shopping cart button
         self.navigationItem.rightBarButtonItem?.action = Selector("togglePreferenceDescription")
-        self.navigationItem.rightBarButtonItem?.target = self
-        
-        //Clear styles before leaving SDK
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.backBarButtonItem = self.navigationItem.leftBarButtonItem
+        self.navigationItem.rightBarButtonItem?.target = self        
 
     }
 
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.leftBarButtonItem!.action = "startPaymentVault"
+
+    }
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -86,7 +86,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if section == 0 && displayPreferenceDescription {
             return 0.1
         }
-        return 20
+        return 8
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -98,7 +98,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
         
         if indexPath.row == 0 {
-            return 100
+            return 80
         } else if indexPath.row == 1 {
             return 60
         }
@@ -182,7 +182,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func startPaymentVault(){
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: UIBarButtonItemStyle.Bordered, target: self, action: "executeBack")
         MPFlowController.popToRoot(true)
     }
     
@@ -219,6 +218,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : nil, payerCost: nil, issuer: nil,success: { (payment) -> Void in
+            payment._id = 1826446924
             MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.clearMercadoPagoStyle()
                     self.callback(payment)
@@ -252,12 +252,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 }))
                 
         })
-    }
-
-    
-    internal func executeBack(){
-        self.clearMercadoPagoStyle()
-        MPFlowController.popToRoot(true)
     }
     
     internal func togglePreferenceDescription(){

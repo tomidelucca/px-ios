@@ -20,7 +20,7 @@ public class MPFlowBuilder : NSObject {
 
     
     public class func startCheckoutViewController(preference: CheckoutPreference, callback: (Payment) -> Void) -> UINavigationController {
-            return MPFlowBuilder.startPaymentVaultInCheckout(preference.getAmount(), currencyId: "MXN", purchaseTitle: "title", excludedPaymentTypes: preference.getExcludedPaymentTypes(), excludedPaymentMethods: preference.getExcludedPaymentMethods(), defaultPaymentMethodId: preference.getDefaultPaymentMethodId(), callback: { (paymentMethod, cardToken, issuer, installments) -> Void in
+            return MPFlowBuilder.startPaymentVaultInCheckout(preference.getAmount(), currencyId: preference.getCurrencyId(), purchaseTitle: preference.getTitle(), excludedPaymentTypes: preference.getExcludedPaymentTypes(), excludedPaymentMethods: preference.getExcludedPaymentMethods(), defaultPaymentMethodId: preference.getDefaultPaymentMethodId(), callback: { (paymentMethod, cardToken, issuer, installments) -> Void in
                 
                 let checkoutVC = CheckoutViewController(preference: preference, callback: { (payment : Payment) -> Void in
                     callback(payment)
@@ -34,7 +34,8 @@ public class MPFlowBuilder : NSObject {
                         callback(payment)
                     })
                 }
-               MPFlowController.push(checkoutVC)
+
+                MPFlowController.push(checkoutVC)
             })
     }
     
@@ -55,6 +56,7 @@ public class MPFlowBuilder : NSObject {
         
         let paymentVault = PaymentVaultViewController(amount: amount, currencyId: currencyId, purchaseTitle: purchaseTitle, excludedPaymentTypes: excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: defaultPaymentMethodId, installments: installments, defaultInstallments: defaultInstallments, callback: callback)
         paymentVault.modalTransitionStyle = .CrossDissolve
+        
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     
