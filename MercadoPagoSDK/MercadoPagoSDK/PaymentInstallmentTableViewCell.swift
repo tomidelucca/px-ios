@@ -10,6 +10,7 @@ import UIKit
 
 class PaymentInstallmentTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var payerCostDetail: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
