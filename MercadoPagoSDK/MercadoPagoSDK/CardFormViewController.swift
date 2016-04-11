@@ -34,9 +34,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?
     
+    
+    var installments : [Installment]?
+    var payerCosts : [PayerCost]?
+    
+    
+    
     var paymentType : PaymentType?
     var callback : (( paymentMethod: PaymentMethod,cardToken: CardToken?, issuer: Issuer?, installment: Installment?) -> Void)?
     
+    var amount : Double?
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -44,10 +51,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentType : PaymentType?, callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentType : PaymentType?, amount:Double,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentType = paymentType
-        self.edgesForExtendedLayout = .All
+      //  self.edgesForExtendedLayout = .All
         self.callback = callback
     }
     
@@ -63,6 +70,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     
     public override func viewDidAppear(animated: Bool) {
+        
         
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
@@ -630,9 +638,20 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
     }
+    
     func updateCardSkin(){
         if (textBox.text?.characters.count>7){
-            paymentMethod = self.matchedPaymentMethod()
+            let pmMatched = self.matchedPaymentMethod()
+            
+            if((pmMatched != nil) && (pmMatched != paymentMethod)){
+                MPServicesBuilder.getInstallments(self.getBIN()!  , amount: 10000, issuer: nil, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+                    self.installments = installments
+                    self.payerCosts = installments![0].payerCosts
+                    }) { (error) -> Void in
+                        print("error!")
+                }
+            }
+            paymentMethod = pmMatched
             if(paymentMethod != nil){
                 UIView.animateWithDuration(0.7, animations: { () -> Void in
                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)

@@ -1,5 +1,5 @@
 //
-//  PaymentInstallmentTableViewCell.swift
+//  PayerCostTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 3/22/16.
@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class PaymentInstallmentTableViewCell: UITableViewCell {
+    
+class PayerCostTableViewCell: UITableViewCell {
 
     @IBOutlet weak var payerCostDetail: UILabel!
     override func awakeFromNib() {
