@@ -10,86 +10,86 @@ import Foundation
 import UIKit
 
 public class NewCardViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, KeyboardDelegate {
-    
-    // ViewController parameters
-    var key : String?
-    var keyType : String?
-    var paymentMethod: PaymentMethod?
-    var requireSecurityCode : Bool?
-    var callback: ((cardToken: CardToken) -> Void)?
-    var identificationType : IdentificationType?
-    var identificationTypes : [IdentificationType]?
-    
-    var bundle : NSBundle? = MercadoPago.getBundle()
-    
-    // Input controls
-    @IBOutlet weak private var tableView : UITableView!
-    var cardNumberCell : MPCardNumberTableViewCell!
-    var expirationDateCell : MPExpirationDateTableViewCell!
-    var cardholderNameCell : MPCardholderNameTableViewCell!
-    var userIdCell : MPUserIdTableViewCell!
-    var securityCodeCell : MPSecurityCodeTableViewCell!
-    var hasError : Bool = false
-    var loadingView : UILoadingView!
+	
+	// ViewController parameters
+	var key : String?
+	var keyType : String?
+	var paymentMethod: PaymentMethod?
+	var requireSecurityCode : Bool?
+	var callback: ((cardToken: CardToken) -> Void)?
+	var identificationType : IdentificationType?
+	var identificationTypes : [IdentificationType]?
+	
+	var bundle : NSBundle? = MercadoPago.getBundle()
+	
+	// Input controls
+	@IBOutlet weak private var tableView : UITableView!
+	var cardNumberCell : MPCardNumberTableViewCell!
+	var expirationDateCell : MPExpirationDateTableViewCell!
+	var cardholderNameCell : MPCardholderNameTableViewCell!
+	var userIdCell : MPUserIdTableViewCell!
+	var securityCodeCell : MPSecurityCodeTableViewCell!
+	var hasError : Bool = false
+	var loadingView : UILoadingView!
 	
 	var inputsCells : NSMutableArray!
 	
-    init(paymentMethod: PaymentMethod, requireSecurityCode: Bool, callback: ((cardToken: CardToken) -> Void)?) {
-        super.init(nibName: "NewCardViewController", bundle: bundle)
-        self.paymentMethod = paymentMethod
-        self.requireSecurityCode = requireSecurityCode
-        self.key = MercadoPagoContext.keyValue()
-        self.keyType = MercadoPagoContext.keyType()
-        self.callback = callback
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    override public func viewDidAppear(animated: Bool) {
-        self.tableView.reloadData()
-    }
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+	init(paymentMethod: PaymentMethod, requireSecurityCode: Bool, callback: ((cardToken: CardToken) -> Void)?) {
+		super.init(nibName: "NewCardViewController", bundle: bundle)
+		self.paymentMethod = paymentMethod
+		self.requireSecurityCode = requireSecurityCode
+		self.key = MercadoPagoContext.keyValue()
+		self.keyType = MercadoPagoContext.keyType()
+		self.callback = callback
+	}
+	
+	required public init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+	}
+	
+	public init() {
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+	}
+	
+	override public func viewDidAppear(animated: Bool) {
+		self.tableView.reloadData()
+	}
+	
+	override public func viewDidLoad() {
+		super.viewDidLoad()
 		
-        self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
-        
-        self.title = "Datos de tu tarjeta".localized
-        
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "submitForm")
+		self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
+		
+		self.title = "Datos de tu tarjeta".localized
+		
+		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Plain, target: self, action: nil)
+		
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "submitForm")
 		
 		self.view.addSubview(self.loadingView)
-        var mercadoPago : MercadoPago
-        mercadoPago = MercadoPago(keyType: self.keyType, key: self.key)
-        mercadoPago.getIdentificationTypes({(identificationTypes: [IdentificationType]?) -> Void in
-            self.identificationTypes = identificationTypes
-            self.prepareTableView()
-            self.tableView.reloadData()
-            self.loadingView.removeFromSuperview()
-            }, failure: { (error: NSError?) -> Void in
-                
-                if error?.code == MercadoPago.ERROR_API_CODE {
-                    self.prepareTableView()
-                    self.tableView.reloadData()
-                    self.loadingView.removeFromSuperview()
-                    self.userIdCell.hidden = true
-                }
-            }
-        )
-        
-    }
+		var mercadoPago : MercadoPago
+		mercadoPago = MercadoPago(keyType: self.keyType, key: self.key)
+		mercadoPago.getIdentificationTypes({(identificationTypes: [IdentificationType]?) -> Void in
+			self.identificationTypes = identificationTypes
+			self.prepareTableView()
+			self.tableView.reloadData()
+			self.loadingView.removeFromSuperview()
+			}, failure: { (error: NSError?) -> Void in
+				
+				if error?.code == MercadoPago.ERROR_API_CODE {
+					self.prepareTableView()
+					self.tableView.reloadData()
+					self.loadingView.removeFromSuperview()
+					self.userIdCell.hidden = true
+				}
+			}
+		)
+		
+	}
 	
 	public override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
@@ -123,13 +123,13 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		var i = 0
 		for arr in self.inputsCells {
 			if let input = object as? UITextField {
-				if let arrTextField = arr[0] as? UITextField {
+				if let arrTextField = (arr as! NSArray)[0] as? UITextField {
 					if input == arrTextField {
 						return i
 					}
 				}
 			}
-			i++
+			i = i + 1
 		}
 		return -1
 	}
@@ -139,18 +139,23 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 	}
 	
 	public func focusAndScrollForIndex(index: Int) {
-		let textField = self.inputsCells[index][0] as? UITextField!
-		let cell = self.inputsCells[index][1] as? ErrorTableViewCell!
-		if textField != nil {
-			if !textField!.isFirstResponder() {
-				textField!.becomeFirstResponder()
+		var i = 0
+		for arr in self.inputsCells {
+			if i == index {
+				if let textField = (arr as! NSArray)[0] as? UITextField {
+					if let cell = (arr as! NSArray)[1] as? ErrorTableViewCell {
+						if !textField.isFirstResponder() {
+							textField.becomeFirstResponder()
+						}
+						let indexPath = self.tableView.indexPathForCell(cell)
+						if indexPath != nil {
+							scrollToRow(indexPath!)
+						}
+					}
+					
+				}
 			}
-		}
-		if cell != nil {
-			let indexPath = self.tableView.indexPathForCell(cell!)
-			if indexPath != nil {
-				scrollToRow(indexPath!)
-			}
+			i = i + 1
 		}
 	}
 	
@@ -176,18 +181,22 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		if object != nil {
 			let index = getIndexForObject(object!)
 			if index < self.inputsCells.count {
-				let textField = self.inputsCells[index][0] as? UITextField!
-				_ = self.inputsCells[index][1] as? ErrorTableViewCell!
-				if textField != nil {
-					textField!.resignFirstResponder()
+				var i = 0
+				for arr in self.inputsCells {
+					if i == index {
+						if let textField = (arr as! NSArray)[0] as? UITextField {
+							textField.resignFirstResponder()
+							let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+							scrollToRow(indexPath)
+						}
+					}
+					i = i + 1
 				}
-				let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-				scrollToRow(indexPath)
 			}
 		}
 	}
 	
-    public func prepareTableView() {
+	public func prepareTableView() {
 		self.inputsCells = NSMutableArray()
 		
 		let cardNumberNib = UINib(nibName: "MPCardNumberTableViewCell", bundle: MercadoPago.getBundle())
@@ -228,33 +237,33 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-    }
-    
-    public func submitForm() {
-        
-        let cardToken = CardToken(cardNumber: self.cardNumberCell.getCardNumber(), expirationMonth: self.expirationDateCell.getExpirationMonth(), expirationYear: self.expirationDateCell.getExpirationYear(), securityCode: nil, cardholderName: self.cardholderNameCell.getCardholderName(), docType: self.userIdCell.getUserIdType(), docNumber: self.userIdCell.getUserIdValue())
-        
-        self.view.addSubview(self.loadingView)
-        
-        if validateForm(cardToken) {
-            callback!(cardToken: cardToken)
-        } else {
-            self.hasError = true
-            self.tableView.reloadData()
-            self.loadingView.removeFromSuperview()
-        }
-    }
-
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
+	}
+	
+	public func submitForm() {
+		
+		let cardToken = CardToken(cardNumber: self.cardNumberCell.getCardNumber(), expirationMonth: self.expirationDateCell.getExpirationMonth(), expirationYear: self.expirationDateCell.getExpirationYear(), securityCode: nil, cardholderName: self.cardholderNameCell.getCardholderName(), docType: self.userIdCell.getUserIdType(), docNumber: self.userIdCell.getUserIdValue())
+		
+		self.view.addSubview(self.loadingView)
+		
+		if validateForm(cardToken) {
+			callback!(cardToken: cardToken)
+		} else {
+			self.hasError = true
+			self.tableView.reloadData()
+			self.loadingView.removeFromSuperview()
+		}
+	}
+	
+	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 2
+	}
 	
 	public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 2
 	}
-    
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+	
+	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		
 		if indexPath.section == 0 {
 			if indexPath.row == 0 {
 				return self.cardNumberCell
@@ -268,8 +277,8 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 				return self.userIdCell
 			}
 		}
-        return UITableViewCell()
-    }
+		return UITableViewCell()
+	}
 	
 	override public func viewDidLayoutSubviews() {
 		if self.tableView.respondsToSelector(Selector("setSeparatorInset:")) {
@@ -278,7 +287,7 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		
 		if self.tableView.respondsToSelector(Selector("setSeparatorInset:")) {
 			if #available(iOS 8.0, *) {
-			    self.tableView.layoutMargins = UIEdgeInsetsZero
+				self.tableView.layoutMargins = UIEdgeInsetsZero
 			} else {
 			}
 		}
@@ -291,13 +300,13 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		
 		if cell.respondsToSelector(Selector("setSeparatorInset:")) {
 			if #available(iOS 8.0, *) {
-			    cell.layoutMargins = UIEdgeInsetsZero
+				cell.layoutMargins = UIEdgeInsetsZero
 			} else {
 			}
 		}
 	}
 	
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 		if indexPath.section == 0 {
 			if indexPath.row == 0 {
 				return self.cardNumberCell.getHeight()
@@ -311,60 +320,60 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 				return self.userIdCell.getHeight()
 			}
 		}
-        return 55
-    }
-    
-    public func validateForm(cardToken : CardToken) -> Bool {
-        
-        var result : Bool = true
-        
-        // Validate card number
-        let errorCardNumber = cardToken.validateCardNumber(paymentMethod!)
-        if  errorCardNumber != nil {
-            self.cardNumberCell.setError(errorCardNumber!.userInfo["cardNumber"] as? String)
-            result = false
-        } else {
-            self.cardNumberCell.setError(nil)
-        }
-        
-        // Validate expiry date
-        let errorExpiryDate = cardToken.validateExpiryDate()
-        if errorExpiryDate != nil {
-            self.expirationDateCell.setError(errorExpiryDate!.userInfo["expiryDate"] as? String)
-            result = false
-        } else {
-            self.expirationDateCell.setError(nil)
-        }
-
-        // Validate card holder name
-        let errorCardholder = cardToken.validateCardholderName()
-        if errorCardholder != nil {
-            self.cardholderNameCell.setError(errorCardholder!.userInfo["cardholder"] as? String)
-            result = false
-        } else {
-            self.cardholderNameCell.setError(nil)
-        }
-        
-        // Validate identification number
-        let errorIdentificationType = cardToken.validateIdentificationType()
-        var errorIdentificationNumber : NSError? = nil
-        if self.identificationType != nil {
-            errorIdentificationNumber = cardToken.validateIdentificationNumber(self.identificationType!)
-        } else {
-            errorIdentificationNumber = cardToken.validateIdentificationNumber()
-        }
-        
-        if errorIdentificationType != nil {
-            self.userIdCell.setError(errorIdentificationType!.userInfo["identification"] as? String)
-            result = false
-        } else if errorIdentificationNumber != nil {
-            self.userIdCell.setError(errorIdentificationNumber!.userInfo["identification"] as? String)
-            result = false
-        } else {
-            self.userIdCell.setError(nil)
-        }
-        
-        return result
-    }
-    
+		return 55
+	}
+	
+	public func validateForm(cardToken : CardToken) -> Bool {
+		
+		var result : Bool = true
+		
+		// Validate card number
+		let errorCardNumber = cardToken.validateCardNumber(paymentMethod!)
+		if  errorCardNumber != nil {
+			self.cardNumberCell.setError(errorCardNumber!.userInfo["cardNumber"] as? String)
+			result = false
+		} else {
+			self.cardNumberCell.setError(nil)
+		}
+		
+		// Validate expiry date
+		let errorExpiryDate = cardToken.validateExpiryDate()
+		if errorExpiryDate != nil {
+			self.expirationDateCell.setError(errorExpiryDate!.userInfo["expiryDate"] as? String)
+			result = false
+		} else {
+			self.expirationDateCell.setError(nil)
+		}
+		
+		// Validate card holder name
+		let errorCardholder = cardToken.validateCardholderName()
+		if errorCardholder != nil {
+			self.cardholderNameCell.setError(errorCardholder!.userInfo["cardholder"] as? String)
+			result = false
+		} else {
+			self.cardholderNameCell.setError(nil)
+		}
+		
+		// Validate identification number
+		let errorIdentificationType = cardToken.validateIdentificationType()
+		var errorIdentificationNumber : NSError? = nil
+		if self.identificationType != nil {
+			errorIdentificationNumber = cardToken.validateIdentificationNumber(self.identificationType!)
+		} else {
+			errorIdentificationNumber = cardToken.validateIdentificationNumber()
+		}
+		
+		if errorIdentificationType != nil {
+			self.userIdCell.setError(errorIdentificationType!.userInfo["identification"] as? String)
+			result = false
+		} else if errorIdentificationNumber != nil {
+			self.userIdCell.setError(errorIdentificationNumber!.userInfo["identification"] as? String)
+			result = false
+		} else {
+			self.userIdCell.setError(nil)
+		}
+		
+		return result
+	}
+	
 }
