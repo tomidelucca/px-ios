@@ -131,7 +131,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let excludedPaymentMethods = ["gestopago"]
             
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-                self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
+				//   self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 11:
             let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
