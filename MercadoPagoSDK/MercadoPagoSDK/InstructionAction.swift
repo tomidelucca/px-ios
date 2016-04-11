@@ -31,6 +31,11 @@ public class InstructionAction : Equatable {
     }
 }
 
+public enum ActionTag : String {
+    case LINK = "link"
+    case PRINT = "print"
+}
+
 
 public func ==(obj1: InstructionAction, obj2: InstructionAction) -> Bool {
     let areEqual =

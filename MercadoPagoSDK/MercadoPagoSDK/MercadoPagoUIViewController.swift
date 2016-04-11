@@ -51,32 +51,33 @@ public class MercadoPagoUIViewController: UIViewController {
         super.viewWillAppear(animated)
         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
         
-    //    lastDefaultFontLabel = UILabel.appearance().substituteFontName
-    //    lastDefaultFontTextField = UITextField.appearance().substituteFontName
-    //    lastDefaultFontButton  = UIButton.appearance().substituteFontName
-        
-   //     UILabel.appearance().substituteFontName = "ProximaNova-Light"
-   //     UITextField.appearance().substituteFontName = "ProximaNova-Light"
-   //     UIButton.appearance().substituteFontName = "ProximaNova-Light"
         self.loadMPStyles()
         
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-
-     //   UILabel.appearance().substituteFontName = lastDefaultFontLabel!
-     //  UITextField.appearance().substituteFontName = lastDefaultFontTextField!
-     //  UIButton.appearance().substituteFontName = lastDefaultFontButton!
     }
     
     internal func loadMPStyles(){
         //Navigation bar colors
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "ProximaNova-Light", size: 18)!]
 
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+        
+        self.navigationItem.hidesBackButton = true
+        
+        
+        let backButton = UIBarButtonItem()
+        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.style = UIBarButtonItemStyle.Bordered
+        backButton.target = self
+        backButton.tintColor = UIColor.whiteColor()
+        backButton.action = "executeBack"
+        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
     internal func clearMercadoPagoStyleAndGoBackAnimated(){
@@ -126,7 +127,6 @@ public class MercadoPagoUIViewController: UIViewController {
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
         shoppingCartButton.style = UIBarButtonItemStyle.Bordered
-        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
@@ -138,12 +138,10 @@ public class MercadoPagoUIViewController: UIViewController {
     
     public func rightButtonShoppingCart(){
         let action = self.navigationItem.rightBarButtonItem?.action
-        var shoppingCartImage = MercadoPago.getImage("regular_payment")
+        var shoppingCartImage = MercadoPago.getImage("iconCart")
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
-        shoppingCartButton.imageInsets = UIEdgeInsets(top: 4, left: 6, bottom: 4, right: 6)
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
@@ -153,6 +151,15 @@ public class MercadoPagoUIViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = shoppingCartButton
     }
     
+    internal func executeBack(){
+        self.clearMercadoPagoStyle()
+        if MPFlowController.isRoot(self) {
+            MPFlowController.dismiss(true)
+        } else {
+            MPFlowController.pop(true)
+        }
+    }
+
 }
 
 extension UINavigationController {
@@ -166,37 +173,3 @@ extension UINavigationController {
     }
 }
 
-
-/*
-
-extension UILabel {
-    
-    var substituteFontName : String {
-        get { return self.font.fontName }
-        set { self.font = UIFont(name: newValue, size: self.font.pointSize) }
-    }
-    
-}
-extension UITextField {
-    
-    var substituteFontName : String {
-        get { return self.font!.fontName }
-        set { self.font = UIFont(name: newValue, size: self.font!.pointSize) }
-    }
-    
-}
-
-
-
-extension UIButton {
-    
-    var substituteFontName : String {
-        get { return self.titleLabel!.font.fontName }
-        set {if (self.titleLabel != nil){
-            self.titleLabel!.font = UIFont(name: newValue, size: self.titleLabel!.font.pointSize) 
-            }
-            }
-    }
-    
-}
-*/

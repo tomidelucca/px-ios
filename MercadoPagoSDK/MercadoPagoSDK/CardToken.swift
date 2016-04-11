@@ -30,7 +30,7 @@ public class CardToken : NSObject {
             self.cardholder?.identification = Identification()
             self.cardholder?.identification?.number = docNumber
             self.cardholder?.identification?.type = docType
-            self.cardNumber = normalizeCardNumber(cardNumber)
+            self.cardNumber = normalizeCardNumber(cardNumber!.stringByReplacingOccurrencesOfString(" ", withString: ""))
             self.expirationMonth = expirationMonth
             self.expirationYear = normalizeYear(expirationYear)
             self.securityCode = securityCode

@@ -2,6 +2,236 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GET/checkout/beta/v1/native_payment?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;email=email&amp;pref_id=xxx&amp;payment_method_id=oxxo</key>
+	<string>{
+  &quot;statement_descriptor&quot;: null,
+  &quot;profile_id&quot;: null,
+  &quot;coupon_id&quot;: null,
+  &quot;captured&quot;: true,
+  &quot;fee_details&quot;: [
+  ],
+  &quot;date_created&quot;: &quot;2016-04-04T08:57:03.000-04:00&quot;,
+  &quot;date_last_updated&quot;: &quot;2016-04-04T08:57:03.000-04:00&quot;,
+  &quot;id&quot;: 485782,
+  &quot;payer_id&quot;: 210330469,
+  &quot;collector&quot;: {
+    &quot;id&quot;: 166532566,
+    &quot;first_name&quot;: &quot;Test&quot;,
+    &quot;phone&quot;: {
+      &quot;extension&quot;: &quot;&quot;,
+      &quot;area_code&quot;: &quot;01&quot;,
+      &quot;number&quot;: &quot;1111-1111&quot;
+    },
+    &quot;email&quot;: &quot;test_user_24731946@testuser.com&quot;,
+    &quot;identification&quot;: {
+      &quot;number&quot;: &quot;11111111111&quot;,
+      &quot;type&quot;: &quot;IFE&quot;
+    },
+    &quot;last_name&quot;: &quot;Test&quot;
+  },
+  &quot;issuer_id&quot;: null,
+  &quot;external_reference&quot;: null,
+  &quot;order&quot;: {
+  },
+  &quot;transaction_amount&quot;: 1000,
+  &quot;description&quot;: null,
+  &quot;card&quot;: {
+  },
+  &quot;available_actions&quot;: [
+    &quot;cancel&quot;,
+    &quot;alter&quot;
+  ],
+  &quot;transaction_details&quot;: {
+    &quot;total_paid_amount&quot;: 1000,
+    &quot;net_received_amount&quot;: 0,
+    &quot;payment_method_reference_id&quot;: &quot;485781&quot;,
+    &quot;financial_institution&quot;: null,
+    &quot;external_resource_url&quot;: &quot;https://sandbox.mercadopago.com/coupon/oxxo&quot;,
+    &quot;installment_amount&quot;: 0,
+    &quot;overpaid_amount&quot;: 0
+  },
+  &quot;coupon_amount&quot;: 0,
+  &quot;marketplace&quot;: &quot;NONE&quot;,
+  &quot;application_id&quot;: &quot;3862657147824031&quot;,
+  &quot;call_for_authorize_id&quot;: null,
+  &quot;risk_execution_id&quot;: null,
+  &quot;metadata&quot;: {
+  },
+  &quot;currency_id&quot;: &quot;MXN&quot;,
+  &quot;collector_id&quot;: 166532566,
+  &quot;sponsor_id&quot;: null,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;payment_method_id&quot;: &quot;oxxo&quot;,
+  &quot;deduction_schema&quot;: null,
+  &quot;site_id&quot;: &quot;MLM&quot;,
+  &quot;status_detail&quot;: &quot;pending_waiting_payment&quot;,
+  &quot;operation_type&quot;: &quot;regular_payment&quot;,
+  &quot;binary_mode&quot;: false,
+  &quot;transaction_id&quot;: null,
+  &quot;installments&quot;: 1,
+  &quot;money_release_date&quot;: null,
+  &quot;differential_pricing_id&quot;: null,
+  &quot;payer&quot;: {
+    &quot;id&quot;: null,
+    &quot;first_name&quot;: null,
+    &quot;phone&quot;: {
+      &quot;extension&quot;: null,
+      &quot;area_code&quot;: null,
+      &quot;number&quot;: null
+    },
+    &quot;email&quot;: &quot;thisis@nemail.com&quot;,
+    &quot;identification&quot;: {
+      &quot;number&quot;: null,
+      &quot;type&quot;: null
+    },
+    &quot;last_name&quot;: null,
+    &quot;type&quot;: &quot;guest&quot;
+  },
+  &quot;notification_url&quot;: null,
+  &quot;transaction_amount_refunded&quot;: 0,
+  &quot;refunds&quot;: [
+  ],
+  &quot;authorization_code&quot;: null,
+  &quot;date_approved&quot;: null,
+  &quot;live_mode&quot;: false,
+  &quot;payment_type_id&quot;: &quot;ticket&quot;
+}</string>
+	<key>GET/checkout/beta/v1/payment_methods/search/options?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;excluded_payment_types=digital_currency,account_money</key>
+	<string>{
+    &quot;groups&quot;: [
+        {
+            &quot;type&quot;: &quot;group&quot;,
+            &quot;comment&quot;: null,
+            &quot;id&quot;: &quot;cards&quot;,
+            &quot;description&quot;: &quot;Tarjetas&quot;,
+            &quot;children_header&quot;: &quot;\u00bfCon que tarjeta?&quot;,
+            &quot;children&quot;: [
+                {
+                    &quot;type&quot;: &quot;payment_type&quot;,
+                    &quot;comment&quot;: &quot;&quot;,
+                    &quot;id&quot;: &quot;credit_card&quot;,
+                    &quot;description&quot;: &quot;Tarjeta de cr\u00e9dito&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_type&quot;,
+                    &quot;comment&quot;: &quot;&quot;,
+                    &quot;id&quot;: &quot;debit_card&quot;,
+                    &quot;description&quot;: &quot;Tarjeta de d\u00e9bito&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_type&quot;,
+                    &quot;comment&quot;: &quot;&quot;,
+                    &quot;id&quot;: &quot;prepaid_card&quot;,
+                    &quot;description&quot;: &quot;Tarjeta prepaga de MercadoPago&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                }
+            ]
+        },
+        {
+            &quot;type&quot;: &quot;payment_type&quot;,
+            &quot;comment&quot;: null,
+            &quot;id&quot;: &quot;ticket&quot;,
+            &quot;description&quot;: &quot;Efectivo&quot;,
+            &quot;children_header&quot;: &quot;\u00bfD\u00f3nde quieres pagar?&quot;,
+            &quot;children&quot;: [
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;oxxo&quot;,
+                    &quot;description&quot;: &quot;Oxxo&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;7eleven&quot;,
+                    &quot;description&quot;: &quot;7eleven&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;telecomm&quot;,
+                    &quot;description&quot;: &quot;Telecomm&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;bancomer_ticket&quot;,
+                    &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;banamex_ticket&quot;,
+                    &quot;description&quot;: &quot;Banamex&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;serfin_ticket&quot;,
+                    &quot;description&quot;: &quot;Santander&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;gestopago&quot;,
+                    &quot;description&quot;: &quot;Gestopago&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                }
+            ]
+        },
+        {
+            &quot;type&quot;: &quot;payment_type&quot;,
+            &quot;comment&quot;: null,
+            &quot;id&quot;: &quot;bank_transfer&quot;,
+            &quot;description&quot;: &quot;Transferencia Bancaria&quot;,
+            &quot;children_header&quot;: &quot;\u00bfCu\u00e1l es tu banco?&quot;,
+            &quot;children&quot;: [
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;bancomer_bank_transfer&quot;,
+                    &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;banamex_bank_transfer&quot;,
+                    &quot;description&quot;: &quot;Banamex&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                },
+                {
+                    &quot;type&quot;: &quot;payment_method&quot;,
+                    &quot;comment&quot;: &quot;Se acreditar\u00e1 en 7 h\u00e1biles&quot;,
+                    &quot;id&quot;: &quot;serfin_bank_transfer&quot;,
+                    &quot;description&quot;: &quot;Santander&quot;,
+                    &quot;children_header&quot;: null,
+                    &quot;children&quot;: null
+                }
+            ]
+        }
+    ]
+}</string>
 	<key>GET/checkout/beta/v1/instructions/1826290155?public_key=&amp;payment_method_id=oxxo</key>
 	<string>{
   &quot;message&quot;: &quot;access denied&quot;,
@@ -14,8 +244,6 @@
   &quot;error&quot;: &quot;unauthorized&quot;,
   &quot;status&quot;: 401
 }</string>
-	<key>GET/checkout/beta/v1/instructions/1826290155?public_key=&amp;payment_method_id=invalid</key>
-	<string></string>
 	<key>GET/checkout/beta/v1/payment_methods/search/options?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;excluded_payment_methods=amex,oxxo</key>
 	<string>{
   &quot;groups&quot;: [

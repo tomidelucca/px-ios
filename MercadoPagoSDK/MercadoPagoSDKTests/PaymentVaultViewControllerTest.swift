@@ -14,10 +14,11 @@ class PaymentVaultViewControllerTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey("TEST-5999d034-afe5-4005-b22f-dccb5b576d55")
+
         self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             
         })
+        MPFlowController.createNavigationControllerWith(self.paymentVaultViewController!)
     }
     
     override func tearDown() {
@@ -144,7 +145,7 @@ class PaymentVaultViewControllerTest: BaseTest {
        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 1), self.paymentVaultViewController?.paymentMethodsSearch.count)
 
         XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 0), 0)
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 1), 20)
+        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 1), 10)
         
         XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)), 120)
         self.paymentVaultViewController!.displayPreferenceDescription = false
@@ -170,7 +171,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
         
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
         }
         
         self.paymentVaultViewController!.optionSelected(pmSearchItem)
@@ -195,7 +196,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
 
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
             
         }
         self.paymentVaultViewController!.optionSelected(pmSearchItem)
@@ -211,7 +212,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         pmSearchItem.idPaymentMethodSearchItem = "bitcoin"
         pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
         
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void in
+        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
            
         }
         self.paymentVaultViewController!.optionSelected(pmSearchItem)

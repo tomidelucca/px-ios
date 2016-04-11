@@ -10,6 +10,8 @@ import UIKit
 
 public class MPButton: UIButton {
 
+    var actionLink : String?
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

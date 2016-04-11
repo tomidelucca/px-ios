@@ -37,10 +37,6 @@ class CheckoutViewControllerTest: BaseTest {
         // Load view
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         
-        
-        //Verify paymentVault was loaded
-        XCTAssertTrue(checkoutViewController!.paymentVaultLoaded)
-        
         //Verify preference has not mutated
         XCTAssertEqual(checkoutViewController!.preference, self.preference)
         
@@ -60,15 +56,18 @@ class CheckoutViewControllerTest: BaseTest {
         
         let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
         XCTAssertEqual(preferenceDescriptionCell.preferenceDescription.text, self.checkoutViewController?.preference?.items![0].title!)
-        let preferenceAmount = preferenceDescriptionCell.preferenceAmount.text
-        let amountInCHOVC = self.checkoutViewController?.preference?.getAmount()
-        XCTAssertEqual(preferenceAmount!, "$\(amountInCHOVC!)")
+        
+        let preferenceAmount = preferenceDescriptionCell.preferenceAmount.attributedText
+        
+        let amountInCHOVC = self.checkoutViewController!.preference!.getAmount()
+        let amountAttributedText = Utils.getAttributedAmount(String(amountInCHOVC), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$")
+        XCTAssertEqual(preferenceAmount!.string, amountAttributedText.string)
         
         let pmSelectionCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath:  NSIndexPath(forRow: 0, inSection: 1)) as! SelectPaymentMethodCell
         XCTAssertEqual(pmSelectionCell.selectPaymentMethodLabel.text, "Seleccione método de pago...".localized)
         
         let paymentTotalCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath:  NSIndexPath(forRow: 1, inSection: 1)) as! PaymentDescriptionFooterTableViewCell
-        XCTAssertEqual(paymentTotalCell.paymentTotalDescription.text, "Total a pagar $".localized + "\(amountInCHOVC!)")
+        XCTAssertEqual(paymentTotalCell.paymentTotalDescription.text, "Total a pagar $".localized + "\(amountInCHOVC)")
         
         let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as!TermsAndConditionsViewCell
         XCTAssertNotNil(termsAndConditionsCell)
@@ -84,12 +83,33 @@ class CheckoutViewControllerTest: BaseTest {
         
     }
     
-    func testTestConfirmPayment(){
+    func testTestConfirmPayment() {
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("oxxo")
         self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.TICKET
+
+        let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as!TermsAndConditionsViewCell
+        XCTAssertNotNil(termsAndConditionsCell)
+        self.checkoutViewController!.paymentButton = termsAndConditionsCell.paymentButton
+        
         self.checkoutViewController!.confirmPayment()
     }
+    
+    func testViewForFooterInSection() {
+        self.simulateViewDidLoadFor(self.checkoutViewController!)
+        let noCopyrightCell = self.checkoutViewController?.tableView(self.checkoutViewController!.checkoutTable, viewForFooterInSection: 0)
+        XCTAssertNil(noCopyrightCell)
+        
+        let copyrightCell = self.checkoutViewController?.tableView(self.checkoutViewController!.checkoutTable, viewForFooterInSection: 1)
+        XCTAssertNotNil(copyrightCell)
+        
+        var footerHeight = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, heightForFooterInSection: 0)
+        XCTAssertEqual(footerHeight, 0)
+        footerHeight = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, heightForFooterInSection: 1)
+        XCTAssertEqual(footerHeight, 60)
+    }
+
+    
     
     func testViewWillLoad(){
         self.checkoutViewController?.viewWillAppear(true)
@@ -104,6 +124,8 @@ class CheckoutViewControllerTest: BaseTest {
         
         let paymentMethodCell = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
         XCTAssertEqual(checkoutViewController?.title, "Revisa si está todo bien...".localized)
+        let termsAndConditions = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as! TermsAndConditionsViewCell
+        XCTAssertEqual(termsAndConditions.termsAndConditionsLabel.text, "Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago")
         let cellComment = paymentMethodCell.comment.text!
         XCTAssertEqual(cellComment, self.checkoutViewController!.paymentMethod!.comment!)
         

@@ -51,11 +51,5 @@ class UtilsTest: BaseTest {
         XCTAssertEqual(amountFormatted, "10,000,000,000,000,000")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
     
 }

@@ -19,8 +19,8 @@ public class MPFlowController: NSObject {
         return sharedInstance.navigationController!
     }
     
-    public class func push(viewController : UIViewController) {
-        self.sharedInstance.navigationController?.pushViewController(viewController, animated: true)
+    public class func push(viewController : UIViewController, animated : Bool = true) {
+        self.sharedInstance.navigationController?.pushViewController(viewController, animated: animated)
     }
 
     public class func pop(animated : Bool) {
@@ -32,6 +32,13 @@ public class MPFlowController: NSObject {
             // Override sharedInstance
             self.sharedInstance = MPFlowController()
         }
+    }
+    
+    public class func isRoot(viewController : UIViewController) -> Bool {
+        if self.sharedInstance.navigationController !=  nil && self.sharedInstance.navigationController!.viewControllers.count > 0 && self.sharedInstance.navigationController!.viewControllers[0] == viewController {
+            return true
+        }
+        return false
     }
 
     public class func popToRoot(animated : Bool) {

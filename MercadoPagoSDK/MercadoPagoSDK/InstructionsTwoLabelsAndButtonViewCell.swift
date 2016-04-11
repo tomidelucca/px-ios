@@ -38,16 +38,27 @@ class InstructionsTwoLabelsAndButtonViewCell: UITableViewCell, InstructionsFillm
         }
         
         if instruction.references != nil && instruction.references.count > 0 {
-            self.referenceLabelFirst.text = instruction.references[0].label.uppercaseString
-            self.referenceValueFirst.text = instruction.references[0].getFullReferenceValue()
+            
+             MPCellValidator.fillInstructionReference(instruction.references[0], label: self.referenceLabelFirst, referenceValueLabel: self.referenceValueFirst)
             
             if (instruction.references.count > 1) {
-                self.referenceLabelSecond.text = instruction.references[1].label.uppercaseString
-                self.referenceValueSecond.text = instruction.references[1].getFullReferenceValue()
+                MPCellValidator.fillInstructionReference(instruction.references[1], label: self.referenceLabelSecond, referenceValueLabel: self.referenceValueSecond)
             }
+        }
+        
+        if instruction.actions != nil && instruction.actions?.count > 0 {
+            if instruction.actions![0].tag == ActionTag.LINK.rawValue {
+                self.button.actionLink = instruction.actions![0].url
+                self.button.addTarget(self, action: "openUrl", forControlEvents: .TouchUpInside)
+            }
+        } else {
+            self.button.hidden = true
         }
         
         return self
     }
     
+    internal func openUrl(){
+        UIApplication.sharedApplication().openURL(NSURL(string: self.button.actionLink!)!)
+    }
 }

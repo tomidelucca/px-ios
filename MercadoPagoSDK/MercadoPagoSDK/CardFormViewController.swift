@@ -35,7 +35,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var paymentMethod : PaymentMethod?
     
     var paymentType : PaymentType?
-    var callback : (( paymentMethod: PaymentMethod,token: Token?, issuer: Issuer?, installment: Installment?) -> Void)?
+    var callback : (( paymentMethod: PaymentMethod,cardToken: CardToken?, issuer: Issuer?, installment: Installment?) -> Void)?
     
     
     required public init?(coder aDecoder: NSCoder) {
@@ -44,7 +44,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentType : PaymentType?, callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentType : PaymentType?, callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentType = paymentType
         self.edgesForExtendedLayout = .All
@@ -102,6 +102,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
+        
+        //Remove rightButton
+        self.navigationItem.rightBarButtonItem = nil
 
     }
 
@@ -732,12 +735,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             return
         }
         
-        MPServicesBuilder.createNewCardToken(cardtoken, success: { (token) -> Void in
-            //self.callback!((token: token, paymentMethod: self.paymentMethod! ,issuer:nil, installment: nil))
-            self.callback!(paymentMethod: self.paymentMethod!, token: token!,issuer:nil, installment: nil)
-            }) { (error) -> Void in
-                print("Falla!")
-        }
+   //     MPServicesBuilder.createNewCardToken(cardtoken, success: { (token) -> Void in
+            self.callback!(paymentMethod: self.paymentMethod!, cardToken: cardtoken,issuer:nil, installment: nil)
+       //     }) { (error) -> Void in
+       //         print("Falla!")
+       // }
     }
     
     

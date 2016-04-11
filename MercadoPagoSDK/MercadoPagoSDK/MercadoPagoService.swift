@@ -41,7 +41,6 @@ public class MercadoPagoService : NSObject {
 				if error == nil {
 					do
 					{
-                        print("SUCCESS !!!")
 						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
 							options:NSJSONReadingOptions.AllowFragments))
 					} catch {

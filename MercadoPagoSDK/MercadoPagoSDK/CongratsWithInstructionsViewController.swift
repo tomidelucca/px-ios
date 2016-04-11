@@ -92,11 +92,8 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if indexPath.section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
-            instructionsHeaderCell.headerTitle.text = self.currentInstruction!.title
-            instructionsHeaderCell.layer.shadowOffset = CGSizeMake(0, 1)
-            instructionsHeaderCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
-            instructionsHeaderCell.layer.shadowRadius = 3
-            instructionsHeaderCell.layer.shadowOpacity = 0.6
+            instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.payment.transactionAmount)
+
             return instructionsHeaderCell
         }
         

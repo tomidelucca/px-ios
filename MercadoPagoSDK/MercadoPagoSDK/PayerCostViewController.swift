@@ -1,5 +1,5 @@
 //
-//  PaymentInstallmentsViewController.swift
+//  PayerCostViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 3/22/16.
@@ -8,11 +8,13 @@
 
 import UIKit
 
-public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
+public class PayerCostViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     var bundle : NSBundle? = MercadoPago.getBundle()
+    var installments : [Installment]?
+    var payerCosts : [PayerCost]?
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -20,10 +22,18 @@ public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Int?,minInstallments : Int?, callback : ((installment: Installment) -> Void)) {
-        super.init(nibName: "PaymentInstallmentsViewController", bundle: self.bundle)
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Double?,minInstallments : Int?, callback : ((installment: Installment) -> Void)) {
+        super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      
         self.edgesForExtendedLayout = .All
+        MPServicesBuilder.getInstallments((cardToken?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+            self.installments = installments
+            self.payerCosts = installments![0].payerCosts
+            //TODO ISSUER
+            self.tableView.reloadData()
+            }) { (error) -> Void in
+                print("error!")
+        }
 
     }
     
@@ -59,7 +69,11 @@ public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 40
+        if(self.payerCosts == nil){
+            return 0
+        }else{
+            return self.payerCosts!.count
+        }
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -67,7 +81,8 @@ public class PaymentInstallmentsViewController: MercadoPagoUIViewController {
 
 
             let installmentCell = tableView.dequeueReusableCellWithIdentifier("PaymentInstallmentsCell", forIndexPath: indexPath) as! PaymentInstallmentTableViewCell
-            
+        
+         installmentCell.payerCostDetail.text = payerCosts![indexPath.row].recommendedMessage
             return installmentCell
         }
           }

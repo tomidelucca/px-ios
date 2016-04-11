@@ -163,7 +163,7 @@
 &quot;street_number&quot;: &quot;0&quot;,
 &quot;zip_code&quot;: &quot;zip_code&quot;
 }</string>
-	<key>Bin</key>
+	<key>BinMask</key>
 	<string>{&quot;pattern&quot;: &quot;4&quot;,&quot;exclusion_pattern&quot;: &quot;(487017)&quot;,&quot;installments_pattern&quot;: &quot;4&quot;}</string>
 	<key>Card</key>
 	<string>{
