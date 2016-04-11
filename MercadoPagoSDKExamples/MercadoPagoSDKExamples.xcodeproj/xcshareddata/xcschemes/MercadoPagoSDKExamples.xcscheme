@@ -20,6 +20,20 @@
                ReferencedContainer = "container:MercadoPagoSDKExamples.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0F98850D1AD2BCB900F750F0"
+               BuildableName = "MercadoPagoSDKExamplesTests.xctest"
+               BlueprintName = "MercadoPagoSDKExamplesTests"
+               ReferencedContainer = "container:MercadoPagoSDKExamples.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
