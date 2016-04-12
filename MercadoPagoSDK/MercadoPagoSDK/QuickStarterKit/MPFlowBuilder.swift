@@ -79,7 +79,7 @@ public class MPFlowBuilder : NSObject {
             //    callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: nil)
            // }else{
             
-            MPFlowController.sharedInstance.navigationController?.pushViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (payerCost) -> Void in
+            MPFlowController.sharedInstance.navigationController?.pushViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 15050, minInstallments: 1, callback: { (payerCost) -> Void in
                 print("OK!")
                 callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: payerCost)
             }), animated: false)
