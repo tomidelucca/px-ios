@@ -51,10 +51,9 @@ class MPFlowControllerTest: BaseTest {
     func testPopToRoot() {
         MPFlowController.createNavigationControllerWith(rootMockViewController)
         MPFlowController.push(mockViewController, animated : false)
-        MPFlowController.push(mockViewController, animated : false)
-        XCTAssertTrue((MPFlowController.sharedInstance.navigationController?.viewControllers)! == 3)
+        XCTAssertTrue((MPFlowController.sharedInstance.navigationController?.viewControllers.count)! == 2)
         MPFlowController.popToRoot(false)
-        XCTAssertTrue((MPFlowController.sharedInstance.navigationController?.viewControllers)! == 1)
+        XCTAssertTrue((MPFlowController.sharedInstance.navigationController?.viewControllers.count)! == 1)
         XCTAssertEqual(MPFlowController.sharedInstance.navigationController?.viewControllers[0], rootMockViewController)
     }
 }

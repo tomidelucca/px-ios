@@ -20,6 +20,7 @@ class BaseTest: XCTestCase {
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController){
+        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
         let nav = UINavigationController()
         nav.pushViewController(viewController, animated: false)
         let _ = viewController.view

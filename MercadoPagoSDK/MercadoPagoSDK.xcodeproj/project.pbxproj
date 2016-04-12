@@ -376,6 +376,7 @@
 		76882AD81C4FBDB500B440B1 /* PaymentTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */; };
 		769B06081CA035A300265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
 		769B06091CA04AFC00265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
+		76AA2E2D1CBC4AC3006D0678 /* ProximaNova-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15635C6D1CA076EC008E5F75 /* ProximaNova-Light.ttf */; };
 		76B64B161C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B181C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */; };
@@ -1679,6 +1680,7 @@
 				76FD24841C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */,
 				0F9883D51AD2AD5500F750F0 /* CongratsPaymentMethodTableViewCell.xib in Resources */,
 				7656C9FC1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */,
+				76AA2E2D1CBC4AC3006D0678 /* ProximaNova-Light.ttf in Resources */,
 				0F9883EF1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76062BDA1C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				0FC4FC241B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,

@@ -166,6 +166,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testOptionSelectedPaymentMethodOffline(){
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
@@ -179,7 +180,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testOptionSelectedCard() {
-
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "credit_card"
@@ -190,7 +191,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testOptionSelectedOfflinePaymentMethod(){
-        
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "oxxo"
@@ -206,7 +207,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     
     func testOptionSelectedBitcoin(){
 
-        
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "bitcoin"
@@ -220,6 +221,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         
     func testOptionSelectedPaymentGroup(){
         
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         let pmSearchItem = PaymentMethodSearchItem()
         pmSearchItem.comment = "comment"
         pmSearchItem.idPaymentMethodSearchItem = "ticket"
@@ -229,6 +231,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testCardFlow(){
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         self.paymentVaultViewController!.cardFlow(MockBuilder.buildPaymentType(), animated: true)
         XCTAssertTrue(self.paymentVaultViewController!.cardFlowStarted)
         

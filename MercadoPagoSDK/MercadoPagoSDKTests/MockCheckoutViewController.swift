@@ -28,6 +28,7 @@ class MockCheckoutViewController: CheckoutViewController {
     }
     
     internal override func loadMPStyles(){
+        super.loadMPStyles()
         mpStylesLoaded = true
     }
     

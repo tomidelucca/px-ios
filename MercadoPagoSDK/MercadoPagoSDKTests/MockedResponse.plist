@@ -2,6 +2,136 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GET/checkout/beta/v1/payment_methods/search/options?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;excluded_payment_types=account_money,digital_currency&amp;excluded_payment_methods=amex,oxxo</key>
+	<string>{
+  &quot;groups&quot;: [
+    {
+      &quot;type&quot;: &quot;group&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;cards&quot;,
+      &quot;description&quot;: &quot;Tarjetas&quot;,
+      &quot;children_header&quot;: &quot;¿Con que tarjeta?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;credit_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta de crédito&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;debit_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta de débito&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_type&quot;,
+          &quot;comment&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;prepaid_card&quot;,
+          &quot;description&quot;: &quot;Tarjeta prepaga de MercadoPago&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;payment_type&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;ticket&quot;,
+      &quot;description&quot;: &quot;Efectivo&quot;,
+      &quot;children_header&quot;: &quot;¿Dónde quieres pagar?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;7eleven&quot;,
+          &quot;description&quot;: &quot;7eleven&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;telecomm&quot;,
+          &quot;description&quot;: &quot;Telecomm&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;bancomer_ticket&quot;,
+          &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;banamex_ticket&quot;,
+          &quot;description&quot;: &quot;Banamex&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;serfin_ticket&quot;,
+          &quot;description&quot;: &quot;Santander&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;gestopago&quot;,
+          &quot;description&quot;: &quot;Gestopago&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    },
+    {
+      &quot;type&quot;: &quot;payment_type&quot;,
+      &quot;comment&quot;: null,
+      &quot;id&quot;: &quot;bank_transfer&quot;,
+      &quot;description&quot;: &quot;Transferencia Bancaria&quot;,
+      &quot;children_header&quot;: &quot;¿Cuál es tu banco?&quot;,
+      &quot;children&quot;: [
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;bancomer_bank_transfer&quot;,
+          &quot;description&quot;: &quot;BBVA Bancomer&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;banamex_bank_transfer&quot;,
+          &quot;description&quot;: &quot;Banamex&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        },
+        {
+          &quot;type&quot;: &quot;payment_method&quot;,
+          &quot;comment&quot;: &quot;Se acreditará en 7 hábiles&quot;,
+          &quot;id&quot;: &quot;serfin_bank_transfer&quot;,
+          &quot;description&quot;: &quot;Santander&quot;,
+          &quot;children_header&quot;: null,
+          &quot;children&quot;: null
+        }
+      ]
+    }
+  ]
+}
+
+</string>
 	<key>GET/checkout/beta/v1/native_payment?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;email=email&amp;pref_id=xxx&amp;payment_method_id=oxxo</key>
 	<string>{
   &quot;statement_descriptor&quot;: null,
@@ -827,39 +957,31 @@
 }</string>
 	<key>GET/checkout/beta/v1/instructions/1826290155?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;payment_method_id=banamex_ticket</key>
 	<string>{
-  &quot;title&quot;: &quot;Listo, ahora deposita 1000 en el Banamex más cercano&quot;,
-  &quot;accreditation_message&quot;: &quot;-accreditation_time-&quot;,
-  &quot;references&quot;: [
-    {
-      &quot;label&quot;: &quot;Sucursal&quot;,
-      &quot;field_value&quot;: [
-      ],
-      &quot;separator&quot;: &quot;-&quot;
-    },
-    {
-      &quot;label&quot;: &quot;Número de cuenta&quot;,
-      &quot;field_value&quot;: [
-      ],
-      &quot;separator&quot;: &quot;-&quot;
-    },
-    {
-      &quot;label&quot;: &quot;Referencia&quot;,
-      &quot;field_value&quot;: [
-        &quot;1725499582-95&quot;
-      ],
-      &quot;separator&quot;: &quot;&quot;
-    }
-  ],
-  &quot;info&quot;: [
-    &quot;Díctale estos datos al cajero y listo.&quot;
-  ],
-  &quot;secondary_info&quot;: [
-    &quot;Te enviamos todos los datos a tu e-mail&quot;
-  ],
-  &quot;tertiary_info&quot;: [
-  ],
-  &quot;actions&quot;: [
-  ]
+	&quot;title&quot;: &quot;Listo, ahora deposita 1000 en el Banamex más cercano&quot;,
+	&quot;accreditation_message&quot;: &quot;-accreditation_time-&quot;,
+	&quot;references&quot;: [{
+		&quot;label&quot;: &quot;Sucursal&quot;,
+		&quot;field_value&quot;: [1],
+		&quot;separator&quot;: &quot;-&quot;
+	}, {
+		&quot;label&quot;: &quot;Número de cuenta&quot;,
+		&quot;field_value&quot;: [1],
+		&quot;separator&quot;: &quot;-&quot;
+	}, {
+		&quot;label&quot;: &quot;Referencia&quot;,
+		&quot;field_value&quot;: [
+			&quot;1725499582-95&quot;
+		],
+		&quot;separator&quot;: &quot;&quot;
+	}],
+	&quot;info&quot;: [
+		&quot;Díctale estos datos al cajero y listo.&quot;
+	],
+	&quot;secondary_info&quot;: [
+		&quot;Te enviamos todos los datos a tu e-mail&quot;
+	],
+	&quot;tertiary_info&quot;: [],
+	&quot;actions&quot;: []
 }</string>
 	<key>GET/checkout/beta/v1/instructions/1826290155?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;payment_method_id=bancomer_ticket</key>
 	<string>{

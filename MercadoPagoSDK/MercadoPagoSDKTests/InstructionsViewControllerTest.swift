@@ -28,6 +28,7 @@ class InstructionsViewControllerTest: BaseTest {
     }
     
     func testInstructionsScreens(){
+         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
         XCTAssertEqual((instructionsViewController?.instructionsByPaymentMethod["oxxo"])!, ["body" : "simpleInstructionsCell", "body_heigth" : 137, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116])
         
         XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116])
@@ -109,11 +110,8 @@ class InstructionsViewControllerTest: BaseTest {
         self.instructionsViewController?.callback = { (Payment) -> Void in
             expectMercadoPagoStylesAreCleared.fulfill()
         }
-        self.instructionsViewController?.finishInstructions()
+        self.instructionsViewController!.finishInstructions()
         self.waitForExpectationsWithTimeout(10.0, handler: nil)
-        XCTAssertNil(self.instructionsViewController?.navigationController?.navigationBar.titleTextAttributes)
-        XCTAssertNil(self.instructionsViewController?.navigationController?.navigationBar.barTintColor)
-        
     }
     
     func testDefaultInstructionsFooterCell(){
