@@ -20,13 +20,13 @@ class Utils {
         return dateFormatter.dateFromString(dateArr[0])
     }
     
-    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+
+    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String , color : UIColor = UIColor.whiteColor()) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
-
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 20)!,NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : 7]
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)

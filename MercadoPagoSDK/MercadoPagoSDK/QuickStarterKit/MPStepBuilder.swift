@@ -48,12 +48,13 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
-    public class func startCreditCardForm(paymentType : PaymentType? , callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController {
+    public class func startCreditCardForm(paymentType : PaymentType? , amount: Double,callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? ,  issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController {
         
-        return CardFormViewController(paymentType : paymentType , callback : callback)
+        
+        return CardFormViewController(paymentType : paymentType , amount: amount, callback : callback)
     }
     
-    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, cardToken : CardToken , amount: Double, minInstallments : Int,  callback : ((installment: Installment?) -> Void)) -> PayerCostViewController {
+    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, cardToken : CardToken , amount: Double, minInstallments : Int,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         
         
         return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, cardToken: cardToken, amount: amount, minInstallments: minInstallments, callback: callback)

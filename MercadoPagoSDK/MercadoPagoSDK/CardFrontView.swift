@@ -51,3 +51,9 @@ extension UIView {
             ).instantiateWithOwner(nil, options: nil)[0] as? UIView
     }
 }
+
+extension String {
+    func insert(string:String,ind:Int) -> String {
+        return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
+    }
+}

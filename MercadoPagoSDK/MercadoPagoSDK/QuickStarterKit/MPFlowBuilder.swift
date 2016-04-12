@@ -59,7 +59,42 @@ public class MPFlowBuilder : NSObject {
         
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
+    /*
     
+    self.showViewController( MPStepBuilder.startCreditCardForm(nil , amount: 10000, callback: { (paymentMethod, token, issuer, installment) -> Void in
+    //      print(paymentMethod.name)
+    
+    self.showViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (installment) -> Void in
+    print("OK!")
+    }))
+    }))
+    */
 
+    
+    public class func startCardFlow(paymentType : PaymentType? , amount: Double, callback: (paymentMethod: PaymentMethod, cardToken: CardToken? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
+        
+        
+        let cardVC = MPStepBuilder.startCreditCardForm(nil , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
+        //    if ((installment == nil)||(installment?.payerCosts == nil)||(installment?.payerCosts.count < 2)){
+            //    callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: nil)
+           // }else{
+            
+            MPFlowController.sharedInstance.navigationController?.pushViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (payerCost) -> Void in
+                print("OK!")
+                callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: payerCost)
+            }), animated: false)
+            
+            //    MPFlowController.push()
+           // }
+        })
+        
+        cardVC.modalTransitionStyle = .CrossDissolve
+        
+        
+        
+        return MPFlowController.createNavigationControllerWith(cardVC)
+        
+        
+    }
 
 }
