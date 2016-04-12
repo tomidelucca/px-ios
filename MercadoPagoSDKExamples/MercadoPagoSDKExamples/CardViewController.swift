@@ -64,7 +64,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		self.navigationItem.backBarButtonItem?.title = "Atrás"
 		
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "submitForm")
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CardViewController.submitForm))
 		
 		let mercadoPago = MercadoPago(publicKey: self.publicKey!)
 		mercadoPago.getIdentificationTypes({(identificationTypes: [IdentificationType]?) -> Void in
@@ -83,8 +83,8 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willShowKeyboard:", name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willHideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardViewController.willShowKeyboard(_:)), name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardViewController.willHideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -125,13 +125,13 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		var i = 0
 		for arr in self.inputsCells {
 			if let input = object as? UITextField {
-				if let arrTextField = arr[0] as? UITextField {
+				if let arrTextField = (arr as! NSArray)[0] as? UITextField {
 					if input == arrTextField {
 						return i
 					}
 				}
 			}
-			i++
+			i = i + 1
 		}
 		return -1
 	}
@@ -141,18 +141,23 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	}
 	
 	func focusAndScrollForIndex(index: Int) {
-		let textField = self.inputsCells[index][0] as? UITextField!
-		let cell = self.inputsCells[index][1] as? ErrorTableViewCell!
-		if textField != nil {
-			if !textField!.isFirstResponder() {
-				textField!.becomeFirstResponder()
+		var i = 0
+		for arr in self.inputsCells {
+			if i == index {
+				if let textField = (arr as! NSArray)[0] as? UITextField {
+					if let cell = (arr as! NSArray)[1] as? ErrorTableViewCell {
+						if !textField.isFirstResponder() {
+							textField.becomeFirstResponder()
+						}
+						let indexPath = self.tableView.indexPathForCell(cell)
+						if indexPath != nil {
+							scrollToRow(indexPath!)
+						}
+					}
+					
+				}
 			}
-		}
-		if cell != nil {
-			let indexPath = self.tableView.indexPathForCell(cell!)
-			if indexPath != nil {
-				scrollToRow(indexPath!)
-			}
+			i = i + 1
 		}
 	}
 	
@@ -178,12 +183,17 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		if object != nil {
 			let index = getIndexForObject(object!)
 			if index < self.inputsCells.count {
-				let textField = self.inputsCells[index][0] as? UITextField!
-				if textField != nil {
-					textField!.resignFirstResponder()
+				var i = 0
+				for arr in self.inputsCells {
+					if i == index {
+						if let textField = (arr as! NSArray)[0] as? UITextField {
+							textField.resignFirstResponder()
+							let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+							scrollToRow(indexPath)
+						}
+					}
+					i = i + 1
 				}
-				let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-				scrollToRow(indexPath)
 			}
 		}
 	}

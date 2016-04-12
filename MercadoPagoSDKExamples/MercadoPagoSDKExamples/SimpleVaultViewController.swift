@@ -60,7 +60,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "submitForm")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SimpleVaultViewController.submitForm))
         self.navigationItem.rightBarButtonItem?.enabled = false
         
         self.tableview.delegate = self
@@ -78,8 +78,8 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
 	override func viewWillAppear(animated: Bool) {
 		declareAndInitCells()
 		super.viewWillAppear(animated)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willShowKeyboard:", name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willHideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimpleVaultViewController.willShowKeyboard(_:)), name: UIKeyboardWillShowNotification, object: nil)
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimpleVaultViewController.willHideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {

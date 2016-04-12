@@ -110,7 +110,6 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 				self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
 			}))
 		case 6:
-			//self.showViewController(MercadoPago.startPromosViewController())
             self.showViewController(MPFlowBuilder.startVaultViewController(1000.0, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: { (paymentMethod, tokenId, issuerId, installments) -> Void in
                 print("do something")
             }))
@@ -129,10 +128,10 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }))
         case 10:
-            let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
+            let excludedPaymentMethods = ["gestopago"]
             
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "MXN", purchaseTitle: "Purchase Title", excludedPaymentTypes: nil, excludedPaymentMethods: excludedPaymentMethods, defaultPaymentMethodId: nil, installments : 6, defaultInstallments : 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-                
+				//   self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 11:
             let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
