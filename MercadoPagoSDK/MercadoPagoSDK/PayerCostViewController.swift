@@ -19,6 +19,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var cardToken : CardToken?
     var cardFront : CardFrontView?
     
+    var callback : ((payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
     
     required public init?(coder aDecoder: NSCoder) {
@@ -27,12 +28,13 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Double?,minInstallments : Int?, callback : ((installment: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Double?,minInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
          self.paymentMethod = paymentMethod
         self.cardToken = cardToken!
+        self.callback = callback
         MPServicesBuilder.getInstallments((cardToken?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
@@ -141,12 +143,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
 
 
-            let installmentCell = tableView.dequeueReusableCellWithIdentifier("PayerCostTableViewCell", forIndexPath: indexPath) as! PayerCostTableViewCell
+        let installmentCell = tableView.dequeueReusableCellWithIdentifier("PayerCostTableViewCell", forIndexPath: indexPath) as! PayerCostTableViewCell
         
         
         let payerCost : PayerCost = payerCosts![indexPath.row]
         let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
-         let mpLightGrayColor = UIColor(netHex: 0x999999)
+        let mpLightGrayColor = UIColor(netHex: 0x999999)
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
         
@@ -167,12 +169,19 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             //= payerCosts![indexPath.row].recommendedMessage
             return installmentCell
         }
-          }
+    
     
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
+        let payerCost : PayerCost = payerCosts![indexPath.row]
+        self.callback!(payerCost: payerCost)
     }
+
+
+}
+    
+    
+
 
 
 
