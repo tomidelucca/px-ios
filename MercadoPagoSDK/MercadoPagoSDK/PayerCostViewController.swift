@@ -16,7 +16,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var installments : [Installment]?
     var payerCosts : [PayerCost]?
     var paymentMethod : PaymentMethod?
-    
+    var cardToken : CardToken?
     var cardFront : CardFrontView?
     
     @IBOutlet weak var cardView: UIView!
@@ -32,6 +32,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
          self.paymentMethod = paymentMethod
+        self.cardToken = cardToken!
         MPServicesBuilder.getInstallments((cardToken?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
@@ -51,8 +52,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
-        cardFront?.frame = cardView.bounds
+        //cardFront?.frame = cardView.bounds
   
+        print(cardView.bounds)
     }
     
     
@@ -63,23 +65,44 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
             self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
             self.cardFront?.cardLogo.alpha = 1
+            
+            
+            cardFront?.cardNumber.text = self.cardToken!.getNumberFormated() as String
+            cardFront?.cardName.text = self.cardToken!.cardholder!.name
+            cardFront?.cardExpirationDate.text = self.cardToken!.getExpirationDateFormated() as String
+            
+            cardFront?.cardNumber.textColor =  defaultColorText
+            cardFront?.cardName.textColor =  defaultColorText
+            cardFront?.cardExpirationDate.textColor =  defaultColorText
+
         }
         
     }
+    let defaultColorText = UIColor(netHex:0x333333)
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        /*
+        UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:view];
+        */
+        cardFront = CardFrontView(frame: self.cardView.bounds)
+        cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         let installmentNib = UINib(nibName: "PayerCostTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "PayerCostTableViewCell")
         // Do any additional setup after loading the view.
         updateCardSkin()
+    
+        
+     
         
     }
+    
 
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        cardFront = CardFrontView()
         cardView.addSubview(cardFront!)
         
         
@@ -150,6 +173,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
        
     }
+
+
 
 
 

@@ -73,6 +73,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         
         cardFront?.frame = cardView.bounds
+        
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Numero".localized
         textBox.becomeFirstResponder()
@@ -187,6 +188,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                             self.prepareNumberLabelForEdit()
                             self.promoButton.alpha = 1
                             self.promoButton.enabled = true
+                            self.closeKeyboard()
+                            self.makeToken()
                         })
                         
                     }
@@ -194,9 +197,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                     self.prepareNumberLabelForEdit()
                 }
                
-               
-                closeKeyboard()
-                makeToken()
+                if(isAmexCard()){
+                    closeKeyboard()
+                    makeToken()
+                }
+                
             }
 
         }

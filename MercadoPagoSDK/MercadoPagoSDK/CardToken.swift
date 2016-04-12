@@ -297,4 +297,27 @@ public class CardToken : NSObject {
         ]
         return JSON(obj).toString()
     }
+    
+    
+    public func getNumberFormated() -> NSString {
+        
+        //TODO AMEX
+        var str : String
+        str = (cardNumber?.insert(" ", ind: 12))!
+        str = (str.insert(" ", ind: 8))
+        str = (str.insert(" ", ind: 4))
+        str = (str.insert(" ", ind: 0))
+        return str
+    }
+    
+    public func getExpirationDateFormated() -> NSString {
+        
+        var str : String
+        
+        
+        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+
+        return str
+    }
+    
 }
