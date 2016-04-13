@@ -112,13 +112,13 @@ class CheckoutViewControllerTest: BaseTest {
     }
 
     
-    
+    /*
     func testViewWillLoad(){
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController?.viewWillAppear(true)
         XCTAssertTrue(self.checkoutViewController!.mpStylesLoaded)
     }
-    
+    */
     func testOfflinePaymentMethodSelectedCell(){
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("bancomer_ticket")
