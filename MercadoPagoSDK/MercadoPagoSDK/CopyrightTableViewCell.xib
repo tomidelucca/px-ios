@@ -22,9 +22,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-xW-Lms">
-                        <rect key="frame" x="98" y="38" width="117" height="30"/>
+                        <rect key="frame" x="92" y="38" width="129" height="30"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                        <state key="normal" title="Cancelar y Volver"/>
+                        <state key="normal" title="Cancelar y Volver a"/>
                     </button>
                 </subviews>
                 <constraints>
