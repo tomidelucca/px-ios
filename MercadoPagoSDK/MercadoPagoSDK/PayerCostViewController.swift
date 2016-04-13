@@ -56,7 +56,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         super.viewDidAppear(animated)
         //cardFront?.frame = cardView.bounds
-  
+        self.navigationItem.rightBarButtonItem = nil
         print(cardView.bounds)
     }
     
