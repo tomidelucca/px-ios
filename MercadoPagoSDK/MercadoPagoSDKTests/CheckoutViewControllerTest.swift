@@ -85,7 +85,7 @@ class CheckoutViewControllerTest: BaseTest {
         
     }
     
-    func testConfirmPayment() {
+    func testConfirmPaymentOff() {
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("oxxo")
         self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.TICKET
@@ -95,6 +95,20 @@ class CheckoutViewControllerTest: BaseTest {
         self.checkoutViewController!.paymentButton = termsAndConditionsCell.paymentButton
         
         self.checkoutViewController!.confirmPayment()
+        //TODO
+    }
+
+    func testConfirmPaymentOn() {
+        self.simulateViewDidLoadFor(self.checkoutViewController!)
+        self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.CREDIT_CARD
+        
+        let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as!TermsAndConditionsViewCell
+        XCTAssertNotNil(termsAndConditionsCell)
+        self.checkoutViewController!.paymentButton = termsAndConditionsCell.paymentButton
+        
+       // self.checkoutViewController!.confirmPayment()
+        //TODO
     }
     
     func testViewForFooterInSection() {
@@ -112,13 +126,12 @@ class CheckoutViewControllerTest: BaseTest {
     }
 
     
-    /*
-    func testViewWillLoad(){
+    func testViewWillAppear(){
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController?.viewWillAppear(true)
         XCTAssertTrue(self.checkoutViewController!.mpStylesLoaded)
     }
-    */
+
     func testOfflinePaymentMethodSelectedCell(){
         self.simulateViewDidLoadFor(self.checkoutViewController!)
         self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("bancomer_ticket")
@@ -128,7 +141,7 @@ class CheckoutViewControllerTest: BaseTest {
         let paymentMethodCell = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
         XCTAssertEqual(checkoutViewController?.title, "Revisa si está todo bien...".localized)
         let termsAndConditions = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as! TermsAndConditionsViewCell
-        XCTAssertEqual(termsAndConditions.termsAndConditionsLabel.text, "Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago")
+        XCTAssertEqual(termsAndConditions.termsAndConditionsText.text, "Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago")
         let cellComment = paymentMethodCell.comment.text!
         XCTAssertEqual(cellComment, self.checkoutViewController!.paymentMethod!.comment!)
         

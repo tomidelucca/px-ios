@@ -100,96 +100,104 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.registerNib(offlinePaymentWithImageCell, forCellReuseIdentifier: "offlinePaymentWithImageCell")
         self.paymentsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
         
-        
         //Configure navigation item button
         self.navigationItem.rightBarButtonItem!.target = self
         self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         
         self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
-        
-        
+
         loadPaymentMethodGroups()
 
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return self.displayPreferenceDescription ? 1 : 0
+        switch section {
+            case 0:
+                return self.displayPreferenceDescription ? 1 : 0
+            case 1:
+                return self.paymentMethodsSearch.count
+            default :
+                return 1
         }
-        return self.paymentMethodsSearch.count
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return (section == 1) ? 60 : 0
-    }
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == 1 {
-            return self.paymentsTable.dequeueReusableCellWithIdentifier("copyrightCell")
-        }
-        return nil
-    }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : 10
+        return section == 1 ? 10 : 0
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return displayPreferenceDescription ? 120 : 0
+        switch indexPath.section {
+            case 0:
+                return displayPreferenceDescription ? 120 : 0
+            case 1:
+            
+                let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
+                if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
+                    return 80
+                }
+                return 52
+            case 2:
+                return 140
+            default : return 0
         }
-        
-        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
-        if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
-            return 80
-        }
-        return 52
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Preference description section
-        if indexPath.section == 0 {
-            let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
-            preferenceDescriptionCell.fillRowWithSettings(self.amount, purchaseTitle: self.purchaseTitle, pictureUrl: nil)
-            return preferenceDescriptionCell
-        }
-        
-        let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
-        let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
-        let tintColor = self.tintColor && (!currentPaymentMethod.isPaymentMethod() || currentPaymentMethod.isBitcoin())
-        
-        if iconImage != nil {
-            if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
-                if currentPaymentMethod.comment != nil && currentPaymentMethod.comment!.characters.count > 0 {
-                    let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
-                    offlinePaymentCell.iconImage.image = iconImage!
-                    offlinePaymentCell.comment.text = currentPaymentMethod.comment!
-                    return offlinePaymentCell
-                } else {
-                    let offlinePaymentCellWithImage = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentWithImageCell") as! PaymentMethodImageViewCell
-                    offlinePaymentCellWithImage.paymentMethodImage.image = iconImage
-                    return offlinePaymentCellWithImage
-                }
-            } else {
-                let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
-                paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
+        switch indexPath.section {
+            case 0 :
+                let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
+                preferenceDescriptionCell.fillRowWithSettings(self.amount, purchaseTitle: self.purchaseTitle, pictureUrl: nil)
+                return preferenceDescriptionCell
+            case 1:
+                let currentPaymentMethod = self.paymentMethodsSearch[indexPath.row]
+                let iconImage = MercadoPago.getImage(currentPaymentMethod.idPaymentMethodSearchItem)
+                let tintColor = self.tintColor && (!currentPaymentMethod.isPaymentMethod() || currentPaymentMethod.isBitcoin())
             
-                return paymentSearchCell
+                if iconImage != nil {
+                    if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
+                        if currentPaymentMethod.comment != nil && currentPaymentMethod.comment!.characters.count > 0 {
+                            let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
+                            offlinePaymentCell.iconImage.image = iconImage!
+                            offlinePaymentCell.comment.text = currentPaymentMethod.comment!
+                            return offlinePaymentCell
+                    } else {
+                        let offlinePaymentCellWithImage = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentWithImageCell") as! PaymentMethodImageViewCell
+                        offlinePaymentCellWithImage.paymentMethodImage.image = iconImage
+                        return offlinePaymentCellWithImage
+                    }
+                } else {
+                    let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
+                    paymentSearchCell.fillRowWithPayment(self.paymentMethodsSearch[indexPath.row], iconImage : iconImage!, tintColor: tintColor)
+                    paymentSearchCell.separatorInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
+                    
+                    return paymentSearchCell
+                }
             }
+            
+            if currentPaymentMethod.comment != nil && currentPaymentMethod.comment?.characters.count > 0 {
+                let paymentSearchTitleAndCommentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentTitleAndCommentCell") as! PaymentTitleAndCommentViewCell
+                paymentSearchTitleAndCommentCell.fillRowWith(currentPaymentMethod.description, paymentComment: currentPaymentMethod.comment!)
+                return paymentSearchTitleAndCommentCell
+            }
+            
+            let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleCell") as! PaymentTitleViewCell
+            paymentSearchCell.paymentTitle.text = currentPaymentMethod.description
+            return paymentSearchCell
+        default :
+            let copyrightCell = self.paymentsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
+            let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
+            separatorLineView.layer.zPosition = 1
+            separatorLineView.backgroundColor = UIColor().UIColorFromRGB(0xEFEFF4)
+            copyrightCell.addSubview(separatorLineView)
+            copyrightCell.bringSubviewToFront(separatorLineView)
+            return copyrightCell
         }
-        
-        if currentPaymentMethod.comment != nil && currentPaymentMethod.comment?.characters.count > 0 {
-            let paymentSearchTitleAndCommentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentTitleAndCommentCell") as! PaymentTitleAndCommentViewCell
-            paymentSearchTitleAndCommentCell.fillRowWith(currentPaymentMethod.description, paymentComment: currentPaymentMethod.comment!)
-            return paymentSearchTitleAndCommentCell
-        }
-        
-        let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchTitleCell") as! PaymentTitleViewCell
-        paymentSearchCell.paymentTitle.text = currentPaymentMethod.description
-        return paymentSearchCell
         
     }
     
@@ -207,6 +215,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true){
+        // Disable selection if connection's slow
+        self.paymentsTable.allowsSelection = false
         if paymentSearchItemSelected.type == PaymentMethodSearchItemType.PAYMENT_TYPE {
             
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -265,6 +275,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     
     }
+    
     
     internal func cardFlow(paymentType: PaymentType, animated : Bool){
         MPFlowController.push(MPStepBuilder.startCreditCardForm(paymentType, amount: self.amount, callback: { (paymentMethod, cardToken, issuer, installment) -> Void in

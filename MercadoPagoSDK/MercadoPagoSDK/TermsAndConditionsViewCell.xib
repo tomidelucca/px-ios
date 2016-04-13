@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -15,12 +15,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="459" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="q6r-xU-2Zh" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="18" y="28" width="423" height="36"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqp-wb-z7q" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="18" y="84" width="423" height="50"/>
                         <color key="backgroundColor" red="0.0" green="0.69803921568627447" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
@@ -32,20 +26,38 @@
                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eka-ax-hIh" customClass="MPTextView" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="18" y="18" width="423" height="46"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                        </accessibility>
+                        <attributedString key="attributedText">
+                            <fragment content="Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago">
+                                <attributes>
+                                    <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Eka-ax-hIh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="5Oc-rz-iVN"/>
                     <constraint firstAttribute="trailingMargin" secondItem="kqp-wb-z7q" secondAttribute="trailing" constant="10" id="8SH-Se-M2Y"/>
-                    <constraint firstItem="q6r-xU-2Zh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="CnC-7c-URQ"/>
-                    <constraint firstItem="kqp-wb-z7q" firstAttribute="top" secondItem="q6r-xU-2Zh" secondAttribute="bottom" constant="20" id="HNx-EY-aGS"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="q6r-xU-2Zh" secondAttribute="trailing" constant="10" id="h4d-ct-3Gr"/>
+                    <constraint firstItem="kqp-wb-z7q" firstAttribute="top" secondItem="Eka-ax-hIh" secondAttribute="bottom" constant="20" id="9iy-f1-ndL"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Eka-ax-hIh" secondAttribute="trailing" constant="10" id="Iqz-Zc-RE8"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="kqp-wb-z7q" secondAttribute="bottom" constant="37" id="R3S-RZ-2Bb"/>
+                    <constraint firstItem="Eka-ax-hIh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="RZT-cG-vCP"/>
                     <constraint firstItem="kqp-wb-z7q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="lRn-7Z-WOm"/>
-                    <constraint firstItem="q6r-xU-2Zh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="pWW-mh-zEf"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="paymentButton" destination="kqp-wb-z7q" id="nxh-FM-KXk"/>
-                <outlet property="termsAndConditionsLabel" destination="q6r-xU-2Zh" id="Q1c-zr-qv2"/>
+                <outlet property="termsAndConditionsText" destination="Eka-ax-hIh" id="iq9-Iv-4qh"/>
             </connections>
             <point key="canvasLocation" x="209.5" y="318"/>
         </tableViewCell>

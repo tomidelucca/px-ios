@@ -25,7 +25,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func fillCell(title : String, amount : Double){
+    func fillCell(title : String, amount : Double) -> UITableViewCell {
         //TODO : servicio!
         let amountStr = Utils.getAmountFormatted(String(amount), thousandSeparator: ",", decimalSeparator: ".")
          let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: ".")
@@ -48,6 +48,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.6
+        return self
     }
     
 }

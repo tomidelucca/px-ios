@@ -10,15 +10,22 @@ import UIKit
 
 public class CopyrightTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cancelButton: MPButton!
+    
     override public func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        self.cancelButton.addTarget(self, action: "cancelPaymentVault", forControlEvents: .TouchUpInside)
     }
 
     override public func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    public func cancelPaymentVault(){
+        MPFlowController.dismiss(true)
     }
     
 }

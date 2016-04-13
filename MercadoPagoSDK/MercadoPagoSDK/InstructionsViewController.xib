@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CongratsWithInstructionsViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InstructionsViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="congratsTable" destination="gOd-Ig-YwI" id="g7A-oz-q0Z"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -24,12 +24,12 @@
                     <color key="sectionIndexBackgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="gOd-Ig-YwI" secondAttribute="trailing" id="MPc-lP-gSq"/>
                 <constraint firstAttribute="bottom" secondItem="gOd-Ig-YwI" secondAttribute="bottom" id="Qdp-Vn-Ris"/>
+                <constraint firstItem="gOd-Ig-YwI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g3T-5e-x1j"/>
                 <constraint firstItem="gOd-Ig-YwI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="iV6-CC-Osy"/>
-                <constraint firstItem="gOd-Ig-YwI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lxi-4B-5o4"/>
-                <constraint firstAttribute="trailing" secondItem="gOd-Ig-YwI" secondAttribute="trailing" id="nXC-F7-pc8"/>
             </constraints>
         </view>
     </objects>

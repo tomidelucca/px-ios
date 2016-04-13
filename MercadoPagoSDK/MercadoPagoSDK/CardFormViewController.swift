@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate , UIGestureRecognizerDelegate{
+public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
 
     
     

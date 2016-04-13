@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MercadoPagoUIViewController: UIViewController {
+public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false
     
@@ -16,9 +16,7 @@ public class MercadoPagoUIViewController: UIViewController {
         super.viewDidLoad()
         
         self.loadMPStyles()
-        
-        //Create custom button with shopping cart
-        rightButtonShoppingCart()
+
     }
     
     var lastDefaultFontLabel : String?
@@ -54,32 +52,48 @@ public class MercadoPagoUIViewController: UIViewController {
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
         self.loadMPStyles()
+     
         
     }
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.clearMercadoPagoStyle()
     }
     
     internal func loadMPStyles(){
+        
         //Navigation bar colors
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
 
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.navigationItem.hidesBackButton = true
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+        self.navigationController?.navigationBar.removeBottomLine()
         
-        self.navigationItem.hidesBackButton = true
+        //Create custom button with shopping cart
+        rightButtonShoppingCart()
         
-        
-        let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("left_arrow")
-        backButton.style = UIBarButtonItemStyle.Bordered
-        backButton.target = self
-        backButton.tintColor = UIColor.whiteColor()
-        backButton.action = "executeBack"
-        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
-        self.navigationItem.leftBarButtonItem = backButton
+        if !MPFlowController.isRoot(self) {
+            let backButton = UIBarButtonItem()
+            backButton.image = MercadoPago.getImage("left_arrow")
+            backButton.style = UIBarButtonItemStyle.Bordered
+            backButton.target = self
+            backButton.tintColor = UIColor.whiteColor()
+            backButton.action = "executeBack"
+            backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+            self.navigationItem.leftBarButtonItem = backButton
+        }
+
+    }
+    
+    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if(navigationController!.viewControllers.count > 1){
+            return true
+        }
+        return false
     }
     
     internal func clearMercadoPagoStyleAndGoBackAnimated(){
@@ -106,7 +120,8 @@ public class MercadoPagoUIViewController: UIViewController {
             self.rightButtonClose()
         }
         displayPreferenceDescription = !displayPreferenceDescription
-        table.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Middle)
+        let range = NSMakeRange(0, 1)
+        table.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: .Middle)
     }
 
     
@@ -119,6 +134,9 @@ public class MercadoPagoUIViewController: UIViewController {
     }
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        
+
+            
         return UIInterfaceOrientationMask.Portrait
     }
     
@@ -151,6 +169,7 @@ public class MercadoPagoUIViewController: UIViewController {
             shoppingCartButton.action = action!
         }
         self.navigationItem.rightBarButtonItem = shoppingCartButton
+        
     }
     
     internal func executeBack(){
@@ -161,7 +180,7 @@ public class MercadoPagoUIViewController: UIViewController {
             MPFlowController.pop(true)
         }
     }
-
+    
 }
 
 extension UINavigationController {
@@ -175,3 +194,16 @@ extension UINavigationController {
     }
 }
 
+extension UINavigationBar {
+    
+    func removeBottomLine() {
+        for parent in self.subviews {
+            for childView in parent.subviews {
+                if(childView is UIImageView) {
+                    childView.removeFromSuperview()
+                }
+            }
+        }
+    }
+
+}

@@ -29,9 +29,9 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
         
     }
     
-    override internal func loadMPStyles(){
+  /*  override internal func loadMPStyles(){
         self.mpStylesLoaded = true
-    }
+    }*/
 
     
     override internal func clearMercadoPagoStyle(){

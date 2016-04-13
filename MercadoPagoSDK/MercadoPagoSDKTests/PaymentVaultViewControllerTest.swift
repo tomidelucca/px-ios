@@ -120,12 +120,6 @@ class PaymentVaultViewControllerTest: BaseTest {
         
     }
     
-    func testViewWillAppear(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        self.paymentVaultViewController!.viewWillAppear(true)
-        XCTAssertTrue(self.paymentVaultViewController!.mpStylesLoaded)
-    }
-    
     func testViewWillDissapear(){
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         self.paymentVaultViewController!.viewWillDisappear(true)
@@ -136,7 +130,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
-       XCTAssertEqual(self.paymentVaultViewController!.numberOfSectionsInTableView(self.paymentVaultViewController!.paymentsTable), 2)
+       XCTAssertEqual(self.paymentVaultViewController!.numberOfSectionsInTableView(self.paymentVaultViewController!.paymentsTable), 3)
        self.paymentVaultViewController!.displayPreferenceDescription = false
        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 0), 0)
        self.paymentVaultViewController!.displayPreferenceDescription = true

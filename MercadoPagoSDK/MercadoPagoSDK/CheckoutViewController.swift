@@ -65,16 +65,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
+        self.checkoutTable.separatorStyle = .None
         
-        //Shopping cart button
-        self.navigationItem.rightBarButtonItem?.action = Selector("togglePreferenceDescription")
-        self.navigationItem.rightBarButtonItem?.target = self        
-
     }
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = "startPaymentVault"
+        //Remove navigation items
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
 
     }
     
@@ -120,11 +119,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
         if indexPath.section == 0 {
-            self.rightButtonClose()
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
-            preferenceDescriptionCell.selectionStyle = UITableViewCellSelectionStyle.None
-
             return preferenceDescriptionCell
         }
     
@@ -171,7 +167,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return (section == 1) ? 60 : 0
+        return (section == 1) ? 140 : 0
     }
 
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -191,20 +187,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.paymentButton!.alpha = 0.4
         self.paymentButton!.enabled = false
 
-        // TODO VER SI ES OFF OR ON y crear el token en caso de ser online y mandarlo
-        
-
         if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
             self.confirmPaymentOff()
         }else{
-            //TODO 
-            
                  MPServicesBuilder.createNewCardToken(self.cardToken!, success: { (token) -> Void in
                     let payment = Payment()
                     payment.transactionAmount = self.preference!.getAmount()
                     payment.tokenId = token?._id
                     payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
                     payment.paymentMethodId = self.paymentMethod!._id
+                    //TODO
                     payment._description = self.preference!.items![0].title
                     self.confirmPaymentOn(payment, token: token!)
                  }) { (error) -> Void in

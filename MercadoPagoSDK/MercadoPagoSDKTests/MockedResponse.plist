@@ -132,7 +132,7 @@
 }
 
 </string>
-	<key>GET/checkout/beta/v1/native_payment?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;email=email&amp;pref_id=xxx&amp;payment_method_id=oxxo</key>
+	<key>GET/checkout/beta/v1/native_payment?public_key=TEST-5999d034-afe5-4005-b22f-dccb5b576d55&amp;email=email&amp;pref_id=167833503-bbb3c69e-d91e-4328-9f50-169a06ebc749&amp;payment_method_id=oxxo</key>
 	<string>{
   &quot;statement_descriptor&quot;: null,
   &quot;profile_id&quot;: null,

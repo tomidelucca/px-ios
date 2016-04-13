@@ -298,10 +298,10 @@
 		76134AB91C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76134AB61C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift */; };
 		76134ABA1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */; };
 		76134ABB1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */; };
-		76151B651C737608007DF0E3 /* CongratsWithInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B631C737608007DF0E3 /* CongratsWithInstructionsViewController.swift */; };
-		76151B661C737608007DF0E3 /* CongratsWithInstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B631C737608007DF0E3 /* CongratsWithInstructionsViewController.swift */; };
-		76151B671C737608007DF0E3 /* CongratsWithInstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B641C737608007DF0E3 /* CongratsWithInstructionsViewController.xib */; };
-		76151B681C737608007DF0E3 /* CongratsWithInstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B641C737608007DF0E3 /* CongratsWithInstructionsViewController.xib */; };
+		76151B651C737608007DF0E3 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B631C737608007DF0E3 /* InstructionsViewController.swift */; };
+		76151B661C737608007DF0E3 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B631C737608007DF0E3 /* InstructionsViewController.swift */; };
+		76151B671C737608007DF0E3 /* InstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B641C737608007DF0E3 /* InstructionsViewController.xib */; };
+		76151B681C737608007DF0E3 /* InstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B641C737608007DF0E3 /* InstructionsViewController.xib */; };
 		76151B6D1C7376E1007DF0E3 /* InstructionsHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B6B1C7376E1007DF0E3 /* InstructionsHeaderViewCell.swift */; };
 		76151B6E1C7376E1007DF0E3 /* InstructionsHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76151B6B1C7376E1007DF0E3 /* InstructionsHeaderViewCell.swift */; };
 		76151B6F1C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B6C1C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib */; };
@@ -377,6 +377,8 @@
 		769B06081CA035A300265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
 		769B06091CA04AFC00265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
 		76AA2E2D1CBC4AC3006D0678 /* ProximaNova-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15635C6D1CA076EC008E5F75 /* ProximaNova-Light.ttf */; };
+		76AA2E341CBD8BCA006D0678 /* MPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA2E331CBD8BCA006D0678 /* MPTextView.swift */; };
+		76AA2E351CBD8C38006D0678 /* MPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA2E331CBD8BCA006D0678 /* MPTextView.swift */; };
 		76B64B161C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B181C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */; };
@@ -627,8 +629,8 @@
 		760BD1F11C99ADE300FDA170 /* MockedResponse.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MockedResponse.plist; sourceTree = "<group>"; };
 		76134AB61C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflinePaymentMethodCell.swift; sourceTree = "<group>"; };
 		76134AB71C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfflinePaymentMethodCell.xib; sourceTree = "<group>"; };
-		76151B631C737608007DF0E3 /* CongratsWithInstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsWithInstructionsViewController.swift; sourceTree = "<group>"; };
-		76151B641C737608007DF0E3 /* CongratsWithInstructionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratsWithInstructionsViewController.xib; sourceTree = "<group>"; };
+		76151B631C737608007DF0E3 /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
+		76151B641C737608007DF0E3 /* InstructionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsViewController.xib; sourceTree = "<group>"; };
 		76151B6B1C7376E1007DF0E3 /* InstructionsHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsHeaderViewCell.swift; sourceTree = "<group>"; };
 		76151B6C1C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsHeaderViewCell.xib; sourceTree = "<group>"; };
 		76151B711C738E14007DF0E3 /* InstructionsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewCell.swift; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 		76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTitleViewCell.swift; sourceTree = "<group>"; };
 		76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTitleViewCell.xib; sourceTree = "<group>"; };
 		769B06071CA035A300265C92 /* MPFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPFlowController.swift; sourceTree = "<group>"; };
+		76AA2E331CBD8BCA006D0678 /* MPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTextView.swift; sourceTree = "<group>"; };
 		76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsAndButtonViewCell.swift; sourceTree = "<group>"; };
 		76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsAndButtonViewCell.xib; sourceTree = "<group>"; };
 		76B64B1A1C75F91D00300F50 /* InstructionsWithButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsWithButtonViewCell.swift; sourceTree = "<group>"; };
@@ -918,6 +921,7 @@
 				0F9883F11AD2ADC200F750F0 /* CustomerPaymentMethods */,
 				0F9883E31AD2AD9500F750F0 /* Congrats */,
 				15D79A031CA96D6400623A84 /* MPLabel.swift */,
+				76AA2E331CBD8BCA006D0678 /* MPTextView.swift */,
 				15D79A061CA986E300623A84 /* MPTextField.swift */,
 				15D79A091CA9B6B900623A84 /* MPButton.swift */,
 			);
@@ -1233,8 +1237,8 @@
 			isa = PBXGroup;
 			children = (
 				76151B6A1C73769C007DF0E3 /* CongratsCells */,
-				76151B631C737608007DF0E3 /* CongratsWithInstructionsViewController.swift */,
-				76151B641C737608007DF0E3 /* CongratsWithInstructionsViewController.xib */,
+				76151B631C737608007DF0E3 /* InstructionsViewController.swift */,
+				76151B641C737608007DF0E3 /* InstructionsViewController.xib */,
 			);
 			name = Instructions;
 			sourceTree = "<group>";
@@ -1567,7 +1571,7 @@
 				0F98832B1AD2AABE00F750F0 /* Images.xcassets in Resources */,
 				0F9884571AD2AEF800F750F0 /* MPPaymentMethodTableViewCell.xib in Resources */,
 				76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
-				76151B671C737608007DF0E3 /* CongratsWithInstructionsViewController.xib in Resources */,
+				76151B671C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				76151B911C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib in Resources */,
 				76E2B07F1C6E5BF9002C50CB /* SelectPaymentMethodCell.xib in Resources */,
 				76E92F851C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib in Resources */,
@@ -1657,7 +1661,7 @@
 				0FC4FC3C1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				76E2B0801C6E5BF9002C50CB /* SelectPaymentMethodCell.xib in Resources */,
 				76FD247C1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
-				76151B681C737608007DF0E3 /* CongratsWithInstructionsViewController.xib in Resources */,
+				76151B681C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				0F9884521AD2AEEF00F750F0 /* MPPaymentMethodEmptyTableViewCell.xib in Resources */,
 				0F98844A1AD2AEC000F750F0 /* MPInstallmentsTableViewCell.xib in Resources */,
 				15D79A021CA1D3A100623A84 /* PayerCostTableViewCell.xib in Resources */,
@@ -1777,7 +1781,7 @@
 				76062BCA1C4D1F450067A14B /* PaymentMethodSearchService.swift in Sources */,
 				0F9883671AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
-				76151B651C737608007DF0E3 /* CongratsWithInstructionsViewController.swift in Sources */,
+				76151B651C737608007DF0E3 /* InstructionsViewController.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
 				0F98837F1AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,
 				0FC4FC3F1B0FB83700CF7148 /* PromosTyCViewController.swift in Sources */,
@@ -1823,6 +1827,7 @@
 				15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */,
 				0F9883E81AD2ADB000F750F0 /* PaymentMethodTableViewCell.swift in Sources */,
 				76E2B07D1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift in Sources */,
+				76AA2E341CBD8BCA006D0678 /* MPTextView.swift in Sources */,
 				0F9884371AD2AE6200F750F0 /* InstallmentsViewController.swift in Sources */,
 				0F9883BC1AD2AD1600F750F0 /* UIDevice+Additions.swift in Sources */,
 				76B64B221C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.swift in Sources */,
@@ -1974,7 +1979,7 @@
 				157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */,
 				0F98841A1AD2AE2700F750F0 /* MPCardNumberTableViewCell.swift in Sources */,
 				0F9883741AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
-				76151B661C737608007DF0E3 /* CongratsWithInstructionsViewController.swift in Sources */,
+				76151B661C737608007DF0E3 /* InstructionsViewController.swift in Sources */,
 				761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */,
 				0F9883961AD2AB6000F750F0 /* Setting.swift in Sources */,
 				76743C7C1C4695EA00120347 /* PaymentType.swift in Sources */,
@@ -2003,6 +2008,7 @@
 				767254721C7CCBDF00EB5EBA /* MockPaymentVaultViewController.swift in Sources */,
 				0F9883921AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
 				0FC4FC2E1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
+				76AA2E351CBD8C38006D0678 /* MPTextView.swift in Sources */,
 				76EC47CC1C85E3E60086FA53 /* CardIssuerTest.swift in Sources */,
 				0F9883E91AD2ADB000F750F0 /* PaymentMethodTableViewCell.swift in Sources */,
 				767254681C7CB2AB00EB5EBA /* CheckoutViewControllerTest.swift in Sources */,
@@ -2127,8 +2133,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2155,8 +2161,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2199,7 +2205,7 @@
 		0F9883241AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2219,7 +2225,7 @@
 		0F9883251AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
