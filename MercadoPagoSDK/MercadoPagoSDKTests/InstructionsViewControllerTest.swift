@@ -28,7 +28,7 @@ class InstructionsViewControllerTest: BaseTest {
     }
     
     func testInstructionsScreens(){
-         MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         XCTAssertEqual((instructionsViewController?.instructionsByPaymentMethod["oxxo"])!, ["body" : "simpleInstructionsCell", "body_heigth" : 137, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116])
         
         XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 189, "footer" : "defaultInstructionsFooterCell", "footer_height" : 116])

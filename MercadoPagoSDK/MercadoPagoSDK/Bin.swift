@@ -25,11 +25,19 @@ public class BinMask : Equatable {
 
 
 public func ==(obj1: BinMask, obj2: BinMask) -> Bool {
-    
-    let areEqual =
+    var areEqual : Bool
+    if ((obj1.exclusionPattern == nil) || (obj2.exclusionPattern == nil)){
+        areEqual  =
+            obj1.installmentsPattern == obj2.installmentsPattern &&
+            obj1.pattern == obj2.pattern
+
+    }else{
+       areEqual =
         obj1.exclusionPattern == obj2.exclusionPattern &&
         obj1.installmentsPattern == obj2.installmentsPattern &&
         obj1.pattern == obj2.pattern
+
+    }
     
     return areEqual
 }

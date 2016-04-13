@@ -25,17 +25,17 @@ public class MPButton: UIButton {
         super.init(frame: frame)
         if (self.titleLabel != nil){
             if (self.titleLabel!.font != nil){
-                self.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: (self.titleLabel!.font.pointSize))
+                self.titleLabel!.font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: (self.titleLabel!.font.pointSize))
             }
         }
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         if (self.titleLabel != nil){
             if (self.titleLabel!.font != nil){
-                                self.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: (self.titleLabel!.font.pointSize))
+                                self.titleLabel!.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: (self.titleLabel!.font.pointSize))
             }
         }
     }

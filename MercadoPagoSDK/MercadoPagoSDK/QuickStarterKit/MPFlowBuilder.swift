@@ -75,17 +75,25 @@ public class MPFlowBuilder : NSObject {
         
         
         let cardVC = MPStepBuilder.startCreditCardForm(nil , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-        //    if ((installment == nil)||(installment?.payerCosts == nil)||(installment?.payerCosts.count < 2)){
-            //    callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: nil)
-           // }else{
+            if ((installment == nil)||(installment?.payerCosts == nil)||(installment?.payerCosts.count < 2)){
+                if ((installment != nil) && (installment!.payerCosts != nil) && (installment!.payerCosts.count > 0) ){
+                    callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: installment?.payerCosts[0])
+                }else{
+                    callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost:nil)
+                }
+                
+                MPFlowController.sharedInstance.navigationController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+                    print("Ya esta!")
+                })
+            }else{
             
-            MPFlowController.sharedInstance.navigationController?.pushViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 15050, minInstallments: 1, callback: { (payerCost) -> Void in
+            MPFlowController.sharedInstance.navigationController?.pushViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: amount, minInstallments: 1, callback: { (payerCost) -> Void in
                 print("OK!")
                 callback(paymentMethod: paymentMethod, cardToken: token, issuer: issuer, payerCost: payerCost)
             }), animated: false)
             
-            //    MPFlowController.push()
-           // }
+               // MPFlowController.push()
+            }
         })
         
         cardVC.modalTransitionStyle = .CrossDissolve

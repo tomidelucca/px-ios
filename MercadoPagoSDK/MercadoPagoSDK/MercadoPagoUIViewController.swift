@@ -47,9 +47,11 @@ public class MercadoPagoUIViewController: UIViewController {
         return false
     }
     
+    
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
         self.loadMPStyles()
         
@@ -61,7 +63,7 @@ public class MercadoPagoUIViewController: UIViewController {
     
     internal func loadMPStyles(){
         //Navigation bar colors
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "ProximaNova-Light", size: 18)!]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
 
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()

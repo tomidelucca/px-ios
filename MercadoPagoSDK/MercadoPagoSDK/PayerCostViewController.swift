@@ -35,6 +35,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
          self.paymentMethod = paymentMethod
         self.cardToken = cardToken!
         self.callback = callback
+        
         MPServicesBuilder.getInstallments((cardToken?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
@@ -150,9 +151,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
         let mpLightGrayColor = UIColor(netHex: 0x999999)
         
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
         
-        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
+        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
         
         
         let stringToWrite = NSMutableAttributedString()

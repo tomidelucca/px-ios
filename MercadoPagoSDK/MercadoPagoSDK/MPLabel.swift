@@ -18,12 +18,15 @@ public class MPLabel: UILabel {
     }
     */
 
+    static let defaultColorText = UIColor(netHex:0x333333)
+    static let highlightedColorText = UIColor(netHex:0x999999)
+    static let errorColorText = UIColor(netHex:0xFF0000)
     
     override init(frame: CGRect){
         super.init(frame: frame)
         
         if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
+            self.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: (self.font?.pointSize)!)
             
         }
      }
@@ -32,7 +35,7 @@ public class MPLabel: UILabel {
         super.init(coder: aDecoder)
 
         if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
+            self.font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: (self.font?.pointSize)!)
             
         }
     }

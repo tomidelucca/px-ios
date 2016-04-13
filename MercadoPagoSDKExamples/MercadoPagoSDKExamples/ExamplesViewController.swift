@@ -39,8 +39,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.title = "MercadoPago SDK"
         self.tableview.delegate = self
         self.tableview.dataSource = self
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
-        
+
       
 
     }

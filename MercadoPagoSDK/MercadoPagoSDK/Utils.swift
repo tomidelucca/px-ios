@@ -25,8 +25,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: "ProximaNova-Light", size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)

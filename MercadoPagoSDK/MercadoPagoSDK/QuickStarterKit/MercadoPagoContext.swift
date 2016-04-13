@@ -41,7 +41,7 @@ public class MercadoPagoContext {
     
     private init() {
     
-        MercadoPagoUIViewController.loadFont("ProximaNova-Light")
+        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
     } //This prevents others from using the default '()' initializer for this class.
 
     
