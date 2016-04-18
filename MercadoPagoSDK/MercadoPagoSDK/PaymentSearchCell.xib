@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -22,19 +22,28 @@
                             <constraint firstAttribute="width" constant="22" id="fad-VH-sWO"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tarjeta de Credito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hzT-wo-4e8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="41" y="16" width="289" height="34"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzT-wo-4e8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="41" y="23" width="289" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="6Nn-cm-Djw"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="Tarjeta de Credito">
+                                <attributes>
+                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="16" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="hzT-wo-4e8" secondAttribute="trailing" constant="8" id="0eF-20-5v9"/>
                     <constraint firstItem="hzT-wo-4e8" firstAttribute="leading" secondItem="2q1-kd-sJr" secondAttribute="trailing" constant="8" id="7zT-SQ-6gQ"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="hzT-wo-4e8" secondAttribute="bottom" constant="8" id="PXR-P3-sbf"/>
+                    <constraint firstItem="hzT-wo-4e8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eXX-hh-Qhk"/>
                     <constraint firstItem="2q1-kd-sJr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="lcU-OW-FKo"/>
-                    <constraint firstItem="hzT-wo-4e8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="q69-r3-TRB"/>
                     <constraint firstItem="2q1-kd-sJr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xBS-sB-e9q"/>
                 </constraints>
             </tableViewCellContentView>

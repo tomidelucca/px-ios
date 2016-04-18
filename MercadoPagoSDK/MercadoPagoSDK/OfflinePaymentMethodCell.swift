@@ -22,9 +22,13 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod){
-        self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
-        self.comment.text = paymentMethod.comment
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethodSearchItem, image : UIImage){
+        self.iconImage.image = image
+        self.comment.text = (paymentMethod.comment!)
     }
     
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod){
+        self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
+        self.comment.text = (paymentMethod.comment!)
+    }
 }

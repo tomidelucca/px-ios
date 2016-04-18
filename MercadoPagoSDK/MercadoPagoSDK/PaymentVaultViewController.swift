@@ -163,8 +163,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     if currentPaymentMethod.isPaymentMethod() && !currentPaymentMethod.isBitcoin() {
                         if currentPaymentMethod.comment != nil && currentPaymentMethod.comment!.characters.count > 0 {
                             let offlinePaymentCell = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentMethodCell") as! OfflinePaymentMethodCell
-                            offlinePaymentCell.iconImage.image = iconImage!
-                            offlinePaymentCell.comment.text = currentPaymentMethod.comment!
+                            offlinePaymentCell.fillRowWithPaymentMethod(currentPaymentMethod, image: iconImage!)
                             return offlinePaymentCell
                     } else {
                         let offlinePaymentCellWithImage = self.paymentsTable.dequeueReusableCellWithIdentifier("offlinePaymentWithImageCell") as! PaymentMethodImageViewCell
