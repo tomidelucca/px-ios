@@ -10,7 +10,8 @@ import UIKit
 
 public class InstructionsService: MercadoPagoService {
 
-    public let MP_INSTRUCTIONS_URL = "https://api.mercadopago.com"
+    //public let MP_INSTRUCTIONS_URL = "https://api.mercadopago.com"
+    public let MP_INSTRUCTIONS_URL = "http://private-9376e-paymentmethodsmla.apiary-mock.com"
     public let MP_INSTRUCTIONS_URI = "/beta/checkout/instructions"
     
     public init(){

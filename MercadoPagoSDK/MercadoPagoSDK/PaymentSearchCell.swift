@@ -10,6 +10,8 @@ import UIKit
 
 class PaymentSearchCell: UITableViewCell {
     
+    static let ROW_HEIGHT = CGFloat(52)
+    
     @IBOutlet weak var paymentTitle: MPLabel!
     
     @IBOutlet weak var paymentIcon: UIImageView!

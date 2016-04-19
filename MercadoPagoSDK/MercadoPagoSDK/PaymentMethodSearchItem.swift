@@ -58,11 +58,19 @@ public class PaymentMethodSearchItem : Equatable {
     }
     
     public func isBitcoin() -> Bool {
-        return self.idPaymentMethodSearchItem == "bitcoin"
+        return self.idPaymentMethodSearchItem.lowercaseString == "bitcoin"
     }
     
     public func isPaymentMethod() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_METHOD
+    }
+    
+    public func isPaymentType() -> Bool {
+        return self.type == PaymentMethodSearchItemType.PAYMENT_TYPE
+    }
+ 
+    public func isRedLink() -> Bool {
+        return self.idPaymentMethodSearchItem.lowercaseString == "redlink"
     }
     
 }

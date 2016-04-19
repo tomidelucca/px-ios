@@ -10,6 +10,8 @@ import UIKit
 
 class OfflinePaymentMethodCell: UITableViewCell {
 
+    static let ROW_HEIGHT = CGFloat(80)
+    
     @IBOutlet weak var iconImage: UIImageView!
     
     @IBOutlet weak var comment: MPLabel!

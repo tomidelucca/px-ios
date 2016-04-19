@@ -10,7 +10,8 @@ import UIKit
 
 class PaymentTitleViewCell: UITableViewCell {
 
-
+    static let ROW_HEIGHT = CGFloat(52)
+    
     @IBOutlet weak var paymentTitle: MPLabel!
     
     override func awakeFromNib() {

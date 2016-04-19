@@ -16,7 +16,8 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     var currentInstruction : Instruction?
     
     // NSDictionary used to build instructions screens by paymentMethodId
-    let instructionsByPaymentMethod = ["oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+    let instructionsByPaymentMethod = [
+        "oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
@@ -25,6 +26,13 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "pagofacil" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "rapipago" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bapropagos" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "cargavirtual" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "redlink_atm" : ["body" : "instructionsAtmCell" , "body_heigth" : 384, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "redlink_bank_transfer" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86]
+        
     ]
     
     var payment : Payment!
@@ -103,7 +111,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if indexPath.section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
-            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.payment.transactionAmount)
+            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.payment.transactionAmount, currency: CurrenciesUtil.getCurrencyFor(self.payment.currencyId))
         }
         
         if indexPath.section == 1 {
@@ -186,6 +194,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let simpleInstructionsWithButtonViewCell = UINib(nibName: "SimpleInstructionsWithButtonViewCell", bundle: self.bundle)
         let instructionsWithButtonCell = UINib(nibName: "InstructionsWithButtonViewCell", bundle: self.bundle)
         let instructionsTwoLabelsWithButtonCell = UINib(nibName: "InstructionsTwoLabelsAndButtonViewCell", bundle: self.bundle)
+        let instructionsAtmCell = UINib(nibName: "InstructionsAtmViewCell", bundle: self.bundle)
         
         let defaultInstructionsFooterCell = UINib(nibName: "DefaultInstructionsFooterViewCell", bundle: self.bundle)
         let instructionFooterWithTertiaryInfoCell = UINib(nibName: "InstructionsFooterWithTertiaryInfoViewCell", bundle: self.bundle)
@@ -206,5 +215,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.registerNib(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
         self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
         self.congratsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
+        self.congratsTable.registerNib(instructionsAtmCell, forCellReuseIdentifier: "instructionsAtmCell")
     }
 }
