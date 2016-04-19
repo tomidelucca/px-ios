@@ -14,7 +14,6 @@ public class CopyrightTableViewCell: UITableViewCell {
     
     override public func awakeFromNib() {
         super.awakeFromNib()
-
         self.cancelButton.addTarget(self, action: "cancelPaymentVault", forControlEvents: .TouchUpInside)
     }
 
@@ -26,6 +25,12 @@ public class CopyrightTableViewCell: UITableViewCell {
     
     public func cancelPaymentVault(){
         MPFlowController.dismiss(true)
+    }
+    
+    internal func drawBottomLine(width : CGFloat){
+        let overLinewView = UIView(frame: CGRect(x: 0, y: 15, width: width, height: 1))
+        overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
+        self.addSubview(overLinewView)
     }
     
 }

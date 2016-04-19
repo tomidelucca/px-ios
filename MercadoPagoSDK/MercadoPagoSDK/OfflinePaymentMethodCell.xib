@@ -16,7 +16,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="8" y="44" width="311" height="27"/>
+                        <rect key="frame" x="8" y="50" width="311" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="OUd-LC-a28"/>
+                        </constraints>
                         <attributedString key="attributedText">
                             <fragment content="Se acreditará en 7 días">
                                 <attributes>
@@ -28,11 +31,10 @@
                         <color key="highlightedColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="bancomer_bank_transfer" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="8" y="8" width="124" height="36"/>
+                        <rect key="frame" x="8" y="8" width="124" height="42"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="124" id="6dn-Zd-4XG"/>
-                            <constraint firstAttribute="height" constant="36" id="mqj-6e-jeg"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>

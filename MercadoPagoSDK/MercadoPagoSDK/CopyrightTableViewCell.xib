@@ -16,13 +16,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 1999-2016 Procesado por MercadoPago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nc5-o5-2Fj" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="18" y="90" width="277" height="14"/>
+                        <rect key="frame" x="18" y="83" width="277" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Gkw-Fx-V9y"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mo3-xW-Lms" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="103" y="40" width="108" height="28"/>
+                        <rect key="frame" x="103" y="40" width="108" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="hiZ-kN-tS3"/>
+                        </constraints>
                         <state key="normal">
                             <attributedString key="attributedTitle">
                                 <fragment content="Cancelar y volver">

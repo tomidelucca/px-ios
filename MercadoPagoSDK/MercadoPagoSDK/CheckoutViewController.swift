@@ -61,6 +61,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
         let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
+        
         self.checkoutTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
         
         self.checkoutTable.delegate = self
@@ -172,7 +173,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 1 {
-            return self.checkoutTable.dequeueReusableCellWithIdentifier("copyrightCell")
+            let copyrightCell =  self.checkoutTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
+            copyrightCell.drawBottomLine(self.view.bounds.width)
+            return copyrightCell
         }
         return nil
     }

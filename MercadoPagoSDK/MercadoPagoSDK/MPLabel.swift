@@ -39,7 +39,15 @@ public class MPLabel: UILabel {
             
         }
     }
-  
     
+    func addCharactersSpacing(spacing:CGFloat) {
+        let attributedString = NSMutableAttributedString()
+        if self.attributedText != nil {
+            attributedString.appendAttributedString(self.attributedText!)
+        }
+        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, self.attributedText!.length))
+        self.attributedText = attributedString
+    }
+ 
     
 }

@@ -16,15 +16,15 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     var currentInstruction : Instruction?
     
     // NSDictionary used to build instructions screens by paymentMethodId
-    let instructionsByPaymentMethod = ["oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100],
-        "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100],
-        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 150],
-        "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100],
-        "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 210, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100],
-        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 210, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 150],
-        "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130],
-        "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130],
-        "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130],
+    let instructionsByPaymentMethod = ["oxxo" : ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "7eleven" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
     ]
     
     var payment : Payment!
@@ -107,21 +107,22 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         if indexPath.section == 1 {
-            let bodyViewCell = self.resolveInstructionsBodyViewCell(self.payment.paymentMethodId)!
+            let bodyViewCell = self.resolveInstructionsBodyViewCell(self.payment.paymentMethodId.lowercaseString)!
             return bodyViewCell
         }
         
         if indexPath.section == 2 {
-            let footer = self.resolveInstructionsFooter(self.payment.paymentMethodId)!
-            /*footer.layer.shadowOffset = CGSizeMake(0, 1)
-            footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
-            footer.layer.shadowRadius = 3
-            footer.layer.shadowOpacity = 0.6*/
+            let footer = self.resolveInstructionsFooter(self.payment.paymentMethodId.lowercaseString)!
             return footer
         }
         
         let copyrightCell =  self.congratsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
         copyrightCell.cancelButton.setTitle("Finalizar".localized, forState: .Normal)
+        let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
+        separatorLineView.layer.zPosition = 1
+        separatorLineView.backgroundColor = UIColor().UIColorFromRGB(0xEFEFF4)
+        copyrightCell.addSubview(separatorLineView)
+        copyrightCell.bringSubviewToFront(separatorLineView)
         return copyrightCell
     }
     
@@ -131,9 +132,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             return 182
         }
         if indexPath.section == 1  {
-            return self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId)
+            return self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId.lowercaseString)
         } else if indexPath.section == 2 {
-            return self.resolveInstructionsFooterHeight(self.payment.paymentMethodId)
+            return self.resolveInstructionsFooterHeight(self.payment.paymentMethodId.lowercaseString) + 40
         }
         return 140
     }
