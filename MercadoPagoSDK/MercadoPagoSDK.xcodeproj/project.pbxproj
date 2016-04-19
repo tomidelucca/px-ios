@@ -330,6 +330,7 @@
 		761B89431C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89401C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift */; };
 		761B89441C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */; };
 		761B89451C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */; };
+		76445AD41CC6BDDD008EE68E /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */; };
 		76565EFE1C9AEB99006FF90B /* CopyrightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76565EFC1C9AEB99006FF90B /* CopyrightTableViewCell.swift */; };
 		76565EFF1C9AEB99006FF90B /* CopyrightTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76565EFD1C9AEB99006FF90B /* CopyrightTableViewCell.xib */; };
 		76565F001C9AF866006FF90B /* CopyrightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76565EFC1C9AEB99006FF90B /* CopyrightTableViewCell.swift */; };
@@ -645,6 +646,7 @@
 		761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewController.swift; sourceTree = "<group>"; };
 		761B89401C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
 		76565EFC1C9AEB99006FF90B /* CopyrightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightTableViewCell.swift; sourceTree = "<group>"; };
 		76565EFD1C9AEB99006FF90B /* CopyrightTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CopyrightTableViewCell.xib; sourceTree = "<group>"; };
 		7656C9F11C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsFooterWithSecondaryInfoViewCell.swift; sourceTree = "<group>"; };
@@ -900,6 +902,7 @@
 				0F9883B71AD2AD1600F750F0 /* String+Additions.swift */,
 				0F9883B81AD2AD1600F750F0 /* UIDevice+Additions.swift */,
 				0F9883B91AD2AD1600F750F0 /* UIColor+Additions.swift */,
+				76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -1806,6 +1809,7 @@
 				76151B951C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift in Sources */,
 				76743C7B1C46951100120347 /* PaymentType.swift in Sources */,
 				0F9883591AD2AB6000F750F0 /* ApiException.swift in Sources */,
+				76445AD41CC6BDDD008EE68E /* CALayer+Additions.swift in Sources */,
 				0FC4FC331B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
 				0F9883811AD2AB6000F750F0 /* Order.swift in Sources */,
 				0F98861D1AD3981A00F750F0 /* GenericErrorView.swift in Sources */,

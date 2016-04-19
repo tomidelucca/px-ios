@@ -11,7 +11,7 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="130" id="KGk-i7-Jjw" customClass="SimpleInstructionsViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="362" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="362" height="129"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -52,7 +52,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="dpQ-yc-BMK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Gvo-kN-jC3"/>
                     <constraint firstItem="dpQ-yc-BMK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="QJl-vd-9b1"/>
@@ -61,6 +61,7 @@
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="infoTitle" destination="eyh-Q9-oja" id="01K-Tb-Bz7"/>
                 <outlet property="referenceValue" destination="QOx-Tr-V4R" id="JK2-Vc-LiR"/>

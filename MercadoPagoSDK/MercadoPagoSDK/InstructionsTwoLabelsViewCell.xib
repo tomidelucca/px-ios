@@ -93,7 +93,6 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="4LO-ql-Qvk" secondAttribute="bottom" id="7UH-J7-DDC"/>
                     <constraint firstAttribute="trailingMargin" secondItem="4LO-ql-Qvk" secondAttribute="trailing" constant="8" id="8ob-vC-Km1"/>
@@ -102,6 +101,7 @@
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="firstReferenceTitle" destination="Egg-41-tvn" id="58A-Cf-6tp"/>
                 <outlet property="firstReferenceValue" destination="nAN-hX-P6g" id="YLw-UP-2DC"/>

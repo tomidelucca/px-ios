@@ -92,22 +92,21 @@
                             <constraint firstItem="ljZ-V3-wZ9" firstAttribute="top" secondItem="g7e-cP-gQZ" secondAttribute="bottom" constant="12" id="wxJ-hQ-Dv4"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                <size key="value" width="0.0" height="1"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
+                            <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColorIB">
                                 <color key="value" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                <real key="value" value="0.59999999999999998"/>
+                                <real key="value" value="0.29999999999999999"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                <integer key="value" value="3"/>
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                <size key="value" width="0.0" height="1"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="XAx-cI-Sup" secondAttribute="trailing" constant="8" id="T8j-wU-0kU"/>
                     <constraint firstItem="XAx-cI-Sup" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="bV3-DQ-SAq"/>
@@ -115,6 +114,7 @@
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="acreditationMessage" destination="l8B-8M-37j" id="yLg-hk-N5V"/>

@@ -117,12 +117,16 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         let copyrightCell =  self.congratsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
-        copyrightCell.cancelButton.setTitle("Finalizar".localized, forState: .Normal)
+        let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor().UIColorFromRGB(0x0066CC)]
+        let title = NSAttributedString(string: "Finalizar".localized, attributes: attributes)
+        copyrightCell.cancelButton.setAttributedTitle(title, forState: .Normal)
+        
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
         separatorLineView.backgroundColor = UIColor().UIColorFromRGB(0xEFEFF4)
         copyrightCell.addSubview(separatorLineView)
         copyrightCell.bringSubviewToFront(separatorLineView)
+        copyrightCell.drawBottomLine(self.view.bounds.width)
         return copyrightCell
     }
     
@@ -134,7 +138,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 1  {
             return self.resolveInstructionsBodyHeightForRow(self.payment.paymentMethodId.lowercaseString)
         } else if indexPath.section == 2 {
-            return self.resolveInstructionsFooterHeight(self.payment.paymentMethodId.lowercaseString) + 40
+            return self.resolveInstructionsFooterHeight(self.payment.paymentMethodId.lowercaseString) + 30
         }
         return 140
     }
