@@ -10,8 +10,7 @@ import Foundation
 public class PaymentMethodSearch: Equatable {
     
     var groups : [PaymentMethodSearchItem]!
-    var preferred : [PaymentMethodSearchItem]!
-    var defaultPayment : PaymentMethodSearchItem!
+    var paymentMethods : [PaymentMethod]!
     
 
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearch {
@@ -27,19 +26,16 @@ public class PaymentMethodSearch: Equatable {
             pmSearch.groups = groups
         }
         
-        var preferred = [PaymentMethodSearchItem]()
-        if let preferredJson = json["preferred"] as? NSArray {
-            for i in 0..<preferredJson.count {
-                if let preferredDic = preferredJson[i] as? NSDictionary {
-                    preferred.append(PaymentMethodSearchItem.fromJSON(preferredDic))
+        var paymentMethods = [PaymentMethod]()
+        if let paymentMethodsJson = json["payment_methods"] as? NSArray {
+            for i in 0..<paymentMethodsJson.count {
+                if let paymentMethodsDic = paymentMethodsJson[i] as? NSDictionary {
+                    paymentMethods.append(PaymentMethod.fromJSON(paymentMethodsDic))
                 }
             }
-            pmSearch.preferred = preferred
+            pmSearch.paymentMethods = paymentMethods
         }
-        
-        if json["default"] != nil {
-            pmSearch.defaultPayment = PaymentMethodSearchItem.fromJSON(json["default"] as! NSDictionary)
-        }
+
         return pmSearch
     }
     
@@ -48,8 +44,6 @@ public class PaymentMethodSearch: Equatable {
 public func ==(obj1: PaymentMethodSearch, obj2: PaymentMethodSearch) -> Bool {
     let areEqual =
     obj1.groups == obj2.groups &&
-    obj1.preferred == obj2.preferred &&
-    obj1.defaultPayment == obj2.defaultPayment
-    
+    obj1.paymentMethods == obj2.paymentMethods
     return areEqual
 }
