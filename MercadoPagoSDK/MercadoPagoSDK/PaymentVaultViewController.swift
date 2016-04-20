@@ -134,7 +134,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 }
                 return 52
             case 2:
-                return 140
+                return 100
             default : return 0
         }
     }
@@ -147,15 +147,21 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 return preferenceDescriptionCell
             case 1:
                 let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
-                return getCellFor(currentPaymentMethod)
+                
+                let paymentMethodCell = getCellFor(currentPaymentMethod)
+                // Add shadow effect to last cell in table
+                if (indexPath.row == self.currentPaymentMethodSearch.count - 1) {
+                    paymentMethodCell.clipsToBounds = false
+                    paymentMethodCell.layer.masksToBounds = false
+                    paymentMethodCell.layer.shadowOffset = CGSizeMake(0, 1)
+                    paymentMethodCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+                    paymentMethodCell.layer.shadowRadius = 1
+                    paymentMethodCell.layer.shadowOpacity = 0.6
+                }
+                return paymentMethodCell
             default :
                 let copyrightCell = self.paymentsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
-                let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
-                separatorLineView.layer.zPosition = 1
-                separatorLineView.backgroundColor = UIColor().UIColorFromRGB(0xEFEFF4)
-                copyrightCell.addSubview(separatorLineView)
-                copyrightCell.bringSubviewToFront(separatorLineView)
-                return copyrightCell
+                return copyrightCell.drawCell(true, width: self.view.bounds.width)
         }
         
     }
@@ -257,8 +263,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             } else {
                 let paymentSearchCell = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
                 paymentSearchCell.fillRowWithPayment(currentPaymentMethodItem, iconImage : iconImage!, tintColor: tintColor)
-                paymentSearchCell.separatorInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
-                
                 return paymentSearchCell
             }
 

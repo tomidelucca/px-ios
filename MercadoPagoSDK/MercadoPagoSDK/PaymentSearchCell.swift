@@ -17,7 +17,6 @@ class PaymentSearchCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.separatorInset = UIEdgeInsetsZero
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -26,11 +25,11 @@ class PaymentSearchCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.addSubview(ViewUtils.getTableCellSeparatorLineView(paymentTitle.frame.minX, y: 0, width: self.frame.width, height: 1))
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
     }
     
     func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, iconImage: UIImage, tintColor : Bool){
@@ -43,6 +42,5 @@ class PaymentSearchCell: UITableViewCell {
             self.paymentIcon.image = iconImage
             self.paymentTitle.hidden = true
         }
-    
     }
 }

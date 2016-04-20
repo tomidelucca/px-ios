@@ -73,19 +73,13 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
         self.navigationController?.navigationBar.removeBottomLine()
         
-        //Create custom button with shopping cart
+        //Create navigation buttons
         rightButtonShoppingCart()
+        displayCustomBackButton()
         
-        if !MPFlowController.isRoot(self) {
-            let backButton = UIBarButtonItem()
-            backButton.image = MercadoPago.getImage("left_arrow")
-            backButton.style = UIBarButtonItemStyle.Bordered
-            backButton.target = self
-            backButton.tintColor = UIColor.whiteColor()
-            backButton.action = "executeBack"
-            backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
-            self.navigationItem.leftBarButtonItem = backButton
-        }
+        
+        
+        
 
     }
     
@@ -179,6 +173,17 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         } else {
             MPFlowController.pop(true)
         }
+    }
+    
+    private func displayCustomBackButton(){
+        let backButton = UIBarButtonItem()
+        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.style = UIBarButtonItemStyle.Bordered
+        backButton.target = self
+        backButton.tintColor = UIColor.whiteColor()
+        backButton.action = "executeBack"
+        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
 }

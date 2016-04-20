@@ -28,9 +28,14 @@ public class CopyrightTableViewCell: UITableViewCell {
     }
     
     internal func drawBottomLine(width : CGFloat){
-        let overLinewView = UIView(frame: CGRect(x: 0, y: 15, width: width, height: 1))
+        let overLinewView = UIView(frame: CGRect(x: 20, y: 0, width: width-40, height: 1))
         overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
         self.addSubview(overLinewView)
     }
     
+    func drawCell(buttonHidden : Bool, width : CGFloat) -> UITableViewCell {
+        self.cancelButton.hidden = buttonHidden
+        self.drawBottomLine(width)
+        return self
+    }
 }

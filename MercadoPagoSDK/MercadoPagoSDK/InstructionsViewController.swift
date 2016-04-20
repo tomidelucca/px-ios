@@ -123,7 +123,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
-        separatorLineView.backgroundColor = UIColor().UIColorFromRGB(0xEFEFF4)
+        separatorLineView.backgroundColor = UIColor().grayTableSeparator()
         copyrightCell.addSubview(separatorLineView)
         copyrightCell.bringSubviewToFront(separatorLineView)
         copyrightCell.drawBottomLine(self.view.bounds.width)
