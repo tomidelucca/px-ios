@@ -15,7 +15,7 @@ class PaymentTitleViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.addSubview(ViewUtils.getTableCellSeparatorLineView(paymentTitle.frame.minX, y: 0, width: self.frame.width, height: 1))
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

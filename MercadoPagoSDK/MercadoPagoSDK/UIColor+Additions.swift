@@ -83,6 +83,9 @@ extension UIColor {
     return UIColorFromRGB(0xCCCCCC)
     }
     
+    public func grayTableSeparator() -> UIColor{
+    return UIColorFromRGB(0xEFEFF4)
+    }
     public func backgroundColor() -> UIColor
     {
     return UIColorFromRGB(0xEBEBF0)

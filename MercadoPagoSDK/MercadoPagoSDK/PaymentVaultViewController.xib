@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="sZ0-8u-QXV">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <tableView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="sZ0-8u-QXV">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -27,7 +27,7 @@
             </subviews>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="sZ0-8u-QXV" secondAttribute="bottom" id="23U-43-qTQ"/>
+                <constraint firstAttribute="bottom" secondItem="sZ0-8u-QXV" secondAttribute="bottom" constant="20" id="23U-43-qTQ"/>
                 <constraint firstItem="sZ0-8u-QXV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Dc3-AE-BXC"/>
                 <constraint firstItem="sZ0-8u-QXV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TOb-ag-tZz"/>
                 <constraint firstAttribute="trailing" secondItem="sZ0-8u-QXV" secondAttribute="trailing" id="eME-ha-GnE"/>

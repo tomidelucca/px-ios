@@ -29,12 +29,15 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertEqual(paymentVaultViewController!.merchantBaseUrl, MercadoPagoContext.baseURL())
         XCTAssertEqual(paymentVaultViewController!.publicKey, MercadoPagoContext.publicKey())
         XCTAssertEqual(paymentVaultViewController!.merchantAccessToken,  MercadoPagoContext.merchantAccessToken())
-        XCTAssertNil(paymentVaultViewController?.paymentMethodsSearch)
+        XCTAssertNil(paymentVaultViewController?.currentPaymentMethodSearch)
+        XCTAssertNil(paymentVaultViewController?.paymentMethods)
         
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
-        XCTAssertNotNil(self.paymentVaultViewController?.paymentMethodsSearch)
-        XCTAssertTrue(self.paymentVaultViewController?.paymentMethodsSearch!.count > 1)
+        XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
+        XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch!.count > 1)
+        XCTAssertNotNil(paymentVaultViewController?.paymentMethods)
+        XCTAssertNotNil(paymentVaultViewController?.paymentMethods.count > 1)
         XCTAssertNotNil(self.paymentVaultViewController?.paymentsTable)
         // Verify preference description row
         XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(0) == 0)
@@ -49,9 +52,9 @@ class PaymentVaultViewControllerTest: BaseTest {
         let preferenceDescriptionCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
         XCTAssertNotNil(preferenceDescriptionCell)
         
-        XCTAssertTrue(self.paymentVaultViewController!.paymentMethodsSearch.count > 0)
+        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 0)
         
-        let cardsOption = self.paymentVaultViewController!.paymentMethodsSearch[0] as PaymentMethodSearchItem
+        let cardsOption = self.paymentVaultViewController!.currentPaymentMethodSearch[0] as PaymentMethodSearchItem
         let cardsGroupCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! PaymentSearchCell
         
         XCTAssertEqual(cardsGroupCell.paymentTitle.text, cardsOption.description)
@@ -61,8 +64,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         // Select cards
         self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1))
         
-        
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearch: cardsChildren, paymentMethodSearchParent: cardsOption, title: "VC Title") { (paymentMethod, tokenId, issuer, installments) -> Void in
+        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: cardsChildren, paymentMethodSearchParent: cardsOption, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
             
         }
         
@@ -76,22 +78,23 @@ class PaymentVaultViewControllerTest: BaseTest {
     
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
-        XCTAssertTrue(self.paymentVaultViewController!.paymentMethodsSearch.count > 1)
+        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 1)
         
-        let bankTransferOptionSelected = self.paymentVaultViewController!.paymentMethodsSearch[1] as PaymentMethodSearchItem
+        let bankTransferOptionSelected = self.paymentVaultViewController!.currentPaymentMethodSearch[1] as PaymentMethodSearchItem
         let bankTransferCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 1)) as! PaymentSearchCell
         
         XCTAssertEqual(bankTransferCell.paymentTitle.text, bankTransferOptionSelected.description)
 
         let bankTransferOptions = bankTransferOptionSelected.children
         
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearch: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, title: "VC Title") { (paymentMethod, tokenId, issuer, installments) -> Void in
+        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
             
         }
+    
         
         self.simulateViewDidLoadFor(paymentVault)
         XCTAssertEqual(paymentVault.title, "VC Title")
-        XCTAssertEqual(paymentVault.paymentMethodsSearch, bankTransferOptions)
+        XCTAssertEqual(paymentVault.currentPaymentMethodSearch, bankTransferOptions)
 
     }
     
@@ -99,21 +102,23 @@ class PaymentVaultViewControllerTest: BaseTest {
         
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
-        XCTAssertTrue(self.paymentVaultViewController!.paymentMethodsSearch.count > 1)
+        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 1)
         
-        let bankTransferOptionSelected = self.paymentVaultViewController!.paymentMethodsSearch[1] as PaymentMethodSearchItem
+        let bankTransferOptionSelected = self.paymentVaultViewController!.currentPaymentMethodSearch[1] as PaymentMethodSearchItem
         let bankTransferOptions = bankTransferOptionSelected.children
         XCTAssertTrue(bankTransferOptions.count > 0)
         
         let offlinePaymentMethods = PaymentMethodSearch.fromJSON(MockManager.getMockFor("groups")!).groups[1].children
 
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearch: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, title: "Payment Vault Title") { (paymentMethod, tokenId, issuer, installments) -> Void in
+        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
             
         }
         
+        
+        
         self.simulateViewDidLoadFor(paymentVault)
-        XCTAssertEqual(paymentVault.title, "Payment Vault Title")
-        XCTAssertEqual(paymentVault.paymentMethodsSearch, bankTransferOptions)
+        XCTAssertEqual(paymentVault.title, "VC Title")
+        XCTAssertEqual(paymentVault.currentPaymentMethodSearch, bankTransferOptions)
         let bankTransferOptionCell = paymentVault.tableView(paymentVault.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
         XCTAssertNotNil(bankTransferOptionCell)
         XCTAssertEqual(bankTransferOptionCell.comment.text, offlinePaymentMethods[0].comment)
@@ -136,7 +141,7 @@ class PaymentVaultViewControllerTest: BaseTest {
        self.paymentVaultViewController!.displayPreferenceDescription = true
        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 0), 1)
         
-       XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 1), self.paymentVaultViewController?.paymentMethodsSearch.count)
+       XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 1), self.paymentVaultViewController?.currentPaymentMethodSearch.count)
 
         XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 0), 0)
         XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 1), 10)
