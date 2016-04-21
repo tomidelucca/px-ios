@@ -49,7 +49,7 @@ public class Token : Equatable {
         let bin :String? = truncCardNumber!.characters.count >= 6 ? truncCardNumber!.substringWithRange(range) : nil
         return bin
     }
-    
+      
 	
 	public class func fromJSON(json : NSDictionary) -> Token {
 		let id = JSON(json["id"]!).asString!
