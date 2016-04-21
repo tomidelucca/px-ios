@@ -24,6 +24,8 @@ class BaseTest: XCTestCase {
         let nav = UINavigationController()
         nav.pushViewController(viewController, animated: false)
         let _ = viewController.view
+        viewController.viewWillAppear(false)
+        viewController.viewDidAppear(false)
     }
     
     

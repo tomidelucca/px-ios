@@ -654,7 +654,7 @@
 }
 </string>
 	<key>PaymentMethodSearchItem</key>
-	<string>  {
+	<string>{
          &quot;children&quot;:[
             {
                &quot;children&quot;:null,

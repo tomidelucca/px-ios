@@ -133,7 +133,16 @@ public class PaymentMethod : Equatable {
         return self.paymentTypeId != nil && self.paymentTypeId.isOfflinePayment()
     }
     
+    
+    public func isVISA() -> Bool {
+        return ((self._id == "visa") && (self._id == "debvisa"))
+    }
+    public func isMASTERCARD() -> Bool {
+        return ((self._id == "master") && (self._id == "debmaster"))
+    }
 }
+
+
 
 public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
     

@@ -66,6 +66,7 @@ public class MPServicesBuilder : NSObject {
                         }
                     }
                 } else {
+                    print(jsonResult)
                     let paymentMethods = jsonResult as? NSArray
                     var pms : [PaymentMethod] = [PaymentMethod]()
                     if paymentMethods != nil {
