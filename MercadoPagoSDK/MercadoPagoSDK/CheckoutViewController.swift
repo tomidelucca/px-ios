@@ -18,7 +18,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentMethod : PaymentMethod?
     var installments : Int = 0
     var issuer : Issuer?
-    var cardToken : CardToken?
+    var token : Token?
     var paymentButton : MPButton?
 
     
@@ -197,9 +197,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
             self.confirmPaymentOff()
         }else{
-            //TODO 
             
-                 MPServicesBuilder.createNewCardToken(self.cardToken!, success: { (token) -> Void in
                     let payment = Payment()
                     payment.transactionAmount = self.preference!.getAmount()
                     payment.tokenId = token?._id
@@ -207,9 +205,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     payment.paymentMethodId = self.paymentMethod!._id
                     payment._description = self.preference!.items![0].title
                     self.confirmPaymentOn(payment, token: token!)
-                 }) { (error) -> Void in
-                     print("Falla!")
-             }
+            
         }
         
         

@@ -43,6 +43,13 @@ public class Token : Equatable {
 			self.lastModifiedDate = lastModifiedDate
 			self.dueDate = dueDate
 	}
+    
+    public func getBin() -> String? {
+        let range = Range(start: truncCardNumber!.startIndex, end: truncCardNumber!.characters.startIndex.advancedBy(6))
+        let bin :String? = truncCardNumber!.characters.count >= 6 ? truncCardNumber!.substringWithRange(range) : nil
+        return bin
+    }
+    
 	
 	public class func fromJSON(json : NSDictionary) -> Token {
 		let id = JSON(json["id"]!).asString!
@@ -73,6 +80,8 @@ extension NSDictionary {
 		return (dictValue == nil || dictValue is NSNull) ? false : true
 	}
 }
+
+
 
 
 

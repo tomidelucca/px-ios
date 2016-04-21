@@ -16,7 +16,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var installments : [Installment]?
     var payerCosts : [PayerCost]?
     var paymentMethod : PaymentMethod?
-    var cardToken : CardToken?
+    var token : Token?
     var cardFront : CardFrontView?
     
     var callback : ((payerCost: PayerCost) -> Void)?
@@ -28,15 +28,15 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,cardToken : CardToken?,amount : Double?,minInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,minInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
          self.paymentMethod = paymentMethod
-        self.cardToken = cardToken!
+        self.token = token!
         self.callback = callback
         
-        MPServicesBuilder.getInstallments((cardToken?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
             //TODO ISSUER
@@ -70,10 +70,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
             
             
-            cardFront?.cardNumber.text = self.cardToken!.getNumberFormated() as String
-            cardFront?.cardName.text = self.cardToken!.cardholder!.name
-            cardFront?.cardExpirationDate.text = self.cardToken!.getExpirationDateFormated() as String
-            
+            cardFront?.cardNumber.text = self.token!.truncCardNumber as String
+        // TODO
+        /*
+            cardFront?.cardName.text = self.token!.cardholder!.name
+            cardFront?.cardExpirationDate.text = self.token!.getExpirationDateFormated() as String
+            */
             cardFront?.cardNumber.textColor =  defaultColorText
             cardFront?.cardName.textColor =  defaultColorText
             cardFront?.cardExpirationDate.textColor =  defaultColorText
@@ -107,10 +109,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
-        
-        
 
-        
     }
     
     

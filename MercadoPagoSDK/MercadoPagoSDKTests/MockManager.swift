@@ -22,16 +22,16 @@ class MockManager: NSObject {
         return nil
     }
 
-    internal class func getMockResponseFor(uri : String, method: String) throws -> NSDictionary?{
+    internal class func getMockResponseFor(uri : String, method: String) throws ->AnyObject?{
         let path = NSBundle(forClass:MockManager.self).pathForResource("MockedResponse", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
-        do {
-            let mockObj = try MockManager.convertStringToDictionary(dictPM?.valueForKey(method + uri) as! String)
-            return mockObj
-        } catch {
-            let mockArr = try MockManager.convertArrayToDictionary(dictPM?.valueForKey(method + uri) as! String)
-            return mockArr
+        let valueOfKey = dictPM?.valueForKey(method + uri) as! String
+        if let data = valueOfKey.dataUsingEncoding(NSUTF8StringEncoding) {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as AnyObject
+            return json
         }
+        return nil
+        
     }
     
     internal class func convertStringToDictionary(text: String) throws -> [String:AnyObject]? {

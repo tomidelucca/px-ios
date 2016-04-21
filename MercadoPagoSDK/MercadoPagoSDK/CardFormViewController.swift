@@ -1,4 +1,4 @@
- //
+  //
 //  CardFormViewController.swift
 //  MercadoPagoSDK
 //
@@ -41,7 +41,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     var paymentType : PaymentType?
-    var callback : (( paymentMethod: PaymentMethod,cardToken: CardToken?, issuer: Issuer?, installment: Installment?) -> Void)?
+    var callback : (( paymentMethod: PaymentMethod,token: Token?, issuer: Issuer?, installment: Installment?) -> Void)?
     
     var amount : Double?
     
@@ -51,7 +51,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentType : PaymentType?, amount:Double,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentType : PaymentType?, amount:Double,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentType = paymentType
       //  self.edgesForExtendedLayout = .All
@@ -77,17 +77,19 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Numero".localized
         textBox.becomeFirstResponder()
-        
+       
+    }
+  
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
+
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             self.paymentMethods = paymentMethods
             }) { (error) -> Void in
                 // Mensaje de error correspondiente, ver que hacemos con el flujo
         }
-    }
-  
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-    
+        
         textBox.autocorrectionType = UITextAutocorrectionType.No
          textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
@@ -124,19 +126,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     }
 
-    func applyPlainShadow(view: UIView) {
-        let layer = view.layer
-        
-        layer.shadowColor = UIColor.blackColor().CGColor
-        layer.shadowOffset = CGSize(width: 0, height: 10)
-        layer.shadowOpacity = 0.4
-        layer.shadowRadius = 5
-    }
-    
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -173,6 +162,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             editingLabel?.text = formatExpirationDate(textField.text!)
             if(textField.text?.characters.count == 5){
                 if(!isAmexCard()){
+                    editingLabel = cvvLabel
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
                         self.promoButton.alpha = 0
@@ -745,11 +735,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 return
             }
         }else{
-            let errorNumber = cardtoken.validateCardNumber()
-            if((errorNumber) != nil){
+         //   let errorNumber = cardtoken.validateCardNumber()
+         //   if((errorNumber) != nil){
                 markErrorLabel(cardNumberLabel!)
                 return
-            }
+          //  }
         }
         
         let errorDate = cardtoken.validateExpiryDate()
@@ -774,7 +764,12 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         let installment : Installment = self.installments![0]
         
-        self.callback!(paymentMethod: self.paymentMethod!, cardToken: cardtoken,issuer:installment.issuer, installment: installment)
+        MPServicesBuilder.createNewCardToken(cardtoken, success: { (token) -> Void in
+            self.callback!(paymentMethod: self.paymentMethod!, token: token,issuer:installment.issuer, installment: installment)
+            }) { (error) -> Void in
+                print(error)
+        }
+        
     }
     
     
@@ -823,4 +818,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     func confirmPaymentMethod(){
         makeToken()
     }
+    
+    
+    
 }
