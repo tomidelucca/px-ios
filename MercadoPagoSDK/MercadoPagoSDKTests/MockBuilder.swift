@@ -8,14 +8,10 @@
 
 import Foundation
 
-class MockBuilder: NSObject {
+public class MockBuilder: NSObject {
     
     internal class var MOCK_PAYMENT_ID : Int {
         return 1826290155
-    }
-    
-    internal class var MOCK_PUBLIC_KEY : String {
-        return "TEST-5999d034-afe5-4005-b22f-dccb5b576d55"
     }
     
     class var PREF_ID_MOCK : String {
@@ -45,8 +41,8 @@ class MockBuilder: NSObject {
         let preferencePM = PreferencePaymentMethods()
         preferencePM.defaultInstallments = 1
         preferencePM.defaultPaymentMethodId = "visa"
-        preferencePM.excludedPaymentMethods = ["amex"]
-        preferencePM.excludedPaymentTypes = self.getMockPaymentTypeIds()
+        preferencePM.excludedPaymentMethodsIds = ["amex"]
+        preferencePM.excludedPaymentTypesIds = self.getMockPaymentTypeIds()
         return preferencePM
     }
     

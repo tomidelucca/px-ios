@@ -28,18 +28,19 @@ class InstructionsHeaderViewCell: UITableViewCell {
     func fillCell(title : String, amount : Double, currency : Currency?) -> UITableViewCell {
         // Assign default values in case there are none in Currency
         var currencySymbol = "$"
-        var thousandSeparator = ","
-        var decimalSeparator = "."
+        var thousandSeparator = "."
+        var decimalSeparator = ","
         
         if let currency = currency {
-            currencySymbol = currency.symbol ?? "$"
-            thousandSeparator = String(currency.thousandsSeparator) ?? ","
-            decimalSeparator = String(currency.decimalSeparator) ?? "."
+            currencySymbol = currency.getCurrencySymbolOrDefault()
+            thousandSeparator = String(currency.getThousandsSeparatorOrDefault())
+            decimalSeparator = String(currency.getDecimalSeparatorOrDefault())
         }
         
-        let amountStr = Utils.getAmountFormatted(String(amount), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        let amountFromDouble = String(amount).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator)
+        let amountStr = Utils.getAmountFormatted(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
         let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
-        let amountRange = title.rangeOfString(currencySymbol + amountStr + decimalSeparator + centsStr)
+        let amountRange = title.rangeOfString(currencySymbol + " " + amountStr + decimalSeparator + centsStr)
         
         if amountRange != nil {
             let attributedTitle = NSMutableAttributedString(string: title.substringToIndex((amountRange?.startIndex)!))

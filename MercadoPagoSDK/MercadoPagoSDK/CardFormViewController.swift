@@ -69,6 +69,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardView.addSubview(cardFront!)
         updateLabelsFontColors()
         
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem?.action = "executeBack"
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -124,6 +126,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
         self.navigationItem.rightBarButtonItem!.enabled = false
+        
+       
 
     }
 
@@ -837,6 +841,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.cardNumberLabel?.text = self.token?.getMaskNumber()
         self.expirationDateLabel?.text = self.token?.getExpirationDateFormated()
     }
-    
+
     
 }

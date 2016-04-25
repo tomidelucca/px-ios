@@ -16,6 +16,9 @@ class OfflinePaymentMethodCell: UITableViewCell {
     
     @IBOutlet weak var comment: MPLabel!
     
+    @IBOutlet weak var paymentItemDescription: MPLabel!
+
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(ViewUtils.getTableCellSeparatorLineView(self.iconImage.frame.minX, y: 0, width: self.frame.width, height: 1))
@@ -25,13 +28,20 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethodSearchItem, image : UIImage){
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethodSearchItem, image : UIImage, paymentItemDescription : String = "") {
         self.iconImage.image = image
         self.comment.text = (paymentMethod.comment!)
+        self.paymentItemDescription.text = paymentItemDescription
     }
     
-    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod){
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem) {
         self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
-        self.comment.text = (paymentMethod.comment!)
+        if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
+            self.comment.text = paymentMethodSearchItemSelected.comment
+        } else {
+            self.comment.text = Utils.getAccreditationTitle(paymentMethod)
+        }
+        
+        self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
     }
 }

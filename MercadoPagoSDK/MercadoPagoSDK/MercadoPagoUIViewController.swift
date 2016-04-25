@@ -75,11 +75,8 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         
         //Create navigation buttons
         rightButtonShoppingCart()
-        displayCustomBackButton()
-        
-        
-        
-        
+        displayBackButton()
+ 
 
     }
     
@@ -128,9 +125,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        
-
-            
         return UIInterfaceOrientationMask.Portrait
     }
     
@@ -166,22 +160,12 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         
     }
     
-    internal func executeBack(){
-        self.clearMercadoPagoStyle()
-        if MPFlowController.isRoot(self) {
-            MPFlowController.dismiss(true)
-        } else {
-            MPFlowController.pop(true)
-        }
-    }
-    
-    private func displayCustomBackButton(){
+    internal func displayBackButton() {
         let backButton = UIBarButtonItem()
         backButton.image = MercadoPago.getImage("left_arrow")
         backButton.style = UIBarButtonItemStyle.Bordered
         backButton.target = self
         backButton.tintColor = UIColor.whiteColor()
-        backButton.action = "executeBack"
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         self.navigationItem.leftBarButtonItem = backButton
     }
@@ -197,6 +181,7 @@ extension UINavigationController {
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return self.viewControllers.last!.supportedInterfaceOrientations()
     }
+
 }
 
 extension UINavigationBar {

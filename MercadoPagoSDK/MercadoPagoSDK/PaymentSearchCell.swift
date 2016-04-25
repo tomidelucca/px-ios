@@ -25,7 +25,8 @@ class PaymentSearchCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    override func awakeFromNib() {
+    override func
+        awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(ViewUtils.getTableCellSeparatorLineView(paymentTitle.frame.minX, y: 0, width: self.frame.width, height: 1))
     }

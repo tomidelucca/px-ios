@@ -28,6 +28,14 @@ extension String {
 		}
 	}
 	
+    public func startsWith(prefix : String) -> Bool {
+        let startIndex = self.rangeOfString(prefix)
+        if startIndex == nil  || self.startIndex != startIndex?.startIndex {
+            return false
+        }
+        return true
+    }
+    
 	subscript (i: Int) -> String {
 		
 		if self.characters.count > i {

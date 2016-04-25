@@ -27,4 +27,16 @@ public class Currency : NSObject {
         self.thousandsSeparator = thousandSeparator
     }
     
+    public func getCurrencySymbolOrDefault() -> String {
+        return self.symbol ?? "$"
+    }
+    
+    public func getThousandsSeparatorOrDefault() -> Character {
+        return self.thousandsSeparator ?? "."
+    }
+    
+    public func getDecimalSeparatorOrDefault() -> Character {
+        return self.decimalSeparator ?? ","
+    }
+
 }

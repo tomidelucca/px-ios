@@ -54,6 +54,7 @@ class Utils {
         return cents
     }
     
+    
     class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
         
         if formattedString.containsString(thousandSeparator){
@@ -95,6 +96,73 @@ class Utils {
             return formattedString.substringToIndex(range!.startIndex)
         }
         return formattedString
+    }
+
+    static public func findPaymentMethodSearchItemInGroups(paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+        for item in paymentMethodSearch.groups {
+            if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+                return result
+            }
+        }
+        return nil
+    }
+    
+    static private func findPaymentMethodSearchItemById(paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+        
+        if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
+            return paymentMethodSearchItem
+        } else if (paymentMethodSearchItem.idPaymentMethodSearchItem.startsWith(paymentMethodId) && paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId + "_" + paymentTypeId.rawValue) {
+            return paymentMethodSearchItem
+        }
+        
+        for item in paymentMethodSearchItem.children {
+            if let paymentMethodSearchItemFound = findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+                return paymentMethodSearchItemFound
+            }
+        }
+        
+        if paymentMethodSearchItem.children.count == 0 {
+            return nil
+        }
+        return nil
+    }
+    
+    public static func findPaymentMethod(paymentMethods : [PaymentMethod], var paymentMethodId : String) -> PaymentMethod {
+        var paymentTypeSelected = ""
+        
+        let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
+            let paymentMethodIdRange = paymentMethodId.rangeOfString(paymentMethod._id)
+            if paymentMethodIdRange != nil {
+                paymentTypeSelected = paymentMethodId.substringFromIndex(paymentMethodIdRange!.endIndex)
+                if paymentTypeSelected.characters.count > 0 {
+                    paymentTypeSelected.removeAtIndex(paymentTypeSelected.startIndex)
+                }
+                return true
+            }
+            return false
+        })
+        
+        
+        if paymentTypeSelected.characters.count > 0 {
+            paymentMethod[0].paymentTypeId = PaymentTypeId(rawValue : paymentTypeSelected)
+        }
+        
+        return paymentMethod[0]
+    }
+    
+    public static func getAccreditationTitle(paymentMethod : PaymentMethod) -> String{
+        if paymentMethod.accreditationTime == nil || !(paymentMethod.accreditationTime > 0) {
+            return ""
+        }
+        
+        var title = "Se acreditará en ".localized
+        let hours = paymentMethod.accreditationTime!/(1000*60*60)
+        if hours > 24 {
+            title = title + String(hours/24) + " dias".localized
+        } else {
+            title = title + String(hours) + " horas".localized
+        }
+        return title
     }
 
 }

@@ -8,4 +8,5 @@
 
 public enum MPErrorException: ErrorType {
     case InvalidPaymentMethod
+    case InvalidInputData(message : String)
 }
