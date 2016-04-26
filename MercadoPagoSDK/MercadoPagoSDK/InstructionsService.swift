@@ -11,7 +11,7 @@ import UIKit
 public class InstructionsService: MercadoPagoService {
 
     public let MP_INSTRUCTIONS_URL = "https://api.mercadopago.com"
-    public let MP_INSTRUCTIONS_URI = "/checkout/beta/v1/instructions"
+    public let MP_INSTRUCTIONS_URI = "/beta/checkout/instructions"
     
     public init(){
         super.init(baseURL: MP_INSTRUCTIONS_URL)

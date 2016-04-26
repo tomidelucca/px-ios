@@ -72,10 +72,10 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             
             cardFront?.cardNumber.text = self.token!.truncCardNumber as String
         // TODO
-        /*
-            cardFront?.cardName.text = self.token!.cardholder!.name
+        
+            cardFront?.cardName.text = self.token!.cardHolder!.name
             cardFront?.cardExpirationDate.text = self.token!.getExpirationDateFormated() as String
-            */
+            
             cardFront?.cardNumber.textColor =  defaultColorText
             cardFront?.cardName.textColor =  defaultColorText
             cardFront?.cardExpirationDate.textColor =  defaultColorText

@@ -40,7 +40,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    var paymentType : PaymentType?
+    var paymentSettings : PaymentSettings?
     var callback : (( paymentMethod: PaymentMethod,token: Token?, issuer: Issuer?, installment: Installment?) -> Void)?
     
     var amount : Double?
@@ -51,9 +51,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentType : PaymentType?, amount:Double,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentSettings : PaymentSettings?, amount:Double,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
-        self.paymentType = paymentType
+        self.paymentSettings = paymentSettings
       //  self.edgesForExtendedLayout = .All
         self.callback = callback
     }
@@ -621,8 +621,18 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         if(getBIN() == nil){
             return nil
         }
+        
+        
         for (_, value) in paymentMethods!.enumerate() {
-            if (paymentType != nil){
+           
+            if (value.conformsPaymentSettings(self.paymentSettings)){
+                if (value.conformsToBIN(getBIN()!)){
+                    return value.cloneWithBIN(getBIN()!)
+                }
+            }
+            /*
+            if (self.paymentSettings != nil){
+                
                 if (value.paymentTypeId == paymentType?.paymentTypeId){
                     if (value.conformsToBIN(getBIN()!)){
                         return value.cloneWithBIN(getBIN()!)
@@ -633,7 +643,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                     return value.cloneWithBIN(getBIN()!)
                 }
             }
-            
+            */
         }
         return nil
     }
@@ -735,11 +745,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 return
             }
         }else{
-         //   let errorNumber = cardtoken.validateCardNumber()
-         //   if((errorNumber) != nil){
+
                 markErrorLabel(cardNumberLabel!)
                 return
-          //  }
         }
         
         let errorDate = cardtoken.validateExpiryDate()

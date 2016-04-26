@@ -24,10 +24,13 @@ public class Token : Equatable {
 	public var lastModifiedDate : NSDate!
 	public var dueDate : NSDate!
 	
+    public var cardHolder : Cardholder?
+    
+    
 	public init (_id: String, publicKey: String, cardId: String!, luhnValidation: String!, status: String!,
 		usedDate: String!, cardNumberLength: Int, creationDate: NSDate!, truncCardNumber: String!,
 		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: NSDate!,
-		dueDate: NSDate?) { 
+        dueDate: NSDate?, cardHolder : Cardholder?) {
 			self._id = _id
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -42,6 +45,7 @@ public class Token : Equatable {
 			self.expirationYear = expirationYear
 			self.lastModifiedDate = lastModifiedDate
 			self.dueDate = dueDate
+            self.cardHolder = cardHolder
 	}
     
     public func getBin() -> String? {
@@ -66,13 +70,26 @@ public class Token : Equatable {
 		let expYear = json.isKeyValid("expiration_year") ? JSON(json["expiration_year"]!).asInt! : 0
 		let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : NSDate()
 		let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : NSDate()
-		
+        
+        let cardHolder : Cardholder? = json.isKeyValid("cardholder") ? Cardholder.fromJSON(json["cardholder"] as! NSDictionary) : nil
+        
 		return Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhn, status: status,
 			usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, truncCardNumber: truncCardNumber,
 			securityCodeLength: securityCodeLength, expirationMonth: expMonth, expirationYear: expYear, lastModifiedDate: lastModifiedDate,
-			dueDate: dueDate)
+            dueDate: dueDate, cardHolder: cardHolder)
 	}
+    
+    public func getExpirationDateFormated() -> NSString {
+        
+        var str : String
+        
+        
+        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+        
+        return str
+    }
 }
+
 
 extension NSDictionary {
 	public func isKeyValid(dictKey : String) -> Bool {

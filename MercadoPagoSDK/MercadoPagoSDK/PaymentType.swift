@@ -31,6 +31,10 @@ public class PaymentType: NSObject {
         }
         return paymentType
     }
+    
+    public func paymentSettingAssociated() -> PaymentSettings {
+        return PaymentSettings(defaultPaymentTypeId:paymentTypeId)
+    }
 
 }
 
@@ -55,6 +59,8 @@ public enum PaymentTypeId :String {
     public func isOfflinePayment() -> Bool {
         return PaymentTypeId.offlinePayments().contains(self.rawValue)
     }
+    
+    
     
 }
 

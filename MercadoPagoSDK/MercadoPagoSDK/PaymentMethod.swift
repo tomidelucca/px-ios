@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PaymentMethod : Equatable {
+public class PaymentMethod : Equatable  {
     
     public var _id : String!
     public var name : String!
@@ -140,7 +140,44 @@ public class PaymentMethod : Equatable {
     public func isMASTERCARD() -> Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
+
+    public func conformsPaymentSettings(paymentSettings : PaymentSettings?) -> Bool{
+        
+        if(paymentSettings == nil){
+            return true
+        }
+        if(paymentSettings!.defaultPaymentTypeId != nil){
+            if (paymentSettings!.defaultPaymentTypeId != self.paymentTypeId){
+                return false
+            }
+        }
+        if (paymentSettings!.defaultPaymentMethodId != nil){
+            if (self._id != paymentSettings!.defaultPaymentMethodId){
+                return false
+            }
+        }
+        if((paymentSettings?.excludedPaymentTypesIds) != nil){
+            for (_, value) in (paymentSettings?.excludedPaymentTypesIds!.enumerate())! {
+                if (value == self.paymentTypeId){
+                    return false
+                }
+            }
+        }
+        
+        if((paymentSettings?.excludedPaymentMethodsIds) != nil){
+            for (_, value) in (paymentSettings?.excludedPaymentMethodsIds!.enumerate())! {
+                if (value == self._id){
+                    return false
+                }
+            }
+        }
+        
+        
+        return true
+    }
+
 }
+
 
 
 

@@ -17,7 +17,7 @@ public class CheckoutPreference : Equatable {
                                 // currency no nula
                                 // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
     public var payer : Payer!
-    public var paymentMethods : PreferencePaymentMethods? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    public var paymentMethodsSettings : PreferencePaymentMethods? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
                                                         // excluded_payment_method < payment_methods
                                                         //excluded_payment_types < payment_types
     
@@ -54,7 +54,7 @@ public class CheckoutPreference : Equatable {
     public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PreferencePaymentMethods? = nil){
         self.items = items
         self.payer = payer
-        self.paymentMethods = paymentMethods
+        self.paymentMethodsSettings = paymentMethods
     }
     
     
@@ -97,52 +97,51 @@ public class CheckoutPreference : Equatable {
     }
     
     public func getInstallments() -> Int {
-        if self.paymentMethods != nil {
-            if (self.paymentMethods!.installments != nil) {
-                return self.paymentMethods!.installments!
-            } else if (self.paymentMethods!.defaultInstallments != nil) {
-                return self.paymentMethods!.defaultInstallments!
+        if self.paymentMethodsSettings != nil {
+            if (self.paymentMethodsSettings!.maxAcceptedInstalment != nil) {
+                return self.paymentMethodsSettings!.maxAcceptedInstalment!
+            } else if (self.paymentMethodsSettings!.defaultInstallments != nil) {
+                return self.paymentMethodsSettings!.defaultInstallments!
             }
         }
         return 1
     }
     
-    public func getExcludedPaymentTypes() -> Set<PaymentTypeId>? {
-        if (self.paymentMethods != nil && self.paymentMethods!.excludedPaymentTypes != nil) {
-            return self.paymentMethods!.excludedPaymentTypes
+    
+    public func getPaymentSettings () -> PaymentSettings {
+        let settings = PaymentSettings(currencyId: getCurrencyId())
+        .addSettings(purchaseTitle: getTitle())
+        .addSettings(excludedPaymentMethodsIds: getExcludedPaymentMethodsIds())
+        .addSettings( defaultPaymentMethodId: getDefaultPaymentMethodId())
+        
+     return settings
+        
+    }
+    public func getExcludedPaymentTypesIds() -> Set<PaymentTypeId>? {
+        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.excludedPaymentTypesIds != nil) {
+            return self.paymentMethodsSettings!.excludedPaymentTypesIds
         }
         return nil
     }
     
-    public func getExcludedPaymentMethods() -> [String]? {
-        if (self.paymentMethods != nil && self.paymentMethods!.excludedPaymentMethods != nil) {
-            return self.paymentMethods!.excludedPaymentMethods
+    public func getExcludedPaymentMethodsIds() -> Set<String>? {
+        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.excludedPaymentMethodsIds != nil) {
+            return self.paymentMethodsSettings!.excludedPaymentMethodsIds
         }
         return nil
     }
 
     public func getDefaultPaymentMethodId() -> String? {
-        if (self.paymentMethods != nil && self.paymentMethods!.defaultPaymentMethodId != nil && self.paymentMethods!.defaultPaymentMethodId!.isNotEmpty) {
-            return self.paymentMethods!.defaultPaymentMethodId
+        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.defaultPaymentMethodId != nil && self.paymentMethodsSettings!.defaultPaymentMethodId!.isNotEmpty) {
+            return self.paymentMethodsSettings!.defaultPaymentMethodId
         }
         return nil
     }
     
-    internal class func wrapPrefenceWithSettings(amount : Double, title : String, currencyId : String, excludedPaymentMethods : [String]?, excludedPaymentTypes : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, installmensts : Int?, defaultInstallments : Int?) -> CheckoutPreference {
-        let item = Item()
-        item.unitPrice = amount
-        item.title = title
-        item.currencyId = currencyId
-        var items = [Item]()
-        items.append(item)
-        let preference = CheckoutPreference()
-        preference.items = items
-        preference.setPaymentMethods(excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, installmensts: installmensts, defaultInstallments: defaultInstallments)
-        return preference
-    }
+
     
-    private func setPaymentMethods(excludedPaymentMethods : [String]?, excludedPaymentTypes : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, installmensts : Int?, defaultInstallments : Int?) {
-        self.paymentMethods = PreferencePaymentMethods(excludedPaymentMethods: excludedPaymentMethods, excludedPaymentTypes: excludedPaymentTypes, defaultPaymentMethodId: defaultPaymentMethodId, installments: installmensts, defaultInstallments: defaultInstallments)
+    private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
+        self.paymentMethodsSettings = PreferencePaymentMethods(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId, maxAcceptedInstalment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
         
     }
     
@@ -161,7 +160,7 @@ public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
         obj1._id == obj2._id &&
         obj1.items! == obj2.items! &&
         obj1.payer == obj2.payer &&
-        obj1.paymentMethods == obj2.paymentMethods
+        obj1.paymentMethodsSettings == obj2.paymentMethodsSettings
     
     return areEqual
 }

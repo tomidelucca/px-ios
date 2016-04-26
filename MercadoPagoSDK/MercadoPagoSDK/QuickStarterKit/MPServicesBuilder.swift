@@ -209,7 +209,7 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    public class func searchPaymentMethods(excludedPaymentTypes : Set<PaymentTypeId>?, excludedPaymentMethods : [String]?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?){
+    public class func searchPaymentMethods(excludedPaymentTypes : Set<PaymentTypeId>?, excludedPaymentMethods : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?){
         let paymentMethodSearchService = PaymentMethodSearchService()
         paymentMethodSearchService.getPaymentMethods(excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, success: success, failure: failure)
     

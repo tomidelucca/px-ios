@@ -9,10 +9,10 @@
 import UIKit
 
 public class PreferencePaymentMethods: Equatable {
-    public var excludedPaymentMethods : [String]?
-    public var excludedPaymentTypes : Set<PaymentTypeId>?
+    public var excludedPaymentMethodsIds : Set<String>?
+    public var excludedPaymentTypesIds : Set<PaymentTypeId>?
     var defaultPaymentMethodId : String?
-    var installments : Int?
+    var maxAcceptedInstalment : Int?
     var defaultInstallments : Int?
 
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
@@ -20,10 +20,10 @@ public class PreferencePaymentMethods: Equatable {
     //excluded_payment_types < payment_types
     
     public func validate() -> Bool{
-        if (installments <= 0){
+        if (maxAcceptedInstalment <= 0){
             return false
         }
-        if (PaymentType.allPaymentIDs.count <= excludedPaymentTypes?.count){
+        if (PaymentType.allPaymentIDs.count <= excludedPaymentTypesIds?.count){
             return false
         }
 
@@ -32,35 +32,35 @@ public class PreferencePaymentMethods: Equatable {
     
 
     
-    public init(excludedPaymentMethods : [String]? = nil, excludedPaymentTypes: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, installments : Int? = 0, defaultInstallments : Int? = 0){
-        self.excludedPaymentMethods =  excludedPaymentMethods
-        self.excludedPaymentTypes = excludedPaymentTypes
+    public init(excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstalment : Int? = 0, defaultInstallments : Int? = 0){
+        self.excludedPaymentMethodsIds =  excludedPaymentMethodsIds
+        self.excludedPaymentTypesIds = excludedPaymentTypesIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
-        self.installments = installments
+        self.maxAcceptedInstalment = maxAcceptedInstalment
         self.defaultInstallments = defaultInstallments
     }
     
     public class func fromJSON(json : NSDictionary) -> PreferencePaymentMethods {
         let preferencePaymentMethods = PreferencePaymentMethods()
         
-        var excludedPaymentMethods = [String]()
+        var excludedPaymentMethods = Set<String>()
         if let pmArray = json["excluded_payment_methods"] as? NSArray {
             for i in 0..<pmArray.count {
                 if let pmDic = pmArray[i] as? String {
-                    excludedPaymentMethods.append(pmDic)
+                    excludedPaymentMethods.insert(pmDic)
                 }
             }
-            preferencePaymentMethods.excludedPaymentMethods = excludedPaymentMethods
+            preferencePaymentMethods.excludedPaymentMethodsIds = excludedPaymentMethods
         }
         
-        var excludedPaymentTypes = Set<PaymentTypeId>()
+        var excludedPaymentTypesIds = Set<PaymentTypeId>()
         if let ptArray = json["excluded_payment_types"] as? NSArray {
             for i in 0..<ptArray.count {
                 if let ptDic = ptArray[i] as? String {
-                    excludedPaymentTypes.insert(PaymentTypeId(rawValue: ptDic)!)
+                    excludedPaymentTypesIds.insert(PaymentTypeId(rawValue: ptDic)!)
                 }
             }
-            preferencePaymentMethods.excludedPaymentTypes = Set<PaymentTypeId>(excludedPaymentTypes)
+            preferencePaymentMethods.excludedPaymentTypesIds = Set<PaymentTypeId>(excludedPaymentTypesIds)
         }
         
         if json["default_payment_method_id"] != nil && !(json["default_payment_method_id"]! is NSNull) {
@@ -68,11 +68,11 @@ public class PreferencePaymentMethods: Equatable {
         }
         
         if json["installments"] != nil && !(json["installments"]! is NSNull) {
-            preferencePaymentMethods.installments = JSON(json["installments"]!).asInt
+            preferencePaymentMethods.maxAcceptedInstalment = JSON(json["installments"]!).asInt
         }
         
         if json["default_installments"] != nil && !(json["default_installments"]! is NSNull) {
-            preferencePaymentMethods.installments = JSON(json["default_installments"]!).asInt
+            preferencePaymentMethods.maxAcceptedInstalment = JSON(json["default_installments"]!).asInt
         }
         
         return preferencePaymentMethods
@@ -82,10 +82,10 @@ public class PreferencePaymentMethods: Equatable {
 public func ==(obj1: PreferencePaymentMethods, obj2: PreferencePaymentMethods) -> Bool {
     
     let areEqual =
-    obj1.excludedPaymentMethods! == obj2.excludedPaymentMethods! &&
-    obj1.excludedPaymentTypes == obj2.excludedPaymentTypes &&
+    obj1.excludedPaymentMethodsIds! == obj2.excludedPaymentMethodsIds! &&
+    obj1.excludedPaymentTypesIds == obj2.excludedPaymentTypesIds &&
     obj1.defaultPaymentMethodId == obj2.defaultPaymentMethodId &&
-    obj1.installments == obj2.installments &&
+    obj1.maxAcceptedInstalment == obj2.maxAcceptedInstalment &&
     obj1.defaultInstallments == obj2.defaultInstallments
     
     return areEqual
