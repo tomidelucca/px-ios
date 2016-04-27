@@ -81,8 +81,22 @@ public class Token : Equatable {
 			securityCodeLength: securityCodeLength, expirationMonth: expMonth, expirationYear: expYear, lastModifiedDate: lastModifiedDate,
             dueDate: dueDate, cardHolder: cardHolder)
 	}
+    public func getCardExpirationDateFormated() -> String {
+        return (String(expirationMonth) + String(expirationYear))
+    }
+    public func getMaskNumber() -> String {
+        
+        var masknumber : String = ""
     
-    public func getExpirationDateFormated() -> NSString {
+        for _ in 0...cardNumberLength-4 {
+           masknumber = masknumber + "X"
+        }
+        
+           masknumber = masknumber + lastFourDigits
+        return masknumber
+        
+    }
+    public func getExpirationDateFormated() -> String {
         
         var str : String
         

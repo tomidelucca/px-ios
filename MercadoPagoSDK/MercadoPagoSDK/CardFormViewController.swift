@@ -38,6 +38,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var installments : [Installment]?
     var payerCosts : [PayerCost]?
     
+    var token : Token?
     
     
     var paymentSettings : PaymentSettings?
@@ -51,9 +52,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentSettings : PaymentSettings?, amount:Double,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentSettings : PaymentSettings?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
+        self.token = token
       //  self.edgesForExtendedLayout = .All
         self.callback = callback
     }
@@ -73,7 +75,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         
         cardFront?.frame = cardView.bounds
-        
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Numero".localized
         textBox.becomeFirstResponder()
@@ -123,7 +124,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
         self.navigationItem.rightBarButtonItem!.enabled = false
-    
+
     }
 
 
@@ -827,6 +828,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         makeToken()
     }
     
+    
+    func hidratateWithToken(){
+        if ( self.token == nil ){
+            return
+        }
+        self.nameLabel?.text = self.token?.cardHolder?.name
+        self.cardNumberLabel?.text = self.token?.getMaskNumber()
+        self.expirationDateLabel?.text = self.token?.getExpirationDateFormated()
+    }
     
     
 }
