@@ -48,14 +48,13 @@ public class PaymentSettings: NSObject {
         excludedPaymentMethodsIds = preferencePaymentMethods.excludedPaymentMethodsIds
         excludedPaymentTypesIds = preferencePaymentMethods.excludedPaymentTypesIds
     }
-    public func addSettings (maxAcceptedInstalment : Int? = nil,
-        defaultPaymentTypeId : PaymentTypeId? = nil,
+    public func addSettings (        defaultPaymentTypeId : PaymentTypeId? = nil,
         defaultInstalment : Int? = nil,
         defaultPaymentMethodId : String? = nil,
         excludedPaymentMethodsIds : Set<String>? = nil,
         excludedPaymentTypesIds : Set<PaymentTypeId>?  = nil,
         currencyId : String!   = nil,
-        purchaseTitle : String!  = nil) -> PaymentSettings{
+        purchaseTitle : String!  = nil, maxAcceptedInstalment : Int? = nil) -> PaymentSettings{
             
             if(maxAcceptedInstalment != nil){
                self.maxAcceptedInstalment = maxAcceptedInstalment

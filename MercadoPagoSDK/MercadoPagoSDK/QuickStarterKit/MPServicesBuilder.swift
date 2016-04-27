@@ -12,7 +12,7 @@ import Foundation
 public class MPServicesBuilder : NSObject {
    
     static let MP_API_BASE_URL = "https://api.mercadopago.com"
-    static let MP_PAYMENTS_URI = "/v1/payments"
+    static let MP_PAYMENTS_URI = "/beta/checkout/payments"
 
 
     public class func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {

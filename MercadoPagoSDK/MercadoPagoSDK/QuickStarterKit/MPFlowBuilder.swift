@@ -72,11 +72,19 @@ public class MPFlowBuilder : NSObject {
     */
 
     
-    public class func startCardFlow(paymentType : PaymentType? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
+    public class func startCardFlow(paymentSettings: PaymentSettings? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
         
         
-        let cardVC = MPStepBuilder.startCreditCardForm(paymentType!.paymentSettingAssociated() , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            if ((installment == nil)||(installment?.payerCosts == nil)||(installment?.payerCosts.count < 2)){
+        let cardVC = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: (paymentSettings?.defaultPaymentTypeId)!).paymentSettingAssociated() , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
+            let payerCostDefaulty : PayerCost? = installment!.containsInstallment(paymentSettings!.defaultInstalment!)
+            if(payerCostDefaulty != nil){
+                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost:payerCostDefaulty)
+                MPFlowController.sharedInstance.navigationController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+
+                })
+                return
+            }
+            if ((installment == nil)||(installment?.payerCosts == nil)||(installment?.numberOfPayerCostToShow(paymentSettings!.maxAcceptedInstalment) < 2)){
                 if ((installment != nil) && (installment!.payerCosts != nil) && (installment!.payerCosts.count > 0) ){
                     callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: installment?.payerCosts[0])
                 }else{
@@ -87,8 +95,7 @@ public class MPFlowBuilder : NSObject {
                     print("Ya esta!")
                 })
             }else{
-                let step : PayerCostViewController = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount: amount, minInstallments: 1, callback: { (payerCost) -> Void in
-                    print("OK!")
+                let step : PayerCostViewController = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount: amount, minInstallments: paymentSettings?.maxAcceptedInstalment, callback: { (payerCost) -> Void in
                     callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
           

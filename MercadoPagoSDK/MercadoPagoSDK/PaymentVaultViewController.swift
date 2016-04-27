@@ -188,7 +188,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
-                self.cardFlow(PaymentType(paymentTypeId: paymentTypeId!), animated : animated)
+                let navigationController = MPFlowBuilder.startCardFlow(PaymentType(paymentTypeId: paymentTypeId!).paymentSettingAssociated().addSettings(maxAcceptedInstalment:2), amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) -> Void in
+                    self.callback!(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: 1)
+                })
+                self.navigationController?.pushViewController(navigationController.viewControllers[0], animated: true)
             } else {
                 MPFlowController.push(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: { (paymentMethod : PaymentMethod) -> Void in
                     //TODO : verificar que con off issuer/installments es asi
@@ -277,13 +280,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         paymentSearchCell.paymentTitle.text = currentPaymentMethodItem.description
         return paymentSearchCell
 
-    }
-    
-    internal func cardFlow(paymentType: PaymentType, animated : Bool){
-        MPFlowController.push(MPStepBuilder.startCreditCardForm(paymentType.paymentSettingAssociated(), amount: self.amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            //TODO
-            self.callback!(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: 1)
-        }))
     }
 
     private func registerAllCells(){

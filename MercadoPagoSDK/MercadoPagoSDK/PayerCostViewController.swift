@@ -18,6 +18,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var paymentMethod : PaymentMethod?
     var token : Token?
     var cardFront : CardFrontView?
+    var maxInstallments : Int?
     
     var callback : ((payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
@@ -28,14 +29,14 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,minInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
          self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
-        
+        self.maxInstallments = maxInstallments
         MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
@@ -70,7 +71,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
             
             
-            cardFront?.cardNumber.text = self.token!.truncCardNumber as String
+            cardFront?.cardNumber.text = self.token!.firstSixDigit as String
         // TODO
         
             cardFront?.cardName.text = self.token!.cardHolder!.name
@@ -135,7 +136,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         if(self.payerCosts == nil){
             return 0
         }else{
-            return self.payerCosts!.count
+            return installments![0].numberOfPayerCostToShow(maxInstallments)
         }
     }
     
@@ -177,7 +178,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.callback!(payerCost: payerCost)
     }
 
-
+    
+  
 }
     
     
