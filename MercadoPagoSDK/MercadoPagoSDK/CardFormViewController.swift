@@ -69,6 +69,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardView.addSubview(cardFront!)
         updateLabelsFontColors()
         
+        
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -124,7 +125,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
         self.navigationItem.rightBarButtonItem!.enabled = false
-
+        view.setNeedsUpdateConstraints()
+        hidratateWithToken()
     }
 
 

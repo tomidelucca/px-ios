@@ -77,7 +77,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 }))
             }))
 */
-            
+        
             self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentType(paymentTypeId: PaymentTypeId.CREDIT_CARD).paymentSettingAssociated().addSettings(maxAcceptedInstalment:9).addSettings(defaultInstalment:3) , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))

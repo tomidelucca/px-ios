@@ -117,7 +117,7 @@ public class MPFlowBuilder : NSObject {
             let step = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: (paymentSettings?.defaultPaymentTypeId)!).paymentSettingAssociated() , amount: amount, token:token, callback: { (paymentMethod, token, issuer, installment) -> Void in
                 })
             
-                MPFlowController.sharedInstance.navigationController?.pushViewController(step, animated: false)
+                MPFlowController.sharedInstance.navigationController?.pushViewController(step, animated: true)
            
         })
         
