@@ -192,7 +192,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
         let paymentSearchItemSelected = self.currentPaymentMethodSearch[indexPath.row]
         if indexPath.section == 1 {
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
@@ -209,7 +208,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
         // Disable selection if connection's slow
-        self.paymentsTable.allowsSelection = false
         
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:

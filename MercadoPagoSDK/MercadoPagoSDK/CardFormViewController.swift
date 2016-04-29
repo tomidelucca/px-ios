@@ -69,8 +69,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardView.addSubview(cardFront!)
         updateLabelsFontColors()
         
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem?.action = "executeBack"
     }
     
     public override func viewDidAppear(animated: Bool) {

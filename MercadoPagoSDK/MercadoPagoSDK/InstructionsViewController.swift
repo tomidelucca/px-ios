@@ -70,9 +70,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: false)
         
-        self.navigationController!.setNavigationBarHidden(true, animated: false)
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = nil
         
@@ -220,5 +220,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
         self.congratsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
         self.congratsTable.registerNib(instructionsAtmCell, forCellReuseIdentifier: "instructionsAtmCell")
+    }
+    
+    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }
