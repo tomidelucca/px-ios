@@ -148,7 +148,7 @@ public class PaymentMethod : Equatable  {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
 
-    public func conformsPaymentSettings(paymentSettings : PaymentSettings?) -> Bool{
+/*    public func conformsPaymentSettings(paymentSettings : PaymentPreference?) -> Bool{
         
         if(paymentSettings == nil){
             return true
@@ -181,7 +181,7 @@ public class PaymentMethod : Equatable  {
         
         
         return true
-    }
+    }*/
 
 }
 

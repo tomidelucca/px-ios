@@ -41,7 +41,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var token : Token?
     
     
-    var paymentSettings : PaymentSettings?
+    var paymentSettings : PaymentPreference?
     var callback : (( paymentMethod: PaymentMethod,token: Token?, issuer: Issuer?, installment: Installment?) -> Void)?
     
     var amount : Double?
@@ -52,7 +52,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentSettings : PaymentSettings?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
@@ -627,13 +627,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         
         for (_, value) in paymentMethods!.enumerate() {
-           
-            if (value.conformsPaymentSettings(self.paymentSettings)){
+            /*
+            if (value.conformsPaymentSettings(self.paymentSettings.)){
                 if (value.conformsToBIN(getBIN()!)){
                     return value.cloneWithBIN(getBIN()!)
                 }
             }
-            /*
+          
             if (self.paymentSettings != nil){
                 
                 if (value.paymentTypeId == paymentType?.paymentTypeId){

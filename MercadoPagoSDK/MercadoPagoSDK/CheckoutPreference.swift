@@ -17,7 +17,7 @@ public class CheckoutPreference : Equatable {
                                 // currency no nula
                                 // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
     public var payer : Payer!
-    public var paymentMethodsSettings : PreferencePaymentMethods? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    public var paymentPreference : PaymentPreference? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
                                                         // excluded_payment_method < payment_methods
                                                         //excluded_payment_types < payment_types
     
@@ -51,10 +51,10 @@ public class CheckoutPreference : Equatable {
         return nil
     }
     
-    public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PreferencePaymentMethods? = nil){
+    public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PaymentPreference? = nil){
         self.items = items
         self.payer = payer
-        self.paymentMethodsSettings = paymentMethods
+        self.paymentPreference = paymentMethods
     }
     
     
@@ -97,43 +97,40 @@ public class CheckoutPreference : Equatable {
     }
     
     public func getInstallments() -> Int {
-        if self.paymentMethodsSettings != nil {
-            if (self.paymentMethodsSettings!.maxAcceptedInstalment != nil) {
-                return self.paymentMethodsSettings!.maxAcceptedInstalment!
-            } else if (self.paymentMethodsSettings!.defaultInstallments != nil) {
-                return self.paymentMethodsSettings!.defaultInstallments!
+        if self.paymentPreference != nil {
+            if (self.paymentPreference!.maxAcceptedInstallments != nil) {
+                return self.paymentPreference!.maxAcceptedInstallments!
+            } else if (self.paymentPreference!.defaultInstallments != nil) {
+                return self.paymentPreference!.defaultInstallments!
             }
         }
         return 1
     }
     
     
-    public func getPaymentSettings () -> PaymentSettings {
-        let settings = PaymentSettings(currencyId: getCurrencyId())
-        .addSettings(purchaseTitle: getTitle())
-        .addSettings(excludedPaymentMethodsIds: getExcludedPaymentMethodsIds())
-        .addSettings( defaultPaymentMethodId: getDefaultPaymentMethodId())
+    public func getPaymentSettings () -> PaymentPreference {
+        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstalment: self.paymentPreference!.maxAcceptedInstallments, defaultInstallments: self.paymentPreference!.defaultInstallments)
         
-     return settings
-        
+        return settings
     }
+    
     public func getExcludedPaymentTypesIds() -> Set<PaymentTypeId>? {
-        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.excludedPaymentTypesIds != nil) {
-            return self.paymentMethodsSettings!.excludedPaymentTypesIds
+        if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
+            return self.paymentPreference!.excludedPaymentTypeIds
         }
         return nil
     }
     
     public func getExcludedPaymentMethodsIds() -> Set<String>? {
-        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.excludedPaymentMethodsIds != nil) {
-            return self.paymentMethodsSettings!.excludedPaymentMethodsIds
+        if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentMethodIds != nil) {
+            return self.paymentPreference!.excludedPaymentMethodIds
         }
         return nil
     }
 
     public func getDefaultPaymentMethodId() -> String? {
-        if (self.paymentMethodsSettings != nil && self.paymentMethodsSettings!.defaultPaymentMethodId != nil && self.paymentMethodsSettings!.defaultPaymentMethodId!.isNotEmpty) {
-            return self.paymentMethodsSettings!.defaultPaymentMethodId
+        if (self.paymentPreference != nil && self.paymentPreference!.defaultPaymentMethodId != nil && self.paymentPreference!.defaultPaymentMethodId!.isNotEmpty) {
+            return self.paymentPreference!.defaultPaymentMethodId
         }
         return nil
     }
@@ -141,7 +138,7 @@ public class CheckoutPreference : Equatable {
 
     
     private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
-        self.paymentMethodsSettings = PreferencePaymentMethods(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId, maxAcceptedInstalment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
+        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId, maxAcceptedInstalment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
         
     }
     
@@ -160,7 +157,7 @@ public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
         obj1._id == obj2._id &&
         obj1.items! == obj2.items! &&
         obj1.payer == obj2.payer &&
-        obj1.paymentMethodsSettings == obj2.paymentMethodsSettings
+        obj1.paymentPreference == obj2.paymentPreference
     
     return areEqual
 }
