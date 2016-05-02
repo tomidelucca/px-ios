@@ -71,10 +71,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
         
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UINavigationBar.appearance().tintColor = UIColor().blueMercadoPago()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = nil
+        
         
     }
     

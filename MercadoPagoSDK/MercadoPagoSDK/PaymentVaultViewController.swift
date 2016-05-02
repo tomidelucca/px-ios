@@ -211,8 +211,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
-        // Disable selection if connection's slow
-        
+        LoadingOverlay.shared.showOverlay(self.view)
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -339,6 +338,16 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.callbackCancel!()
     }
     
-    
+    public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if(navigationController!.viewControllers.count > 1){
+            if navigationController!.viewControllers[0] == self {
+                self.callbackCancel!()
+                return true
+            }
+            return true
+        }
+        return false
+    }
 
 }

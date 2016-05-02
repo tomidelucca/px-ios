@@ -49,10 +49,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.title = "¿Cómo quieres pagar?".localized
 
         self.registerAllCells()
-     
-        if self.paymentMethod == nil {
-            self.loadGroupsAndStartPaymentVault()
-        }
+
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -60,6 +57,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         //Remove navigation items
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
+        
+        if self.paymentMethod == nil {
+            self.loadGroupsAndStartPaymentVault()
+        }
     }
     
     override public func didReceiveMemoryWarning() {
@@ -170,8 +171,11 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func loadGroupsAndStartPaymentVault(){
         
         if self.paymentMethodSearch == nil {
+            LoadingOverlay.shared.showOverlay(self.view)
             MPServicesBuilder.searchPaymentMethods(self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
+                LoadingOverlay.shared.hideOverlayView()
                 self.paymentMethodSearch = paymentMethodSearch
+                
                 self.startPaymentVault()
                 }, failure: { (error) in
                     //TODO handle error
@@ -195,7 +199,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         // Set action for cancel callback
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = { Void -> Void in
             self.dismissViewControllerAnimated(true, completion: {
-                
+                LoadingOverlay.shared.hideOverlayView()
             })
         }
 
@@ -204,7 +208,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPayment(){
         
-        self.paymentButton!.alpha = 0.4
+        LoadingOverlay.shared.showOverlay(self.view)
         self.paymentButton!.enabled = false
 
         if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
@@ -230,7 +234,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
-                    
+                    LoadingOverlay.shared.hideOverlayView()
                 })
                     self.callback(payment)
                 }), animated: true)
@@ -246,7 +250,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
-                    
+                  LoadingOverlay.shared.hideOverlayView()
                 })
                 self.callback(payment)
             }), animated: true)
@@ -299,4 +303,5 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .None
     }
+    
 }
