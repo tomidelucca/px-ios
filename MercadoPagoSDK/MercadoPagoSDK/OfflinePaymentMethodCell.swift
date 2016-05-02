@@ -22,6 +22,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addSubview(ViewUtils.getTableCellSeparatorLineView(self.iconImage.frame.minX, y: 0, width: self.frame.width, height: 1))
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -43,5 +44,15 @@ class OfflinePaymentMethodCell: UITableViewCell {
         }
         
         self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
+        
+        let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 1, height: 1))
+        let iconImage = MercadoPago.getImage("edit")!
+        iconImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        customAccesoryIndicator.tintColor = UIColor().blueMercadoPago()
+        let editImage = UIImageView(image: iconImage)
+        
+        editImage.tintColor = UIColor().blueMercadoPago()
+        customAccesoryIndicator.addSubview(editImage)
+        self.accessoryView = customAccesoryIndicator
     }
 }

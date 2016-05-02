@@ -22,7 +22,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "telecomm_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
@@ -54,7 +54,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
         
-        
         if currentInstruction == nil {
             registerAllCells()
             MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
@@ -70,11 +69,11 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
-        
-        UINavigationBar.appearance().tintColor = UIColor().blueMercadoPago()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        
+
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        if self.navigationController != nil {
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+        }
     }
     
     override public func viewWillAppear(animated: Bool) {

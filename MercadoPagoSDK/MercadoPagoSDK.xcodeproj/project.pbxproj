@@ -334,6 +334,7 @@
 		761B89451C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */; };
 		763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */; };
 		763AD8091CD3FFB40039E09B /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */; };
+		763AD80B1CD7CA080039E09B /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD80A1CD7CA080039E09B /* MPFlowController.swift */; };
 		76445AD41CC6BDDD008EE68E /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */; };
 		76445ADB1CC921B5008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
 		76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
@@ -390,8 +391,6 @@
 		76882AD61C4FBAD900B440B1 /* PaymentTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */; };
 		76882AD71C4FBAD900B440B1 /* PaymentTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */; };
 		76882AD81C4FBDB500B440B1 /* PaymentTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */; };
-		769B06081CA035A300265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
-		769B06091CA04AFC00265C92 /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769B06071CA035A300265C92 /* MPFlowController.swift */; };
 		76AA2E2D1CBC4AC3006D0678 /* ProximaNova-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15635C6D1CA076EC008E5F75 /* ProximaNova-Light.ttf */; };
 		76AA2E341CBD8BCA006D0678 /* MPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA2E331CBD8BCA006D0678 /* MPTextView.swift */; };
 		76AA2E351CBD8C38006D0678 /* MPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AA2E331CBD8BCA006D0678 /* MPTextView.swift */; };
@@ -415,6 +414,7 @@
 		76DA64601C8F50C2004F9A7C /* MPServicesBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA645F1C8F50C2004F9A7C /* MPServicesBuilderTest.swift */; };
 		76DA64661C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA64641C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.xib */; };
 		76DA646C1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
+		76DCBD661CD8EE0900659CFF /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DCBD651CD8EE0900659CFF /* MPFlowController.swift */; };
 		76E2B07D1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2B07B1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift */; };
 		76E2B07E1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2B07B1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift */; };
 		76E2B07F1C6E5BF9002C50CB /* SelectPaymentMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76E2B07C1C6E5BF9002C50CB /* SelectPaymentMethodCell.xib */; };
@@ -664,6 +664,7 @@
 		761B89401C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		761B89411C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferenceDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		763AD80A1CD7CA080039E09B /* MPFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPFlowController.swift; sourceTree = "<group>"; };
 		76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
 		76445ADA1CC921B5008EE68E /* ViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		76445AE01CC9576B008EE68E /* InstructionsAtmViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsAtmViewCell.swift; sourceTree = "<group>"; };
@@ -699,7 +700,6 @@
 		76743C801C46A21C00120347 /* CheckoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
 		76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTitleViewCell.swift; sourceTree = "<group>"; };
 		76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTitleViewCell.xib; sourceTree = "<group>"; };
-		769B06071CA035A300265C92 /* MPFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MPFlowController.swift; path = QuickStarterKit/MPFlowController.swift; sourceTree = "<group>"; };
 		76AA2E331CBD8BCA006D0678 /* MPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTextView.swift; sourceTree = "<group>"; };
 		76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsAndButtonViewCell.swift; sourceTree = "<group>"; };
 		76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsAndButtonViewCell.xib; sourceTree = "<group>"; };
@@ -716,6 +716,7 @@
 		76DA64641C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentDescriptionFooterTableViewCell.xib; sourceTree = "<group>"; };
 		76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewCell.swift; sourceTree = "<group>"; };
 		76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TermsAndConditionsViewCell.xib; sourceTree = "<group>"; };
+		76DCBD651CD8EE0900659CFF /* MPFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPFlowController.swift; sourceTree = "<group>"; };
 		76E2B07B1C6E5BF9002C50CB /* SelectPaymentMethodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPaymentMethodCell.swift; sourceTree = "<group>"; };
 		76E2B07C1C6E5BF9002C50CB /* SelectPaymentMethodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectPaymentMethodCell.xib; sourceTree = "<group>"; };
 		76E92F811C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTitleAndCommentViewCell.swift; sourceTree = "<group>"; };
@@ -860,7 +861,6 @@
 		0F98832D1AD2AB0D00F750F0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				769B06071CA035A300265C92 /* MPFlowController.swift */,
 				15EFA3341C4423DA007D67D0 /* QuickStarterKit */,
 				0F98832E1AD2AB3C00F750F0 /* MercadoPago.swift */,
 				0F98832F1AD2AB3C00F750F0 /* MerchantServer.swift */,
@@ -1242,6 +1242,7 @@
 		15EFA3341C4423DA007D67D0 /* QuickStarterKit */ = {
 			isa = PBXGroup;
 			children = (
+				76DCBD651CD8EE0900659CFF /* MPFlowController.swift */,
 				15EFA3351C4423DA007D67D0 /* MercadoPagoContext.swift */,
 				15EFA3361C4423DA007D67D0 /* MPFlowBuilder.swift */,
 				15EFA3371C4423DA007D67D0 /* MPServicesBuilder.swift */,
@@ -1797,6 +1798,8 @@
 				0F9883D61AD2AD5500F750F0 /* PaymentIDTableViewCell.swift in Sources */,
 				76FD247D1C5BFEA1008C5DC0 /* CardFormViewController.swift in Sources */,
 				76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
+				76DCBD661CD8EE0900659CFF /* MPFlowController.swift in Sources */,
+				763AD80B1CD7CA080039E09B /* MPFlowController.swift in Sources */,
 				15D799F91CA1CE9A00623A84 /* PayerCostViewController.swift in Sources */,
 				76134AB81C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
@@ -1844,7 +1847,6 @@
 				76445AEF1CCA73B2008EE68E /* MockManager.swift in Sources */,
 				7656C9F91C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */,
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
-				769B06081CA035A300265C92 /* MPFlowController.swift in Sources */,
 				76882AD61C4FBAD900B440B1 /* PaymentTitleViewCell.swift in Sources */,
 				0FC4FC1B1B0FAD0600CF7148 /* PromosService.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
@@ -2084,7 +2086,6 @@
 				7656CA1B1C7645450043BDB2 /* InstructionReference.swift in Sources */,
 				76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */,
 				76151B7A1C73ABEF007DF0E3 /* DefaultInstructionsFooterViewCell.swift in Sources */,
-				769B06091CA04AFC00265C92 /* MPFlowController.swift in Sources */,
 				15A7B18E1C88BFDF007D0C4E /* CardTest.swift in Sources */,
 				76EC47D41C85E82B0086FA53 /* CustomerTest.swift in Sources */,
 				76EC480A1C862B2D0086FA53 /* InstructionActionTest.swift in Sources */,

@@ -31,7 +31,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var bundle = MercadoPago.getBundle()
     
     private var tintColor = true
-
+    internal var isRoot = true
     
     
     @IBOutlet weak var paymentsTable: UITableView!
@@ -40,6 +40,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal init(amount: Double, paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
+        
         self.merchantBaseUrl = MercadoPagoContext.baseURL() //distinta de null y vacia
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()//Distinta de null y vacio
         //Installment > 0
@@ -74,6 +75,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     init(amount: Double, paymentSettings : PaymentPreference!, purchaseTitle : String, currencyId : String, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
+        
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
@@ -112,7 +114,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
         
         self.registerAllCells()
-        self.loadPaymentMethodSearch()
+        
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -123,6 +125,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         
+        self.loadPaymentMethodSearch()
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -200,10 +203,13 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 1 {
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
             if (paymentSearchItemSelected.children.count > 0) {
-                self.navigationController!.pushViewController(PaymentVaultViewController(amount: self.amount, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void in
+                let paymentVault = PaymentVaultViewController(amount: self.amount, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void in
                     self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, installments: 1)
-                }), animated: true)
+                })
+                paymentVault.isRoot = false
+                self.navigationController!.pushViewController(paymentVault, animated: true)
             } else {
+                LoadingOverlay.shared.showOverlay(self.view)
                 self.optionSelected(paymentSearchItemSelected)
             }
 
@@ -244,15 +250,18 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 //TODO : HANDLE ERROR
                 break
         }
+        LoadingOverlay.shared.hideOverlayView()
     }
     
     private func loadPaymentMethodSearch(){
         
 
         if self.currentPaymentMethodSearch == nil {
+            LoadingOverlay.shared.showOverlay(self.view)
             MPServicesBuilder.searchPaymentMethods(self.paymentSettings.excludedPaymentTypeIds, excludedPaymentMethodIds: self.paymentSettings.excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 self.paymentMethods = paymentMethodSearchResponse.paymentMethods
                 self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
+                LoadingOverlay.shared.hideOverlayView()
                 if self.currentPaymentMethodSearch.count == 1 {
                     self.optionSelected(self.currentPaymentMethodSearch[0], animated: false)
                 }
@@ -337,13 +346,13 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     internal func invokeCallbackCancel(){
         self.callbackCancel!()
     }
-    
+
     public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
-        if(navigationController!.viewControllers.count > 1){
-            if navigationController!.viewControllers[0] == self {
+        //En caso de que el vc no sea root
+        if(navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self) {
+            if self.isRoot {
                 self.callbackCancel!()
-                return true
             }
             return true
         }

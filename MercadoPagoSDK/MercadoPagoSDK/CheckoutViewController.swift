@@ -49,7 +49,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.title = "¿Cómo quieres pagar?".localized
 
         self.registerAllCells()
-
+        
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -57,7 +57,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         //Remove navigation items
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
-        
+
         if self.paymentMethod == nil {
             self.loadGroupsAndStartPaymentVault()
         }
@@ -173,7 +173,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if self.paymentMethodSearch == nil {
             LoadingOverlay.shared.showOverlay(self.view)
             MPServicesBuilder.searchPaymentMethods(self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
-                LoadingOverlay.shared.hideOverlayView()
                 self.paymentMethodSearch = paymentMethodSearch
                 
                 self.startPaymentVault()
@@ -193,7 +192,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.issuer = issuer
                 self.installments = installments
                 self.checkoutTable.reloadData()
-                self.navigationController!.popToRootViewControllerAnimated(true)
+            
+                let transition = CATransition()
+                transition.type = kCATransitionPush
+                transition.subtype = kCATransitionFromRight
+                self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
+                self.navigationController!.popToRootViewControllerAnimated(false)
         })
         
         // Set action for cancel callback
@@ -303,5 +307,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .None
     }
+    
     
 }
