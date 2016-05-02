@@ -209,15 +209,15 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    public class func searchPaymentMethods(excludedPaymentTypes : Set<PaymentTypeId>?, excludedPaymentMethods : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?){
+    public class func searchPaymentMethods(excludedPaymentTypeIds : Set<PaymentTypeId>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
         let paymentMethodSearchService = PaymentMethodSearchService()
-        paymentMethodSearchService.getPaymentMethods(excludedPaymentTypes, excludedPaymentMethods: excludedPaymentMethods, success: success, failure: failure)
+        paymentMethodSearchService.getPaymentMethods(excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure)
     
     }
     
-    public class func getInstructionsByPaymentId(paymentId : Int, paymentMethodId : String, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
+    public class func getInstructions(paymentId : Int, paymentMethodId : String, paymentTypeId: String, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
         let instructionsService = InstructionsService()
-        instructionsService.getInstructionsForPaymentId(paymentId, paymentMethodId: paymentMethodId, success:  { (instruction) -> Void in
+        instructionsService.getInstructions(paymentId, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, success:  { (instruction) -> Void in
             success(instruction: instruction)
         }, failure : failure)
     }

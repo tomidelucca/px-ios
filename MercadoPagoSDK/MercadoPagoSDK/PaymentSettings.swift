@@ -27,7 +27,7 @@ public class PaymentSettings: NSObject {
          excludedPaymentMethodsIds : Set<String>? = nil,
         excludedPaymentTypesIds : Set<PaymentTypeId>?  = nil,
         currencyId : String!   = nil,
-        purchaseTitle : String!  = nil) {
+        purchaseTitle : String?  = nil) {
         
             self.maxAcceptedInstalment = maxAcceptedInstalment
             self.defaultInstalment = defaultInstalment

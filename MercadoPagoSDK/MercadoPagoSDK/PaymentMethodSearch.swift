@@ -11,7 +11,6 @@ public class PaymentMethodSearch: Equatable {
     
     var groups : [PaymentMethodSearchItem]!
     var paymentMethods : [PaymentMethod]!
-    
 
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
@@ -30,12 +29,14 @@ public class PaymentMethodSearch: Equatable {
         if let paymentMethodsJson = json["payment_methods"] as? NSArray {
             for i in 0..<paymentMethodsJson.count {
                 if let paymentMethodsDic = paymentMethodsJson[i] as? NSDictionary {
-                    paymentMethods.append(PaymentMethod.fromJSON(paymentMethodsDic))
+                    let currentPaymentMethod = PaymentMethod.fromJSON(paymentMethodsDic)
+                    paymentMethods.append(currentPaymentMethod)
                 }
+             
             }
             pmSearch.paymentMethods = paymentMethods
         }
-
+        
         return pmSearch
     }
     

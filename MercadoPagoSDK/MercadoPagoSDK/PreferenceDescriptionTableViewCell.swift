@@ -37,10 +37,11 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     }
     
     internal func fillRowWithPreference(preference : CheckoutPreference){
-        self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.items![0].title, pictureUrl: preference.items![0].pictureUrl)
+        let currency = CurrenciesUtil.getCurrencyFor(preference.getCurrencyId())
+        self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.items![0].title, pictureUrl: preference.items![0].pictureUrl, currency : currency!)
     }
     
-    internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?){
+    internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?, currency : Currency){
         //TODO : deberia venir de servicio
         self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$")
         self.preferenceDescription.text = purchaseTitle

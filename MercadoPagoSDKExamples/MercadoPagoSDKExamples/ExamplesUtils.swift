@@ -10,6 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 class ExamplesUtils {
+
     class var MERCHANT_PUBLIC_KEY : String {
 		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
 		// "444a9ef5-8a6b-429f-abdf-587639155d88" // AR
@@ -19,14 +20,12 @@ class ExamplesUtils {
 		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
         
             
-     //  "TEST-b130744e-3dc5-4809-b027-599109307f1e"
+     "TEST-b130744e-3dc5-4809-b027-599109307f1e"
      //"TEST-d7ecb23b-8cbd-4292-96d5-eccfe39748b5"
-        
-        "444a9ef5-8a6b-429f-abdf-587639155d88"
-        
         //USUARIO AXEL - ARG
-       // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
+        // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
     }
+    
     class var MERCHANT_MOCK_BASE_URL : String {
         return "https://www.mercadopago.com"
     }

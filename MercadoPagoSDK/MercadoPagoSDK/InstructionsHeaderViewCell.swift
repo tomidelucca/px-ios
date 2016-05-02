@@ -25,15 +25,26 @@ class InstructionsHeaderViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func fillCell(title : String, amount : Double) -> UITableViewCell {
-        //TODO : servicio!
-        let amountStr = Utils.getAmountFormatted(String(amount), thousandSeparator: ",", decimalSeparator: ".")
-         let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: ".")
-        let amountRange = title.rangeOfString("$ " + amountStr + "." + centsStr)
+    func fillCell(title : String, amount : Double, currency : Currency?) -> UITableViewCell {
+        // Assign default values in case there are none in Currency
+        var currencySymbol = "$"
+        var thousandSeparator = "."
+        var decimalSeparator = ","
+        
+        if let currency = currency {
+            currencySymbol = currency.getCurrencySymbolOrDefault()
+            thousandSeparator = String(currency.getThousandsSeparatorOrDefault())
+            decimalSeparator = String(currency.getDecimalSeparatorOrDefault())
+        }
+        
+        let amountFromDouble = String(amount).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator)
+        let amountStr = Utils.getAmountFormatted(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
+        let amountRange = title.rangeOfString(currencySymbol + " " + amountStr + decimalSeparator + centsStr)
         
         if amountRange != nil {
             let attributedTitle = NSMutableAttributedString(string: title.substringToIndex((amountRange?.startIndex)!))
-            let attributedAmount = Utils.getAttributedAmount(amountStr, thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color: UIColor().UIColorFromRGB(0x666666))
+            let attributedAmount = Utils.getAttributedAmount(amountStr, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor().UIColorFromRGB(0x666666))
             attributedTitle.appendAttributedString(attributedAmount)
             let endingTitle = NSAttributedString(string: title.substringFromIndex((amountRange?.endIndex)!))
             attributedTitle.appendAttributedString(endingTitle)

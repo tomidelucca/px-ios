@@ -20,44 +20,31 @@ public class MPFlowBuilder : NSObject {
 
     
     public class func startCheckoutViewController(preference: CheckoutPreference, callback: (Payment) -> Void) -> UINavigationController {
-            return MPFlowBuilder.startPaymentVaultInCheckout(preference.getAmount(), paymentSettings: PaymentSettings(preferencePaymentMethods: preference.paymentMethodsSettings!), callback: { (paymentMethod, token, issuer, installments) -> Void in
-                
-                let checkoutVC = CheckoutViewController(preference: preference, callback: { (payment : Payment) -> Void in
-                    callback(payment)
-                })
-                checkoutVC.paymentMethod = paymentMethod
-                checkoutVC.installments = installments
-                checkoutVC.issuer = issuer
-                checkoutVC.token = token
-                checkoutVC.callback = {(payment: Payment) -> Void in
-                    checkoutVC.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        callback(payment)
-                    })
-                }
-
-                MPFlowController.push(checkoutVC)
-            })
+            let checkoutVC = CheckoutViewController(preference: preference, callback: { (payment : Payment) -> Void in
+            callback(payment)
+        })
+        return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     
     public class func startPaymentVaultViewController(amount: Double, paymentSettings : PaymentSettings, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
         
-        
-        let paymentVault = PaymentVaultViewController(amount: amount,paymentSettings : paymentSettings, callback: callback)
-        
+        let paymentVault = PaymentVaultViewController(amount: amount, paymentSettings : paymentSettings, callback: callback)
+
         paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void in
             paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
                 callback(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: installments)
             })
         }
+        
         paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
     
-    internal class func startPaymentVaultInCheckout(amount: Double, paymentSettings: PaymentSettings?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
+    internal class func startPaymentVaultInCheckout(amount: Double, paymentSettings: PaymentSettings?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
         
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentSettings: paymentSettings, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
+        
         paymentVault.modalTransitionStyle = .CrossDissolve
-        
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
 
@@ -108,23 +95,23 @@ public class MPFlowBuilder : NSObject {
     }
 
     */
+
     
     public class func startCardFlow(paymentSettings: PaymentSettings? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
         
-        
-        let cardVC = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: (paymentSettings?.defaultPaymentTypeId)!).paymentSettingAssociated() , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
+
+        let cardVC = MPStepBuilder.startCreditCardForm(paymentSettings , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
             
             let step = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: (paymentSettings?.defaultPaymentTypeId)!).paymentSettingAssociated() , amount: amount, token:token, callback: { (paymentMethod, token, issuer, installment) -> Void in
+
                 })
             
-                MPFlowController.sharedInstance.navigationController?.pushViewController(step, animated: true)
+                MPFlowController.sharedInstance.currentNavigationController?.pushViewController(step, animated: true)
+
            
         })
         
         cardVC.modalTransitionStyle = .CrossDissolve
-        
-    //    return UINavigationController(rootViewController : cardVC)
-        
         return MPFlowController.createNavigationControllerWith(cardVC)
         
         

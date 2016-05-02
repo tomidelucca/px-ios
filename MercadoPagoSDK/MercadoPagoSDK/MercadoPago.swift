@@ -46,7 +46,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
-    static let MP_PAYMENTS_URI = "/checkout/beta/v1/native_payment"
+    static let MP_PAYMENTS_URI = "/beta/checkout/native_payment"
     
     public var privateKey : String?
     public var publicKey : String?
@@ -329,23 +329,11 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
     public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token?, payerCost: PayerCost?, issuer: Issuer?, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
-        var params = "public_key=" + MercadoPagoContext.publicKey() + "&email=" + email + "&pref_id=" + preferenceId
-        params = params + "&payment_method_id=" + paymentMethod._id
         
-        if payerCost != nil {
-            params = params + "&istallment=" + String(payerCost!.installments)
-        }
         
-        if issuer != nil {
-            params = params + "&issuer_id=" + String(issuer!._id)
-        }
-        
-        if token != nil {
-            params = params + "&token_id=" + token!._id
-        }
-        
+        let mpPayment = MPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id)
         let service : MerchantService = MerchantService()
-        service.createMPPayment(params : params, success: {(jsonResult: AnyObject?) -> Void in
+        service.createMPPayment(payment: mpPayment, success: { (jsonResult) in
             var payment : Payment? = nil
             
             if let paymentDic = jsonResult as? NSDictionary {
@@ -366,8 +354,8 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 if failure != nil {
                     failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                 }
-            }
-            }, failure: failure)
+            }}, failure: failure)
+
     }
     
     

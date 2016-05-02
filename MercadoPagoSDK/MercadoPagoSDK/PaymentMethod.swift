@@ -11,11 +11,12 @@ import Foundation
 public class PaymentMethod : Equatable  {
     
     public var _id : String!
+
     public var name : String!
-    public var comment : String! //TODO - Check Mark
     public var paymentTypeId : PaymentTypeId!
     public var settings : [Setting]!
     public var additionalInfoNeeded : [String]!
+    public var accreditationTime : Int?
     
     public func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
@@ -68,6 +69,12 @@ public class PaymentMethod : Equatable  {
                 }
             }
         }
+        
+        if let accreditationTime = json["accreditation_time"] as? Int {
+            paymentMethod.accreditationTime = accreditationTime
+        }
+        
+        
         paymentMethod.additionalInfoNeeded = additionalInfoNeeded
         return paymentMethod
     }

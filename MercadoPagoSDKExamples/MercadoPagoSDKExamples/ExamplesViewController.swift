@@ -61,7 +61,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var settings = PaymentSettings(currencyId: "MXN")
+        var settings = PaymentSettings(currencyId: "MXN", purchaseTitle : "purchaseTitle")
         
         switch indexPath.row {
         case 0:

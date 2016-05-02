@@ -65,22 +65,20 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     internal func loadMPStyles(){
         
         if self.navigationController != nil {
-            //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
-            
-            self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-            self.navigationItem.hidesBackButton = true
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-            self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-            self.navigationController?.navigationBar.removeBottomLine()
-            
-            //Create navigation buttons
-            rightButtonShoppingCart()
-            displayCustomBackButton()
-
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.navigationItem.hidesBackButton = true
+        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+        self.navigationController?.navigationBar.removeBottomLine()
+        
+        //Create navigation buttons
+        rightButtonShoppingCart()
+        displayBackButton()
+ 
         }
-     
 
     }
     
@@ -129,9 +127,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        
-
-            
         return UIInterfaceOrientationMask.Portrait
     }
     
@@ -167,22 +162,12 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         
     }
     
-    internal func executeBack(){
-        self.clearMercadoPagoStyle()
-        if MPFlowController.isRoot(self) {
-            MPFlowController.dismiss(true)
-        } else {
-            MPFlowController.pop(true)
-        }
-    }
-    
-    private func displayCustomBackButton(){
+    internal func displayBackButton() {
         let backButton = UIBarButtonItem()
         backButton.image = MercadoPago.getImage("left_arrow")
         backButton.style = UIBarButtonItemStyle.Bordered
         backButton.target = self
         backButton.tintColor = UIColor.whiteColor()
-        backButton.action = "executeBack"
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         self.navigationItem.leftBarButtonItem = backButton
     }
@@ -198,6 +183,7 @@ extension UINavigationController {
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return self.viewControllers.last!.supportedInterfaceOrientations()
     }
+
 }
 
 extension UINavigationBar {

@@ -69,7 +69,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardView.addSubview(cardFront!)
         updateLabelsFontColors()
         
-        
+
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -127,6 +127,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.navigationItem.rightBarButtonItem!.enabled = false
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
+
     }
 
 
@@ -839,6 +840,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.cardNumberLabel?.text = self.token?.getMaskNumber()
         self.expirationDateLabel?.text = self.token?.getExpirationDateFormated()
     }
-    
+
     
 }
