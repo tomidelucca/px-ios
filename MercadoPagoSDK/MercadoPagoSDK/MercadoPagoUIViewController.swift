@@ -65,19 +65,20 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     internal func loadMPStyles(){
         
         if self.navigationController != nil {
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.navigationItem.hidesBackButton = true
-        self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-        self.navigationController?.navigationBar.removeBottomLine()
-        
-        //Create navigation buttons
-        rightButtonShoppingCart()
-        displayBackButton()
- 
+
+            //Navigation bar colors
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            
+            self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+            self.navigationItem.hidesBackButton = true
+            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+            self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+            self.navigationController?.navigationBar.removeBottomLine()
+            
+            //Create navigation buttons
+            rightButtonShoppingCart()
+            displayBackButton()
         }
 
     }
@@ -169,9 +170,13 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         backButton.target = self
         backButton.tintColor = UIColor.whiteColor()
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        backButton.action = "executeBack"
         self.navigationItem.leftBarButtonItem = backButton
     }
     
+    internal func executeBack(){
+        self.navigationController!.popViewControllerAnimated(true)
+    }
 }
 
 extension UINavigationController {

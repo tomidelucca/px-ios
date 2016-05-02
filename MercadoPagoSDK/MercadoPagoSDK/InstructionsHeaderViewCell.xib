@@ -29,7 +29,7 @@
                                 <attributes>
                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="22" name="HelveticaNeue-Light"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="32" maximumLineHeight="32" tighteningFactorForTruncation="0.0"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" minimumLineHeight="32" maximumLineHeight="32" lineHeightMultiple="5" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>

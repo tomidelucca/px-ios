@@ -37,12 +37,12 @@ public class MockBuilder: NSObject {
         return payer
     }
     
-    class func buildPreferencePaymentMethods() -> PreferencePaymentMethods {
-        let preferencePM = PreferencePaymentMethods()
+    class func buildPreferencePaymentMethods() -> PaymentPreference {
+        let preferencePM = PaymentPreference()
         preferencePM.defaultInstallments = 1
         preferencePM.defaultPaymentMethodId = "visa"
-        preferencePM.excludedPaymentMethodsIds = ["amex"]
-        preferencePM.excludedPaymentTypesIds = self.getMockPaymentTypeIds()
+        preferencePM.excludedPaymentMethodIds = ["amex"]
+        preferencePM.excludedPaymentTypeIds = self.getMockPaymentTypeIds()
         return preferencePM
     }
     
