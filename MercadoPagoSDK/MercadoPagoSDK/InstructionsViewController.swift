@@ -67,11 +67,8 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         } else {
             self.congratsTable.reloadData()
         }
-        
-        self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 20))
-        self.congratsTable.contentInset = UIEdgeInsetsMake(0, 0, 20, 20)
 
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
     
         if self.navigationController != nil {
             self.navigationController!.navigationBarHidden = true
