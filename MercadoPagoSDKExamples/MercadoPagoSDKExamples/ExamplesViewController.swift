@@ -66,9 +66,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         switch indexPath.row {
         case 0:
             
- 
-        
-            self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentType(paymentTypeId: PaymentTypeId.CREDIT_CARD).paymentSettingAssociated().addSettings(maxAcceptedInstallment:9).addSettings(defaultInstallments:3) , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
+
+            self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentPreference(defaultInstallments:3, maxAcceptedInstallment:9), amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
 
