@@ -109,7 +109,7 @@ public class CheckoutPreference : Equatable {
     
     
     public func getPaymentSettings () -> PaymentPreference {
-        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstalment: self.paymentPreference!.maxAcceptedInstallments, defaultInstallments: self.paymentPreference!.defaultInstallments)
+        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.paymentPreference!.maxAcceptedInstallments, defaultInstallments: self.paymentPreference!.defaultInstallments)
         
         return settings
     }
@@ -138,7 +138,7 @@ public class CheckoutPreference : Equatable {
 
     
     private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
-        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId, maxAcceptedInstalment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
+        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId,maxAcceptedInstallment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
         
     }
     

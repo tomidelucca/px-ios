@@ -61,24 +61,14 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var settings = PaymentSettings(currencyId: "MXN", purchaseTitle : "purchaseTitle")
+        var settings = PaymentPreference()
         
         switch indexPath.row {
         case 0:
             
-            
-            
-            
-            /*
-            self.showViewController( MPStepBuilder.startCreditCardForm(nil , amount: 10000, callback: { (paymentMethod, token, issuer, installment) -> Void in
-
-                self.showViewController(MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, cardToken: token!, amount: 1550, minInstallments: 1, callback: { (installment) -> Void in
-                    print("OK!")
-                }))
-            }))
-*/
+ 
         
-            self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentType(paymentTypeId: PaymentTypeId.CREDIT_CARD).paymentSettingAssociated().addSettings(maxAcceptedInstalment:9).addSettings(defaultInstalment:3) , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentType(paymentTypeId: PaymentTypeId.CREDIT_CARD).paymentSettingAssociated().addSettings(maxAcceptedInstallment:9).addSettings(defaultInstallments:3) , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
 
@@ -113,7 +103,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
         case 8:
             
-            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00,paymentSettings: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, purchaseTitle : "Compra", currencyId : "MXN", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             }))
         case 9:
             self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
@@ -122,14 +112,14 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         case 10:
             let excludedPaymentMethods = ["gestopago"]
             
-            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, paymentSettings: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00,  purchaseTitle : "Compra", currencyId : "MXN",paymentPreference: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
 				//   self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 11:
             let excludedPaymentMethods = ["serfin_ticket, banamex_ticket, bancomer_ticket", "7eleven", "telecomm", "gestopago"]
             let excludedPaymentTypes = Set([PaymentTypeId.BANK_TRANSFER, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
             
-            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, paymentSettings: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00,purchaseTitle : "Compra",currencyId : "MXN", paymentPreference: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
                 
             }))
         case 12:

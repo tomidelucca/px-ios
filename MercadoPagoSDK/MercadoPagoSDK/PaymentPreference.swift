@@ -32,14 +32,26 @@ public class PaymentPreference: Equatable {
         return true
     }
     
-
     
-    public init(excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstalment : Int? = 0, defaultInstallments : Int? = 0){
+    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0){
         self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
-        self.maxAcceptedInstallments = maxAcceptedInstalment
+        self.maxAcceptedInstallments = maxAcceptedInstallment
         self.defaultInstallments = defaultInstallments
+        self.defaultPaymentTypeId = defaultPaymentTypeId
+    }
+    
+    
+    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0) -> PaymentPreference {
+        
+        self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
+        self.excludedPaymentTypeIds = excludedPaymentTypesIds
+        self.defaultPaymentMethodId = defaultPaymentMethodId
+        self.maxAcceptedInstallments = maxAcceptedInstallment
+        self.defaultInstallments = defaultInstallments
+        self.defaultPaymentTypeId = defaultPaymentTypeId
+        return self
     }
     
     public class func fromJSON(json : NSDictionary) -> PaymentPreference {

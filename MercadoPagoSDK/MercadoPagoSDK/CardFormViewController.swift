@@ -46,6 +46,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     var amount : Double?
     
+    
+    
+    
+    //DNI
+     var identificationCard : IdentificationCardView?
+    
+    
+    
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -67,6 +76,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
+        
         updateLabelsFontColors()
 
     }
@@ -76,6 +86,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
+        identificationCard?.frame = cardView.bounds
+
         textBox.placeholder = "Numero".localized
         textBox.becomeFirstResponder()
        
@@ -98,6 +110,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.delegate = self
         cardFront = CardFrontView()
         cardBack = CardBackView()
+        identificationCard = IdentificationCardView()
         cardBack!.backgroundColor = UIColor.clearColor()
         
         cardNumberLabel = cardFront?.cardNumber

@@ -33,7 +33,7 @@ public class PaymentType: NSObject {
     }
     
     public func paymentSettingAssociated() -> PaymentPreference {
-        return PaymentPreference()
+        return PaymentPreference(defaultPaymentTypeId:self.paymentTypeId)
     }
 
 }
