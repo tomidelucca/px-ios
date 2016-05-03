@@ -26,6 +26,7 @@ public class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     
+    
     public class func startPaymentVaultViewController(amount: Double, purchaseTitle : String!, currencyId : String!,paymentPreference : PaymentPreference,   callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void) -> UINavigationController {
         
         let paymentVault = PaymentVaultViewController(amount: amount, purchaseTitle : purchaseTitle, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
