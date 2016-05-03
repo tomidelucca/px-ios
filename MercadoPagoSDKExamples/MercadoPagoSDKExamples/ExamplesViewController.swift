@@ -65,8 +65,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch indexPath.row {
         case 0:
-            
-
+        
             self.presentNavigation(MPFlowBuilder.startCardFlow(PaymentPreference(defaultInstallments:3, maxAcceptedInstallment:9), amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
@@ -101,8 +100,9 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }))
         case 8:
-            
+
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, purchaseTitle : "Compra", currencyId : "MXN", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+
             }))
         case 9:
             self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
@@ -110,7 +110,6 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
         case 10:
             let excludedPaymentMethods = ["gestopago"]
-            
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00,  purchaseTitle : "Compra", currencyId : "MXN",paymentPreference: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
 				//   self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))

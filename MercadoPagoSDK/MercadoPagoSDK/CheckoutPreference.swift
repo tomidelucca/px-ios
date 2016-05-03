@@ -109,7 +109,7 @@ public class CheckoutPreference : Equatable {
     
     
     public func getPaymentSettings () -> PaymentPreference {
-        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.paymentPreference!.maxAcceptedInstallments, defaultInstallments: self.paymentPreference!.defaultInstallments)
+        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstalment: self.getMaxAcceptedInstallments(), defaultInstallments: self.getDefaultInstallments())
         
         return settings
     }
@@ -117,6 +117,20 @@ public class CheckoutPreference : Equatable {
     public func getExcludedPaymentTypesIds() -> Set<PaymentTypeId>? {
         if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
             return self.paymentPreference!.excludedPaymentTypeIds
+        }
+        return nil
+    }
+    
+    public func getDefaultInstallments() -> Int? {
+        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments != nil) {
+            return self.paymentPreference!.defaultInstallments
+        }
+        return nil
+    }
+    
+    public func getMaxAcceptedInstallments() -> Int? {
+        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments != nil) {
+            return self.paymentPreference!.maxAcceptedInstallments
         }
         return nil
     }
