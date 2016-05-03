@@ -45,13 +45,14 @@ class OfflinePaymentMethodCell: UITableViewCell {
         
         self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
         
-        let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 1, height: 1))
+        let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: 0, width: 18, height: 18))
         let iconImage = MercadoPago.getImage("edit")!
-        iconImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        customAccesoryIndicator.tintColor = UIColor().blueMercadoPago()
-        let editImage = UIImageView(image: iconImage)
+        let editImage = UIImageView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 18, height: 18))
         
+    
+        editImage.image = iconImage.imageWithRenderingMode(.AlwaysTemplate)
         editImage.tintColor = UIColor().blueMercadoPago()
+        
         customAccesoryIndicator.addSubview(editImage)
         self.accessoryView = customAccesoryIndicator
     }

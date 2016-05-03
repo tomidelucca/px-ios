@@ -68,12 +68,19 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             self.congratsTable.reloadData()
         }
         
-        self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
+        self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 20))
+        self.congratsTable.contentInset = UIEdgeInsetsMake(0, 0, 20, 20)
 
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+    
         if self.navigationController != nil {
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            self.navigationController!.navigationBarHidden = true
         }
+        
+        self.edgesForExtendedLayout = .None
+        self.extendedLayoutIncludesOpaqueBars = false
+        self.automaticallyAdjustsScrollViewInsets = false
+
     }
     
     override public func viewWillAppear(animated: Bool) {
