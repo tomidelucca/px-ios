@@ -109,7 +109,7 @@ public class CheckoutPreference : Equatable {
     
     
     public func getPaymentSettings () -> PaymentPreference {
-        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstalment: self.getMaxAcceptedInstallments(), defaultInstallments: self.getDefaultInstallments())
+        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.getMaxAcceptedInstallments(), defaultInstallments: self.getDefaultInstallments())
         
         return settings
     }
