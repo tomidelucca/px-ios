@@ -233,9 +233,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             payment._description = self.preference!.items![0].title
             self.confirmPaymentOn(payment, token: token!)
         }
-        
-        
-       
+        LoadingOverlay.shared.showOverlay(self.view)
     }
     
     internal func confirmPaymentOff(){
@@ -244,7 +242,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
-                    LoadingOverlay.shared.hideOverlayView()
+                    
                 })
                     self.callback(payment)
                 }), animated: true)
@@ -260,7 +258,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
-                  LoadingOverlay.shared.hideOverlayView()
+                  
                 })
                 self.callback(payment)
             }), animated: true)

@@ -66,7 +66,6 @@ public class CheckoutPreference : Equatable {
         }
         
         if json["payer"] != nil && !(json["payer"]! is NSNull) {
-            //preference.payer = Payer()
             preference.payer = Payer.fromJSON(json["payer"]! as! NSDictionary)
         }
         

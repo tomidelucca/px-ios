@@ -25,12 +25,11 @@ class ViewUtils {
     }
     
     class func addScaledImage(image : UIImage, inView view: UIView){
-        UIGraphicsBeginImageContext(view.frame.size);
-        image.drawInRect(view.bounds)
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        view.backgroundColor = UIColor(patternImage: scaledImage!)
+        let imageView = UIImageView()
+        imageView.frame = view.bounds
+        imageView.contentMode = .ScaleAspectFill
+        imageView.image = image
+        view.addSubview(imageView)
     }
     
 }

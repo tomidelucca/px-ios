@@ -71,7 +71,7 @@ class ExamplesUtils {
         return 1000.00
     }
  
-    class var PREF_ID_MOCK : String {
+    class var PREF_ID_NO_EXCLUSIONS : String {
         return "150216849-a2e6c898-db8d-4f93-925b-66105c4b632e"
     }
     
@@ -122,7 +122,7 @@ class ExamplesUtils {
         
         //Create CheckoutPreference
         let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
-        preference._id = ExamplesUtils.PREF_ID_MOCK
+        preference._id = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
     
         return preference
     }

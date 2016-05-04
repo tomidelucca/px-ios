@@ -354,7 +354,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         //En caso de que el vc no sea root
-        if(navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self) {
+        if(navigationController != nil) && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self) || (navigationController != nil && navigationController!.viewControllers.count == 1) {
             if self.isRoot {
                 self.callbackCancel!()
             }
