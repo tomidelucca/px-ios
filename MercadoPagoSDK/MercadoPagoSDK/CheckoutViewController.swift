@@ -58,6 +58,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
 
+        
         if self.paymentMethod == nil {
             self.loadGroupsAndStartPaymentVault()
         }

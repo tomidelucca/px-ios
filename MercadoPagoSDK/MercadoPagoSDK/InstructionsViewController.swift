@@ -52,8 +52,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
-        
         if currentInstruction == nil {
             registerAllCells()
             MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
@@ -68,12 +66,15 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             self.congratsTable.reloadData()
         }
 
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
-    
+        
+        self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
+        
         if self.navigationController != nil {
-            self.navigationController!.navigationBarHidden = true
+            self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
+            self.navigationController!.setNavigationBarHidden(true, animated: true)
         }
         
+        ViewUtils.addStatusBar(self.view, color: UIColor(red: 245, green: 241, blue: 211))
         self.edgesForExtendedLayout = .None
         self.extendedLayoutIncludesOpaqueBars = false
         self.automaticallyAdjustsScrollViewInsets = false

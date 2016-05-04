@@ -125,6 +125,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let excludedPaymentTypes = Set([PaymentTypeId.CREDIT_CARD, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
             
             let preference = ExamplesUtils.createCheckoutPreference()
+            
         //    preference.paymentMethods?.excludedPaymentMethods = excludedPaymentMethods
         //    preference.paymentMethods!.excludedPaymentTypes = excludedPaymentTypes
 

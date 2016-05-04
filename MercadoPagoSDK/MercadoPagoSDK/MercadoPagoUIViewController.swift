@@ -69,16 +69,18 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
             //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
-            self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-            self.navigationItem.hidesBackButton = true
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-            self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-            self.navigationController?.navigationBar.removeBottomLine()
-            
-            //Create navigation buttons
-            rightButtonShoppingCart()
-            displayBackButton()
+            if self.navigationController != nil {
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationItem.hidesBackButton = true
+                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+                self.navigationController?.navigationBar.removeBottomLine()
+                
+                //Create navigation buttons
+                rightButtonShoppingCart()
+                displayBackButton()
+            }
         }
 
     }
