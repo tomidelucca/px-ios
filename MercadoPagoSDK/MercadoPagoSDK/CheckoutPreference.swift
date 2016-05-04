@@ -66,6 +66,7 @@ public class CheckoutPreference : Equatable {
         }
         
         if json["payer"] != nil && !(json["payer"]! is NSNull) {
+            //preference.payer = Payer()
             preference.payer = Payer.fromJSON(json["payer"]! as! NSDictionary)
         }
         
@@ -149,19 +150,16 @@ public class CheckoutPreference : Equatable {
         return nil
     }
     
-
-    
-    private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
-        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId,maxAcceptedInstallment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
-        
-    }
-    
     public func getTitle() -> String {
         return self.items![0].title
     }
     
     public func getCurrencyId() -> String {
         return self.items![0].currencyId
+    }
+    
+    public func getPictureUrl() -> String {
+        return self.items![0].pictureUrl
     }
 }
 

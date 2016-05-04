@@ -24,4 +24,13 @@ class ViewUtils {
         view.addSubview(addStatusBar)
     }
     
+    class func addScaledImage(image : UIImage, inView view: UIView){
+        UIGraphicsBeginImageContext(view.frame.size);
+        image.drawInRect(view.bounds)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        view.backgroundColor = UIColor(patternImage: scaledImage!)
+    }
+    
 }

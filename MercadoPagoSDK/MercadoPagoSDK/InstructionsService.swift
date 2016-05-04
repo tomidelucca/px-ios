@@ -10,12 +10,11 @@ import UIKit
 
 public class InstructionsService: MercadoPagoService {
 
-    //public let MP_INSTRUCTIONS_URL = "https://api.mercadopago.com"
-    public let MP_INSTRUCTIONS_URL = "http://private-9376e-paymentmethodsmla.apiary-mock.com"
     public let MP_INSTRUCTIONS_URI = "/beta/checkout/instructions"
     
     public init(){
-        super.init(baseURL: MP_INSTRUCTIONS_URL)
+        //super.init(baseURL: MercadoPagoService.MP_BASE_URL)
+        super.init(baseURL : "http://private-9376e-paymentmethodsmla.apiary-mock.com")
     }
     
     public func getInstructions(paymentId : Int, paymentMethodId: String, paymentTypeId: String, success : (instruction :Instruction) -> Void, failure: ((error: NSError) -> Void)?){

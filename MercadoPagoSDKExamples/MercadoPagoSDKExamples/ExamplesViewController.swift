@@ -96,7 +96,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("do something")
             }))
         case 7:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:Payment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions()._id, callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
@@ -105,7 +105,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
             }))
         case 9:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference()._id, callback: { (MerchantPayment) -> Void in
                 
             }))
         case 10:
@@ -130,9 +130,9 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         //    preference.paymentMethods!.excludedPaymentTypes = excludedPaymentTypes
 
             
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
+            /*self.presentNavigation(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
 
-            }))
+            }))*/
         default:
             print("Otra opcion")
         }

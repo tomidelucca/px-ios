@@ -221,9 +221,14 @@ public class MPServicesBuilder : NSObject {
             success(instruction: instruction)
         }, failure : failure)
     }
+    
+    public class func getPreference(preferenceId : String, success : (preference : CheckoutPreference) -> Void, failure: ((error: NSError) -> Void)){
+        let preferenceService = PreferenceService()
+        preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
+            success(preference: preference)
+            }, failure: failure)
+    }
 
-    
-    
 }
 
 
