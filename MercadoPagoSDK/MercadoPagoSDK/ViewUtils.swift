@@ -17,4 +17,11 @@ class ViewUtils {
         separatorLineView.backgroundColor = UIColor().grayTableSeparator()
         return separatorLineView
     }
+    
+    class func addStatusBar(view : UIView, color : UIColor) {
+        let addStatusBar = UIView(frame: CGRectMake(0, 0, view.bounds.width, 20))
+        addStatusBar.backgroundColor = color
+        view.addSubview(addStatusBar)
+    }
+    
 }

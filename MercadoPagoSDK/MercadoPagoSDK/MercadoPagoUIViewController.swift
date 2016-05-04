@@ -69,25 +69,20 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
             //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
-            self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-            self.navigationItem.hidesBackButton = true
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-            self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
-            self.navigationController?.navigationBar.removeBottomLine()
-            
-            //Create navigation buttons
-            rightButtonShoppingCart()
-            displayBackButton()
+            if self.navigationController != nil {
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationItem.hidesBackButton = true
+                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+                self.navigationController?.navigationBar.removeBottomLine()
+                
+                //Create navigation buttons
+                rightButtonShoppingCart()
+                displayBackButton()
+            }
         }
 
-    }
-    
-    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if(navigationController!.viewControllers.count > 1){
-            return true
-        }
-        return false
     }
     
     internal func clearMercadoPagoStyleAndGoBackAnimated(){
@@ -177,6 +172,18 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     internal func executeBack(){
         self.navigationController!.popViewControllerAnimated(true)
     }
+    
+    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        //En caso de que el vc no sea root
+        if(navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self){
+        
+                //self.callbackCancel!()
+                return true
+        }
+        return false
+    }
+
 }
 
 extension UINavigationController {

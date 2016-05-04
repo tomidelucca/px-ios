@@ -48,8 +48,11 @@ class InstructionsHeaderViewCell: UITableViewCell {
             attributedTitle.appendAttributedString(attributedAmount)
             let endingTitle = NSAttributedString(string: title.substringFromIndex((amountRange?.endIndex)!))
             attributedTitle.appendAttributedString(endingTitle)
+
             self.headerTitle.attributedText = attributedTitle
+            
             self.headerTitle.addCharactersSpacing(-0.4)
+            self.headerTitle.addLineSpacing(4)
         } else {
             self.headerTitle.text = title
         }
