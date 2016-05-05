@@ -30,11 +30,7 @@ public class MerchantService : MercadoPagoService {
         self.request(MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
     }
     
-    public func createPreference(method : String = "POST", preference : CheckoutPreference, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        //TODO: set proper default base url
-        if self.baseURL.isEmpty {
-            self.baseURL = MercadoPago.MP_API_BASE_URL
-        }
-        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: preference.toJSONString(), method: method, success: success, failure: failure)
+    public func createPreference(method : String = "POST", merchantParams : NSDictionary, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams, method: method, success: success, failure: failure)
     }
 }

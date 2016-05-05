@@ -48,6 +48,15 @@ public class CheckoutPreference : Equatable {
             }
         }
         //VALIDAR PREFERENCE PAYMENT METHOD
+        
+        if self.payer == nil {
+            return "No hay información de payer".localized
+        }
+        
+        if self.payer.email == nil || self.payer.email.characters.count > 0 {
+            return "Se requiere email de comprador".localized
+        }
+        
         return nil
     }
     
@@ -78,6 +87,11 @@ public class CheckoutPreference : Equatable {
             }
             
             preference.items = items
+        }
+        
+        if json["payment_methods"] != nil && !(json["payment_methods"]! is NSNull) {
+            let jsonPaymentPreference = json["payment_methods"] as! NSDictionary
+            preference.paymentPreference = PaymentPreference.fromJSON(jsonPaymentPreference)
         }
         
         return preference
