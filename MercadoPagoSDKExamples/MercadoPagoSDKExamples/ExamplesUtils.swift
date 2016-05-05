@@ -75,6 +75,19 @@ class ExamplesUtils {
         return "150216849-a2e6c898-db8d-4f93-925b-66105c4b632e"
     }
     
+    class var PREF_ID_TICKET_EXCLUDED : String {
+        return "150216849-551cddcc-e221-4289-bb9c-54bfab992e3d"
+    }
+    
+    class var PREF_ID_MLA_ONLY_CC : String {
+        return "150216849-80a7a6da-dec9-410f-b865-7244c91141fb"
+    }
+    
+    class var PREF_ID_MLA_RAPIPAGO_CARGAVIRTUAL_EXCLUDED : String {
+        return "150216849-e6ab0d15-e6f1-4160-a447-2ba5294ca7f4"
+    }
+    
+    
     class func startCardActivity(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (token: Token?) -> Void) -> CardViewController {
         return CardViewController(merchantPublicKey: merchantPublicKey, paymentMethod: paymentMethod, callback: callback)
     }

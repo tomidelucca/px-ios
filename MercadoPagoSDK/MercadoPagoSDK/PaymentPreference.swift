@@ -16,7 +16,7 @@ public class PaymentPreference: Equatable {
     var maxAcceptedInstallments : Int?
     var defaultInstallments : Int?
     var defaultPaymentTypeId : PaymentTypeId?
-
+    
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
     //excluded_payment_types < payment_types
@@ -60,8 +60,11 @@ public class PaymentPreference: Equatable {
         var excludedPaymentMethods = Set<String>()
         if let pmArray = json["excluded_payment_methods"] as? NSArray {
             for i in 0..<pmArray.count {
-                if let pmDic = pmArray[i] as? String {
-                    excludedPaymentMethods.insert(pmDic)
+                if let pmDic = pmArray[i] as? NSDictionary {
+                    let pmDicValue = pmDic.valueForKey("id") as? String
+                    if pmDicValue != nil && pmDicValue!.characters.count > 0 {
+                        excludedPaymentMethods.insert(pmDicValue!)
+                    }
                 }
             }
             preferencePaymentMethods.excludedPaymentMethodIds = excludedPaymentMethods
@@ -70,8 +73,11 @@ public class PaymentPreference: Equatable {
         var excludedPaymentTypesIds = Set<PaymentTypeId>()
         if let ptArray = json["excluded_payment_types"] as? NSArray {
             for i in 0..<ptArray.count {
-                if let ptDic = ptArray[i] as? String {
-                    excludedPaymentTypesIds.insert(PaymentTypeId(rawValue: ptDic)!)
+                if let ptDic = ptArray[i] as? NSDictionary {
+                    let ptDicValue = ptDic.valueForKey("id") as? String
+                    if ptDicValue != nil && ptDicValue?.characters.count > 0 {
+                        excludedPaymentTypesIds.insert(PaymentTypeId(rawValue: ptDicValue!)!)
+                    }
                 }
             }
             preferencePaymentMethods.excludedPaymentTypeIds = Set<PaymentTypeId>(excludedPaymentTypesIds)
