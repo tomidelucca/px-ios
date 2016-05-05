@@ -11,6 +11,7 @@ import UIKit
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false
+    public var callbackCancel : (Void -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +101,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
       
+    }
+    
+    internal func invokeCallbackCancel(){
+        self.callbackCancel!()
     }
     
     internal func togglePreferenceDescription(table : UITableView){
