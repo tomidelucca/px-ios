@@ -64,11 +64,11 @@ public class MerchantServer : NSObject {
         }, failure: failure)
     }
     
-    public class func createPreference(preference : CheckoutPreference, success: (checkoutPreference: CheckoutPreference) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func createPreference(params : NSDictionary, success: (checkoutPreference: CheckoutPreference) -> Void, failure: ((error: NSError) -> Void)?) {
         
         let service : MerchantService = MerchantService()
         
-        service.createPreference(preference: preference, success: { (jsonResult: AnyObject?) -> Void in
+        service.createPreference(merchantParams: params, success: { (jsonResult) in
             var checkoutPreference : CheckoutPreference? = nil
             
             if let preferenceDic = jsonResult as? NSDictionary {
