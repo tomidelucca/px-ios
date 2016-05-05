@@ -31,12 +31,17 @@ public class Currency : NSObject {
         return self.symbol ?? "$"
     }
     
+    /***
+     *
+     Default values are ARS values
+     *
+     **/
     public func getThousandsSeparatorOrDefault() -> Character {
-        return self.thousandsSeparator ?? "."
+        return self.thousandsSeparator ?? ","
     }
     
     public func getDecimalSeparatorOrDefault() -> Character {
-        return self.decimalSeparator ?? ","
+        return self.decimalSeparator ?? "."
     }
 
 }

@@ -24,4 +24,12 @@ class ViewUtils {
         view.addSubview(addStatusBar)
     }
     
+    class func addScaledImage(image : UIImage, inView view: UIView){
+        let imageView = UIImageView()
+        imageView.frame = view.bounds
+        imageView.contentMode = .ScaleAspectFill
+        imageView.image = image
+        view.addSubview(imageView)
+    }
+    
 }

@@ -177,8 +177,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         
         //En caso de que el vc no sea root
         if(navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self){
-        
-                //self.callbackCancel!()
                 return true
         }
         return false

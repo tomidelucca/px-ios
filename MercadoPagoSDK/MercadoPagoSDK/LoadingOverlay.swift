@@ -24,9 +24,8 @@ public class LoadingOverlay {
         
     }
     
-    public func showOverlay(view: UIView) {
-        
-        self.activityIndicator.frame = CGRectMake(0, 0, 40, 40)
+    public func getLoadingOverlay(view : UIView) -> UIView {
+        self.activityIndicator.frame = CGRectMake(0, 0, 20, 20)
         self.activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         self.activityIndicator.color = UIColor().blueMercadoPago()
         
@@ -38,7 +37,12 @@ public class LoadingOverlay {
         self.container.addSubview(self.activityIndicator)
         
         self.activityIndicator.startAnimating()
-        view.addSubview(self.container)
+        return container
+    }
+    
+    public func showOverlay(view: UIView) {
+        
+        view.addSubview(self.getLoadingOverlay(view))
     }
     
     public func hideOverlayView() {

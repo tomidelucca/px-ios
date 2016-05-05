@@ -57,10 +57,10 @@ class Utils {
     
     class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
         
-        if formattedString.containsString(thousandSeparator){
+  /*      if formattedString.containsString(thousandSeparator){
             return formattedString
         }
-        
+    */
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
         if length <= 3 {

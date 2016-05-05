@@ -33,7 +33,6 @@ public class MockBuilder: NSObject {
     class func buildPayer(id : NSNumber, type : String) -> Payer {
         let payer =  Payer()
         payer._id = id
-        payer.type = type
         return payer
     }
     

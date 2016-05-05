@@ -149,19 +149,16 @@ public class CheckoutPreference : Equatable {
         return nil
     }
     
-
-    
-    private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
-        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId,maxAcceptedInstallment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
-        
-    }
-    
     public func getTitle() -> String {
         return self.items![0].title
     }
     
     public func getCurrencyId() -> String {
         return self.items![0].currencyId
+    }
+    
+    public func getPictureUrl() -> String {
+        return self.items![0].pictureUrl
     }
 }
 
