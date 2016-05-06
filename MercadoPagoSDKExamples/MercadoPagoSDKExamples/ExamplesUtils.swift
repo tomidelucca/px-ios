@@ -87,6 +87,13 @@ class ExamplesUtils {
         return "150216849-e6ab0d15-e6f1-4160-a447-2ba5294ca7f4"
     }
     
+    class var PREF_ID_MLA_ONLY_PAGOFACIL : String {
+        return "150216849-b4c456b8-e880-497e-aafa-cbfc60c8114b"
+    }
+    
+    class var PREF_ID_MLA_SEVERAL_ITEMS : String {
+        return "150216849-77db2abc-a73d-4293-8914-4a35ddf835c0"
+    }
     
     class func startCardActivity(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (token: Token?) -> Void) -> CardViewController {
         return CardViewController(merchantPublicKey: merchantPublicKey, paymentMethod: paymentMethod, callback: callback)

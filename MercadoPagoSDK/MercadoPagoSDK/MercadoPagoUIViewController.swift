@@ -178,6 +178,14 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.navigationController!.popViewControllerAnimated(true)
     }
     
+    internal func showLoading(){
+        LoadingOverlay.shared.showOverlay(self.view)
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
+    }
+    
     public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         //En caso de que el vc no sea root

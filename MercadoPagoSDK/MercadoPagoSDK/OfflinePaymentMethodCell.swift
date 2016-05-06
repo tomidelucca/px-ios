@@ -56,6 +56,9 @@ class OfflinePaymentMethodCell: UITableViewCell {
             
             customAccesoryIndicator.addSubview(editImage)
             self.accessoryView = customAccesoryIndicator
+        } else {
+            self.selectionStyle = UITableViewCellSelectionStyle.None
+            self.accessoryType = .None
         }
         
     }

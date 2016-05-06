@@ -30,7 +30,7 @@ public class MerchantService : MercadoPagoService {
         self.request(MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
     }
     
-    public func createPreference(method : String = "POST", merchantParams : NSDictionary, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func createPreference(method : String = "POST", merchantParams : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.request(MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams, method: method, success: success, failure: failure)
     }
 }

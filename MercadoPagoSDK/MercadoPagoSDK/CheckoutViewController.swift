@@ -66,7 +66,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        LoadingOverlay.shared.showOverlay(self.view)
+        self.showLoading()
         
         //Remove navigation items
         self.navigationItem.rightBarButtonItem = nil
@@ -81,7 +81,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        LoadingOverlay.shared.hideOverlayView()
+        self.hideLoading()
     }
     
     override public func didReceiveMemoryWarning() {
@@ -137,7 +137,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     self.title = "Revisa si está todo bien...".localized
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: self.paymentMethod!.paymentTypeId)
-                    cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!)
+                    let displayEditSelection = (paymentMethodSearch!.groups.count > 1)
+                    cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!, displayCustomIndicator: displayEditSelection)
                     return cell
                 } else {
                     self.title = "Tantito más y terminas…".localized
@@ -167,7 +168,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
-        } else if indexPath.section == 1 && indexPath.row == 0 {
+        } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.groups.count > 1 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
             self.loadGroupsAndStartPaymentVault(true)
         }
@@ -221,6 +222,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 transition.subtype = kCATransitionFromRight
                 self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
                 self.navigationController!.popToRootViewControllerAnimated(animated)
+            
         })
         
         var callbackCancel : (Void -> Void)
@@ -242,7 +244,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPayment(){
         
-        LoadingOverlay.shared.showOverlay(self.view)
+        self.showLoading()
         self.paymentButton!.enabled = false
 
         if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
@@ -257,7 +259,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             payment._description = self.preference!.items![0].title
             self.confirmPaymentOn(payment, token: token!)
         }
-        LoadingOverlay.shared.showOverlay(self.view)
+        self.hideLoading()
     }
     
     internal func confirmPaymentOff(){

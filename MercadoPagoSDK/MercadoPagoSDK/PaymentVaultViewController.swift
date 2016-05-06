@@ -231,7 +231,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
                 if paymentTypeId!.isCard() {
-                    let cardFlow = MPFlowBuilder.startCardFlow(nil, amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) in
+                    let cardFlow = MPFlowBuilder.startCardFlow(self.paymentSettings, amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) in
                         //TODO : complete
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {

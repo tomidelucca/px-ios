@@ -32,6 +32,17 @@ public class Payer : Equatable {
         }
         return payer
     }
+    
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "email": self.email == nil ? JSON.null : (self.email!),
+            "_id": self._id == 0 ? JSON.null : self._id,
+            "identification" : self.identification == nil ? JSON.null : self.identification.toJSONString()
+        ]
+        return JSON(obj).toString()
+    }
+
 }
 
 

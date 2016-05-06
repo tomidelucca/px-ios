@@ -24,6 +24,7 @@ public class Item : Equatable {
     public var categoryId : String!
     public var pictureUrl : String!
     
+    
     public func validate() -> Bool{
         
         if(quantity <= 0){
@@ -49,9 +50,13 @@ public class Item : Equatable {
     
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
-            "id": self._id!,
+            "id": (self._id == nil) ? JSON.null : self._id!,
             "quantity" : self.quantity,
-            "unit_price" : self.unitPrice
+            "unit_price" : self.unitPrice,
+            "title" : (self.title == nil) ? JSON.null : self.title!,
+            "currencyId" : (self.currencyId == nil) ? JSON.null : self.currencyId!,
+            "categoryId" : (self.categoryId == nil) ? JSON.null : self.categoryId!,
+            "pictureUrl" : (self.pictureUrl == nil) ? JSON.null : self.pictureUrl!,
         ]
         return JSON(obj).toString()
     }
