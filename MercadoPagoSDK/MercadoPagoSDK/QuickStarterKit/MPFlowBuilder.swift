@@ -51,7 +51,7 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
+    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> UINavigationController {
     
     
         let cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
@@ -77,8 +77,8 @@ public class MPFlowBuilder : NSObject {
     
     //  step.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: step, action: "backTapped:")
     
-    }
-    })
+            }
+        }, callbackCancel : callbackCancel)
     
     cardVC.modalTransitionStyle = .CrossDissolve
     

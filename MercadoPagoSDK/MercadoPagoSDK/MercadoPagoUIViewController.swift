@@ -11,6 +11,7 @@ import UIKit
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false
+    public var callbackCancel : (Void -> Void)?
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +103,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
       
     }
     
+    internal func invokeCallbackCancel(){
+        self.callbackCancel!()
+    }
+    
     internal func togglePreferenceDescription(table : UITableView){
         if displayPreferenceDescription {
             self.rightButtonShoppingCart()
@@ -171,6 +176,14 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     
     internal func executeBack(){
         self.navigationController!.popViewControllerAnimated(true)
+    }
+    
+    internal func showLoading(){
+        LoadingOverlay.shared.showOverlay(self.view)
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
     }
     
     public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

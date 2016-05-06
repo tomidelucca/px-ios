@@ -98,8 +98,18 @@ public class CheckoutPreference : Equatable {
     }
     
     public func toJSONString() -> String {
-        //TODO
-        return ""
+        var obj:[String:AnyObject] = [
+            "id": self._id == nil ? JSON.null : (self._id)!,
+            "payer": self.payer == nil ? JSON.null : self.payer.toJSONString()
+        ]
+        
+        var itemsJson = ""
+        for item in items! {
+            itemsJson = itemsJson + item.toJSONString()
+        }
+        obj["items"] = itemsJson
+        
+        return JSON(obj).toString()
     }
     
     public func getAmount() -> Double {

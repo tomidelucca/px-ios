@@ -35,7 +35,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.paymentItemDescription.text = paymentItemDescription
     }
     
-    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem) {
+    internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem, displayCustomIndicator : Bool = true) {
         self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
         if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
             self.comment.text = paymentMethodSearchItemSelected.comment
@@ -45,15 +45,21 @@ class OfflinePaymentMethodCell: UITableViewCell {
         
         self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
         
-        let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: 0, width: 18, height: 18))
-        let iconImage = MercadoPago.getImage("edit")!
-        let editImage = UIImageView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 18, height: 18))
+        if displayCustomIndicator {
+            let customAccesoryIndicator = UIView(frame: CGRect(x: self.bounds.minX, y: 0, width: 18, height: 18))
+            let iconImage = MercadoPago.getImage("edit")!
+            let editImage = UIImageView(frame: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 18, height: 18))
+            
+            
+            editImage.image = iconImage.imageWithRenderingMode(.AlwaysTemplate)
+            editImage.tintColor = UIColor().blueMercadoPago()
+            
+            customAccesoryIndicator.addSubview(editImage)
+            self.accessoryView = customAccesoryIndicator
+        } else {
+            self.selectionStyle = UITableViewCellSelectionStyle.None
+            self.accessoryType = .None
+        }
         
-    
-        editImage.image = iconImage.imageWithRenderingMode(.AlwaysTemplate)
-        editImage.tintColor = UIColor().blueMercadoPago()
-        
-        customAccesoryIndicator.addSubview(editImage)
-        self.accessoryView = customAccesoryIndicator
     }
 }

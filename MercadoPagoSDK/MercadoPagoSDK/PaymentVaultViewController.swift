@@ -20,7 +20,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var paymentSettings : PaymentPreference!
     
     var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, installments: Int) -> Void)!
-    var callbackCancel : (Void -> Void)?
 
     var defaultInstallments : Int?
     var installments : Int?
@@ -119,6 +118,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         
         self.registerAllCells()
         
+        
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -131,6 +131,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         
         self.loadPaymentMethodSearch()
     }
+    
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -213,7 +219,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 paymentVault.isRoot = false
                 self.navigationController!.pushViewController(paymentVault, animated: true)
             } else {
-                LoadingOverlay.shared.showOverlay(self.view)
                 self.optionSelected(paymentSearchItemSelected)
             }
 
@@ -221,7 +226,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
-        LoadingOverlay.shared.showOverlay(self.view)
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -229,9 +233,17 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 if paymentTypeId!.isCard() {
                     let cardFlow = MPFlowBuilder.startCardFlow(self.paymentSettings, amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) in
                         //TODO : complete
+                        }, callbackCancel: {
+                            if self.currentPaymentMethodSearch.count > 1 {
+                                self.navigationController?.popViewControllerAnimated(true)
+                            } else {
+                                self.navigationController?.popViewControllerAnimated(true)
+                                self.callbackCancel!()
+                            }
+                            
                     })
                     
-                    self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
+                    self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: animated)
                 } else {
                     self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: {    (paymentMethod : PaymentMethod) -> Void in
                         //TODO : verificar que con off issuer/installments es asi
@@ -254,18 +266,15 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 //TODO : HANDLE ERROR
                 break
         }
-        LoadingOverlay.shared.hideOverlayView()
     }
     
     private func loadPaymentMethodSearch(){
         
 
         if self.currentPaymentMethodSearch == nil {
-            LoadingOverlay.shared.showOverlay(self.view)
             MPServicesBuilder.searchPaymentMethods(self.paymentSettings.excludedPaymentTypeIds, excludedPaymentMethodIds: self.paymentSettings.excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 self.paymentMethods = paymentMethodSearchResponse.paymentMethods
                 self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
-                LoadingOverlay.shared.hideOverlayView()
                 if self.currentPaymentMethodSearch.count == 1 {
                     self.optionSelected(self.currentPaymentMethodSearch[0], animated: false)
                 }
@@ -276,9 +285,13 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     //TODO
             })
         } else {
-            self.paymentsTable.delegate = self
-            self.paymentsTable.dataSource = self
-            self.paymentsTable.reloadData()
+            if self.currentPaymentMethodSearch.count == 1 {
+                self.optionSelected(self.currentPaymentMethodSearch[0], animated: false)
+            } else {
+                self.paymentsTable.delegate = self
+                self.paymentsTable.dataSource = self
+                self.paymentsTable.reloadData()
+            }
         }
     
     }
@@ -345,10 +358,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     internal func togglePreferenceDescription(){
         self.togglePreferenceDescription(self.paymentsTable)
-    }
-    
-    internal func invokeCallbackCancel(){
-        self.callbackCancel!()
     }
 
     public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
