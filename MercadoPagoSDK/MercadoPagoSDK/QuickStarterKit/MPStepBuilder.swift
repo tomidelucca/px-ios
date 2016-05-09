@@ -48,10 +48,12 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
-    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void)) -> UINavigationController {
-        
+
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> UINavigationController {
+
         var navigation : UINavigationController?
         
+
         navigation = MPFlowController.createNavigationControllerWith(CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
             
             if(paymentMethod.isIdentificationRequired()){
@@ -60,7 +62,7 @@ public class MPStepBuilder : NSObject {
                    
                     let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, callback: { (issuer) -> Void in
                         MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
-                            callback(paymentMethod: paymentMethod, token: token,issuer:issuer)
+                            callback(paymentMethod: paymentMethod, token: token, issuer:issuer)
                             }) { (error) -> Void in
                                 print(error)
                         }
@@ -88,9 +90,10 @@ public class MPStepBuilder : NSObject {
             }
         
         
-        }))
+        },callbackCancel: callbackCancel))
         
         return navigation!
+
     }
     
     

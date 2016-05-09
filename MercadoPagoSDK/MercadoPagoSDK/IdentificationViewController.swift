@@ -15,7 +15,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     @IBOutlet weak var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
     var callback : (( identification: Identification) -> Void)?
-    var callbackCancel : (Void -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
     @IBOutlet weak var typeButton: UIButton!
@@ -87,10 +86,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
     }
     
-    
-    internal func invokeCallbackCancel(){
-        self.callbackCancel!()
-    }
 
     
 

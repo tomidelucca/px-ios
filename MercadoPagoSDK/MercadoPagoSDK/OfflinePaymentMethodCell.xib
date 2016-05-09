@@ -30,12 +30,12 @@
                         </attributedString>
                         <color key="highlightedColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="oxxo" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                    <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" preservesSuperviewLayoutMargins="YES" image="oxxo" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
                         <rect key="frame" x="8" y="7" width="52" height="43"/>
                         <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOb-BJ-hW9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOb-BJ-hW9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="65" y="8" width="120" height="45"/>
                         <attributedString key="attributedText">
                             <fragment content="Método de Pago">

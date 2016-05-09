@@ -14,7 +14,6 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     @IBOutlet weak var tableView: UITableView!
     var bundle : NSBundle? = MercadoPago.getBundle()
     var callback : (( issuer: Issuer) -> Void)?
-    var callbackCancel : (Void -> Void)?
     
     var cardToken : CardToken?
     var paymentMethod : PaymentMethod?

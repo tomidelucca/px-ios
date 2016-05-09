@@ -48,6 +48,15 @@ public class CheckoutPreference : Equatable {
             }
         }
         //VALIDAR PREFERENCE PAYMENT METHOD
+        
+        if self.payer == nil {
+            return "No hay información de payer".localized
+        }
+        
+        if self.payer.email == nil || self.payer.email.characters.count > 0 {
+            return "Se requiere email de comprador".localized
+        }
+        
         return nil
     }
     
@@ -80,12 +89,27 @@ public class CheckoutPreference : Equatable {
             preference.items = items
         }
         
+        if json["payment_methods"] != nil && !(json["payment_methods"]! is NSNull) {
+            let jsonPaymentPreference = json["payment_methods"] as! NSDictionary
+            preference.paymentPreference = PaymentPreference.fromJSON(jsonPaymentPreference)
+        }
+        
         return preference
     }
     
     public func toJSONString() -> String {
-        //TODO
-        return ""
+        var obj:[String:AnyObject] = [
+            "id": self._id == nil ? JSON.null : (self._id)!,
+            "payer": self.payer == nil ? JSON.null : self.payer.toJSONString()
+        ]
+        
+        var itemsJson = ""
+        for item in items! {
+            itemsJson = itemsJson + item.toJSONString()
+        }
+        obj["items"] = itemsJson
+        
+        return JSON(obj).toString()
     }
     
     public func getAmount() -> Double {
@@ -109,7 +133,7 @@ public class CheckoutPreference : Equatable {
     
     
     public func getPaymentSettings () -> PaymentPreference {
-        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.paymentPreference!.maxAcceptedInstallments, defaultInstallments: self.paymentPreference!.defaultInstallments)
+        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.getMaxAcceptedInstallments(), defaultInstallments: self.getDefaultInstallments())
         
         return settings
     }
@@ -117,6 +141,20 @@ public class CheckoutPreference : Equatable {
     public func getExcludedPaymentTypesIds() -> Set<PaymentTypeId>? {
         if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
             return self.paymentPreference!.excludedPaymentTypeIds
+        }
+        return nil
+    }
+    
+    public func getDefaultInstallments() -> Int? {
+        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments != nil) {
+            return self.paymentPreference!.defaultInstallments
+        }
+        return nil
+    }
+    
+    public func getMaxAcceptedInstallments() -> Int? {
+        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments != nil) {
+            return self.paymentPreference!.maxAcceptedInstallments
         }
         return nil
     }
@@ -135,19 +173,16 @@ public class CheckoutPreference : Equatable {
         return nil
     }
     
-
-    
-    private func setPaymentMethods(excludedPaymentMethodsIds : Set<String>?, excludedPaymentTypesIds : Set<PaymentTypeId>?, defaultPaymentMethodId : String?, maxAcceptedInstalment : Int?, defaultInstallments : Int?) {
-        self.paymentPreference = PaymentPreference(excludedPaymentMethodsIds: excludedPaymentMethodsIds, excludedPaymentTypesIds: excludedPaymentTypesIds, defaultPaymentMethodId: defaultPaymentMethodId,maxAcceptedInstallment: maxAcceptedInstalment, defaultInstallments: defaultInstallments)
-        
-    }
-    
     public func getTitle() -> String {
         return self.items![0].title
     }
     
     public func getCurrencyId() -> String {
         return self.items![0].currencyId
+    }
+    
+    public func getPictureUrl() -> String {
+        return self.items![0].pictureUrl
     }
 }
 

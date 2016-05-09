@@ -17,4 +17,19 @@ class ViewUtils {
         separatorLineView.backgroundColor = UIColor().grayTableSeparator()
         return separatorLineView
     }
+    
+    class func addStatusBar(view : UIView, color : UIColor) {
+        let addStatusBar = UIView(frame: CGRectMake(0, 0, view.bounds.width, 20))
+        addStatusBar.backgroundColor = color
+        view.addSubview(addStatusBar)
+    }
+    
+    class func addScaledImage(image : UIImage, inView view: UIView){
+        let imageView = UIImageView()
+        imageView.frame = view.bounds
+        imageView.contentMode = .ScaleAspectFill
+        imageView.image = image
+        view.addSubview(imageView)
+    }
+    
 }

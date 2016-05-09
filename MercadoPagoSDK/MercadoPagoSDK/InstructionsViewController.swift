@@ -22,7 +22,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "telecomm" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "telecomm_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
@@ -52,9 +52,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
-        
-        
         if currentInstruction == nil {
             registerAllCells()
             MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
@@ -68,14 +65,20 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         } else {
             self.congratsTable.reloadData()
         }
+
         
         self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
         
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = nil
+        if self.navigationController != nil {
+            self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
+            self.navigationController!.setNavigationBarHidden(true, animated: true)
+        }
         
+        ViewUtils.addStatusBar(self.view, color: UIColor(red: 245, green: 241, blue: 211))
+        self.edgesForExtendedLayout = .None
+        self.extendedLayoutIncludesOpaqueBars = false
+        self.automaticallyAdjustsScrollViewInsets = false
+
     }
     
     override public func viewWillAppear(animated: Bool) {

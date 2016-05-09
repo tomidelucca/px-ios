@@ -65,6 +65,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch indexPath.row {
         case 0:
+
             
          
             self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
@@ -97,20 +98,20 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("do something")
             }))
         case 7:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreferenceWithNoExclusions(), callback: { (payment:Payment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
-            
+
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00, purchaseTitle : "Compra", currencyId : "MXN", paymentPreference: settings , callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+
             }))
         case 9:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.createCheckoutPreference(), callback: { (MerchantPayment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (MerchantPayment) -> Void in
                 
             }))
         case 10:
             let excludedPaymentMethods = ["gestopago"]
-            
             self.presentNavigation(MPFlowBuilder.startPaymentVaultViewController(1.00,  purchaseTitle : "Compra", currencyId : "MXN",paymentPreference: settings, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
 				//   self.createPayment(tokenId, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
@@ -126,11 +127,12 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let excludedPaymentTypes = Set([PaymentTypeId.CREDIT_CARD, PaymentTypeId.DEBIT_CARD, PaymentTypeId.ACCOUNT_MONEY, PaymentTypeId.BITCOIN, PaymentTypeId.TICKET, PaymentTypeId.PREPAID_CARD])
             
             let preference = ExamplesUtils.createCheckoutPreference()
+            
         //    preference.paymentMethods?.excludedPaymentMethods = excludedPaymentMethods
         //    preference.paymentMethods!.excludedPaymentTypes = excludedPaymentTypes
 
             
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(preference, callback: { (payment) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment) -> Void in
 
             }))
         default:

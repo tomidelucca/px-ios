@@ -45,9 +45,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     var amount : Double?
     
-    
-    
-    
     //DNI
      var identificationCard : IdentificationCardView?
     
@@ -57,19 +54,17 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    
-    
-    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void)) {
+
+
+    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
       //  self.edgesForExtendedLayout = .All
         self.callback = callback
-        
 
-        
-        
+        self.callbackCancel = callbackCancel
+
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -82,6 +77,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         updateLabelsFontColors()
 
+        self.navigationItem.leftBarButtonItem?.target = self
+        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -130,16 +127,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
-        
-        //Remove rightButton
-      //  self.navigationItem.rightBarButtonItem = nil
-      //  navigationItem.rightBarButtonItem = UIBarButtonItem(title: nil, style: .Done, target: self, action: "addTapped")
-        
+
         
         // Or if you just want to insert one item.
+
         
   //      self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
 //        self.navigationItem.rightBarButtonItem!.enabled = false
+
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
 
