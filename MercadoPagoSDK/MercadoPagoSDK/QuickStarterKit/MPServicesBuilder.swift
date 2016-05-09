@@ -137,10 +137,10 @@ public class MPServicesBuilder : NSObject {
         
     }
     
-    public class func getIssuers(paymentMethod : PaymentMethod, success: (issuers: [Issuer]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func getIssuers(paymentMethod : PaymentMethod, bin: String? = nil, success: (issuers: [Issuer]?) -> Void, failure: ((error: NSError) -> Void)?) {
         
             let service : PaymentService = PaymentService(baseURL: MPServicesBuilder.MP_API_BASE_URL)
-            service.getIssuers(public_key: MercadoPagoContext.publicKey(), payment_method_id: paymentMethod._id, success: {(jsonResult: AnyObject?) -> Void in
+        service.getIssuers(public_key: MercadoPagoContext.publicKey(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {

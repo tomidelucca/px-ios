@@ -17,7 +17,6 @@ public class MPFlowBuilder : NSObject {
         return VaultViewController(amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
         
     }
-
     
     public class func startCheckoutViewController(preference: CheckoutPreference, callback: (Payment) -> Void) -> UINavigationController {
             let checkoutVC = CheckoutViewController(preference: preference, callback: { (payment : Payment) -> Void in
@@ -52,9 +51,26 @@ public class MPFlowBuilder : NSObject {
     
     public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
     
+        
+
     
-        let cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            let payerCostDefaulty : PayerCost? = installment!.containsInstallment(paymentSettings!.defaultInstallments!)
+        var cardVC : UINavigationController?
+        
+        cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
+            
+            MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+                
+                let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, minInstallments: nil, callback: { (payerCost) -> Void in
+                    callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
+                })
+                
+                cardVC!.pushViewController(pcvc, animated: false)
+                
+                }, failure: { (error) -> Void in
+                    
+            })
+            
+/*            let payerCostDefaulty : PayerCost? = installment!.containsInstallment(paymentSettings!.defaultInstallments!)
             if(payerCostDefaulty != nil){
                 callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost:payerCostDefaulty)
                 
@@ -76,14 +92,14 @@ public class MPFlowBuilder : NSObject {
     
     //  step.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: step, action: "backTapped:")
     
-    }
+    }*/
     })
     
-    cardVC.modalTransitionStyle = .CrossDissolve
+    cardVC!.modalTransitionStyle = .CrossDissolve
     
     
     
-    return MPFlowController.createNavigationControllerWith(cardVC)
+    return cardVC!
     
     
     }

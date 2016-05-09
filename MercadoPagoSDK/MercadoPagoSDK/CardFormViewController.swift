@@ -12,7 +12,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
     
     
-    @IBOutlet weak var promoButton: MPButton!
     @IBOutlet weak var cardView: UIView!
     var cardViewBack:UIView?
  
@@ -39,10 +38,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var payerCosts : [PayerCost]?
     
     var token : Token?
-    
+    var cardToken : CardToken?
     
     var paymentSettings : PaymentPreference?
-    var callback : (( paymentMethod: PaymentMethod,token: Token?, issuer: Issuer?, installment: Installment?) -> Void)?
+    var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?, issuer: Issuer?) -> Void)?
     
     var amount : Double?
     
@@ -61,12 +60,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, token: Token? , issuer: Issuer?, installment: Installment?) -> Void)) {
+    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void)) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
       //  self.edgesForExtendedLayout = .All
         self.callback = callback
+        
+
+        
+        
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -135,8 +138,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         // Or if you just want to insert one item.
         
-        self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
-        self.navigationItem.rightBarButtonItem!.enabled = false
+  //      self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
+//        self.navigationItem.rightBarButtonItem!.enabled = false
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
 
@@ -181,8 +184,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                     editingLabel = cvvLabel
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        self.promoButton.alpha = 0
-                        self.promoButton.enabled = false
                         UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
                             self.prepareCVVLabelForEdit()
                         })
@@ -203,8 +204,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                        
                         UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
                             self.prepareNumberLabelForEdit()
-                            self.promoButton.alpha = 1
-                            self.promoButton.enabled = true
                             self.closeKeyboard()
                             self.navigationItem.rightBarButtonItem!.enabled = true
                         })
@@ -525,21 +524,21 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         navBar.alpha = 1;
         //replace viewWidth with view controller width
         let navItem = UINavigationItem()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "closeKeyboard")
+        //let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "closeKeyboard")
+
         
-      //  let doneNext = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "rightArrowKeyTapped")
-     //   let donePrev = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Rewind, target: self, action: "leftArrowKeyTapped")
-        
-        
-       let doneNext =  UIBarButtonItem(image: MercadoPago.getImage("right_arrow"), landscapeImagePhone: MercadoPago.getImage("right_arrow"), style: .Plain, target: self, action: "rightArrowKeyTapped")
-        let donePrev = UIBarButtonItem(image: MercadoPago.getImage("left_arrow"), landscapeImagePhone: MercadoPago.getImage("left_arrow"), style: .Plain, target: self, action: "leftArrowKeyTapped")
+        let doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
+
+        //UIBarButtonItem(image: MercadoPago.getImage("right_arrow"), landscapeImagePhone: MercadoPago.getImage("right_arrow"), style: .Plain, target: self, action: "rightArrowKeyTapped")
+        let donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        //UIBarButtonItem(image: MercadoPago.getImage("left_arrow"), landscapeImagePhone: MercadoPago.getImage("left_arrow"), style: .Plain, target: self, action: "leftArrowKeyTapped")
         
 
         
         
-        navItem.rightBarButtonItem = doneButton
-        
-        navItem.setLeftBarButtonItems([donePrev,doneNext], animated: false)
+        navItem.rightBarButtonItem = doneNext
+        navItem.leftBarButtonItem = donePrev
+    //    navItem.setLeftBarButtonItems([donePrev,doneNext], animated: false)
         
         
         
@@ -555,9 +554,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         switch editingLabel! {
             
         case cardNumberLabel! :
-            self.promoButton.alpha = 0
-            self.promoButton.enabled = false
-            UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+             UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
             self.prepareCVVLabelForEdit()
             
         case nameLabel! :
@@ -568,8 +565,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         case cvvLabel! :
            
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
-                self.promoButton.alpha = 1
-                self.promoButton.enabled = true
             })
         
             prepareExpirationLabelForEdit()
@@ -586,8 +581,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
         case expirationDateLabel! :
             if(!isAmexCard()){
-                self.promoButton.alpha = 0
-                self.promoButton.enabled = false
                 UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
                     self.updateLabelsFontColors()
                 })
@@ -598,13 +591,12 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         case cvvLabel! :
             if(!isAmexCard()){
                 UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion:  { (completion) -> Void in
-                    self.promoButton.alpha = 1
-                    self.promoButton.enabled = true
                     self.updateLabelsFontColors()
                 })
             }
             
-            self.prepareNumberLabelForEdit()
+            //self.prepareNumberLabelForEdit()
+            self.confirmPaymentMethod()
         default : updateLabelsFontColors()
         }
         updateLabelsFontColors()
@@ -640,26 +632,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         
         for (_, value) in paymentMethods!.enumerate() {
-            /*
-            if (value.conformsPaymentSettings(self.paymentSettings.)){
+            
+            if (value.conformsPaymentPreferences(self.paymentSettings)){
                 if (value.conformsToBIN(getBIN()!)){
                     return value.cloneWithBIN(getBIN()!)
                 }
             }
-          
-            if (self.paymentSettings != nil){
                 
-                if (value.paymentTypeId == paymentType?.paymentTypeId){
-                    if (value.conformsToBIN(getBIN()!)){
-                        return value.cloneWithBIN(getBIN()!)
-                    }
-                }
-            }else{
-                if (value.conformsToBIN(getBIN()!)){
-                    return value.cloneWithBIN(getBIN()!)
-                }
-            }
-            */
         }
         return nil
     }
@@ -779,8 +758,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         let errorCVV = cardtoken.validateSecurityCode()
         if((errorCVV) != nil){
             markErrorLabel(cvvLabel!)
-            self.promoButton.alpha = 0
-            self.promoButton.enabled = false
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
             return
         }
@@ -788,12 +765,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         let installment : Installment = self.installments![0]
         
+        
+         self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken,issuer:installment.issuer)
+        
+        /*
         MPServicesBuilder.createNewCardToken(cardtoken, success: { (token) -> Void in
-            self.callback!(paymentMethod: self.paymentMethod!, token: token,issuer:installment.issuer, installment: installment)
+            self.callback!(paymentMethod: self.paymentMethod!, token: token,issuer:installment.issuer)
             }) { (error) -> Void in
                 print(error)
         }
-        
+        */
     }
     
     
@@ -821,22 +802,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
-    //BUTTON 
-    func configureButton()
-    {
-
-       // promoButton.titleLabel!.font =  UIFont.boldSystemFontOfSize(8)
-        promoButton.titleLabel!.text = "VER BANCOS CON MSI"
-        promoButton.backgroundColor = UIColor.whiteColor()
-        promoButton.layer.cornerRadius = 0.5 * promoButton.bounds.size.width
-        promoButton.layer.borderColor = UIColor(netHex: 0x359FDB).CGColor
-        promoButton.layer.borderWidth = 2.0
-        promoButton.clipsToBounds = true
-    }
     
-    override public func viewDidLayoutSubviews() {
-        configureButton()
-    }
 
     
     func confirmPaymentMethod(){

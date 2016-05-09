@@ -22,6 +22,13 @@ public class PaymentMethod : Equatable  {
         return isAdditionalInfoNeeded("issuer_id")
     }
     
+    public func isIdentificationRequired() -> Bool {
+        return isAdditionalInfoNeeded("cardholder_identification_number")
+    }
+    public func isIdentificationTypeRequired() -> Bool {
+        return isAdditionalInfoNeeded("cardholder_identification_type")
+    }
+    
     public func isSecurityCodeRequired(bin: String) -> Bool {
         
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
@@ -148,31 +155,31 @@ public class PaymentMethod : Equatable  {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
 
-/*    public func conformsPaymentSettings(paymentSettings : PaymentPreference?) -> Bool{
+    public func conformsPaymentPreferences(paymentPreference : PaymentPreference?) -> Bool{
         
-        if(paymentSettings == nil){
+        if(paymentPreference == nil){
             return true
         }
-        if(paymentSettings!.defaultPaymentTypeId != nil){
-            if (paymentSettings!.defaultPaymentTypeId != self.paymentTypeId){
+        if(paymentPreference!.defaultPaymentTypeId != nil){
+            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId){
                 return false
             }
         }
-        if (paymentSettings!.defaultPaymentMethodId != nil){
-            if (self._id != paymentSettings!.defaultPaymentMethodId){
+        if (paymentPreference!.defaultPaymentMethodId != nil){
+            if (self._id != paymentPreference!.defaultPaymentMethodId){
                 return false
             }
         }
-        if((paymentSettings?.excludedPaymentTypesIds) != nil){
-            for (_, value) in (paymentSettings?.excludedPaymentTypesIds!.enumerate())! {
+        if((paymentPreference?.excludedPaymentTypeIds) != nil){
+            for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerate())! {
                 if (value == self.paymentTypeId){
                     return false
                 }
             }
         }
         
-        if((paymentSettings?.excludedPaymentMethodsIds) != nil){
-            for (_, value) in (paymentSettings?.excludedPaymentMethodsIds!.enumerate())! {
+        if((paymentPreference?.excludedPaymentMethodIds) != nil){
+            for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerate())! {
                 if (value == self._id){
                     return false
                 }
@@ -181,7 +188,7 @@ public class PaymentMethod : Equatable  {
         
         
         return true
-    }*/
+    }
 
 }
 

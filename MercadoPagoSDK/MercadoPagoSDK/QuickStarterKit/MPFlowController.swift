@@ -15,9 +15,9 @@ public class MPFlowController: NSObject {
     
     public class func createNavigationControllerWith(rootViewController : UIViewController) -> UINavigationController {
         
-        self.sharedInstance.currentNavigationController = UINavigationController(rootViewController : rootViewController)
+        let nav = UINavigationController(rootViewController : rootViewController)
         
-        return sharedInstance.currentNavigationController!
+        return nav
     }
     
    /* public class func presentViewController(nv : UINavigationController, callback : (() -> Void)?){

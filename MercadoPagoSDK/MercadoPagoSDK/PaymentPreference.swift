@@ -45,12 +45,29 @@ public class PaymentPreference: Equatable {
     
     public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0) -> PaymentPreference {
         
-        self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
-        self.excludedPaymentTypeIds = excludedPaymentTypesIds
-        self.defaultPaymentMethodId = defaultPaymentMethodId
-        self.maxAcceptedInstallments = maxAcceptedInstallment
-        self.defaultInstallments = defaultInstallments
-        self.defaultPaymentTypeId = defaultPaymentTypeId
+        if(excludedPaymentMethodsIds != nil){
+           self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
+        }
+        
+        if(excludedPaymentTypesIds != nil){
+            self.excludedPaymentTypeIds = excludedPaymentTypesIds
+        }
+        
+        if(defaultPaymentMethodId != nil){
+             self.defaultPaymentMethodId = defaultPaymentMethodId
+        }
+      
+        if(maxAcceptedInstallment != nil){
+            self.maxAcceptedInstallments = maxAcceptedInstallment
+        }
+        
+        if(defaultInstallments != nil){
+            self.defaultInstallments = defaultInstallments
+        }
+       
+        if(defaultPaymentTypeId != nil){
+             self.defaultPaymentTypeId = defaultPaymentTypeId
+        }
         return self
     }
     

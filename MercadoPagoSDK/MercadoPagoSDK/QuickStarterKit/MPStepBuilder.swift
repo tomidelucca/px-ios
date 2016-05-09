@@ -48,11 +48,52 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
-    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController {
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void)) -> UINavigationController {
+        
+        var navigation : UINavigationController?
+        
+        navigation = MPFlowController.createNavigationControllerWith(CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
+            
+            if(paymentMethod.isIdentificationRequired()){
+                let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
+                    cardToken?.cardholder?.identification = identification
+                   
+                    let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, callback: { (issuer) -> Void in
+                        MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
+                            callback(paymentMethod: paymentMethod, token: token,issuer:issuer)
+                            }) { (error) -> Void in
+                                print(error)
+                        }
+                    })
+                    issuerForm.callbackCancel = { Void -> Void in
+                        navigation!.dismissViewControllerAnimated(true, completion: {
+                            print("LLEGUE!")
+                        })
+                    }
+                    navigation!.pushViewController(issuerForm, animated: false)
+                })
+                // Set action for cancel callback
+                identificationForm.callbackCancel = { Void -> Void in
+                    navigation!.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                }
+
+                
+                navigation!.pushViewController(identificationForm, animated: false)
+                
+                
+            }else{
+                
+            }
         
         
-        return CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : callback)
+        }))
+        
+        return navigation!
     }
+    
+    
     public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int?,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         
         
@@ -60,6 +101,17 @@ public class MPStepBuilder : NSObject {
        // return PaymentInstallmentsViewController(paymentType : paymentType , callback : callback)
     }
     
+    public class func startIdentificationForm( callback : ((identification: Identification?) -> Void)) -> IdentificationViewController {
+        
+        
+        return IdentificationViewController(callback: callback)
+    }
     
+    
+    public class func startIssuerForm(paymentMethod: PaymentMethod, cardToken: CardToken, callback : ((issuer: Issuer?) -> Void)) -> IssuerCardViewController {
+        
+        
+        return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
+    }
 }
 
