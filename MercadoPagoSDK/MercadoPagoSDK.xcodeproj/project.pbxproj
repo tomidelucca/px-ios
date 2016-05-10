@@ -428,6 +428,10 @@
 		76B085051CE2464700C157BF /* ExitButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085021CE2464700C157BF /* ExitButtonTableViewCell.swift */; };
 		76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B085031CE2464700C157BF /* ExitButtonTableViewCell.xib */; };
 		76B085071CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B085031CE2464700C157BF /* ExitButtonTableViewCell.xib */; };
+		76B085091CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085081CE258BA00C157BF /* CongratsFillmentDelegate.swift */; };
+		76B0850A1CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085081CE258BA00C157BF /* CongratsFillmentDelegate.swift */; };
+		76B0850C1CE2669C00C157BF /* CallbackCancelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */; };
+		76B0850D1CE2669C00C157BF /* CallbackCancelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */; };
 		76B64B161C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B181C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */; };
@@ -757,6 +761,8 @@
 		76B084FB1CE174FE00C157BF /* ApprovedPaymentBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApprovedPaymentBodyTableViewCell.xib; sourceTree = "<group>"; };
 		76B085021CE2464700C157BF /* ExitButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitButtonTableViewCell.swift; sourceTree = "<group>"; };
 		76B085031CE2464700C157BF /* ExitButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExitButtonTableViewCell.xib; sourceTree = "<group>"; };
+		76B085081CE258BA00C157BF /* CongratsFillmentDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsFillmentDelegate.swift; sourceTree = "<group>"; };
+		76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackCancelDelegate.swift; sourceTree = "<group>"; };
 		76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsAndButtonViewCell.swift; sourceTree = "<group>"; };
 		76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsAndButtonViewCell.xib; sourceTree = "<group>"; };
 		76B64B1A1C75F91D00300F50 /* InstructionsWithButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsWithButtonViewCell.swift; sourceTree = "<group>"; };
@@ -1044,6 +1050,7 @@
 				0F9883CD1AD2AD5500F750F0 /* CongratsViewController.xib */,
 				76B084D81CE0D47C00C157BF /* PaymentCongratsViewController.swift */,
 				76B084D91CE0D47C00C157BF /* PaymentCongratsViewController.xib */,
+				76B085081CE258BA00C157BF /* CongratsFillmentDelegate.swift */,
 			);
 			name = Congrats;
 			sourceTree = "<group>";
@@ -1415,6 +1422,7 @@
 				76565EFD1C9AEB99006FF90B /* CopyrightTableViewCell.xib */,
 				763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */,
 				76B083E21CDD38BC00C157BF /* MPCongratsViewController.swift */,
+				76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1930,6 +1938,7 @@
 				76445AE21CC9576B008EE68E /* InstructionsAtmViewCell.swift in Sources */,
 				76B084DA1CE0D47C00C157BF /* PaymentCongratsViewController.swift in Sources */,
 				0FE3E37F1AE706B600C27B97 /* Utils.swift in Sources */,
+				76B0850C1CE2669C00C157BF /* CallbackCancelDelegate.swift in Sources */,
 				15D79A0A1CA9B6B900623A84 /* MPButton.swift in Sources */,
 				15D79A041CA96D6400623A84 /* MPLabel.swift in Sources */,
 				0F9884551AD2AEF800F750F0 /* MPPaymentMethodTableViewCell.swift in Sources */,
@@ -1947,6 +1956,7 @@
 				0F9884011AD2ADEE00F750F0 /* IssuersViewController.swift in Sources */,
 				0F9883751AD2AB6000F750F0 /* Identification.swift in Sources */,
 				76B084F41CE1701D00C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
+				76B085091CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */,
 				0F9883A11AD2AB8000F750F0 /* GatewayService.swift in Sources */,
 				0F9883D21AD2AD5500F750F0 /* CongratsPaymentMethodTableViewCell.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
@@ -2091,6 +2101,7 @@
 				76151B881C73C025007DF0E3 /* InstructionsService.swift in Sources */,
 				0F9884021AD2ADEE00F750F0 /* IssuersViewController.swift in Sources */,
 				767254641C7CB18200EB5EBA /* MercadoPagoContextTest.swift in Sources */,
+				76B0850D1CE2669C00C157BF /* CallbackCancelDelegate.swift in Sources */,
 				0F9884321AD2AE5900F750F0 /* InstallmentTableViewCell.swift in Sources */,
 				155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */,
 				0FC4FC3A1B0FB53500CF7148 /* PromoViewController.swift in Sources */,
@@ -2153,6 +2164,7 @@
 				156DA6431CC55636006B892F /* PayerCostFormTest.swift in Sources */,
 				0F9883721AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */,
+				76B0850A1CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */,
 				7656F5301C98A2E50076A14D /* InstructionsViewControllerTest.swift in Sources */,
 				76EC47DA1C85E8D20086FA53 /* IdentificationTest.swift in Sources */,
 				76EC47FE1C862A600086FA53 /* TransactionDetailsTest.swift in Sources */,

@@ -40,6 +40,17 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         self.congratsContentTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0,
             self.congratsContentTable.bounds.size.width, 0.01))
         
+        if self.callbackCancel == nil {
+            self.callbackCancel = {
+                if self.navigationController != nil {
+                    self.navigationController!.popViewControllerAnimated(true)
+                } else {
+                    self.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                }
+            }
+        }
         
     }
 
@@ -48,6 +59,13 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     }
     
 
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if (self.navigationItem.rightBarButtonItem != nil) {
+           self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }
@@ -56,28 +74,18 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         
         if indexPath.section == 0 {
             let header = congratsLayout[self.layoutTemplate]!["header"] as! String
-            return self.congratsContentTable.dequeueReusableCellWithIdentifier(header)!
+            let headerCell =  self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
+            return headerCell.fillCell(self.payment, callbackCancel: nil)
         } else if indexPath.section == 1 {
             let body = congratsLayout[self.layoutTemplate]!["body"] as! String
-            return self.congratsContentTable.dequeueReusableCellWithIdentifier(body)!
+            let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body) as! CongratsFillmentDelegate
+            return bodyCell.fillCell(self.payment, callbackCancel: self.callbackCancel)
         }
         
         // Exit button with callbackCancel action
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
-        if self.callbackCancel == nil {
-            self.callbackCancel = {
-                if self.navigationController != nil {
-                    self.navigationController!.popViewControllerAnimated(true)
-                } else {
-                    self.dismissViewControllerAnimated(true, completion: { 
-                        
-                    })
-                }
-            }
-        }
-        exitButtonCell.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        exitButtonCell.callbackCancel = self.callbackCancel
         return exitButtonCell
-        
         
     }
     
@@ -127,7 +135,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     private func getLayoutName(payment : Payment) -> String {
     
         if payment.status == PaymentStatus.REJECTED.rawValue {
-            if payment.statusDetail == "cc_rejected_call_for_authorize" {
+            if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {
                 return "authorize"
             }
             return "rejected"

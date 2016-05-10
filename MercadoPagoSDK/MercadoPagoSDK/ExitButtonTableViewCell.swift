@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExitButtonTableViewCell: UITableViewCell {
+class ExitButtonTableViewCell: CallbackCancelTableViewCell {
 
     static let ROW_HEIGHT = CGFloat(60)
     
@@ -16,13 +16,11 @@ class ExitButtonTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }

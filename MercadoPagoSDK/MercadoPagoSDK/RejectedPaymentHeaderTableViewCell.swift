@@ -8,9 +8,13 @@
 
 import UIKit
 
-class RejectedPaymentHeaderTableViewCell: UITableViewCell {
+class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
     static let ROW_HEIGHT = CGFloat(176)
+    
+    @IBOutlet weak var title: MPLabel!
+    
+    @IBOutlet weak var subtitle: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +27,14 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    func fillCell(payment : Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
+        //let title = payment.paymentMethodId.localized + " no proceso el pago."
+        let title = "Mastercard no proceso el pago."
+        self.title.text = title
+        self.subtitle.text = "Usa otra tarjeta o medio de pago".localized
+        return self
     }
  
 }

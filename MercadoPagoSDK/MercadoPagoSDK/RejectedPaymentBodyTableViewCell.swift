@@ -8,12 +8,12 @@
 
 import UIKit
 
-class RejectedPaymentBodyTableViewCell: UITableViewCell {
+class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(196)
+    static let ROW_HEIGHT = CGFloat(120)
     
-    @IBOutlet weak var cancelButton: MPButton!
     @IBOutlet weak var payAgainButton: MPButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.payAgainButton.layer.cornerRadius = 5
@@ -24,8 +24,14 @@ class RejectedPaymentBodyTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
+    }
+    
+    func fillCell(payment: Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
+        self.callbackCancel = callbackCancel!
+        self.payAgainButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        return self
     }
     
 }

@@ -12,6 +12,8 @@ class AuthorizePaymentHeaderTableViewCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(240)
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.shadowOffset = CGSizeMake(0, 1)

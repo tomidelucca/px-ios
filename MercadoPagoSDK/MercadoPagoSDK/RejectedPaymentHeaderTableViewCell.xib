@@ -57,6 +57,10 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.97254901960784312" green="0.9137254901960784" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            <connections>
+                <outlet property="subtitle" destination="g0C-Jp-kcu" id="aXC-Mr-eXV"/>
+                <outlet property="title" destination="p3y-Es-nD9" id="aet-km-sSM"/>
+            </connections>
             <point key="canvasLocation" x="420.5" y="245.5"/>
         </tableViewCell>
     </objects>
