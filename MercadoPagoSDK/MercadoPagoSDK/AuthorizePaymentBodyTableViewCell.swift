@@ -1,5 +1,5 @@
 //
-//  AuthorizePaymentTableViewCell.swift
+//  AuthorizePaymentBodyTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 9/5/16.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-class AuthorizePaymentTableViewCell: UITableViewCell {
+class AuthorizePaymentBodyTableViewCell: UITableViewCell {
 
+    static let ROW_HEIGHT = CGFloat(216)
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        ViewUtils.drawBottomLine(155, width: self.bounds.width, inView: self)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

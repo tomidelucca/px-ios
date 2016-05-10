@@ -36,8 +36,13 @@ public class MPStepBuilder : NSObject {
         return InstallmentsViewController(payerCosts: payerCosts, amount: amount, callback: callback)
     }
     
+    @available(*, deprecated=2.0, message="Use startPaymentCongratsStep instead")
     public class func startCongratsStep(payment: Payment, paymentMethod: PaymentMethod) -> CongratsViewController {
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
+    }
+
+    public class func startPaymentCongratsStep(payment: Payment) -> PaymentCongratsViewController {
+        return PaymentCongratsViewController(payment: payment)
     }
     
     public class func startInstructionsStep(payment: Payment, callback : (payment : Payment) -> Void) -> InstructionsViewController {

@@ -16,16 +16,14 @@
 "step6_description" = "Flujo de pagos por defecto sin tarjetas guardadas. Incluye todos los módulos de pago.";
 "step7_description" = "Promociones";
 
-"step1_title" = "Formulario simple";
+"step1_title" = "Tarjeta de Crédito";
 "step2_title" = "Tarjetas guardadas";
 "step3_title" = "Pagos con cuotas";
 "step4_title" = "Pagos con medios off-line";
 "step5_title" = "Flujo de pagos completo";
-"step6_title" = "Flujo de pagos completo sin tarjetas guardadas";
-"step7_title" = "Promociones";
-"step8_title" = "Checkout";
-"step9_title" = "Payment Vault";
-"step10_title" = "Checkout excluyendo Oxxo, Bancomer BT y Debito";
-"step11_title" = "Payment Vault con installments, excluyendo todo efectivo menos Oxxo";
-"step12_title" = "Payment Vault, Tarjeta de credito solamente disponible";
-"step13_title" = "Checkout solo con Serfin BT";
+"step6_title" = "Checkout";
+"step7_title" = "F2 - Selección de método de pago";
+"step8_title" = "Checkout : ticket excluído";
+"step9_title" = "Checkout : solo tarjeta de crédito";
+"step10_title" = "Checkout : rapipago y carga virtual";
+"step11_title" = "Checkout : solo pagofacil";
