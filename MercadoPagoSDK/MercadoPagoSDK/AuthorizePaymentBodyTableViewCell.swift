@@ -8,18 +8,32 @@
 
 import UIKit
 
-class AuthorizePaymentBodyTableViewCell: UITableViewCell {
+class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(216)
+    static let ROW_HEIGHT = CGFloat(150)
+    
+    var alreadyAuthorizedAction : (Void -> Void)?
+    
+    @IBOutlet weak var completeCardButton: MPButton!
+    @IBOutlet weak var cancelButton: MPButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        ViewUtils.drawBottomLine(155, width: self.bounds.width, inView: self)
+        ViewUtils.drawBottomLine(150, width: self.bounds.width, inView: self)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+        self.callbackCancel = callbackCancel
+        if alreadyAuthorizedAction == nil {
+            self.completeCardButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        }
+        self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
+        self.cancelButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        return self
     }
     
 }

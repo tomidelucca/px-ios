@@ -120,6 +120,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let payment = Payment()
             payment.status = "rejected"
             //payment.statusDetail = "cc_rejected_call_for_authorize"
+            payment.paymentMethodId = "visa"
+            payment.transactionAmount = 200
             let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
             self.navigationController!.pushViewController(congrats, animated: true)
 

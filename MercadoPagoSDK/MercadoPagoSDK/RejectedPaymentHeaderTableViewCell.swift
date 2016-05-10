@@ -12,12 +12,14 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
 
     static let ROW_HEIGHT = CGFloat(176)
     
+    
     @IBOutlet weak var title: MPLabel!
     
     @IBOutlet weak var subtitle: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.title.addCharactersSpacing(-0.4)
         self.layer.shadowOffset = CGSizeMake(0, 1)
         self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
         self.layer.shadowRadius = 3
@@ -30,8 +32,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     }
     
     func fillCell(payment : Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
-        //let title = payment.paymentMethodId.localized + " no proceso el pago."
-        let title = "Mastercard no proceso el pago."
+        let title = payment.paymentMethodId.localized + " no proceso el pago."
         self.title.text = title
         self.subtitle.text = "Usa otra tarjeta o medio de pago".localized
         return self

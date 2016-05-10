@@ -15,3 +15,5 @@
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
 
+"visa"="Visa";
+"master"="Mastercard";

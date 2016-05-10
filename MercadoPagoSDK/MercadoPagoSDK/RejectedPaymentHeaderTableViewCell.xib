@@ -22,7 +22,7 @@
                             <constraint firstAttribute="height" constant="60" id="i9F-hZ-f1b"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usa otra tarjeta u otro medio de pago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Usa otra tarjeta u otro medio de pago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="15" y="135" width="425" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="TId-Ot-Izk"/>
@@ -31,7 +31,7 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mastercard no proceso el pago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-Es-nD9">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mastercard no proceso el pago" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-Es-nD9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="15" y="98" width="425" height="32"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="32" id="vhP-mh-iLB"/>
@@ -59,7 +59,7 @@
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             <connections>
                 <outlet property="subtitle" destination="g0C-Jp-kcu" id="aXC-Mr-eXV"/>
-                <outlet property="title" destination="p3y-Es-nD9" id="aet-km-sSM"/>
+                <outlet property="title" destination="p3y-Es-nD9" id="Pga-20-AOm"/>
             </connections>
             <point key="canvasLocation" x="420.5" y="245.5"/>
         </tableViewCell>
