@@ -11,5 +11,4 @@ import UIKit
 public protocol InstructionsFillmentDelegate {
 
     func fillCell(instruction : Instruction) -> UITableViewCell
-    
 }

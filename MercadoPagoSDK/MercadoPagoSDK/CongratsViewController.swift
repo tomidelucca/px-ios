@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@available(*, deprecated=1.0, message="Use PaymentCongratsViewController instead")
 public class CongratsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     var payment: Payment!
@@ -26,9 +27,11 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
     
     var bundle : NSBundle? = MercadoPago.getBundle()
     
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
     
     init(payment: Payment, paymentMethod: PaymentMethod) {
         super.init(nibName: "CongratsViewController", bundle: bundle)

@@ -47,6 +47,16 @@ public class CheckoutPreference : Equatable {
                  return "Los items tienen diferente moneda".localized
             }
         }
+        //validar precio item(!= nil & >0), y que la currency exista
+        // que pref no esté expirada -> expirationDateTo
+        // que pref esté activa -> dateFrom
+        
+        // que installments : sea null || > 0 
+        // maxInstallments lo mismo
+        //que no esten todos los payment types exluidos!
+        
+        
+        
         //VALIDAR PREFERENCE PAYMENT METHOD
         
         if self.payer == nil {

@@ -23,9 +23,7 @@ public class CopyrightTableViewCell: UITableViewCell {
     }
     
     internal func drawBottomLine(width : CGFloat){
-        let overLinewView = UIView(frame: CGRect(x: 20, y: 0, width: width-40, height: 1))
-        overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
-        self.addSubview(overLinewView)
+        ViewUtils.drawBottomLine(0, width : width, inView: self)
     }
     
     func drawCell(buttonHidden : Bool, width : CGFloat) -> UITableViewCell {

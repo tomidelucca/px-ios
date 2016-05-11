@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Payment : Equatable {
+public class Payment : NSObject {
     public var binaryMode : Bool!
     public var callForAuthorizeId : String!
     public var captured : Bool!
@@ -42,6 +42,10 @@ public class Payment : Equatable {
     public var differentialPricingId : NSNumber = 0
     public var issuerId : Int = 0
     public var tokenId : String?
+    
+    override public init(){
+        super.init()
+    }
     
     public class func fromJSON(json : NSDictionary) -> Payment {
         let payment : Payment = Payment()

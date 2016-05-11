@@ -32,4 +32,10 @@ class ViewUtils {
         view.addSubview(imageView)
     }
     
+    class func drawBottomLine(y : CGFloat, width : CGFloat, inView view: UIView){
+        let overLinewView = UIView(frame: CGRect(x: 20, y: y, width: width-40, height: 1))
+        overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
+        view.addSubview(overLinewView)
+    }
+    
 }

@@ -147,29 +147,21 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         let installmentCell = tableView.dequeueReusableCellWithIdentifier("PayerCostTableViewCell", forIndexPath: indexPath) as! PayerCostTableViewCell
         
         
+        
         let payerCost : PayerCost = payerCosts![indexPath.row]
-        let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
+        
         let mpLightGrayColor = UIColor(netHex: 0x999999)
-        
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
-        
         let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
+        let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
         
-        
-        let stringToWrite = NSMutableAttributedString()
-        
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string: "\(payerCost.installments.description) de ", attributes: descriptionAttributes))
-        
-         stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(payerCost.installmentAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpTurquesaColor))
-        
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string:" (", attributes: totalAttributes))
-        stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor))
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string:")", attributes: totalAttributes))
-        installmentCell.payerCostDetail.attributedText =  stringToWrite
+        let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
+        totalAmountStr.appendAttributedString(totalAmount)
+        totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
+        installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: totalAmountStr)
             
             //= payerCosts![indexPath.row].recommendedMessage
-            return installmentCell
-        }
+        return installmentCell
+    }
     
     
     
