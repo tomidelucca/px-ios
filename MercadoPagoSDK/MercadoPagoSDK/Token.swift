@@ -17,17 +17,21 @@ public class Token : Equatable {
 	public var usedDate : String!
 	public var cardNumberLength : Int = 0
 	public var creationDate : NSDate!
-	public var truncCardNumber : String!
+	public var lastFourDigits : String!
+    public var firstSixDigit : String!
 	public var securityCodeLength : Int = 0
 	public var expirationMonth : Int = 0
 	public var expirationYear : Int = 0
 	public var lastModifiedDate : NSDate!
 	public var dueDate : NSDate!
 	
+    public var cardHolder : Cardholder?
+    
+    
 	public init (_id: String, publicKey: String, cardId: String!, luhnValidation: String!, status: String!,
-		usedDate: String!, cardNumberLength: Int, creationDate: NSDate!, truncCardNumber: String!,
+        usedDate: String!, cardNumberLength: Int, creationDate: NSDate!,lastFourDigits : String!,firstSixDigit : String!,
 		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: NSDate!,
-		dueDate: NSDate?) { 
+        dueDate: NSDate?, cardHolder : Cardholder?) {
 			self._id = _id
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -36,20 +40,22 @@ public class Token : Equatable {
 			self.usedDate = usedDate
 			self.cardNumberLength = cardNumberLength
 			self.creationDate = creationDate
-			self.truncCardNumber = truncCardNumber
+			self.lastFourDigits = lastFourDigits
+            self.firstSixDigit = firstSixDigit
 			self.securityCodeLength = securityCodeLength
 			self.expirationMonth = expirationMonth
 			self.expirationYear = expirationYear
 			self.lastModifiedDate = lastModifiedDate
 			self.dueDate = dueDate
+            self.cardHolder = cardHolder
 	}
     
     public func getBin() -> String? {
-        let range = Range(start: truncCardNumber!.startIndex, end: truncCardNumber!.characters.startIndex.advancedBy(6))
-        let bin :String? = truncCardNumber!.characters.count >= 6 ? truncCardNumber!.substringWithRange(range) : nil
+        let range = Range(start: firstSixDigit!.startIndex, end: firstSixDigit!.characters.startIndex.advancedBy(6))
+        let bin :String? = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substringWithRange(range) : nil
         return bin
     }
-    
+      
 	
 	public class func fromJSON(json : NSDictionary) -> Token {
 		let id = JSON(json["id"]!).asString!
@@ -60,19 +66,47 @@ public class Token : Equatable {
 		let usedDate = json.isKeyValid("date_used") ? JSON(json["date_used"]!).asString : ""
 		let cardNumberLength = json.isKeyValid("card_number_length") ? JSON(json["card_number_length"]!).asInt! : 0
 		let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : NSDate()
-		let truncCardNumber = json.isKeyValid("last_four_digits") ? JSON(json["last_four_digits"]!).asString : ""
+		let lastFourDigits = json.isKeyValid("last_four_digits") ? JSON(json["last_four_digits"]!).asString : ""
+        let firstSixDigits = json.isKeyValid("first_six_digits") ? JSON(json["first_six_digits"]!).asString : ""
 		let securityCodeLength = json.isKeyValid("security_code_length") ? JSON(json["security_code_length"]!).asInt! : 0
 		let expMonth = json.isKeyValid("expiration_month") ? JSON(json["expiration_month"]!).asInt! : 0
 		let expYear = json.isKeyValid("expiration_year") ? JSON(json["expiration_year"]!).asInt! : 0
 		let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : NSDate()
 		let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : NSDate()
-		
+        
+        let cardHolder : Cardholder? = json.isKeyValid("cardholder") ? Cardholder.fromJSON(json["cardholder"] as! NSDictionary) : nil
+        
 		return Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhn, status: status,
-			usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, truncCardNumber: truncCardNumber,
+			usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigits,
 			securityCodeLength: securityCodeLength, expirationMonth: expMonth, expirationYear: expYear, lastModifiedDate: lastModifiedDate,
-			dueDate: dueDate)
+            dueDate: dueDate, cardHolder: cardHolder)
 	}
+    public func getCardExpirationDateFormated() -> String {
+        return (String(expirationMonth) + String(expirationYear))
+    }
+    public func getMaskNumber() -> String {
+        
+        var masknumber : String = ""
+    
+        for _ in 0...cardNumberLength-4 {
+           masknumber = masknumber + "X"
+        }
+        
+           masknumber = masknumber + lastFourDigits
+        return masknumber
+        
+    }
+    public func getExpirationDateFormated() -> String {
+        
+        var str : String
+        
+        
+        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+        
+        return str
+    }
 }
+
 
 extension NSDictionary {
 	public func isKeyValid(dictKey : String) -> Bool {
@@ -96,7 +130,8 @@ public func ==(obj1: Token, obj2: Token) -> Bool {
     obj1.usedDate == obj2.usedDate &&
    // obj1.cardNumberLength == obj2.cardNumberLength &&
   //  obj1.creationDate == obj2.creationDate &&
-    obj1.truncCardNumber == obj2.truncCardNumber &&
+    obj1.firstSixDigit == obj2.firstSixDigit &&
+    obj1.lastFourDigits == obj2.lastFourDigits &&
     obj1.securityCodeLength == obj2.securityCodeLength &&
     obj1.expirationMonth == obj2.expirationMonth &&
     obj1.expirationYear == obj2.expirationYear &&

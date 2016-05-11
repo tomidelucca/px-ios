@@ -25,6 +25,7 @@ import UIKit
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
         loadViewFromNib ()
     }
     func loadViewFromNib() {
@@ -32,7 +33,7 @@ import UIKit
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         view.frame = bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+ //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view);
         
         

@@ -16,6 +16,7 @@ public class PaymentMethodSearchItem : Equatable {
     public var comment : String?
     public var childrenHeader : String?
     public var children : [PaymentMethodSearchItem] = []
+    public var showIcon : Bool = false
     
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearchItem {
         let pmSearchItem = PaymentMethodSearchItem()
@@ -34,6 +35,10 @@ public class PaymentMethodSearchItem : Equatable {
         
         if json["comment"] != nil && !(json["comment"]! is NSNull) {
             pmSearchItem.comment = JSON(json["comment"]!).asString!
+        }
+        
+        if json["show_icon"] != nil && !(json["show_icon"]! is NSNull) {
+            pmSearchItem.showIcon = JSON(json["show_icon"]!).asBool!
         }
         
         if json["children_header"] != nil && !(json["children_header"]! is NSNull) {
@@ -58,11 +63,15 @@ public class PaymentMethodSearchItem : Equatable {
     }
     
     public func isBitcoin() -> Bool {
-        return self.idPaymentMethodSearchItem == "bitcoin"
+        return self.idPaymentMethodSearchItem.lowercaseString == "bitcoin"
     }
     
     public func isPaymentMethod() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_METHOD
+    }
+    
+    public func isPaymentType() -> Bool {
+        return self.type == PaymentMethodSearchItemType.PAYMENT_TYPE
     }
     
 }
@@ -81,6 +90,6 @@ public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> 
     obj1.comment == obj2.comment &&
     obj1.childrenHeader == obj2.childrenHeader &&
     obj1.children == obj2.children
-    
+    obj1.showIcon == obj2.showIcon
     return areEqual
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TransactionDetails : Equatable {
+public class TransactionDetails : NSObject {
     public var couponAmount : Double = 0
     public var externalResourceUrl : String!
     public var financialInstitution : String!
@@ -16,6 +16,11 @@ public class TransactionDetails : Equatable {
     public var netReceivedAmount : Double = 0
     public var overpaidAmount : Double = 0
     public var totalPaidAmount : Double = 0
+    
+    override public init(){
+        super.init()
+    }
+    
     
     public class func fromJSON(json : NSDictionary) -> TransactionDetails {
         let transactionDetails : TransactionDetails = TransactionDetails()

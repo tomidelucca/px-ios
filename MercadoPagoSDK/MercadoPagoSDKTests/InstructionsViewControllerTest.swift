@@ -29,24 +29,25 @@ class InstructionsViewControllerTest: BaseTest {
     
     func testInstructionsScreens(){
          MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        XCTAssertEqual((instructionsViewController?.instructionsByPaymentMethod["oxxo"])!, ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100])
+        XCTAssertEqual((instructionsViewController?.instructionsByPaymentMethod["oxxo"])!, ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["bancomer_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 150])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["7eleven"]!,["body" : "instructionsTwoLabelsCell" , "body_heigth" : 170, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["bancomer_ticket"]!, ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["banamex_ticket"]!,["body" : "instructionsCell" , "body_heigth" : 210, "footer" : "defaultInstructionsFooterCell", "footer_height" : 100])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["7eleven"]!,["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["telecomm"]!,["body" : "instructionsCell" , "body_heigth" : 210, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 150])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["banamex_ticket"]!,["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86])
+        
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["telecomm"]!,["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180])
         
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_bank_transfer"]!,["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["serfin_bank_transfer"]!,["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["banamex_bank_transfer"]!,["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["banamex_bank_transfer"]!,["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120])
         
-        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["bancomer_bank_transfer"]!,["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 130])
+        XCTAssertEqual(instructionsViewController!.instructionsByPaymentMethod["bancomer_bank_transfer"]!,["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120])
     
     }
     
@@ -84,28 +85,28 @@ class InstructionsViewControllerTest: BaseTest {
     
     func testResolveBodyHeightForRow (){
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("oxxo"), 130)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("serfin_ticket"), 170)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("bancomer_ticket"), 170)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("7eleven"), 170)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("serfin_ticket"), 200)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("bancomer_ticket"), 200)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("7eleven"), 200)
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("banamex_ticket"),
-                            210)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("telecomm"), 210)
+                            230)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("telecomm"), 230)
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("serfin_bank_transfer"), 208)
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("banamex_bank_transfer"), 276)
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsBodyHeightForRow("bancomer_bank_transfer"), 258)
     }
     
     func testResolveInstructionsFooterHeight (){
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("oxxo"), 100)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("serfin_ticket"), 100)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("bancomer_ticket"), 150)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("7eleven"), 100)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("oxxo"), 86)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("serfin_ticket"), 86)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("bancomer_ticket"), 180)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("7eleven"), 86)
         XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("banamex_ticket"),
-            100)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("telecomm"), 150)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("serfin_bank_transfer"), 130)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("banamex_bank_transfer"), 130)
-        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("bancomer_bank_transfer"), 130)
+            86)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("telecomm"), 180)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("serfin_bank_transfer"), 120)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("banamex_bank_transfer"), 120)
+        XCTAssertEqual(self.instructionsViewController?.resolveInstructionsFooterHeight("bancomer_bank_transfer"), 120)
     }
     
     func testFinishInstruction(){

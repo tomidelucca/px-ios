@@ -10,12 +10,13 @@ import UIKit
 
 class PaymentTitleViewCell: UITableViewCell {
 
-
+    static let ROW_HEIGHT = CGFloat(52)
+    
     @IBOutlet weak var paymentTitle: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.addSubview(ViewUtils.getTableCellSeparatorLineView(paymentTitle.frame.minX, y: 0, width: self.frame.width, height: 1))
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

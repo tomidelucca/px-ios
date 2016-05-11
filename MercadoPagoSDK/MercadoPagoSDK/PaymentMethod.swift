@@ -8,17 +8,25 @@
 
 import Foundation
 
-public class PaymentMethod : Equatable {
+public class PaymentMethod : Equatable  {
     
     public var _id : String!
+
     public var name : String!
-    public var comment : String! //TODO - Check Mark
     public var paymentTypeId : PaymentTypeId!
     public var settings : [Setting]!
     public var additionalInfoNeeded : [String]!
+    public var accreditationTime : Int?
     
     public func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
+    }
+    
+    public func isIdentificationRequired() -> Bool {
+        return isAdditionalInfoNeeded("cardholder_identification_number")
+    }
+    public func isIdentificationTypeRequired() -> Bool {
+        return isAdditionalInfoNeeded("cardholder_identification_type")
     }
     
     public func isSecurityCodeRequired(bin: String) -> Bool {
@@ -68,6 +76,12 @@ public class PaymentMethod : Equatable {
                 }
             }
         }
+        
+        if let accreditationTime = json["accreditation_time"] as? Int {
+            paymentMethod.accreditationTime = accreditationTime
+        }
+        
+        
         paymentMethod.additionalInfoNeeded = additionalInfoNeeded
         return paymentMethod
     }
@@ -140,7 +154,44 @@ public class PaymentMethod : Equatable {
     public func isMASTERCARD() -> Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
+
+    public func conformsPaymentPreferences(paymentPreference : PaymentPreference?) -> Bool{
+        
+        if(paymentPreference == nil){
+            return true
+        }
+        if(paymentPreference!.defaultPaymentTypeId != nil){
+            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId){
+                return false
+            }
+        }
+        if (paymentPreference!.defaultPaymentMethodId != nil){
+            if (self._id != paymentPreference!.defaultPaymentMethodId){
+                return false
+            }
+        }
+        if((paymentPreference?.excludedPaymentTypeIds) != nil){
+            for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerate())! {
+                if (value == self.paymentTypeId){
+                    return false
+                }
+            }
+        }
+        
+        if((paymentPreference?.excludedPaymentMethodIds) != nil){
+            for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerate())! {
+                if (value == self._id){
+                    return false
+                }
+            }
+        }
+        
+        
+        return true
+    }
+
 }
+
 
 
 

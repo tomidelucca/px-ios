@@ -10,6 +10,8 @@ import UIKit
 
 class PaymentSearchCell: UITableViewCell {
     
+    static let ROW_HEIGHT = CGFloat(52)
+    
     @IBOutlet weak var paymentTitle: MPLabel!
     
     @IBOutlet weak var paymentIcon: UIImageView!
@@ -17,20 +19,20 @@ class PaymentSearchCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.separatorInset = UIEdgeInsetsZero
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func awakeFromNib() {
+    override func
+        awakeFromNib() {
         super.awakeFromNib()
+        self.addSubview(ViewUtils.getTableCellSeparatorLineView(paymentTitle.frame.minX, y: 0, width: self.frame.width, height: 1))
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
     }
     
     func fillRowWithPayment(paymentSearchItem : PaymentMethodSearchItem, iconImage: UIImage, tintColor : Bool){
@@ -43,6 +45,5 @@ class PaymentSearchCell: UITableViewCell {
             self.paymentIcon.image = iconImage
             self.paymentTitle.hidden = true
         }
-    
     }
 }

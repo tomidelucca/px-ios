@@ -16,7 +16,7 @@ class GuessingFormTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
+        MercadoPagoContext.setPublicKey(Examples)
 
         self.cardFormViewController = MPStepBuilder.startCreditCardForm(nil, amount: 10000, callback: { (paymentMethod, cardToken, issuer, installment) -> Void in
             

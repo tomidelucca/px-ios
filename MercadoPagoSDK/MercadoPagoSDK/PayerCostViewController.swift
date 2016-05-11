@@ -18,6 +18,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var paymentMethod : PaymentMethod?
     var token : Token?
     var cardFront : CardFrontView?
+    var maxInstallments : Int?
     
     var callback : ((payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
@@ -28,14 +29,14 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,minInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
          self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
-        
+        self.maxInstallments = maxInstallments
         MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
@@ -70,12 +71,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
             
             
-            cardFront?.cardNumber.text = self.token!.truncCardNumber as String
+            cardFront?.cardNumber.text = self.token!.firstSixDigit as String
         // TODO
-        /*
-            cardFront?.cardName.text = self.token!.cardholder!.name
+        
+            cardFront?.cardName.text = self.token!.cardHolder!.name
             cardFront?.cardExpirationDate.text = self.token!.getExpirationDateFormated() as String
-            */
+            
             cardFront?.cardNumber.textColor =  defaultColorText
             cardFront?.cardName.textColor =  defaultColorText
             cardFront?.cardExpirationDate.textColor =  defaultColorText
@@ -135,7 +136,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         if(self.payerCosts == nil){
             return 0
         }else{
-            return self.payerCosts!.count
+            return installments![0].numberOfPayerCostToShow(maxInstallments)
         }
     }
     
@@ -146,29 +147,21 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         let installmentCell = tableView.dequeueReusableCellWithIdentifier("PayerCostTableViewCell", forIndexPath: indexPath) as! PayerCostTableViewCell
         
         
+        
         let payerCost : PayerCost = payerCosts![indexPath.row]
-        let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
+        
         let mpLightGrayColor = UIColor(netHex: 0x999999)
-        
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
-        
         let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
+        let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
         
-        
-        let stringToWrite = NSMutableAttributedString()
-        
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string: "\(payerCost.installments.description) de ", attributes: descriptionAttributes))
-        
-         stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(payerCost.installmentAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpTurquesaColor))
-        
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string:" (", attributes: totalAttributes))
-        stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor))
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string:")", attributes: totalAttributes))
-        installmentCell.payerCostDetail.attributedText =  stringToWrite
+        let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
+        totalAmountStr.appendAttributedString(totalAmount)
+        totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
+        installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: totalAmountStr)
             
             //= payerCosts![indexPath.row].recommendedMessage
-            return installmentCell
-        }
+        return installmentCell
+    }
     
     
     
@@ -177,7 +170,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.callback!(payerCost: payerCost)
     }
 
-
+    
+  
 }
     
     

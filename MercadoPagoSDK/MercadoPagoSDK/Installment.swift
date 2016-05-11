@@ -36,6 +36,31 @@ public class Installment : Equatable {
         return installment
     }
     
+    public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = nil) -> Int{
+        var count = 0
+        if (maxNumberOfInstallments == nil){
+            return self.payerCosts!.count
+        }
+        for pc in payerCosts! {
+            if (pc.installments > maxNumberOfInstallments){
+                return count
+            }
+            count++
+        }
+        
+        return count
+    }
+    
+    public func containsInstallment(installment : Int) -> PayerCost? {
+        
+         for pc in payerCosts! {
+            if (pc.installments == installment){
+                return pc
+            }
+        }
+        return nil
+    }
+
 }
 
 public func ==(obj1: Installment, obj2: Installment) -> Bool {

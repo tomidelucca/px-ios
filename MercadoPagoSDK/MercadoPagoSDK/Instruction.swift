@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class Instruction: Equatable {
+public class Instruction: NSObject {
     
     var title : String = ""
     var accreditationMessage : String = ""

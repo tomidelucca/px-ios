@@ -12,7 +12,7 @@ class BaseTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey("TEST-5999d034-afe5-4005-b22f-dccb5b576d55")
+        MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
     }
     
     override func tearDown() {

@@ -37,15 +37,24 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     }
     
     internal func fillRowWithPreference(preference : CheckoutPreference){
-        self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.items![0].title, pictureUrl: preference.items![0].pictureUrl)
+        let currency = CurrenciesUtil.getCurrencyFor(preference.getCurrencyId())
+        self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.getTitle(), pictureUrl: preference.getPictureUrl(), currency : currency!)
     }
     
-    internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?){
-        //TODO : deberia venir de servicio
-        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$")
+    internal func fillRowWithSettings(amount : Double, purchaseTitle: String, pictureUrl : String?, currency : Currency){
+        self.preferenceAmount.attributedText = Utils.getAttributedAmount(String(amount), thousandSeparator: String(currency.getThousandsSeparatorOrDefault()), decimalSeparator: String(currency.getDecimalSeparatorOrDefault()), currencySymbol: String(currency.getCurrencySymbolOrDefault()))
         self.preferenceDescription.text = purchaseTitle
-        if pictureUrl != nil {
-            self.shoppingCartIcon.image = MercadoPago.getImage(pictureUrl!)
+        if pictureUrl != nil && pictureUrl?.characters.count > 0 {
+            let url = NSURL(string: pictureUrl!)
+            if url != nil {
+                let data = NSData(contentsOfURL: url!)
+                let image = UIImage(data: data!)
+                if image != nil {
+                    self.shoppingCartIcon.removeFromSuperview()
+                    ViewUtils.addScaledImage(image!, inView: self.shoppingCartIconContainer)
+                }
+            }
+            
         }
     }
     

@@ -27,4 +27,21 @@ public class Currency : NSObject {
         self.thousandsSeparator = thousandSeparator
     }
     
+    public func getCurrencySymbolOrDefault() -> String {
+        return self.symbol ?? "$"
+    }
+    
+    /***
+     *
+     Default values are ARS values
+     *
+     **/
+    public func getThousandsSeparatorOrDefault() -> Character {
+        return self.thousandsSeparator ?? ","
+    }
+    
+    public func getDecimalSeparatorOrDefault() -> Character {
+        return self.decimalSeparator ?? "."
+    }
+
 }

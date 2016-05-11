@@ -12,14 +12,12 @@ public class Payer : Equatable {
     public var email : String!
     public var _id : NSNumber = 0
     public var identification : Identification!
-    public var type : String!
     
     
     
     public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
         self._id = _id!
         self.email = email
-        self.type = type
         self.identification = identification
     }
     
@@ -29,12 +27,22 @@ public class Payer : Equatable {
             payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
         }
         payer.email = JSON(json["email"]!).asString
-        payer.type = JSON(json["type"]!).asString
         if let identificationDic = json["identification"] as? NSDictionary {
             payer.identification = Identification.fromJSON(identificationDic)
         }
         return payer
     }
+    
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "email": self.email == nil ? JSON.null : (self.email!),
+            "_id": self._id == 0 ? JSON.null : self._id,
+            "identification" : self.identification == nil ? JSON.null : self.identification.toJSONString()
+        ]
+        return JSON(obj).toString()
+    }
+
 }
 
 
@@ -43,8 +51,7 @@ public func ==(obj1: Payer, obj2: Payer) -> Bool {
     let areEqual =
     obj1._id == obj2._id &&
     obj1.email == obj2.email &&
-    obj1.identification == obj2.identification &&
-    obj1.type == obj2.type
+    obj1.identification == obj2.identification
     
     return areEqual
 }

@@ -66,7 +66,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		
 		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "submitForm")
 		
-		let mercadoPago = MercadoPago(publicKey: self.publicKey!)
+        let mercadoPago = MercadoPago(publicKey: self.publicKey!)
 		mercadoPago.getIdentificationTypes({(identificationTypes: [IdentificationType]?) -> Void in
 			self.identificationTypes = identificationTypes
 			self.prepareTableView()
@@ -85,6 +85,8 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		super.viewWillAppear(animated)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willShowKeyboard:", name: UIKeyboardWillShowNotification, object: nil)
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "willHideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
+        
+
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -399,4 +401,6 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 			self.callback?(token: token)
 			}, failure: nil)
 	}
+    
+
 }

@@ -36,8 +36,13 @@ public class MPStepBuilder : NSObject {
         return InstallmentsViewController(payerCosts: payerCosts, amount: amount, callback: callback)
     }
     
+    @available(*, deprecated=2.0, message="Use startPaymentCongratsStep instead")
     public class func startCongratsStep(payment: Payment, paymentMethod: PaymentMethod) -> CongratsViewController {
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
+    }
+
+    public class func startPaymentCongratsStep(payment: Payment) -> PaymentCongratsViewController {
+        return PaymentCongratsViewController(payment: payment)
     }
     
     public class func startInstructionsStep(payment: Payment, callback : (payment : Payment) -> Void) -> InstructionsViewController {
@@ -48,18 +53,74 @@ public class MPStepBuilder : NSObject {
         return PromoViewController()
     }
     
-    public class func startCreditCardForm(paymentType : PaymentType? , amount: Double,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, installment: Installment?) -> Void)) -> CardFormViewController {
+
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> UINavigationController {
+
+        var navigation : UINavigationController?
+        var ccf : CardFormViewController = CardFormViewController()
+
+        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
+            
+            if(paymentMethod.isIdentificationRequired()){
+                let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
+                    cardToken?.cardholder?.identification = identification
+                    
+                    let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, callback: { (issuer) -> Void in
+                        MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
+                            callback(paymentMethod: paymentMethod, token: token, issuer:issuer)
+                        }) { (error) -> Void in
+                            print(error)
+                        }
+                    })
+                    issuerForm.callbackCancel = { Void -> Void in
+                        ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
+                            print("LLEGUE!")
+                        })
+                    }
+                    ccf.navigationController!.pushViewController(issuerForm, animated: false)
+                })
+                // Set action for cancel callback
+                identificationForm.callbackCancel = { Void -> Void in
+                    ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                }
+                
+                
+                ccf.navigationController!.pushViewController(identificationForm, animated: false)
+                
+                
+            }else{
+                
+            }
+            
+            
+            },callbackCancel: callbackCancel)
+        navigation = MPFlowController.createNavigationControllerWith(ccf)
         
-        
-        return CardFormViewController(paymentType : paymentType , amount: amount, callback : callback)
+        return navigation!
+
     }
-    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
+    
+    
+    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int?,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         
         
-        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, minInstallments: minInstallments, callback: callback)
+        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: minInstallments, callback: callback)
        // return PaymentInstallmentsViewController(paymentType : paymentType , callback : callback)
     }
     
+    public class func startIdentificationForm( callback : ((identification: Identification?) -> Void)) -> IdentificationViewController {
+        
+        
+        return IdentificationViewController(callback: callback)
+    }
     
+    
+    public class func startIssuerForm(paymentMethod: PaymentMethod, cardToken: CardToken, callback : ((issuer: Issuer?) -> Void)) -> IssuerCardViewController {
+        
+        
+        return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
+    }
 }
 

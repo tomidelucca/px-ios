@@ -10,20 +10,26 @@ import UIKit
 import MercadoPagoSDK
 
 class ExamplesUtils {
+
     class var MERCHANT_PUBLIC_KEY : String {
 		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
-		// "444a9ef5-8a6b-429f-abdf-587639155d88" // AR
+		 //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
 		// "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
-//		 "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+		// "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
 		// "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
 		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
         
-            
-       "TEST-b130744e-3dc5-4809-b027-599109307f1e"
-            
+
+          "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
+
+     //"TEST-b130744e-3dc5-4809-b027-599109307f1e"
+     //"TEST-d7ecb23b-8cbd-4292-96d5-eccfe39748b5"
+       // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
+
         //USUARIO AXEL - ARG
-       // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
+        // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
     }
+    
     class var MERCHANT_MOCK_BASE_URL : String {
         return "https://www.mercadopago.com"
     }
@@ -34,6 +40,7 @@ class ExamplesUtils {
     class var MERCHANT_MOCK_CREATE_PAYMENT_URI : String {
         return  "/checkout/examples/doPayment"
     }
+    
     class var MERCHANT_MOCK_GET_DISCOUNT_URI : String {
         return  "/checkout/examples/getDiscounts"
     }
@@ -68,8 +75,28 @@ class ExamplesUtils {
         return 1000.00
     }
  
-    class var PREF_ID_MOCK : String {
-        return "167833503-8a98d77e-425a-4817-ae0b-6a429b832ba6"
+    class var PREF_ID_NO_EXCLUSIONS : String {
+        return "150216849-a2e6c898-db8d-4f93-925b-66105c4b632e"
+    }
+    
+    class var PREF_ID_TICKET_EXCLUDED : String {
+        return "150216849-551cddcc-e221-4289-bb9c-54bfab992e3d"
+    }
+    
+    class var PREF_ID_MLA_ONLY_CC : String {
+        return "150216849-80a7a6da-dec9-410f-b865-7244c91141fb"
+    }
+    
+    class var PREF_ID_MLA_RAPIPAGO_CARGAVIRTUAL_EXCLUDED : String {
+        return "150216849-e6ab0d15-e6f1-4160-a447-2ba5294ca7f4"
+    }
+    
+    class var PREF_ID_MLA_ONLY_PAGOFACIL : String {
+        return "150216849-b4c456b8-e880-497e-aafa-cbfc60c8114b"
+    }
+    
+    class var PREF_ID_MLA_SEVERAL_ITEMS : String {
+        return "150216849-77db2abc-a73d-4293-8914-4a35ddf835c0"
     }
     
     class func startCardActivity(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (token: Token?) -> Void) -> CardViewController {
@@ -119,7 +146,7 @@ class ExamplesUtils {
         
         //Create CheckoutPreference
         let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
-        preference._id = ExamplesUtils.PREF_ID_MOCK
+        preference._id = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
     
         return preference
     }
@@ -129,9 +156,9 @@ class ExamplesUtils {
         let preference = self.createCheckoutPreferenceWithNoExclusions()
         
         //Preference payment methods
-        let preferencePaymentMethods = PreferencePaymentMethods(excludedPaymentMethods: ["oxxo", "bancomer_bank_transfer"], excludedPaymentTypes: [PaymentTypeId.DEBIT_CARD,], defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1)
+        let paymentPreference = PaymentPreference(excludedPaymentMethodsIds: ["oxxo", "bancomer_bank_transfer"], excludedPaymentTypesIds: [PaymentTypeId.DEBIT_CARD,], defaultPaymentMethodId: nil, maxAcceptedInstallment: 1, defaultInstallments: 1)
         
-        preference.paymentMethods = preferencePaymentMethods
+        preference.paymentPreference = paymentPreference
         
         return preference
     }

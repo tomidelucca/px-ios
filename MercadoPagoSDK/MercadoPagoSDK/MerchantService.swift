@@ -25,16 +25,12 @@ public class MerchantService : MercadoPagoService {
         self.request(MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
     }
     
-    public func createMPPayment(method : String = "GET", params : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func createMPPayment(method : String = "POST", payment : MPPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.baseURL = MercadoPago.MP_API_BASE_URL
-        self.request(MercadoPago.MP_PAYMENTS_URI, params: params, body: nil, method: method, success: success, failure: failure)
+        self.request(MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
     }
     
-    public func createPreference(method : String = "POST", preference : CheckoutPreference, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        //TODO: set proper default base url
-        if self.baseURL.isEmpty {
-            self.baseURL = MercadoPago.MP_API_BASE_URL
-        }
-        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: preference.toJSONString(), method: method, success: success, failure: failure)
+    public func createPreference(method : String = "POST", merchantParams : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams, method: method, success: success, failure: failure)
     }
 }
