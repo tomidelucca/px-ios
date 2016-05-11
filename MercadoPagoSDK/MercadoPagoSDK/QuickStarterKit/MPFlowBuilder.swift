@@ -52,10 +52,8 @@ public class MPFlowBuilder : NSObject {
     
     public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> UINavigationController {
     
-        
-
-    
         var cardVC : UINavigationController?
+        var ccf : CardFormViewController = CardFormViewController()
         
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
             
@@ -65,7 +63,7 @@ public class MPFlowBuilder : NSObject {
                     callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
                 })
                 
-                cardVC!.pushViewController(pcvc, animated: false)
+                ccf.navigationController!.pushViewController(pcvc, animated: false)
                 
                 }, failure: { (error) -> Void in
                     
@@ -73,7 +71,9 @@ public class MPFlowBuilder : NSObject {
             
             }, callbackCancel : callbackCancel)
     
-    cardVC!.modalTransitionStyle = .CrossDissolve
+        ccf = cardVC?.viewControllers[0] as! CardFormViewController
+    
+        cardVC!.modalTransitionStyle = .CrossDissolve
     
     
     
