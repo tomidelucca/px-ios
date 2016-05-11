@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cbr-KY-HPt">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="177"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="179"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAv-vt-373" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                                 <rect key="frame" x="62" y="16" width="318" height="21"/>
@@ -38,14 +38,20 @@
                                     <constraint firstAttribute="height" constant="19" id="g8h-hy-bda"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En tu estado de cuenta verás el cargo como MERCADOPAGO." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQY-gr-8cb" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="22" y="84" width="358" height="31"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQY-gr-8cb" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="22" y="84" width="358" height="33"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="En tu estado de cuenta verás el cargo como MERCADOPAGO.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comprobante 01234567" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMr-uI-zyh" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="23" y="146" width="344" height="21"/>
+                                <rect key="frame" x="23" y="148" width="344" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="XHq-gI-hl2"/>
                                 </constraints>
@@ -86,7 +92,7 @@
                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="voucherClipped" translatesAutoresizingMaskIntoConstraints="NO" id="UQY-Qs-1Oo">
-                        <rect key="frame" x="0.0" y="177" width="390" height="15"/>
+                        <rect key="frame" x="0.0" y="179" width="390" height="15"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.39406866776315785" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>

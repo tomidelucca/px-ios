@@ -152,11 +152,11 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         let mpLightGrayColor = UIColor(netHex: 0x999999)
         let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
-        let totalAmountStr = NSMutableAttributedString(string:" (")
+        let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
         
         let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
         totalAmountStr.appendAttributedString(totalAmount)
-        totalAmountStr.appendAttributedString(NSMutableAttributedString(string:")", attributes: totalAttributes))
+        totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
         installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: totalAmountStr)
             
             //= payerCosts![indexPath.row].recommendedMessage

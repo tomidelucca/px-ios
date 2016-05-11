@@ -12,6 +12,7 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
 
     static let ROW_HEIGHT = CGFloat(210)
     
+    @IBOutlet weak var subtitle: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.shadowOffset = CGSizeMake(0, 1)
@@ -28,6 +29,14 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     }
     
     func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+        let email : String
+        if (payment.payer != nil) {
+            email = payment.payer!.email ?? ""
+        } else {
+            email = "tu mail".localized
+        }
+        
+        self.subtitle.text = "Te enviaremos los datos a ".localized + email
         return self
     }
     
