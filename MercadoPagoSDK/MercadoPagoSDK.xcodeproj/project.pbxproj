@@ -433,6 +433,7 @@
 		76B085151CE366D600C157BF /* ApprovedPaymentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B085131CE366D600C157BF /* ApprovedPaymentHeaderTableViewCell.xib */; };
 		76B085161CE368D700C157BF /* ApprovedPaymentHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085121CE366D600C157BF /* ApprovedPaymentHeaderTableViewCell.swift */; };
 		76B085171CE3690600C157BF /* ApprovedPaymentHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B085131CE366D600C157BF /* ApprovedPaymentHeaderTableViewCell.xib */; };
+		76B085181CE3A81C00C157BF /* MPFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D9363D1CD9011400238CB0 /* MPFlowController.swift */; };
 		76B64B161C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B181C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */; };
@@ -2274,6 +2275,7 @@
 				155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */,
 				15EFA33E1C4423DA007D67D0 /* MPServicesBuilder.swift in Sources */,
 				0FC4FC341B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
+				76B085181CE3A81C00C157BF /* MPFlowController.swift in Sources */,
 				0F9884441AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.swift in Sources */,
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F9883681AD2AB6000F750F0 /* Cause.swift in Sources */,

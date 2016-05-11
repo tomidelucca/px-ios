@@ -57,45 +57,46 @@ public class MPStepBuilder : NSObject {
     public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> UINavigationController {
 
         var navigation : UINavigationController?
-        
+        var ccf : CardFormViewController = CardFormViewController()
 
-        navigation = MPFlowController.createNavigationControllerWith(CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
+        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
             
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
                     cardToken?.cardholder?.identification = identification
-                   
+                    
                     let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, callback: { (issuer) -> Void in
                         MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
                             callback(paymentMethod: paymentMethod, token: token, issuer:issuer)
-                            }) { (error) -> Void in
-                                print(error)
+                        }) { (error) -> Void in
+                            print(error)
                         }
                     })
                     issuerForm.callbackCancel = { Void -> Void in
-                        navigation!.dismissViewControllerAnimated(true, completion: {
+                        ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
                             print("LLEGUE!")
                         })
                     }
-                    navigation!.pushViewController(issuerForm, animated: false)
+                    ccf.navigationController!.pushViewController(issuerForm, animated: false)
                 })
                 // Set action for cancel callback
                 identificationForm.callbackCancel = { Void -> Void in
-                    navigation!.dismissViewControllerAnimated(true, completion: {
+                    ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
                         
                     })
                 }
-
                 
-                navigation!.pushViewController(identificationForm, animated: false)
+                
+                ccf.navigationController!.pushViewController(identificationForm, animated: false)
                 
                 
             }else{
                 
             }
-        
-        
-        },callbackCancel: callbackCancel))
+            
+            
+            },callbackCancel: callbackCancel)
+        navigation = MPFlowController.createNavigationControllerWith(ccf)
         
         return navigation!
 
