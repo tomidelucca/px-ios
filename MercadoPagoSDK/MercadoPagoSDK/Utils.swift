@@ -36,6 +36,42 @@ class Utils {
         return attributedSymbol
     }
     
+    class func getAttributedAmount(amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+        let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
+        let amount = getAmountFormatted(String(amount), thousandSeparator : thousandSeparator, decimalSeparator: ".")
+        
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+        
+        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
+        let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
+        let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
+        attributedSymbol.appendAttributedString(attributedAmount)
+        attributedSymbol.appendAttributedString(attributedCents)
+        return attributedSymbol
+    }
+    
+    class func getTransactionInstallmentsDescription(installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
+        let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
+        let mpLightGrayColor = UIColor(netHex: 0x999999)
+        
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
+        
+        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
+        
+
+        
+        let stringToWrite = NSMutableAttributedString()
+        
+        stringToWrite.appendAttributedString(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
+        
+        stringToWrite.appendAttributedString(Utils.getAttributedAmount(String(installmentAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpTurquesaColor))
+        
+        stringToWrite.appendAttributedString(additionalString)
+        
+        return stringToWrite
+    }
+    
     class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
         let range = formattedString.rangeOfString(decimalSeparator)
         var cents = ""

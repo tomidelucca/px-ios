@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApprovedPaymentHeaderTableViewCell: UITableViewCell {
+class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
     static let ROW_HEIGHT = CGFloat(210)
     
@@ -25,6 +25,10 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+        return self
     }
     
 }
