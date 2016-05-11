@@ -328,10 +328,19 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
-    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token?, payerCost: PayerCost?, issuer: Issuer?, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    
+        var issuerId = ""
+        if issuer != nil {
+            issuerId = String(issuer!._id!.integerValue)
+        }
         
+        var tokenId = ""
+        if token != nil {
+            tokenId = token!._id
+        }
         
-        let mpPayment = MPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id)
+        let mpPayment = MPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId)
         let service : MerchantService = MerchantService()
         service.createMPPayment(payment: mpPayment, success: { (jsonResult) in
             var payment : Payment? = nil

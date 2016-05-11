@@ -232,7 +232,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             
                 if paymentTypeId!.isCard() {
                     let cardFlow = MPFlowBuilder.startCardFlow(self.paymentSettings, amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) in
-                        //TODO : complete
+                        self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: (payerCost?.installments)!)
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {
                                 self.navigationController?.popViewControllerAnimated(true)
