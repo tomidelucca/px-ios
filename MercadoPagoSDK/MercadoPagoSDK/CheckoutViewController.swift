@@ -247,23 +247,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.showLoading()
         self.paymentButton!.enabled = false
 
-        if ((self.paymentMethod?.isOfflinePaymentMethod()) != nil){
+        if (self.paymentMethod!.isOfflinePaymentMethod()){
             self.confirmPaymentOff()
         } else {
-            let payment = Payment()
-            payment.transactionAmount = self.preference!.getAmount()
-            payment.tokenId = token?._id
-            payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
-            payment.paymentMethodId = self.paymentMethod!._id
-            //TODO
-            payment._description = self.preference!.items![0].title
-            self.confirmPaymentOn(payment, token: token!)
+            self.confirmPaymentOn()
         }
         self.hideLoading()
     }
     
     internal func confirmPaymentOff(){
-        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : nil, payerCost: nil, issuer: nil,success: { (payment) -> Void in
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
             payment._id = 1826446924
             self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
@@ -291,17 +284,19 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         })
     }
     
-    internal func confirmPaymentOn(payment : Payment , token : Token){
-        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : token, payerCost:payerCost , issuer: self.issuer,success: { (payment) -> Void in
+    internal func confirmPaymentOn(){
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.installments , issuer: self.issuer,success: { (payment) -> Void in
             
                 self.clearMercadoPagoStyleAndGoBack()
-              //  MPFlowController.dismiss(true)
+                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callback: {
+                    self.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                })
+                self.navigationController?.pushViewController(congratsVC, animated: true)
+            
             }, failure : { (error) -> Void in
                 //TODO : remove / payment failed
-              /*  MPFlowController.push(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                    self.clearMercadoPagoStyle()
-                    self.callback(payment)
-                }))*/
                 
         })
     }
