@@ -119,8 +119,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         case 11:
             let payment = Payment()
             payment.status = "rejected"
-            payment.statusDetail = "cc_rejected_bad_filled_security_code"
-            payment.paymentMethodId = "visa"
+            payment.statusDetail = "cc_rejected_insufficient_amount"
+            payment.paymentMethodId = "master"
             payment.transactionAmount = 200
             payment.transactionDetails = TransactionDetails()
             payment.installments = 6
@@ -129,8 +129,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
             
             payment._id = 333555
-            let congrats = MPStepBuilder.startPaymentCongratsStep(payment, callback: {
-            })
+            let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
             self.navigationController!.pushViewController(congrats, animated: true)
 
         default:

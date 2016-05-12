@@ -288,7 +288,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.installments , issuer: self.issuer,success: { (payment) -> Void in
             
                 self.clearMercadoPagoStyleAndGoBack()
-                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callback: {
+                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, cancelCallback: {
                     self.dismissViewControllerAnimated(true, completion: {
                         
                     })
