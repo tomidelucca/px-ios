@@ -65,7 +65,7 @@ PARA LA FACTURACION</string>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="ux3-pV-d6L" secondAttribute="height" multiplier="5:3" id="H8R-hU-klH"/>
                         <constraint firstItem="opS-yI-TNr" firstAttribute="centerY" secondItem="ux3-pV-d6L" secondAttribute="centerY" constant="1" id="OMr-C8-fnX"/>
@@ -156,7 +156,7 @@ PARA LA FACTURACION</string>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.29019609089999998" green="0.5647059083" blue="0.88627451660000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="jwv-KW-920" firstAttribute="top" secondItem="XWw-2W-szN" secondAttribute="bottom" id="5rx-Id-g6w"/>
                 <constraint firstItem="XWw-2W-szN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9qR-Ee-2YS"/>

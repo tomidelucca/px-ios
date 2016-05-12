@@ -156,6 +156,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             editingLabel?.text = formatCardNumberText(textField.text!)
             self.updateCardSkin()
 
+            /*
             if(isAmexCard()){
                 if (textField.text?.characters.count==18){
                     self.prepareNameLabelForEdit()
@@ -165,15 +166,17 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                     self.prepareNameLabelForEdit()
                 }
             }
+  */
              updateLabelsFontColors()
         }else if(editingLabel == nameLabel){
             editingLabel?.text = formatName(textField.text!)
-            if (textField.text?.characters.count==20){
-                self.prepareExpirationLabelForEdit()
-            }
+    //        if (textField.text?.characters.count==20){
+    //            self.prepareExpirationLabelForEdit()
+    //        }
              updateLabelsFontColors()
         }else if(editingLabel == expirationDateLabel){
             editingLabel?.text = formatExpirationDate(textField.text!)
+            /*
             if(textField.text?.characters.count == 5){
                 if(!isAmexCard()){
                     editingLabel = cvvLabel
@@ -188,10 +191,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 }
                 
             }
+  */
              updateLabelsFontColors()
         }else{
             editingLabel?.text = formatCVV(textField.text!)
-           
+           /*
             if(textField.text?.characters.count == 3){
                 if(!isAmexCard()){
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
@@ -212,8 +216,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                     closeKeyboard()
                     self.navigationItem.rightBarButtonItem!.enabled = true
                 }
-                
-            }
+  
+            } */
 
         }
       
