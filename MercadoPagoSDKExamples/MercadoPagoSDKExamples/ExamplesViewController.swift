@@ -129,8 +129,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
             
             payment._id = 333555
-            let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
-            self.navigationController!.pushViewController(congrats, animated: true)
+            //let congrats = MPStepBuilder.startPaymentCongratsStep(payment)
+            //self.navigationController!.pushViewController(congrats, animated: true)
 
         default:
             print("Otra opcion")
