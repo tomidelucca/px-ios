@@ -56,7 +56,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1e7-Cv-GMx">
                     <rect key="frame" x="40" y="18" width="240" height="144"/>
-                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="5:3" id="Ewo-pl-adM"/>
                     </constraints>
@@ -75,7 +75,7 @@
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.29019609089999998" green="0.5647059083" blue="0.88627451660000001" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.3529411764705882" green="0.74509803921568629" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="1e7-Cv-GMx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0JH-Nv-XiN"/>
                 <constraint firstItem="hE4-HX-Gim" firstAttribute="height" secondItem="XbX-vI-niG" secondAttribute="height" id="2Fb-cu-xyX"/>

@@ -18,9 +18,9 @@ public class MPLabel: UILabel {
     }
     */
 
-    static let defaultColorText = UIColor(netHex:0x333333)
-    static let highlightedColorText = UIColor(netHex:0x999999)
-    static let errorColorText = UIColor(netHex:0xFF0000)
+    static let defaultColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0x333333)
+    static let highlightedColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0x999999)
+    static let errorColorText = UIColor(red: 51, green: 51, blue: 51)//UIColor(netHex:0xFF0000)
     
     override init(frame: CGRect){
         super.init(frame: frame)

@@ -17,4 +17,5 @@ public class GatewayService : MercadoPagoService {
     public func getToken(url : String = "/v1/card_tokens", method : String = "POST", public_key : String, cardToken : CardToken, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.request(url, params: "public_key=" + public_key, body: cardToken.toJSONString(), method: method, success: success, failure: failure)
     }
+    
 }

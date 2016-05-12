@@ -56,7 +56,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97O-co-oz8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="8" y="69" width="220" height="23"/>
+                    <rect key="frame" x="20" y="69" width="208" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="Mr6-I7-DFG"/>
                     </constraints>
@@ -64,8 +64,8 @@
                         <fragment content="7878 0909 9909 9090">
                             <attributes>
                                 <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <font key="NSFont" size="17" name="Courier"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="30"/>
+                                <font key="NSFont" size="21" name="Courier"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="30"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -90,7 +90,7 @@
                 <constraint firstItem="KwN-Cd-QgM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="gNV-ri-9hp"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="l95-EC-c7L"/>
                 <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="19" id="n3L-v5-CVb"/>
-                <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ud7-S9-gmz"/>
+                <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ud7-S9-gmz"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" id="w2M-bt-87O"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
