@@ -39,7 +39,8 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         
         self.congratsContentTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0,
             self.congratsContentTable.bounds.size.width, 0.01))
-        
+        self.congratsContentTable.rowHeight = UITableViewAutomaticDimension
+        self.congratsContentTable.estimatedRowHeight = 160.0
         if self.callbackCancel == nil {
             self.callbackCancel = {
                 if self.navigationController != nil {
@@ -109,6 +110,12 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
         }
     }
+    
+    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+
     
     private func registerCells(){
         let approvedPaymentHeader = UINib(nibName: "ApprovedPaymentHeaderTableViewCell", bundle: self.bundle)
