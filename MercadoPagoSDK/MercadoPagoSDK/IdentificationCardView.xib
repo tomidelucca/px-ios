@@ -11,6 +11,12 @@
             <rect key="frame" x="0.0" y="0.0" width="240" height="144"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="JuW-MM-Abb">
+                    <rect key="frame" x="0.0" y="0.0" width="160" height="144"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="160" id="AId-Dt-rp6"/>
+                    </constraints>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hKa-Vn-m5c">
                     <rect key="frame" x="8" y="38" width="68" height="68"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,15 +60,21 @@ PARA LA FACTURACION</string>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="b7h-8P-cL0" firstAttribute="leading" secondItem="hKa-Vn-m5c" secondAttribute="trailing" constant="8" id="8H2-8D-Ywo"/>
+                <constraint firstItem="JuW-MM-Abb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Dla-tn-ARy"/>
                 <constraint firstItem="b7h-8P-cL0" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Itj-hs-ENK"/>
                 <constraint firstAttribute="trailing" secondItem="b7h-8P-cL0" secondAttribute="trailing" constant="8" id="LOO-EU-eUm"/>
                 <constraint firstItem="b7h-8P-cL0" firstAttribute="top" secondItem="hKa-Vn-m5c" secondAttribute="top" id="ZEd-d5-9aO"/>
                 <constraint firstItem="hKa-Vn-m5c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="aFV-xJ-0CP"/>
+                <constraint firstAttribute="bottom" secondItem="JuW-MM-Abb" secondAttribute="bottom" id="h5v-rO-94U"/>
                 <constraint firstItem="hKa-Vn-m5c" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vJy-Qg-sYZ"/>
+                <constraint firstItem="JuW-MM-Abb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xjF-dL-lFp"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="234" y="55"/>
         </view>
     </objects>
+    <resources>
+        <image name="cardBackShadow" width="128" height="144"/>
+    </resources>
 </document>

@@ -76,7 +76,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardView.addSubview(cardFront!)
         
         updateLabelsFontColors()
-
+        self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem?.target = self
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
     }
@@ -106,7 +106,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.autocorrectionType = UITextAutocorrectionType.No
          textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
-       setupInputAccessoryView()
+        setupInputAccessoryView()
         textBox.delegate = self
         cardFront = CardFrontView()
         cardBack = CardBackView()
@@ -129,11 +129,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         editingLabel = cardNumberLabel
 
         
-        // Or if you just want to insert one item.
-
-        
-  //      self.navigationItem.setRightBarButtonItem(UIBarButtonItem(barButtonSystemItem: .Play, target: self, action: "confirmPaymentMethod"), animated: true)
-//        self.navigationItem.rightBarButtonItem!.enabled = false
 
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
@@ -195,30 +190,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
              updateLabelsFontColors()
         }else{
             editingLabel?.text = formatCVV(textField.text!)
-           /*
-            if(textField.text?.characters.count == 3){
-                if(!isAmexCard()){
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                       
-                        UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
-                            self.prepareNumberLabelForEdit()
-                            self.closeKeyboard()
-                            self.navigationItem.rightBarButtonItem!.enabled = true
-                        })
-                        
-                    }
-                }else{
-                    self.prepareNumberLabelForEdit()
-                }
-               
-                if(isAmexCard()){
-                    closeKeyboard()
-                    self.navigationItem.rightBarButtonItem!.enabled = true
-                }
-  
-            } */
-
+           
         }
       
         
@@ -521,23 +493,21 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         navBar.barStyle = UIBarStyle.Default;
         navBar.backgroundColor = UIColor(netHex: 0xEEEEEE);
         navBar.alpha = 1;
-        //replace viewWidth with view controller width
+
         let navItem = UINavigationItem()
-        //let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "closeKeyboard")
 
         
         let doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
 
-        //UIBarButtonItem(image: MercadoPago.getImage("right_arrow"), landscapeImagePhone: MercadoPago.getImage("right_arrow"), style: .Plain, target: self, action: "rightArrowKeyTapped")
         let donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
-        //UIBarButtonItem(image: MercadoPago.getImage("left_arrow"), landscapeImagePhone: MercadoPago.getImage("left_arrow"), style: .Plain, target: self, action: "leftArrowKeyTapped")
+
         
 
         
         
         navItem.rightBarButtonItem = doneNext
         navItem.leftBarButtonItem = donePrev
-    //    navItem.setLeftBarButtonItems([donePrev,doneNext], animated: false)
+
         
         
         
@@ -690,6 +660,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = ""
         }
+        self.updateLabelsFontColors()
     }
     
     func isAmexCard() -> Bool{
@@ -706,14 +677,28 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     func delightedLabels(){
-         cardNumberLabel?.textColor = MPLabel.defaultColorText
-         nameLabel?.textColor = MPLabel.defaultColorText
-         expirationDateLabel?.textColor = MPLabel.defaultColorText
-         cvvLabel?.textColor = MPLabel.defaultColorText
+        if (paymentMethod == nil){
+            cardNumberLabel?.textColor = MPLabel.defaultColorText
+            nameLabel?.textColor = MPLabel.defaultColorText
+            expirationDateLabel?.textColor = MPLabel.defaultColorText
+            cvvLabel?.textColor = MPLabel.defaultColorText
+        }else{
+            cardNumberLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
+            nameLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
+            expirationDateLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
+            cvvLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
+            
+        }
+        
     }
     
     func lightEditingLabel(){
-        editingLabel?.textColor = MPLabel.highlightedColorText
+        if (paymentMethod == nil){
+           editingLabel?.textColor = MPLabel.highlightedColorText
+        }else{
+           editingLabel?.textColor =  MercadoPago.getEditingFontColorFor(self.paymentMethod!)
+        }
+        
     }
     func updateLabelsFontColors(){
         self.delightedLabels()

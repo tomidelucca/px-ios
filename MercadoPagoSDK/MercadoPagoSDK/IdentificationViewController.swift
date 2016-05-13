@@ -26,7 +26,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     public init(callback : (( identification: Identification) -> Void)) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
        
-        self.edgesForExtendedLayout = UIRectEdge.None
+      //  self.edgesForExtendedLayout = UIRectEdge.None
 
         self.callback = callback
         
@@ -75,6 +75,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
                 //TODO ERROR
         }
         typePicker.hidden = true;
+        numberTextField.becomeFirstResponder()
     }
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

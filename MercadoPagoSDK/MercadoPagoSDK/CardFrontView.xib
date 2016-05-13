@@ -21,10 +21,16 @@
             <rect key="frame" x="0.0" y="0.0" width="240" height="144"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y6l-UX-KQ5">
-                    <rect key="frame" x="186" y="8" width="42" height="42"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="tG6-9u-zlM">
+                    <rect key="frame" x="0.0" y="0.0" width="160" height="144"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="y6l-UX-KQ5" secondAttribute="height" multiplier="1:1" id="lwQ-P1-91x"/>
+                        <constraint firstAttribute="width" constant="160" id="oDG-9i-WdJ"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y6l-UX-KQ5">
+                    <rect key="frame" x="8" y="8" width="115" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="y6l-UX-KQ5" secondAttribute="height" multiplier="1:1" constant="73" id="lwQ-P1-91x"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre y apellido" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR5-vU-TU9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
@@ -32,7 +38,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="VHj-ud-8qG"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
@@ -40,23 +46,22 @@
                 </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/AA" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrP-jA-FVI" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                     <rect key="frame" x="148" y="103" width="80" height="22"/>
-                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
+                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwN-Cd-QgM" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="12" y="12" width="166" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="34" id="A5h-09-9nO"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nkl-ZN-XiC">
+                    <rect key="frame" x="0.0" y="50" width="240" height="15"/>
+                    <color key="backgroundColor" red="0.0" green="0.9960784912109375" blue="0.32156863808631897" alpha="0.0" colorSpace="deviceRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjO-2l-xvX">
+                    <rect key="frame" x="0.0" y="88" width="240" height="15"/>
+                    <color key="backgroundColor" red="0.0" green="0.9960784912109375" blue="0.32156863808631897" alpha="0.0" colorSpace="deviceRGB"/>
+                </view>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97O-co-oz8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="20" y="69" width="208" height="23"/>
+                    <rect key="frame" x="20" y="65" width="208" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="Mr6-I7-DFG"/>
                     </constraints>
@@ -64,7 +69,7 @@
                         <fragment content="7878 0909 9909 9090">
                             <attributes>
                                 <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <font key="NSFont" size="21" name="Courier"/>
+                                <font key="NSFont" size="21" name="Courier-Bold"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="30"/>
                             </attributes>
                         </fragment>
@@ -73,23 +78,48 @@
                     <color key="shadowColor" white="0.80000000000000004" alpha="0.0" colorSpace="deviceWhite"/>
                     <size key="shadowOffset" width="1" height="1"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwN-Cd-QgM" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="131" y="12" width="101" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="A5h-09-9nO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.011764707043766975" green="0.99215692281723022" blue="0.32156863808631897" alpha="0.0" colorSpace="deviceRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="97" id="2hI-ql-fQl"/>
+                <constraint firstAttribute="bottom" secondItem="tG6-9u-zlM" secondAttribute="bottom" id="5B1-p3-bQl"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="leading" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="9F2-gE-Wqs"/>
+                <constraint firstItem="y6l-UX-KQ5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="9OF-PG-Inc"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="baseline" secondItem="pR5-vU-TU9" secondAttribute="baseline" id="AOt-3g-FQQ"/>
-                <constraint firstItem="y6l-UX-KQ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="7:24" id="Aie-cO-xa7"/>
+                <constraint firstItem="Nkl-ZN-XiC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ATm-hY-xKO"/>
+                <constraint firstItem="y6l-UX-KQ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="7:24" constant="73" id="Aie-cO-xa7"/>
+                <constraint firstItem="tG6-9u-zlM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BB7-ec-9sJ"/>
+                <constraint firstItem="KwN-Cd-QgM" firstAttribute="leading" secondItem="y6l-UX-KQ5" secondAttribute="trailing" constant="8" id="E5G-sh-S84"/>
+                <constraint firstItem="cjO-2l-xvX" firstAttribute="top" secondItem="97O-co-oz8" secondAttribute="bottom" id="EC8-rL-gzf"/>
                 <constraint firstItem="KwN-Cd-QgM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="12" id="GI6-sb-N2Y"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="firstBaseline" secondItem="pR5-vU-TU9" secondAttribute="firstBaseline" id="H06-2R-sps"/>
                 <constraint firstAttribute="bottom" secondItem="97O-co-oz8" secondAttribute="bottom" constant="52" id="IA1-0s-caX"/>
+                <constraint firstAttribute="trailing" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="Icb-LS-0rH"/>
                 <constraint firstAttribute="trailing" secondItem="y6l-UX-KQ5" secondAttribute="trailing" constant="12" id="Jlp-HD-09b"/>
+                <constraint firstItem="cjO-2l-xvX" firstAttribute="height" secondItem="Nkl-ZN-XiC" secondAttribute="height" id="M1l-kV-Vir"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="5" id="TlV-UI-jRP"/>
+                <constraint firstAttribute="trailing" secondItem="Nkl-ZN-XiC" secondAttribute="trailing" id="UBx-2t-pcG"/>
                 <constraint firstItem="pR5-vU-TU9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="Vdf-kZ-c3S"/>
                 <constraint firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" constant="12" id="bll-Jo-8PY"/>
+                <constraint firstItem="cjO-2l-xvX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fuh-OT-O1z"/>
                 <constraint firstItem="KwN-Cd-QgM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="gNV-ri-9hp"/>
+                <constraint firstItem="97O-co-oz8" firstAttribute="top" secondItem="Nkl-ZN-XiC" secondAttribute="bottom" id="iDZ-88-m8v"/>
+                <constraint firstAttribute="trailing" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="jLV-hn-Vda"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="l95-EC-c7L"/>
+                <constraint firstItem="rrP-jA-FVI" firstAttribute="top" secondItem="cjO-2l-xvX" secondAttribute="bottom" id="mxX-8v-J73"/>
                 <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="19" id="n3L-v5-CVb"/>
+                <constraint firstItem="tG6-9u-zlM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qT3-zo-uZA"/>
+                <constraint firstAttribute="trailing" secondItem="cjO-2l-xvX" secondAttribute="trailing" id="qqM-b6-uBw"/>
+                <constraint firstItem="Nkl-ZN-XiC" firstAttribute="top" secondItem="y6l-UX-KQ5" secondAttribute="bottom" id="tBz-3T-r6b"/>
                 <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ud7-S9-gmz"/>
                 <constraint firstItem="rrP-jA-FVI" firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" id="w2M-bt-87O"/>
             </constraints>
@@ -100,7 +130,18 @@
                     <integer key="value" value="5"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="9F2-gE-Wqs"/>
+                    <exclude reference="Jlp-HD-09b"/>
+                    <exclude reference="IA1-0s-caX"/>
+                    <exclude reference="gNV-ri-9hp"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="331" y="207"/>
         </view>
     </objects>
+    <resources>
+        <image name="cardBackShadow" width="128" height="144"/>
+    </resources>
 </document>
