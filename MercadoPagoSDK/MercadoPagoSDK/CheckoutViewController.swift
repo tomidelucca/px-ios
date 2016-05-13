@@ -160,6 +160,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
                     paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!)
                     paymentSearchCell.paymentDescription.text = "terminada en ".localized + self.token!.lastFourDigits
+                    ViewUtils.drawBottomLine(47, width: paymentSearchCell.bounds.width, inView: paymentSearchCell)
                     return paymentSearchCell
                 }
                 
@@ -220,6 +221,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.groups.count > 1 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
             self.loadGroupsAndStartPaymentVault(true)
+        } else if indexPath.section == 1 && indexPath.row == 1 && paymentMethod != nil && !self.paymentMethod!.isOfflinePaymentMethod(){
+            showInstallments()
+
         }
     }
     
@@ -337,7 +341,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.payerCost!.installments , issuer: self.issuer,success: { (payment) -> Void in
             
                 self.clearMercadoPagoStyleAndGoBack()
-                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, cancelCallback: {
+                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callbackCancel: {
                     self.dismissViewControllerAnimated(true, completion: {
                         
                     })
@@ -365,6 +369,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             }) { (error) in
                 //TODO
         }
+    }
+    
+    private func showInstallments(){
+        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), minInstallments: nil, callback: { (payerCost) -> Void in
+            self.payerCost = payerCost
+            self.navigationController?.popViewControllerAnimated(true)
+            self.checkoutTable.reloadData()
+        })
+        self.navigationController?.pushViewController(pcf, animated: true)
     }
     
     private func registerAllCells(){

@@ -42,7 +42,9 @@
                     <constraint firstItem="qyR-Rp-UCa" firstAttribute="leading" secondItem="L06-Xm-phB" secondAttribute="trailing" constant="7" id="Tel-wF-0wr"/>
                     <constraint firstItem="L06-Xm-phB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="XUV-TJ-Rjg"/>
                 </constraints>
+                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="0.0"/>
             </tableViewCellContentView>
+            <edgeInsets key="layoutMargins" top="0.0" left="8" bottom="0.0" right="0.0"/>
             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="paymentDescription" destination="qyR-Rp-UCa" id="soW-eX-7Ge"/>

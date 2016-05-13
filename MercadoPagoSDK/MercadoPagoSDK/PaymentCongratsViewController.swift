@@ -14,7 +14,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         ["approved" : ["header" : "approvedPaymentHeader", "headerHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT, "body" : "approvedPaymentBody", "bodyHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT],
         "rejected" : ["header" : "rejectedPaymentHeader", "headerHeight" : RejectedPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "rejectedPaymentBody", "bodyHeight" : RejectedPaymentBodyTableViewCell.ROW_HEIGHT],
         "authorize" : ["header" : "authorizePaymentHeader", "headerHeight" : AuthorizePaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "authorizePaymentBody", "bodyHeight" : AuthorizePaymentBodyTableViewCell.ROW_HEIGHT],
-        "pending" : ["header" : "pendingPaymentHeader", "headerHeight" : PendingPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "", "bodyHeight" : 0]
+        "in_process" : ["header" : "pendingPaymentHeader", "headerHeight" : PendingPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "", "bodyHeight" : 0]
         ]
     
     var bundle = MercadoPago.getBundle()
@@ -23,9 +23,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
-    init(payment: Payment, cancelCallback : (Void -> Void)?){
+    init(payment: Payment, callbackCancel : (Void -> Void)?){
         super.init(nibName: "PaymentCongratsViewController", bundle : bundle)
         self.payment = payment
+        self.callbackCancel = callbackCancel
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -43,15 +44,15 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             self.congratsContentTable.bounds.size.width, 0.01))
         self.congratsContentTable.rowHeight = UITableViewAutomaticDimension
         self.congratsContentTable.estimatedRowHeight = 160.0
+        
+        self.navigationItem.backBarButtonItem?.action = "invokeCallbackCancel"
+        self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
+        
         if self.callbackCancel == nil {
             self.callbackCancel = {
-                if self.navigationController != nil {
-                    self.navigationController!.popViewControllerAnimated(true)
-                } else {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                }
+               self.dismissViewControllerAnimated(true, completion: {
+                
+               })
             }
         }
         
@@ -87,16 +88,9 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             }
             return UITableViewCell()
         }
-        
-        // Exit button with callbackCancel action
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
         exitButtonCell.callbackCancel = self.callbackCancel
         return exitButtonCell
-        
-    }
-    
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -163,5 +157,5 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
 enum PaymentStatus : String {
     case APPROVED = "approved"
     case REJECTED = "rejected"
-    case PENDING = "pending"
+    case IN_PROCESS = "in_process"
 }
