@@ -20,7 +20,7 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func setAmount(amount : Double){
+    func setAmount(amount : Double, additionalText : String = ""){
         let total = NSMutableAttributedString(string: "Total a pagar ")
         //TODO : obtener de servicio
         let attributedAmount = Utils.getAttributedAmount(String(amount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color : UIColor().UIColorFromRGB(0x666666), fontSize: 16, baselineOffset : 4)

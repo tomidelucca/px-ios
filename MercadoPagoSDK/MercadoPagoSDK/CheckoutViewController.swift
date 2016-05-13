@@ -142,7 +142,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
+            
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
+            
             return preferenceDescriptionCell
         }
     
@@ -158,7 +160,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 } else {
                     self.title = "Tantito más y terminas…".localized
                     let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
-                    paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!)
+                    paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!, forCell: true)
                     paymentSearchCell.paymentDescription.text = "terminada en ".localized + self.token!.lastFourDigits
                     ViewUtils.drawBottomLine(47, width: paymentSearchCell.bounds.width, inView: paymentSearchCell)
                     return paymentSearchCell
@@ -172,12 +174,17 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if !paymentMethod!.isOfflinePaymentMethod() {
                 let installmentsCell = self.checkoutTable.dequeueReusableCellWithIdentifier("installmentSelectionCell") as! InstallmentSelectionTableViewCell
                 let installments = self.payerCost!.installments
-                let installmentsDescription = Utils.getTransactionInstallmentsDescription(String(installments), installmentAmount: self.payerCost!.installmentAmount, additionalString: NSAttributedString(string: ""))
+                
+                let additionalTextAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
+                
+                let additionalText = payerCost?.installmentRate > 0 ? "" : " Sin interes".localized
+                let installmentsDescription = Utils.getTransactionInstallmentsDescription(String(installments), installmentAmount: self.payerCost!.installmentAmount, additionalString: NSAttributedString(string: additionalText, attributes: additionalTextAttributes))
                 installmentsCell.installmentsDescription.attributedText = installmentsDescription
                 return installmentsCell
             }
             
             let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
+            
             
             footer.layer.shadowOffset = CGSizeMake(0, 1)
             footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
@@ -193,13 +200,17 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.paymentButton = termsAndConditionsButton.paymentButton
                 return termsAndConditionsButton
             } else {
+                let totalAmount = self.payerCost == nil ? self.preference!.getAmount() : self.payerCost!.totalAmount
+                if payerCost?.installmentRate > 0 {
+                
+                }
                 let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
                 
                 footer.layer.shadowOffset = CGSizeMake(0, 1)
                 footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
                 footer.layer.shadowRadius = 1
                 footer.layer.shadowOpacity = 0.6
-                footer.setAmount(self.preference!.getAmount())
+                footer.setAmount(totalAmount)
                 return footer
 
             }
@@ -222,8 +233,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
             self.loadGroupsAndStartPaymentVault(true)
         } else if indexPath.section == 1 && indexPath.row == 1 && paymentMethod != nil && !self.paymentMethod!.isOfflinePaymentMethod(){
-            showInstallments()
-
+            startPayerCostStep()
         }
     }
     
@@ -371,7 +381,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
     }
     
-    private func showInstallments(){
+    private func startPayerCostStep(){
         let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), minInstallments: nil, callback: { (payerCost) -> Void in
             self.payerCost = payerCost
             self.navigationController?.popViewControllerAnimated(true)
