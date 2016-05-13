@@ -621,6 +621,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.cardFront?.cardLogo.image =  nil
                 
         }
+        paymentMethod = nil
+        self.updateLabelsFontColors()
         
     }
     

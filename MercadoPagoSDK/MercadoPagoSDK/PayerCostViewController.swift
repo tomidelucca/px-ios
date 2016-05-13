@@ -29,7 +29,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, payerCosts : [PayerCost]? = nil, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
@@ -37,15 +37,21 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.token = token!
         self.callback = callback
         self.maxInstallments = maxInstallments
-        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-            self.installments = installments
-            self.payerCosts = installments![0].payerCosts
-            //TODO ISSUER
-           
+        self.payerCosts = payerCosts
+        if(self.payerCosts == nil){
+            MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+                self.installments = installments
+                self.payerCosts = installments![0].payerCosts
+                //TODO ISSUER
+                
+                self.tableView.reloadData()
+                }) { (error) -> Void in
+                    print("error!")
+            }
+        }else{
             self.tableView.reloadData()
-            }) { (error) -> Void in
-                print("error!")
         }
+       
 
     }
     

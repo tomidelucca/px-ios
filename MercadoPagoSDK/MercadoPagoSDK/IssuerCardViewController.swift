@@ -22,7 +22,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     let defaultColorText = UIColor(netHex:0x333333)
 
     
-    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , callback : (( issuer: Issuer) -> Void)) {
+    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : (( issuer: Issuer) -> Void)) {
         
         super.init(nibName: "IssuerCardViewController", bundle: MercadoPago.getBundle())
         
@@ -30,12 +30,18 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         self.cardToken = cardToken
         self.callback = callback
         self.paymentMethod = paymentMethod
-        MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
-            self.issuerList = issuers
+        self.issuerList = issuerList
+        if(issuerList == nil){
+            MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
+                self.issuerList = issuers
+                self.tableView.reloadData()
+                }) { (error) -> Void in
+                    print("error")
+            }
+        }else{
             self.tableView.reloadData()
-            }) { (error) -> Void in
-                print("error")
         }
+        
         
         
     }

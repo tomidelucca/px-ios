@@ -64,22 +64,36 @@ public class MPStepBuilder : NSObject {
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
                     cardToken?.cardholder?.identification = identification
-                    
-                    let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, callback: { (issuer) -> Void in
-                        MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
-                            callback(paymentMethod: paymentMethod, token: token, issuer:issuer)
+                    MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken!.getBin(), success: { (issuers) -> Void in
+                            if(issuers!.count > 1){
+                                let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken!, issuerList: issuers, callback: { (issuer) -> Void in
+                                    MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
+                                        callback(paymentMethod: paymentMethod, token: token, issuer:issuer)
+                                        }) { (error) -> Void in
+                                            print(error)
+                                    }
+                                })
+                                issuerForm.callbackCancel = { Void -> Void in
+                                    ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
+                                        print("LLEGUE!")
+                                    })
+                                }
+                                
+                                ccf.navigationController!.pushViewController(issuerForm, animated: false)
+                            }else{
+                                MPServicesBuilder.createNewCardToken(cardToken!, success: { (token) -> Void in
+                                    callback(paymentMethod: paymentMethod, token: token, issuer:issuers![0])
+                                    }) { (error) -> Void in
+                                        print(error)
+                                }
+                            }
+                        
                         }) { (error) -> Void in
-                            print(error)
-                        }
-                    })
-                    issuerForm.callbackCancel = { Void -> Void in
-                        ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
-                            print("LLEGUE!")
-                        })
+                            print("error")
                     }
-                    ccf.navigationController!.pushViewController(issuerForm, animated: false)
+                   
                 })
-                // Set action for cancel callback
+
                 identificationForm.callbackCancel = { Void -> Void in
                     ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
                         
@@ -117,7 +131,7 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    public class func startIssuerForm(paymentMethod: PaymentMethod, cardToken: CardToken, callback : ((issuer: Issuer?) -> Void)) -> IssuerCardViewController {
+    public class func startIssuerForm(paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil, callback : ((issuer: Issuer?) -> Void)) -> IssuerCardViewController {
         
         
         return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)

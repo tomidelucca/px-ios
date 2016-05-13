@@ -27,7 +27,7 @@
 	<key>debvisa</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>FFFFFF</string>
+		<string>FF0000</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>first_color</key>
@@ -38,7 +38,7 @@
 	<key>visa</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>FFFFFF</string>
+		<string>FF0000</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>first_color</key>
