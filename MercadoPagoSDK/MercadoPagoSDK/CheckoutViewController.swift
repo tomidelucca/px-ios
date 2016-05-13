@@ -320,7 +320,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
-            payment._id = 1826446924
             self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
@@ -336,7 +335,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             payment.paymentMethodId = self.paymentMethod!._id
             payment.paymentTypeId = self.paymentMethod!.paymentTypeId.rawValue
             payment._description = self.preference!.items![0].title
-            payment._id = 1826446924
             self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                 self.modalTransitionStyle = .CrossDissolve
                 self.dismissViewControllerAnimated(true, completion: {
