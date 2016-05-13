@@ -27,7 +27,10 @@ public class MerchantService : MercadoPagoService {
     
     public func createMPPayment(method : String = "POST", payment : MPPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.baseURL = MercadoPago.MP_API_BASE_URL
-        self.request(MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
+        let paymentKey = "xxx1234567"
+        
+        let headers = NSDictionary(dictionary: ["X-Idempotency-Key" : paymentKey])
+        self.request(MercadoPago.MP_PAYMENTS_URI, params: nil, body: payment.toJSONString(), method: method, headers : headers, success: success, failure: failure)
     }
     
     public func createPreference(method : String = "POST", merchantParams : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
