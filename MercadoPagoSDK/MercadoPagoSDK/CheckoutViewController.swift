@@ -17,7 +17,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var bundle : NSBundle? = MercadoPago.getBundle()
     var callback : (Payment -> Void)!
     var paymentMethod : PaymentMethod?
-    var installments : Int = 0
     var issuer : Issuer?
     var token : Token?
     var paymentButton : MPButton?
@@ -104,8 +103,19 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
         
         if indexPath.row == 0 {
-            return 80
+            if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
+                return 80
+            }
+            return 48
         } else if indexPath.row == 1 {
+            if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
+                return 60
+            }
+            return 48
+        } else if indexPath.row == 2 {
+            if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
+                return 180
+            }
             return 60
         }
         return 180
@@ -120,14 +130,21 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if section == 0 {
             return self.displayPreferenceDescription ? 1 : 0
         }
-        return (self.paymentMethod == nil) ? 2 : 3
+        if (self.paymentMethod == nil) {
+            return 2
+        } else if self.paymentMethod!.isOfflinePaymentMethod(){
+            return 3
+        }
+        return 4
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
+            
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
+            
             return preferenceDescriptionCell
         }
     
@@ -142,13 +159,32 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     return cell
                 } else {
                     self.title = "Tantito más y terminas…".localized
+                    let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
+                    paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!, forCell: true)
+                    paymentSearchCell.paymentDescription.text = "terminada en ".localized + self.token!.lastFourDigits
+                    ViewUtils.drawBottomLine(47, width: paymentSearchCell.bounds.width, inView: paymentSearchCell)
+                    return paymentSearchCell
                 }
                 
             }
             
             return tableView.dequeueReusableCellWithIdentifier("selectPaymentMethodCell", forIndexPath: indexPath) as! SelectPaymentMethodCell
         } else if indexPath.row == 1 {
+            
+            if !paymentMethod!.isOfflinePaymentMethod() {
+                let installmentsCell = self.checkoutTable.dequeueReusableCellWithIdentifier("installmentSelectionCell") as! InstallmentSelectionTableViewCell
+                let installments = self.payerCost!.installments
+                
+                let additionalTextAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
+                
+                let additionalText = payerCost?.installmentRate > 0 ? "" : " Sin interes".localized
+                let installmentsDescription = Utils.getTransactionInstallmentsDescription(String(installments), installmentAmount: self.payerCost!.installmentAmount, additionalString: NSAttributedString(string: additionalText, attributes: additionalTextAttributes))
+                installmentsCell.installmentsDescription.attributedText = installmentsDescription
+                return installmentsCell
+            }
+            
             let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
+            
             
             footer.layer.shadowOffset = CGSizeMake(0, 1)
             footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
@@ -156,12 +192,37 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             footer.layer.shadowOpacity = 0.6
             footer.setAmount(self.preference!.getAmount())
             return footer
+
+        } else if indexPath.row == 2 {
+            if paymentMethod!.isOfflinePaymentMethod() {
+                let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
+                termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+                self.paymentButton = termsAndConditionsButton.paymentButton
+                return termsAndConditionsButton
+            } else {
+                let totalAmount = self.payerCost == nil ? self.preference!.getAmount() : self.payerCost!.totalAmount
+                if payerCost?.installmentRate > 0 {
+                
+                }
+                let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
+                
+                footer.layer.shadowOffset = CGSizeMake(0, 1)
+                footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+                footer.layer.shadowRadius = 1
+                footer.layer.shadowOpacity = 0.6
+                footer.setAmount(totalAmount)
+                return footer
+
+            }
+        } else if indexPath.row == 3 {
+            let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
+            termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+            self.paymentButton = termsAndConditionsButton.paymentButton
+            return termsAndConditionsButton
         }
         
-        let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
-        termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
-        self.paymentButton = termsAndConditionsButton.paymentButton
-        return termsAndConditionsButton
+        return UITableViewCell()
+        
     }
     
     
@@ -171,6 +232,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.groups.count > 1 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
             self.loadGroupsAndStartPaymentVault(true)
+        } else if indexPath.section == 1 && indexPath.row == 1 && paymentMethod != nil && !self.paymentMethod!.isOfflinePaymentMethod(){
+            startPayerCostStep()
         }
     }
     
@@ -209,11 +272,11 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func startPaymentVault(animated : Bool = false){
         self.registerAllCells()
         
-        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.preference!.getAmount(), purchaseTitle: self.preference!.getTitle(), currencyId: self.preference!.getCurrencyId(), pictureUrl : self.preference!.getPictureUrl(), paymentSettings: self.preference!.getPaymentSettings(), paymentMethodSearch: self.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, installments) in
+        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.preference!.getAmount(), purchaseTitle: self.preference!.getTitle(), currencyId: self.preference!.getCurrencyId(), pictureUrl : self.preference!.getPictureUrl(), paymentSettings: self.preference!.getPaymentSettings(), paymentMethodSearch: self.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
                 self.paymentMethod = paymentMethod
                 self.token = token
                 self.issuer = issuer
-                self.installments = installments
+                self.payerCost = payerCost
                 self.checkoutTable.reloadData()
             
             
@@ -285,10 +348,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func confirmPaymentOn(){
-        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.installments , issuer: self.issuer,success: { (payment) -> Void in
+        MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.payerCost!.installments , issuer: self.issuer,success: { (payment) -> Void in
             
                 self.clearMercadoPagoStyleAndGoBack()
-                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, cancelCallback: {
+                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callbackCancel: {
                     self.dismissViewControllerAnimated(true, completion: {
                         
                     })
@@ -318,6 +381,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
     }
     
+    private func startPayerCostStep(){
+        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), minInstallments: nil, callback: { (payerCost) -> Void in
+            self.payerCost = payerCost
+            self.navigationController?.popViewControllerAnimated(true)
+            self.checkoutTable.reloadData()
+        })
+        self.navigationController?.pushViewController(pcf, animated: true)
+    }
+    
     private func registerAllCells(){
         
         //Register rows
@@ -332,8 +404,13 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
         let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
-        
         self.checkoutTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
+        
+        // Payment ON rows
+        let paymentSelectedCell = UINib(nibName: "PaymentMethodSelectedTableViewCell", bundle: self.bundle)
+        self.checkoutTable.registerNib(paymentSelectedCell, forCellReuseIdentifier: "paymentSelectedCell")
+        let installmentSelectionCell = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
+        self.checkoutTable.registerNib(installmentSelectionCell, forCellReuseIdentifier: "installmentSelectionCell")
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
