@@ -27,6 +27,8 @@ public class MercadoPagoContext {
     
     var payment_uri: String = ""
     
+    var payment_key : String = ""
+    
     public class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -127,6 +129,17 @@ public class MercadoPagoContext {
         
         return sharedInstance.payment_uri
         
+    }
+    
+    public class func paymentKey() -> String {
+        if sharedInstance.payment_key == "" {
+            sharedInstance.payment_key = String(arc4random()) + String(NSDate().timeIntervalSince1970)
+        }
+        return sharedInstance.payment_key
+    }
+    
+    public class func clearPaymentKey(){
+        sharedInstance.payment_key = ""
     }
     
     public class func keyType() -> String{

@@ -383,6 +383,8 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                     if paymentDic.allKeys.count > 0 {
                         payment = Payment.fromJSON(paymentDic)
                         success(payment: payment!)
+                        // Clear payment key after post payment success
+                        MercadoPagoContext.clearPaymentKey()
                     } else {
                         failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
                     }
