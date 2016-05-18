@@ -16,7 +16,7 @@ public class MPServicesBuilder : NSObject {
 
     public class func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
         cardToken.device = Device()
-        let service : GatewayService = GatewayService(baseURL: MercadoPagoService.MP_BASE_URL)
+        let service = GatewayService(baseURL: MercadoPagoService.MP_BASE_URL)
         service.getToken(public_key: MercadoPagoContext.publicKey(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {
@@ -211,7 +211,7 @@ public class MPServicesBuilder : NSObject {
 
     public class func searchPaymentMethods(excludedPaymentTypeIds : Set<PaymentTypeId>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
         let paymentMethodSearchService = PaymentMethodSearchService()
-        paymentMethodSearchService.getPaymentMethods(excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure)
+        paymentMethodSearchService.getPaymentMethods(excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure!)
     
     }
     

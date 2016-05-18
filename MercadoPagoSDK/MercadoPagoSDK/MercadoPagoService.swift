@@ -52,7 +52,7 @@ public class MercadoPagoService : NSObject {
 						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
 							options:NSJSONReadingOptions.AllowFragments))
 					} catch {
-						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: 1, userInfo: nil)
+						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
 						failure!(error: e)
 					}
                 } else {
