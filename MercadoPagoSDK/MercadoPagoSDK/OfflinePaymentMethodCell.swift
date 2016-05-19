@@ -36,7 +36,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     }
     
     internal func fillRowWithPaymentMethod(paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem, displayCustomIndicator : Bool = true) {
-        self.iconImage.image = MercadoPago.getImageFor(paymentMethod)
+        self.iconImage.image = MercadoPago.getImageFor(paymentMethod, forCell: true)
         if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
             self.comment.text = paymentMethodSearchItemSelected.comment
         } else {

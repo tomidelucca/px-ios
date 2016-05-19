@@ -17,6 +17,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var payerCosts : [PayerCost]?
     var paymentMethod : PaymentMethod?
     var token : Token?
+    var amount : Double!
+    var issuer : Issuer?
     var cardFront : CardFrontView?
     var maxInstallments : Int?
     
@@ -37,10 +39,15 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.token = token!
         self.callback = callback
         self.maxInstallments = maxInstallments
+
         if(installment != nil){
             self.payerCosts = installment!.payerCosts
             self.installments = [installment!]
         }
+        
+
+        self.amount = amount
+        self.issuer = issuer
         
         
         if(self.payerCosts == nil){
@@ -102,6 +109,15 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:view];
         */
+        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: self.amount, issuer: self.issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+            self.installments = installments
+            self.payerCosts = installments![0].payerCosts
+            //TODO ISSUER
+            
+            self.tableView.reloadData()
+        }) { (error) -> Void in
+            print("error!")
+        }
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         let installmentNib = UINib(nibName: "PayerCostTableViewCell", bundle: self.bundle)

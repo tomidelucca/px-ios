@@ -33,5 +33,6 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         self.payAgainButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         return self
     }
+
     
 }

@@ -20,7 +20,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var currencyId : String!
     var paymentSettings : PaymentPreference!
     
-    var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, installments: Int) -> Void)!
+    var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void)!
 
     var defaultInstallments : Int?
     var installments : Int?
@@ -38,7 +38,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var paymentsTable: UITableView!
     
 
-    internal init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    internal init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
@@ -76,7 +76,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentPreference : PaymentPreference!, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentPreference : PaymentPreference!, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
@@ -214,8 +214,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 1 {
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
             if (paymentSearchItemSelected.children.count > 0) {
-                let paymentVault = PaymentVaultViewController(amount: self.amount, purchaseTitle: self.purchaseTitle, currencyId : self.currencyId, pictureUrl : self.pictureUrl, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, installments: Int) -> Void in
-                    self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, installments: 1)
+                let paymentVault = PaymentVaultViewController(amount: self.amount, purchaseTitle: self.purchaseTitle, currencyId : self.currencyId, pictureUrl : self.pictureUrl, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+                    self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
                 paymentVault.isRoot = false
                 self.navigationController!.pushViewController(paymentVault, animated: true)
@@ -233,7 +233,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             
                 if paymentTypeId!.isCard() {
                     let cardFlow = MPFlowBuilder.startCardFlow(self.paymentSettings, amount: self.amount, callback: { (paymentMethod, token, issuer, payerCost) in
-                        self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: (payerCost?.installments)!)
+                        self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {
                            //     self.navigationController?.popViewControllerAnimated(true)
@@ -249,8 +249,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: animated)
                 } else {
                     self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: {    (paymentMethod : PaymentMethod) -> Void in
-                        //TODO : verificar que con off issuer/installments es asi
-                        self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, installments: 1)
+                        self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, payerCost: nil)
                     }), animated: true)
                 }
                 break
@@ -262,7 +261,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 } else {
                     // Offline Payment Method
                     let offlinePaymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: paymentSearchItemSelected.idPaymentMethodSearchItem)
-                    self.callback(paymentMethod: offlinePaymentMethodSelected, token:nil, issuer: nil, installments: 1)
+                    self.callback(paymentMethod: offlinePaymentMethodSelected, token:nil, issuer: nil, payerCost: nil)
                 }
                 break
             default:
