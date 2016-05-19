@@ -21,6 +21,31 @@ public class PaymentPreference: Equatable {
     // excluded_payment_method < payment_methods
     //excluded_payment_types < payment_types
     
+    public func autoSelectPayerCost(payerCostList:[PayerCost])-> PayerCost?
+    {
+        if (payerCostList.count == 0){
+            return nil
+        }
+        if (payerCostList.count == 1){
+            return payerCostList.first
+        }
+        if(defaultInstallments != nil){
+            for payercost in payerCostList{
+                if (payercost.installments == defaultInstallments){
+                    return payercost
+                }
+            }
+        }
+        if ((payerCostList.first?.installments <= maxAcceptedInstallments)
+            && (payerCostList[1].installments > maxAcceptedInstallments)){
+                return nil
+        }else{
+            return payerCostList.first
+        }
+        
+        return nil
+    }
+
     public func validate() -> Bool{
         if (maxAcceptedInstallments <= 0){
             return false

@@ -21,7 +21,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var issuer : Issuer?
     var cardFront : CardFrontView?
     var maxInstallments : Int?
-    
+    var fontColor = UIColor(netHex:0x333333)
     var callback : ((payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
     
@@ -85,22 +85,24 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
             self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
             self.cardFront?.cardLogo.alpha = 1
-            
+            self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
             cardFront?.cardNumber.text = self.token!.firstSixDigit as String
         // TODO
         
             cardFront?.cardName.text = self.token!.cardHolder!.name
             cardFront?.cardExpirationDate.text = self.token!.getExpirationDateFormated() as String
-            
-            cardFront?.cardNumber.textColor =  defaultColorText
-            cardFront?.cardName.textColor =  defaultColorText
-            cardFront?.cardExpirationDate.textColor =  defaultColorText
+            cardFront?.cardNumber.alpha = 0.7
+            cardFront?.cardName.alpha = 0.7
+            cardFront?.cardExpirationDate.alpha = 0.7
+            cardFront?.cardNumber.textColor =  fontColor
+            cardFront?.cardName.textColor =  fontColor
+            cardFront?.cardExpirationDate.textColor =  fontColor
 
         }
         
     }
-    let defaultColorText = UIColor(netHex:0x333333)
+
     
     override public func viewDidLoad() {
         super.viewDidLoad()

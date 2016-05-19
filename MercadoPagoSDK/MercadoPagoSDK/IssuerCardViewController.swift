@@ -19,7 +19,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     var paymentMethod : PaymentMethod?
     var issuerList : [Issuer]?
     var cardFront : CardFrontView?
-    let defaultColorText = UIColor(netHex:0x333333)
+    var fontColor = UIColor(netHex:0x333333)
 
     
     public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : (( issuer: Issuer) -> Void)) {
@@ -108,16 +108,17 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
             self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
             self.cardFront?.cardLogo.alpha = 1
-            
+             self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
             cardFront?.cardNumber.text = (self.cardToken?.getBin())! as String
             
             cardFront?.cardName.text = self.cardToken?.cardholder!.name
             cardFront?.cardExpirationDate.text = self.cardToken?.getExpirationDateFormated() as? String
             
-            cardFront?.cardNumber.textColor =  defaultColorText
-            cardFront?.cardName.textColor =  defaultColorText
-            cardFront?.cardExpirationDate.textColor =  defaultColorText
+           
+            cardFront?.cardNumber.textColor =  fontColor
+            cardFront?.cardName.textColor =  fontColor
+            cardFront?.cardExpirationDate.textColor =  fontColor
             
         }
         
