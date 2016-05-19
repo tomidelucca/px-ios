@@ -203,6 +203,24 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         }
         return false
     }
+    
+    internal func requestFailure(error : NSError, callback : (Void -> Void)? = nil) {
+        let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: callback)
+        if self.navigationController != nil {
+            self.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+        } else {
+            self.presentViewController(errorVC, animated: true, completion: {})
+        }
+    }
+    
+    internal func displayFailure(mpError : MPError){
+        let errorVC = MPStepBuilder.startErrorViewController(mpError)
+        if self.navigationController != nil {
+            self.navigationController?.presentViewController(errorVC, animated: true, completion: {})
+        } else {
+            self.presentViewController(errorVC, animated: true, completion: {})
+        }
+    }
 
 }
 

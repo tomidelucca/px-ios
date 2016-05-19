@@ -51,15 +51,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         
         if(self.payerCosts == nil){
-            MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-                self.installments = installments
-                self.payerCosts = installments![0].payerCosts
-                //TODO ISSUER
-                
-                self.tableView.reloadData()
-                }) { (error) -> Void in
-                    print("error!")
-            }
+            self.getInstallments()
+        }else{
+            self.tableView.reloadData()
         }
        
 
@@ -75,6 +69,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         print(cardView.bounds)
+        if self.installments == nil {
+            self.getInstallments()
+        }
     }
     
     
@@ -109,15 +106,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:view];
         */
-        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: self.amount, issuer: self.issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-            self.installments = installments
-            self.payerCosts = installments![0].payerCosts
-            //TODO ISSUER
-            
-            self.tableView.reloadData()
-        }) { (error) -> Void in
-            print("error!")
-        }
+        
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         let installmentNib = UINib(nibName: "PayerCostTableViewCell", bundle: self.bundle)
@@ -125,8 +114,6 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         // Do any additional setup after loading the view.
         updateCardSkin()
     
-        
-     
         
     }
     
@@ -193,6 +180,19 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let payerCost : PayerCost = payerCosts![indexPath.row]
         self.callback!(payerCost: payerCost)
+    }
+    
+    private func getInstallments(){
+        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: self.amount, issuer: self.issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+            self.installments = installments
+            self.payerCosts = installments![0].payerCosts
+            //TODO ISSUER
+            
+            self.tableView.reloadData()
+        }) { (error) -> Void in
+           self.requestFailure(error)
+        }
+
     }
 
     

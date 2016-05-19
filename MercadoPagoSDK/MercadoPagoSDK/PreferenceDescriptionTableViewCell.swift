@@ -48,10 +48,12 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
             let url = NSURL(string: pictureUrl!)
             if url != nil {
                 let data = NSData(contentsOfURL: url!)
-                let image = UIImage(data: data!)
-                if image != nil {
-                    self.shoppingCartIcon.removeFromSuperview()
-                    ViewUtils.addScaledImage(image!, inView: self.shoppingCartIconContainer)
+                if data != nil {
+                    let image = UIImage(data: data!)
+                    if image != nil {
+                        self.shoppingCartIcon.removeFromSuperview()
+                        ViewUtils.addScaledImage(image!, inView: self.shoppingCartIconContainer)
+                    }
                 }
             }
             

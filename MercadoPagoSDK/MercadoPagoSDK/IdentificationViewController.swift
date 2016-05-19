@@ -66,14 +66,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         numberTextField.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
 
         self.setupInputAccessoryView()
-        MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
-            self.identificationTypes = identificationTypes
-            self.typePicker.reloadAllComponents()
-            self.identificationType =  self.identificationTypes![0]
-            self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
-            }) { (error) -> Void in
-                //TODO ERROR
-        }
+        self.getIdentificationTypes()
         typePicker.hidden = true;
         numberTextField.becomeFirstResponder()
     }
@@ -161,8 +154,17 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         self.navigationController?.popViewControllerAnimated(false)
         
     }
-  
-
+    
+    private func getIdentificationTypes(){
+        MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
+            self.identificationTypes = identificationTypes
+            self.typePicker.reloadAllComponents()
+            self.identificationType =  self.identificationTypes![0]
+            self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
+            }, failure : { (error) -> Void in
+                self.requestFailure(error)
+        })
+    }
 }
 
 

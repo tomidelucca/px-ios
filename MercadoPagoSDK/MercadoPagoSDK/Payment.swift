@@ -184,6 +184,10 @@ public class Payment : NSObject {
         var dateArr = string.characters.split {$0 == "T"}.map(String.init)
         return dateFormatter.dateFromString(dateArr[0])
     }
+    
+    public func isRejected() -> Bool {
+        return self.status == PaymentStatus.REJECTED.rawValue
+    }
 }
 
 
