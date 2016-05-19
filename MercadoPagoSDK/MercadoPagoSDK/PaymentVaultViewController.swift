@@ -1,4 +1,3 @@
-
 //
 //  PaymentVaultViewController.swift
 //  MercadoPagoSDK
@@ -221,6 +220,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
+        self.showLoading()
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -278,11 +278,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 self.paymentsTable.reloadData()
                 self.hideLoading()
                 }, failure: { (error) -> Void in
-                    let mpError = MPError.convertFrom(error)
-                    self.navigationController?.pushViewController(MPStepBuilder.startErrorViewController(mpError, callback: {
-                        self.navigationController?.popViewControllerAnimated(true)
-                        self.loadPaymentMethodSearch()
-                    }), animated: true)
+                    self.requestFailure(error)
             })
         } else {
             if self.currentPaymentMethodSearch.count == 1 {

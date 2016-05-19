@@ -46,7 +46,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
-    static let MP_PAYMENTS_URI = "/beta/checkout/native_payment"
+    static let MP_PAYMENTS_URI = "/beta/checkout/payments"
     
     public var privateKey : String?
     public var publicKey : String?
@@ -353,7 +353,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podrido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
+                        failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podrido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {

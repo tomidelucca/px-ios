@@ -60,7 +60,7 @@ public class MPFlowBuilder : NSObject {
             }) }
         }
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
-                MPFlowBuilder.getInstallments(token!, amount: amount, issuer: issuer!, paymentTypeId: PaymentTypeId.CREDIT_CARD, paymentMethod: paymentMethod, ccf: ccf, callback: { (paymentMethod, token, issuer, payerCost) in
+                MPStepBuilder.getInstallments(token!, amount: amount, issuer: issuer!, paymentTypeId: PaymentTypeId.CREDIT_CARD, paymentMethod: paymentMethod, ccf: ccf, callback: { (paymentMethod, token, issuer, payerCost) in
                     callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
             
@@ -72,24 +72,6 @@ public class MPFlowBuilder : NSObject {
         return cardVC!
 
     }
-    
-    internal class func getInstallments(token : Token, amount : Double, issuer: Issuer, paymentTypeId : PaymentTypeId, paymentMethod : PaymentMethod, ccf : MercadoPagoUIViewController, callback : (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void){
-        
-        MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: paymentTypeId, success: { (installments) -> Void in
-            
-            let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, minInstallments: nil, callback: { (payerCost) -> Void in
-                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
-            })
-            
-            ccf.navigationController!.pushViewController(pcvc, animated: false)
-            
-            }, failure: { (error) -> Void in
-                let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
-                    ccf.navigationController!.popViewControllerAnimated(true)
-                    self.getInstallments(token, amount: amount, issuer: issuer, paymentTypeId: paymentTypeId, paymentMethod: paymentMethod, ccf: ccf, callback: callback)
-                })
-                ccf.navigationController!.pushViewController(errorVC, animated: true)
-        })
-    }
+
 
 }

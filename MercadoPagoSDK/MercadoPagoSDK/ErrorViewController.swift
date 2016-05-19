@@ -22,10 +22,10 @@ public class ErrorViewController: MercadoPagoUIViewController {
     public init(error : MPError!, callback : (Void -> Void)?){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
-        self.callback = callback
         self.callbackCancel = {
             self.navigationController?.dismissViewControllerAnimated(true, completion: {})
         }
+        self.callback = callback
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -36,18 +36,14 @@ public class ErrorViewController: MercadoPagoUIViewController {
         super.viewDidLoad()
         self.errorTitle.text = error.message
         
-        if self.error.retry! && self.callback != nil  {
+        if self.error.retry! {
             self.errorIcon.image = MercadoPago.getImage("ic_refresh")
             self.retryButton.addTarget(self, action: "invokeCallback", forControlEvents: .TouchUpInside)
             self.retryButton.hidden = false
         } else {
-            self.retryButton.hidden = true
+            self.retryButton.setTitle("Salir".localized, forState: .Normal)
+            self.retryButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         }
-    }
-
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = "invokeCallbackCancel"
     }
     
     override public func didReceiveMemoryWarning() {
@@ -56,7 +52,15 @@ public class ErrorViewController: MercadoPagoUIViewController {
     }
     
     internal func invokeCallback(){
-        self.callback!()
+        if callback != nil {
+            callback!()
+        } else {
+            if self.navigationController != nil {
+                self.navigationController!.dismissViewControllerAnimated(true, completion: {})
+            } else {
+                self.dismissViewControllerAnimated(true, completion: {})
+            }
+        }
     }
     
 

@@ -257,12 +257,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 
                 self.startPaymentVault()
                 }, failure: { (error) in
-                    let mpError = MPError.convertFrom(error)
-                    self.navigationController?.pushViewController(MPStepBuilder.startErrorViewController(mpError, callback: {
-                        self.navigationController?.popViewControllerAnimated(true)
-                        self.loadGroupsAndStartPaymentVault(animated)
-                        
-                }), animated: true)
+                    self.requestFailure(error)
             })
         } else {
             self.startPaymentVault(animated)
@@ -280,7 +275,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
                 self.navigationController!.popToRootViewControllerAnimated(animated)
             
-                self.showLoading()
                 self.paymentMethod = paymentMethod
                 self.token = token
                 self.issuer = issuer
@@ -313,7 +307,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func confirmPayment(){
         
         self.showLoading()
-        self.paymentButton!.enabled = false
 
         if (self.paymentMethod!.isOfflinePaymentMethod()){
             self.confirmPaymentOff()
@@ -324,29 +317,23 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
-            self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                self.modalTransitionStyle = .CrossDissolve
-                self.dismissViewControllerAnimated(true, completion: {
-                    
-                })
-                    self.callback(payment)
-                }), animated: true)
+            if payment.isRejected() {
+                let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment)
+                self.navigationController!.pushViewController(congratsRejected, animated: true)
+            } else {
+                self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
+                    self.modalTransitionStyle = .CrossDissolve
+                    self.dismissViewControllerAnimated(true, completion: {})
+                        self.callback(payment)
+                    }), animated: true)
+            }
            }, failure : { (error) -> Void in
-                //TODO : remove / payment failed
-            let payment = Payment()
-            payment.transactionAmount = self.preference!.getAmount()
-            payment.issuerId = self.issuer != nil ? self.issuer!._id!.integerValue : 0
-            payment.paymentMethodId = self.paymentMethod!._id
-            payment.paymentTypeId = self.paymentMethod!.paymentTypeId.rawValue
-            payment._description = self.preference!.items![0].title
-            self.navigationController?.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                self.modalTransitionStyle = .CrossDissolve
-                self.dismissViewControllerAnimated(true, completion: {
-                  
+                self.requestFailure(error, callback: {
+                    self.navigationController?.dismissViewControllerAnimated(true, completion: {})
+                    self.confirmPayment()
                 })
-                self.callback(payment)
-            }), animated: true)
         })
+        
     }
     
     internal func confirmPaymentOn(){
@@ -361,8 +348,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.navigationController?.pushViewController(congratsVC, animated: true)
             
             }, failure : { (error) -> Void in
-                //TODO : remove / payment failed
-                
+                self.requestFailure(error, callback: {
+                    self.navigationController?.dismissViewControllerAnimated(true, completion: {})
+                    self.confirmPayment()
+                })
         })
     }
 
@@ -375,18 +364,15 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MPServicesBuilder.getPreference(self.preferenceId, success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
-                    self.navigationController!.pushViewController(MPStepBuilder.startErrorViewController(MPError(message: "La prefencia creada a pagar no es válida".localized, messageDetail: error, retry: false), callback: {
-                        self.dismissViewControllerAnimated(true, completion: {})}), animated: true)
+                    let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error, retry: false)
+                    self.displayFailure(mpError)
                 } else {
                     self.preference = preference
                     self.loadGroupsAndStartPaymentVault(false)
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.navigationController!.pushViewController(MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: {
-                    self.navigationController!.popViewControllerAnimated(true)
-                    self.loadPreference()
-                }), animated: true)
+                self.requestFailure(error)
         })
     }
     
