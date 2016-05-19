@@ -75,6 +75,6 @@ PARA LA FACTURACION</string>
         </view>
     </objects>
     <resources>
-        <image name="cardBackShadow" width="128" height="144"/>
+        <image name="cardBackShadow" width="335" height="322"/>
     </resources>
 </document>

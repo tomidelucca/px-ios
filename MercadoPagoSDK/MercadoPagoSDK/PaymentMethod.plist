@@ -9,16 +9,16 @@
 		<key>image_name</key>
 		<string>icoTc_master</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 	</dict>
 	<key>master</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
 		<string>405B72</string>
 		<key>image_name</key>
@@ -27,7 +27,7 @@
 	<key>debvisa</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>FF0000</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>first_color</key>
@@ -38,7 +38,7 @@
 	<key>visa</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>FF0000</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
 		<string>FFFFFF</string>
 		<key>first_color</key>
@@ -60,9 +60,9 @@
 	<key>naranja</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
 		<string>FF723F</string>
 		<key>image_name</key>
@@ -71,9 +71,9 @@
 	<key>nativa</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
 		<string>013C76</string>
 		<key>image_name</key>
@@ -82,9 +82,9 @@
 	<key>tarshop</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
 		<string>3D4064</string>
 		<key>image_name</key>
@@ -126,9 +126,9 @@
 	<key>argencard</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
 		<string>405B72</string>
 		<key>image_name</key>
@@ -221,6 +221,17 @@
 		<string></string>
 		<key>image_name</key>
 		<string></string>
+	</dict>
+	<key>mercadopago_cc</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTC_mppa</string>
+		<key>first_color</key>
+		<string>dcddd9</string>
+		<key>font_color</key>
+		<string>333333</string>
+		<key>editing_font_color</key>
+		<string>333333</string>
 	</dict>
 </dict>
 </plist>

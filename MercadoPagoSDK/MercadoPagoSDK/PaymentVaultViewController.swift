@@ -1,3 +1,4 @@
+
 //
 //  PaymentVaultViewController.swift
 //  MercadoPagoSDK
@@ -235,9 +236,11 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                         self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, installments: (payerCost?.installments)!)
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {
-                                self.navigationController?.popViewControllerAnimated(true)
+                           //     self.navigationController?.popViewControllerAnimated(true)
+                                self.navigationController?.popToViewController(self, animated: true)
                             } else {
-                                self.navigationController?.popViewControllerAnimated(true)
+                              //  self.navigationController?.popViewControllerAnimated(true)
+                                 self.navigationController?.popToViewController(self, animated: true)
                                 self.callbackCancel!()
                             }
                             

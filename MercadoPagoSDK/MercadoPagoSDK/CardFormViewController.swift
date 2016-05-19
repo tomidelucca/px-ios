@@ -28,7 +28,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cvvLabelEmpty: Bool = true
 
     var editingLabel : MPLabel?
-    @IBOutlet weak var textBox: MPTextField!
+    @IBOutlet weak var textBox: HoshiTextField!
    
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?
@@ -73,12 +73,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        cardView.addSubview(cardFront!)
         
         updateLabelsFontColors()
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem?.target = self
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        
+        if(callbackCancel != nil){
+            self.navigationItem.leftBarButtonItem?.target = self
+            self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        }
+        
+
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -86,10 +90,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
-        identificationCard?.frame = cardView.bounds
-
+      
         textBox.placeholder = "Numero".localized
         textBox.becomeFirstResponder()
+
        
     }
   
@@ -118,13 +122,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         expirationDateLabel = cardFront?.cardExpirationDate
         cvvLabel = cardBack?.cardCVV
         
-        cardNumberLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchNumber:"))
+      //  cardNumberLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchNumber:"))
         cardNumberLabel?.text = ".... .... .... ...."
-        nameLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchName:"))
+     //   nameLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchName:"))
         nameLabel?.text = "Nombre Completo".localized
-        expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
+    //    expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
         expirationDateLabel?.text = "MM/AA".localized
-        cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
+     //   cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "CVV".localized
         editingLabel = cardNumberLabel
 
@@ -132,6 +136,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
+        cardView.addSubview(cardFront!)
 
     }
 
@@ -146,47 +151,19 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
     
     public func editingChanged(textField:UITextField){
-
+        hideErrorMessage()
         if(editingLabel == cardNumberLabel){
             editingLabel?.text = formatCardNumberText(textField.text!)
             self.updateCardSkin()
 
-            /*
-            if(isAmexCard()){
-                if (textField.text?.characters.count==18){
-                    self.prepareNameLabelForEdit()
-                }
-            }else{
-                if (textField.text?.characters.count==20){
-                    self.prepareNameLabelForEdit()
-                }
-            }
-  */
              updateLabelsFontColors()
         }else if(editingLabel == nameLabel){
             editingLabel?.text = formatName(textField.text!)
-    //        if (textField.text?.characters.count==20){
-    //            self.prepareExpirationLabelForEdit()
-    //        }
+
              updateLabelsFontColors()
         }else if(editingLabel == expirationDateLabel){
             editingLabel?.text = formatExpirationDate(textField.text!)
-            /*
-            if(textField.text?.characters.count == 5){
-                if(!isAmexCard()){
-                    editingLabel = cvvLabel
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
-                            self.prepareCVVLabelForEdit()
-                        })
-                    }
-                }else{
-                    self.prepareCVVLabelForEdit()
-                }
-                
-            }
-  */
+
              updateLabelsFontColors()
         }else{
             editingLabel?.text = formatCVV(textField.text!)
@@ -488,51 +465,91 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         return lenght
     }
     
+    
+    var inputButtons : UINavigationBar?
+    var errorLabel : MPLabel?
+    
+    var navItem : UINavigationItem?
+    var doneNext : UIBarButtonItem?
+    var donePrev : UIBarButtonItem?
+
     func setupInputAccessoryView() {
-        let navBar = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
-        navBar.barStyle = UIBarStyle.Default;
-        navBar.backgroundColor = UIColor(netHex: 0xEEEEEE);
-        navBar.alpha = 1;
-
-        let navItem = UINavigationItem()
-
-        
-        let doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
-
-        let donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
-
-        
-
-        
-        
-        navItem.rightBarButtonItem = doneNext
-        navItem.leftBarButtonItem = donePrev
-
-        
-        
-        
-        navBar.pushNavigationItem(navItem, animated: false)
-        
-        textBox.inputAccessoryView = navBar
+        inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
+        inputButtons!.barStyle = UIBarStyle.Default;
+        inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        inputButtons!.alpha = 1;
+        navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
+        donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        navItem!.rightBarButtonItem = doneNext
+        navItem!.leftBarButtonItem = donePrev
+        inputButtons!.pushNavigationItem(navItem!, animated: false)
+        textBox.inputAccessoryView = inputButtons
+       
         
     }
     
+    func showErrorMessage(errorMessage:String){
+        errorLabel = MPLabel(frame: inputButtons!.frame)
+        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.text = errorMessage
+        self.errorLabel!.textAlignment = .Center
+        self.errorLabel!.font = self.errorLabel!.font.fontWithSize(12)
+        textBox.borderInactiveColor = UIColor.redColor()
+        textBox.borderActiveColor = UIColor.redColor()
+        textBox.inputAccessoryView = errorLabel
+        textBox.setNeedsDisplay()
+        textBox.resignFirstResponder()
+        textBox.becomeFirstResponder()
+     
+       
+       
+    }
     
+    func hideErrorMessage(){
+                self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
+                self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+                self.textBox.inputAccessoryView = self.inputButtons
+                self.textBox.setNeedsDisplay()
+                self.textBox.resignFirstResponder()
+                self.textBox.becomeFirstResponder()
+    }
     
+ 
     func leftArrowKeyTapped(){
         switch editingLabel! {
-            
         case cardNumberLabel! :
-             UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+        
+            if (checkCardNumber() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
             self.prepareCVVLabelForEdit()
+            if ((self.paymentMethod == nil) || (self.paymentMethod!.secCodeInBack())){
+                UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+            }
+            
+            
             
         case nameLabel! :
+            if (checkCardName() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
             self.prepareNumberLabelForEdit()
         case expirationDateLabel! :
+            if (checkExpirationDateCard() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
         prepareNameLabelForEdit()
             
         case cvvLabel! :
-           
+            if (checkCVV() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
             })
         
@@ -544,11 +561,25 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     func rightArrowKeyTapped(){
         switch editingLabel! {
             
-        case cardNumberLabel! : prepareNameLabelForEdit()
+        case cardNumberLabel! :
+            if (checkCardNumber() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
+            prepareNameLabelForEdit()
             
-        case nameLabel! : prepareExpirationLabelForEdit()
+        case nameLabel! :
+            if (checkCardName() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
+            prepareExpirationLabelForEdit()
             
         case expirationDateLabel! :
+            if (checkExpirationDateCard() == false){
+                showErrorMessage("Revisa este dato.")
+                return
+            }
             if(!isAmexCard()){
                 UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
                     self.updateLabelsFontColors()
@@ -558,13 +589,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             self.prepareCVVLabelForEdit()
             
         case cvvLabel! :
-            if(!isAmexCard()){
-                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion:  { (completion) -> Void in
-                    self.updateLabelsFontColors()
-                })
+            if (checkCVV() == false){
+                showErrorMessage("Revisa este dato.")
+                return
             }
-            
-            //self.prepareNumberLabelForEdit()
             self.confirmPaymentMethod()
         default : updateLabelsFontColors()
         }
@@ -621,6 +649,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.cardFront?.cardLogo.image =  nil
                 
         }
+        cardFront?.cardCVV.alpha = 0
         paymentMethod = nil
         self.updateLabelsFontColors()
         
@@ -658,9 +687,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         if((paymentMethod != nil)&&(!paymentMethod!.secCodeInBack())){
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = ""
+            cardFront?.cardCVV.alpha = 1
+             cardFront?.cardCVV.text = "CVV".localized
+            cvvLabelEmpty = true
         }else{
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = ""
+            cardFront?.cardCVV.alpha = 0
+            cardBack?.cardCVV.text = "CVV".localized
+            cvvLabelEmpty = true
         }
         self.updateLabelsFontColors()
     }
@@ -683,24 +718,33 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             cardNumberLabel?.textColor = MPLabel.defaultColorText
             nameLabel?.textColor = MPLabel.defaultColorText
             expirationDateLabel?.textColor = MPLabel.defaultColorText
-            cvvLabel?.textColor = MPLabel.defaultColorText
+    //        cvvLabel?.textColor = MPLabel.defaultColorText
         }else{
             cardNumberLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             nameLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             expirationDateLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
-            cvvLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
+   //         cvvLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             
         }
+        cvvLabel?.textColor = MPLabel.defaultColorText
+        cardNumberLabel?.alpha = 0.7
+        nameLabel?.alpha =  0.7
+        expirationDateLabel?.alpha = 0.7
+        cvvLabel?.alpha = 0.7
+        
         
     }
     
     func lightEditingLabel(){
-        if (paymentMethod == nil){
-           editingLabel?.textColor = MPLabel.highlightedColorText
-        }else{
-           editingLabel?.textColor =  MercadoPago.getEditingFontColorFor(self.paymentMethod!)
+        if (editingLabel != cvvLabel){
+            if (paymentMethod == nil){
+                editingLabel?.textColor = MPLabel.highlightedColorText
+            }else{
+                editingLabel?.textColor =  MercadoPago.getEditingFontColorFor(self.paymentMethod!)
+            }
+
         }
-        
+       editingLabel?.alpha = 1
     }
     func updateLabelsFontColors(){
         self.delightedLabels()
@@ -710,17 +754,59 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         label.textColor = MPLabel.errorColorText
     }
     
-    func makeToken(){
+    
+    var cardtoken : CardToken?
+    
+    func tokenHidratate(){
         let number =  numberLabelEmpty ? "" :cardNumberLabel?.text
         let month = getMonth()
         let year = getYear()
         let secCode = cvvLabel?.text
         let name = nameLabel?.text
         
-        let cardtoken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
+        cardtoken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
+    }
+    
+    func checkCardNumber() -> Bool{
+        
+        if(self.paymentMethod == nil){
+            return false
+        }
+        tokenHidratate()
+        let errorMethod = cardtoken!.validateCardNumber(paymentMethod!)
+        if((errorMethod) != nil){
+            return false
+        }
+        return true
+    }
+    func checkCardName() -> Bool{
+        if (nameLabel?.text == nil ){
+            return false
+        }
+        return true
+    }
+    func checkExpirationDateCard() -> Bool{
+         tokenHidratate()
+        let errorMethod = cardtoken!.validateExpiryDate()
+        if((errorMethod) != nil){
+            return false
+        }
+        return true
+    }
+    func checkCVV() -> Bool{
+         tokenHidratate()
+        let errorMethod = cardtoken!.validateSecurityCode()
+        if((errorMethod) != nil){
+            return false
+        }
+        return true
+    }
+    
+    func makeToken(){
+        tokenHidratate()
         
         if (paymentMethod != nil){ 
-            let errorMethod = cardtoken.validateCardNumber(paymentMethod!)
+            let errorMethod = cardtoken!.validateCardNumber(paymentMethod!)
             if((errorMethod) != nil){
                 markErrorLabel(cardNumberLabel!)
                 return
@@ -731,17 +817,17 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 return
         }
         
-        let errorDate = cardtoken.validateExpiryDate()
+        let errorDate = cardtoken!.validateExpiryDate()
         if((errorDate) != nil){
             markErrorLabel(expirationDateLabel!)
             return
         }
-        let errorName = cardtoken.validateCardholderName()
+        let errorName = cardtoken!.validateCardholderName()
         if((errorName) != nil){
             markErrorLabel(nameLabel!)
             return
         }
-        let errorCVV = cardtoken.validateSecurityCode()
+        let errorCVV = cardtoken!.validateSecurityCode()
         if((errorCVV) != nil){
             markErrorLabel(cvvLabel!)
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
@@ -754,13 +840,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
          self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken,issuer:installment.issuer)
         
-        /*
-        MPServicesBuilder.createNewCardToken(cardtoken, success: { (token) -> Void in
-            self.callback!(paymentMethod: self.paymentMethod!, token: token,issuer:installment.issuer)
-            }) { (error) -> Void in
-                print(error)
-        }
-        */
     }
     
     

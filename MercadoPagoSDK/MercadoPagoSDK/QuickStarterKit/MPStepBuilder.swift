@@ -94,12 +94,7 @@ public class MPStepBuilder : NSObject {
                    
                 })
 
-                identificationForm.callbackCancel = { Void -> Void in
-                    ccf.navigationController!.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                }
-                
+                identificationForm.callbackCancel = callbackCancel                
                 
                 ccf.navigationController!.pushViewController(identificationForm, animated: false)
                 
@@ -117,10 +112,10 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int?,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
+    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int?,installment : Installment? = nil,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         
         
-        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: minInstallments, callback: callback)
+        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: minInstallments, installment : installment, callback: callback)
        // return PaymentInstallmentsViewController(paymentType : paymentType , callback : callback)
     }
     

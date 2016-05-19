@@ -51,6 +51,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
         self.loadMPStyles()
@@ -61,12 +62,15 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
+  
+        
     }
     
     internal func loadMPStyles(){
         
         if self.navigationController != nil {
 
+            
             //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
@@ -77,7 +81,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
                 self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
                 self.navigationController?.navigationBar.removeBottomLine()
-                
+                  self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
                 rightButtonShoppingCart()
                 displayBackButton()
@@ -100,11 +104,16 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         //Navigation bar colors
         self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+
       
     }
     
     internal func invokeCallbackCancel(){
-        self.callbackCancel!()
+        if(self.callbackCancel != nil){
+            self.callbackCancel!()
+        }
+
     }
     
     internal func togglePreferenceDescription(table : UITableView){

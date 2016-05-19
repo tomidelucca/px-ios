@@ -29,7 +29,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, payerCosts : [PayerCost]? = nil, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?,maxInstallments : Int?, installment : Installment? = nil, callback : ((payerCost: PayerCost) -> Void)) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
         //self.edgesForExtendedLayout = .All
@@ -37,7 +37,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.token = token!
         self.callback = callback
         self.maxInstallments = maxInstallments
-        self.payerCosts = payerCosts
+        if(installment != nil){
+            self.payerCosts = installment!.payerCosts
+            self.installments = [installment!]
+        }
+        
+        
         if(self.payerCosts == nil){
             MPServicesBuilder.getInstallments((token?.getBin())!  , amount: amount!, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
                 self.installments = installments
@@ -48,8 +53,6 @@ public class PayerCostViewController: MercadoPagoUIViewController {
                 }) { (error) -> Void in
                     print("error!")
             }
-        }else{
-            self.tableView.reloadData()
         }
        
 
@@ -62,8 +65,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear(animated)
-        //cardFront?.frame = cardView.bounds
         self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         print(cardView.bounds)
     }
     

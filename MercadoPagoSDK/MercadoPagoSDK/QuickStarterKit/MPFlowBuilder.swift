@@ -50,20 +50,32 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> UINavigationController {
+    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> UINavigationController {
     
         var cardVC : UINavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
+        if (callbackCancel == nil){
+            callbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            }) }
+        }
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
             
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
                 
-                let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, minInstallments: nil, callback: { (payerCost) -> Void in
-                    callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
-                })
-                
-                ccf.navigationController!.pushViewController(pcvc, animated: false)
+                if(installments?.count == 1){
+                    if(installments![0].payerCosts.count != 1){
+                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, minInstallments: nil, installment:installments![0] ,callback: { (payerCost) -> Void in
+                            callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
+                        })
+                        pcvc.callbackCancel = callbackCancel
+                        
+                        ccf.navigationController!.pushViewController(pcvc, animated: false)
+
+                    }else{
+                         callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: installments![0].payerCosts[0])
+                    }
+                }
                 
                 }, failure: { (error) -> Void in
                     
@@ -83,27 +95,4 @@ public class MPFlowBuilder : NSObject {
     }
 
  
-
-    
-    /*public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void) -> UINavigationController {
-        
-
-        let cardVC = MPStepBuilder.startCreditCardForm(paymentSettings , amount: amount, callback: { (paymentMethod, token, issuer, installment) -> Void in
-            
-            let step = MPStepBuilder.startCreditCardForm(PaymentType(paymentTypeId: paymentSettings.defaultPaymentTypeId , amount: amount, token:token, callback: { (paymentMethod, token, issuer, installment) -> Void in
-
-                })
-
-                MPFlowController.sharedInstance.currentNavigationController?.pushViewController(step, animated: true)
-
-
-           
-        })
-        
-        cardVC.modalTransitionStyle = .CrossDissolve
-        return MPFlowController.createNavigationControllerWith(cardVC)
-        
-        
-    }*/
-
 }
