@@ -19,7 +19,7 @@ public class MercadoPagoService : NSObject {
         self.baseURL = baseURL
     }
     
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, success: (jsonResult: AnyObject?) -> Void,
+    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
         
         var url = baseURL + uri
@@ -32,6 +32,12 @@ public class MercadoPagoService : NSObject {
         request.URL = finalURL
         request.HTTPMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if headers !=  nil && headers!.count > 0 {
+            for header in headers! {
+                request.setValue(header.value as! String, forHTTPHeaderField: header.key as! String)
+            }
+        }
+        
         if body != nil {
             request.HTTPBody = (body as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
         }
@@ -46,7 +52,7 @@ public class MercadoPagoService : NSObject {
 						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
 							options:NSJSONReadingOptions.AllowFragments))
 					} catch {
-						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: 1, userInfo: nil)
+						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
 						failure!(error: e)
 					}
                 } else {

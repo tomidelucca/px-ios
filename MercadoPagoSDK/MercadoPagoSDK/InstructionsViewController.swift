@@ -52,21 +52,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        if currentInstruction == nil {
-            registerAllCells()
-            MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
-                self.currentInstruction = instruction
-                self.congratsTable.delegate = self
-                self.congratsTable.dataSource = self
-                self.congratsTable.reloadData()
-                }, failure: { (error) -> Void in
-                    //TODO
-            })
-        } else {
-            self.congratsTable.reloadData()
-        }
-
-        
         self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
         
         if self.navigationController != nil {
@@ -79,6 +64,16 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.extendedLayoutIncludesOpaqueBars = false
         self.automaticallyAdjustsScrollViewInsets = false
 
+    }
+    
+    override public func viewDidAppear(animated : Bool) {
+        super.viewDidAppear(animated)
+        if currentInstruction == nil {
+            registerAllCells()
+            getInstructions()
+        } else {
+            self.congratsTable.reloadData()
+        }
     }
     
     override public func viewWillAppear(animated: Bool) {
@@ -227,5 +222,16 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
+    }
+    
+    private func getInstructions(){
+        MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
+            self.currentInstruction = instruction
+            self.congratsTable.delegate = self
+            self.congratsTable.dataSource = self
+            self.congratsTable.reloadData()
+            }, failure: { (error) -> Void in
+                self.requestFailure(error)
+        })
     }
 }

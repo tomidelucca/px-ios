@@ -36,7 +36,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
                 self.issuerList = issuers
                 self.tableView.reloadData()
                 }) { (error) -> Void in
-                    print("error")
+                        // HANDLE ERROR
             }
         }else{
             self.tableView.reloadData()
@@ -45,6 +45,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         
         
     }
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)

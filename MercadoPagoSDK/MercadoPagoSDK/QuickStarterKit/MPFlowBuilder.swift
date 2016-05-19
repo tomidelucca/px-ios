@@ -60,7 +60,7 @@ public class MPFlowBuilder : NSObject {
             }) }
         }
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
-            
+
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
                 
                     if(installments![0].payerCosts.count != 1){ // Si tiene una sola opcion de cuotas
@@ -79,19 +79,16 @@ public class MPFlowBuilder : NSObject {
                 }, failure: { (error) -> Void in
                     
             })
+
             
             }, callbackCancel : callbackCancel)
     
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
     
         cardVC!.modalTransitionStyle = .CrossDissolve
-    
-    
-    
-    return cardVC!
-    
-    
+        return cardVC!
+
     }
 
- 
+
 }

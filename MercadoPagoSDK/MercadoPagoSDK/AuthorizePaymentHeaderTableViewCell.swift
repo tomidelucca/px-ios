@@ -35,7 +35,7 @@ class AuthorizePaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDele
     
     func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
         let title = NSMutableAttributedString(string: "Debes autorizar ante ".localized + payment.paymentMethodId + " el pago de ".localized)
-        let attributedAmount = Utils.getAttributedAmount(String(payment.transactionAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
+        let attributedAmount = Utils.getAttributedAmount(String(payment.transactionDetails.totalPaidAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
         title.appendAttributedString(attributedAmount)
         title.appendAttributedString(NSMutableAttributedString(string : " a MercadoPago".localized))
         self.title.attributedText = title

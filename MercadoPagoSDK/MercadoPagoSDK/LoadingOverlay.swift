@@ -41,8 +41,9 @@ public class LoadingOverlay {
     }
     
     public func showOverlay(view: UIView) {
-        
-        view.addSubview(self.getLoadingOverlay(view))
+        let overlay = self.getLoadingOverlay(view)
+        view.addSubview(overlay)
+        view.bringSubviewToFront(overlay)
     }
     
     public func hideOverlayView() {
