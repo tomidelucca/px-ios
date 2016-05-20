@@ -50,12 +50,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.issuer = issuer
         
         
-        if(self.payerCosts == nil){
-            self.getInstallments()
-        }else{
-            self.tableView.reloadData()
-        }
-       
+ 
 
     }
     
@@ -124,7 +119,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
-
+        if(self.payerCosts == nil){
+            self.getInstallments()
+        }else{
+            self.tableView.reloadData()
+        }
+        
     }
     
     
