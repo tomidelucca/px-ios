@@ -36,7 +36,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
       
-       print(string)
+        if(textField.text?.characters.count > 9){
+            return false
+        }
         return true
     }
 
