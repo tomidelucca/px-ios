@@ -149,7 +149,7 @@ public class Payment : NSObject {
 			payment.couponAmount = JSON(json["coupon_amount"]!).asDouble!
 		}
 		if json["differential_pricing_id"] != nil && !(json["differential_pricing_id"]! is NSNull) {
-			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"] as? NSString)!.longLongValue)
+			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"]!.longLongValue))
 		}
 		
 		if json["issuer_id"] != nil && !(json["issuer_id"]! is NSNull) {
