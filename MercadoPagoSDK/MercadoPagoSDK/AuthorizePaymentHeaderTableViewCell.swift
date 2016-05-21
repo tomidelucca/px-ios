@@ -33,7 +33,7 @@ class AuthorizePaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDele
         // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell {
         let title = NSMutableAttributedString(string: "Debes autorizar ante ".localized + payment.paymentMethodId + " el pago de ".localized)
         let attributedAmount = Utils.getAttributedAmount(String(payment.transactionDetails.totalPaidAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
         title.appendAttributedString(attributedAmount)

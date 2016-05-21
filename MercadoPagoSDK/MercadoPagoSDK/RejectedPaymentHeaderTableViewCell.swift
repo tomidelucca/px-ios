@@ -31,7 +31,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment : Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment : Payment, callbackCancel : (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell {
         
         
         let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(payment.paymentMethodId.localized)")

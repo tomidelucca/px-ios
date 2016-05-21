@@ -28,9 +28,10 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, callbackCancel : (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell {
         self.callbackCancel = callbackCancel!
-        self.payAgainButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        self.startPaymentVault = startPaymentVault
+        self.payAgainButton.addTarget(self, action: "invokeStartPaymentVault", forControlEvents: .TouchUpInside)
         return self
     }
 

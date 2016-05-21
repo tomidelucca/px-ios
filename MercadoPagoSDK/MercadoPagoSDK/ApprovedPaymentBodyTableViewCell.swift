@@ -33,7 +33,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell {
         self.creditCardIcon.image = MercadoPago.getImage(payment.paymentMethodId)
         self.voucherId.text = "Comprobante".localized + " " + String(payment._id)
         let greenLabelColor = UIColor(red: 67, green: 176,blue: 0)

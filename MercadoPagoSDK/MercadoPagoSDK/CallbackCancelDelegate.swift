@@ -11,9 +11,23 @@ import UIKit
 public class CallbackCancelTableViewCell : UITableViewCell {
 
     var callbackCancel : (Void -> Void)?
+    var startPaymentVault : (Void -> Void)?
+    var calledForAuthorize : (Void -> Void)?
     
     func invokeCallbackCancel() {
         self.callbackCancel!()
     }
 
+    func invokeStartPaymentVault(){
+        if self.startPaymentVault != nil {
+            self.startPaymentVault!()
+        }
+    }
+    
+    func invokeCalledForAuthorize(){
+        if self.calledForAuthorize != nil {
+            self.calledForAuthorize!()
+        }
+    }
+    
 }

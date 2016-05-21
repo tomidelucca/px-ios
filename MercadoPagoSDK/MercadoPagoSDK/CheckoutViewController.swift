@@ -342,11 +342,26 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.payerCost!.installments , issuer: self.issuer,success: { (payment) -> Void in
             
                 self.clearMercadoPagoStyleAndGoBack()
+            
+            
                 let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callbackCancel: {
                     self.dismissViewControllerAnimated(true, completion: {
                         
                     })
                 })
+            
+                if payment.status == "rejected" {
+                    congratsVC.startPaymentVault = {
+                        MPFlowBuilder.startCheckoutViewController(self.preferenceId, callback: self.callback)
+                    }
+                    if payment.statusDetail == "cc_call_for_authorize" {
+                        congratsVC.calledForAuthtorize = {
+                            MPFlowBuilder.startCardFlow(self.preference?.getPaymentSettings(), amount: (self.preference?.getAmount())!, callback: { (paymentMethod, token, issuer, payerCost) in
+                                //TODO
+                            })
+                        }
+                    }
+                }
                 self.navigationController?.pushViewController(congratsVC, animated: true)
             
             }, failure : { (error) -> Void in

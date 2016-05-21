@@ -20,6 +20,8 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     var bundle = MercadoPago.getBundle()
     var payment : Payment!
     var layoutTemplate : String!
+    var startPaymentVault : ((Void) -> Void)?
+    var calledForAuthtorize : ((Void) -> Void)?
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
@@ -76,12 +78,12 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         if indexPath.section == 0 {
             let header = congratsLayout[self.layoutTemplate]!["header"] as! String
             let headerCell =  self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
-            return headerCell.fillCell(self.payment, callbackCancel: nil)
+            return headerCell.fillCell(self.payment, callbackCancel: nil, startPaymentVault: nil, calledForAuthorize: nil)
         } else if indexPath.section == 1 {
             let body = congratsLayout[self.layoutTemplate]!["body"] as? String
             if body != nil && body?.characters.count > 0 {
                 let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body!) as! CongratsFillmentDelegate
-                return bodyCell.fillCell(self.payment, callbackCancel: self.callbackCancel)
+                return bodyCell.fillCell(self.payment, callbackCancel: self.callbackCancel, startPaymentVault: self.startPaymentVault, calledForAuthorize: self.calledForAuthtorize)
             }
             return UITableViewCell()
         }
