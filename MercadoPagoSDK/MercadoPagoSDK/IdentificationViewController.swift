@@ -121,16 +121,13 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         navBar.barStyle = UIBarStyle.Default;
         navBar.backgroundColor = UIColor(netHex: 0xEEEEEE);
         navBar.alpha = 1;
-        //replace viewWidth with view controller width
+
         let navItem = UINavigationItem()
-        //let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "closeKeyboard")
-        
-        
+
         let doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
-        
-        //UIBarButtonItem(image: MercadoPago.getImage("right_arrow"), landscapeImagePhone: MercadoPago.getImage("right_arrow"), style: .Plain, target: self, action: "rightArrowKeyTapped")
+
         let donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
-        //UIBarButtonItem(image: MercadoPago.getImage("left_arrow"), landscapeImagePhone: MercadoPago.getImage("left_arrow"), style: .Plain, target: self, action: "leftArrowKeyTapped")
+
         
         
         

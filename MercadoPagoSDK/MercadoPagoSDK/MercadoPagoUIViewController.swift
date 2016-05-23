@@ -7,7 +7,17 @@
 //
 
 import UIKit
-
+public class MPNavigationController : UINavigationController {
+    internal func showLoading(){
+        
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view)
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
+    }
+    
+}
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false

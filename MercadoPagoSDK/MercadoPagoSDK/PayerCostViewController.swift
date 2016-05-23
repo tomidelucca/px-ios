@@ -90,7 +90,6 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             cardFront?.cardNumber.textColor =  fontColor
             cardFront?.cardName.textColor =  fontColor
             cardFront?.cardExpirationDate.textColor =  fontColor
-
         }
         
     }
