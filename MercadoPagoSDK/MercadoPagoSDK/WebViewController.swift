@@ -10,9 +10,11 @@ import UIKit
 
 class WebViewController: MercadoPagoUIViewController {
     
+    var url : NSURL?
     @IBOutlet weak var webView: UIWebView!
-    init() {
+    init( url : NSURL) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
+        self.url = url
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -21,6 +23,7 @@ class WebViewController: MercadoPagoUIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loadUrl(url!)
     }
 
     override func didReceiveMemoryWarning() {

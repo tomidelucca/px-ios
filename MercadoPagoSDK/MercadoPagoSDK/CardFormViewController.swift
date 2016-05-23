@@ -91,7 +91,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
       
-        textBox.placeholder = "Numero".localized
+        textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
 
        
@@ -125,11 +125,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
       //  cardNumberLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchNumber:"))
         cardNumberLabel?.text = ".... .... .... ...."
      //   nameLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchName:"))
-        nameLabel?.text = "Nombre Completo".localized
+        nameLabel?.text = "NOMBRE APELLIDO".localized
     //    expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
         expirationDateLabel?.text = "MM/AA".localized
      //   cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
-        cvvLabel?.text = "CVV".localized
+        cvvLabel?.text = "...".localized
         editingLabel = cardNumberLabel
 
         
@@ -196,16 +196,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     private func formatName(name:String) -> String{
         if(name.characters.count == 0){
             nameLabelEmpty = true
-            return "Nombre Completo".localized
+            return "Nombre y apellido".localized
         }
         nameLabelEmpty = false
-        return name
-       // return name.uppercaseString // TODO UX NO QUIERE MAYUSCULAS
+        return name.uppercaseString
     }
     private func formatCVV(cvv:String) -> String{
         if(cvv.characters.count == 0){
             cvvLabelEmpty = true
-            return "CVV".localized
+            return "...".localized
         }
         cvvLabelEmpty = false
         return cvv
@@ -227,7 +226,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.becomeFirstResponder()
         textBox.text = numberLabelEmpty ?  "" : cardNumberLabel!.text
-        textBox.placeholder = "Numero de tarjeta".localized
+        textBox.placeholder = "Número de tarjeta".localized
     }
     private func prepareNameLabelForEdit(){
         editingLabel = nameLabel
@@ -235,7 +234,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.keyboardType = UIKeyboardType.Alphabet
         textBox.becomeFirstResponder()
         textBox.text = nameLabelEmpty ?  "" : nameLabel!.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
-        textBox.placeholder = "Nombre Completo".localized
+        textBox.placeholder = "Nombre y apellido".localized
 
     }
     private func prepareExpirationLabelForEdit(){
@@ -244,17 +243,17 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.becomeFirstResponder()
         textBox.text = expirationLabelEmpty ?  "" : expirationDateLabel!.text
-        textBox.placeholder = "Fecha de Expiracion".localized
+        textBox.placeholder = "Fecha de expiración".localized
     }
     private func prepareCVVLabelForEdit(){
         if(isAmexCard()){
             cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = "CVV".localized
+            cardBack?.cardCVV.text = "....".localized
             cardBack?.cardCVV.alpha = 0
             cardFront?.cardCVV.alpha = 1
         }else{
             cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = "CVV".localized
+            cardFront?.cardCVV.text = "...".localized
             cardFront?.cardCVV.alpha = 0
             cardBack?.cardCVV.alpha = 1
         }
@@ -263,7 +262,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.becomeFirstResponder()
         textBox.text = cvvLabelEmpty  ?  "" : cvvLabel!.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
-        textBox.placeholder = "Codigo de Seguridad".localized
+        textBox.placeholder = "Código de seguridad".localized
     }
     
     
@@ -688,13 +687,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = ""
             cardFront?.cardCVV.alpha = 1
-             cardFront?.cardCVV.text = "CVV".localized
+             cardFront?.cardCVV.text = "....".localized
             cvvLabelEmpty = true
         }else{
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = ""
             cardFront?.cardCVV.alpha = 0
-            cardBack?.cardCVV.text = "CVV".localized
+            cardBack?.cardCVV.text = "...".localized
             cvvLabelEmpty = true
         }
         self.updateLabelsFontColors()

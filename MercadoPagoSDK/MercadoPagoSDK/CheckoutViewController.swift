@@ -410,9 +410,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func openTermsAndConditions(url : NSURL){
-        let webVC = WebViewController()
-        webVC.loadUrl(url)
+        let webVC = WebViewController(url: url)
+
         self.navigationController!.pushViewController(webVC, animated: true)
+        
     }
     
 }

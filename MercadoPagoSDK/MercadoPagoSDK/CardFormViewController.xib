@@ -21,7 +21,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFe-jt-dCn">
                     <rect key="frame" x="0.0" y="180" width="320" height="320"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Numero" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-aq-63o" customClass="HoshiTextField" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-aq-63o" customClass="HoshiTextField" customModule="MercadoPagoSDK" customModuleProvider="target">
                             <rect key="frame" x="20" y="10" width="280" height="45"/>
                             <color key="backgroundColor" white="1" alpha="0.63" colorSpace="calibratedWhite"/>
                             <constraints>
