@@ -34,9 +34,13 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.preferenceId = preferenceId
         self.callback = callback
         self.callbackCancel = {
-            self.dismissViewControllerAnimated(true, completion: { 
+            if self.paymentMethod == nil {
+                self.dismissViewControllerAnimated(true, completion: {
                 
-            })
+                })
+            } else {
+                self.loadGroupsAndStartPaymentVault()
+            }
         }
     }
     
@@ -59,9 +63,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //Remove navigation items
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
         
     }
     
@@ -245,7 +248,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             exitButtonCell.callbackCancel = {
                 self.dismissViewControllerAnimated(true, completion: {})
             }
-            exitButtonCell.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+            exitButtonCell.exitButton.addTarget(self, action: "exitCheckoutFlow", forControlEvents: .TouchUpInside)
             return exitButtonCell
         }
         return nil
@@ -271,21 +274,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.registerAllCells()
         
         let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.preference!.getAmount(), purchaseTitle: self.preference!.getTitle(), currencyId: self.preference!.getCurrencyId(), pictureUrl : self.preference!.getPictureUrl(), paymentSettings: self.preference!.getPaymentSettings(), paymentMethodSearch: self.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
-                let transition = CATransition()
-                transition.type = kCATransitionPush
-                transition.subtype = kCATransitionFromRight
-                self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
-                self.navigationController!.popToRootViewControllerAnimated(animated)
-            
-                self.paymentMethod = paymentMethod
-                self.token = token
-                self.issuer = issuer
-                self.payerCost = payerCost
-                self.checkoutTable.reloadData()
-            
-            
-            
-            
+            self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : animated)
         })
         
         var callbackCancel : (Void -> Void)
@@ -317,11 +306,27 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         }
     }
     
+    internal func paymentVaultCallback(paymentMethod : PaymentMethod, token : Token?, issuer : Issuer?, payerCost : PayerCost?, animated : Bool = true){
+        let transition = CATransition()
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
+        self.navigationController!.popToRootViewControllerAnimated(animated)
+        
+        self.paymentMethod = paymentMethod
+        self.token = token
+        self.issuer = issuer
+        self.payerCost = payerCost
+        self.checkoutTable.reloadData()
+    }
+    
+    
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
             if payment.isRejected() {
-                let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment)
-                self.navigationController!.pushViewController(congratsRejected, animated: true)
+                //TODO
+            //    let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment)
+            //    self.navigationController!.pushViewController(congratsRejected, animated: true)
             } else {
                 self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
                     self.modalTransitionStyle = .CrossDissolve
@@ -341,20 +346,32 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func confirmPaymentOn(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.payerCost!.installments , issuer: self.issuer,success: { (payment) -> Void in
             
-                self.clearMercadoPagoStyleAndGoBack()
-                let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callbackCancel: {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                })
-                self.navigationController?.pushViewController(congratsVC, animated: true)
-            
+                self.clearMercadoPagoStyle()
+                self.navigationController!.popViewControllerAnimated(true)
+                self.displayCongrats(payment)
             }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
                     self.navigationController?.dismissViewControllerAnimated(true, completion: {})
                     self.confirmPayment()
                 })
         })
+    }
+    
+    internal func displayCongrats(payment: Payment){
+        let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callback : { (payment : Payment, status: String) in
+            if status == "CANCEL" {
+                self.navigationController?.popToViewController(self, animated: true)
+                self.navigationController!.setNavigationBarHidden(false, animated: false)
+                self.paymentMethod = nil
+                let choVC = MPFlowBuilder.startCheckoutViewController(self.preferenceId, callback: self.callback)
+                self.navigationController?.pushViewController(choVC.viewControllers[0], animated: true)
+            } else {
+                self.dismissViewControllerAnimated(true, completion: {})
+                self.callback(payment)
+            }
+            
+        })
+        self.navigationController!.pushViewController(congratsVC, animated: true)
     }
     
     private func loadPreference(){
@@ -415,5 +432,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.navigationController!.pushViewController(webVC, animated: true)
         
     }
-    
+ 
+    internal func exitCheckoutFlow(){
+        self.navigationController?.dismissViewControllerAnimated(true, completion: {})
+    }
 }

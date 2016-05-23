@@ -111,6 +111,7 @@
             <connections>
                 <outlet property="amountDescription" destination="wvo-y8-NJi" id="JAn-cr-WMP"/>
                 <outlet property="creditCardIcon" destination="ov0-kE-AA9" id="Eff-Qw-8sZ"/>
+                <outlet property="creditCardLabel" destination="KAv-vt-373" id="SQk-h4-ows"/>
                 <outlet property="voucherId" destination="vMr-uI-zyh" id="XY9-qf-dp6"/>
             </connections>
             <point key="canvasLocation" x="240" y="76.5"/>

@@ -12,8 +12,6 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
 
     static let ROW_HEIGHT = CGFloat(150)
     
-    var alreadyAuthorizedAction : (Void -> Void)?
-    
     @IBOutlet weak var completeCardButton: MPButton!
     @IBOutlet weak var cancelButton: MPButton!
     
@@ -26,14 +24,12 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
-        self.callbackCancel = callbackCancel
-        if alreadyAuthorizedAction == nil {
-            self.completeCardButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
-        }
+    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
         self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
-        self.cancelButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        self.defaultCallback = callback
+        self.cancelButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         return self
     }
     
+
 }

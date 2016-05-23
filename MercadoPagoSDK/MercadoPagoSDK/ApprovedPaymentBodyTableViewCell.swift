@@ -14,6 +14,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
     
     @IBOutlet weak var creditCardIcon: UIImageView!
     
+    @IBOutlet weak var creditCardLabel: MPLabel!
     @IBOutlet weak var amountDescription: UILabel!
     @IBOutlet weak var cancelButton: MPButton!
     
@@ -29,15 +30,14 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
         self.creditCardIcon.image = MercadoPago.getImage(payment.paymentMethodId)
         self.voucherId.text = "Comprobante".localized + " " + String(payment._id)
         let greenLabelColor = UIColor(red: 67, green: 176,blue: 0)
         
+        self.creditCardLabel.text = "terminada en ".localized + payment.card.lastFourDigits!
         let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
         let additionalString = NSMutableAttributedString(string: " ")
         

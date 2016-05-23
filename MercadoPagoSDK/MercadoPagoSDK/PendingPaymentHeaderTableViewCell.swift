@@ -27,7 +27,7 @@ class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelega
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment: Payment, callbackCancel: (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
         if payment.statusDetail == "pending_contigency" {
             self.subtitle.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
         } else {
