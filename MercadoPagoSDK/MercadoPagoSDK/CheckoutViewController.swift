@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
     
     var preferenceId : String!
     var preference : CheckoutPreference?
@@ -151,8 +151,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     self.title = "Revisa si está todo bien...".localized
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: self.paymentMethod!.paymentTypeId)
-                    let displayEditSelection = (paymentMethodSearch!.groups.count > 1)
-                    cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!, displayCustomIndicator: displayEditSelection)
+                    cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!)
                     return cell
                 } else {
                     self.title = "Tantito más y terminas…".localized
@@ -193,6 +192,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if paymentMethod!.isOfflinePaymentMethod() {
                 let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
                 termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+                termsAndConditionsButton.delegate = self
                 self.paymentButton = termsAndConditionsButton.paymentButton
                 return termsAndConditionsButton
             } else {
@@ -241,10 +241,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 1 {
-            let copyrightCell =  self.checkoutTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
-            copyrightCell.cancelButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
-            copyrightCell.drawBottomLine(self.view.bounds.width)
-            return copyrightCell
+            let exitButtonCell =  self.checkoutTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
+            exitButtonCell.callbackCancel = {
+                self.dismissViewControllerAnimated(true, completion: {})
+            }
+            exitButtonCell.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+            return exitButtonCell
         }
         return nil
     }
@@ -354,11 +356,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 })
         })
     }
-
-    
-    internal func togglePreferenceDescription(){
-        self.togglePreferenceDescription(self.checkoutTable)
-    }
     
     private func loadPreference(){
         MPServicesBuilder.getPreference(self.preferenceId, success: { (preference) in
@@ -398,8 +395,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.registerNib(paymentDescriptionFooter, forCellReuseIdentifier: "paymentDescriptionFooter")
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
-        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
+        let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
+        self.checkoutTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
         
         // Payment ON rows
         let paymentSelectedCell = UINib(nibName: "PaymentMethodSelectedTableViewCell", bundle: self.bundle)
@@ -412,5 +409,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.separatorStyle = .None
     }
     
+    internal func openTermsAndConditions(url : NSURL){
+        let webVC = WebViewController()
+        webVC.loadUrl(url)
+        self.navigationController!.pushViewController(webVC, animated: true)
+    }
     
 }

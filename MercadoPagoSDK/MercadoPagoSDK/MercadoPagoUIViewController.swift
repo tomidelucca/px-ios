@@ -89,11 +89,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor().blueMercadoPago()
+                self.navigationController?.navigationBar.barTintColor = UIColor(red: 48, green: 175, blue: 226)
                 self.navigationController?.navigationBar.removeBottomLine()
                   self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
-                rightButtonShoppingCart()
                 displayBackButton()
             }
         }
@@ -125,18 +124,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         }
 
     }
-    
-    internal func togglePreferenceDescription(table : UITableView){
-        if displayPreferenceDescription {
-            self.rightButtonShoppingCart()
-        } else {
-            self.rightButtonClose()
-        }
-        displayPreferenceDescription = !displayPreferenceDescription
-        let range = NSMakeRange(0, 1)
-        table.reloadSections(NSIndexSet(indexesInRange: range), withRowAnimation: .Middle)
-    }
-
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

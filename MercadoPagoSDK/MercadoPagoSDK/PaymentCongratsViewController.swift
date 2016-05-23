@@ -44,9 +44,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             self.congratsContentTable.bounds.size.width, 0.01))
         self.congratsContentTable.rowHeight = UITableViewAutomaticDimension
         self.congratsContentTable.estimatedRowHeight = 160.0
-        
-        self.navigationItem.backBarButtonItem?.action = "invokeCallbackCancel"
-        self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
+    
         
         if self.callbackCancel == nil {
             self.callbackCancel = {
@@ -57,18 +55,17 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         }
         
     }
+    
+    override public func viewWillAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.backBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+    }
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if (self.navigationItem.rightBarButtonItem != nil) {
-           self.navigationItem.rightBarButtonItem = nil
-        }
-    }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
@@ -90,6 +87,8 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         }
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
         exitButtonCell.callbackCancel = self.callbackCancel
+        exitButtonCell.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        exitButtonCell.exitButton.setTitle("Seguir comprando".localized, forState: .Normal)
         return exitButtonCell
     }
     

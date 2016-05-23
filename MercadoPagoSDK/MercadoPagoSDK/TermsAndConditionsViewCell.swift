@@ -12,6 +12,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var termsAndConditionsText: MPTextView!
     @IBOutlet weak var paymentButton: MPButton!
+    var delegate : TermsAndConditionsDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +26,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         let tycLinkRange = termsAndConditionsText!.rangeOfString("términos y condiciones".localized)
         //TODO  hardcoded
         mutableAttributedString.addAttribute(NSLinkAttributeName, value: "http://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715", range: tycLinkRange)
-        
+        self.termsAndConditionsText.delegate = self
         let style = NSMutableParagraphStyle()
         style.alignment = .Center
         
@@ -37,8 +38,8 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     }
     
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        UIApplication.sharedApplication().openURL(URL)
-        return false
+        self.delegate?.openTermsAndConditions(URL)
+        return true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -47,3 +48,10 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     }
     
 }
+
+protocol TermsAndConditionsDelegate {
+    
+    func openTermsAndConditions(url : NSURL)
+}
+
+
