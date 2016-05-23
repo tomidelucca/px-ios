@@ -544,7 +544,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         case cardNumberLabel! :
         
             if (checkCardNumber() == false){
-                showErrorMessage("Revisa este dato.")
+                
+             showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
                 return
             }
             self.prepareCVVLabelForEdit()
@@ -556,20 +557,20 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
         case nameLabel! :
             if (checkCardName() == false){
-                showErrorMessage("Revisa este dato.")
+                showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
                 return
             }
             self.prepareNumberLabelForEdit()
         case expirationDateLabel! :
             if (checkExpirationDateCard() == false){
-                showErrorMessage("Revisa este dato.")
+                showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
                 return
             }
         prepareNameLabelForEdit()
             
         case cvvLabel! :
             if (checkCVV() == false){
-                showErrorMessage("Revisa este dato.")
+                showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
                 return
             }
             UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
@@ -585,21 +586,28 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
         case cardNumberLabel! :
             if (checkCardNumber() == false){
-                showErrorMessage("Revisa este dato.")
+                if (paymentMethod != nil){
+            showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
+                }else{
+                    showErrorMessage("Revisa este dato")
+                }
+
                 return
             }
             prepareNameLabelForEdit()
             
         case nameLabel! :
-            if (checkCardName() == false){
-                showErrorMessage("Revisa este dato.")
+          if (checkCardName() == false){
+                showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
+
                 return
             }
             prepareExpirationLabelForEdit()
             
         case expirationDateLabel! :
             if (checkExpirationDateCard() == false){
-                showErrorMessage("Revisa este dato.")
+                showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
+
                 return
             }
             if(!isAmexCard()){
@@ -612,7 +620,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
         case cvvLabel! :
             if (checkCVV() == false){
-                showErrorMessage("Revisa este dato.")
+                showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
                 return
             }
             self.confirmPaymentMethod()
@@ -783,10 +791,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         let number =  numberLabelEmpty ? "" :cardNumberLabel?.text
         let month = getMonth()
         let year = getYear()
-        let secCode = cvvLabel?.text
-        let name = nameLabel?.text
+        let secCode = cvvLabelEmpty ? "" :cvvLabel?.text
+        let name = nameLabelEmpty ? "" : nameLabel?.text
         
         cardtoken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
+        
     }
     
     func checkCardNumber() -> Bool{
@@ -802,7 +811,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         return true
     }
     func checkCardName() -> Bool{
-        if (nameLabel?.text == nil ){
+        tokenHidratate()
+        if ( cardtoken!.validateCardholderName() != nil ){
             return false
         }
         return true
