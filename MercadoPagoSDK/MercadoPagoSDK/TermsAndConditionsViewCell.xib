@@ -17,7 +17,7 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqp-wb-z7q" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="18" y="84" width="423" height="50"/>
-                        <color key="backgroundColor" red="0.0" green="0.69803921568627447" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.62352941176470589" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="pHM-Cl-qS6"/>
                         </constraints>

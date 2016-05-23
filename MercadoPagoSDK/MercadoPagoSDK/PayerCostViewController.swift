@@ -166,20 +166,20 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         let mpLightGrayColor = UIColor(netHex: 0x999999)
         let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
-        let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
-        
-        let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
-        totalAmountStr.appendAttributedString(totalAmount)
-        totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
-        
-        let additionalText = payerCost.installmentRate > 0 || payerCost.installments == 1 ? "" : " Sin interes".localized
-        if additionalText.characters.count > 0 {
-            let additionalTextAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
-            totalAmountStr.appendAttributedString(NSAttributedString(string: additionalText, attributes: additionalTextAttributes))
+       let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
+       
+        let additionalText = NSMutableAttributedString(string : "")
+        if payerCost.installmentRate > 0 || payerCost.installments == 1 {
+            let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
+            let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
+            totalAmountStr.appendAttributedString(totalAmount)
+            totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
+            additionalText.appendAttributedString(totalAmountStr)
+        } else {
+            additionalText.appendAttributedString(NSAttributedString(string: " Sin intereses".localized, attributes: noRateAttributes))
         }
         
-        
-        installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: totalAmountStr)
+        installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: additionalText)
         
         
             //= payerCosts![indexPath.row].recommendedMessage

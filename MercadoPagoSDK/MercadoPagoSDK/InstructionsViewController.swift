@@ -123,19 +123,19 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             return footer
         }
         
-        let copyrightCell =  self.congratsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
+        let exitButtonCell =  self.congratsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
         let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor().UIColorFromRGB(0x0066CC)]
         let title = NSAttributedString(string: "Finalizar".localized, attributes: attributes)
-        copyrightCell.cancelButton.setAttributedTitle(title, forState: .Normal)
-        copyrightCell.cancelButton.addTarget(self, action: "finishInstructions", forControlEvents: .TouchUpInside)
+        exitButtonCell.exitButton.setAttributedTitle(title, forState: .Normal)
+        exitButtonCell.exitButton.addTarget(self, action: "finishInstructions", forControlEvents: .TouchUpInside)
         
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
         separatorLineView.backgroundColor = UIColor().grayTableSeparator()
-        copyrightCell.addSubview(separatorLineView)
-        copyrightCell.bringSubviewToFront(separatorLineView)
-        copyrightCell.drawBottomLine(self.view.bounds.width)
-        return copyrightCell
+        exitButtonCell.addSubview(separatorLineView)
+        exitButtonCell.bringSubviewToFront(separatorLineView)
+        ViewUtils.drawBottomLine(10, width: self.view.bounds.width, inView: exitButtonCell)
+        return exitButtonCell
     }
     
     
@@ -201,7 +201,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let defaultInstructionsFooterCell = UINib(nibName: "DefaultInstructionsFooterViewCell", bundle: self.bundle)
         let instructionFooterWithTertiaryInfoCell = UINib(nibName: "InstructionsFooterWithTertiaryInfoViewCell", bundle: self.bundle)
         let instructionFooterWithSecondaryInfoCell = UINib(nibName: "InstructionsFooterWithSecondaryInfoViewCell", bundle: self.bundle)
-        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
+        let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
         
         // Register cell nibs in table
         self.congratsTable.registerNib(instructionsHeaderCell, forCellReuseIdentifier: "instructionsHeaderCell")
@@ -216,7 +216,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.congratsTable.registerNib(defaultInstructionsFooterCell, forCellReuseIdentifier: "defaultInstructionsFooterCell")
         self.congratsTable.registerNib(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
         self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
-        self.congratsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
+        self.congratsTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
         self.congratsTable.registerNib(instructionsAtmCell, forCellReuseIdentifier: "instructionsAtmCell")
     }
     

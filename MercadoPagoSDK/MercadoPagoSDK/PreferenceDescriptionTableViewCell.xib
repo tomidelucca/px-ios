@@ -32,7 +32,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0Y-hG-NaU" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="123" y="8" width="158" height="70"/>
+                        <rect key="frame" x="123" y="15" width="158" height="48"/>
                         <attributedString key="attributedText">
                             <fragment content="Item de Preferencia Con description eterna para testeo de dos lineas">
                                 <attributes>
@@ -52,12 +52,12 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="DYB-02-qLc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="3RN-xd-mNi"/>
                     <constraint firstAttribute="bottomMargin" secondItem="q9l-s5-Umy" secondAttribute="bottom" constant="10" id="5sL-Tb-sZD"/>
-                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="9er-Xz-pe0"/>
+                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="9er-Xz-pe0"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerY" secondItem="DYB-02-qLc" secondAttribute="centerY" id="Fxd-SU-dkz"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ipx-E0-ih1"/>
                     <constraint firstItem="B2E-SA-UmH" firstAttribute="centerX" secondItem="DYB-02-qLc" secondAttribute="centerX" id="KaN-9w-OI2"/>
-                    <constraint firstItem="q9l-s5-Umy" firstAttribute="top" secondItem="D0Y-hG-NaU" secondAttribute="bottom" id="PTA-PM-bXn"/>
                     <constraint firstItem="DYB-02-qLc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RQa-5w-L7d"/>
                     <constraint firstItem="DYB-02-qLc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="bhd-8b-fhS"/>
                     <constraint firstAttribute="trailingMargin" secondItem="D0Y-hG-NaU" secondAttribute="trailing" constant="10" id="lRV-my-5rr"/>

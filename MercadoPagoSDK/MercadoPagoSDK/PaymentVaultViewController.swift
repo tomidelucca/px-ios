@@ -120,9 +120,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //Configure navigation item button
-        self.navigationItem.rightBarButtonItem!.target = self
-        self.navigationItem.rightBarButtonItem!.action = Selector("togglePreferenceDescription")
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
     }
 
@@ -196,8 +193,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 }
                 return paymentMethodCell
             default :
-                let copyrightCell = self.paymentsTable.dequeueReusableCellWithIdentifier("copyrightCell") as! CopyrightTableViewCell
-                return copyrightCell.drawCell(true, width: self.view.bounds.width)
+                let exitButtonCell = self.paymentsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
+                exitButtonCell.callbackCancel =  {(Void) -> Void in
+                    self.dismissViewControllerAnimated(true, completion: {})
+                }
+                exitButtonCell.exitButton.addTarget(exitButtonCell, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+                return exitButtonCell
         }
         
     }
@@ -337,7 +338,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
         let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
         let offlinePaymentWithDescription = UINib(nibName: "OfflinePaymentMethodWithDescriptionCell", bundle: self.bundle)
-        let copyrightCell = UINib(nibName: "CopyrightTableViewCell", bundle: self.bundle)
+        let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
         
         self.paymentsTable.registerNib(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
@@ -345,15 +346,11 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
         self.paymentsTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
         self.paymentsTable.registerNib(offlinePaymentWithDescription, forCellReuseIdentifier: "offlinePaymentWithDescription")
-        self.paymentsTable.registerNib(copyrightCell, forCellReuseIdentifier: "copyrightCell")
+        self.paymentsTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
     }
     
     public override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    internal func togglePreferenceDescription(){
-        self.togglePreferenceDescription(self.paymentsTable)
     }
 
     public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

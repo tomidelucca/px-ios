@@ -42,9 +42,9 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         let additionalString = NSMutableAttributedString(string: " ")
         
         if payment.transactionAmount < payment.transactionDetails.totalPaidAmount {
-            additionalString.appendAttributedString(NSAttributedString(string : "(", attributes: additionalTextAttributes))
+            additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
             additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 22))
-            additionalString.appendAttributedString(NSAttributedString(string : ")", attributes: additionalTextAttributes))
+            additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
         } else {
             additionalString.appendAttributedString(NSAttributedString(string: "Sin intereses".localized, attributes : additionalTextAttributes))
         }
