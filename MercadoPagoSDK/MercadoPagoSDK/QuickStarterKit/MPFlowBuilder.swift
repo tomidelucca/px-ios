@@ -64,8 +64,9 @@ public class MPFlowBuilder : NSObject {
             (ccf.navigationController as! MPNavigationController).showLoading()
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
                  (ccf.navigationController as! MPNavigationController).hideLoading()
-                    if(installments![0].payerCosts.count != 1){ // Si tiene una sola opcion de cuotas
-                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, minInstallments: nil, installment:installments![0] ,callback: { (payerCost) -> Void in
+                let payerCostSelected = paymentSettings?.autoSelectPayerCost(installments![0].payerCosts)
+                    if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
+                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, maxInstallments: paymentSettings?.maxAcceptedInstallments, installment:installments![0] ,callback: { (payerCost) -> Void in
                             callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
                         })
                         pcvc.callbackCancel = callbackCancel
@@ -73,7 +74,7 @@ public class MPFlowBuilder : NSObject {
                         ccf.navigationController!.pushViewController(pcvc, animated: false)
 
                     }else{
-                         callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: installments![0].payerCosts[0])
+                         callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCostSelected)
                     }
 
                 

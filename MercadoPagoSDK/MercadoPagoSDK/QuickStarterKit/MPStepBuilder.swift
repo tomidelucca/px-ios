@@ -85,10 +85,10 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, minInstallments : Int?,installment : Installment? = nil,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
+    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, maxInstallments : Int?,installment : Installment? = nil,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         
         
-        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: minInstallments, installment : installment, callback: callback)
+        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: maxInstallments, installment : installment, callback: callback)
        // return PaymentInstallmentsViewController(paymentType : paymentType , callback : callback)
     }
     
@@ -110,7 +110,9 @@ public class MPStepBuilder : NSObject {
     }
     
     private class func getIssuers(paymentMethod : PaymentMethod, cardToken : CardToken, ccf : MercadoPagoUIViewController, callback : (paymentMethod: PaymentMethod, token: Token, issuer:Issuer) -> Void){
+        (ccf.navigationController as! MPNavigationController).showLoading()
         MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
+            (ccf.navigationController as! MPNavigationController).hideLoading()
                 if(issuers!.count > 1){
                     let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, callback: { (issuer) -> Void in
                         self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer!, ccf : ccf, callback: callback)
@@ -123,6 +125,7 @@ public class MPStepBuilder : NSObject {
                     self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
                 }
             }, failure: { (error) -> Void in
+                (ccf.navigationController as! MPNavigationController).hideLoading()
                 let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
                     ccf.navigationController?.popViewControllerAnimated(true)
                     self.getIssuers(paymentMethod, cardToken: cardToken, ccf: ccf, callback: callback)
@@ -135,6 +138,8 @@ public class MPStepBuilder : NSObject {
         MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
             callback(paymentMethod: paymentMethod, token: token!, issuer: issuer)
         }) { (error) -> Void in
+            print(error)
+        //   return
             let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
                 ccf.navigationController?.popViewControllerAnimated(true)
                 self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
@@ -148,7 +153,7 @@ public class MPStepBuilder : NSObject {
         
         MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: paymentTypeId, success: { (installments) -> Void in
             
-            let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, minInstallments: nil, callback: { (payerCost) -> Void in
+            let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, maxInstallments: nil, callback: { (payerCost) -> Void in
                 callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
             })
             

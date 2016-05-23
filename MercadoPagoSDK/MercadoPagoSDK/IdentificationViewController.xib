@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ux3-pV-d6L">
-                    <rect key="frame" x="40" y="18" width="240" height="144"/>
+                    <rect key="frame" x="40" y="0.0" width="240" height="144"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="wBK-08-Ba2">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="144"/>
@@ -156,10 +156,6 @@
                         <constraint firstAttribute="trailing" secondItem="h9Z-Aa-2AR" secondAttribute="trailing" id="sZH-mf-SQ9"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWw-2W-szN">
-                    <rect key="frame" x="0.0" y="162" width="320" height="18"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQ5-Gw-ZTl">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="18"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -167,16 +163,12 @@
             </subviews>
             <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="jwv-KW-920" firstAttribute="top" secondItem="XWw-2W-szN" secondAttribute="bottom" id="5rx-Id-g6w"/>
-                <constraint firstItem="XWw-2W-szN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9qR-Ee-2YS"/>
                 <constraint firstItem="jwv-KW-920" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="E2F-D6-Et4"/>
                 <constraint firstItem="qQ5-Gw-ZTl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="EOk-HB-T7P"/>
+                <constraint firstItem="ux3-pV-d6L" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="KaY-XM-uUf"/>
                 <constraint firstItem="qQ5-Gw-ZTl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Uvv-Gf-1PK"/>
                 <constraint firstItem="ux3-pV-d6L" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZLg-mE-NV0"/>
-                <constraint firstAttribute="trailing" secondItem="XWw-2W-szN" secondAttribute="trailing" id="dXS-nY-2Ch"/>
                 <constraint firstAttribute="trailing" secondItem="qQ5-Gw-ZTl" secondAttribute="trailing" id="eAV-vA-fh7"/>
-                <constraint firstItem="XWw-2W-szN" firstAttribute="top" secondItem="ux3-pV-d6L" secondAttribute="bottom" id="ihg-xk-Dxh"/>
-                <constraint firstItem="XWw-2W-szN" firstAttribute="height" secondItem="qQ5-Gw-ZTl" secondAttribute="height" id="jD4-rt-eri"/>
                 <constraint firstItem="ux3-pV-d6L" firstAttribute="top" secondItem="qQ5-Gw-ZTl" secondAttribute="bottom" id="o5o-WD-esu"/>
                 <constraint firstItem="ux3-pV-d6L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="sZH-Cf-j2P"/>
                 <constraint firstAttribute="trailing" secondItem="jwv-KW-920" secondAttribute="trailing" id="tGN-JE-bsb"/>
@@ -186,6 +178,9 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="qQ5-Gw-ZTl"/>
+                </mask>
                 <mask key="constraints">
                     <exclude reference="zTz-IE-zp7"/>
                 </mask>

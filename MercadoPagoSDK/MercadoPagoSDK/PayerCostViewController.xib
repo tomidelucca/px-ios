@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7nl-Xg-MIO">
-                    <rect key="frame" x="40" y="20" width="278" height="167"/>
+                    <rect key="frame" x="40" y="0.0" width="278" height="167"/>
                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="7nl-Xg-MIO" secondAttribute="height" multiplier="5:3" id="dKu-ww-ezb"/>
@@ -50,7 +50,7 @@
                 <constraint firstItem="9IB-ZA-8iJ" firstAttribute="top" secondItem="7nl-Xg-MIO" secondAttribute="bottom" constant="20" id="K77-lc-VnY"/>
                 <constraint firstItem="9IB-ZA-8iJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kq8-nU-MCr"/>
                 <constraint firstAttribute="trailing" secondItem="9IB-ZA-8iJ" secondAttribute="trailing" id="mQ6-IY-ull"/>
-                <constraint firstItem="7nl-Xg-MIO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="mdb-ul-cke"/>
+                <constraint firstItem="7nl-Xg-MIO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="mdb-ul-cke"/>
                 <constraint firstAttribute="trailing" secondItem="7nl-Xg-MIO" secondAttribute="trailing" constant="40" id="x9Q-Nx-Y2l"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

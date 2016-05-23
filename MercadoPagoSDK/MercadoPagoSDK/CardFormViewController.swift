@@ -54,6 +54,28 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    override func loadMPStyles(){
+        
+        if self.navigationController != nil {
+            
+            
+            //Navigation bar colors
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            
+            if self.navigationController != nil {
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationItem.hidesBackButton = true
+                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
+                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.removeBottomLine()
+                self.navigationController?.navigationBar.translucent = false
+                //Create navigation buttons
+                displayBackButton()
+            }
+        }
+        
+    }
 
 
     public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)? = nil) {
@@ -72,6 +94,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     
     public override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         updateLabelsFontColors()

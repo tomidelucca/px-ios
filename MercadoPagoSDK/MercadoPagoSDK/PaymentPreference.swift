@@ -29,7 +29,7 @@ public class PaymentPreference: Equatable {
         if (payerCostList.count == 1){
             return payerCostList.first
         }
-        if(defaultInstallments != nil){
+        if((defaultInstallments != nil)&&(defaultInstallments > 0)){
             for payercost in payerCostList{
                 if (payercost.installments == defaultInstallments){
                     return payercost
@@ -38,9 +38,9 @@ public class PaymentPreference: Equatable {
         }
         if ((payerCostList.first?.installments <= maxAcceptedInstallments)
             && (payerCostList[1].installments > maxAcceptedInstallments)){
-                return nil
+                return payerCostList.first
         }else{
-            return payerCostList.first
+            return nil
         }
         
         return nil
