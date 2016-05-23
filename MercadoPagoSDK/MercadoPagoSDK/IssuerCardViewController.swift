@@ -58,6 +58,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+         tableView.tableFooterView = UIView()
         let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")
         cardFront = CardFrontView(frame: self.cardView.bounds)

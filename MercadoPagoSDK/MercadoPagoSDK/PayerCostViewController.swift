@@ -102,7 +102,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:view];
         */
-        
+        tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         let installmentNib = UINib(nibName: "PayerCostTableViewCell", bundle: self.bundle)

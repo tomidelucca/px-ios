@@ -24,6 +24,9 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ux3-pV-d6L">
                     <rect key="frame" x="40" y="18" width="240" height="144"/>
                     <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="wBK-08-Ba2">
+                            <rect key="frame" x="0.0" y="0.0" width="160" height="144"/>
+                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dni_man" translatesAutoresizingMaskIntoConstraints="NO" id="opS-yI-TNr">
                             <rect key="frame" x="25" y="39" width="39" height="61"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -35,17 +38,15 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xF0-fi-6d9">
                             <rect key="frame" x="84" y="39" width="148" height="68"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAe-cS-ifU">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DOCUMENTO DEL TITULAR DE LA TARJETA" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAe-cS-ifU">
                                     <rect key="frame" x="0.0" y="0.0" width="148" height="34"/>
-                                    <string key="text">DOCUMENTO
-PARA LA FACTURACION</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="... ... ... .." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5i-w3-sw9">
                                     <rect key="frame" x="0.0" y="34" width="148" height="34"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -70,11 +71,15 @@ PARA LA FACTURACION</string>
                     </subviews>
                     <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="wBK-08-Ba2" firstAttribute="width" secondItem="ux3-pV-d6L" secondAttribute="height" multiplier="10:9" id="CyP-QL-XlY"/>
                         <constraint firstAttribute="width" secondItem="ux3-pV-d6L" secondAttribute="height" multiplier="5:3" id="H8R-hU-klH"/>
+                        <constraint firstItem="wBK-08-Ba2" firstAttribute="leading" secondItem="ux3-pV-d6L" secondAttribute="leading" id="HFG-Di-H7o"/>
+                        <constraint firstItem="wBK-08-Ba2" firstAttribute="top" secondItem="ux3-pV-d6L" secondAttribute="top" id="HLM-90-fgg"/>
                         <constraint firstItem="opS-yI-TNr" firstAttribute="centerY" secondItem="ux3-pV-d6L" secondAttribute="centerY" constant="-2.5" id="OMr-C8-fnX"/>
                         <constraint firstItem="xF0-fi-6d9" firstAttribute="centerY" secondItem="ux3-pV-d6L" secondAttribute="centerY" constant="1" id="REn-Mq-LVq"/>
                         <constraint firstItem="opS-yI-TNr" firstAttribute="leading" secondItem="ux3-pV-d6L" secondAttribute="leading" constant="25" id="VGB-vJ-9tf"/>
                         <constraint firstAttribute="trailing" secondItem="xF0-fi-6d9" secondAttribute="trailing" constant="8" id="X8d-O5-kRd"/>
+                        <constraint firstAttribute="bottom" secondItem="wBK-08-Ba2" secondAttribute="bottom" id="lNe-MC-qbh"/>
                         <constraint firstItem="xF0-fi-6d9" firstAttribute="leading" secondItem="opS-yI-TNr" secondAttribute="trailing" constant="20" id="uxv-hc-zWF"/>
                         <constraint firstItem="xF0-fi-6d9" firstAttribute="top" secondItem="opS-yI-TNr" secondAttribute="top" id="ztk-6a-5eP"/>
                     </constraints>
@@ -185,10 +190,11 @@ PARA LA FACTURACION</string>
                     <exclude reference="zTz-IE-zp7"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="421.5" y="141.5"/>
+            <point key="canvasLocation" x="421" y="141"/>
         </view>
     </objects>
     <resources>
+        <image name="cardBackShadow" width="335" height="322"/>
         <image name="dni_man" width="39" height="61"/>
     </resources>
 </document>
