@@ -19,19 +19,17 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         self.payAgainButton.layer.cornerRadius = 5
         self.payAgainButton.layer.borderWidth = 1
         self.payAgainButton.layer.borderColor = UIColor().blueMercadoPago().CGColor
+        self.payAgainButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         ViewUtils.drawBottomLine(122, width : self.bounds.width, inView: self)
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callbackCancel : (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell {
-        self.callbackCancel = callbackCancel!
-        self.startPaymentVault = startPaymentVault
-        self.payAgainButton.addTarget(self, action: "invokeStartPaymentVault", forControlEvents: .TouchUpInside)
+    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
+        self.defaultCallback = callback
         return self
     }
 

@@ -33,7 +33,7 @@
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                         </accessibility>
                         <attributedString key="attributedText">
-                            <fragment content="Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago">
+                            <fragment content="Al pagar afirme que es mayor de edad y acepto los Términos y Condiciones de Mercado Pago">
                                 <attributes>
                                     <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="12" name="HelveticaNeue"/>

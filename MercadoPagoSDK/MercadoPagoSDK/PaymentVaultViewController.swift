@@ -141,7 +141,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     
@@ -178,7 +178,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
                 preferenceDescriptionCell.fillRowWithSettings(self.amount, purchaseTitle: self.purchaseTitle, pictureUrl: self.pictureUrl, currency: CurrenciesUtil.getCurrencyFor(self.currencyId)!)
                 return preferenceDescriptionCell
-            case 1:
+            default :
                 let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
                 
                 let paymentMethodCell = getCellFor(currentPaymentMethod)
@@ -192,13 +192,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     paymentMethodCell.layer.shadowOpacity = 0.6
                 }
                 return paymentMethodCell
-            default :
-                let exitButtonCell = self.paymentsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
-                exitButtonCell.callbackCancel =  {(Void) -> Void in
-                    self.dismissViewControllerAnimated(true, completion: {})
-                }
-                exitButtonCell.exitButton.addTarget(exitButtonCell, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
-                return exitButtonCell
         }
         
     }

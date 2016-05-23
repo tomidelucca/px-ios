@@ -10,5 +10,5 @@ import UIKit
 
 protocol CongratsFillmentDelegate {
 
-    func fillCell(payment : Payment, callbackCancel : (Void -> Void)?, startPaymentVault : (Void -> Void)?, calledForAuthorize : (Void -> Void)?) -> UITableViewCell
+    func fillCell(payment : Payment, callback : (Void -> Void)?) -> UITableViewCell
 }
