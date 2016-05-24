@@ -143,7 +143,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
              self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
-            cardFront?.cardNumber.text = (self.cardToken?.getBin())! as String
+            cardFront?.cardNumber.text = "xxxx xxxx xxxx " + String(((self.cardToken?.getBin())! as String).characters.suffix(4))
             
             cardFront?.cardName.text = self.cardToken?.cardholder!.name
             cardFront?.cardExpirationDate.text = self.cardToken?.getExpirationDateFormated() as? String
