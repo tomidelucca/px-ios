@@ -17,7 +17,6 @@ class ExitButtonTableViewCell: CallbackCancelTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.exitButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
-        self.exitButton.enabled = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

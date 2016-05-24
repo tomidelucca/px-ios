@@ -31,16 +31,17 @@ public class LoadingOverlay {
         self.activityIndicator.frame = CGRectMake(x,y, 20, 20)
         self.activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         self.activityIndicator.color = UIColor().blueMercadoPago()
+        self.activityIndicator.hidden = false
         
         
-        self.container.frame = view.frame
+        self.container.frame = CGRect(x : view.bounds.minX, y : view.bounds.minY, width : view.bounds.width, height : view.bounds.height)
         self.container.backgroundColor = UIColor().backgroundColor()
-        self.container.center = view.center
+        self.container.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2 )
      //   self.activityIndicator.center = view.center
         self.container.addSubview(self.activityIndicator)
         
         self.activityIndicator.startAnimating()
-        return self.activityIndicator
+        return self.container
     }
     
     public func showOverlay(view: UIView) {

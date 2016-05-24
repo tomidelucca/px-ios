@@ -65,7 +65,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return (self.layoutTemplate == "in_process") ? 2 : 3
+        return 3
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -79,16 +79,22 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             if body != nil && body?.characters.count > 0 {
                 let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body!) as! CongratsFillmentDelegate
                 let callback = self.congratsCallback()
-            
                 return bodyCell.fillCell(self.payment, callback: callback)
             }
+            return UITableViewCell()
         }
+        
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
         exitButtonCell.exitButton.setAttributedTitle(NSAttributedString(string: "Seguir comprando".localized), forState: .Normal)
+        exitButtonCell.userInteractionEnabled = true
         exitButtonCell.defaultCallback = {
             self.invokeCallback("OK")
         }
         return exitButtonCell
+    }
+    
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -105,11 +111,13 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
 
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0 :
-            return (self.congratsLayout[self.layoutTemplate]!["headerHeight"] as! CGFloat)
-        default:
-            return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
-        }
+            case 0 :
+                return (self.congratsLayout[self.layoutTemplate]!["headerHeight"] as! CGFloat)
+            case 1:
+                return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
+            default :
+                return 100
+            }
     }
 
     
@@ -134,7 +142,6 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         self.congratsContentTable.registerNib(pendingPaymentHeader, forCellReuseIdentifier: "pendingPaymentHeader")
         
         let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
-        
         self.congratsContentTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
         
     }

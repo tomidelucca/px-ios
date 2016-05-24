@@ -230,7 +230,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.groups.count > 1 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
-            self.loadGroupsAndStartPaymentVault(true)
+            self.showLoading()
+            self.loadGroupsAndStartPaymentVault()
         } else if indexPath.section == 1 && indexPath.row == 1 && paymentMethod != nil && !self.paymentMethod!.isOfflinePaymentMethod(){
             startPayerCostStep()
         }
@@ -312,6 +313,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
         self.navigationController!.popToRootViewControllerAnimated(animated)
+        
+        self.showLoading()
         
         self.paymentMethod = paymentMethod
         self.token = token
