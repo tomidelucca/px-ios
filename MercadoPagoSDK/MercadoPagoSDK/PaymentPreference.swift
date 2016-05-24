@@ -58,7 +58,7 @@ public class PaymentPreference: Equatable {
     }
     
     
-    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0){
+    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil){
         self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
@@ -68,7 +68,7 @@ public class PaymentPreference: Equatable {
     }
     
     
-    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = 0, defaultInstallments : Int? = 0) -> PaymentPreference {
+    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
         
         if(excludedPaymentMethodsIds != nil){
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
