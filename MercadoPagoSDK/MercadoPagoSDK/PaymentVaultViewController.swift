@@ -127,6 +127,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         super.viewDidAppear(animated)
         self.showLoading()
         self.loadPaymentMethodSearch()
+        
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -214,7 +215,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
-        self.showLoading()
+    
+        let loading = LoadingOverlay.shared.getLoadingOverlay(self.view)
+        self.navigationController?.visibleViewController?.view.addSubview(loading)
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
@@ -224,10 +227,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                         self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {
-                           //     self.navigationController?.popViewControllerAnimated(true)
                                 self.navigationController?.popToViewController(self, animated: true)
                             } else {
-                              //  self.navigationController?.popViewControllerAnimated(true)
                                  self.navigationController?.popToViewController(self, animated: true)
                                 self.callbackCancel!()
                             }

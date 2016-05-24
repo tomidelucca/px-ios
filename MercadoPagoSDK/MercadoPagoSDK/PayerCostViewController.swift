@@ -190,14 +190,16 @@ public class PayerCostViewController: MercadoPagoUIViewController {
        let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
        
         let additionalText = NSMutableAttributedString(string : "")
-        if payerCost.installmentRate > 0 || payerCost.installments == 1 {
+        if payerCost.installmentRate > 0 && payerCost.installments > 1 {
             let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
             let totalAmount = Utils.getAttributedAmount(String(payerCost.totalAmount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$" , color:mpLightGrayColor)
             totalAmountStr.appendAttributedString(totalAmount)
             totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
             additionalText.appendAttributedString(totalAmountStr)
         } else {
-            additionalText.appendAttributedString(NSAttributedString(string: " Sin intereses".localized, attributes: noRateAttributes))
+            if payerCost.installments > 1 {
+                additionalText.appendAttributedString(NSAttributedString(string: " Sin intereses".localized, attributes: noRateAttributes))
+            }
         }
         
         installmentCell.payerCostDetail.attributedText =  Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, additionalString: additionalText)

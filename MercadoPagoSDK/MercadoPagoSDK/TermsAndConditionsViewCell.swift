@@ -39,9 +39,9 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
         self.delegate?.openTermsAndConditions(URL)
-        return true
+        return false
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

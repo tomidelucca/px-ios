@@ -39,7 +39,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 
                 })
             } else {
-                self.loadGroupsAndStartPaymentVault()
+                self.loadGroupsAndStartPaymentVault(false)
             }
         }
     }
@@ -60,6 +60,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.title = "¿Cómo quieres pagar?".localized
 
     }
+    
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,7 +79,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.checkoutTable.reloadData()
                 self.hideLoading()
             } else {
-                self.loadGroupsAndStartPaymentVault()
+                self.loadGroupsAndStartPaymentVault(true)
             }
         }
 
@@ -150,14 +151,13 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
         if indexPath.row == 0 {
             if self.paymentMethod != nil {
+                self.title = "Revisa si está todo bien...".localized
                 if self.paymentMethod!.isOfflinePaymentMethod() {
-                    self.title = "Revisa si está todo bien...".localized
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: self.paymentMethod!.paymentTypeId)
                     cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!)
                     return cell
                 } else {
-                    self.title = "Tantito más y terminas…".localized
                     let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
                     paymentSearchCell.paymentIcon.image = MercadoPago.getImageFor(self.paymentMethod!, forCell: true)
                     paymentSearchCell.paymentDescription.text = "terminada en ".localized + self.token!.lastFourDigits
@@ -254,7 +254,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         return nil
     }
     
-    internal func loadGroupsAndStartPaymentVault(animated : Bool = false){
+    internal func loadGroupsAndStartPaymentVault(animated : Bool = true){
         
         if self.paymentMethodSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
@@ -360,11 +360,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func displayCongrats(payment: Payment){
         let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callback : { (payment : Payment, status: String) in
             if status == "CANCEL" {
-                self.navigationController?.popToViewController(self, animated: true)
                 self.navigationController!.setNavigationBarHidden(false, animated: false)
                 self.paymentMethod = nil
-                let choVC = MPFlowBuilder.startCheckoutViewController(self.preferenceId, callback: self.callback)
-                self.navigationController?.pushViewController(choVC.viewControllers[0], animated: true)
+                self.navigationController?.viewControllers[0].title = ""
+                self.navigationController!.popToRootViewControllerAnimated(false)
             } else {
                 self.dismissViewControllerAnimated(true, completion: {})
                 self.callback(payment)
