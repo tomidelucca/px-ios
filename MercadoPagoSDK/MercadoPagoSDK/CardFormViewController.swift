@@ -542,40 +542,42 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     func leftArrowKeyTapped(){
         switch editingLabel! {
         case cardNumberLabel! :
-        
-            if (checkCardNumber() == false){
+        return
+         //   if (checkCardNumber() == false){
                 
-             showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
-                return
-            }
-            self.prepareCVVLabelForEdit()
-            if ((self.paymentMethod == nil) || (self.paymentMethod!.secCodeInBack())){
-                UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
-            }
+//             showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
+  //              return
+    //        }
+      //      self.prepareCVVLabelForEdit()
+        //    if ((self.paymentMethod == nil) || (self.paymentMethod!.secCodeInBack())){
+          //      UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
+           // }
             
             
             
         case nameLabel! :
-            if (checkCardName() == false){
-                showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
-                return
-            }
+         //   if (checkCardName() == false){
+           //     showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
+          //      return
+          //  }
             self.prepareNumberLabelForEdit()
         case expirationDateLabel! :
-            if (checkExpirationDateCard() == false){
-                showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
-                return
-            }
+         //   if (checkExpirationDateCard() == false){
+           //     showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
+           //     return
+           // }
         prepareNameLabelForEdit()
             
         case cvvLabel! :
-            if (checkCVV() == false){
-                showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
-                return
+            //if (checkCVV() == false){
+                //showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
+                //return
+            //}
+            if (self.paymentMethod!.secCodeInBack()){
+                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
+                })
             }
-            UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
-            })
-        
+                    
             prepareExpirationLabelForEdit()
         default : self.updateLabelsFontColors()
         }

@@ -36,11 +36,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     override func loadMPStyles(){
         
         if self.navigationController != nil {
-            
-            
             //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
-            
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
@@ -59,6 +56,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
       
+        if (string.characters.count < 1){
+            return true
+        }
         if(textField.text?.characters.count > 9){
             return false
         }
@@ -67,7 +67,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
     
     public func editingChanged(textField:UITextField) {
-         print(textField.text)
+          hideErrorMessage()
         if(textField.text?.characters.count > 0){
             let num : Int = Int(textField.text!)!
             let myIntString = num.stringFormatedWithSepator
@@ -138,40 +138,67 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         
     }
 
+    var navItem : UINavigationItem?
+    var doneNext : UIBarButtonItem?
+    var donePrev : UIBarButtonItem?
     
     func setupInputAccessoryView() {
-        let navBar = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
-        navBar.barStyle = UIBarStyle.Default;
-        navBar.backgroundColor = UIColor(netHex: 0xEEEEEE);
-        navBar.alpha = 1;
-
-        let navItem = UINavigationItem()
-
-        let doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
-
-        let donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
-
+        inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
+        inputButtons!.barStyle = UIBarStyle.Default;
+        inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        inputButtons!.alpha = 1;
+        navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
+        donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        navItem!.rightBarButtonItem = doneNext
+        navItem!.leftBarButtonItem = donePrev
+        inputButtons!.pushNavigationItem(navItem!, animated: false)
+        numberTextField.inputAccessoryView = inputButtons
         
-        
-        
-        
-        navItem.rightBarButtonItem = doneNext
-        navItem.leftBarButtonItem = donePrev
-        //    navItem.setLeftBarButtonItems([donePrev,doneNext], animated: false)
-        
-        
-        
-        navBar.pushNavigationItem(navItem, animated: false)
-        
-        numberTextField.inputAccessoryView = navBar
         
     }
 
     func rightArrowKeyTapped(){
         let idnt = Identification(type: identificationType?.name , number: numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))
         
-        self.callback!(identification:idnt)
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  (numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))!)
+
+        if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
+             self.callback!(identification:idnt)
+        }else{
+            showErrorMessage((cardToken.validateIdentificationNumber(identificationType)?.userInfo["identification"] as? String)!)
+        }
+       
     }
+    var inputButtons : UINavigationBar?
+     var errorLabel : MPLabel?
+    func showErrorMessage(errorMessage:String){
+        errorLabel = MPLabel(frame: inputButtons!.frame)
+        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.text = errorMessage
+        self.errorLabel!.textAlignment = .Center
+        self.errorLabel!.font = self.errorLabel!.font.fontWithSize(12)
+        numberTextField.borderInactiveColor = UIColor.redColor()
+        numberTextField.borderActiveColor = UIColor.redColor()
+        numberTextField.inputAccessoryView = errorLabel
+        numberTextField.setNeedsDisplay()
+        numberTextField.resignFirstResponder()
+        numberTextField.becomeFirstResponder()
+        
+        
+        
+    }
+    
+    func hideErrorMessage(){
+        self.numberTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
+        self.numberTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.numberTextField.inputAccessoryView = self.inputButtons
+        self.numberTextField.setNeedsDisplay()
+        self.numberTextField.resignFirstResponder()
+        self.numberTextField.becomeFirstResponder()
+    }
+    
     func leftArrowKeyTapped(){
         self.navigationController?.popViewControllerAnimated(false)
         

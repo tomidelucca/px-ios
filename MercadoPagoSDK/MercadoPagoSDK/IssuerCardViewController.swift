@@ -90,6 +90,13 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         self.updateCardSkin()
         // Do any additional setup after loading the view.
     }
+    
+    
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+    }
+
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

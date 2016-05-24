@@ -63,7 +63,6 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         super.viewDidAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
-        print(cardView.bounds)
         if self.installments == nil {
             self.getInstallments()
         }
