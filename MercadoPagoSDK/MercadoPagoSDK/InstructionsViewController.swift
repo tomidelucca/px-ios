@@ -17,7 +17,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
-        "oxxo_ticket" : ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "oxxo_ticket" : ["body" : "simpleInstructionsCell", "body_heigth" : 100, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
         "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
@@ -26,10 +26,10 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
         "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
-        "pagofacil_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "rapipago_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "bapropagos_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "cargavirtual_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "pagofacil_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 100, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "rapipago_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 100, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bapropagos_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 100, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "cargavirtual_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 100, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "redlink_atm" : ["body" : "instructionsAtmCell" , "body_heigth" : 384, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
         "redlink_bank_transfer" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 200, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86]
         
