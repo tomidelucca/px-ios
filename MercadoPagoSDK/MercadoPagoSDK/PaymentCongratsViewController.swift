@@ -65,7 +65,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return (self.layoutTemplate == "in_process") ? 2 : 3
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -78,18 +78,16 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             let body = congratsLayout[self.layoutTemplate]!["body"] as? String
             if body != nil && body?.characters.count > 0 {
                 let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body!) as! CongratsFillmentDelegate
-                let callback = {
-                    self.invokeCallback("CANCEL")
-                }
+                let callback = self.congratsCallback()
+            
                 return bodyCell.fillCell(self.payment, callback: callback)
             }
-            return UITableViewCell()
         }
         let exitButtonCell = self.congratsContentTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
+        exitButtonCell.exitButton.setAttributedTitle(NSAttributedString(string: "Seguir comprando".localized), forState: .Normal)
         exitButtonCell.defaultCallback = {
             self.invokeCallback("OK")
         }
-        exitButtonCell.exitButton.setTitle("Seguir comprando".localized, forState: .Normal)
         return exitButtonCell
     }
     
@@ -97,6 +95,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         return 0.01
     }
     
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+   
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -155,6 +157,23 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     internal func invokeCallback(status : String){
         self.callback(payment: self.payment, status: status)
     }
+    
+    func congratsCallback() -> (Void -> Void){
+        return {
+            var status = ""
+            if self.payment.status == PaymentStatus.REJECTED.rawValue {
+                if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
+                    status = "AUTH"
+                } else {
+                    status = "CANCEL"
+                }
+            } else {
+                status = "OK"
+            }
+            self.invokeCallback(status)
+        }
+    }
+    
 
 }
 

@@ -14,8 +14,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var merchantAccessToken : String!
     var publicKey : String!
     var amount : Double!
-    var purchaseTitle : String!
-    var pictureUrl : String!
     var currencyId : String!
     var paymentSettings : PaymentPreference!
     var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void)!
@@ -36,7 +34,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var paymentsTable: UITableView!
     
 
-    internal init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    internal init(amount: Double, currencyId : String, paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
@@ -51,9 +49,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.tintColor = tintColor
         self.amount = amount // mayor o igual a 0
         self.currencyId = currencyId
-        self.purchaseTitle = purchaseTitle
         self.paymentSettings = paymentSettings
-        self.pictureUrl = pictureUrl
 
         self.currentPaymentMethodSearch = paymentMethodSearchItem
         self.paymentMethods = paymentMethods
@@ -74,16 +70,14 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, purchaseTitle : String, currencyId : String, pictureUrl : String = "", paymentPreference : PaymentPreference!, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    init(amount: Double, currencyId : String, paymentPreference : PaymentPreference!, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
         self.amount = amount
-        self.purchaseTitle = purchaseTitle
         self.currencyId = currencyId
-        self.pictureUrl = pictureUrl
         self.paymentSettings = paymentPreference
         self.callback = callback
         
@@ -177,7 +171,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         switch indexPath.section {
             case 0 :
                 let preferenceDescriptionCell = self.paymentsTable.dequeueReusableCellWithIdentifier("preferenceDescriptionCell") as! PreferenceDescriptionTableViewCell
-                preferenceDescriptionCell.fillRowWithSettings(self.amount, purchaseTitle: self.purchaseTitle, pictureUrl: self.pictureUrl, currency: CurrenciesUtil.getCurrencyFor(self.currencyId)!)
+                preferenceDescriptionCell.fillRowWithSettings(self.amount, currency: CurrenciesUtil.getCurrencyFor(self.currencyId)!)
                 return preferenceDescriptionCell
             default :
                 let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
@@ -202,7 +196,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 1 {
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
             if (paymentSearchItemSelected.children.count > 0) {
-                let paymentVault = PaymentVaultViewController(amount: self.amount, purchaseTitle: self.purchaseTitle, currencyId : self.currencyId, pictureUrl : self.pictureUrl, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+                let paymentVault = PaymentVaultViewController(amount: self.amount, currencyId : self.currencyId, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
                     self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
                 paymentVault.isRoot = false
