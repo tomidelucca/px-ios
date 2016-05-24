@@ -65,7 +65,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
+        self.navigationItem.leftBarButtonItem = nil
         
     }
     
@@ -273,7 +273,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func startPaymentVault(animated : Bool = false){
         self.registerAllCells()
         
-        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.preference!.getAmount(), purchaseTitle: self.preference!.getTitle(), currencyId: self.preference!.getCurrencyId(), pictureUrl : self.preference!.getPictureUrl(), paymentSettings: self.preference!.getPaymentSettings(), paymentMethodSearch: self.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
+        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.preference!.getAmount(), currencyId: self.preference!.getCurrencyId(), paymentSettings: self.preference!.getPaymentSettings(), paymentMethodSearch: self.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : animated)
         })
         
