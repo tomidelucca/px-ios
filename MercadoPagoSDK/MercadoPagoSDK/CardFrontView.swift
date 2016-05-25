@@ -15,7 +15,7 @@ import UIKit
     @IBOutlet weak var cardLogo: UIImageView!
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
-   @IBOutlet weak var cardNumber: MPLabel!
+   @IBOutlet weak var cardNumber: UILabel!
     @IBOutlet weak var cardCVV: MPLabel!
     
     override init(frame: CGRect) {

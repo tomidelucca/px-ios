@@ -18,7 +18,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cardFront : CardFrontView?
     var cardBack : CardBackView?
     
-    var cardNumberLabel: MPLabel?
+    var cardNumberLabel: UILabel?
     var numberLabelEmpty: Bool = true
     var nameLabel: MPLabel?
     var nameLabelEmpty: Bool = true
@@ -27,7 +27,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cvvLabel: MPLabel?
     var cvvLabelEmpty: Bool = true
 
-    var editingLabel : MPLabel?
+    var editingLabel : UILabel?
     @IBOutlet weak var textBox: HoshiTextField!
    
     var paymentMethods : [PaymentMethod]?
@@ -146,7 +146,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cvvLabel = cardBack?.cardCVV
         
       //  cardNumberLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchNumber:"))
-        cardNumberLabel?.text = ".... .... .... ...."
+        cardNumberLabel?.text = "•••• •••• •••• ••••"
      //   nameLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchName:"))
         nameLabel?.text = "NOMBRE APELLIDO".localized
     //    expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
@@ -164,10 +164,12 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-
+var changeNumber = false
+    
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let value : Bool = validateInput(textField, shouldChangeCharactersInRange: range, replacementString: string)
         updateLabelsFontColors()
+
         return value
     }
 
@@ -177,6 +179,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         hideErrorMessage()
         if(editingLabel == cardNumberLabel){
             editingLabel?.text = formatCardNumberText(textField.text!)
+            if(!changeNumber){
+                changeNumber = true
+                completeNumberLabel()
+                changeNumber = false
+            }
             self.updateCardSkin()
 
              updateLabelsFontColors()
@@ -210,7 +217,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     private func formatCardNumberText(numberText:String) -> String{
         if(numberText.characters.count == 0){
             numberLabelEmpty = true
-            return ".... .... .... ...."
+            return "•••• •••• •••• ••••"
         }
         numberLabelEmpty = false
         return numberText
@@ -332,6 +339,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func validInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
         
+        if (textField.text?.characters.count == 0){
+            return true
+        }
         //Range.Lenth will greater than 0 if user is deleting text - Allow it to replce
         if range.length > 0
         {
@@ -345,7 +355,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
         //Check for max length including the spacers we added
-        if range.location == 20
+        if range.location == 19
         {
             return false
         }
@@ -354,7 +364,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
         
         //Verify entered text is a numeric value
-        let digits = NSCharacterSet.decimalDigitCharacterSet()
+       let digits = NSCharacterSet.decimalDigitCharacterSet()
         for char in replacementText.unicodeScalars
         {
             if !digits.longCharacterIsMember(char.value)
@@ -364,7 +374,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
         //Put an empty space after every 4 places
-        if originalText!.characters.count % 5 == 0
+        if (originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count % 4 == 0)
         {
             originalText?.appendContentsOf(" ")
             textField.text = originalText
@@ -901,6 +911,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     
+    func completeNumberLabel(){
+       // self.cardNumberLabel?.text = formatCardNumberText((self.cardNumberLabel?.text)! + "•••••••••••••••••••••••••••")
+     // return
+        while (addDot() != false){
+            
+        }
+    }
     
 
     
@@ -918,5 +935,31 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.expirationDateLabel?.text = self.token?.getExpirationDateFormated()
     }
 
+    
+    func addDot() -> Bool{
+        
+        var label = cardNumberLabel
+   
+        
+        //Check for max length including the spacers we added
+        if label?.text?.characters.count == 19
+        {
+            return false
+        }
+        
+        if ((label?.text?.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count)! % 4 == 0)
+        {
+            
+            label?.text?.appendContentsOf(" ")
+            label?.text = label?.text?.stringByReplacingOccurrencesOfString("  ", withString: " •")
+        }
+        label?.text?.appendContentsOf("•")
+        return true
+        
+        
+    }
+
+    
+    
     
 }
