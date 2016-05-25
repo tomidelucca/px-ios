@@ -20,6 +20,63 @@
             <rect key="frame" x="0.0" y="0.0" width="256" height="161"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IVS-bD-nfa">
+                    <rect key="frame" x="0.0" y="65" width="256" height="85"/>
+                    <subviews>
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre y apellido" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR5-vU-TU9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                            <rect key="frame" x="12" y="56" width="179" height="17"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7878 0909 9909 9090" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97O-co-oz8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                            <rect key="frame" x="12" y="10" width="236" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="lp9-Wa-blN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="21"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="highlightedColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="shadowColor" white="0.80000000000000004" alpha="0.0" colorSpace="deviceWhite"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/AA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrP-jA-FVI" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                            <rect key="frame" x="199" y="56" width="49" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="49" id="U8r-zP-1dB"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
+                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
+                            <size key="shadowOffset" width="1" height="1"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94117647059999998" green="0.2666666667" blue="0.28627450980000002" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="rrP-jA-FVI" firstAttribute="width" secondItem="pR5-vU-TU9" secondAttribute="height" multiplier="49:22" id="2oz-3f-ElX"/>
+                        <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="8" id="3rh-av-Cn1"/>
+                        <constraint firstAttribute="height" constant="85" id="5lb-VV-7R0"/>
+                        <constraint firstItem="pR5-vU-TU9" firstAttribute="leading" secondItem="IVS-bD-nfa" secondAttribute="leading" constant="12" id="CQh-iY-CSx"/>
+                        <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="8" id="DZb-7H-LDz"/>
+                        <constraint firstItem="rrP-jA-FVI" firstAttribute="leading" secondItem="pR5-vU-TU9" secondAttribute="trailing" constant="8" id="Gzo-jA-Hny"/>
+                        <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="20" id="IjS-C2-vHN"/>
+                        <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="12" id="KMT-1k-nzy"/>
+                        <constraint firstAttribute="trailing" secondItem="rrP-jA-FVI" secondAttribute="trailing" constant="8" id="LOP-no-baQ"/>
+                        <constraint firstItem="97O-co-oz8" firstAttribute="top" secondItem="IVS-bD-nfa" secondAttribute="top" constant="10" id="WEa-zo-foZ"/>
+                        <constraint firstAttribute="bottom" secondItem="rrP-jA-FVI" secondAttribute="bottom" constant="12" id="bkX-oH-42Y"/>
+                        <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="IVS-bD-nfa" secondAttribute="leading" constant="12" id="reQ-AD-jbd"/>
+                        <constraint firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" constant="8" id="v3k-th-D7y"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="IjS-C2-vHN"/>
+                            <exclude reference="2oz-3f-ElX"/>
+                        </mask>
+                    </variation>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="tG6-9u-zlM">
                     <rect key="frame" x="0.0" y="0.0" width="168" height="161"/>
                 </imageView>
@@ -30,39 +87,6 @@
                         <constraint firstAttribute="width" secondItem="y6l-UX-KQ5" secondAttribute="height" multiplier="220:39" id="aUU-Kk-AbQ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre y apellido" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR5-vU-TU9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="12" y="120" width="147" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="Ocy-sQ-Es2"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
-                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
-                    <size key="shadowOffset" width="1" height="1"/>
-                </label>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/AA" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrP-jA-FVI" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="195" y="120" width="49" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="6Bw-wK-bBM"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="14"/>
-                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <color key="shadowColor" white="0.66666666666666663" alpha="0.0" colorSpace="deviceWhite"/>
-                    <size key="shadowOffset" width="1" height="1"/>
-                </label>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7878 0909 9909 9090" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97O-co-oz8" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="12" y="89" width="232" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="23" id="UeT-Rb-aFy"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="21"/>
-                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="highlightedColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
-                    <color key="shadowColor" white="0.80000000000000004" alpha="0.0" colorSpace="deviceWhite"/>
-                    <size key="shadowOffset" width="1" height="1"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CVV" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwN-Cd-QgM" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
                     <rect key="frame" x="150" y="47" width="98" height="34"/>
                     <constraints>
@@ -83,31 +107,25 @@
             </subviews>
             <color key="backgroundColor" red="0.011764707043766975" green="0.99215692281723022" blue="0.32156863808631897" alpha="0.0" colorSpace="deviceRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="97O-co-oz8" secondAttribute="trailing" constant="12" id="0Tk-OZ-b38"/>
-                <constraint firstItem="97O-co-oz8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="2tP-xL-wjq"/>
                 <constraint firstItem="W4e-3d-ZMl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5o5-DQ-sgJ"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="76v-Ss-4hO"/>
+                <constraint firstItem="IVS-bD-nfa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8xH-Gk-RJq"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="leading" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="9F2-gE-Wqs"/>
-                <constraint firstAttribute="bottom" secondItem="pR5-vU-TU9" secondAttribute="bottom" constant="19" id="Bkq-hF-avK"/>
                 <constraint firstItem="tG6-9u-zlM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="HhB-OT-fse"/>
-                <constraint firstAttribute="bottom" secondItem="97O-co-oz8" secondAttribute="bottom" constant="52" id="IA1-0s-caX"/>
                 <constraint firstAttribute="trailing" secondItem="y6l-UX-KQ5" secondAttribute="trailing" constant="12" id="Jlp-HD-09b"/>
-                <constraint firstAttribute="trailing" secondItem="rrP-jA-FVI" secondAttribute="trailing" constant="12" id="LdK-vr-ke6"/>
                 <constraint firstItem="tG6-9u-zlM" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="24:23" id="Pck-Zd-6gW"/>
+                <constraint firstItem="IVS-bD-nfa" firstAttribute="top" secondItem="y6l-UX-KQ5" secondAttribute="bottom" constant="8" id="ULM-fA-GW4"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="220:161" id="V4Q-aM-y43"/>
                 <constraint firstItem="W4e-3d-ZMl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="aLw-RD-KQY"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="W4e-3d-ZMl" secondAttribute="bottom" id="eN2-Se-UX0"/>
                 <constraint firstItem="KwN-Cd-QgM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="gNV-ri-9hp"/>
-                <constraint firstItem="pR5-vU-TU9" firstAttribute="width" secondItem="rrP-jA-FVI" secondAttribute="height" multiplier="147:22" id="grN-5b-z0L"/>
                 <constraint firstAttribute="trailing" secondItem="W4e-3d-ZMl" secondAttribute="trailing" id="khh-0z-5m9"/>
-                <constraint firstItem="pR5-vU-TU9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="lFb-dj-9PL"/>
+                <constraint firstItem="KwN-Cd-QgM" firstAttribute="top" secondItem="W4e-3d-ZMl" secondAttribute="bottom" constant="29" id="kxP-BJ-BX7"/>
                 <constraint firstItem="y6l-UX-KQ5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="m4F-dt-4Kp"/>
-                <constraint firstItem="rrP-jA-FVI" firstAttribute="top" secondItem="97O-co-oz8" secondAttribute="bottom" constant="8" id="o6g-Bg-Cs9"/>
                 <constraint firstAttribute="bottom" secondItem="tG6-9u-zlM" secondAttribute="bottom" id="pAW-73-Yy1"/>
-                <constraint firstItem="97O-co-oz8" firstAttribute="top" secondItem="KwN-Cd-QgM" secondAttribute="bottom" constant="8" id="tK2-5f-87C"/>
                 <constraint firstItem="tG6-9u-zlM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="w2L-3Y-MIg"/>
-                <constraint firstAttribute="bottom" secondItem="rrP-jA-FVI" secondAttribute="bottom" constant="19" id="wub-Oa-xVB"/>
                 <constraint firstAttribute="trailing" secondItem="KwN-Cd-QgM" secondAttribute="trailing" constant="8" id="x2b-4v-nSY"/>
+                <constraint firstAttribute="trailing" secondItem="IVS-bD-nfa" secondAttribute="trailing" id="xE3-NL-gFU"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -116,7 +134,6 @@
                     <exclude reference="9F2-gE-Wqs"/>
                     <exclude reference="Jlp-HD-09b"/>
                     <exclude reference="m4F-dt-4Kp"/>
-                    <exclude reference="IA1-0s-caX"/>
                     <exclude reference="gNV-ri-9hp"/>
                 </mask>
             </variation>
