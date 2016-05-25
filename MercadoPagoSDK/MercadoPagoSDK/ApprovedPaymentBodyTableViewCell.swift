@@ -41,16 +41,19 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         let additionalTextAttributes = [NSForegroundColorAttributeName : greenLabelColor, NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
         let additionalString = NSMutableAttributedString(string: " ")
         
-        let financingFee = payment.feesDetails.filter({ return $0.isFinancingFeeType()})
-        if financingFee.count > 0 {
-            additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
-            additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 22))
-            additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
-        } else {
-            if payment.installments != 1 {
-                additionalString.appendAttributedString(NSAttributedString(string: "Sin intereses".localized, attributes : additionalTextAttributes))
+        if payment.feesDetails != nil && payment.feesDetails.count > 0 {
+            let financingFee = payment.feesDetails.filter({ return $0.isFinancingFeeType()})
+            if financingFee.count > 0 {
+                additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
+                additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 22))
+                additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
+            } else {
+                if payment.installments != 1 {
+                    additionalString.appendAttributedString(NSAttributedString(string: "Sin intereses".localized, attributes : additionalTextAttributes))
+                }
             }
         }
+        
         self.amountDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payment.installments), installmentAmount: payment.transactionDetails.installmentAmount, additionalString: additionalString)
         return self
     }

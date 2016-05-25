@@ -36,13 +36,16 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     ]
     
     var payment : Payment!
+    var paymentTypeId : PaymentTypeId!
     var callback : ((Payment) -> Void)!
     var bundle = MercadoPago.getBundle()
     
-    public init(payment : Payment, callback : (Payment) -> Void) {
+    
+    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : (Payment) -> Void) {
         super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.payment = payment
         self.callback = callback
+        self.paymentTypeId = paymentTypeId
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -68,6 +71,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     override public func viewDidAppear(animated : Bool) {
         super.viewDidAppear(animated)
+        self.showLoading()
         if currentInstruction == nil {
             registerAllCells()
             getInstructions()
@@ -112,7 +116,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.payment.transactionAmount, currency: CurrenciesUtil.getCurrencyFor(self.payment.currencyId))
         }
         
-        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.payment.paymentTypeId.lowercaseString
+        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
         if indexPath.section == 1 {
             let bodyViewCell = self.resolveInstructionsBodyViewCell(instructionsSelected)!
             return bodyViewCell
@@ -127,7 +131,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor().UIColorFromRGB(0x0066CC)]
         let title = NSAttributedString(string: "Finalizar".localized, attributes: attributes)
         exitButtonCell.exitButton.setAttributedTitle(title, forState: .Normal)
-        exitButtonCell.exitButton.addTarget(self, action: "finishInstructions", forControlEvents: .TouchUpInside)
+        exitButtonCell.defaultCallback = { self.finishInstructions() }
         
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
@@ -140,7 +144,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.payment.paymentTypeId.lowercaseString
+        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
         if indexPath.section == 0 {
             return 182
         }
@@ -225,13 +229,15 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     private func getInstructions(){
-        MPServicesBuilder.getInstructions(payment._id, paymentMethodId: payment.paymentMethodId.lowercaseString, paymentTypeId : payment.paymentTypeId, success: { (instruction) -> Void in
+        MPServicesBuilder.getInstructions(payment._id, paymentMethodId: self.payment.paymentMethodId, paymentTypeId : self.paymentTypeId.rawValue.lowercaseString, success: { (instruction) -> Void in
             self.currentInstruction = instruction
             self.congratsTable.delegate = self
             self.congratsTable.dataSource = self
             self.congratsTable.reloadData()
+            self.hideLoading()
             }, failure: { (error) -> Void in
                 self.requestFailure(error)
+                self.hideLoading()
         })
     }
 }

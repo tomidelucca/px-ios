@@ -331,11 +331,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             //    let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment)
             //    self.navigationController!.pushViewController(congratsRejected, animated: true)
             } else {
-                self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, callback: {(payment : Payment) -> Void  in
-                    self.modalTransitionStyle = .CrossDissolve
-                    self.dismissViewControllerAnimated(true, completion: {})
-                        self.callback(payment)
-                    }), animated: true)
+                self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, paymentTypeId: self.paymentMethod!.paymentTypeId, callback: {(payment : Payment) -> Void  in
+                        self.dismissViewControllerAnimated(true, completion: { self.callback(payment) })
+                }), animated: true)
             }
            }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
