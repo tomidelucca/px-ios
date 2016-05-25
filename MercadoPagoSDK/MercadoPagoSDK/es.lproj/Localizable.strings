@@ -17,6 +17,7 @@
 
 "visa"="Visa";
 "master"="Mastercard";
+"amex"="Amex";
 
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";

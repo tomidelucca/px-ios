@@ -17,6 +17,7 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
         ViewUtils.drawBottomLine(150, width: self.bounds.width, inView: self)
     }
 
@@ -25,9 +26,9 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
     }
     
     func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
-        self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
         self.defaultCallback = callback
         self.cancelButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.completeCardButton.setTitle("Ya hablé con " + payment.paymentMethodId.localized, forState: .Normal)
         self.completeCardButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         return self
     }
