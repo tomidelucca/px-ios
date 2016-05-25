@@ -40,7 +40,8 @@ class InstructionsHeaderViewCell: UITableViewCell {
         let amountFromDouble = String(amount).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator)
         let amountStr = Utils.getAmountFormatted(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
         let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
-        let amountRange = title.rangeOfString(currencySymbol + " " + amountStr + decimalSeparator + centsStr)
+        //TODO : , tiene que reemplazarse por decimalSeparator
+        let amountRange = title.rangeOfString(currencySymbol + " " + amountStr + "," + centsStr)
         
         if amountRange != nil {
             let attributedTitle = NSMutableAttributedString(string: title.substringToIndex((amountRange?.startIndex)!))
