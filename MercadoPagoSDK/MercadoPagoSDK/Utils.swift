@@ -36,6 +36,7 @@ class Utils {
         return attributedSymbol
     }
     
+    
     class func getAttributedAmount(amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(amount), thousandSeparator : thousandSeparator, decimalSeparator: ".")
@@ -72,6 +73,11 @@ class Utils {
         return stringToWrite
     }
     
+    /**
+     Returns cents string formatted
+     Ex: formattedString = "100.2", decimalSeparator = "."
+     returns 20
+     **/
     class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
         let range = formattedString.rangeOfString(decimalSeparator)
         var cents = ""
@@ -90,12 +96,12 @@ class Utils {
         return cents
     }
     
-    
+    /**
+     Returns amount string formatted according to separators
+     Ex: formattedString = "10200.90", decimalSeparator = ".", thousandSeparator: ","
+     returns 10,200.90
+     **/
     class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
-        
-        if formattedString.containsString(thousandSeparator){
-            return formattedString
-        }
  
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
