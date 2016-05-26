@@ -145,18 +145,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             
-            if self.preference?.getPictureUrl() != nil && self.preference!.getPictureUrl().characters.count > 0 {
-                if preferenceDescriptionCell.shoppingCartIconContainer.subviews.count == 0 {
-                    preferenceDescriptionCell.shoppingCartIcon.removeFromSuperview()
-                    ViewUtils.loadImageFromUrl(self.preference!.getPictureUrl(), inView: preferenceDescriptionCell.shoppingCartIconContainer, loadingBackgroundColor: UIColor().UIColorFromRGB(0x5ABEE7), loadingIndicatorColor: UIColor().backgroundColor())
-                }
-            }
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
             
             return preferenceDescriptionCell
-        }
-    
-        if indexPath.row == 0 {
+        }else if indexPath.row == 0 {
             if self.paymentMethod != nil {
                 if self.paymentMethod!.isOfflinePaymentMethod() {
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
@@ -315,12 +307,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func paymentVaultCallback(paymentMethod : PaymentMethod, token : Token?, issuer : Issuer?, payerCost : PayerCost?, animated : Bool = true){
 
-        self.navigationController!.popToRootViewControllerAnimated(animated)
+       
         let transition = CATransition()
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
-
+ self.navigationController!.popToRootViewControllerAnimated(animated)
         self.showLoading()
         
         self.paymentMethod = paymentMethod
