@@ -40,27 +40,24 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     internal func fillRowWithPreference(preference : CheckoutPreference){
         let currency = CurrenciesUtil.getCurrencyFor(preference.getCurrencyId())
         self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.getTitle(), pictureUrl: preference.getPictureUrl(), currency : currency!)
+        
     }
     
     internal func fillRowWithSettings(amount : Double, purchaseTitle: String? = "", pictureUrl : String? = "", currency : Currency){
         self.preferenceAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: String(currency.getThousandsSeparatorOrDefault()), decimalSeparator: String(currency.getDecimalSeparatorOrDefault()), currencySymbol: String(currency.getCurrencySymbolOrDefault()))
         self.preferenceDescription.text = purchaseTitle
-        if pictureUrl != nil && pictureUrl?.characters.count > 0 {
-            self.shoppingCartIcon.removeFromSuperview()
-            let loadingOverlay = LoadingOverlay.shared.getLoadingOverlay(self.shoppingCartIconContainer)
-            self.shoppingCartIconContainer.addSubview(loadingOverlay)
-            let url = NSURL(string: pictureUrl!)
-            if url != nil {
-                let data = NSData(contentsOfURL: url!)
-                if data != nil {
-                    let image = UIImage(data: data!)
-                    if image != nil {
-                        ViewUtils.addScaledImage(image!, inView: self.shoppingCartIconContainer)
-                    }
-                }
+        if  !String.isNullOrEmpty(pictureUrl) {
+            if self.shoppingCartIconContainer.subviews.count == 0 {
+                self.shoppingCartIcon.removeFromSuperview()
+                ViewUtils.loadImageFromUrl(pictureUrl!, inView: self.shoppingCartIconContainer)
             }
-            
         }
+        
+    }
+    
+    public func loadPreference(preference: CheckoutPreference!){
+       
+        
     }
     
 }

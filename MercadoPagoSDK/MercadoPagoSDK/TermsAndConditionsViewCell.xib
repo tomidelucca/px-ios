@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -19,7 +19,7 @@
                         <rect key="frame" x="18" y="84" width="423" height="50"/>
                         <color key="backgroundColor" red="0.0" green="0.62352941176470589" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="pHM-Cl-qS6"/>
+                            <constraint firstAttribute="height" constant="50" id="pNq-e9-HhW"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                         <state key="normal" title="Pagar">
@@ -32,6 +32,9 @@
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                         </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="46" id="WXH-Ey-dLa"/>
+                        </constraints>
                         <attributedString key="attributedText">
                             <fragment content="Al pagar afirme que es mayor de edad y acepto los Términos y Condiciones de Mercado Pago">
                                 <attributes>
@@ -45,13 +48,12 @@
                     </textView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Eka-ax-hIh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="5Oc-rz-iVN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="kqp-wb-z7q" secondAttribute="trailing" constant="10" id="8SH-Se-M2Y"/>
-                    <constraint firstItem="kqp-wb-z7q" firstAttribute="top" secondItem="Eka-ax-hIh" secondAttribute="bottom" constant="20" id="9iy-f1-ndL"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Eka-ax-hIh" secondAttribute="trailing" constant="10" id="Iqz-Zc-RE8"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="kqp-wb-z7q" secondAttribute="bottom" constant="37" id="R3S-RZ-2Bb"/>
-                    <constraint firstItem="Eka-ax-hIh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="RZT-cG-vCP"/>
-                    <constraint firstItem="kqp-wb-z7q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="lRn-7Z-WOm"/>
+                    <constraint firstItem="kqp-wb-z7q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="76" id="12i-HA-4nx"/>
+                    <constraint firstItem="Eka-ax-hIh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="2tw-Zh-JsD"/>
+                    <constraint firstItem="kqp-wb-z7q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="6qi-U1-waP"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="kqp-wb-z7q" secondAttribute="trailing" constant="10" id="PUM-Aj-qAQ"/>
+                    <constraint firstItem="Eka-ax-hIh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="SQv-UU-KBK"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Eka-ax-hIh" secondAttribute="trailing" constant="10" id="uvT-Li-VYg"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
@@ -59,7 +61,7 @@
                 <outlet property="paymentButton" destination="kqp-wb-z7q" id="nxh-FM-KXk"/>
                 <outlet property="termsAndConditionsText" destination="Eka-ax-hIh" id="iq9-Iv-4qh"/>
             </connections>
-            <point key="canvasLocation" x="209.5" y="318"/>
+            <point key="canvasLocation" x="176.5" y="195"/>
         </tableViewCell>
     </objects>
 </document>

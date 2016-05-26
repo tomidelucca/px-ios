@@ -185,11 +185,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     internal func showLoading(view : UIView? = nil){
-        let overlay = LoadingOverlay.shared.getLoadingOverlay(self.view)
-        
-        self.view.addSubview(overlay)
-        overlay.setNeedsDisplay()
-        self.view.setNeedsDisplay()
+        LoadingOverlay.shared.showOverlay(self.view)
     }
     
     internal func hideLoading(){

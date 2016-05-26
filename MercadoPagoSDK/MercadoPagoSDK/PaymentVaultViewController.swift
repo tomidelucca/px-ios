@@ -210,8 +210,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     internal func optionSelected(paymentSearchItemSelected : PaymentMethodSearchItem, animated: Bool = true) {
     
-        let loading = LoadingOverlay.shared.getLoadingOverlay(self.view)
-        self.navigationController?.visibleViewController?.view.addSubview(loading)
         switch paymentSearchItemSelected.type.rawValue {
             case PaymentMethodSearchItemType.PAYMENT_TYPE.rawValue:
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
