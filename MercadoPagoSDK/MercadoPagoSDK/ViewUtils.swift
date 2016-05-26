@@ -31,11 +31,30 @@ class ViewUtils {
         imageView.image = image
         view.addSubview(imageView)
     }
+
+    class func loadImageFromUrl(url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor().UIColorFromRGB(0x5ABEE7), loadingIndicatorColor : UIColor = UIColor().backgroundColor()){
+        LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
+        dispatch_async(dispatch_get_main_queue(), {
+            let url = NSURL(string: url)
+            if url != nil {
+                let data = NSData(contentsOfURL: url!)
+                if data != nil {
+                    let image = UIImage(data: data!)
+                    if image != nil {
+                        ViewUtils.addScaledImage(image!, inView: inView)
+                    }
+                }
+            }
+            LoadingOverlay.shared.hideOverlayView()
+        })
+    }
     
     class func drawBottomLine(y : CGFloat, width : CGFloat, inView view: UIView){
         let overLinewView = UIView(frame: CGRect(x: 20, y: y, width: width-40, height: 1))
         overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
         view.addSubview(overLinewView)
     }
+    
+
     
 }

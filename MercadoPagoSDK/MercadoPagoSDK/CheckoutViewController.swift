@@ -76,6 +76,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.loadPreference()
         } else {
             if self.paymentMethod != nil {
+                self.title = "Revisa si está todo bien...".localized
                 self.checkoutTable.reloadData()
                 self.hideLoading()
             } else {
@@ -147,11 +148,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
             
             return preferenceDescriptionCell
-        }
-    
-        if indexPath.row == 0 {
+        }else if indexPath.row == 0 {
             if self.paymentMethod != nil {
-                self.title = "Revisa si está todo bien...".localized
                 if self.paymentMethod!.isOfflinePaymentMethod() {
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: self.paymentMethod!.paymentTypeId)
@@ -308,19 +306,19 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func paymentVaultCallback(paymentMethod : PaymentMethod, token : Token?, issuer : Issuer?, payerCost : PayerCost?, animated : Bool = true){
+
+       
         let transition = CATransition()
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
-        self.navigationController!.popToRootViewControllerAnimated(animated)
-        
+ self.navigationController!.popToRootViewControllerAnimated(animated)
         self.showLoading()
         
         self.paymentMethod = paymentMethod
         self.token = token
         self.issuer = issuer
         self.payerCost = payerCost
-        self.checkoutTable.reloadData()
     }
     
     
