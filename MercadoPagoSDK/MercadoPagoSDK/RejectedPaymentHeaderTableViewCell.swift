@@ -31,12 +31,12 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment : Payment, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment : Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         
         
-        let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(payment.paymentMethodId.localized)")
+        let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.title.text = title
-        let subtitle = ((payment.statusDetail + "_subtitle").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(payment.paymentMethodId.localized)")
+        let subtitle = ((payment.statusDetail + "_subtitle").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.subtitle.text = subtitle
         return self
     }

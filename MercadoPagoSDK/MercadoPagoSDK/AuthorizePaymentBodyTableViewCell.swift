@@ -25,10 +25,10 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod,callback : (Void -> Void)?) -> UITableViewCell {
         self.defaultCallback = callback
         self.cancelButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
-        self.completeCardButton.setTitle("Ya hablé con " + payment.paymentMethodId.localized, forState: .Normal)
+        self.completeCardButton.setTitle("Ya hablé con " + paymentMethod.name, forState: .Normal)
         self.completeCardButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         return self
     }

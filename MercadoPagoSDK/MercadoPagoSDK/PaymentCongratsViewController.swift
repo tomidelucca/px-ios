@@ -19,15 +19,17 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     
     var bundle = MercadoPago.getBundle()
     var payment : Payment!
+    var paymentMethod : PaymentMethod!
     var layoutTemplate : String!
     var callback : ((payment : Payment, status : String) -> Void)!
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
-    init(payment: Payment, callback : (payment : Payment, status : String) -> Void){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : (payment : Payment, status : String) -> Void){
         super.init(nibName: "PaymentCongratsViewController", bundle : bundle)
         self.payment = payment
         self.callback = callback
+        self.paymentMethod = paymentMethod
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -73,13 +75,13 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         if indexPath.section == 0 {
             let header = congratsLayout[self.layoutTemplate]!["header"] as! String
             let headerCell =  self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
-            return headerCell.fillCell(self.payment, callback: nil)
+            return headerCell.fillCell(self.payment, paymentMethod : self.paymentMethod, callback: nil)
         } else if indexPath.section == 1 {
             let body = congratsLayout[self.layoutTemplate]!["body"] as? String
             if body != nil && body?.characters.count > 0 {
                 let bodyCell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body!) as! CongratsFillmentDelegate
                 let callback = self.congratsCallback()
-                return bodyCell.fillCell(self.payment, callback: callback)
+                return bodyCell.fillCell(self.payment, paymentMethod : self.paymentMethod, callback: callback)
             }
             return UITableViewCell()
         }
