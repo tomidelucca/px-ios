@@ -76,6 +76,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.loadPreference()
         } else {
             if self.paymentMethod != nil {
+                self.title = "Revisa si está todo bien...".localized
                 self.checkoutTable.reloadData()
                 self.hideLoading()
             } else {
@@ -144,6 +145,12 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if indexPath.section == 0 {
             let preferenceDescriptionCell = tableView.dequeueReusableCellWithIdentifier("preferenceDescriptionCell", forIndexPath: indexPath) as! PreferenceDescriptionTableViewCell
             
+            if self.preference?.getPictureUrl() != nil && self.preference!.getPictureUrl().characters.count > 0 {
+                if preferenceDescriptionCell.shoppingCartIconContainer.subviews.count == 0 {
+                    preferenceDescriptionCell.shoppingCartIcon.removeFromSuperview()
+                    ViewUtils.loadImageFromUrl(self.preference!.getPictureUrl(), inView: preferenceDescriptionCell.shoppingCartIconContainer, loadingBackgroundColor: UIColor().UIColorFromRGB(0x5ABEE7), loadingIndicatorColor: UIColor().backgroundColor())
+                }
+            }
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
             
             return preferenceDescriptionCell
@@ -151,7 +158,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
         if indexPath.row == 0 {
             if self.paymentMethod != nil {
-                self.title = "Revisa si está todo bien...".localized
                 if self.paymentMethod!.isOfflinePaymentMethod() {
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: self.paymentMethod!.paymentTypeId)
@@ -308,19 +314,19 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func paymentVaultCallback(paymentMethod : PaymentMethod, token : Token?, issuer : Issuer?, payerCost : PayerCost?, animated : Bool = true){
+
+        self.navigationController!.popToRootViewControllerAnimated(animated)
         let transition = CATransition()
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
-        self.navigationController!.popToRootViewControllerAnimated(animated)
-        
+
         self.showLoading()
         
         self.paymentMethod = paymentMethod
         self.token = token
         self.issuer = issuer
         self.payerCost = payerCost
-        self.checkoutTable.reloadData()
     }
     
     

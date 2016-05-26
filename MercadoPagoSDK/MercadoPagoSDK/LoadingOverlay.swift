@@ -24,18 +24,18 @@ public class LoadingOverlay {
         
     }
     
-    public func getLoadingOverlay(view : UIView) -> UIView {
+    public func getLoadingOverlay(view : UIView, backgroundColor : UIColor, indicatorColor : UIColor) -> UIView {
         
         let x = (view.frame.size.width - 20) / 2
         let y = (view.frame.size.height - 20) / 2
         self.activityIndicator.frame = CGRectMake(x,y, 20, 20)
         self.activityIndicator.activityIndicatorViewStyle = .WhiteLarge
-        self.activityIndicator.color = UIColor().blueMercadoPago()
+        self.activityIndicator.color = indicatorColor
         self.activityIndicator.hidden = false
         
         
         self.container.frame = CGRect(x : view.bounds.minX, y : view.bounds.minY, width : view.bounds.width, height : view.bounds.height)
-        self.container.backgroundColor = UIColor().backgroundColor()
+        self.container.backgroundColor = backgroundColor
         self.container.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2 )
      //   self.activityIndicator.center = view.center
         self.container.addSubview(self.activityIndicator)
@@ -44,8 +44,8 @@ public class LoadingOverlay {
         return self.container
     }
     
-    public func showOverlay(view: UIView) {
-        let overlay = self.getLoadingOverlay(view)
+    public func showOverlay(view: UIView, backgroundColor : UIColor = UIColor().backgroundColor(), indicatorColor : UIColor = UIColor().blueMercadoPago()) {
+        let overlay = self.getLoadingOverlay(view, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
         view.addSubview(overlay)
         view.bringSubviewToFront(overlay)
     }
