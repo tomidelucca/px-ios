@@ -28,7 +28,7 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         self.defaultCallback = callback
         return self
     }

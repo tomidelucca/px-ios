@@ -357,7 +357,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     internal func displayCongrats(payment: Payment){
-        let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, callback : { (payment : Payment, status: String) in
+        let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod : self.paymentMethod!, callback : { (payment : Payment, status: String) in
             if status == "CANCEL" || status == "AUTH" {
                 self.navigationController!.setNavigationBarHidden(false, animated: false)
                 self.paymentMethod = nil

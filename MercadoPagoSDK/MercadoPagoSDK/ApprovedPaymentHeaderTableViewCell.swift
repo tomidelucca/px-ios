@@ -28,7 +28,7 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         // Configure the view for the selected state
     }
     
-    func fillCell(payment: Payment, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         let email : String
         if (payment.payer != nil) {
             email = payment.payer!.email ?? ""
