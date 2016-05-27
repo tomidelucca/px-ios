@@ -129,7 +129,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         let exitButtonCell =  self.congratsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
         let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor().UIColorFromRGB(0x0066CC)]
-        let title = NSAttributedString(string: "Finalizar".localized, attributes: attributes)
+        let title = NSAttributedString(string: "Seguir comprando".localized, attributes: attributes)
         exitButtonCell.exitButton.setAttributedTitle(title, forState: .Normal)
         exitButtonCell.defaultCallback = { self.finishInstructions() }
         
