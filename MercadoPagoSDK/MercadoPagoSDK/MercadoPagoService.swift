@@ -44,18 +44,34 @@ public class MercadoPagoService : NSObject {
 
 		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		
+        let requestBeganAt  = NSDate()
+        print("*************** REQUEST AT " + String(requestBeganAt) + " *************")
+        print(request)
 		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 				if error == nil {
 					do
 					{
+                        let requestFinishedAt = NSDate()
+                        print("*************** RESPONSE AT " + String(requestFinishedAt))
+                        let response = try NSJSONSerialization.JSONObjectWithData(data!,
+                                                                              options:NSJSONReadingOptions.AllowFragments)
+                        print(response)
+                        //let totalTime = requestFinishedAt
+                      //  print("*************** REQUEST TOOK :" + String(totalTime) + " *************")
 						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
 							options:NSJSONReadingOptions.AllowFragments))
 					} catch {
+                        
 						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
 						failure!(error: e)
 					}
                 } else {
+                    let requestFinishedAt = NSDate()
+                    print("*************** RESPONSE AT " + String(requestFinishedAt))
+                    let response = String(error)
+                    print(response)
+
                     if failure != nil {
                         failure!(error: error!)
                     }
