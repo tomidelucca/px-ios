@@ -397,14 +397,15 @@ var changeNumber = false
         {
             return false
         }
-        
+        var originalText = textField.text
+        let numberOfDigits = originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count
         //Check for max length including the spacers we added
-        if range.location == 18
+        if numberOfDigits == 16
         {
             return false
         }
         
-        var originalText = textField.text
+        
         let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
         
         //Verify entered text is a numeric value
@@ -418,7 +419,7 @@ var changeNumber = false
         }
         
         
-        if ((originalText!.characters.count == 4)||(originalText!.characters.count == 12))
+        if ((numberOfDigits == 4)||(numberOfDigits == 10))
         {
             originalText?.appendContentsOf(" ")
             textField.text = originalText
@@ -698,7 +699,7 @@ var changeNumber = false
     }
     
     func updateCardSkin(){
-        if (textBox.text?.characters.count>7){
+        if (textBox.text?.characters.count>6){
             let pmMatched = self.matchedPaymentMethod()
             
             if((pmMatched != nil) && (pmMatched != paymentMethod)){
@@ -937,9 +938,42 @@ var changeNumber = false
 
     
     func addDot() -> Bool{
+        if ((paymentMethod == nil) || (!paymentMethod!.isAmex())){
+            return addDotDefault()
+        } else {
+            return  addDotAmex()
+        }
+    }
+    
+    func addDotAmex() -> Bool{
+        
         
         var label = cardNumberLabel
    
+        
+        //Check for max length including the spacers we added
+        if  (label?.text?.stringByReplacingOccurrencesOfString(" ", withString: ""))!.stringByReplacingOccurrencesOfString("•", withString: "").characters.count > 14
+        {
+            return false
+        }
+        
+        let digits = (label?.text?.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count)!
+        
+        if ( digits == 4) ||  ( digits == 9)
+        {
+            
+            label?.text?.appendContentsOf(" ")
+            label?.text = label?.text?.stringByReplacingOccurrencesOfString("  ", withString: " •")
+        }
+        label?.text?.appendContentsOf("•")
+        return true
+        
+    }
+
+    func addDotDefault() -> Bool{
+        
+        var label = cardNumberLabel
+        
         
         //Check for max length including the spacers we added
         if label?.text?.characters.count == 19
