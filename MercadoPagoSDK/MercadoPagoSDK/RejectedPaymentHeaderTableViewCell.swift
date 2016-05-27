@@ -36,7 +36,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         
         let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.title.text = title
-        let subtitle = ((payment.statusDetail + "_subtitle").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId.rawValue).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.subtitle.text = subtitle
         return self
     }
