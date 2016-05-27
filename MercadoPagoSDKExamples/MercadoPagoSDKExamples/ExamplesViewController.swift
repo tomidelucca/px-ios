@@ -90,6 +90,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 5:
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
             self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
@@ -99,7 +100,8 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
             }))
         case 7:
-            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_TICKET_EXCLUDED, callback: { (MerchantPayment) -> Void in
+            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+            self.presentNavigation(MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment:Payment) -> Void in
                 
             }))
         case 8:
