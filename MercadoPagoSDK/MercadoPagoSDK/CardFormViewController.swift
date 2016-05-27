@@ -321,6 +321,7 @@ var changeNumber = false
         switch editingLabel! {
        
         case cardNumberLabel! :
+            
             if(isAmexCard()){
                 return validAmexInputNumber(textField, shouldChangeCharactersInRange: range, replacementString: string)
             }else{
@@ -336,100 +337,7 @@ var changeNumber = false
         default : return false
         }
     }
-    
-    func validInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        
-        if (textField.text?.characters.count == 0){
-            return true
-        }
-        //Range.Lenth will greater than 0 if user is deleting text - Allow it to replce
-        if range.length > 0
-        {
-            return true
-        }
-        
-        //Dont allow empty strings
-        if string == " "
-        {
-            return false
-        }
-        
-        //Check for max length including the spacers we added
-        if range.location == 19
-        {
-            return false
-        }
-        
-        var originalText = textField.text
-        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
-        
-        //Verify entered text is a numeric value
-       let digits = NSCharacterSet.decimalDigitCharacterSet()
-        for char in replacementText.unicodeScalars
-        {
-            if !digits.longCharacterIsMember(char.value)
-            {
-                return false
-            }
-        }
-        
-        //Put an empty space after every 4 places
-        if (originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count % 4 == 0)
-        {
-            originalText?.appendContentsOf(" ")
-            textField.text = originalText
-        }
-        
-        return true
-
-        
-    }
-    func validAmexInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        
-        //Range.Lenth will greater than 0 if user is deleting text - Allow it to replce
-        if range.length > 0
-        {
-            return true
-        }
-        
-        //Dont allow empty strings
-        if string == " "
-        {
-            return false
-        }
-        var originalText = textField.text
-        let numberOfDigits = originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count
-        //Check for max length including the spacers we added
-        if numberOfDigits == 16
-        {
-            return false
-        }
-        
-        
-        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
-        
-        //Verify entered text is a numeric value
-        let digits = NSCharacterSet.decimalDigitCharacterSet()
-        for char in replacementText.unicodeScalars
-        {
-            if !digits.longCharacterIsMember(char.value)
-            {
-                return false
-            }
-        }
-        
-        
-        if ((numberOfDigits == 4)||(numberOfDigits == 10))
-        {
-            originalText?.appendContentsOf(" ")
-            textField.text = originalText
-        }
-        
-        return true
-        
-        
-    }
-    
+  
     
     func validInputName(text : String) -> Bool{
         return true
@@ -699,6 +607,7 @@ var changeNumber = false
     }
     
     func updateCardSkin(){
+       
         if (textBox.text?.characters.count>6){
             let pmMatched = self.matchedPaymentMethod()
             
@@ -915,6 +824,10 @@ var changeNumber = false
     func completeNumberLabel(){
        // self.cardNumberLabel?.text = formatCardNumberText((self.cardNumberLabel?.text)! + "•••••••••••••••••••••••••••")
      // return
+        if (cardNumberLabel!.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count == 0){
+            cardNumberLabel?.text = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "")
+        }
+        
         while (addDot() != false){
             
         }
@@ -937,6 +850,105 @@ var changeNumber = false
     }
 
     
+    
+    
+    func validInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+        
+        if (textField.text?.characters.count == 0){
+            return true
+        }
+        //Range.Lenth will greater than 0 if user is deleting text - Allow it to replce
+        if range.length > 0
+        {
+            return true
+        }
+        
+        //Dont allow empty strings
+        if string == " "
+        {
+            return false
+        }
+        
+        //Check for max length including the spacers we added
+        if range.location == 19
+        {
+            return false
+        }
+        
+        var originalText = textField.text
+        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
+        
+        //Verify entered text is a numeric value
+        let digits = NSCharacterSet.decimalDigitCharacterSet()
+        for char in replacementText.unicodeScalars
+        {
+            if !digits.longCharacterIsMember(char.value)
+            {
+                return false
+            }
+        }
+        
+        //Put an empty space after every 4 places
+        if (originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count % 4 == 0)
+        {
+            originalText?.appendContentsOf(" ")
+            textField.text = originalText
+        }
+        
+        return true
+        
+        
+    }
+    func validAmexInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
+        
+        if range.length > 0
+        {
+            return true
+        }
+        
+        //Dont allow empty strings
+        if string == " "
+        {
+            return false
+        }
+        var originalText = textField.text
+        let numberOfDigits = originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count
+        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
+         let numberOfDigitsToAdd = replacementText.characters.count
+        //Check for max length including the spacers we added
+        if (numberOfDigits + numberOfDigitsToAdd) > 15
+        {
+            return false
+        }
+        
+        
+        
+        
+        //Verify entered text is a numeric value
+        let digits = NSCharacterSet.decimalDigitCharacterSet()
+        for char in replacementText.unicodeScalars
+        {
+            if !digits.longCharacterIsMember(char.value)
+            {
+                return false
+            }
+        }
+        
+        
+        if ((numberOfDigits == 4)||(numberOfDigits == 10))
+        {
+            originalText?.appendContentsOf(" ")
+            textField.text = originalText
+        }
+        
+        return true
+        
+        
+    }
+    
+    
+    
+    
     func addDot() -> Bool{
         if ((paymentMethod == nil) || (!paymentMethod!.isAmex())){
             return addDotDefault()
@@ -947,15 +959,15 @@ var changeNumber = false
     
     func addDotAmex() -> Bool{
         
-        
+
         var label = cardNumberLabel
    
         
-        //Check for max length including the spacers we added
-        if  (label?.text?.stringByReplacingOccurrencesOfString(" ", withString: ""))!.stringByReplacingOccurrencesOfString("•", withString: "").characters.count > 14
+        if label?.text?.characters.count == 17
         {
             return false
         }
+
         
         let digits = (label?.text?.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count)!
         
