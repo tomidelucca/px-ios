@@ -256,7 +256,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func loadGroupsAndStartPaymentVault(animated : Bool = true){
         
         if self.paymentMethodSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
+            MPServicesBuilder.searchPaymentMethods(self.preference!.getAmount(), excludedPaymentTypeIds: self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
                 self.paymentMethodSearch = paymentMethodSearch
                 
                 self.startPaymentVault()
