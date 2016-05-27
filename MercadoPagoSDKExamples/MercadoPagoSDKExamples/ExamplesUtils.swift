@@ -29,6 +29,24 @@ class ExamplesUtils {
         // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
     }
     
+    class var MERCHANT_PUBLIC_KEY_TEST : String {
+        return //"444a9ef5-8a6b-429f-abdf-587639155d88"
+            //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
+            // "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
+            // "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+            // "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
+            // "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
+            
+            // "444a9ef5-8a6b-429f-abdf-587639155d88"
+        
+        
+         "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
+        // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
+        
+        //USUARIO AXEL - ARG
+        // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
+    }
+    
     class var MERCHANT_MOCK_BASE_URL : String {
         return "https://www.mercadopago.com"
     }
