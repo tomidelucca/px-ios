@@ -64,8 +64,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = nil
         
     }
     
@@ -278,16 +278,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         
         var callbackCancel : (Void -> Void)
         // Set action for cancel callback
-        if self.paymentMethod == nil {
+       // if self.paymentMethod == nil {
             callbackCancel = { Void -> Void in
                 self.dismissViewControllerAnimated(true, completion: {
                 })
             }
-        } else {
-            callbackCancel = { Void -> Void in
-               self.navigationController!.popViewControllerAnimated(true)
-            }
-        }
+        //} else {
+          //  callbackCancel = { Void -> Void in
+            //   self.navigationController!.popViewControllerAnimated(true)
+            //}
+        //}
         self.hideLoading()
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
@@ -312,7 +312,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.addAnimation(transition, forKey: nil)
- self.navigationController!.popToRootViewControllerAnimated(animated)
+        self.navigationController!.popToRootViewControllerAnimated(animated)
         self.showLoading()
         
         self.paymentMethod = paymentMethod
