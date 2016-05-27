@@ -188,6 +188,31 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         LoadingOverlay.shared.showOverlay(self.view)
     }
     
+    var fistResponder : UITextField?
+    
+    internal func hideKeyboard(view: UIView) -> Bool{
+        if let textField = view as? UITextField {
+            // if (textField.isFirstResponder()){
+            fistResponder = textField
+            textField.resignFirstResponder()
+            //   return true
+            // }
+        }
+        for subview in view.subviews {
+            if (hideKeyboard(subview)){
+                return true
+            }
+        }
+        return false
+    }
+    internal func showKeyboard(){
+        if (fistResponder != nil){
+            fistResponder?.becomeFirstResponder()
+        }
+        fistResponder = nil
+    }
+    
+    
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
     }

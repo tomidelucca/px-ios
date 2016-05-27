@@ -206,8 +206,10 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     private func getIdentificationTypes(){
         self.showLoading()
+        doneNext?.enabled = false
         MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
             self.hideLoading()
+            self.doneNext?.enabled = true
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
