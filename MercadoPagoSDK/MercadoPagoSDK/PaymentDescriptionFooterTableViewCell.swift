@@ -21,7 +21,8 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
     }
     
     func setAmount(amount : Double, additionalText : String = ""){
-        let total = NSMutableAttributedString(string: "Total a pagar ")
+        let fontAttrs : [String : AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!]
+        let total = NSMutableAttributedString(string: "Total a pagar ", attributes: fontAttrs)
         //TODO : obtener de servicio
         let attributedAmount = Utils.getAttributedAmount(String(amount), thousandSeparator: ",", decimalSeparator: ".", currencySymbol: "$", color : UIColor().UIColorFromRGB(0x666666), fontSize: 16, baselineOffset : 4)
         total.appendAttributedString(attributedAmount)
