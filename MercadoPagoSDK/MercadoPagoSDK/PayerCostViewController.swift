@@ -197,7 +197,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             additionalText.appendAttributedString(totalAmountStr)
         } else {
             if payerCost.installments > 1 {
-                additionalText.appendAttributedString(NSAttributedString(string: " Sin intereses".localized, attributes: noRateAttributes))
+                additionalText.appendAttributedString(NSAttributedString(string: " Sin interes".localized, attributes: noRateAttributes))
             }
         }
         

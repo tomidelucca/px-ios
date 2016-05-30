@@ -185,7 +185,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     }
     
     internal func showLoading(){
-        LoadingOverlay.shared.showOverlay(self.view)
+        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
     }
     
     var fistResponder : UITextField?
