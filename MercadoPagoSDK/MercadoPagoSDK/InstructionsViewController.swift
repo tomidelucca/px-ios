@@ -138,7 +138,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         separatorLineView.backgroundColor = UIColor().grayTableSeparator()
         exitButtonCell.addSubview(separatorLineView)
         exitButtonCell.bringSubviewToFront(separatorLineView)
-        ViewUtils.drawBottomLine(10, width: self.view.bounds.width, inView: exitButtonCell)
         return exitButtonCell
     }
     

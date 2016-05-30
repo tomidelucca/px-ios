@@ -184,7 +184,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.navigationController!.popViewControllerAnimated(true)
     }
     
-    internal func showLoading(view : UIView? = nil){
+    internal func showLoading(){
         LoadingOverlay.shared.showOverlay(self.view)
     }
     

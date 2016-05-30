@@ -93,7 +93,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if section == 0 && displayPreferenceDescription {
             return 0.1
         }
-        return 16
+        return 13
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -116,7 +116,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             return 48
         } else if indexPath.row == 2 {
             if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
-                return 180
+                return 150
             }
             return 60
         }
@@ -238,7 +238,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return (section == 1) ? 140 : 0
+        return (section == 1) ? 44 : 0.1
     }
 
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
