@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "hombreDocumento.png",
+      "filename" : "fotoSello.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "hombreDocumento@2x.png",
+      "filename" : "fotoSello@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "hombreDocumento@3x.png",
+      "filename" : "fotoSello@3x.png",
       "scale" : "3x"
     }
   ],

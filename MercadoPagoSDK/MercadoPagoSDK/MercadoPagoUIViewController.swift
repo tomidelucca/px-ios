@@ -61,8 +61,10 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+    
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+        
         
         self.loadMPStyles()
      
@@ -114,7 +116,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-
+        
       
     }
     
