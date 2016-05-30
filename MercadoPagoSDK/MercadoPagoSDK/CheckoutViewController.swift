@@ -118,7 +118,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             if self.paymentMethod == nil || (self.paymentMethod != nil && self.paymentMethod!.isOfflinePaymentMethod()){
                 return 150
             }
-            return 60
+            return 50
         }
         return 160
     }
