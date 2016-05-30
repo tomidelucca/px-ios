@@ -35,14 +35,14 @@ public class LoadingOverlay {
         self.activityIndicator.hidden = false
         
         self.container.frame = CGRectMake(0, 0, 80, 80)
-        self.container.backgroundColor = backgroundColor
-        self.container.alpha = 0.7
+        self.container.backgroundColor = UIColor.clearColor()
+        self.container.alpha = 1
         self.container.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2 )
         self.container.layer.cornerRadius = 10.0
         self.container.addSubview(self.activityIndicator)
         
         self.screenContainer.frame = CGRect(x : view.bounds.minX, y : view.bounds.minY, width : view.bounds.width, height : view.bounds.height)
-        self.screenContainer.backgroundColor = UIColor.clearColor()
+        self.screenContainer.backgroundColor = backgroundColor.colorWithAlphaComponent(0.8)
         self.screenContainer.addSubview(self.container)
         
         self.activityIndicator.startAnimating()
