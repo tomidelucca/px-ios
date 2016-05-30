@@ -49,7 +49,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
                 additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
             } else {
                 if payment.installments != 1 {
-                    additionalString.appendAttributedString(NSAttributedString(string: "Sin intereses".localized, attributes : additionalTextAttributes))
+                    additionalString.appendAttributedString(NSAttributedString(string: "Sin interes".localized, attributes : additionalTextAttributes))
                 }
             }
         }
