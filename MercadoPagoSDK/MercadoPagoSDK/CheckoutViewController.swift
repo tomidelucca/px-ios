@@ -64,7 +64,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
         
     }
@@ -93,7 +93,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         if section == 0 && displayPreferenceDescription {
             return 0.1
         }
-        return 8
+        return 16
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -120,7 +120,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             }
             return 60
         }
-        return 180
+        return 160
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -256,7 +256,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func loadGroupsAndStartPaymentVault(animated : Bool = true){
         
         if self.paymentMethodSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
+            MPServicesBuilder.searchPaymentMethods(self.preference!.getAmount(), excludedPaymentTypeIds: self.preference?.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.preference?.getExcludedPaymentMethodsIds(), success: { (paymentMethodSearch) in
                 self.paymentMethodSearch = paymentMethodSearch
                 
                 self.startPaymentVault()
@@ -424,9 +424,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.separatorStyle = .None
     }
     
-    internal func openTermsAndConditions(url : NSURL){
+    internal func openTermsAndConditions(title: String, url : NSURL){
         let webVC = WebViewController(url: url)
-
+        webVC.title = title
         self.navigationController!.pushViewController(webVC, animated: true)
         
     }

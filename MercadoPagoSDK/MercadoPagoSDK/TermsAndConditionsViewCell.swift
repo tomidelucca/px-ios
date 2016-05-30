@@ -29,6 +29,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
        self.termsAndConditionsText.delegate = self
         let style = NSMutableParagraphStyle()
         style.alignment = .Center
+        style.lineSpacing = CGFloat(6)
         
         mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
         
@@ -38,7 +39,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     }
     
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        self.delegate?.openTermsAndConditions(URL)
+        self.delegate?.openTermsAndConditions("Términos y Condiciones".localized, url : URL)
         return false
     }
     
@@ -51,7 +52,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
 protocol TermsAndConditionsDelegate {
     
-    func openTermsAndConditions(url : NSURL)
+    func openTermsAndConditions(title : String, url : NSURL)
 }
 
 
