@@ -30,7 +30,7 @@
                             <constraint firstAttribute="height" constant="28" id="3vx-kh-9hp"/>
                         </constraints>
                         <attributedString key="attributedText">
-                            <fragment content="¡Listo! Se acreditó tu pago">
+                            <fragment content="¡Listo, se acreditó tu pago!">
                                 <attributes>
                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <font key="NSFont" size="22" name="HelveticaNeue"/>
