@@ -148,7 +148,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
+        doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
         donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
