@@ -10,7 +10,7 @@ import UIKit
 
 class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(200)
+    static let ROW_HEIGHT = CGFloat(212)
     
     @IBOutlet weak var subtitle: MPLabel!
     
@@ -28,7 +28,7 @@ class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelega
     }
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
-        if payment.statusDetail == "pending_contigency" {
+        if payment.statusDetail == "pending_contingency" {
             self.subtitle.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
         } else {
             self.subtitle.text = "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.".localized

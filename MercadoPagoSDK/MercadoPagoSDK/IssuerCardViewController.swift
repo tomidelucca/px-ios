@@ -31,18 +31,6 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         self.callback = callback
         self.paymentMethod = paymentMethod
         self.issuerList = issuerList
-        if(issuerList == nil){
-            MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
-                self.issuerList = issuers
-                self.tableView.reloadData()
-                }) { (error) -> Void in
-                        // HANDLE ERROR
-            }
-        }else{
-            self.tableView.reloadData()
-        }
-        
-        
         
     }
     
@@ -95,6 +83,20 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        
+        self.showLoading()
+        if(issuerList == nil){
+            MPServicesBuilder.getIssuers(self.paymentMethod!, bin: self.cardToken!.getBin(), success: { (issuers) -> Void in
+                self.issuerList = issuers
+                self.tableView.reloadData()
+                self.hideLoading()
+            }) { (error) -> Void in
+                // HANDLE ERROR
+            }
+        }else{
+            self.tableView.reloadData()
+        }
+
     }
 
 
