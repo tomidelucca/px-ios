@@ -115,7 +115,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardBack?.frame = cardView.bounds
       
         textBox.placeholder = "Número de tarjeta".localized
-        textBox.becomeFirstResponder()
+     //   textBox.becomeFirstResponder()
 
        
     }
@@ -254,7 +254,7 @@ var changeNumber = false
         editingLabel = cardNumberLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
-        textBox.becomeFirstResponder()
+     //   textBox.becomeFirstResponder()
         textBox.text = numberLabelEmpty ?  "" : cardNumberLabel!.text
         textBox.placeholder = "Número de tarjeta".localized
     }
@@ -262,7 +262,7 @@ var changeNumber = false
         editingLabel = nameLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.Alphabet
-        textBox.becomeFirstResponder()
+     //   textBox.becomeFirstResponder()
         textBox.text = nameLabelEmpty ?  "" : nameLabel!.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
         textBox.placeholder = "NOMBRE APELLIDO".localized
 
@@ -271,7 +271,7 @@ var changeNumber = false
         editingLabel = expirationDateLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
-        textBox.becomeFirstResponder()
+ //       textBox.becomeFirstResponder()
         textBox.text = expirationLabelEmpty ?  "" : expirationDateLabel!.text
         textBox.placeholder = "Fecha de expiración".localized
     }
