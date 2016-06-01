@@ -10,19 +10,20 @@ import UIKit
 
 class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(200)
+    static let ROW_HEIGHT = CGFloat(206)
     
     @IBOutlet weak var creditCardIcon: UIImageView!
     
     @IBOutlet weak var creditCardLabel: MPLabel!
     @IBOutlet weak var amountDescription: UILabel!
     @IBOutlet weak var cancelButton: MPButton!
+    @IBOutlet weak var subtitle: MPLabel!
     
     @IBOutlet weak var voucherId: MPLabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let overLinewView = UIView(frame: CGRect(x: 0, y: 120, width: self.bounds.width, height: 1))
+        let overLinewView = UIView(frame: CGRect(x: 0, y: 140, width: self.bounds.width, height: 1))
         overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
         self.addSubview(overLinewView)
 
@@ -30,6 +31,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        self.subtitle.addLineSpacing(6)
     }
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
@@ -53,6 +55,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
                     additionalString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes : noRateTextAttributes))
                 }
             }
+
         }
         
         self.amountDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payment.installments), installmentAmount: payment.transactionDetails.installmentAmount, additionalString: additionalString)

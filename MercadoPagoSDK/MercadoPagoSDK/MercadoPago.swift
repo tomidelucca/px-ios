@@ -15,6 +15,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     public static let DEFAULT_FONT_NAME = "ProximaNova-Light"
+    
     public class var PUBLIC_KEY : String {
         return "public_key"
     }

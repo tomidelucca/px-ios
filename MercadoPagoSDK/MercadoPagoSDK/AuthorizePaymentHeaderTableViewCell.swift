@@ -10,8 +10,7 @@ import UIKit
 
 class AuthorizePaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(260)
-    
+    static let ROW_HEIGHT = CGFloat(240)
     
     @IBOutlet weak var title: MPLabel!
     

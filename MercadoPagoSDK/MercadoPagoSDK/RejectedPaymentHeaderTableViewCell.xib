@@ -23,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="g0C-Jp-kcu" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="15" y="135" width="429" height="17"/>
+                        <rect key="frame" x="15" y="142" width="429" height="17"/>
                         <attributedString key="attributedText">
                             <fragment content="Usa otra tarjeta u otro medio de pago">
                                 <attributes>
@@ -43,7 +43,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-Es-nD9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="15" y="98" width="429" height="32"/>
+                        <rect key="frame" x="15" y="100" width="429" height="32"/>
                         <attributedString key="attributedText">
                             <fragment content="Visa no procesó tu pago">
                                 <attributes>
@@ -59,12 +59,12 @@
                 <constraints>
                     <constraint firstItem="p3y-Es-nD9" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="A8w-9s-PC7"/>
                     <constraint firstItem="43x-vX-lYh" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Qeq-1A-mbe"/>
-                    <constraint firstItem="p3y-Es-nD9" firstAttribute="top" secondItem="43x-vX-lYh" secondAttribute="bottom" constant="14" id="S8m-ff-xoh"/>
+                    <constraint firstItem="p3y-Es-nD9" firstAttribute="top" secondItem="43x-vX-lYh" secondAttribute="bottom" constant="16" id="S8m-ff-xoh"/>
                     <constraint firstItem="g0C-Jp-kcu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="Wun-3A-gtQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="g0C-Jp-kcu" secondAttribute="trailing" constant="15" id="fLM-db-dRd"/>
                     <constraint firstItem="p3y-Es-nD9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="fyq-lk-l3Z"/>
                     <constraint firstItem="43x-vX-lYh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="24" id="i7N-xF-hka"/>
-                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="top" secondItem="p3y-Es-nD9" secondAttribute="bottom" constant="5" id="ofZ-wa-PtL"/>
+                    <constraint firstItem="g0C-Jp-kcu" firstAttribute="top" secondItem="p3y-Es-nD9" secondAttribute="bottom" constant="10" id="ofZ-wa-PtL"/>
                     <constraint firstAttribute="trailingMargin" secondItem="p3y-Es-nD9" secondAttribute="trailing" constant="15" id="xev-UJ-ztQ"/>
                     <constraint firstItem="g0C-Jp-kcu" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="zsp-Dz-mC8"/>
                 </constraints>

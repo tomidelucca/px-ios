@@ -64,6 +64,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         if self.installments == nil {
+            self.showLoading()
             self.getInstallments()
         }
     }
@@ -194,8 +195,8 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
             //TODO ISSUER
-            
             self.tableView.reloadData()
+            self.hideLoading()
         }) { (error) -> Void in
            self.requestFailure(error)
         }

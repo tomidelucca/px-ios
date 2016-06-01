@@ -10,7 +10,7 @@ import UIKit
 public class MPNavigationController : UINavigationController {
     internal func showLoading(){
         
-        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view)
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
     }
     
     internal func hideLoading(){

@@ -10,7 +10,7 @@ import UIKit
 
 class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(200)
+    static let ROW_HEIGHT = CGFloat(212)
     
     @IBOutlet weak var subtitle: MPLabel!
     

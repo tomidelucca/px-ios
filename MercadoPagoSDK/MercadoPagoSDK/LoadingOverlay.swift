@@ -49,7 +49,7 @@ public class LoadingOverlay {
         return self.screenContainer
     }
     
-    public func showOverlay(view: UIView, backgroundColor : UIColor = UIColor().blueMercadoPago(), indicatorColor : UIColor = UIColor().backgroundColor()) {
+    public func showOverlay(view: UIView, backgroundColor : UIColor, indicatorColor : UIColor) {
         let overlay = self.getLoadingOverlay(view, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
         view.addSubview(overlay)
         view.bringSubviewToFront(overlay)

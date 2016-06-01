@@ -64,9 +64,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
 
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
-        
+        self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -79,6 +78,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.title = "Revisa si está todo bien...".localized
                 self.checkoutTable.reloadData()
                 self.hideLoading()
+                self.navigationItem.leftBarButtonItem = nil
             } else {
                 self.loadGroupsAndStartPaymentVault(true)
             }
@@ -283,6 +283,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             }
         }
         self.hideLoading()
+        self.navigationItem.leftBarButtonItem = nil
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
