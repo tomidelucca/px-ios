@@ -24,7 +24,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var nameLabelEmpty: Bool = true
     var expirationDateLabel: MPLabel?
     var expirationLabelEmpty: Bool = true
-    var cvvLabel: MPLabel?
+    var cvvLabel: UILabel?
     var cvvLabelEmpty: Bool = true
 
     var editingLabel : UILabel?
@@ -226,7 +226,7 @@ var changeNumber = false
     private func formatName(name:String) -> String{
         if(name.characters.count == 0){
             nameLabelEmpty = true
-            return "Nombre y apellido".localized
+            return "NOMBRE APELLIDO".localized
         }
         nameLabelEmpty = false
         return name.uppercaseString
@@ -234,7 +234,7 @@ var changeNumber = false
     private func formatCVV(cvv:String) -> String{
         if(cvv.characters.count == 0){
             cvvLabelEmpty = true
-            return "...".localized
+            return "•••".localized
         }
         cvvLabelEmpty = false
         return cvv
@@ -264,7 +264,7 @@ var changeNumber = false
         textBox.keyboardType = UIKeyboardType.Alphabet
         textBox.becomeFirstResponder()
         textBox.text = nameLabelEmpty ?  "" : nameLabel!.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
-        textBox.placeholder = "Nombre y apellido".localized
+        textBox.placeholder = "NOMBRE APELLIDO".localized
 
     }
     private func prepareExpirationLabelForEdit(){
@@ -278,12 +278,12 @@ var changeNumber = false
     private func prepareCVVLabelForEdit(){
         if(isAmexCard()){
             cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = "....".localized
+            cardBack?.cardCVV.text = "••••".localized
             cardBack?.cardCVV.alpha = 0
             cardFront?.cardCVV.alpha = 1
         }else{
             cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = "...".localized
+            cardFront?.cardCVV.text = "•••".localized
             cardFront?.cardCVV.alpha = 0
             cardBack?.cardCVV.alpha = 1
         }
@@ -420,8 +420,12 @@ var changeNumber = false
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(title: "Siguiente", style: .Plain, target: self, action: "rightArrowKeyTapped")
+        doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
         donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+       // donePrev?.width = UIScreen.mainScreen().bounds.size.width / 2
+       // doneNext?.width = UIScreen.mainScreen().bounds.size.width / 2
+        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
         inputButtons!.pushNavigationItem(navItem!, animated: false)
@@ -640,13 +644,13 @@ var changeNumber = false
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = ""
             cardFront?.cardCVV.alpha = 1
-             cardFront?.cardCVV.text = "....".localized
+             cardFront?.cardCVV.text = "••••".localized
             cvvLabelEmpty = true
         }else{
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = ""
             cardFront?.cardCVV.alpha = 0
-            cardBack?.cardCVV.text = "...".localized
+            cardBack?.cardCVV.text = "•••".localized
             cvvLabelEmpty = true
         }
         self.updateLabelsFontColors()
