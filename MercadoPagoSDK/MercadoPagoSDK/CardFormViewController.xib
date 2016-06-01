@@ -66,18 +66,18 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duM-jG-gy1">
-                            <rect key="frame" x="0.0" y="210" width="320" height="17"/>
+                            <rect key="frame" x="0.0" y="202" width="320" height="25"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFe-CW-SrB">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1e7-Cv-GMx">
-                            <rect key="frame" x="22" y="25" width="276" height="177"/>
+                            <rect key="frame" x="32" y="33" width="256" height="161"/>
                             <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="59:38" id="WDx-Ow-fZY"/>
+                                <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="256:161" id="1ZB-3q-Hs6"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -86,21 +86,37 @@
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7pi-6h-zuI">
+                            <rect key="frame" x="0.0" y="196" width="320" height="7"/>
+                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="7" id="4h3-fp-Tnt"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="duM-jG-gy1" firstAttribute="top" secondItem="1e7-Cv-GMx" secondAttribute="bottom" constant="8" id="029-29-j2U"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="width" secondItem="HQg-yC-PDa" secondAttribute="height" multiplier="118:97" id="0cm-TH-P6B"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="top" secondItem="XFe-CW-SrB" secondAttribute="bottom" constant="8" id="0kf-1F-QeO"/>
                         <constraint firstAttribute="bottom" secondItem="duM-jG-gy1" secondAttribute="bottom" id="3TX-cs-cC9"/>
+                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="centerX" secondItem="HQg-yC-PDa" secondAttribute="centerX" id="BRm-UA-G94"/>
                         <constraint firstItem="duM-jG-gy1" firstAttribute="height" secondItem="XFe-CW-SrB" secondAttribute="height" id="Cow-3n-9mI"/>
                         <constraint firstItem="duM-jG-gy1" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="FLO-JI-7TK"/>
+                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="top" secondItem="XFe-CW-SrB" secondAttribute="bottom" constant="8" id="JBg-Jt-u88"/>
                         <constraint firstItem="XFe-CW-SrB" firstAttribute="top" secondItem="HQg-yC-PDa" secondAttribute="top" id="NhO-MM-7dl"/>
                         <constraint firstAttribute="trailing" secondItem="XFe-CW-SrB" secondAttribute="trailing" id="RvY-8K-nGk"/>
+                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="width" secondItem="7pi-6h-zuI" secondAttribute="height" multiplier="256:7" id="SOK-KC-ask"/>
+                        <constraint firstItem="7pi-6h-zuI" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="Sl0-ue-nEg"/>
                         <constraint firstItem="XFe-CW-SrB" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="UH4-lq-Xhj"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="centerX" secondItem="HQg-yC-PDa" secondAttribute="centerX" id="dML-Iv-Kcp"/>
+                        <constraint firstAttribute="trailing" secondItem="7pi-6h-zuI" secondAttribute="trailing" id="bNe-1y-3gI"/>
+                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="width" secondItem="HQg-yC-PDa" secondAttribute="height" multiplier="256:227" id="gvP-uQ-Lv8"/>
+                        <constraint firstItem="duM-jG-gy1" firstAttribute="top" secondItem="1e7-Cv-GMx" secondAttribute="bottom" constant="8" id="kt6-VU-VVM"/>
                         <constraint firstAttribute="trailing" secondItem="duM-jG-gy1" secondAttribute="trailing" id="qkN-C6-sQm"/>
+                        <constraint firstAttribute="bottom" secondItem="7pi-6h-zuI" secondAttribute="bottom" constant="24" id="tEs-L2-Rss"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="subviews">
+                            <exclude reference="7pi-6h-zuI"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.3529411764705882" green="0.74509803921568629" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -118,7 +134,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-207" y="455"/>
+            <point key="canvasLocation" x="-170" y="456"/>
         </view>
     </objects>
 </document>
