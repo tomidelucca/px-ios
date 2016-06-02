@@ -176,6 +176,10 @@ var changeNumber = false
 
     
     public func editingChanged(textField:UITextField){
+        if (textField.text?.characters.last == " "){
+            textField.text = textField.text!.substringToIndex(textField.text!.endIndex.predecessor())
+              //  textField.text.removeAtIndex(textField.text.endIndex.predecessor())
+        }
         hideErrorMessage()
         if(editingLabel == cardNumberLabel){
             editingLabel?.text = formatCardNumberText(textField.text!)
