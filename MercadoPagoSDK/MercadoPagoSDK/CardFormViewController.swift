@@ -513,6 +513,8 @@ var changeNumber = false
         }
         self.updateLabelsFontColors()
     }
+    
+    
     func rightArrowKeyTapped(){
         switch editingLabel! {
             
@@ -847,6 +849,7 @@ var changeNumber = false
 
     
     func confirmPaymentMethod(){
+        self.textBox.resignFirstResponder()
         makeToken()
     }
     
