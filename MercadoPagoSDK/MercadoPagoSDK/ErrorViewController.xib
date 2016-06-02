@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="errorIcon" destination="Lo5-cf-7x0" id="PHO-yf-rpa"/>
                 <outlet property="errorTitle" destination="ODG-43-ocD" id="qea-2D-Pj5"/>
+                <outlet property="exitButton" destination="895-Ju-YJT" id="2i8-Jn-LFk"/>
                 <outlet property="retryButton" destination="W9v-lm-yGm" id="agk-gQ-deg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -42,13 +43,19 @@
                     <rect key="frame" x="265" y="280" width="71" height="30"/>
                     <state key="normal" title="Reintentar"/>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="285" y="340" width="30" height="30"/>
+                    <state key="normal" title="Salir"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="ODG-43-ocD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="7xi-Ed-VT6"/>
                 <constraint firstItem="W9v-lm-yGm" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="B3o-fm-4WW"/>
                 <constraint firstItem="Lo5-cf-7x0" firstAttribute="top" secondItem="ODG-43-ocD" secondAttribute="bottom" constant="50" id="GN4-lL-bh0"/>
+                <constraint firstItem="895-Ju-YJT" firstAttribute="top" secondItem="W9v-lm-yGm" secondAttribute="bottom" constant="30" id="Idq-Gd-loS"/>
                 <constraint firstItem="W9v-lm-yGm" firstAttribute="top" secondItem="Lo5-cf-7x0" secondAttribute="bottom" constant="50" id="PTQ-6t-5Qb"/>
+                <constraint firstItem="895-Ju-YJT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="R5u-RF-Bsl"/>
                 <constraint firstItem="Lo5-cf-7x0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lfk-uO-hIT"/>
                 <constraint firstItem="ODG-43-ocD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sje-DT-3Fw"/>
             </constraints>

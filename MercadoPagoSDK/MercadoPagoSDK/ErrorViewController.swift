@@ -14,6 +14,7 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     @IBOutlet weak var errorIcon: UIImageView!
     
+    @IBOutlet weak var exitButton: MPButton!
     
     @IBOutlet weak var retryButton: MPButton!
     var error : MPError!
@@ -39,14 +40,14 @@ public class ErrorViewController: MercadoPagoUIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
+        self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         
         if self.error.retry! {
             self.errorIcon.image = MercadoPago.getImage("ic_refresh")
             self.retryButton.addTarget(self, action: "invokeCallback", forControlEvents: .TouchUpInside)
             self.retryButton.hidden = false
         } else {
-            self.retryButton.setTitle("Salir".localized, forState: .Normal)
-            self.retryButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+            self.retryButton.hidden = true
         }
     }
     
