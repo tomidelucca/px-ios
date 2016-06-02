@@ -78,11 +78,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
-      //  self.edgesForExtendedLayout = .All
+        self.paymentMethods = paymentMethods
         self.callback = callback
 
         self.callbackCancel = callbackCancel
@@ -124,11 +124,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         super.viewDidLoad()
 
 
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
-            self.paymentMethods = paymentMethods
-            }) { (error) -> Void in
-                // Mensaje de error correspondiente, ver que hacemos con el flujo
+        if (self.paymentMethods == nil){
+            MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+                self.paymentMethods = paymentMethods
+                }) { (error) -> Void in
+                    // Mensaje de error correspondiente, ver que hacemos con el flujo
+            }
         }
+ 
         
         textBox.autocorrectionType = UITextAutocorrectionType.No
          textBox.keyboardType = UIKeyboardType.NumberPad
