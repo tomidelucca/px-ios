@@ -389,6 +389,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             self.navigationController?.popViewControllerAnimated(true)
             self.checkoutTable.reloadData()
         })
+        pcf.callbackCancel = { self.navigationController?.popViewControllerAnimated(true)}
         self.navigationController?.pushViewController(pcf, animated: true)
     }
     
