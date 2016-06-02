@@ -65,6 +65,10 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         return true
     }
 
+    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.numberDocLabel.resignFirstResponder()
+        return true
+    }
     
     public func editingChanged(textField:UITextField) {
           hideErrorMessage()
@@ -93,7 +97,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         self.setupInputAccessoryView()
         self.getIdentificationTypes()
         typePicker.hidden = true;
-        numberTextField.becomeFirstResponder()
+        
     }
     public override func viewDidAppear(animated: Bool) {
         self.showLoading()
@@ -165,7 +169,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  (numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))!)
 
         if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
-             self.callback!(identification:idnt)
+            self.numberTextField.resignFirstResponder()
+            self.callback!(identification:idnt)
         }else{
             showErrorMessage((cardToken.validateIdentificationNumber(identificationType)?.userInfo["identification"] as? String)!)
         }
@@ -214,6 +219,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
             self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
             self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
+            self.numberTextField.becomeFirstResponder()
             }, failure : { (error) -> Void in
                 self.requestFailure(error)
         })

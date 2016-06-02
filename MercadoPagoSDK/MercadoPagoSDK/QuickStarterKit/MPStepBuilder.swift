@@ -65,7 +65,7 @@ public class MPStepBuilder : NSObject {
             
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
-
+                    
                     cardToken?.cardholder?.identification = identification
                     self.getIssuers(paymentMethod, cardToken: cardToken!, ccf: ccf, callback: callback)
                     
