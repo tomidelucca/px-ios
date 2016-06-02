@@ -324,9 +324,19 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
             if payment.isRejected() {
-                //TODO
-            //    let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment)
-            //    self.navigationController!.pushViewController(congratsRejected, animated: true)
+                //TODO : confirm
+                let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: self.paymentMethod!, callback : { (payment : Payment, status: String) in
+                        if status == "CANCEL" || status == "AUTH" {
+                            self.navigationController!.setNavigationBarHidden(false, animated: false)
+                            self.paymentMethod = nil
+                            self.navigationController?.viewControllers[0].title = ""
+                            self.navigationController!.popToRootViewControllerAnimated(false)
+                        } else {
+                            self.dismissViewControllerAnimated(true, completion: {})
+                            self.callback(payment)
+                        }
+                })
+                self.navigationController!.pushViewController(congratsRejected, animated: true)
             } else {
                 self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, paymentTypeId: self.paymentMethod!.paymentTypeId, callback: {(payment : Payment) -> Void  in
                         self.dismissViewControllerAnimated(true, completion: { self.callback(payment) })

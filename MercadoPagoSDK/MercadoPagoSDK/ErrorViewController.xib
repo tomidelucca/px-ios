@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="errorIcon" destination="Lo5-cf-7x0" id="PHO-yf-rpa"/>
                 <outlet property="errorTitle" destination="ODG-43-ocD" id="qea-2D-Pj5"/>
+                <outlet property="exitButton" destination="895-Ju-YJT" id="2i8-Jn-LFk"/>
                 <outlet property="retryButton" destination="W9v-lm-yGm" id="agk-gQ-deg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -42,8 +43,8 @@
                     <rect key="frame" x="265" y="280" width="71" height="30"/>
                     <state key="normal" title="Reintentar"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="277" y="340" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="895-Ju-YJT" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
+                    <rect key="frame" x="285" y="340" width="30" height="30"/>
                     <state key="normal" title="Salir"/>
                 </button>
             </subviews>
