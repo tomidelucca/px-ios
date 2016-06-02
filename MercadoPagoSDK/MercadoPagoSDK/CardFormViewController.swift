@@ -203,7 +203,8 @@ var changeNumber = false
 
              updateLabelsFontColors()
         }else{
-            editingLabel?.text = formatCVV(textField.text!)
+            editingLabel?.text = textField.text!
+            completeCvvLabel()
            
         }
       
@@ -239,11 +240,7 @@ var changeNumber = false
         return name.uppercaseString
     }
     private func formatCVV(cvv:String) -> String{
-        if(cvv.characters.count == 0){
-            cvvLabelEmpty = true
-            return "•••".localized
-        }
-        cvvLabelEmpty = false
+               completeCvvLabel()
         return cvv
     }
     private func formatExpirationDate(expirationDate:String) -> String{
@@ -835,8 +832,6 @@ var changeNumber = false
     
     
     func completeNumberLabel(){
-       // self.cardNumberLabel?.text = formatCardNumberText((self.cardNumberLabel?.text)! + "•••••••••••••••••••••••••••")
-     // return
         if (cardNumberLabel!.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count == 0){
             cardNumberLabel?.text = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "")
         }
@@ -846,6 +841,32 @@ var changeNumber = false
         }
     }
     
+    
+    func addCvvDot() -> Bool {
+    
+        var label = self.cvvLabel
+        //Check for max length including the spacers we added
+        if label?.text?.characters.count == cvvLenght(){
+            return false
+        }
+        
+        label?.text?.appendContentsOf("•")
+        return true
+
+    }
+    
+    func completeCvvLabel(){
+        if (cvvLabel!.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count == 0){
+            cvvLabel?.text = cvvLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "")
+            cvvLabelEmpty = true
+        } else {
+            cvvLabelEmpty = false
+        }
+        
+        while (addCvvDot() != false){
+            
+        }
+    }
 
     
     func confirmPaymentMethod(){
