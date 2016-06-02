@@ -28,9 +28,11 @@ import UIKit
         let nib = UINib(nibName: "CardBackView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         view.frame = bounds
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenHeight = screenSize.height
         view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view);
-             let circlePath = UIBezierPath(arcCenter:cardCVV.center, radius: CGFloat(25), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
+             let circlePath = UIBezierPath(arcCenter:cardCVV.center, radius: CGFloat(screenHeight*0.05), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
@@ -43,7 +45,7 @@ import UIKit
         shapeLayer.lineWidth = 4.0
         
         cardCVV.layer.addSublayer(shapeLayer)
-        
+        cardCVV.numberOfLines = 0
         
     }
     

@@ -214,13 +214,13 @@
 	<key>cmr</key>
 	<dict>
 		<key>editing_font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>font_color</key>
-		<string>333333</string>
+		<string>FFFFFF</string>
 		<key>first_color</key>
-		<string></string>
+		<string>3D7D4E</string>
 		<key>image_name</key>
-		<string></string>
+		<string>icoTc_cmr</string>
 	</dict>
 	<key>mercadopago_cc</key>
 	<dict>

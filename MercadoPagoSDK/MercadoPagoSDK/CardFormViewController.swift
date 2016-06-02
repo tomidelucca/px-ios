@@ -974,7 +974,7 @@ var changeNumber = false
         var label = cardNumberLabel
    
         
-        if label?.text?.characters.count == 17
+        if label?.text?.characters.count == 19
         {
             return false
         }
@@ -988,7 +988,12 @@ var changeNumber = false
             label?.text?.appendContentsOf(" ")
             label?.text = label?.text?.stringByReplacingOccurrencesOfString("  ", withString: " •")
         }
-        label?.text?.appendContentsOf("•")
+        if (label?.text?.characters.count < 17){
+            label?.text?.appendContentsOf("•")
+        }else{
+            label?.text?.appendContentsOf(" ")
+        }
+        
         return true
         
     }

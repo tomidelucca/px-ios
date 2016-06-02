@@ -101,7 +101,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             self.cardFront?.cardLogo.alpha = 1
             self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
             
-            cardFront?.cardNumber.text =  "xxxx xxxx xxxx " + (self.token!.lastFourDigits as String)
+            cardFront?.cardNumber.text =  "XXXX XXXX XXXX " + (self.token!.lastFourDigits as String)
         // TODO
         
             cardFront?.cardName.text = self.token!.cardHolder!.name
