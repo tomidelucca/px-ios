@@ -96,6 +96,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         numberTextField.becomeFirstResponder()
     }
     public override func viewDidAppear(animated: Bool) {
+        self.showLoading()
         super.viewDidAppear(animated)
         self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
     }
@@ -205,7 +206,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
     
     private func getIdentificationTypes(){
-        self.showLoading()
         doneNext?.enabled = false
         MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
             self.hideLoading()

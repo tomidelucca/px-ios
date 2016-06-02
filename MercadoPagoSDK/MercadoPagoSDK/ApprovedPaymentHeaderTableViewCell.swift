@@ -15,6 +15,7 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     @IBOutlet weak var subtitle: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.layer.shadowOffset = CGSizeMake(0, 1)
         self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
         self.layer.shadowRadius = 3
