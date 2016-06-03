@@ -68,7 +68,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
 
             
          
-            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
+            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 1, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
 
