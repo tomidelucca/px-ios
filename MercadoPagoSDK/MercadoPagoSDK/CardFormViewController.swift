@@ -542,9 +542,14 @@ var changeNumber = false
         case cardNumberLabel! :
             if (checkCardNumber() == false){
                 if (paymentMethod != nil){
-            showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
+                        showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
                 }else{
-                    showErrorMessage("Revisa este dato")
+                    if (cardNumberLabel?.text?.characters.count == 0){
+                        showErrorMessage("Ingresa el número de la tarjeta de crédito")
+                    }else{
+                        showErrorMessage("Revisa este dato")
+                    }
+
                 }
 
                 return
@@ -553,7 +558,7 @@ var changeNumber = false
             
         case nameLabel! :
           if (checkCardName() == false){
-                showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
+                showErrorMessage("Ingresa el nombre y apellido impreso en la tarjeta")
 
                 return
             }
@@ -575,7 +580,10 @@ var changeNumber = false
             
         case cvvLabel! :
             if (checkCVV() == false){
-                showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
+                
+                showErrorMessage("Ingresa los " + ((paymentMethod?.secCodeLenght())! as NSNumber).stringValue + " números del código de seguridad")
+                
+                //showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
                 return
             }
             self.confirmPaymentMethod()
@@ -783,6 +791,9 @@ var changeNumber = false
     }
     func checkCVV() -> Bool{
          tokenHidratate()
+        if (cvvLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count < paymentMethod?.secCodeLenght()){
+            return false
+        }
         let errorMethod = cardtoken!.validateSecurityCode()
         if((errorMethod) != nil){
             return false
