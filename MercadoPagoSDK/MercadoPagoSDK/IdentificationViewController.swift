@@ -153,14 +153,21 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
+        
         doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
         donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        
+        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        }
+        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
         inputButtons!.pushNavigationItem(navItem!, animated: false)
         numberTextField.inputAccessoryView = inputButtons
-        
-        
+                
     }
 
     func rightArrowKeyTapped(){

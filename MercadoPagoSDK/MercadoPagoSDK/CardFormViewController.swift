@@ -268,7 +268,7 @@ var changeNumber = false
         textBox.keyboardType = UIKeyboardType.Alphabet
         textBox.becomeFirstResponder()
         textBox.text = nameLabelEmpty ?  "" : nameLabel!.text!.stringByReplacingOccurrencesOfString(" ", withString: "")
-        textBox.placeholder = "NOMBRE APELLIDO".localized
+        textBox.placeholder = "Nombre y apellido".localized
 
     }
     private func prepareExpirationLabelForEdit(){
@@ -322,6 +322,8 @@ var changeNumber = false
         de campo que se este llenando */
     
     func validateInput(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+       
+        
         switch editingLabel! {
        
         case cardNumberLabel! :
@@ -424,8 +426,17 @@ var changeNumber = false
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
+        
+        
         doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
         donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        
+        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+        }
+        
+        
        // donePrev?.width = UIScreen.mainScreen().bounds.size.width / 2
        // doneNext?.width = UIScreen.mainScreen().bounds.size.width / 2
         donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
