@@ -11,10 +11,10 @@ import UIKit
 public class PaymentCongratsViewController: MercadoPagoUIViewController , UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
-        ["approved" : ["header" : "approvedPaymentHeader", "headerHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT, "body" : "approvedPaymentBody", "bodyHeight" : ApprovedPaymentBodyTableViewCell.ROW_HEIGHT, "headerColor" : UIColor(red: 210, green: 229, blue: 202)],
-        "rejected" : ["header" : "rejectedPaymentHeader", "headerHeight" : RejectedPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "rejectedPaymentBody", "bodyHeight" : RejectedPaymentBodyTableViewCell.ROW_HEIGHT, "headerColor" : UIColor(red: 248, green: 218, blue: 218)],
-        "authorize" : ["header" : "authorizePaymentHeader", "headerHeight" : AuthorizePaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "authorizePaymentBody", "bodyHeight" : AuthorizePaymentBodyTableViewCell.ROW_HEIGHT, "headerColor" : UIColor(red: 190, green: 230, blue: 245)],
-        "in_process" : ["header" : "pendingPaymentHeader", "headerHeight" : PendingPaymentHeaderTableViewCell.ROW_HEIGHT, "body" : "", "bodyHeight" : 0, "headerColor" : UIColor(red: 245, green: 241, blue: 211)]
+        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202)],
+        "rejected" : ["header" : "rejectedPaymentHeader", "body" : "rejectedPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218)],
+        "authorize" : ["header" : "authorizePaymentHeader", "body" : "authorizePaymentBody", "headerColor" : UIColor(red: 190, green: 230, blue: 245)],
+        "in_process" : ["header" : "pendingPaymentHeader", "body" : "", "headerColor" : UIColor(red: 245, green: 241, blue: 211)]
         ]
     
     var bundle = MercadoPago.getBundle()
@@ -100,7 +100,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return (section == 2) ? 25 : 0.01
+        return 0.01
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -112,13 +112,22 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
     }
 
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let layoutTemplate = self.congratsLayout[self.layoutTemplate]
         switch indexPath.section {
             case 0 :
-                return (self.congratsLayout[self.layoutTemplate]!["headerHeight"] as! CGFloat)
+                let header = layoutTemplate!["header"] as! String
+                let cell = self.congratsContentTable.dequeueReusableCellWithIdentifier(header) as! CongratsFillmentDelegate
+                return cell.getCellHeight(self.payment, paymentMethod: self.paymentMethod)
             case 1:
-                return (self.congratsLayout[self.layoutTemplate]!["bodyHeight"] as! CGFloat)
+                let body = layoutTemplate!["body"] as! String
+                if body.characters.count > 0 {
+                    let cell = self.congratsContentTable.dequeueReusableCellWithIdentifier(body) as! CongratsFillmentDelegate
+                    return cell.getCellHeight(self.payment, paymentMethod: self.paymentMethod)
+                }
+                // No body found
+                return 0
             default :
-                return 120
+                return 44
             }
     }
 

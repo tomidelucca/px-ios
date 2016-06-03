@@ -9,8 +9,6 @@
 import UIKit
 
 class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
-
-    static let ROW_HEIGHT = CGFloat(206)
     
     @IBOutlet weak var creditCardIcon: UIImageView!
     
@@ -60,6 +58,10 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         
         self.amountDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payment.installments), installmentAmount: payment.transactionDetails.installmentAmount, additionalString: additionalString)
         return self
+    }
+    
+    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+        return 206
     }
     
 }

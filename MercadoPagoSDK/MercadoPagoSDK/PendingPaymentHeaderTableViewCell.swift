@@ -10,7 +10,6 @@ import UIKit
 
 class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(212)
     
     @IBOutlet weak var subtitle: MPLabel!
     
@@ -34,6 +33,10 @@ class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelega
             self.subtitle.text = "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.".localized
         }
         return self
+    }
+    
+    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+        return 212
     }
     
 }

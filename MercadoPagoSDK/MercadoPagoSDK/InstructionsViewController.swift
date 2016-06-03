@@ -17,21 +17,21 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
-        "oxxo_ticket" : ["body" : "simpleInstructionsCell", "body_heigth" : 116, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 166, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 166, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
-        "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 166, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "banamex_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "telecomm_ticket" : ["body" : "instructionsCell" , "body_heigth" : 230, "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
-        "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell" , "body_heigth" : 208, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
-        "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell" , "body_heigth" : 276, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
-        "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell" , "body_heigth" : 258, "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
-        "pagofacil_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 116, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "rapipago_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 116, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "bapropagos_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 116, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "cargavirtual_ticket" : ["body" : "simpleInstructionsCell" , "body_heigth" : 116, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "redlink_atm" : ["body" : "instructionsAtmCell" , "body_heigth" : 388, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
-        "redlink_bank_transfer" : ["body" : "instructionsTwoLabelsCell" , "body_heigth" : 166, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86]
+        "oxxo_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "serfin_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bancomer_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "7eleven_ticket" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "banamex_ticket" : ["body" : "instructionsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "telecomm_ticket" : ["body" : "instructionsCell", "footer" : "intructionsWithTertiaryInfoFooterCell", "footer_height" : 180],
+        "serfin_bank_transfer" : ["body" : "simpleInstructionWithButtonViewCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "banamex_bank_transfer" : ["body" : "instructionsWithButtonCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "bancomer_bank_transfer" : ["body" : "instructionsTwoLabelsAndButtonViewCell", "footer" : "intructionsWithSecondaryInfoFooterCell", "footer_height" : 120],
+        "pagofacil_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "rapipago_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "bapropagos_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "cargavirtual_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "redlink_atm" : ["body" : "instructionsAtmCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
+        "redlink_bank_transfer" : ["body" : "instructionsTwoLabelsCell" , "footer" : "defaultInstructionsFooterCell", "footer_height" : 86]
         
     ]
     
@@ -63,9 +63,6 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         ViewUtils.addStatusBar(self.view, color: UIColor(red: 245, green: 241, blue: 211))
-        self.edgesForExtendedLayout = .None
-        self.extendedLayoutIncludesOpaqueBars = false
-        self.automaticallyAdjustsScrollViewInsets = false
 
     }
     
@@ -145,7 +142,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
         if indexPath.section == 0 {
-            return 182
+            let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
+            
+            return instructionsHeaderCell.getCellHeight(self.currentInstruction!.title)
         }
         if indexPath.section == 1  {
             return self.resolveInstructionsBodyHeightForRow(instructionsSelected)
@@ -165,9 +164,9 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     internal func resolveInstructionsBodyHeightForRow(instructionsId : String) -> CGFloat {
-        let instructionScreenStructure = self.instructionsByPaymentMethod[instructionsId]
-        let instructionBodyHeight = instructionScreenStructure!["body_heigth"] as! CGFloat
-        return instructionBodyHeight
+        let instructionsLayout = self.instructionsByPaymentMethod[instructionsId]!["body"] as! String
+        let cell = self.congratsTable.dequeueReusableCellWithIdentifier(instructionsLayout) as! InstructionsFillmentDelegate
+        return cell.getCellHeight(self.currentInstruction!, forFontSize: 22)
     }
     
     internal func resolveInstructionsFooter(instructionsId : String) -> UITableViewCell? {

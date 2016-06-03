@@ -10,7 +10,6 @@ import UIKit
 
 class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
-    static let ROW_HEIGHT = CGFloat(210)
     
     @IBOutlet weak var subtitle: MPLabel!
     override func awakeFromNib() {
@@ -37,6 +36,10 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         
         self.subtitle.text = subtitle
         return self
+    }
+    
+    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+        return 200
     }
     
 }

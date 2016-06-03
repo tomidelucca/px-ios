@@ -119,8 +119,23 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             }))
             
         case 11:
-           print("yeah!")
+            let payment = Payment()
+            payment._id = 123
+            payment.transactionAmount = 200
+            payment.status = "rejected"
+            payment.statusDetail = "cc_rejected_insufficient_amount"
+            
+            let pm = PaymentMethod()
+            pm.paymentTypeId = PaymentTypeId.DEBIT_CARD
+            pm.name = "Visa"
+            
+            
+            let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: pm, callback: { (Void) -> Void in
+                self.navigationController!.popViewControllerAnimated(true)
+            })
+            self.navigationController!.pushViewController(congratsVC, animated: true)
         case 12:
+            
             let error = MPError(message : "Esto deberia ser titulo", messageDetail : "messageDetail", retry : false)
             
             self.showViewController(MPStepBuilder.startErrorViewController(error, callback: {
