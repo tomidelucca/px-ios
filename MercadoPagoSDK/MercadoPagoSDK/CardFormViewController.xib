@@ -79,7 +79,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1e7-Cv-GMx">
                             <rect key="frame" x="34" y="35" width="252" height="157"/>
-                            <color key="backgroundColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="252:157" id="pfr-Ir-i7t"/>
                                 <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="252:157" id="yhA-Ly-E34"/>

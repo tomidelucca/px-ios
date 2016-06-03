@@ -1,4 +1,4 @@
-//
+1//
 //  IdentificationViewController.swift
 //  MercadoPagoSDK
 //
@@ -8,16 +8,17 @@
 
 import UIKit
 
-public class IdentificationViewController: MercadoPagoUIViewController , UITextFieldDelegate{
+public class IdentificationViewController: MercadoPagoUIViewController , UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     
     
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
     var callback : (( identification: Identification) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
-    @IBOutlet weak var typeButton: UIButton!
+  //  @IBOutlet weak var typeButton: UIButton!
 
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     
@@ -43,13 +44,41 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.barTintColor =  UIColor(red: 90, green: 190, blue: 231)
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
                 displayBackButton()
             }
         }
+        let pickerView = UIPickerView(frame: CGRectMake(0, 150, view.frame.width, 216))
+        pickerView.backgroundColor = .whiteColor()
+        pickerView.showsSelectionIndicator = true
+        pickerView.backgroundColor = .whiteColor()
+        pickerView.showsSelectionIndicator = true
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        var toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+    //    toolBar.translucent = true
+   //     toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        
+        let doneButton = UIBarButtonItem(title: "OK", style: UIBarButtonItemStyle.Bordered, target: self, action: "donePicker")
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        
+        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+            doneButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+          }
+        
+     //   let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Bordered, target: self, action: "canclePicker")
+        
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        
+        textField.inputView = pickerView
+        textField.inputAccessoryView = toolBar
         
     }
 
@@ -86,7 +115,10 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    public func donePicker(){
+        textField.resignFirstResponder()
+        numberTextField.becomeFirstResponder()
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -113,12 +145,12 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
     
 
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int{
+    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
         return 1
     }
-    
+   public  
 
-    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int{
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         if(self.identificationTypes == nil){
             return 0
         }
@@ -126,14 +158,15 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         return self.identificationTypes!.count
     }
     
-    func pickerView(pickerView: UIPickerView!, titleForRow row: Int, forComponent component: Int) -> String! {
+    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         return self.identificationTypes![row].name
     }
     
-    func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int)
+    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         identificationType =  self.identificationTypes![row]
-        typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
+    //    typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
+        textField.text = self.identificationTypes![row].name
         typePicker.hidden = true;
     }
     
@@ -148,6 +181,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     var donePrev : UIBarButtonItem?
     
     func setupInputAccessoryView() {
+        
         inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
         inputButtons!.barStyle = UIBarStyle.Default;
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
@@ -225,7 +259,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
-            self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
+         //   self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
+            self.textField.text = self.identificationTypes![0].name
             self.numberTextField.becomeFirstResponder()
             }, failure : { (error) -> Void in
                 self.requestFailure(error)

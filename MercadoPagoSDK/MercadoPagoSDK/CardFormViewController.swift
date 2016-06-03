@@ -70,6 +70,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
+                
+ 
+                var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
+
+                
+                self.navigationItem.rightBarButtonItem = promocionesButton
+                
+                
                 //Create navigation buttons
                 displayBackButton()
             }
@@ -98,7 +106,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         super.viewWillAppear(animated)
         
         updateLabelsFontColors()
-        self.navigationItem.rightBarButtonItem = nil
+     //   self.navigationItem.rightBarButtonItem = nil
         
         if(callbackCancel != nil){
             self.navigationItem.leftBarButtonItem?.target = self
@@ -177,6 +185,11 @@ var changeNumber = false
     }
 
 
+    public func verPromociones(){
+        print("Ver Promociones")
+        
+        self.navigationController?.presentViewController(MPStepBuilder.startPromosStep(), animated: true, completion: {})
+    }
     
     public func editingChanged(textField:UITextField){
         if (textField.text?.characters.last == " "){
