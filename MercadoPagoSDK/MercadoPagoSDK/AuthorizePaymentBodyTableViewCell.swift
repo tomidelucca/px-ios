@@ -18,7 +18,6 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
     override func awakeFromNib() {
         super.awakeFromNib()
         self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
-        ViewUtils.drawBottomLine(20, y : 150, width: self.bounds.width-40, inView: self)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -33,5 +32,8 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
         return self
     }
     
+    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+        return 150
+    }
 
 }

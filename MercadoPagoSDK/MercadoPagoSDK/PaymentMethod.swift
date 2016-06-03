@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PaymentMethod : Equatable  {
+public class PaymentMethod : NSObject  {
     
     public var _id : String!
 
@@ -17,6 +17,10 @@ public class PaymentMethod : Equatable  {
     public var settings : [Setting]!
     public var additionalInfoNeeded : [String]!
     public var accreditationTime : Int?
+    
+    public override init(){
+        super.init()
+    }
     
     public func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
