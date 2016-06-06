@@ -1,4 +1,4 @@
-  //
+//
 //  CardFormViewController.swift
 //  MercadoPagoSDK
 //
@@ -32,10 +32,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
    
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?
-    
-    
-//    var installments : [Installment]?
-//    var payerCosts : [PayerCost]?
     
     var token : Token?
     var cardToken : CardToken?
@@ -106,7 +102,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         super.viewWillAppear(animated)
         
         updateLabelsFontColors()
-     //   self.navigationItem.rightBarButtonItem = nil
         
         if(callbackCancel != nil){
             self.navigationItem.leftBarButtonItem?.target = self
@@ -194,7 +189,6 @@ var changeNumber = false
     public func editingChanged(textField:UITextField){
         if (textField.text?.characters.last == " "){
             textField.text = textField.text!.substringToIndex(textField.text!.endIndex.predecessor())
-              //  textField.text.removeAtIndex(textField.text.endIndex.predecessor())
         }
         hideErrorMessage()
         if(editingLabel == cardNumberLabel){
@@ -454,8 +448,6 @@ var changeNumber = false
         }
         
         
-       // donePrev?.width = UIScreen.mainScreen().bounds.size.width / 2
-       // doneNext?.width = UIScreen.mainScreen().bounds.size.width / 2
         donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
@@ -498,37 +490,13 @@ var changeNumber = false
         switch editingLabel! {
         case cardNumberLabel! :
         return
-         //   if (checkCardNumber() == false){
-                
-//             showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
-  //              return
-    //        }
-      //      self.prepareCVVLabelForEdit()
-        //    if ((self.paymentMethod == nil) || (self.paymentMethod!.secCodeInBack())){
-          //      UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: nil)
-           // }
-            
-            
-            
         case nameLabel! :
-         //   if (checkCardName() == false){
-           //     showErrorMessage((cardtoken?.validateCardholderName()?.userInfo["cardholder"] as? String)!)
-          //      return
-          //  }
             self.prepareNumberLabelForEdit()
         case expirationDateLabel! :
-         //   if (checkExpirationDateCard() == false){
-           //     showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
-           //     return
-           // }
-        prepareNameLabelForEdit()
+            prepareNameLabelForEdit()
             
         case cvvLabel! :
-            //if (checkCVV() == false){
-                //showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
-                //return
-            //}
-            if (self.paymentMethod!.secCodeInBack()){
+              if (self.paymentMethod!.secCodeInBack()){
                 UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromRight, completion: { (completion) -> Void in
                 })
             }
@@ -587,8 +555,7 @@ var changeNumber = false
                 
                 showErrorMessage("Ingresa los " + ((paymentMethod?.secCodeLenght())! as NSNumber).stringValue + " números del código de seguridad")
                 
-                //showErrorMessage((cardtoken?.validateSecurityCodeWithPaymentMethod(paymentMethod!)?.userInfo["securityCode"] as? String)!)
-                return
+                   return
             }
             self.confirmPaymentMethod()
         default : updateLabelsFontColors()
@@ -657,18 +624,7 @@ var changeNumber = false
         if (textBox.text?.characters.count==7){
             let pmMatched = self.matchedPaymentMethod()
             
-            /*
-            if((pmMatched != nil) && (pmMatched != paymentMethod)){
-                
-                MPServicesBuilder.getInstallments(self.getBIN()!  , amount: amount!, issuer: nil, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-                    self.installments = installments
-                    self.payerCosts = installments![0].payerCosts
-                    }) { (error) -> Void in
-                        print("error!")
-                }
-            }
-            */
-            paymentMethod = pmMatched
+               paymentMethod = pmMatched
             if(paymentMethod != nil){
                 UIView.animateWithDuration(0.7, animations: { () -> Void in
                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
@@ -720,12 +676,10 @@ var changeNumber = false
             cardNumberLabel?.textColor = MPLabel.defaultColorText
             nameLabel?.textColor = MPLabel.defaultColorText
             expirationDateLabel?.textColor = MPLabel.defaultColorText
-    //        cvvLabel?.textColor = MPLabel.defaultColorText
         }else{
             cardNumberLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             nameLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             expirationDateLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
-   //         cvvLabel?.textColor = MercadoPago.getFontColorFor(self.paymentMethod!)
             
         }
         cvvLabel?.textColor = MPLabel.defaultColorText
@@ -842,11 +796,7 @@ var changeNumber = false
         }
 
         
-     //   let installment : Installment = self.installments![0]
-        
-        
-         //self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken,issuer:installment.issuer)
-        self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
+         self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
     }
     
     
