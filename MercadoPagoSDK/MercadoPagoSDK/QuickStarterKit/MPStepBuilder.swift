@@ -54,12 +54,15 @@ public class MPStepBuilder : NSObject {
     }
     
 
+
+
     public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> MPNavigationController {
+
 
         var navigation : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
 
-        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken,  issuer) -> Void in
+        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken) -> Void in
             
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
@@ -74,6 +77,8 @@ public class MPStepBuilder : NSObject {
                 ccf.navigationController!.pushViewController(identificationForm, animated: false)
                 
                 
+            }else{
+                 self.getIssuers(paymentMethod, cardToken: cardToken!, ccf: ccf, callback: callback)
             }
             
             },callbackCancel: callbackCancel)

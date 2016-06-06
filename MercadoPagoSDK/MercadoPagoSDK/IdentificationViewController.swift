@@ -60,8 +60,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         pickerView.delegate = self
         var toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
-    //    toolBar.translucent = true
-   //     toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+//      toolBar.translucent = true
+//      toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
         
