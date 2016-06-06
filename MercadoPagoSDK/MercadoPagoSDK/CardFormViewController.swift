@@ -34,14 +34,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var paymentMethod : PaymentMethod?
     
     
-    var installments : [Installment]?
-    var payerCosts : [PayerCost]?
+//    var installments : [Installment]?
+//    var payerCosts : [PayerCost]?
     
     var token : Token?
     var cardToken : CardToken?
     
     var paymentSettings : PaymentPreference?
-    var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?, issuer: Issuer?) -> Void)?
+    var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?) -> Void)?
     
     var amount : Double?
     
@@ -86,13 +86,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-    public init(paymentSettings : PaymentPreference?, amount:Double, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken? , issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken?) -> Void), callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
         self.paymentMethods = paymentMethods
         self.callback = callback
-
+        self.amount = amount
         self.callbackCancel = callbackCancel
 
     }
@@ -340,7 +340,11 @@ var changeNumber = false
         switch editingLabel! {
        
         case cardNumberLabel! :
-            
+            if(((textField.text?.characters.count)! == 7) && (string.characters.count > 0)){
+                if (paymentMethod == nil){
+                    return false
+                }
+            }
             if(isAmexCard()){
                 return validAmexInputNumber(textField, shouldChangeCharactersInRange: range, replacementString: string)
             }else{
@@ -650,18 +654,20 @@ var changeNumber = false
     
     func updateCardSkin(){
        
-        if (textBox.text?.characters.count>6){
+        if (textBox.text?.characters.count==7){
             let pmMatched = self.matchedPaymentMethod()
             
+            /*
             if((pmMatched != nil) && (pmMatched != paymentMethod)){
                 
-                MPServicesBuilder.getInstallments(self.getBIN()!  , amount: 10000, issuer: nil, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+                MPServicesBuilder.getInstallments(self.getBIN()!  , amount: amount!, issuer: nil, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
                     self.installments = installments
                     self.payerCosts = installments![0].payerCosts
                     }) { (error) -> Void in
                         print("error!")
                 }
             }
+            */
             paymentMethod = pmMatched
             if(paymentMethod != nil){
                 UIView.animateWithDuration(0.7, animations: { () -> Void in
@@ -673,8 +679,10 @@ var changeNumber = false
                
             }else{
                 self.clearCardSkin()
+                showErrorMessage("Método de pago no soportado".localized)
+                return
             }
-        }else{
+        }else if (textBox.text?.characters.count<7){
             self.clearCardSkin()
         }
         
@@ -834,11 +842,11 @@ var changeNumber = false
         }
 
         
-        let installment : Installment = self.installments![0]
+     //   let installment : Installment = self.installments![0]
         
         
-         self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken,issuer:installment.issuer)
-        
+         //self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken,issuer:installment.issuer)
+        self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
     }
     
     
