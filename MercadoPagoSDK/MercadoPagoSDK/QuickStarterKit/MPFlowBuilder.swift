@@ -50,7 +50,7 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
     
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
@@ -59,11 +59,10 @@ public class MPFlowBuilder : NSObject {
             callbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
             }) }
         }
-        cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, callback: { (paymentMethod, token, issuer) -> Void in
+        cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, paymentMethods : paymentMethods, callback: { (paymentMethod, token, issuer) -> Void in
             
-            (ccf.navigationController as! MPNavigationController).showLoading()
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
-                 (ccf.navigationController as! MPNavigationController).hideLoading()
+                 //(ccf.navigationController as! MPNavigationController).hideLoading()
                 let payerCostSelected = paymentSettings?.autoSelectPayerCost(installments![0].payerCosts)
                     if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
                         let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, maxInstallments: paymentSettings?.maxAcceptedInstallments, installment:installments![0] ,callback: { (payerCost) -> Void in

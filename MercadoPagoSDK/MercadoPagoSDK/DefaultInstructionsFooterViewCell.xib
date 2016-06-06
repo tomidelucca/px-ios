@@ -32,7 +32,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="cEd-VJ-Idm">
-                                <rect key="frame" x="15" y="44" width="16" height="16"/>
+                                <rect key="frame" x="15" y="46" width="16" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="WGH-x5-qer"/>
                                     <constraint firstAttribute="height" constant="16" id="bZC-ct-leG"/>
@@ -55,7 +55,7 @@
                             <constraint firstItem="LTx-cp-Yw6" firstAttribute="leading" secondItem="cEd-VJ-Idm" secondAttribute="trailing" constant="5" id="Jkw-LM-fyp"/>
                             <constraint firstItem="LTx-cp-Yw6" firstAttribute="top" secondItem="FRd-Qj-jJo" secondAttribute="bottom" constant="15" id="TVq-R3-20i"/>
                             <constraint firstItem="cEd-VJ-Idm" firstAttribute="leading" secondItem="36Q-El-BD6" secondAttribute="leading" constant="15" id="cRn-ex-0ai"/>
-                            <constraint firstItem="cEd-VJ-Idm" firstAttribute="top" secondItem="FRd-Qj-jJo" secondAttribute="bottom" constant="14" id="gNY-6T-prj"/>
+                            <constraint firstItem="cEd-VJ-Idm" firstAttribute="top" secondItem="FRd-Qj-jJo" secondAttribute="bottom" constant="16" id="gNY-6T-prj"/>
                             <constraint firstItem="FRd-Qj-jJo" firstAttribute="top" secondItem="36Q-El-BD6" secondAttribute="top" constant="15" id="huA-l8-tna"/>
                             <constraint firstAttribute="bottom" secondItem="LTx-cp-Yw6" secondAttribute="bottom" constant="15" id="nZl-mx-sEe"/>
                             <constraint firstAttribute="trailing" secondItem="FRd-Qj-jJo" secondAttribute="trailing" constant="15" id="ukD-rW-28Z"/>

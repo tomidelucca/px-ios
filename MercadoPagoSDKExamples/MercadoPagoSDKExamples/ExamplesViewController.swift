@@ -9,6 +9,7 @@
 import UIKit
 import MercadoPagoSDK
 
+
 class ExamplesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak private var tableview : UITableView!
@@ -66,9 +67,34 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
         switch indexPath.row {
         case 0:
 
+            let pm = PaymentMethod()
+            pm._id = "master"
+            pm.name = "Mastercard"
+            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD
             
-         
-            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 10000, callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
+            
+            
+            let bin = BinMask()
+            bin.pattern = "^5"
+            bin.exclusionPattern = "^(589562)"
+            bin.installmentsPattern = "^5"
+            
+            let cardNumber = CardNumber()
+            cardNumber.length = 16
+            cardNumber.validation = "standard"
+                            
+            let securityCode = SecurityCode()
+            securityCode.mode = "mandatory"
+            securityCode.length = 3
+            securityCode.cardLocation = "back"
+            let setting = Setting()
+            setting.securityCode = securityCode
+            setting.cardNumber =  cardNumber
+            setting.binMask = bin
+
+            pm.settings = [setting]
+
+            self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 1, paymentMethods: [pm], callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
                 print("OK!!")
             }))
 
