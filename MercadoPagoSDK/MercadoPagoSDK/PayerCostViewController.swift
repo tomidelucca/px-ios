@@ -180,6 +180,10 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         let payerCost : PayerCost = payerCosts![indexPath.row]
         let installmentCell = tableView.dequeueReusableCellWithIdentifier("installmentCell", forIndexPath: indexPath) as! InstallmentSelectionTableViewCell
         installmentCell.fillCell(payerCost)
+  
+        
+        ViewUtils.drawBottomLine(y : 50, width: self.view.bounds.width, inView: installmentCell)
+
         return installmentCell
     }
     
