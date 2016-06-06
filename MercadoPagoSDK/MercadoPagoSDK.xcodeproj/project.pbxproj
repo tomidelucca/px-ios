@@ -1277,6 +1277,8 @@
 			isa = PBXGroup;
 			children = (
 				15DA7E621CDA3C630068896E /* Utils */,
+				76B085291CE5045D00C157BF /* InstallmentSelectionTableViewCell.swift */,
+				76B0852A1CE5045D00C157BF /* InstallmentSelectionTableViewCell.xib */,
 				76FD24701C5BFEA1008C5DC0 /* CardBackView.swift */,
 				76FD24711C5BFEA1008C5DC0 /* CardBackView.xib */,
 				76FD24741C5BFEA1008C5DC0 /* CardFrontView.swift */,
@@ -1442,8 +1444,6 @@
 				76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */,
 				76B085251CE500D100C157BF /* PaymentMethodSelectedTableViewCell.swift */,
 				76B085261CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib */,
-				76B085291CE5045D00C157BF /* InstallmentSelectionTableViewCell.swift */,
-				76B0852A1CE5045D00C157BF /* InstallmentSelectionTableViewCell.xib */,
 			);
 			name = ReviewAndConfirmCells;
 			sourceTree = "<group>";
