@@ -18,8 +18,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpQ-yc-BMK">
                         <rect key="frame" x="8" y="0.0" width="294" height="120"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0800 2222 3333 4444 5555 6666 00 5555 6666 00" lineBreakMode="clip" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOx-Tr-V4R" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="15" y="49" width="264" height="52"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0800 2222 3333 4444 5555 6666 00 5555 6666 00" lineBreakMode="clip" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QOx-Tr-V4R" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                                <rect key="frame" x="15" y="49" width="264" height="78"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
