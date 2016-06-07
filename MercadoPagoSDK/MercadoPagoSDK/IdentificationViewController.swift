@@ -104,8 +104,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         if(textField.text?.characters.count > 0){
             let num : Int = Int(textField.text!)!
             let myIntString = num.stringFormatedWithSepator
-            
-            print(myIntString)
+
             numberDocLabel.text = myIntString
         }
         

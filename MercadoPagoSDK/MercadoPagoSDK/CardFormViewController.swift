@@ -181,7 +181,6 @@ var changeNumber = false
 
 
     public func verPromociones(){
-        print("Ver Promociones")
         
         self.navigationController?.presentViewController(MPStepBuilder.startPromosStep(), animated: true, completion: {})
     }

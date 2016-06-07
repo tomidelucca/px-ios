@@ -260,7 +260,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 
                 self.startPaymentVault()
                 }, failure: { (error) in
-                    self.requestFailure(error)
+                    self.requestFailure(error, callback: {}, callbackCancel:
+                        {
+                            self.navigationController!.dismissViewControllerAnimated(true, completion: {
+                            })})
             })
         } else {
             self.startPaymentVault(animated)
@@ -393,7 +396,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.requestFailure(error)
+                self.requestFailure(error, callback: nil, callbackCancel: {
+                    self.navigationController!.dismissViewControllerAnimated(true, completion: {})
+                })
         })
     }
     
