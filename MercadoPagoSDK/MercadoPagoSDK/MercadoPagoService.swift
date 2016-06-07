@@ -13,6 +13,8 @@ public class MercadoPagoService : NSObject {
 
     static let MP_BASE_URL = "https://api.mercadopago.com"
     
+    let MP_DEFAULT_TIME_OUT = 15.0
+    
     var baseURL : String!
     init (baseURL : String) {
         super.init()
@@ -28,7 +30,8 @@ public class MercadoPagoService : NSObject {
         }
         
         let finalURL: NSURL = NSURL(string: url)!
-        let request: NSMutableURLRequest = NSMutableURLRequest()
+            let request: NSMutableURLRequest = NSMutableURLRequest(URL: finalURL,
+                cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
         request.URL = finalURL
         request.HTTPMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -46,7 +49,6 @@ public class MercadoPagoService : NSObject {
 		
         let requestBeganAt  = NSDate()
         print("*************** REQUEST AT " + String(requestBeganAt) + " *************")
-        print(request)
 		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 				if error == nil {
@@ -56,9 +58,7 @@ public class MercadoPagoService : NSObject {
                         print("*************** RESPONSE AT " + String(requestFinishedAt))
                         let response = try NSJSONSerialization.JSONObjectWithData(data!,
                                                                               options:NSJSONReadingOptions.AllowFragments)
-                        print(response)
-                        //let totalTime = requestFinishedAt
-                      //  print("*************** REQUEST TOOK :" + String(totalTime) + " *************")
+
 						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
 							options:NSJSONReadingOptions.AllowFragments))
 					} catch {

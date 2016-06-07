@@ -31,7 +31,7 @@ public class MPError: NSObject {
             mpError.message = error.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
             mpError.messageDetail = error.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
         }
-        mpError.retry = (error.code == MercadoPago.ERROR_API_CODE || error.code == NSURLErrorCannotDecodeContentData || error.code == NSURLErrorNotConnectedToInternet)
+        mpError.retry = (error.code == MercadoPago.ERROR_API_CODE || error.code == NSURLErrorCannotDecodeContentData || error.code == NSURLErrorNotConnectedToInternet || error.code == NSURLErrorTimedOut)
         return mpError
     }
     

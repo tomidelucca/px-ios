@@ -95,7 +95,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             pm.settings = [setting]
 
             self.presentNavigation(MPFlowBuilder.startCardFlow(settings , amount: 1, paymentMethods: [pm], callback: { (paymentMethod, cardToken, issuer, payerCost) -> Void in
-                print("OK!!")
+
             }))
 
         case 1:
@@ -165,7 +165,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let error = MPError(message : "Esto deberia ser titulo", messageDetail : "messageDetail", retry : false)
             
             self.showViewController(MPStepBuilder.startErrorViewController(error, callback: {
-                print("yeah!")
+
             }))
         default:
             print("Otra opcion")
@@ -189,7 +189,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.showViewController(MPStepBuilder.startCongratsStep(payment, paymentMethod: paymentMethod))
             })
         } else {
-            print("no tengo token")
+            
         }
     }
 	
