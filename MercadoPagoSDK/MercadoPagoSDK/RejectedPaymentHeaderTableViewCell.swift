@@ -52,7 +52,9 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         let frame = (subtitle as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
         
         let stringSize = frame.size
-        return 150 + stringSize.height
+        return 180 + stringSize.height
+        
+        
     }
     
 }
