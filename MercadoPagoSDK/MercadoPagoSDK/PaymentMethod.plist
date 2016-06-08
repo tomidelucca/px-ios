@@ -198,7 +198,7 @@
 		<key>first_color</key>
 		<string>5BAB97</string>
 		<key>image_name</key>
-		<string>icoTc_Cordobesa</string>
+		<string>icoTc_cordobesa</string>
 	</dict>
 	<key>cordial</key>
 	<dict>
@@ -209,7 +209,7 @@
 		<key>first_color</key>
 		<string>CBD8DF</string>
 		<key>image_name</key>
-		<string>icoTc_Coordial</string>
+		<string>icoTc_cordial</string>
 	</dict>
 	<key>cmr</key>
 	<dict>
