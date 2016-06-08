@@ -48,7 +48,7 @@ class SimpleInstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate 
         let frame = (instruction.references[0].getFullReferenceValue() as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
         
         let stringSize = frame.size
-        return 65 + stringSize.height
+        return 85 + stringSize.height
     }
     
 }
