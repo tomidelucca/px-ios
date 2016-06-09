@@ -21,7 +21,7 @@ public class MercadoPagoService : NSObject {
         self.baseURL = baseURL
     }
     
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, success: (jsonResult: AnyObject?) -> Void,
+    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, cache: Bool = true, success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
         
         var url = baseURL + uri
@@ -30,8 +30,16 @@ public class MercadoPagoService : NSObject {
         }
         
         let finalURL: NSURL = NSURL(string: url)!
-            let request: NSMutableURLRequest = NSMutableURLRequest(URL: finalURL,
-                cachePolicy: .UseProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
+            let request : NSMutableURLRequest
+            if(cache){
+              request  = NSMutableURLRequest(URL: finalURL,
+                    cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
+            }else{
+               request = NSMutableURLRequest(URL: finalURL,
+                    cachePolicy: .UseProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
+            }
+            
+            
         request.URL = finalURL
         request.HTTPMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
