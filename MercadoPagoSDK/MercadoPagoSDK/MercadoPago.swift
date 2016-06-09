@@ -43,6 +43,10 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         return -4
     }
     
+    public class var ERROR_INSTRUCTIONS : Int {
+        return -4
+    }
+    
     let BIN_LENGTH : Int = 6
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
