@@ -20,7 +20,13 @@ public class InstructionsService: MercadoPagoService {
     
         let params =  "public_key=" + MercadoPagoContext.publicKey() + "&payment_method_id=" + paymentMethodId + "&payment_type=" + paymentTypeId
         self.request(MP_INSTRUCTIONS_URI.stringByReplacingOccurrencesOfString("${payment_id}", withString: String(paymentId)), params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
-            success(instruction : Instruction.fromJSON(jsonResult as! NSDictionary))
+            let error = jsonResult?["error"]!
+            if error != nil {
+                let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey : "No se ha podrido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey : jsonResult!["error"] as! String])
+                failure!(error: e)
+            } else {
+                success(instruction : Instruction.fromJSON(jsonResult as! NSDictionary))
+            }
         }, failure: failure)
     }
 }

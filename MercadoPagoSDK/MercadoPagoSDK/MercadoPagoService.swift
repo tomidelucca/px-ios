@@ -31,7 +31,7 @@ public class MercadoPagoService : NSObject {
         
         let finalURL: NSURL = NSURL(string: url)!
             let request: NSMutableURLRequest = NSMutableURLRequest(URL: finalURL,
-                cachePolicy: .ReturnCacheDataElseLoad, timeoutInterval: MP_DEFAULT_TIME_OUT)
+                cachePolicy: .UseProtocolCachePolicy, timeoutInterval: MP_DEFAULT_TIME_OUT)
         request.URL = finalURL
         request.HTTPMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -58,9 +58,9 @@ public class MercadoPagoService : NSObject {
                         print("*************** RESPONSE AT " + String(requestFinishedAt))
                         let response = try NSJSONSerialization.JSONObjectWithData(data!,
                                                                               options:NSJSONReadingOptions.AllowFragments)
-
-						success(jsonResult: try NSJSONSerialization.JSONObjectWithData(data!,
-							options:NSJSONReadingOptions.AllowFragments))
+                        let responseJson = try NSJSONSerialization.JSONObjectWithData(data!,
+                                                                   options:NSJSONReadingOptions.AllowFragments)
+						success(jsonResult: responseJson)
 					} catch {
                         
 						let e : NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
