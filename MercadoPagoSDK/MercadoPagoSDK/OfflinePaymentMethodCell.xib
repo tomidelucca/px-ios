@@ -15,16 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="327" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="rapipago" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
-                        <rect key="frame" x="8" y="7" width="88" height="45"/>
-                        <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="45" id="V8d-TI-NL9"/>
-                        </constraints>
-                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOb-BJ-hW9" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="101" y="8" width="120" height="47"/>
+                        <rect key="frame" x="43" y="8" width="120" height="48"/>
                         <attributedString key="attributedText">
                             <fragment content="Método de Pago">
                                 <attributes>
@@ -37,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Y8d-Nr-Ptp" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="8" y="52" width="311" height="19"/>
+                        <rect key="frame" x="8" y="53" width="311" height="18"/>
                         <attributedString key="attributedText">
                             <fragment content="Se acreditará en 7 días">
                                 <attributes>
@@ -48,6 +40,14 @@
                         </attributedString>
                         <color key="highlightedColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="cargavirtual" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
+                        <rect key="frame" x="8" y="7" width="30" height="46"/>
+                        <rect key="contentStretch" x="0.0" y="0.0" width="0.050000000000000003" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="46" id="V8d-TI-NL9"/>
+                        </constraints>
+                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Y8d-Nr-Ptp" firstAttribute="top" secondItem="N1r-JA-UCo" secondAttribute="bottom" id="7ap-S3-Rvt"/>
@@ -74,6 +74,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="rapipago" width="88" height="17"/>
+        <image name="cargavirtual" width="30" height="30"/>
     </resources>
 </document>
