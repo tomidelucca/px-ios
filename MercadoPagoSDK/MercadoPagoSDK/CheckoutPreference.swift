@@ -17,7 +17,7 @@ public class CheckoutPreference : Equatable {
                                 // currency no nula
                                 // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
     public var payer : Payer!
-    public var paymentPreference : PaymentPreference? //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    public var paymentPreference : PaymentPreference! //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
                                                         // excluded_payment_method < payment_methods
                                                         //excluded_payment_types < payment_types
     

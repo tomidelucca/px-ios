@@ -51,7 +51,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
-    static let MP_PAYMENTS_URI = "/beta/checkout/payments"
+    static let MP_PAYMENTS_URI = "/v1/checkout/payments"
     
     public var privateKey : String?
     public var publicKey : String?

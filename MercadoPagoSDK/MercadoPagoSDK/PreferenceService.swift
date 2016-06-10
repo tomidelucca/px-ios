@@ -10,7 +10,7 @@ import UIKit
 
 public class PreferenceService: MercadoPagoService {
     
-    private var MP_PREFERENCE_URI = "/beta/checkout/preferences/"
+    private var MP_PREFERENCE_URI = "/v1/checkout/preferences/"
     
     init(){
         super.init(baseURL: MercadoPagoService.MP_BASE_URL)

@@ -10,7 +10,7 @@ import UIKit
 
 public class PaymentMethodSearchService: MercadoPagoService {
     
-    public let MP_SEARCH_PAYMENTS_URI = "/beta/checkout/payment_methods/search/options"
+    public let MP_SEARCH_PAYMENTS_URI = "/v1/checkout/payment_methods/search/options"
     
     public init(){
         super.init(baseURL: MercadoPagoService.MP_BASE_URL)
