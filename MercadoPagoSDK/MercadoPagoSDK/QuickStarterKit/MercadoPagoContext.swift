@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class MercadoPagoContext {
+public class MercadoPagoContext : NSObject {
     
     static let sharedInstance = MercadoPagoContext()
     
@@ -42,7 +42,7 @@ public class MercadoPagoContext {
         return !sharedInstance.private_key.isEmpty
     }
     
-    private init() {
+    private override init() {
     
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
     } //This prevents others from using the default '()' initializer for this class.
