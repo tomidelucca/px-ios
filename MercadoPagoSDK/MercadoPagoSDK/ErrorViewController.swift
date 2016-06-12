@@ -12,6 +12,8 @@ public class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var errorTitle: MPLabel!
     
+    @IBOutlet weak var errorSubtitle: MPLabel!
+    
     @IBOutlet weak var errorIcon: UIImageView!
     
     @IBOutlet weak var exitButton: MPButton!
@@ -22,6 +24,7 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     public init(error : MPError!, callback : (Void -> Void)?, callbackCancel : (Void -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
+        self.errorIcon.tintColor = UIColor(red: 255, green: 0, blue: 0)
         self.error = error
         self.callbackCancel = {
             self.dismissViewControllerAnimated(true, completion: {
@@ -43,7 +46,6 @@ public class ErrorViewController: MercadoPagoUIViewController {
         self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         
         if self.error.retry! {
-            self.errorIcon.image = MercadoPago.getImage("ic_refresh")
             self.retryButton.addTarget(self, action: "invokeCallback", forControlEvents: .TouchUpInside)
             self.retryButton.hidden = false
         } else {
