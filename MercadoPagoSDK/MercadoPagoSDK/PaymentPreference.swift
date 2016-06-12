@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentPreference: Equatable {
+public class PaymentPreference: NSObject {
     
     public var excludedPaymentMethodIds : Set<String>?
     public var excludedPaymentTypeIds : Set<PaymentTypeId>?
