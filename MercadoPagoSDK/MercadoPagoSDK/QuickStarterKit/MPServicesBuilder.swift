@@ -11,7 +11,7 @@ import Foundation
 
 public class MPServicesBuilder : NSObject {
    
-    static let MP_PAYMENTS_URI = "/beta/checkout/payments"
+    static let MP_PAYMENTS_URI = "/v1/checkout/payments"
 
 
     public class func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {

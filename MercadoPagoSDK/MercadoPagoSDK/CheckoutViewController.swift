@@ -403,7 +403,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     private func startPayerCostStep(){
-        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), maxInstallments: nil, callback: { (payerCost) -> Void in
+        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), maxInstallments: self.preference!.paymentPreference.maxAcceptedInstallments, callback: { (payerCost) -> Void in
             self.payerCost = payerCost
             self.navigationController?.popViewControllerAnimated(true)
             self.checkoutTable.reloadData()
