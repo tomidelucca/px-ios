@@ -12,7 +12,9 @@ public class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var errorTitle: MPLabel!
     
-    @IBOutlet weak var errorIcon: UIImageView!
+    @IBOutlet internal weak var errorSubtitle: MPLabel!
+    
+    @IBOutlet internal weak var errorIcon: UIImageView!
     
     @IBOutlet weak var exitButton: MPButton!
     
@@ -40,10 +42,10 @@ public class ErrorViewController: MercadoPagoUIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
+        
         self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         
         if self.error.retry! {
-            self.errorIcon.image = MercadoPago.getImage("ic_refresh")
             self.retryButton.addTarget(self, action: "invokeCallback", forControlEvents: .TouchUpInside)
             self.retryButton.hidden = false
         } else {
@@ -53,7 +55,6 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     internal func invokeCallback(){
@@ -68,15 +69,4 @@ public class ErrorViewController: MercadoPagoUIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
