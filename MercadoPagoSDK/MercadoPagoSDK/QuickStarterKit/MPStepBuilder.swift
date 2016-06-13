@@ -56,7 +56,7 @@ public class MPStepBuilder : NSObject {
 
 
 
-    public class func startCreditCardForm(paymentSettings : PaymentPreference? , amount: Double, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> MPNavigationController {
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? = nil , amount: Double, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> MPNavigationController {
 
 
         var navigation : MPNavigationController?

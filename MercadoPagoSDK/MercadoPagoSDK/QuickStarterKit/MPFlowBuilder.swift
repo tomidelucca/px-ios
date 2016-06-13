@@ -50,7 +50,7 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentSettings: PaymentPreference? , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+    public class func startCardFlow(paymentSettings: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
     
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
