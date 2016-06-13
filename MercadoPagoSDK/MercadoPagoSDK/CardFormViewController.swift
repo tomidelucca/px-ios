@@ -186,7 +186,7 @@ var changeNumber = false
     }
     
     public func editingChanged(textField:UITextField){
-        if (textField.text?.characters.last == " "){
+        if ((textField.text?.characters.last == " ") && (editingLabel != nameLabel)){
             textField.text = textField.text!.substringToIndex(textField.text!.endIndex.predecessor())
         }
         hideErrorMessage()
