@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CheckoutPreference : Equatable {
+public class CheckoutPreference : NSObject {
     
     public var _id : String!
     public var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
