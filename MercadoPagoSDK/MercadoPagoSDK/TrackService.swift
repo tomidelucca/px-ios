@@ -10,8 +10,8 @@ import UIKit
 
 public class TrackService: NSObject {
 
-    static let MP_TRACK_TOKEN_URL = "https://api.mercadopago.com/beta/checkout/tracking"
-    static let MP_TRACK_PAYMENTOFF_URL = "https://api.mercadopago.com/beta/checkout/tracking/off"
+    static let MP_TRACK_TOKEN_URL = "https://api.mercadopago.com/v1/checkout/tracking"
+    static let MP_TRACK_PAYMENTOFF_URL = "https://api.mercadopago.com/v1/checkout/tracking/off"
 
     
     var baseURL : String!
