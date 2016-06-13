@@ -12,9 +12,9 @@ public class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var errorTitle: MPLabel!
     
-    @IBOutlet weak var errorSubtitle: MPLabel!
+    @IBOutlet internal weak var errorSubtitle: MPLabel!
     
-    @IBOutlet weak var errorIcon: UIImageView!
+    @IBOutlet internal weak var errorIcon: UIImageView!
     
     @IBOutlet weak var exitButton: MPButton!
     
@@ -24,7 +24,6 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     public init(error : MPError!, callback : (Void -> Void)?, callbackCancel : (Void -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
-        self.errorIcon.tintColor = UIColor(red: 255, green: 0, blue: 0)
         self.error = error
         self.callbackCancel = {
             self.dismissViewControllerAnimated(true, completion: {
@@ -43,6 +42,7 @@ public class ErrorViewController: MercadoPagoUIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
+        
         self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
         
         if self.error.retry! {
@@ -55,7 +55,6 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     internal func invokeCallback(){
@@ -70,15 +69,4 @@ public class ErrorViewController: MercadoPagoUIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
