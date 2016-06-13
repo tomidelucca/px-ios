@@ -36,7 +36,7 @@ public class TrackService: NSObject {
         
         let obj:[String:AnyObject] = ["public_key": MercadoPagoContext.publicKey() , "token":paymentID!,"sdk_flavor":"3","sdk_platform":"iOS","sdk_type":"native","sdk_version":"1.0.1"]
         
-        self.request(TrackService.MP_TRACK_TOKEN_URL, params: nil, body: JSON(obj).toString(), method: "POST", headers: nil, success: { (jsonResult) -> Void in
+        self.request(TrackService.MP_TRACK_PAYMENTOFF_URL, params: nil, body: JSON(obj).toString(), method: "POST", headers: nil, success: { (jsonResult) -> Void in
             
             }) { (error) -> Void in
                 
