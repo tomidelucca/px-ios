@@ -22,6 +22,7 @@ public class MPServicesBuilder : NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
+                    TrackService.trackToken(token?._id)
                     success(token: token)
                 } else {
                     if failure != nil {
