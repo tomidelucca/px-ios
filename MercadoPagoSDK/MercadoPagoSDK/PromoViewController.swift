@@ -36,9 +36,9 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
     override public func viewDidLoad() {
         super.viewDidLoad()
 		self.title = "Promociones".localized
-		self.navigationItem.hidesBackButton = true
+	//	self.navigationItem.hidesBackButton = true
 
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cerrar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PromoViewController.back))
+	//	self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cerrar", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(PromoViewController.back))
 		
 		self.tableView.registerNib(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
 		self.tableView.registerNib(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
@@ -50,7 +50,7 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 		self.tableView.dataSource = self
 		
 		self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
-		
+        
 		self.view.addSubview(self.loadingView)
 		
 		var mercadoPago : MercadoPago
@@ -109,5 +109,12 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 		}
 		
 	}
+    
+    
+    internal override func executeBack(){
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            
+        }
+    }
 	
 }
