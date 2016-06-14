@@ -43,6 +43,8 @@ public class Promo : Equatable{
 		
 		promo.paymentMethods = paymentMethods
 		
+		promo.legals = json["legals"] as? String
+		
 		return promo
 	}
 	
