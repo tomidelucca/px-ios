@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/mercadopago/px-ios.svg?token=vPpQiHmLkp88siQfJcTo&branch=master)](https://travis-ci.com/mercadopago/px-ios)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-android)
 
 # MercadoPago iOS (Swift 2.0 & iOS 9.3) SDK
 The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
@@ -36,7 +36,7 @@ Copy and paste the following lines into the TextEdit window:
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
     platform :ios, '8.0'
-    pod 'MercadoPagoSDK', '~> 0.3.1'
+    pod 'MercadoPagoSDK', '~> WORKSHOP'
 
 > You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
 
@@ -59,86 +59,9 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 - Expand the "Target Dependencies" group, and add MercadoPagoSDK.framework.
 - Click on the + button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add MercadoPagoSDK.framework.
 
-##Usage
------
-- Swift 
-```swift
-        import MercadoPagoSDK
-        func initMercadoPagoVault() {
-                let supportedPaymentTypes = ["credit_card", "debit_card", "prepaid_card", "ticket", "atm"]
-		
-		let vaultViewController = MercadoPago.startVaultViewController("444a9ef5-8a6b-429f-abdf-587639155d88",
-			merchantBaseUrl: "https://www.mercadopago.com", 
-			merchantGetCustomerUri: "/checkout/examples/getCustomer", 
-			merchantAccessToken: "mla-cards-data", 
-			amount: 10.0, 
-			supportedPaymentTypes: supportedPaymentTypes) { 
-			(paymentMethod, tokenId, issuerId, installments) -> Void in
-                        	let alert = UIAlertController()
-                        	alert.title = "Payment Info"
-                
-                        	var msg = "Token = \(token?._id!). \n Payment method = \(paymentMethod.name!). \n"
-                        	msg = msg + " Installments = \(installments!)."
-                        	msg = msg + " CardIssuer ID = \(cardIssuerId != nil ? cardIssuerId! : cardIssuerId)"
-                
-                        	alert.message = msg
-                        	alert.addAction(UIAlertAction(title: "Finish", style: .Default, handler: { action in
-                          	switch action.style{
-                            	case .Default:
-                              		self.nav!.popToRootViewControllerAnimated(true)
-                              		self.nav!.popViewControllerAnimated(true)
-                              		self.initViewController()
-                            	case .Cancel:
-                              		println("cancel")
-                            	case .Destructive:
-                              		println("destructive")
-                          	}
-                        	}))
-                        	self.nav!.presentViewController(alert, animated: true, completion: nil)
-                    	}
-                // Put vaultController at the top of navigator.
-                self.nav!.pushViewController(vaultViewController, animated: false)
-        }
-```
-- Objective-C
-
-	**IMPORTANT: "Embedded Content Contains Swift Code" flag in the Build Settings that needs to be set to YES**
-```objc
-	#import "MercadoPagoSDK/MercadoPagoSDK-Swift.h"
-	- (void) getCardToken() {
-		MercadoPago *mp = [[MercadoPago alloc] initWithPublicKey:@"444a9ef5-8a6b-429f-abdf-587639155d88"];
-	
-		Identification *identification = [[Identification alloc] init];
-		identification.type = @"DNI";
-		identification.number = @"12345678";
-	
-		Cardholder *cardholder = [[Cardholder alloc] init];
-		cardholder.identification = identification;
-		cardholder.name = @"APRO";
-	
-		CardToken *cardToken = [[CardToken alloc] initWithCardNumber:@"4170068810108020" expirationMonth:10 expirationYear:15 securityCode:@"123" cardholderName:@"APRO" docType:@"DNI" docNumber:@"12345678"];
-	
-		[mp createNewCardToken:cardToken success: ^(Token *t) {
-			NSLog(@"TOKEN %@", t._id);
-		} failure: ^(NSError *e) {
-			NSLog(@"ERROR");
-		}];
-	}
-```
-## Examples
-
-This project includes five examples you can follow to understand how MercadoPago SDK works:
-
-1. Start with a simple card form payment flow
-2. Add your customers' cards to the flow
-3. Manage installments and bank issuers
-4. Pay with other payment types (ticket, atm)
-5. Let MercadoPago SDK do steps 1-4 for you!
-6. Show deals list
-
 ## Documentation
 
-+ [Read more about this 5 steps integration.](http://www.mercadopago.com.ar/developers/en/solutions/payments/custom-checkout/charge-with-creditcard/ios/)
++ [Read more about this 6 steps integration.](https://github.com/mercadopago/px-ios)
 + [Check out MercadoPago Developers Site!](http://www.mercadopago.com.ar/developers)
 
 ## Feedback
