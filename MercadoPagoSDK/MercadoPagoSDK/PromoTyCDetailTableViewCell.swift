@@ -23,8 +23,8 @@ public class PromoTyCDetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 	
-	public func setLabelWithIssuerName(issuer: String, legals: String) {
-		let s = NSMutableAttributedString(string: "\(issuer): \(legals)")
+	public func setLabelWithIssuerName(issuer: String, legals: String?) {
+		let s = NSMutableAttributedString(string: "\(issuer): \(legals != nil ? legals! : "No hay condiciones.")")
 		let atts : [String : AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 15)!]
 		s.addAttributes(atts, range: NSMakeRange(0, issuer.characters.count))
 		self.tycLabel.attributedText = s
