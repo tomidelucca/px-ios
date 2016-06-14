@@ -243,6 +243,8 @@
 		150786A41CD7CD1E0034C5B1 /* IdentificationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150786A21CD7CD1E0034C5B1 /* IdentificationCardView.swift */; };
 		150786A61CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */; };
 		150786A71CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */; };
+		151D09941D0F4F3C00CB5DA1 /* TrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D09931D0F4F3C00CB5DA1 /* TrackService.swift */; };
+		151D09951D0F4F3C00CB5DA1 /* TrackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151D09931D0F4F3C00CB5DA1 /* TrackService.swift */; };
 		1529D9A51C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */; };
 		1529D9A61C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */; };
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
@@ -676,6 +678,7 @@
 		0FE3E38C1AE7174600C27B97 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		150786A21CD7CD1E0034C5B1 /* IdentificationCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentificationCardView.swift; sourceTree = "<group>"; };
 		150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentificationCardView.xib; sourceTree = "<group>"; };
+		151D09931D0F4F3C00CB5DA1 /* TrackService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackService.swift; sourceTree = "<group>"; };
 		1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutViewController.xib; sourceTree = "<group>"; };
 		15635C6D1CA076EC008E5F75 /* ProximaNova-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Light.ttf"; sourceTree = "<group>"; };
 		1565B1301CBFD7F100181998 /* GuessingFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessingFormTest.swift; sourceTree = "<group>"; };
@@ -990,6 +993,7 @@
 				76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */,
 				76151B861C73C025007DF0E3 /* InstructionsService.swift */,
 				76D936401CDA56A900238CB0 /* PreferenceService.swift */,
+				151D09931D0F4F3C00CB5DA1 /* TrackService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -2038,6 +2042,7 @@
 				766012E71CEBA19700897F9D /* ErrorViewController.swift in Sources */,
 				0F9883671AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76D9363E1CD9011400238CB0 /* MPFlowController.swift in Sources */,
+				151D09941D0F4F3C00CB5DA1 /* TrackService.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
 				76151B651C737608007DF0E3 /* InstructionsViewController.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
@@ -2194,6 +2199,7 @@
 				15D79A0B1CA9B6B900623A84 /* MPButton.swift in Sources */,
 				76EC47F61C8619E70086FA53 /* SavedCardTokenTest.swift in Sources */,
 				76B085051CE2464700C157BF /* ExitButtonTableViewCell.swift in Sources */,
+				151D09951D0F4F3C00CB5DA1 /* TrackService.swift in Sources */,
 				0FC4FBF61B0F4F4800CF7148 /* KeyboardDelegate.swift in Sources */,
 				76EC47DC1C85E9A50086FA53 /* InstallmentTest.swift in Sources */,
 				0F98835E1AD2AB6000F750F0 /* Card.swift in Sources */,

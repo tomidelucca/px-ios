@@ -12,7 +12,7 @@ import UIKit
 public class MercadoPagoService : NSObject {
 
     static let MP_BASE_URL = "https://api.mercadopago.com"
-    
+      
     let MP_DEFAULT_TIME_OUT = 15.0
     
     var baseURL : String!
@@ -56,14 +56,12 @@ public class MercadoPagoService : NSObject {
 		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		
         let requestBeganAt  = NSDate()
-        print("*************** REQUEST AT " + String(requestBeganAt) + " *************")
 		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 				if error == nil {
 					do
 					{
                         let requestFinishedAt = NSDate()
-                        print("*************** RESPONSE AT " + String(requestFinishedAt))
                         let response = try NSJSONSerialization.JSONObjectWithData(data!,
                                                                               options:NSJSONReadingOptions.AllowFragments)
                         let responseJson = try NSJSONSerialization.JSONObjectWithData(data!,
@@ -76,7 +74,6 @@ public class MercadoPagoService : NSObject {
 					}
                 } else {
                     let requestFinishedAt = NSDate()
-                    print("*************** RESPONSE AT " + String(requestFinishedAt))
                     let response = String(error)
                     print(response)
 
