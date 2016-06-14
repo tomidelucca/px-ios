@@ -181,8 +181,7 @@ var changeNumber = false
 
 
     public func verPromociones(){
-        
-        self.navigationController?.presentViewController(MPStepBuilder.startPromosStep(), animated: true, completion: {})
+        self.navigationController?.presentViewController(UINavigationController(rootViewController: MPStepBuilder.startPromosStep()), animated: true, completion: {})
     }
     
     public func editingChanged(textField:UITextField){
