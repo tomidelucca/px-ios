@@ -36,8 +36,9 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
     override public func viewDidLoad() {
         super.viewDidLoad()
 		self.title = "Promociones".localized
-		
-		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		self.navigationItem.hidesBackButton = true
+
+		self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cerrar", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PromoViewController.back))
 		
 		self.tableView.registerNib(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
 		self.tableView.registerNib(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
@@ -66,6 +67,10 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 		})
 		
     }
+	
+	public func back() {
+		self.dismissViewControllerAnimated(true, completion: nil)
+	}
 
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return promos == nil ? 1 : promos.count + 1
