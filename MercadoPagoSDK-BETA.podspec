@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK-BETA"
-  s.version          = "0.9.1"
+  s.version          = "0.9.2"
   s.summary          = "MercadoPagoSDK-BETA"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = 'MIT'
