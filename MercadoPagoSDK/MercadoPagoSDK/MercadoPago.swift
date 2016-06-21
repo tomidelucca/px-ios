@@ -232,15 +232,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
     public class func getBundle() -> NSBundle? {
-        
        return NSBundle(forClass:MercadoPago.self)
-        
-        let privatePath : NSString? = NSBundle.mainBundle().privateFrameworksPath
-        if privatePath != nil {
-            let path = privatePath!.stringByAppendingPathComponent("MercadoPagoSDK.framework")
-            return NSBundle(path: path)
-        }
-        return nil
     }
     
     public class func getImage(name: String) -> UIImage? {

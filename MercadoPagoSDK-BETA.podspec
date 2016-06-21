@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK-BETA"
-  s.version          = "0.9.2"
+  s.version          = "0.9.3"
   s.summary          = "MercadoPagoSDK-BETA"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.resources = "MercadoPagoSDK/MercadoPagoSDK/*.xcassets"
   s.source_files = 'MercadoPagoSDK/MercadoPagoSDK/*'
-  s.resource_bundle = { 'ProximaNova-Light' => 'MercadoPagoSDK/MercadoPagoSDK/*.ttf' }
+  s.resource_bundle = { 'MPResources' => ['MercadoPagoSDK/MercadoPagoSDK/*.ttf'] }
 
   s.subspec 'Localization' do |t|
     %w|pt es es-MX es-CO|.map {|localename|
