@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name             = "MercadoPagoSDK"
-  s.version          = "WORKSHOP"
-  s.summary          = "MercadoPagoSDK"
+  s.name             = "MercadoPagoSDK-BETA"
+  s.version          = "0.9.1"
+  s.summary          = "MercadoPagoSDK-BETA"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = 'MIT'
   s.author           = { "Matias Gualino" => "matias.gualino@mercadolibre.com" }
