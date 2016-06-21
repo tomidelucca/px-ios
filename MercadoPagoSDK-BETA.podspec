@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version          = "0.9.2"
   s.summary          = "MercadoPagoSDK-BETA"
   s.homepage         = "https://www.mercadopago.com"
-  s.license          = 'MIT'
+  s.license          = { :type => "MIT", :file => "LICENSE" }
   s.author           = { "Matias Gualino" => "matias.gualino@mercadolibre.com" }
   s.source           = { :git => "https://github.com/mercadopago/px-ios.git", :tag => s.version.to_s }
 
@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
 
   s.resources = "MercadoPagoSDK/MercadoPagoSDK/*.xcassets"
   s.source_files = 'MercadoPagoSDK/MercadoPagoSDK/*'
+  s.resource_bundle = { 'ProximaNova-Light' => 'MercadoPagoSDK/MercadoPagoSDK/*.ttf' }
 
   s.subspec 'Localization' do |t|
     %w|pt es es-MX es-CO|.map {|localename|
