@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objc public class MPFlowBuilder : NSObject {
+public class MPFlowBuilder : NSObject {
     
     @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
     public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
