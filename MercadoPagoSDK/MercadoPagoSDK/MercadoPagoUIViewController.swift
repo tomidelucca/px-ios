@@ -37,19 +37,9 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
 
     static func loadFont(fontName: String) -> Bool {
         
-        var resourcesBundle : NSBundle?
-        let resorcesBundlePath = MercadoPago.getBundle()?.URLForResource("MPResources", withExtension: "bundle")
-        if resorcesBundlePath != nil {
-            resourcesBundle = NSBundle(URL: resorcesBundlePath!)
-        } else {
-            resourcesBundle = MercadoPago.getBundle()!
-        }
-        
-        let path = resourcesBundle!.pathForResource(fontName, ofType: "ttf")
-        
-        if path != nil
+        if let path = MercadoPago.getBundle()!.pathForResource(fontName, ofType: "ttf")
         {
-            if let inData = NSData(contentsOfFile: path!)
+            if let inData = NSData(contentsOfFile: path)
             {
                 var error: Unmanaged<CFError>?
                 let cfdata = CFDataCreate(nil, UnsafePointer<UInt8>(inData.bytes), inData.length)
@@ -65,8 +55,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         }
         return false
     }
-    
-    
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
