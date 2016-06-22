@@ -37,7 +37,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
 
     static func loadFont(fontName: String) -> Bool {
         
-        
         if let path = MercadoPago.getBundle()!.pathForResource(fontName, ofType: "ttf")
         {
             if let inData = NSData(contentsOfFile: path)
@@ -56,8 +55,6 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         }
         return false
     }
-    
-    
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
