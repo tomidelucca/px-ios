@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import MercadoPagoTracker
 
-public class MPNavigationController : UINavigationController, MPTrackerDelegate {
+
+public class MPNavigationController : UINavigationController {
     internal func showLoading(){
 
         LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
@@ -19,23 +19,7 @@ public class MPNavigationController : UINavigationController, MPTrackerDelegate 
         LoadingOverlay.shared.hideOverlayView()
     }
     
-    
-    public func flavor() -> Flavor!{
-        return Flavor.Flavor_1
-    }
-    public func framework() -> String!{
-        return ""
-    }
-    public func sdkVersion() -> String!{
-        return ""
-    }
-    public func publicKey() -> String!{
-        return ""
-    }
-    public func siteId() -> String!{
-        return ""
-    }
-
+   
     
 }
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
