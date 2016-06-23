@@ -12,6 +12,8 @@ Pod::Spec.new do |s|
 
   s.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf']
   s.source_files = 'MercadoPagoSDK/MercadoPagoSDK/*'
+  
+  s.dependency 'MercadoPagoTracker'
 
   s.subspec 'Localization' do |t|
     %w|pt es es-MX es-CO|.map {|localename|
