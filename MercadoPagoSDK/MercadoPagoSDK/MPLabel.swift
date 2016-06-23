@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoTracker
 
 public class MPLabel: UILabel {
 

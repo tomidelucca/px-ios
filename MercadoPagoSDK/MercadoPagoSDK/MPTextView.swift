@@ -42,6 +42,7 @@ public class MPTextView: UITextView {
     }
     
     func addLineSpacing(lineSpacing : Float){
+        
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
             attributedString.appendAttributedString(self.attributedText!)

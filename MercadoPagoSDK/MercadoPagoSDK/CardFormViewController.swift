@@ -90,7 +90,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.callback = callback
         self.amount = amount
         self.callbackCancel = callbackCancel
-
+        
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
