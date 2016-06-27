@@ -13,12 +13,13 @@ public class MPFlowBuilder : NSObject {
     
     @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
     public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
-        
+        MercadoPagoContext.initFlavor3()
         return VaultViewController(amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
         
     }
     
     public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void) -> MPNavigationController {
+        MercadoPagoContext.initFlavor3()
             let checkoutVC = CheckoutViewController(preferenceId: preferenceId, callback: { (payment : Payment) -> Void in
             callback(payment)
         })

@@ -12,7 +12,7 @@ import Foundation
 public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 	
 	var publicKey : String?
-	
+	override public var screenName : String { get { return "BANK_DEALS" } }
 	@IBOutlet weak private var tableView : UITableView!
 	var loadingView : UILoadingView!
 	

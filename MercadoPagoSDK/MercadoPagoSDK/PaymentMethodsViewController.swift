@@ -17,6 +17,7 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
     var items : [PaymentMethod]!
     var supportedPaymentTypes: Set<PaymentTypeId>!
     var bundle : NSBundle? = MercadoPago.getBundle()
+    override public var screenName : String { get { return "PAYMENT_METHOD_SEARCH" } }
     
     var callback : ((paymentMethod : PaymentMethod) -> Void)?
     

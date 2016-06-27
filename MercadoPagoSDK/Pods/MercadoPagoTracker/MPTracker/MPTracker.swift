@@ -29,7 +29,7 @@ public protocol MPTrackerDelegate {
     func framework() -> String!
     func sdkVersion() -> String!
     func publicKey() -> String!
-    func siteId() -> String!
+    func siteId() -> GAKey!
 
 }
 
@@ -56,7 +56,7 @@ public class MPTracker {
     
     private class func initialize (mpDelegate : MPTrackerDelegate!){
         MPTracker.initialized = true
-        siteGAKey = GAKey(rawValue: mpDelegate.siteId())
+        siteGAKey = mpDelegate.siteId()
         GATracker.sharedInstance.initialized(flowTrackInfo(mpDelegate), gaKey: siteGAKey)
         MPTracker.flavor = mpDelegate.flavor()
     }
@@ -74,7 +74,7 @@ public class MPTracker {
             self.initialize(mpDelegate)
         }
         GATracker.sharedInstance.trackPaymentEvent(flavorText() + "/" + screen, action: action, label: result, paymentInformer: paymentInformer)
-        PaymentTracker.trackToken(token, delegate: mpDelegate)
+       // PaymentTracker.trackToken(token, delegate: mpDelegate)
     }
     
     public class func trackPaymentOffEvent(paymentId: String!, mpDelegate: MPTrackerDelegate!, paymentInformer: MPPaymentTrackInformer, flavor: Flavor!, screen: String! = "NO_SCREEN", action: String!, result: String?){
@@ -98,6 +98,13 @@ public class MPTracker {
             self.initialize(mpDelegate)
         }
         GATracker.sharedInstance.trackScreen(flavorText() + "/" + screenName)
+    }
+    
+    public class func trackCreateToken(mpDelegate: MPTrackerDelegate!,token: String!){
+        
+        
+        PaymentTracker.trackToken(token, delegate: mpDelegate)
+        
     }
     
     private class func flavorText() -> String{

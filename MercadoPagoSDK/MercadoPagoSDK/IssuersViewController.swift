@@ -17,7 +17,7 @@ public class IssuersViewController: MercadoPagoUIViewController, UITableViewData
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [Issuer]!
-    
+     override public var screenName : String { get { return "CARD_ISSUER" } }
     var bundle: NSBundle? = MercadoPago.getBundle()
 
     init(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) {

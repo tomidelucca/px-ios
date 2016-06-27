@@ -22,7 +22,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentButton : MPButton?
     var paymentMethodSearch : PaymentMethodSearch?
     var payerCost : PayerCost?
-    
+    override public var screenName : String { get{ return "REVIEW_AND_CONFIRM" } }
     private var reviewAndConfirmContent = Set<String>()
     
     @IBOutlet weak var checkoutTable: UITableView!

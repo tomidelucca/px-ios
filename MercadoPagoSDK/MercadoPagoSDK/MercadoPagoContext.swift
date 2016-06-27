@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import MercadoPagoTracker
 
-public class MercadoPagoContext : NSObject {
+public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     static let sharedInstance = MercadoPagoContext()
     
@@ -22,6 +23,9 @@ public class MercadoPagoContext : NSObject {
     var customer_uri: String = ""
     
     var merchant_access_token: String = ""
+    
+    var initialFlavor: Flavor?
+
     
     //TODO : complete with default preference_uri
     var preference_uri: String = ""
@@ -40,6 +44,28 @@ public class MercadoPagoContext : NSObject {
 
     public class func isAuthenticatedUser() -> Bool{
         return !sharedInstance.private_key.isEmpty
+    }
+
+   public func flavor() -> Flavor!{
+    if (initialFlavor == nil){
+        return Flavor.Flavor_3
+    }else{
+        return initialFlavor
+    }
+    
+    }
+    public func framework() -> String!{
+        return  "iOS"
+    }
+    public func sdkVersion() -> String!{
+        return "0.9.1"
+    }
+ 
+    public func siteId() -> GAKey!{
+        return GAKey.MLA
+    }
+    public func publicKey() -> String!{
+        return self.public_key
     }
     
     private override init() {
@@ -63,6 +89,25 @@ public class MercadoPagoContext : NSObject {
        let cardFront = CardFrontView()
        let  cardBack = CardBackView()
         
+    }
+    
+    public class func initFlavor1(){
+        if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
+            return
+        }
+        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_1
+    }
+    public class func initFlavor2(){
+        if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
+            return
+        }
+        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_2
+    }
+    public class func initFlavor3(){
+        if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
+            return
+        }
+        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
     
     /*

@@ -9,10 +9,10 @@
 
 import Foundation
 import UIKit
-import MercadoPagoTracker
 
 
-public class MercadoPago : NSObject, UIAlertViewDelegate, MPTrackerDelegate {
+
+public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     
@@ -50,19 +50,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate, MPTrackerDelegate {
     }
     
     
-    public func flavor() -> Flavor!{
-        return Flavor.Flavor_1
-    }
-    public func framework() -> String!{
-        return ""
-    }
-    public func sdkVersion() -> String!{
-        return ""
-    }
 
-    public func siteId() -> String!{
-        return ""
-    }
     
     public func publicKey() -> String!{
         return self.pk

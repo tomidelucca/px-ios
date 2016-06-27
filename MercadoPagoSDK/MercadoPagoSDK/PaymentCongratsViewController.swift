@@ -11,17 +11,19 @@ import UIKit
 public class PaymentCongratsViewController: MercadoPagoUIViewController , UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
-        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202)],
-        "rejected" : ["header" : "rejectedPaymentHeader", "body" : "rejectedPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218)],
-        "authorize" : ["header" : "authorizePaymentHeader", "body" : "authorizePaymentBody", "headerColor" : UIColor(red: 190, green: 230, blue: 245)],
-        "in_process" : ["header" : "pendingPaymentHeader", "body" : "", "headerColor" : UIColor(red: 245, green: 241, blue: 211)]
+        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202), "screenName" : "CONGRATS"],
+        "rejected" : ["header" : "rejectedPaymentHeader", "body" : "rejectedPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218), "screenName" : "REJECTION"],
+        "authorize" : ["header" : "authorizePaymentHeader", "body" : "authorizePaymentBody", "headerColor" : UIColor(red: 190, green: 230, blue: 245), "screenName" : "CALL_FOR_AUTHORIZE"],
+        "in_process" : ["header" : "pendingPaymentHeader", "body" : "", "headerColor" : UIColor(red: 245, green: 241, blue: 211), "screenName" : "PENDING"]
         ]
-    
+    override public var screenName : String { get { return self.getScreenName() } }
     var bundle = MercadoPago.getBundle()
     var payment : Payment!
     var paymentMethod : PaymentMethod!
     var layoutTemplate : String!
     var callback : ((payment : Payment, status : String) -> Void)!
+    
+    
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
@@ -157,7 +159,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         
     }
     
-    private func getLayoutName(payment : Payment) -> String {
+    private func getLayoutName(payment : Payment) -> String! {
     
         if payment.status == PaymentStatus.REJECTED.rawValue {
             if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {
@@ -168,6 +170,12 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
         return payment.status
     }
 
+    private func getScreenName() -> String {
+        let layoutName = self.getLayoutName(self.payment)
+        let t = self.congratsLayout[layoutName] as! NSDictionary
+        return t["screenName"] as! String
+    }
+    
     override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }

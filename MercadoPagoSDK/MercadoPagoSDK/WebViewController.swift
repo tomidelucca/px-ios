@@ -11,6 +11,7 @@ import UIKit
 class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     
     var url : NSURL?
+    override public var screenName : String { get{ return "TERMS_AND_CONDITIONS" } }
     @IBOutlet weak var webView: UIWebView!
     init( url : NSURL) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())

@@ -33,7 +33,8 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 	var loadingView : UILoadingView!
 	
 	var inputsCells : NSMutableArray!
-	
+	override public var screenName : String { get { return "CARD_NUMBER" } }
+    
 	init(paymentMethod: PaymentMethod, requireSecurityCode: Bool, callback: ((cardToken: CardToken) -> Void)?) {
 		super.init(nibName: "NewCardViewController", bundle: bundle)
 		self.paymentMethod = paymentMethod

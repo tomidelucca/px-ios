@@ -19,7 +19,7 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     var payerCosts : [PayerCost]!
     var amount : Double = 0
     var callback : ((payerCost: PayerCost?) -> Void)?
-    
+    override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
     var bundle : NSBundle? = MercadoPago.getBundle()
     
     init(payerCosts: [PayerCost]?, amount: Double, callback: (payerCost: PayerCost?) -> Void) {
