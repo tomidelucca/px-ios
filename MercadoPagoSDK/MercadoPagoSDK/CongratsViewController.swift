@@ -14,7 +14,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
     
     var payment: Payment!
     var paymentMethod: PaymentMethod!
-    
+    override public var screenName : String { get { return "CONGRATS" } }
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var tableView: UITableView!

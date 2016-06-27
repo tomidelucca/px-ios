@@ -14,7 +14,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var congratsTable: UITableView!
     
     var currentInstruction : Instruction?
-    
+    override public var screenName : String { get { return "INSTRUCTIONS" } }
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
         "oxxo_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MercadoPagoTracker
+
 
 public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
 
@@ -44,7 +46,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     //DNI
      var identificationCard : IdentificationCardView?
     
-    
+    override public var screenName : String { get { return "CARD_NUMBER" } }
     
     
     required public init?(coder aDecoder: NSCoder) {
@@ -260,6 +262,7 @@ var changeNumber = false
     
     /* Metodos para preparar los diferentes labels del formulario para ser editados */
     private func prepareNumberLabelForEdit(){
+         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_NUMBER")
         editingLabel = cardNumberLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
@@ -268,6 +271,7 @@ var changeNumber = false
         textBox.placeholder = "Número de tarjeta".localized
     }
     private func prepareNameLabelForEdit(){
+         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_HOLDER")
         editingLabel = nameLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.Alphabet
@@ -277,6 +281,7 @@ var changeNumber = false
 
     }
     private func prepareExpirationLabelForEdit(){
+         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_EXPIRY_DATE")
         editingLabel = expirationDateLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
@@ -285,6 +290,7 @@ var changeNumber = false
         textBox.placeholder = "Fecha de expiración".localized
     }
     private func prepareCVVLabelForEdit(){
+         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
         if(isAmexCard()){
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = "••••".localized

@@ -24,7 +24,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var fontColor = UIColor(netHex:0x333333)
     var callback : ((payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
-    
+    override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

@@ -22,7 +22,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     
-
+    
+    override public var screenName : String { get { return "IDENTIFICATION_NUMBER" } }
     
     public init(callback : (( identification: Identification) -> Void)) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
@@ -107,7 +108,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
             numberDocLabel.text = myIntString
         }
-        
     }
 
     required public init?(coder aDecoder: NSCoder) {

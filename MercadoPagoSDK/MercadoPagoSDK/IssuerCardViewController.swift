@@ -20,7 +20,8 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     var issuerList : [Issuer]?
     var cardFront : CardFrontView?
     var fontColor = UIColor(netHex:0x333333)
-
+    
+    override public var screenName : String { get { return "CARD_ISSUER" } }
     
     public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : (( issuer: Issuer) -> Void)) {
         

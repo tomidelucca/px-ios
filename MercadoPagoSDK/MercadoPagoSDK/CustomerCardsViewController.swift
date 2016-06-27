@@ -17,6 +17,8 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
     var cards : [Card]?
     var bundle : NSBundle? = MercadoPago.getBundle()
     var callback : ((selectedCard: Card?) -> Void)?
+    override public var screenName : String { get { return "CUSTOMER_CARDS" } }
+    
     
     public init(cards: [Card]?, callback: (selectedCard: Card?) -> Void) {
         super.init(nibName: "CustomerCardsViewController", bundle: bundle)
