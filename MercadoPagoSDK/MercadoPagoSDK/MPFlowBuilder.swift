@@ -28,7 +28,7 @@ public class MPFlowBuilder : NSObject {
     
     
     public class func startPaymentVaultViewController(amount: Double, currencyId : String!,paymentPreference : PaymentPreference, pictureUrl : String = "", callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
-        
+         MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
 
         paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
@@ -42,7 +42,7 @@ public class MPFlowBuilder : NSObject {
     }
     
     internal class func startPaymentVaultInCheckout(amount: Double, currencyId : String!, paymentSettings: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
-        
+        MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
         
         paymentVault.modalTransitionStyle = .CrossDissolve
@@ -52,7 +52,7 @@ public class MPFlowBuilder : NSObject {
     
     
     public class func startCardFlow(paymentSettings: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
-    
+        MercadoPagoContext.initFlavor2()
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         

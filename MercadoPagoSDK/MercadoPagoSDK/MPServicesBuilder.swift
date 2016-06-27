@@ -39,7 +39,7 @@ public class MPServicesBuilder : NSObject {
     
     public class func createToken(savedCardToken : SavedCardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
             MercadoPagoContext.initFlavor1()
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_CARD_TOKEN", result: nil)
+            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_SAVED_TOKEN", result: nil)
             savedCardToken.device = Device()
             let service : GatewayService = GatewayService(baseURL: MercadoPagoService.MP_BASE_URL)
             service.getToken(public_key: MercadoPagoContext.publicKey(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in

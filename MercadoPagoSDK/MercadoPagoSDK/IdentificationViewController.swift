@@ -108,7 +108,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
             numberDocLabel.text = myIntString
         }
-        
     }
 
     required public init?(coder aDecoder: NSCoder) {
