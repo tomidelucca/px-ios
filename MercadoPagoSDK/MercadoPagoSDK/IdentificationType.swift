@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IdentificationType : Equatable {
+public class IdentificationType : NSObject {
     public var _id : String?
     public var name : String?
     public var type : String?

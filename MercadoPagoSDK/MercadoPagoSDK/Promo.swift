@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Promo : Equatable{
+public class Promo : NSObject {
 	
 	public var promoId : String!
 	public var issuer : Issuer!
