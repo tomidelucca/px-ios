@@ -148,7 +148,7 @@ public class CheckoutPreference : NSObject {
         return settings
     }
     
-    public func getExcludedPaymentTypesIds() -> Set<PaymentTypeId>? {
+    public func getExcludedPaymentTypesIds() -> Set<String>? {
         if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
             return self.paymentPreference!.excludedPaymentTypeIds
         }

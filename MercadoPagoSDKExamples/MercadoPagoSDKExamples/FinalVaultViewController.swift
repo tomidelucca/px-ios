@@ -17,7 +17,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
         super.init(coder: aDecoder)
     }
 	
-	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
+	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<String>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
 		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
 		self.finalCallback = callback
 	}
@@ -25,7 +25,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
     override func getSelectionCallbackPaymentMethod() -> (paymentMethod : PaymentMethod) -> Void {
         return { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
-            if paymentMethod.paymentTypeId!.isCard() {
+            if PaymentTypeId(rawValue:paymentMethod.paymentTypeId!)!.isCard() {
                 self.selectedCard = nil
                 if paymentMethod.settings != nil && paymentMethod.settings.count > 0 {
                     self.securityCodeLength = paymentMethod.settings![0].securityCode!.length
@@ -50,7 +50,9 @@ class FinalVaultViewController : AdvancedVaultViewController {
         }
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.selectedCard == nil && self.selectedCardToken == nil) || (self.selectedPaymentMethod != nil && !self.selectedPaymentMethod!.paymentTypeId!.isCard()) {
+        
+        
+        if (self.selectedCard == nil && self.selectedCardToken == nil) || (self.selectedPaymentMethod != nil && !self.selectedPaymentMethod!.isCard()) {
             return 1
         }
         else if self.selectedPayerCost == nil {
@@ -68,7 +70,8 @@ class FinalVaultViewController : AdvancedVaultViewController {
                 return self.emptyPaymentMethodCell
             } else {
                 self.paymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("paymentMethodCell") as! MPPaymentMethodTableViewCell
-                if !self.selectedPaymentMethod!.paymentTypeId!.isCard() {
+                let paymentTypeId = PaymentTypeId(rawValue : self.selectedPaymentMethod!.paymentTypeId!)
+                if !paymentTypeId!.isCard() {
                     self.paymentMethodCell.fillWithPaymentMethod(self.selectedPaymentMethod!)                    
                 }
                 else if self.selectedCardToken != nil {

@@ -181,7 +181,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
         if self.publicKey() != nil {
             let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
-            service.getInstallments(public_key: self.publicKey(), bin: bin, amount: amount, issuer_id: issuerId, payment_type_id: paymentTypeId, success: success, failure: failure)
+             service.getInstallments(public_key: self.publicKey(), bin: bin, amount: amount, issuer_id: issuerId, payment_method_id: paymentTypeId, success: success, failure: failure)
         
         }
     }

@@ -15,7 +15,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var publicKey : String!
     var amount : Double!
     var currencyId : String!
-    var paymentSettings : PaymentPreference!
+    var paymentSettings : PaymentPreference?
     var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void)!
 
     var defaultInstallments : Int?
@@ -34,7 +34,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var paymentsTable: UITableView!
     
 
-    internal init(amount: Double, currencyId : String, paymentSettings : PaymentPreference!, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    internal init(amount: Double, currencyId : String, paymentSettings : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
@@ -70,7 +70,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, currencyId : String, paymentPreference : PaymentPreference!, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    init(amount: Double, currencyId : String, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
@@ -229,7 +229,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     
                     self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: animated)
                 } else {
-                    self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)!], callback: {    (paymentMethod : PaymentMethod) -> Void in
+                    self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([paymentSearchItemSelected.idPaymentMethodSearchItem], callback: {    (paymentMethod : PaymentMethod) -> Void in
                         self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, payerCost: nil)
                     }), animated: true)
                 }
@@ -254,7 +254,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     private func loadPaymentMethodSearch(){
         
         if self.currentPaymentMethodSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.amount, excludedPaymentTypeIds: self.paymentSettings.excludedPaymentTypeIds, excludedPaymentMethodIds: self.paymentSettings.excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+            let excludedPaymentTypeIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentTypeIds : nil
+            let excludedPaymentMethodIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentMethodIds : nil
+            
+            MPServicesBuilder.searchPaymentMethods(self.amount, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 self.paymentMethods = paymentMethodSearchResponse.paymentMethods
                 self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
                 if self.currentPaymentMethodSearch.count == 1 {

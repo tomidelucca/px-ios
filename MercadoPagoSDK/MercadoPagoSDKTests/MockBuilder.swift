@@ -41,7 +41,7 @@ public class MockBuilder: NSObject {
         preferencePM.defaultInstallments = 1
         preferencePM.defaultPaymentMethodId = "visa"
         preferencePM.excludedPaymentMethodIds = ["amex"]
-        preferencePM.excludedPaymentTypeIds = self.getMockPaymentTypeIds()
+      //  preferencePM.excludedPaymentTypeIds = self.getMockPaymentTypeIds()
         return preferencePM
     }
     

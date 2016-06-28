@@ -12,7 +12,7 @@ import UIKit
 public class MPFlowBuilder : NSObject {
     
     @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
-    public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<PaymentTypeId>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
+    public class func startVaultViewController(amount: Double, supportedPaymentTypes: Set<String>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
         MercadoPagoContext.initFlavor3()
         return VaultViewController(amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
         
@@ -27,7 +27,7 @@ public class MPFlowBuilder : NSObject {
     }
     
     
-    public class func startPaymentVaultViewController(amount: Double, currencyId : String!,paymentPreference : PaymentPreference, pictureUrl : String = "", callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
+    public class func startPaymentVaultViewController(amount: Double, currencyId : String!,paymentPreference : PaymentPreference? = nil, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
          MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
 
@@ -62,7 +62,7 @@ public class MPFlowBuilder : NSObject {
         }
         cardVC = MPStepBuilder.startCreditCardForm(paymentSettings, amount: amount, paymentMethods : paymentMethods, callback: { (paymentMethod, token, issuer) -> Void in
             
-            MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+            MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
                  //(ccf.navigationController as! MPNavigationController).hideLoading()
                 let payerCostSelected = paymentSettings?.autoSelectPayerCost(installments![0].payerCosts)
                     if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas

@@ -30,7 +30,7 @@ public class MerchantPayment : NSObject {
     
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
-            "card_issuer_id": self.issuer?._id == 0 ? JSON.null : (self.issuer?._id)!,
+            "card_issuer_id": (issuer == nil || self.issuer?._id == 0) ? JSON.null : (self.issuer?._id)!,
             "card_token": self.cardTokenId == nil ? JSON.null : self.cardTokenId!,
             "campaign_id": self.campaignId == 0 ? JSON.null : String(self.campaignId),
             //"item": JSON(self.items[0]),

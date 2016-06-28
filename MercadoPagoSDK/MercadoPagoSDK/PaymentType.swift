@@ -10,7 +10,7 @@ import UIKit
 
 public class PaymentType: NSObject {
 
-    public static let allPaymentIDs : Set<PaymentTypeId> = [PaymentTypeId.DEBIT_CARD,PaymentTypeId.CREDIT_CARD,PaymentTypeId.ACCOUNT_MONEY,PaymentTypeId.TICKET,PaymentTypeId.BANK_TRANSFER,PaymentTypeId.ATM,PaymentTypeId.BITCOIN,PaymentTypeId.PREPAID_CARD]
+    public static let allPaymentIDs : Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue,PaymentTypeId.CREDIT_CARD.rawValue,PaymentTypeId.ACCOUNT_MONEY.rawValue,PaymentTypeId.TICKET.rawValue,PaymentTypeId.BANK_TRANSFER.rawValue,PaymentTypeId.ATM.rawValue,PaymentTypeId.BITCOIN.rawValue,PaymentTypeId.PREPAID_CARD.rawValue]
     
     var paymentTypeId : PaymentTypeId!
     
@@ -33,7 +33,7 @@ public class PaymentType: NSObject {
     }
     
     public func paymentSettingAssociated() -> PaymentPreference {
-        return PaymentPreference(defaultPaymentTypeId:self.paymentTypeId)
+        return PaymentPreference(defaultPaymentTypeId:self.paymentTypeId.rawValue)
     }
 
 }

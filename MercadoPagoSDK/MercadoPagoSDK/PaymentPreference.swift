@@ -11,11 +11,11 @@ import UIKit
 public class PaymentPreference: NSObject {
     
     public var excludedPaymentMethodIds : Set<String>?
-    public var excludedPaymentTypeIds : Set<PaymentTypeId>?
+    public var excludedPaymentTypeIds : Set<String>?
     var defaultPaymentMethodId : String?
     var maxAcceptedInstallments : Int?
     var defaultInstallments : Int?
-    var defaultPaymentTypeId : PaymentTypeId?
+    var defaultPaymentTypeId : String?
     
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
@@ -58,7 +58,7 @@ public class PaymentPreference: NSObject {
     }
     
     
-    public init(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil){
+    public init(defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil){
         self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
         self.defaultPaymentMethodId = defaultPaymentMethodId
@@ -68,7 +68,7 @@ public class PaymentPreference: NSObject {
     }
     
     
-    public func addSettings(defaultPaymentTypeId: PaymentTypeId? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<PaymentTypeId>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
+    public func addSettings(defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
         
         if(excludedPaymentMethodsIds != nil){
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
@@ -112,17 +112,17 @@ public class PaymentPreference: NSObject {
             preferencePaymentMethods.excludedPaymentMethodIds = excludedPaymentMethods
         }
         
-        var excludedPaymentTypesIds = Set<PaymentTypeId>()
+        var excludedPaymentTypesIds = Set<String>()
         if let ptArray = json["excluded_payment_types"] as? NSArray {
             for i in 0..<ptArray.count {
                 if let ptDic = ptArray[i] as? NSDictionary {
                     let ptDicValue = ptDic.valueForKey("id") as? String
                     if ptDicValue != nil && ptDicValue?.characters.count > 0 {
-                        excludedPaymentTypesIds.insert(PaymentTypeId(rawValue: ptDicValue!)!)
+                        excludedPaymentTypesIds.insert(ptDicValue!)
                     }
                 }
             }
-            preferencePaymentMethods.excludedPaymentTypeIds = Set<PaymentTypeId>(excludedPaymentTypesIds)
+            preferencePaymentMethods.excludedPaymentTypeIds = Set<String>(excludedPaymentTypesIds)
         }
         
         if json["default_payment_method_id"] != nil && !(json["default_payment_method_id"]! is NSNull) {

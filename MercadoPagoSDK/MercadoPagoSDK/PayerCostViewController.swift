@@ -195,7 +195,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     }
     
     private func getInstallments(){
-        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: self.amount, issuer: self.issuer, paymentTypeId: PaymentTypeId.CREDIT_CARD, success: { (installments) -> Void in
+        MPServicesBuilder.getInstallments((token?.getBin())!  , amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethod!._id, success: { (installments) -> Void in
             self.installments = installments
             self.payerCosts = installments![0].payerCosts
             //TODO ISSUER
