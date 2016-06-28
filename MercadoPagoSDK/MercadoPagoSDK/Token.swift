@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Token : Equatable {
+public class Token : NSObject {
 	public var _id : String!
 	public var publicKey : String!
 	public var cardId : String!

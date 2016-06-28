@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PayerCost : Equatable {
+public class PayerCost : NSObject {
     public var installments : Int = 0
     public var installmentRate : Double = 0
     public var labels : [String]!

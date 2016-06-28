@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Installment : Equatable {
+public class Installment : NSObject {
     public var issuer : Issuer!
     public var payerCosts : [PayerCost]!
     public var paymentMethodId : String!

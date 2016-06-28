@@ -10,13 +10,13 @@ import UIKit
 
 public class Instruction: NSObject {
     
-    var title : String = ""
-    var accreditationMessage : String = ""
-    var references : [InstructionReference]!
-    var info : [String]!
-    var secondaryInfo : [String]?
-    var tertiaryInfo : [String]?
-    var actions : [InstructionAction]?
+    public var title : String = ""
+    public var accreditationMessage : String = ""
+    public var references : [InstructionReference]!
+    public var info : [String]!
+    public var secondaryInfo : [String]?
+    public var tertiaryInfo : [String]?
+    public var actions : [InstructionAction]?
 
 
     public class func fromJSON(json : NSDictionary) -> Instruction {
