@@ -23,7 +23,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
         super.init(coder: aDecoder)
     }
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<String>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
         super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
         advancedCallback = callback
         self.amount = amount
@@ -141,7 +141,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
         
         let issuerId = self.selectedIssuer != nil ? self.selectedIssuer!._id : nil
      
-        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: issuerId, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId!.rawValue, success: {(installments: [Installment]?) -> Void in
+        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: issuerId, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId, success: {(installments: [Installment]?) -> Void in
             if installments != nil {
                 self.payerCosts = installments![0].payerCosts
                 self.tableview.reloadData()

@@ -158,6 +158,12 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+    public class func setPaymentURI(payment_uri : String){
+        
+        sharedInstance.payment_uri = payment_uri
+        
+    }
+    
     public class func setMerchantAccessToken(merchant_access_token : String){
         
         sharedInstance.merchant_access_token = merchant_access_token

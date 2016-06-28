@@ -113,12 +113,12 @@ public class MPServicesBuilder : NSObject {
        
     }
     
-    public class func getInstallments(bin: String, amount: Double, issuer: Issuer?, paymentTypeId: PaymentTypeId, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
+    public class func getInstallments(bin: String, amount: Double, issuer: Issuer?, paymentMethodId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTALLMENTS", result: nil)
 
             let service : PaymentService = PaymentService(baseURL: MercadoPagoService.MP_BASE_URL)
-            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_type_id: paymentTypeId.rawValue, success: success, failure: failure)
+            service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
         
     }
     
@@ -202,7 +202,7 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<PaymentTypeId>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHOD_SEARCH", result: nil)
         let paymentMethodSearchService = PaymentMethodSearchService()

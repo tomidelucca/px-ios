@@ -120,15 +120,15 @@ class ExamplesUtils {
         return CardViewController(merchantPublicKey: merchantPublicKey, paymentMethod: paymentMethod, callback: callback)
     }
     
-    class func startSimpleVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, supportedPaymentTypes: Set<PaymentTypeId>, callback: (paymentMethod: PaymentMethod, token: Token?) -> Void) -> SimpleVaultViewController {
+    class func startSimpleVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, supportedPaymentTypes: Set<String>, callback: (paymentMethod: PaymentMethod, token: Token?) -> Void) -> SimpleVaultViewController {
         return SimpleVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
     }
     
-    class func startAdvancedVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> AdvancedVaultViewController {
+    class func startAdvancedVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<String>, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> AdvancedVaultViewController {
         return AdvancedVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
     }
     
-    class func startFinalVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<PaymentTypeId>, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> FinalVaultViewController {
+    class func startFinalVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<String>, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> FinalVaultViewController {
         return FinalVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, supportedPaymentTypes: supportedPaymentTypes, callback: callback)
     }
     
@@ -143,7 +143,9 @@ class ExamplesUtils {
         let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
         
         // Create payment
-        MerchantServer.createPayment(ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantPaymentUri: ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI, payment: payment, success: callback, failure: nil)
+        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
+        MercadoPagoContext.setPaymentURI(ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)
+        MerchantServer.createPayment(payment, success: callback, failure: nil)
     }
     
     class func createCheckoutPreferenceWithNoExclusions() -> CheckoutPreference {
@@ -173,7 +175,7 @@ class ExamplesUtils {
         let preference = self.createCheckoutPreferenceWithNoExclusions()
         
         //Preference payment methods
-        let paymentPreference = PaymentPreference(excludedPaymentMethodsIds: ["oxxo", "bancomer_bank_transfer"], excludedPaymentTypesIds: [PaymentTypeId.DEBIT_CARD,], defaultPaymentMethodId: nil, maxAcceptedInstallment: 1, defaultInstallments: 1)
+        let paymentPreference = PaymentPreference(excludedPaymentMethodsIds: ["oxxo", "bancomer_bank_transfer"], excludedPaymentTypesIds: [PaymentTypeId.DEBIT_CARD.rawValue], defaultPaymentMethodId: nil, maxAcceptedInstallment: 1, defaultInstallments: 1)
         
         preference.paymentPreference = paymentPreference
         

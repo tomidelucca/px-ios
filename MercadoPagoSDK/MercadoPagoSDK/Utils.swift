@@ -190,7 +190,7 @@ class Utils {
         
         
         if paymentTypeSelected.characters.count > 0 {
-            paymentMethod[0].paymentTypeId = PaymentTypeId(rawValue : paymentTypeSelected)
+            paymentMethod[0].paymentTypeId = paymentTypeSelected
         }
         
         return paymentMethod[0]

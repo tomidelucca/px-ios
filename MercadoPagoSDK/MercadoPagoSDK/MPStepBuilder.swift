@@ -26,7 +26,7 @@ public class MPStepBuilder : NSObject {
         
     }
     
-    public class func startPaymentMethodsStep(supportedPaymentTypes: Set<PaymentTypeId>, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
+    public class func startPaymentMethodsStep(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
         MercadoPagoContext.initFlavor2()
         return PaymentMethodsViewController(supportedPaymentTypes: supportedPaymentTypes, callback: callback)
     }
@@ -52,9 +52,9 @@ public class MPStepBuilder : NSObject {
         return PaymentCongratsViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
     }
     
-    public class func startInstructionsStep(payment: Payment, paymentTypeId : PaymentTypeId, callback : (payment : Payment) -> Void) -> InstructionsViewController {
+    public class func startInstructionsStep(payment: Payment, paymentTypeId : String, callback : (payment : Payment) -> Void) -> InstructionsViewController {
         MercadoPagoContext.initFlavor2()
-        return InstructionsViewController(payment: payment, paymentTypeId : paymentTypeId, callback : callback)
+        return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : callback)
     }
     
     public class func startPromosStep() -> PromoViewController {
@@ -168,10 +168,10 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    internal class func getInstallments(token : Token, amount : Double, issuer: Issuer, paymentTypeId : PaymentTypeId, paymentMethod : PaymentMethod, ccf : MercadoPagoUIViewController, callback : (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void){
+    internal class func getInstallments(token : Token, amount : Double, issuer: Issuer, paymentTypeId : String, paymentMethod : PaymentMethod, ccf : MercadoPagoUIViewController, callback : (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void){
         MercadoPagoContext.initFlavor2()
         
-        MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentTypeId: paymentTypeId, success: { (installments) -> Void in
+       MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
             
             let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, maxInstallments: nil, callback: { (payerCost) -> Void in
                 callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)

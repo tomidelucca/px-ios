@@ -15,13 +15,12 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [PaymentMethod]!
-    var supportedPaymentTypes: Set<PaymentTypeId>!
+    var supportedPaymentTypes: Set<String>!
     var bundle : NSBundle? = MercadoPago.getBundle()
-    override public var screenName : String { get { return "PAYMENT_METHOD_SEARCH" } }
     
     var callback : ((paymentMethod : PaymentMethod) -> Void)?
     
-    init(supportedPaymentTypes: Set<PaymentTypeId>, callback:(paymentMethod: PaymentMethod) -> Void) {
+    init(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) {
         super.init(nibName: "PaymentMethodsViewController", bundle: bundle)
         self.publicKey = MercadoPagoContext.publicKey()
         self.supportedPaymentTypes = supportedPaymentTypes
@@ -57,15 +56,12 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
         MPServicesBuilder.getPaymentMethods({(paymentMethods: [PaymentMethod]?) -> Void in
                 self.items = [PaymentMethod]()
                 if paymentMethods != nil {
-                    var pms : [PaymentMethod] = [PaymentMethod]()
-                    if self.supportedPaymentTypes != nil {
-                        for pm in paymentMethods! {
-                            if self.supportedPaymentTypes.contains(pm.paymentTypeId) {
-                                pms.append(pm)
-                            }
-                        }
+                    
+                    if self.supportedPaymentTypes != nil && self.supportedPaymentTypes.count > 0 {
+                        self.items = paymentMethods?.filter({return self.supportedPaymentTypes.contains($0.paymentTypeId)})
+                    } else {
+                        self.items = paymentMethods
                     }
-                    self.items = pms
                 }
                 self.tableView.reloadData()
                 self.loadingView.removeFromSuperview()

@@ -62,7 +62,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var settings = PaymentPreference(defaultPaymentTypeId : PaymentTypeId.CREDIT_CARD)
+        var settings = PaymentPreference(defaultPaymentTypeId : PaymentTypeId.CREDIT_CARD.rawValue)
         
         switch indexPath.row {
         case 0:
@@ -70,7 +70,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let pm = PaymentMethod()
             pm._id = "master"
             pm.name = "Mastercard"
-            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD
+            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD.rawValue
             
             
             
@@ -163,7 +163,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             payment.statusDetail = "cc_rejected_insufficient_amount"
             
             let pm = PaymentMethod()
-            pm.paymentTypeId = PaymentTypeId.DEBIT_CARD
+            pm.paymentTypeId = PaymentTypeId.DEBIT_CARD.rawValue
             pm.name = "Visa"
             
             
@@ -186,7 +186,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
             let pm = PaymentMethod()
             pm._id = "master"
             pm.name = "Mastercard"
-            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD
+            pm.paymentTypeId = PaymentTypeId.CREDIT_CARD.rawValue
 
             self.showViewController(MPStepBuilder.startIssuersStep( pm, callback: { (issuer) -> Void in
               // Seguir el proceso de pago con el Issuer seleccionado

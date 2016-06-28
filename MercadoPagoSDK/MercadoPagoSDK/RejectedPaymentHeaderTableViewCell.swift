@@ -34,7 +34,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         
         let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.title.text = title
-        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId.rawValue).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.subtitle.text = subtitle
         return self
     }
@@ -47,7 +47,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         
         let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
         
-        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId.rawValue).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
 
         let frame = (subtitle as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
         

@@ -37,7 +37,7 @@ public class MerchantServer : NSObject {
         }, failure: failure)
     }
     
-    public class func createPayment(merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func createPayment(payment : MerchantPayment, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
         let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
