@@ -338,7 +338,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
     }
     
     func getPaymentMethodsViewController() -> PaymentMethodsViewController {
-       return MPStepBuilder.startPaymentMethodsStep(self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
+       return MPStepBuilder.startPaymentMethodsStep(callback: { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
             let paymentTypeIdEnum = PaymentTypeId(rawValue: paymentMethod.paymentTypeId)!
             if paymentTypeIdEnum.isCard() {

@@ -45,6 +45,14 @@
 		766CDFD11D22B72E00F9FAD4 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766CDFD21D22B73100F9FAD4 /* MercadoPagoTracker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766CDFD31D22B73400F9FAD4 /* MPGoogleAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		766CDFF01D240ED000F9FAD4 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
+		766CDFF11D240ED000F9FAD4 /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
+		76EF7E631D2415E60087C785 /* StepsExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */; };
+		76EF7E641D2415E60087C785 /* StepsExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E621D2415E60087C785 /* StepsExamplesViewController.xib */; };
+		76EF7E6E1D24229A0087C785 /* ServicesExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */; };
+		76EF7E6F1D24229A0087C785 /* ServicesExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E6D1D24229A0087C785 /* ServicesExamplesViewController.xib */; };
+		76EF7E731D2447870087C785 /* ComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */; };
+		76EF7E741D2447870087C785 /* ComponentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +151,14 @@
 		0FFDB72D1AF2B5BB00F7AF9D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../MercadoPagoSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoSDK.xcodeproj; path = ../MercadoPagoSDK/MercadoPagoSDK.xcodeproj; sourceTree = "<group>"; };
+		766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainExamplesViewController.swift; sourceTree = "<group>"; };
+		766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainExamplesViewController.xib; sourceTree = "<group>"; };
+		76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepsExamplesViewController.swift; sourceTree = "<group>"; };
+		76EF7E621D2415E60087C785 /* StepsExamplesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepsExamplesViewController.xib; sourceTree = "<group>"; };
+		76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesExamplesViewController.swift; sourceTree = "<group>"; };
+		76EF7E6D1D24229A0087C785 /* ServicesExamplesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServicesExamplesViewController.xib; sourceTree = "<group>"; };
+		76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComponentTableViewCell.swift; sourceTree = "<group>"; };
+		76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComponentTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +206,7 @@
 		0F9884F81AD2BCB900F750F0 /* MercadoPagoSDKExamples */ = {
 			isa = PBXGroup;
 			children = (
+				766CDFE71D240E9D00F9FAD4 /* Component Examples */,
 				0F98854A1AD2BDDD00F750F0 /* LaunchScreen.xib */,
 				0F98851E1AD2BCD800F750F0 /* Example */,
 				0F9884FB1AD2BCB900F750F0 /* AppDelegate.swift */,
@@ -344,6 +361,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		766CDFE71D240E9D00F9FAD4 /* Component Examples */ = {
+			isa = PBXGroup;
+			children = (
+				76EF7E701D24475F0087C785 /* Component Cells */,
+				766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */,
+				766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */,
+				76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */,
+				76EF7E621D2415E60087C785 /* StepsExamplesViewController.xib */,
+				76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */,
+				76EF7E6D1D24229A0087C785 /* ServicesExamplesViewController.xib */,
+			);
+			name = "Component Examples";
+			sourceTree = "<group>";
+		};
+		76EF7E701D24475F0087C785 /* Component Cells */ = {
+			isa = PBXGroup;
+			children = (
+				76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */,
+				76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */,
+			);
+			name = "Component Cells";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -486,7 +526,11 @@
 			files = (
 				0F98853C1AD2BD9200F750F0 /* SimpleSecurityCodeTableViewCell.xib in Resources */,
 				0F9885271AD2BD1B00F750F0 /* ExamplesViewController.xib in Resources */,
+				76EF7E741D2447870087C785 /* ComponentTableViewCell.xib in Resources */,
+				766CDFF11D240ED000F9FAD4 /* MainExamplesViewController.xib in Resources */,
+				76EF7E6F1D24229A0087C785 /* ServicesExamplesViewController.xib in Resources */,
 				0F9885361AD2BD8700F750F0 /* CardViewController.xib in Resources */,
+				76EF7E641D2415E60087C785 /* StepsExamplesViewController.xib in Resources */,
 				0FFDB7261AF2B1F600F7AF9D /* Localizable.strings in Resources */,
 				0F9885421AD2BDA700F750F0 /* SimpleVaultViewController.xib in Resources */,
 				0F98854B1AD2BDDD00F750F0 /* LaunchScreen.xib in Resources */,
@@ -517,13 +561,17 @@
 				0F9885251AD2BD1B00F750F0 /* ExamplesViewController.swift in Sources */,
 				0F9885451AD2BDB300F750F0 /* AdvancedVaultViewController.swift in Sources */,
 				0F9885341AD2BD8700F750F0 /* CardViewController.swift in Sources */,
+				76EF7E631D2415E60087C785 /* StepsExamplesViewController.swift in Sources */,
 				0F9884FF1AD2BCB900F750F0 /* MercadoPagoSDKExamples.xcdatamodeld in Sources */,
 				0F98853A1AD2BD9200F750F0 /* SimpleSecurityCodeTableViewCell.swift in Sources */,
 				0F98852B1AD2BD3700F750F0 /* ExamplesUtils.swift in Sources */,
 				0F9884FC1AD2BCB900F750F0 /* AppDelegate.swift in Sources */,
 				0F9885481AD2BDBE00F750F0 /* FinalVaultViewController.swift in Sources */,
 				0F9885401AD2BDA700F750F0 /* SimpleVaultViewController.swift in Sources */,
+				766CDFF01D240ED000F9FAD4 /* MainExamplesViewController.swift in Sources */,
+				76EF7E6E1D24229A0087C785 /* ServicesExamplesViewController.swift in Sources */,
 				0FCE50A41AF2B05600A30177 /* String+Additions.swift in Sources */,
+				76EF7E731D2447870087C785 /* ComponentTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

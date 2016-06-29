@@ -16,7 +16,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var getCustomerUri: String?
     var merchantAccessToken: String?
     var callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?
-    var supportedPaymentTypes: Set<String>?
+    var paymentPreference: PaymentPreference?
     
     @IBOutlet weak var tableview : UITableView!
     
@@ -38,13 +38,13 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var securityCodeLength : Int = 0
     var bin : String?
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, supportedPaymentTypes: Set<String>, callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?) {
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, paymentPreference: PaymentPreference?, callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?) {
         super.init(nibName: "SimpleVaultViewController", bundle: nil)
         self.publicKey = merchantPublicKey
         self.baseUrl = merchantBaseUrl
         self.getCustomerUri = merchantGetCustomerUri
         self.merchantAccessToken = merchantAccessToken
-        self.supportedPaymentTypes = supportedPaymentTypes
+        self.paymentPreference = paymentPreference
         self.callback = callback
     }
     
@@ -166,7 +166,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
-            let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(self.supportedPaymentTypes!, callback: getSelectionCallbackPaymentMethod())
+            let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(self.paymentPreference, callback: getSelectionCallbackPaymentMethod())
             
             if self.cards != nil {
                 if self.cards!.count > 0 {

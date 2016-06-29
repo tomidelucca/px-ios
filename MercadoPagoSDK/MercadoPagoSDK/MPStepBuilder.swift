@@ -26,9 +26,9 @@ public class MPStepBuilder : NSObject {
         
     }
     
-    public class func startPaymentMethodsStep(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
+    public class func startPaymentMethodsStep(paymentPreference: PaymentPreference? = nil, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
         MercadoPagoContext.initFlavor2()
-        return PaymentMethodsViewController(supportedPaymentTypes: supportedPaymentTypes, callback: callback)
+        return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
     }
     
     public class func startIssuersStep(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) -> IssuersViewController {
