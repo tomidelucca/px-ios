@@ -113,7 +113,7 @@ public class MPServicesBuilder : NSObject {
        
     }
     
-    public class func getInstallments(bin: String?, amount: Double, issuer: Issuer?, paymentMethodId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
+    public class func getInstallments(bin: String? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTALLMENTS", result: nil)
 

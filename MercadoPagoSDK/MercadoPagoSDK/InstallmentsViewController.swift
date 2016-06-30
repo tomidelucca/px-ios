@@ -59,7 +59,7 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         self.tableView.reloadData()
     }
     private func getInstallments(){
-        MPServicesBuilder.getInstallments(nil , amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethodId!, success: { (installments) -> Void in
+        MPServicesBuilder.getInstallments(amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethodId!, success: { (installments) -> Void in
             self.payerCosts = installments![0].payerCosts
             self.tableView.reloadData()
             self.hideLoading()

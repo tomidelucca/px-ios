@@ -18,7 +18,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
     }
 	
 	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
-		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: nil)
+		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: callback)
 		self.finalCallback = callback
 	}
    

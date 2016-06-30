@@ -122,7 +122,7 @@ class ExamplesViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 4:
-            self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, supportedPaymentTypes: PaymentType.allPaymentIDs, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
+            self.showViewController(MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT, paymentPreference: settings, callback: {(paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void in
                     self.createPayment(token, paymentMethod: paymentMethod, installments: installments, cardIssuer: issuer, discount: nil)
             }))
         case 5:

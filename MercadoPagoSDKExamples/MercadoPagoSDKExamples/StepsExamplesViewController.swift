@@ -12,10 +12,10 @@ import MercadoPagoSDK
 class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let stepsExamples = [
-        "Payment Vault".localized,
-        "Card Form con cuotas".localized,
-        "Card Form sin cuotas".localized,
-        "Métodos de Pago".localized,
+        "Selección de medio de pago completa".localized,
+        "Cobra con tarjeta con cuotas".localized,
+        "Cobra con tarjeta sin cuotas".localized,
+        "Selección de medio de pago simple".localized,
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
         "Crear Pago".localized
@@ -116,16 +116,15 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func startPaymentMethods(){
-        //TARAN TA TAN
         let pms = MPStepBuilder.startPaymentMethodsStep(nil) { (paymentMethod) in
-            
+            self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(pms, animated: true)
     }
     
     private func statIssuersStep(){
         let issuersVC = MPStepBuilder.startIssuersStep(self.paymentMethod) { (issuer) in
-            
+            self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(issuersVC, animated: true)
         
@@ -134,16 +133,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     private func startInstallmentsStep(){
         
         let installmentsVC = MPStepBuilder.startInstallmentsStep(amount: 10000, issuer: nil, paymentMethodId: "visa") { (payerCost) in
-            
+            self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(installmentsVC, animated: true)
         
-//TODO
-//        let installmentsVC = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: nil, token: "", amount: 1000, maxInstallments: nil) { (payerCost) in
-//            
-//        }
-//        self.presentViewController(installmentsVC, animated: true, completion: {})
-//        
     }
     
     private func createPayment(){

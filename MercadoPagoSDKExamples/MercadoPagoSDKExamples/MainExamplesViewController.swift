@@ -11,9 +11,9 @@ import MercadoPagoSDK
 
 class MainExamplesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let examples = [["title" : "Checkout".localized, "image" : "PlugNplay"],
-                               ["title" : "ComponentsUI".localized, "image" : "Puzzle"],
-                               ["title" : "Services".localized, "image" : "Ninja"]
+    let examples = [["title" : "Nuestro Checkout".localized, "image" : "PlugNplay"],
+                               ["title" : "Components de UI".localized, "image" : "Puzzle"],
+                               ["title" : "Servicios".localized, "image" : "Ninja"]
                             ]
 
     @IBOutlet weak var tableExamples: UITableView!
