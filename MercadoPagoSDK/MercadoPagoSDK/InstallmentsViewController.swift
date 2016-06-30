@@ -21,14 +21,16 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     var paymentMethodId : String?
     var amount : Double = 0
     var callback : ((payerCost: PayerCost?) -> Void)?
+    var paymentPreference : PaymentPreference?
     override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
     var bundle : NSBundle? = MercadoPago.getBundle()
     
-    init(payerCosts: [PayerCost]?, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) {
+    init(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) {
         super.init(nibName: "InstallmentsViewController", bundle: bundle)
         if((payerCosts) != nil){
              self.payerCosts = payerCosts
         }
+        self.paymentPreference = paymentPreference
         self.paymentMethodId = paymentMethodId
         self.issuer = issuer
         self.amount = amount
