@@ -328,7 +328,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
-            
+
+            MPTracker.trackPaymentOffEvent(String(payment._id), mpDelegate: MercadoPagoContext.sharedInstance)
+
             if payment.isRejected() {
                 //TODO : confirm
                 let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: self.paymentMethod!, callback : { (payment : Payment, status: String) in
