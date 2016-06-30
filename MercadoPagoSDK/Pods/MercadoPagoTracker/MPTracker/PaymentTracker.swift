@@ -22,7 +22,7 @@ public class PaymentTracker: NSObject {
 
     public class func trackToken(token: String!, delegate : MPTrackerDelegate!){
         
-        let obj:[String:AnyObject] = ["public_key": delegate.publicKey() , "token":token!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS","sdk_type":"native","sdk_version":delegate.sdkVersion()]
+        let obj:[String:AnyObject] = ["public_key": delegate.publicKey() , "token":token!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS","sdk_type":"native","sdk_version":delegate.sdkVersion(),"sdk_framework":"","site_id":delegate.siteId().rawValue]
             
         self.request(PaymentTracker.MP_TRACK_TOKEN_URL, params: nil, body: JSON(obj).toString(), method: "POST", headers: nil, success: { (jsonResult) -> Void in
             
@@ -34,7 +34,7 @@ public class PaymentTracker: NSObject {
     
     public class func trackPaymentOff(paymentId: String!, delegate : MPTrackerDelegate!){
         
-        let obj:[String:AnyObject] = ["public_key":delegate.publicKey() , "token":paymentId!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS","sdk_type":"native","sdk_version":delegate.sdkVersion()]
+        let obj:[String:AnyObject] = ["public_key":delegate.publicKey() , "payment_id":paymentId!,"sdk_flavor":(delegate.flavor()?.rawValue)!,"sdk_platform":"iOS","sdk_type":"native","sdk_version":delegate.sdkVersion(),"sdk_framework":"","site_id" :delegate.siteId().rawValue]
         
         self.request(PaymentTracker.MP_TRACK_PAYMENTOFF_URL, params: nil, body: JSON(obj).toString(), method: "POST", headers: nil, success: { (jsonResult) -> Void in
             
@@ -43,12 +43,12 @@ public class PaymentTracker: NSObject {
         }
     }
     
-    public class func request(var url: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil,  success: (jsonResult: AnyObject?) -> Void,
+    public class func request(url: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil,  success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
             
-          //  var url = baseURL + uri
+            var requesturl = url
             if params != nil {
-                url += "?" + params!
+                requesturl += "?" + params!
             }
             
             let finalURL: NSURL = NSURL(string: url)!
@@ -62,16 +62,37 @@ public class PaymentTracker: NSObject {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             if headers !=  nil && headers!.count > 0 {
                 for header in headers! {
-                    request.setValue(header.value as! String, forHTTPHeaderField: header.key as! String)
+                    request.setValue(header.value as? String, forHTTPHeaderField: header.key as! String)
                 }
             }
             
             if body != nil {
                 request.HTTPBody = (body as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
             }
-            
-
-
+        
+    
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                if error == nil {
+                do
+                {
+                    let responseJson = try NSJSONSerialization.JSONObjectWithData(data!,
+                                                                                  options:NSJSONReadingOptions.AllowFragments)
+                    success(jsonResult: responseJson)
+                } catch {
+                    
+                    let e : NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure!(error: e)
+                }
+            } else {
+                let response = String(error)
+                print(response)
+                
+                if failure != nil {
+                    failure!(error: error!)
+                }
+            }
+        }
     }
     
 }
