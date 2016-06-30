@@ -40,6 +40,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.callback = callback
         self.maxInstallments = maxInstallments
 
+        
         if(installment != nil){
             self.payerCosts = installment!.payerCosts
             self.installments = [installment!]
