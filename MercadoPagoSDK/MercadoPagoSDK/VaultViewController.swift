@@ -240,7 +240,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
                 self.showViewController(paymentMethodsViewController)
             }
         } else if indexPath.row == 1 {
-            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, callback: { (payerCost) -> Void in
+            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, issuer: nil, paymentMethodId: nil,callback: { (payerCost) -> Void in
                 self.selectedPayerCost = payerCost
                 self.tableview.reloadData()
                 self.navigationController!.popToViewController(self, animated: true)

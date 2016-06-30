@@ -36,9 +36,9 @@ public class MPStepBuilder : NSObject {
         return IssuersViewController(paymentMethod: paymentMethod, callback: callback)
     }
     
-    public class func startInstallmentsStep(payerCosts: [PayerCost], amount: Double, callback: (payerCost: PayerCost?) -> Void) -> InstallmentsViewController {
+    public class func startInstallmentsStep(payerCosts: [PayerCost]?, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) -> InstallmentsViewController {
         MercadoPagoContext.initFlavor2()
-        return InstallmentsViewController(payerCosts: payerCosts, amount: amount, callback: callback)
+        return InstallmentsViewController(payerCosts: payerCosts, amount: amount, issuer: issuer, paymentMethodId: paymentMethodId, callback: callback)
     }
     
     @available(*, deprecated=2.0, message="Use startPaymentCongratsStep instead")

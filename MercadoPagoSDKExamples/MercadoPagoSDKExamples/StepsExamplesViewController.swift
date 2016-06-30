@@ -132,6 +132,12 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func startInstallmentsStep(){
+        
+        let installmentsVC = MPStepBuilder.startInstallmentsStep(nil, amount: 10000, issuer: nil, paymentMethodId: "visa") { (payerCost) in
+            
+        }
+        self.navigationController?.pushViewController(installmentsVC, animated: true)
+        
 //TODO
 //        let installmentsVC = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: nil, token: "", amount: 1000, maxInstallments: nil) { (payerCost) in
 //            
