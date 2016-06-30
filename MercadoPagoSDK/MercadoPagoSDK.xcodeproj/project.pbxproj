@@ -518,6 +518,8 @@
 		76EC48061C862B000086FA53 /* InstructionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48051C862B000086FA53 /* InstructionTest.swift */; };
 		76EC48081C862B160086FA53 /* InstructionReferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48071C862B160086FA53 /* InstructionReferenceTest.swift */; };
 		76EC480A1C862B2D0086FA53 /* InstructionActionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EC48091C862B2D0086FA53 /* InstructionActionTest.swift */; };
+		76EF7F311D2584C10087C785 /* MPGoogleAnalytics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 766CDFCC1D21CB7000F9FAD4 /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76EF7F321D2584D90087C785 /* MercadoPagoTracker.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 766CDFCA1D21CB6E00F9FAD4 /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24701C5BFEA1008C5DC0 /* CardBackView.swift */; };
 		76FD247A1C5BFEA1008C5DC0 /* CardBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24701C5BFEA1008C5DC0 /* CardBackView.swift */; };
 		76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24711C5BFEA1008C5DC0 /* CardBackView.xib */; };
@@ -556,6 +558,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				76EF7F321D2584D90087C785 /* MercadoPagoTracker.framework in CopyFiles */,
+				76EF7F311D2584C10087C785 /* MPGoogleAnalytics.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
