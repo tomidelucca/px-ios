@@ -21,7 +21,8 @@
 #define ITEM_TITLE @"This is the title for an item purchased, extremely long so you can test how a long title will be displayed in the app"
 #define ITEM_QUANTITY 1
 #define ITEM_UNIT_PRICE 1000.00
-#define PREF_ID_NO_EXCLUSIONS "150216849-e131b785-10d3-48c0-a58b-2910935512e0"
+#define PREF_ID_NO_EXCLUSIONS @"150216849-e131b785-10d3-48c0-a58b-2910935512e0"
+#define CURRENCY @"ARS"
 
 
 @end
