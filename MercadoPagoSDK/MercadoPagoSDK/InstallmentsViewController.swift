@@ -24,11 +24,16 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     var paymentPreference : PaymentPreference?
     override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
     var bundle : NSBundle? = MercadoPago.getBundle()
+    var maxInstallments : Int?
+    var installment : Installment?
     
     init(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) {
         super.init(nibName: "InstallmentsViewController", bundle: bundle)
         if((payerCosts) != nil){
              self.payerCosts = payerCosts
+        }
+        if (paymentPreference != nil){
+            self.maxInstallments = paymentPreference?.maxAcceptedInstallments
         }
         self.paymentPreference = paymentPreference
         self.paymentMethodId = paymentMethodId
@@ -86,7 +91,16 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return payerCosts == nil ? 0 : payerCosts!.count
+        if(self.payerCosts == nil){
+            return 0
+        }else{
+            if (installment != nil){
+                return installment!.numberOfPayerCostToShow(maxInstallments)
+            }else{
+                return (self.payerCosts?.count)!
+            }
+            
+        }
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -105,5 +119,6 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         callback!(payerCost: self.payerCosts![indexPath.row])
     }
+    
    
 }

@@ -66,7 +66,7 @@ public class MPFlowBuilder : NSObject {
                  //(ccf.navigationController as! MPNavigationController).hideLoading()
                 let payerCostSelected = paymentSettings?.autoSelectPayerCost(installments![0].payerCosts)
                     if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
-                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, maxInstallments: paymentSettings?.maxAcceptedInstallments, installment:installments![0] ,callback: { (payerCost) -> Void in
+                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, paymentPreference: paymentSettings, installment:installments![0] ,callback: { (payerCost) -> Void in
                             callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
                         })
                         pcvc.callbackCancel = callbackCancel

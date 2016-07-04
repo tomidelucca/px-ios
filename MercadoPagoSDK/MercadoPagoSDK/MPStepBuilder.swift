@@ -100,9 +100,9 @@ public class MPStepBuilder : NSObject {
     }
     
     
-    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, maxInstallments : Int?,installment : Installment? = nil,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
+    public class func startPayerCostForm(paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,  callback : ((payerCost: PayerCost?) -> Void)) -> PayerCostViewController {
         MercadoPagoContext.initFlavor2()
-        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, maxInstallments: maxInstallments, installment : installment, callback: callback)
+        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
     }
     
     public class func startIdentificationForm( callback : ((identification: Identification?) -> Void)) -> IdentificationViewController {
@@ -175,7 +175,7 @@ public class MPStepBuilder : NSObject {
         
        MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
             
-            let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, maxInstallments: nil, callback: { (payerCost) -> Void in
+            let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, paymentPreference: nil, callback: { (payerCost) -> Void in
                 callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
             })
             
