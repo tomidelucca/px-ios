@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MercadoPagoTracker
 
-public class PaymentCongratsViewController: MercadoPagoUIViewController , UITableViewDelegate, UITableViewDataSource {
+public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymentTrackInformer, UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
         ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202), "screenName" : "CONGRATS"],
@@ -49,11 +50,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             self.congratsContentTable.bounds.size.width, 0.01))
         self.congratsContentTable.rowHeight = UITableViewAutomaticDimension
         self.congratsContentTable.estimatedRowHeight = 160.0
-    
-    }
+        }
     
     override public func viewWillAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         self.navigationItem.backBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
         
@@ -61,8 +61,13 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             self.navigationController?.setNavigationBarHidden(true, animated: false)
             ViewUtils.addStatusBar(self.view, color: self.congratsLayout[self.layoutTemplate]!["headerColor"] as! UIColor)
         }
+
     }
 
+    override public func  viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+         MPTracker.trackPaymentEvent(payment.tokenId, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
+    }
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -133,6 +138,28 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , UITabl
             }
     }
 
+    
+    public func methodId() -> String!{
+        return payment!.paymentMethodId
+    }
+    public func status() -> String!{
+        return payment!.status
+    }
+    public func statusDetail() -> String!{
+        return payment!.statusDetail
+    }
+    public func typeId() -> String!{
+        return payment!.paymentTypeId
+    }
+    public func installments() -> String!{
+        return String(payment!.installments)
+    }
+    public func issuerId() -> String!{
+        return String(payment!.issuerId)
+    }
+    
+    
+    
     
     private func registerCells(){
         let approvedPaymentHeader = UINib(nibName: "ApprovedPaymentHeaderTableViewCell", bundle: self.bundle)

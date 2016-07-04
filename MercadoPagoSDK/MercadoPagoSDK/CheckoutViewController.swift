@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoTracker
 
 public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
-    
+
     var preferenceId : String!
     var preference : CheckoutPreference?
     var publicKey : String!
@@ -358,13 +358,16 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         })
         
     }
-    
+
     internal func confirmPaymentOn(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,token : self.token, installments: self.payerCost!.installments , issuer: self.issuer,success: { (payment) -> Void in
             
+            
                 self.clearMercadoPagoStyle()
                 self.navigationController!.popViewControllerAnimated(true)
+
                 self.displayCongrats(payment)
+          
             }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
                     self.navigationController?.dismissViewControllerAnimated(true, completion: {})
@@ -388,7 +391,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         })
         self.navigationController!.pushViewController(congratsVC, animated: true)
     }
-    
+ 
     private func loadPreference(){
         MPServicesBuilder.getPreference(self.preferenceId, success: { (preference) in
                 if let error = preference.validate() {
