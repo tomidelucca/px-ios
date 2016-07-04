@@ -45,9 +45,12 @@
 
 -(void) startPaymentMethodsVault{
     //TODO !!!!!!
+    
 }
 
 -(void) startSimpleVault{
+    
+    
 //    let simpleVault = ExamplesUtils.startSimpleVaultActivity(MercadoPagoContext.publicKey(), merchantBaseUrl:  ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantGetCustomerUri: MercadoPagoContext.customerURI(), merchantAccessToken: MercadoPagoContext.merchantAccessToken(), paymentPreference: nil) { (paymentMethod, token) in
 //        
 //    }
