@@ -16,9 +16,13 @@
 
 @implementation StepsExamplesViewController
 
+PaymentMethod *paymentMethod;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    paymentMethod = [[PaymentMethod alloc] init];
+    paymentMethod._id = @"visa";
+    paymentMethod.name = @"visa";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,62 +69,67 @@
 
 - (void)startCardFlow {
     UIViewController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT paymentMethods:nil callback:^(PaymentMethod *paymentMethod, Token *token, Issuer *issuer, PayerCost *payerCost) {
-        
+        [self dismissViewControllerAnimated:YES completion:^{}];
     } callbackCancel:^{
-        
+        [self dismissViewControllerAnimated:YES completion:^{}];
     }];
     [self presentViewController:cf animated:YES completion:^{}];
 
 }
 
 -(void)startCardForm {
-//    var cf : UINavigationController!
-//    cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
-//        cf!.dismissViewControllerAnimated(true, completion: {})
-//    }, callbackCancel : {
-//        cf!.dismissViewControllerAnimated(true, completion: {})
-//    })
-//    
-//    self.presentViewController(cf, animated: true, completion: {})
-//}
+    UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
+        
+    } callbackCancel:^{
+       [self dismissViewControllerAnimated:YES completion:^{}];
+    }];
+    
+    [self presentViewController:cf animated:YES completion:^{}];
+    
 }
 
 - (void)startPaymentMethods {
-//
-//    let pms = MPStepBuilder.startPaymentMethodsStep(nil) { (paymentMethod) in
-//        
-//    }
-//    self.navigationController?.pushViewController(pms, animated: true)
+    
+    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *paymentMethod) {
+       [self dismissViewControllerAnimated:YES completion:^{}];
+    }];
+    [self.navigationController pushViewController:paymentsStep animated:YES];
+
 }
 
 - (void)statIssuersStep {
-//    let issuersVC = MPStepBuilder.startIssuersStep(self.paymentMethod) { (issuer) in
-//        
-//    }
-//    self.navigationController?.pushViewController(issuersVC, animated: true)
-//    
+    UIViewController *issuersVC = [MPStepBuilder startIssuersStep:paymentMethod callback:^(Issuer *issuer) {
+       [self dismissViewControllerAnimated:YES completion:^{}]; 
+    }];
+    [self.navigationController pushViewController:issuersVC animated:YES];
+    
 }
 
 - (void)startInstallmentsStep{
 }
 
-- (void)createPayment{
+- (void)createPayment {
     
-//    MercadoPagoContext.setBaseURL("http://server.com")
-//    MercadoPagoContext.setPaymentURI("/payment_uri")
-//    
-//    let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
-//                           unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
-//    
-//    //CardIssuer is optional
-//    let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: 3, cardIssuer: nil, tokenId: "tokenId", paymentMethod: self.paymentMethod, campaignId: 0)
-//    
-//    
-//    MerchantServer.createPayment(merchantPayment, success: { (payment) in
-//        
-//    }) { (error) in
-//        
-//    }
+    [MercadoPagoContext setBaseURL:@"http://server.com"];
+    [MercadoPagoContext setPaymentURI:@"/payment_uri"];
+    
+    Item *item = [[Item init] alloc];
+    item._id = ITEM_ID;
+    item.title = ITEM_TITLE;
+    item.quantity = ITEM_QUANTITY;
+    item.unitPrice = ITEM_UNIT_PRICE;
+
+    MerchantPayment *merchantPayment = [[MerchantPayment init] alloc];
+    merchantPayment.items = [NSArray arrayWithObject:item];
+    merchantPayment.installments = 3;
+    merchantPayment.issuer = nil;;
+    merchantPayment.cardTokenId = @"cardTokenId";
+    
+    [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
 
