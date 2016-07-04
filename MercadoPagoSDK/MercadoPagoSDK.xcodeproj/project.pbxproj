@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		049A7F23ACCD256E4B868062 /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42EEB35A049070643CEE39C /* Pods_MercadoPagoSDK.framework */; };
 		0F0749051AED5BAE003DD39D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0749081AED5BAE003DD39D /* Localizable.strings */; };
 		0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0749081AED5BAE003DD39D /* Localizable.strings */; };
 		0F2071C21B1F4BF700CE11AB /* UILoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2071C11B1F4BF700CE11AB /* UILoadingView.swift */; };
@@ -284,6 +283,7 @@
 		15E7D6E81C87164E00101872 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
+		178F40FD32B46067A42038DD /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42EEB35A049070643CEE39C /* Pods_MercadoPagoSDK.framework */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -895,7 +895,7 @@
 				766CDFD01D22B16600F9FAD4 /* MercadoPagoTracker.framework in Frameworks */,
 				0F9883271AD2AA9900F750F0 /* UIKit.framework in Frameworks */,
 				0F9883291AD2AAA100F750F0 /* Foundation.framework in Frameworks */,
-				049A7F23ACCD256E4B868062 /* Pods_MercadoPagoSDK.framework in Frameworks */,
+				178F40FD32B46067A42038DD /* Pods_MercadoPagoSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

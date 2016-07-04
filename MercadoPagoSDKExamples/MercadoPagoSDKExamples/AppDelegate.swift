@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.nav = UINavigationController()
 
         
-        let exmaplesViewController = ExamplesViewController()
+        let exmaplesViewController = MainExamplesViewController()
         
         // Put vaultController at the top of navigator.
         self.nav!.pushViewController(exmaplesViewController, animated: false)

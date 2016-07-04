@@ -16,22 +16,35 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!
     
-    var payerCosts : [PayerCost]!
+    var payerCosts : [PayerCost]?
+    var issuer : Issuer?
+    var paymentMethodId : String?
     var amount : Double = 0
     var callback : ((payerCost: PayerCost?) -> Void)?
+    var paymentPreference : PaymentPreference?
     override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
     var bundle : NSBundle? = MercadoPago.getBundle()
+    var maxInstallments : Int?
+    var installment : Installment?
     
-    init(payerCosts: [PayerCost]?, amount: Double, callback: (payerCost: PayerCost?) -> Void) {
+    init(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) {
         super.init(nibName: "InstallmentsViewController", bundle: bundle)
-        self.payerCosts = payerCosts
+        if((payerCosts) != nil){
+             self.payerCosts = payerCosts
+        }
+        if (paymentPreference != nil){
+            self.maxInstallments = paymentPreference?.maxAcceptedInstallments
+        }
+        self.paymentPreference = paymentPreference
+        self.paymentMethodId = paymentMethodId
+        self.issuer = issuer
         self.amount = amount
         self.callback = callback
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
+    } 
     
     public init() {
         super.init(nibName: "InstallmentsViewController", bundle: self.bundle)
@@ -42,9 +55,26 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     }
     
     override public func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.payerCosts == nil {
+            self.showLoading()
+            self.getInstallments()
+        }
         self.tableView.reloadData()
     }
-    
+    private func getInstallments(){
+        MPServicesBuilder.getInstallments(amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethodId!, success: { (installments) -> Void in
+            self.payerCosts = installments![0].payerCosts
+            self.installment = installments![0]
+            self.tableView.reloadData()
+            self.hideLoading()
+        }) { (error) -> Void in
+            self.requestFailure(error)
+        }
+        
+    }
+
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +92,16 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return payerCosts == nil ? 0 : payerCosts.count
+        if(self.payerCosts == nil){
+            return 0
+        }else{
+            if (installment != nil){
+                return installment!.numberOfPayerCostToShow(maxInstallments)
+            }else{
+                return (self.payerCosts?.count)!
+            }
+            
+        }
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -81,5 +120,6 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         callback!(payerCost: self.payerCosts![indexPath.row])
     }
+    
    
 }

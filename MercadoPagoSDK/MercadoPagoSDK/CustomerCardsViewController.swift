@@ -83,7 +83,7 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
             let paymentMethodRow = PaymentMethodRow()
             paymentMethodRow.card = card
             paymentMethodRow.label = card.paymentMethod!.name + " " + "terminada en".localized + " " + card.lastFourDigits!
-            paymentMethodRow.icon = "icoTc_" + card.paymentMethod!._id
+            paymentMethodRow.icon = card.paymentMethod!._id
             self.items.append(paymentMethodRow)
         }
         self.tableView.reloadData()

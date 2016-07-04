@@ -62,8 +62,6 @@ public class MercadoPagoService : NSObject {
 					do
 					{
                         let requestFinishedAt = NSDate()
-                        let response = try NSJSONSerialization.JSONObjectWithData(data!,
-                                                                              options:NSJSONReadingOptions.AllowFragments)
                         let responseJson = try NSJSONSerialization.JSONObjectWithData(data!,
                                                                    options:NSJSONReadingOptions.AllowFragments)
 						success(jsonResult: responseJson)

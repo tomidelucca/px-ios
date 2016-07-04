@@ -328,7 +328,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
+
             MPTracker.trackPaymentOffEvent(String(payment._id), mpDelegate: MercadoPagoContext.sharedInstance)
+
             if payment.isRejected() {
                 //TODO : confirm
                 let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: self.paymentMethod!, callback : { (payment : Payment, status: String) in
@@ -409,7 +411,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     private func startPayerCostStep(){
-        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), maxInstallments: self.preference!.paymentPreference.maxAcceptedInstallments, callback: { (payerCost) -> Void in
+        let pcf = MPStepBuilder.startPayerCostForm(self.paymentMethod, issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), paymentPreference: self.preference!.paymentPreference, callback: { (payerCost) -> Void in
             self.payerCost = payerCost
             self.navigationController?.popViewControllerAnimated(true)
             self.checkoutTable.reloadData()

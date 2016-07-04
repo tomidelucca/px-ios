@@ -18,11 +18,11 @@ public class MerchantService : MercadoPagoService {
     }
 
     public func getCustomer(method : String = "GET", success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        self.request(MercadoPagoContext.customerURI(), params: "merchant_access_token=" + MercadoPagoContext.merchantAccessToken(), body: nil, method: method, success: success, failure: failure)
+        self.request(MercadoPagoContext.customerURI(), params: "merchant_access_token=" + MercadoPagoContext.merchantAccessToken(), body: nil, method: method, cache: false, success: success, failure: failure)
     }
     
     public func createPayment(method : String = "POST", payment : MerchantPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        self.request(MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString(), method: method, success: success, failure: failure)
+        self.request(MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString(), method: method, cache: false,success: success, failure: failure)
     }
     
     public func createMPPayment(method : String = "POST", payment : MPPayment, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
@@ -33,6 +33,6 @@ public class MerchantService : MercadoPagoService {
     }
     
     public func createPreference(method : String = "POST", merchantParams : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams, method: method, success: success, failure: failure)
+        self.request(MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams, method: method, cache: false, success: success, failure: failure)
     }
 }
