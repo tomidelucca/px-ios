@@ -371,7 +371,7 @@
             </objects>
             <point key="canvasLocation" x="2325" y="1369"/>
         </scene>
-        <!--Simple Vault Form View Controller-->
+        <!--Pagar-->
         <scene sceneID="3y4-6k-oGh">
             <objects>
                 <tableViewController id="QJ5-Nk-nFy" customClass="SimpleVaultFormViewController" sceneMemberID="viewController">
@@ -394,7 +394,7 @@
                                                 <constraint firstAttribute="height" constant="20" id="Xdg-n5-lq6"/>
                                             </constraints>
                                         </imageView>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tO6-i7-dBd">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tO6-i7-dBd">
                                             <rect key="frame" x="51" y="29" width="531" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -424,7 +424,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TMN-wC-0Xa">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TMN-wC-0Xa">
                                             <rect key="frame" x="13" y="27" width="69" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="69" id="k3b-m4-dLk"/>
@@ -460,19 +460,21 @@
                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ygp-w0-cAU">
-                                            <rect key="frame" x="13" y="27" width="69" height="30"/>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="wfx-4p-MLw">
+                                            <rect key="frame" x="18" y="29" width="40" height="25"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="69" id="Qm4-au-j5Y"/>
+                                                <constraint firstAttribute="width" constant="40" id="Oi1-Oj-r72"/>
+                                                <constraint firstAttribute="height" constant="25" id="UG1-5c-3VS"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
+                                            <date key="date" timeIntervalSinceReferenceDate="489439921.23633403">
+                                                <!--2016-07-05 19:32:01 +0000-->
+                                            </date>
+                                        </datePicker>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="wfx-4p-MLw" firstAttribute="leading" secondItem="qvr-RW-quA" secondAttribute="leadingMargin" constant="10" id="EVh-9J-wcT"/>
+                                        <constraint firstItem="wfx-4p-MLw" firstAttribute="top" secondItem="pq1-Lt-O8T" secondAttribute="bottom" constant="5" id="IoO-t1-ESs"/>
                                         <constraint firstItem="pq1-Lt-O8T" firstAttribute="top" secondItem="qvr-RW-quA" secondAttribute="topMargin" id="QiX-DM-Dsc"/>
-                                        <constraint firstItem="ygp-w0-cAU" firstAttribute="top" secondItem="pq1-Lt-O8T" secondAttribute="bottom" constant="3" id="cDD-WY-MMM"/>
-                                        <constraint firstItem="ygp-w0-cAU" firstAttribute="leading" secondItem="qvr-RW-quA" secondAttribute="leadingMargin" constant="5" id="hqo-CC-ovO"/>
                                         <constraint firstItem="pq1-Lt-O8T" firstAttribute="leading" secondItem="qvr-RW-quA" secondAttribute="leadingMargin" constant="5" id="x6b-8w-7Hd"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -490,7 +492,7 @@
                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ssx-XN-8LX">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ssx-XN-8LX">
                                             <rect key="frame" x="13" y="27" width="569" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
@@ -649,6 +651,13 @@
                             <outlet property="delegate" destination="QJ5-Nk-nFy" id="bMI-kI-GWe"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Pagar" id="fCn-mr-X0L">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="J3Z-VQ-3nG">
+                            <connections>
+                                <action selector="payButtonAction:" destination="QJ5-Nk-nFy" id="i1J-3K-LDC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KBQ-0w-uov" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
