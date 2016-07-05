@@ -7,6 +7,7 @@
 //
 
 #import "ServicesExamplesViewController.h"
+#import "SavedCardsTableViewController.h"
 
 @interface ServicesExamplesViewController ()
 
@@ -71,9 +72,20 @@
 //    let finalVault = ExamplesUtils.startFinalVaultActivity(MercadoPagoContext.publicKey(), merchantBaseUrl:  ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantGetCustomerUri: MercadoPagoContext.customerURI(), merchantAccessToken: MercadoPagoContext.merchantAccessToken(), amount: 1000, paymentPreference: nil) { (paymentMethod, token, issuer, installments) in
 //        
 //    }
-//    
+//    allowInstallmentsSegue
 //    self.navigationController?.pushViewController(finalVault, animated: true)
 }
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
+    if ([segue.identifier  isEqual: @"allowInstallmentsSegue"]) {
+        SavedCardsTableViewController *savedCardsVC = [segue destinationViewController];
+        savedCardsVC.allowInstallmentsSeletion = YES;
+    }
+    
+}
+
 
 
 @end

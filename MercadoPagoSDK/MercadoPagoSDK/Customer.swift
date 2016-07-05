@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class Customer : Equatable {
+public class Customer : NSObject {
     public var address : Address?
     public var cards : [Card]?
     public var defaultCard : NSNumber?
