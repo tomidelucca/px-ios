@@ -28,8 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         //Pinto de rojo el color primerio
         MercadoPagoUIViewController.primaryColor = UIColor.redColor()
-        //Pinto de rojo el color secundario
-        MercadoPagoUIViewController.secundaryColor = UIColor.greenColor()
+       /// MercadoPagoUIViewController.secundaryColor = UIColor.greenColor()
         
         
         // Initialize window

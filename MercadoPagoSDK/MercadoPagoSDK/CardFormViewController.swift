@@ -64,8 +64,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+           //     self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+            //    self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.tintColor = MercadoPagoUIViewController.secundaryColor
+                self.navigationController?.navigationBar.barTintColor = MercadoPagoUIViewController.primaryColor
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
                 
