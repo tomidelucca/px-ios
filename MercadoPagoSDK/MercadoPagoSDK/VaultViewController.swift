@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MercadoPagoSDK
 
 public class VaultViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -41,10 +42,9 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
     public var securityCodeRequired : Bool = true
     public var securityCodeLength : Int = 0
     public var bin : String?
+    public var paymentPreference : PaymentPreference?
     
-    public var supportedPaymentTypes : Set<String>?
-    
-    init(amount: Double, supportedPaymentTypes: Set<String>?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
+    init(amount: Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) {
             
         super.init(nibName: "VaultViewController", bundle: bundle)
             
@@ -54,7 +54,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
         self.publicKey = MercadoPagoContext.publicKey()
             
         self.amount = amount
-        self.supportedPaymentTypes = supportedPaymentTypes
+        self.paymentPreference = paymentPreference
         self.callback = callback
     }
     
@@ -240,7 +240,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
                 self.showViewController(paymentMethodsViewController)
             }
         } else if indexPath.row == 1 {
-            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, callback: { (payerCost) -> Void in
+            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, issuer: nil, paymentMethodId: nil,callback: { (payerCost) -> Void in
                 self.selectedPayerCost = payerCost
                 self.tableview.reloadData()
                 self.navigationController!.popToViewController(self, animated: true)
@@ -259,16 +259,18 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
     public func loadPayerCosts() {
         self.view.addSubview(self.loadingView)
         let mercadoPago : MercadoPago = MercadoPago(publicKey: self.publicKey!)
-        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: self.selectedIssuer?._id, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId, success: {(installments: [Installment]?) -> Void in
+        MPServicesBuilder.getInstallments(self.bin, amount: self.amount, issuer: self.selectedIssuer!, paymentMethodId: self.selectedPaymentMethod!._id, success: { (installments) in
             if installments != nil {
                 self.payerCosts = installments![0].payerCosts
                 self.tableview.reloadData()
                 self.loadingView.removeFromSuperview()
             }
-            }, failure: { (error: NSError?) -> Void in
+
+            }) { (error) in
                 MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
                 self.navigationController?.popToRootViewControllerAnimated(true)
-        })
+        }
+        
     }
     
     public func submitForm() {
@@ -338,7 +340,7 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
     }
     
     func getPaymentMethodsViewController() -> PaymentMethodsViewController {
-       return MPStepBuilder.startPaymentMethodsStep(self.supportedPaymentTypes!, callback: { (paymentMethod : PaymentMethod) -> Void in
+       return MPStepBuilder.startPaymentMethodsStep(callback: { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
             let paymentTypeIdEnum = PaymentTypeId(rawValue: paymentMethod.paymentTypeId)!
             if paymentTypeIdEnum.isCard() {

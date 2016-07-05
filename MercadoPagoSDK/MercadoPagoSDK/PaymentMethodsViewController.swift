@@ -15,15 +15,15 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
     @IBOutlet weak private var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [PaymentMethod]!
-    var supportedPaymentTypes: Set<String>!
+    var paymentPreference: PaymentPreference?
     var bundle : NSBundle? = MercadoPago.getBundle()
     
     var callback : ((paymentMethod : PaymentMethod) -> Void)?
     
-    init(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) {
+    init(paymentPreference: PaymentPreference?, callback:(paymentMethod: PaymentMethod) -> Void) {
         super.init(nibName: "PaymentMethodsViewController", bundle: bundle)
         self.publicKey = MercadoPagoContext.publicKey()
-        self.supportedPaymentTypes = supportedPaymentTypes
+        self.paymentPreference = paymentPreference
         self.callback = callback
     }
     
@@ -56,13 +56,20 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
         MPServicesBuilder.getPaymentMethods({(paymentMethods: [PaymentMethod]?) -> Void in
                 self.items = [PaymentMethod]()
                 if paymentMethods != nil {
-                    
-                    if self.supportedPaymentTypes != nil && self.supportedPaymentTypes.count > 0 {
-                        self.items = paymentMethods?.filter({return self.supportedPaymentTypes.contains($0.paymentTypeId)})
+                    if self.paymentPreference != nil {
+                        var currenPaymentMethods = paymentMethods
+                        if self.paymentPreference?.excludedPaymentTypeIds != nil && self.paymentPreference?.excludedPaymentTypeIds?.count > 0 {
+                            currenPaymentMethods = currenPaymentMethods?.filter({return (self.paymentPreference?.excludedPaymentTypeIds!.contains($0.paymentTypeId))!})
+                        }
+                        if self.paymentPreference?.excludedPaymentMethodIds != nil && self.paymentPreference?.excludedPaymentMethodIds?.count > 0 {
+                            currenPaymentMethods = currenPaymentMethods?.filter({return (self.paymentPreference?.excludedPaymentMethodIds?.contains($0._id))!})
+                        }
+                        self.items = currenPaymentMethods
                     } else {
                         self.items = paymentMethods
                     }
                 }
+            
                 self.tableView.reloadData()
                 self.loadingView.removeFromSuperview()
             }, failure: { (error: NSError?) -> Void in

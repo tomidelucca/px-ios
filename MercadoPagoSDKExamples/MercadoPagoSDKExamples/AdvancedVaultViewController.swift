@@ -23,8 +23,8 @@ class AdvancedVaultViewController : SimpleVaultViewController {
         super.init(coder: aDecoder)
     }
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, supportedPaymentTypes: Set<String>, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
-        super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, supportedPaymentTypes: supportedPaymentTypes, callback: nil)
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
+        super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, paymentPreference: paymentPreference, callback: nil)
         advancedCallback = callback
         self.amount = amount
     }
@@ -137,20 +137,20 @@ class AdvancedVaultViewController : SimpleVaultViewController {
     
     func loadPayerCosts() {
         self.view.addSubview(self.loadingView)
-        let mercadoPago : MercadoPago = MercadoPago(publicKey: self.publicKey!)
         
-        let issuerId = self.selectedIssuer != nil ? self.selectedIssuer!._id : nil
-     
-        mercadoPago.getInstallments(self.bin!, amount: self.amount, issuerId: issuerId, paymentTypeId: self.selectedPaymentMethod!.paymentTypeId, success: {(installments: [Installment]?) -> Void in
+        let issuer = self.selectedIssuer != nil ? self.selectedIssuer : nil
+        
+        MPServicesBuilder.getInstallments(self.bin!, amount: self.amount, issuer: issuer, paymentMethodId: self.selectedPaymentMethod!._id, success: { (installments) in
             if installments != nil {
                 self.payerCosts = installments![0].payerCosts
                 self.tableview.reloadData()
                 self.loadingView.removeFromSuperview()
             }
-			}, failure: { (error: NSError?) -> Void in
-				MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
-				self.navigationController?.popToRootViewControllerAnimated(true)
-		})
+            }) { (error) in
+                MercadoPago.showAlertViewWithError(error, nav: self.navigationController)
+                self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+
     }
 	
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -158,7 +158,7 @@ class AdvancedVaultViewController : SimpleVaultViewController {
             super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         } else if indexPath.row == 1 {
 
-            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, callback: { (payerCost: PayerCost?) -> Void in
+            self.showViewController(MPStepBuilder.startInstallmentsStep(payerCosts!, amount: amount, issuer:nil, paymentMethodId: nil,callback: { (payerCost: PayerCost?) -> Void in
                 self.selectedPayerCost = payerCost
                 self.tableview.reloadData()
                 self.navigationController!.popToViewController(self, animated: true)

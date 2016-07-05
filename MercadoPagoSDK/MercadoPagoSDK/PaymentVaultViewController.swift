@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 public class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var merchantBaseUrl : String!
@@ -229,7 +230,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                     
                     self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: animated)
                 } else {
-                    self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep([paymentSearchItemSelected.idPaymentMethodSearchItem], callback: {    (paymentMethod : PaymentMethod) -> Void in
+                    self.navigationController?.pushViewController(MPStepBuilder.startPaymentMethodsStep(callback: {    (paymentMethod : PaymentMethod) -> Void in
                         self.callback(paymentMethod: paymentMethod, token: nil, issuer: nil, payerCost: nil)
                     }), animated: true)
                 }
