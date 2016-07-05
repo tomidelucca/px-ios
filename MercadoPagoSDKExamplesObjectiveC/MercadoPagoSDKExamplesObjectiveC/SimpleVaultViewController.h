@@ -11,6 +11,8 @@
 
 @interface SimpleVaultViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic) PaymentMethod *pm;
+@property(nonatomic) PaymentMethod *selectedPaymentMethod;
+@property Card *customerCard;
+@property bool allowInstallmentsSelection;
 
 @end

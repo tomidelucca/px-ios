@@ -7,7 +7,7 @@
 //
 
 #import "SimpleVaultViewController.h"
-#import "SimpleVaultFormViewController.h" // dni man
+#import "SimpleVaultFormViewController.h"
 
 
 @import MercadoPagoSDK;
@@ -18,13 +18,16 @@
 
 @implementation SimpleVaultViewController
 
+@synthesize selectedPaymentMethod;
+@synthesize customerCard;
+@synthesize allowInstallmentsSelection;
 NSArray<PaymentMethod *> *currentPaymentMethods;
-PaymentMethod *selectedPaymentMethod;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
         currentPaymentMethods = paymentMethods;
+        [[self tableView] reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -66,6 +69,8 @@ PaymentMethod *selectedPaymentMethod;
     // Pass the selected object to the new view controller.
     SimpleVaultFormViewController *simpleFormVc= (SimpleVaultFormViewController*) [segue destinationViewController];
     simpleFormVc.paymentMethod = selectedPaymentMethod;
+    simpleFormVc.allowInstallmentsSelection = self.allowInstallmentsSelection;
+
 }
 
 
