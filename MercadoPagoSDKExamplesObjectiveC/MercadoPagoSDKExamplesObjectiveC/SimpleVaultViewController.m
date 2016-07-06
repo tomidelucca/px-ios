@@ -57,7 +57,8 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    selectedPaymentMethod = currentPaymentMethods[indexPath.row];
+    self.selectedPaymentMethod = currentPaymentMethods[indexPath.row];
+    [self performSegueWithIdentifier:@"paymentFormSegue" sender:self];
     
 }
 
@@ -68,8 +69,9 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     SimpleVaultFormViewController *simpleFormVc= (SimpleVaultFormViewController*) [segue destinationViewController];
-    simpleFormVc.paymentMethod = selectedPaymentMethod;
+    simpleFormVc.paymentMethod = self.selectedPaymentMethod;
     simpleFormVc.allowInstallmentsSelection = self.allowInstallmentsSelection;
+    
 
 }
 

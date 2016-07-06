@@ -46,6 +46,9 @@ Card *selectedCard;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SavedCardCell" forIndexPath:indexPath];
+    UIImageView *pmIcon = [cell viewWithTag:1];
+    NSString *pmId = cards[indexPath.row].paymentMethod._id;
+    pmIcon.image = [MercadoPago getImage: pmId];
     return cell;
 }
 

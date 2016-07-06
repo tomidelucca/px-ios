@@ -16,6 +16,6 @@
 @property(nonatomic) bool allowInstallmentsSelection;
 @property(nonatomic) double amount;
 @property(nonatomic) PayerCost *selectedPayerCost;
-
+@property NSArray<IdentificationType *> *identificationTypes;
 
 @end

@@ -17,6 +17,7 @@
 @synthesize allowInstallmentsSelection;
 @synthesize amount;
 @synthesize selectedPayerCost;
+@synthesize identificationTypes;
 UIImageView *cardIcon;
 UITextView *cardNumber;
 UITextView *securityCode;
@@ -25,8 +26,8 @@ UITextView *expirationYear;
 UITextView *cardholderName;
 UITextView *identificationNumber;
 UILabel *installmentsTitle;
-UISegmentedControl *identificationType;
-NSArray<IdentificationType *> *identificationTypes;
+UILabel *identificationType;
+
 
 
 
@@ -36,8 +37,7 @@ NSArray<IdentificationType *> *identificationTypes;
     CardToken *cardToken;
     
     if (customerCard == nil) {
-        NSString *identificationTypeSelected = [identificationType titleForSegmentAtIndex:identificationType.selectedSegmentIndex];
-        cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:expirationMonth.text.intValue expirationYear:expirationYear.text.intValue securityCode:securityCode.text cardholderName:cardholderName.text docType:identificationTypeSelected docNumber:identificationNumber.text];
+        cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:expirationMonth.text.intValue expirationYear:expirationYear.text.intValue securityCode:securityCode.text cardholderName:cardholderName.text docType:identificationType.text docNumber:identificationNumber.text];
         if ([cardToken validateCardNumber] != nil) {
             cardNumber.backgroundColor = [UIColor redColor];
             errorOcurred = YES;
@@ -82,18 +82,15 @@ NSArray<IdentificationType *> *identificationTypes;
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
-                        [congrats dismissViewControllerAnimated:YES completion:^{
-                            [self.navigationController setNavigationBarHidden:NO];
-                            [self.navigationController popToRootViewControllerAnimated:YES];
-                        }];
-                        
+                        [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
-                    [self.navigationController presentViewController:congrats animated:YES completion:^{}];
+                    [self.navigationController pushViewController:congrats animated:YES];
                 } failure:^(NSError *error) {
                     NSLog(@"Error ocurred : %@", error.description);
                 }];
             } failure:^(NSError *error) {
                 NSLog(@"Error ocurred : %@", error.description);
+                
             }];
         
         } else {
@@ -104,7 +101,6 @@ NSArray<IdentificationType *> *identificationTypes;
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
-                    //    [self.navigationController setNavigationBarHidden:NO];
                         [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
                     [self.navigationController pushViewController:congrats animated:YES];
@@ -121,18 +117,8 @@ NSArray<IdentificationType *> *identificationTypes;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [MPServicesBuilder getIdentificationTypes:^(NSArray<IdentificationType *> *identificationTypes) {
-        identificationTypes = identificationTypes;
-        [[self tableView] reloadData];
-    } failure:^(NSError *error) {
-        
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -152,10 +138,13 @@ NSArray<IdentificationType *> *identificationTypes;
             if (self.customerCard == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCardNumber"];
                 cardIcon = [cell viewWithTag:1];
+                cardIcon.image = [MercadoPago getImage:self.paymentMethod._id];
                 cardNumber = [cell viewWithTag:2];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCustomerCard"];
+            cardIcon = [cell viewWithTag:1];
+            cardIcon.image = [MercadoPago getImage:self.customerCard.paymentMethod._id];
             return cell;
             }
             break;
@@ -191,9 +180,6 @@ NSArray<IdentificationType *> *identificationTypes;
         case 4:{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPIdentification"];
             identificationType = [cell viewWithTag:1];
-            for (int i =0; i<= identificationTypes.count; i++) {
-                [identificationType setTitle:identificationTypes[i].name forSegmentAtIndex:i];
-            }
             identificationNumber = [cell viewWithTag:2];
             return cell;
         }
