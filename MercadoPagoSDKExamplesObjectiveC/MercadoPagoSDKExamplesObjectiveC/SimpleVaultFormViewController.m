@@ -20,9 +20,13 @@
 UIImageView *cardIcon;
 UITextView *cardNumber;
 UITextView *securityCode;
+UITextView *expirationMonth;
+UITextView *expirationYear;
 UITextView *cardholderName;
 UITextView *identificationNumber;
 UILabel *installmentsTitle;
+UISegmentedControl *identificationType;
+NSArray<IdentificationType *> *identificationTypes;
 
 
 
@@ -32,26 +36,33 @@ UILabel *installmentsTitle;
     CardToken *cardToken;
     
     if (customerCard == nil) {
-        cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:11 expirationYear:22 securityCode:securityCode.text cardholderName:cardholderName.text docType:@"" docNumber:identificationNumber.text];
+        NSString *identificationTypeSelected = [identificationType titleForSegmentAtIndex:identificationType.selectedSegmentIndex];
+        cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:expirationMonth.text.intValue expirationYear:expirationYear.text.intValue securityCode:securityCode.text cardholderName:cardholderName.text docType:identificationTypeSelected docNumber:identificationNumber.text];
         if ([cardToken validateCardNumber] != nil) {
             cardNumber.backgroundColor = [UIColor redColor];
             errorOcurred = YES;
         } else if ([cardToken validateSecurityCode] != nil) {
             securityCode.backgroundColor = [UIColor redColor];
             errorOcurred = YES;
+        } else if ([cardToken validateExpiryDate] != nil) {
+            expirationMonth.backgroundColor = [UIColor redColor];
+            expirationYear.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
         } else if ([cardToken validateCardholderName] != nil){
             cardholderName.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
+        } else if ([cardToken validateIdentificationType] != nil){
+            identificationType.tintColor = [UIColor redColor];
             errorOcurred = YES;
         } else if ([cardToken validateIdentification] != nil){
             identificationNumber.backgroundColor = [UIColor redColor];
             errorOcurred = YES;
         }
     } else {
-        NSLog(@"%@ %ld", customerCard.paymentMethod._id, customerCard.paymentMethod.secCodeLenght);
-    /*    if (securityCode.text.length == 0 || customerCard.paymentMethod.secCodeLenght != securityCode.text.length) {
+        if (securityCode.text.length == 0) {
             securityCode.backgroundColor = [UIColor redColor];
             errorOcurred = YES;
-        }*/
+        }
     }
     
     if (allowInstallmentsSelection && selectedPayerCost == nil) {
@@ -71,9 +82,12 @@ UILabel *installmentsTitle;
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
+                        [congrats dismissViewControllerAnimated:YES completion:^{
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }];
+                        
                     }];
-                    [self.navigationController pushViewController:congrats animated:YES];
+                    [self.navigationController presentViewController:congrats animated:YES completion:^{}];
                 } failure:^(NSError *error) {
                     NSLog(@"Error ocurred : %@", error.description);
                 }];
@@ -89,7 +103,7 @@ UILabel *installmentsTitle;
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
-                        [[self navigationController] popViewControllerAnimated:YES];
+                        [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
                     [self.navigationController pushViewController:congrats animated:YES];
                 } failure:^(NSError *error) {
@@ -105,6 +119,17 @@ UILabel *installmentsTitle;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [MPServicesBuilder getIdentificationTypes:^(NSArray<IdentificationType *> *identificationTypes) {
+        identificationTypes = identificationTypes;
+        [[self tableView] reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,6 +166,8 @@ UILabel *installmentsTitle;
         case 2:{
             if (self.customerCard == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPExpirationDate"];
+                expirationMonth = [cell viewWithTag:1];
+                expirationYear = [cell viewWithTag:2];
                 return cell;
             } else if (self.selectedPayerCost == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
@@ -161,6 +188,10 @@ UILabel *installmentsTitle;
             break;
         case 4:{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPIdentification"];
+            identificationType = [cell viewWithTag:1];
+            for (int i =0; i<= identificationTypes.count; i++) {
+                [identificationType setTitle:identificationTypes[i].name forSegmentAtIndex:i];
+            }
             identificationNumber = [cell viewWithTag:2];
             return cell;
         }
