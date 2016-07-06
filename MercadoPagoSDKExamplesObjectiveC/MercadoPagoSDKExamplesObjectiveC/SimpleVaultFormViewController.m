@@ -16,6 +16,40 @@
 @synthesize allowInstallmentsSelection;
 @synthesize amount;
 @synthesize selectedPayerCost;
+UIImageView *cardIcon;
+UITextView *cardNumber;
+UITextView *securityCode;
+UITextView *cardholderName;
+UITextView *identificationNumber;
+UILabel *installmentsTitle;
+
+
+
+- (IBAction)payButtonAction:(id)sender {
+    [self clearFields];
+    if (customerCard == nil) {
+        CardToken *cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:11 expirationYear:22 securityCode:securityCode.text cardholderName:cardholderName.text docType:@"" docNumber:identificationNumber.text];
+        if ([cardToken validateCardNumber] != nil) {
+            cardNumber.backgroundColor = [UIColor redColor];
+        } else if ([cardToken validateSecurityCode] != nil) {
+            securityCode.backgroundColor = [UIColor redColor];
+        } else if ([cardToken validateCardholderName] != nil){
+            cardholderName.backgroundColor = [UIColor redColor];
+        } else if ([cardToken validateIdentification] != nil){
+            identificationNumber.backgroundColor = [UIColor redColor];
+        }
+    } else {
+        if (securityCode.text.length == nil || paymentMethod.secCodeLenght != securityCode.text.length) {
+            securityCode.backgroundColor = [UIColor redColor];
+        }
+    }
+    
+    if (allowInstallmentsSelection && selectedPayerCost == nil) {
+        installmentsTitle.textColor = [UIColor redColor];
+    }
+    
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,14 +72,17 @@
         case 0:{
             if (self.customerCard == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCardNumber"];
+                cardIcon = [cell viewWithTag:1];
+                cardNumber = [cell viewWithTag:2];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCustomerCard"];
             return cell;
-        }
+            }
             break;
         case 1:{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPSecurityCode"];
+            securityCode = [cell viewWithTag:1];
             return cell;
         }
             break;
@@ -55,6 +92,7 @@
                 return cell;
             } else if (self.selectedPayerCost == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
+                installmentsTitle = [cell viewWithTag:1];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
@@ -65,17 +103,20 @@
             break;
         case 3:{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPCardholderName"];
+            cardholderName = [cell viewWithTag:1];
             return cell;
         }
             break;
         case 4:{
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPIdentification"];
+            identificationNumber = [cell viewWithTag:2];
             return cell;
         }
             break;
         case 5:{
             if (self.selectedPayerCost == nil) {
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallmentsSelection"];
+                installmentsTitle = [cell viewWithTag:1];
                 return cell;
             }
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPInstallment"];
@@ -92,10 +133,18 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
+    [self clearFields];
+
 }
 
+-(void) clearFields{
+    cardNumber.backgroundColor = [UIColor whiteColor];
+    securityCode.backgroundColor = [UIColor whiteColor];
+    cardholderName.backgroundColor = [UIColor whiteColor];
+    identificationNumber.backgroundColor = [UIColor whiteColor];
+    installmentsTitle.textColor = [UIColor darkGrayColor];
+
+}
 
 #pragma mark - Navigation
 
