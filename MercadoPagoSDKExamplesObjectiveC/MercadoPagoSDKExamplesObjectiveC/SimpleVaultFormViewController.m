@@ -83,6 +83,7 @@ NSArray<IdentificationType *> *identificationTypes;
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
                         [congrats dismissViewControllerAnimated:YES completion:^{
+                            [self.navigationController setNavigationBarHidden:NO];
                             [self.navigationController popToRootViewControllerAnimated:YES];
                         }];
                         
@@ -103,6 +104,7 @@ NSArray<IdentificationType *> *identificationTypes;
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
                     UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
+                    //    [self.navigationController setNavigationBarHidden:NO];
                         [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
                     [self.navigationController pushViewController:congrats animated:YES];
