@@ -8,6 +8,7 @@
 
 #import "SimpleVaultFormViewController.h"
 #import "InstallmentsTableViewController.h"
+#import "ExampleUtils.h"
 
 @implementation SimpleVaultFormViewController 
 
@@ -27,27 +28,78 @@ UILabel *installmentsTitle;
 
 - (IBAction)payButtonAction:(id)sender {
     [self clearFields];
+    bool errorOcurred = NO;
+    CardToken *cardToken;
+    
     if (customerCard == nil) {
-        CardToken *cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:11 expirationYear:22 securityCode:securityCode.text cardholderName:cardholderName.text docType:@"" docNumber:identificationNumber.text];
+        cardToken = [[CardToken alloc] initWithCardNumber:cardNumber.text expirationMonth:11 expirationYear:22 securityCode:securityCode.text cardholderName:cardholderName.text docType:@"" docNumber:identificationNumber.text];
         if ([cardToken validateCardNumber] != nil) {
             cardNumber.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
         } else if ([cardToken validateSecurityCode] != nil) {
             securityCode.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
         } else if ([cardToken validateCardholderName] != nil){
             cardholderName.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
         } else if ([cardToken validateIdentification] != nil){
             identificationNumber.backgroundColor = [UIColor redColor];
+            errorOcurred = YES;
         }
     } else {
-        if (securityCode.text.length == nil || paymentMethod.secCodeLenght != securityCode.text.length) {
+        NSLog(@"%@ %ld", customerCard.paymentMethod._id, customerCard.paymentMethod.secCodeLenght);
+    /*    if (securityCode.text.length == 0 || customerCard.paymentMethod.secCodeLenght != securityCode.text.length) {
             securityCode.backgroundColor = [UIColor redColor];
-        }
+            errorOcurred = YES;
+        }*/
     }
     
     if (allowInstallmentsSelection && selectedPayerCost == nil) {
         installmentsTitle.textColor = [UIColor redColor];
+        errorOcurred = YES;
     }
     
+    if (!errorOcurred) {
+        [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
+        [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
+        [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
+        NSInteger installments = (selectedPayerCost == nil) ? 1 : selectedPayerCost.installments;
+        
+        if (customerCard == nil) {
+            [MPServicesBuilder createNewCardToken:cardToken success:^(Token *token) {
+                Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount];
+                MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:paymentMethod campaignId:0];
+                [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
+                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    }];
+                    [self.navigationController pushViewController:congrats animated:YES];
+                } failure:^(NSError *error) {
+                    NSLog(@"Error ocurred : %@", error.description);
+                }];
+            } failure:^(NSError *error) {
+                NSLog(@"Error ocurred : %@", error.description);
+            }];
+        
+        } else {
+            SavedCardToken *savedCardtoken = [[SavedCardToken alloc] initWithCard:customerCard securityCode:securityCode.text securityCodeRequired: [customerCard.paymentMethod isSecurityCodeRequired:customerCard.firstSixDigits]];
+            
+            [MPServicesBuilder createToken:savedCardtoken success:^(Token *token) {
+                Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount];
+                MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
+                [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
+                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
+                        [[self navigationController] popViewControllerAnimated:YES];
+                    }];
+                    [self.navigationController pushViewController:congrats animated:YES];
+                } failure:^(NSError *error) {
+                    NSLog(@"Error ocurred : %@", error.description);
+                }];
+            } failure:^(NSError *error) {
+               NSLog(@"Error ocurred : %@", error.description);
+            }];
+        }
+    }
     
 }
 
