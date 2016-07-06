@@ -85,6 +85,11 @@
 
 
 
+-(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog([[self.mediosOffArray objectAtIndex:indexPath.row] name]);
+    
+    [self performSegueWithIdentifier:@"unwindFromOff" sender:self];
+}
 
 
 /*
