@@ -79,7 +79,7 @@ PaymentMethod *paymentMethod;
 
 -(void)startCardForm {
     UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
-        
+         [self dismissViewControllerAnimated:YES completion:^{}];
     } callbackCancel:^{
        [self dismissViewControllerAnimated:YES completion:^{}];
     }];
@@ -91,7 +91,8 @@ PaymentMethod *paymentMethod;
 - (void)startPaymentMethods {
     
     UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *paymentMethod) {
-       [self dismissViewControllerAnimated:YES completion:^{}];
+      
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     [self.navigationController pushViewController:paymentsStep animated:YES];
 
@@ -99,13 +100,19 @@ PaymentMethod *paymentMethod;
 
 - (void)statIssuersStep {
     UIViewController *issuersVC = [MPStepBuilder startIssuersStep:paymentMethod callback:^(Issuer *issuer) {
-       [self dismissViewControllerAnimated:YES completion:^{}]; 
+      // [self dismissViewControllerAnimated:YES completion:^{}];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     [self.navigationController pushViewController:issuersVC animated:YES];
     
 }
 
 - (void)startInstallmentsStep{
+    
+     UIViewController *installmentVC =[MPStepBuilder startInstallmentsStep:nil paymentPreference:nil amount:10000 issuer:nil paymentMethodId:@"visa" callback:^(PayerCost * _Nullable payerCost) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+     [self.navigationController pushViewController:installmentVC animated:YES];
 }
 
 - (void)createPayment {
