@@ -17,6 +17,9 @@
 @implementation StepsExamplesViewController
 
 PaymentMethod *paymentMethod;
+Token *currentToken;
+Issuer *selectedIssuer;
+int installmentsSelected = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,15 +63,20 @@ PaymentMethod *paymentMethod;
 }
 
 - (void)startPaymentVault {
-    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT currencyId:CURRENCY paymentPreference:nil callback:^(PaymentMethod *paymentMethod, Token *token, Issuer *issuer, PayerCost *payerCost) {
-        
+    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT currencyId:CURRENCY paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
+        currentToken = token;
+        selectedIssuer = issuer;
+        paymentMethod = pm;
     }];
     [self presentViewController:paymentVaultVC animated:YES completion:^{}];
 
 }
 
 - (void)startCardFlow {
-    UIViewController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT paymentMethods:nil callback:^(PaymentMethod *paymentMethod, Token *token, Issuer *issuer, PayerCost *payerCost) {
+    UIViewController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT paymentMethods:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
+        currentToken = token;
+        selectedIssuer = issuer;
+        paymentMethod = pm;
         [self dismissViewControllerAnimated:YES completion:^{}];
     } callbackCancel:^{
         [self dismissViewControllerAnimated:YES completion:^{}];
@@ -79,6 +87,9 @@ PaymentMethod *paymentMethod;
 
 -(void)startCardForm {
     UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
+        currentToken = token;
+        selectedIssuer = issuer;
+        paymentMethod = pm;
          [self dismissViewControllerAnimated:YES completion:^{}];
     } callbackCancel:^{
        [self dismissViewControllerAnimated:YES completion:^{}];
@@ -90,8 +101,8 @@ PaymentMethod *paymentMethod;
 
 - (void)startPaymentMethods {
     
-    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *paymentMethod) {
-      
+    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *pm) {
+        paymentMethod = pm;
         [self.navigationController popViewControllerAnimated:YES];
     }];
     [self.navigationController pushViewController:paymentsStep animated:YES];
@@ -100,7 +111,7 @@ PaymentMethod *paymentMethod;
 
 - (void)statIssuersStep {
     UIViewController *issuersVC = [MPStepBuilder startIssuersStep:paymentMethod callback:^(Issuer *issuer) {
-      // [self dismissViewControllerAnimated:YES completion:^{}];
+        selectedIssuer = issuer;
         [self.navigationController popViewControllerAnimated:YES];
     }];
     [self.navigationController pushViewController:issuersVC animated:YES];
@@ -109,7 +120,7 @@ PaymentMethod *paymentMethod;
 
 - (void)startInstallmentsStep{
     
-     UIViewController *installmentVC =[MPStepBuilder startInstallmentsStep:nil paymentPreference:nil amount:10000 issuer:nil paymentMethodId:@"visa" callback:^(PayerCost * _Nullable payerCost) {
+     UIViewController *installmentVC =[MPStepBuilder startInstallmentsStep:nil paymentPreference:nil amount:ITEM_UNIT_PRICE issuer:selectedIssuer paymentMethodId:@"visa" callback:^(PayerCost * _Nullable payerCost) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
      [self.navigationController pushViewController:installmentVC animated:YES];
@@ -123,17 +134,13 @@ PaymentMethod *paymentMethod;
     
     Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE];
 
-
-    MerchantPayment *merchantPayment = [[MerchantPayment init] alloc];
-    merchantPayment.items = [NSArray arrayWithObject:item];
-    merchantPayment.installments = 3;
-    merchantPayment.issuer = nil;;
-    merchantPayment.cardTokenId = @"cardTokenId";
+    MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installmentsSelected cardIssuer:selectedIssuer tokenId:[currentToken _id] paymentMethod:paymentMethod campaignId:0];
+    
     
     [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
-        
+        NSLog(@"Payment created with id: %ld", payment._id);
     } failure:^(NSError *error) {
-        
+        NSLog(@"%@", error.description);
     }];
     
 }
