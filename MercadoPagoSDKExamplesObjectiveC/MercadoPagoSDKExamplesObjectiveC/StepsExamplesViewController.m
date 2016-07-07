@@ -117,14 +117,12 @@ PaymentMethod *paymentMethod;
 
 - (void)createPayment {
     
-    [MercadoPagoContext setBaseURL:@"http://server.com"];
-    [MercadoPagoContext setPaymentURI:@"/payment_uri"];
+    [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
+    [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
+    [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
     
-    Item *item = [[Item init] alloc];
-    item._id = ITEM_ID;
-    item.title = ITEM_TITLE;
-    item.quantity = ITEM_QUANTITY;
-    item.unitPrice = ITEM_UNIT_PRICE;
+    Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE];
+
 
     MerchantPayment *merchantPayment = [[MerchantPayment init] alloc];
     merchantPayment.items = [NSArray arrayWithObject:item];
