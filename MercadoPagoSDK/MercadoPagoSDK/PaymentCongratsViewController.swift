@@ -103,7 +103,6 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         exitButtonCell.defaultCallback = {
             if self.navigationController != nil && self.navigationController?.navigationBar != nil {
                 self.navigationController?.setNavigationBarHidden(false, animated: false)
-              //  ViewUtils.addStatusBar(self.view, color: self.congratsLayout[self.layoutTemplate]!["headerColor"] as! UIColor)
             }
             self.invokeCallback("OK")
             

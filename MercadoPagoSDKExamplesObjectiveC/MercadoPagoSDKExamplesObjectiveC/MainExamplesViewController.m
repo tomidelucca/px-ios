@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,7 +26,7 @@
 
 - (IBAction)checkoutFlow:(id)sender {
 
-    UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:TEST_PUBLIC_KEY callback:^(Payment *payment) {
+    UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
         
     }];
     
