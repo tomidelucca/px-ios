@@ -64,9 +64,9 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         self.tableExamples.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.row {
         case 0:
-            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+            MercadoPagoContext.setPublicKey("TEST-13af39b3-2d56-4776-9dd7-981672ddb3bb")
             //Checkout Example
-            let choFlow = MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment: Payment) in
+            let choFlow = MPFlowBuilder.startCheckoutViewController("170206767-8a1e1e56-1d51-4018-9a81-2599a75e6996", callback: { (payment: Payment) in
                 
             })
             self.presentViewController(choFlow, animated: true, completion: {})

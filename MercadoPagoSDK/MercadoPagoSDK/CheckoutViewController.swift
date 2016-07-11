@@ -160,6 +160,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                     let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)!
                     let paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: paymentTypeIdEnum)
                     cell.fillRowWithPaymentMethod(self.paymentMethod!, paymentMethodSearchItemSelected: paymentMethodSearchItemSelected!)
+                    if self.paymentMethodSearch!.paymentMethods.count == 1 {
+                        cell.selectionStyle = .None
+                        cell.accessoryType = .None
+                    }
                     return cell
                 } else {
                     let paymentSearchCell = tableView.dequeueReusableCellWithIdentifier("paymentSelectedCell", forIndexPath: indexPath) as! PaymentMethodSelectedTableViewCell
@@ -227,7 +231,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
-        } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.groups.count > 1 {
+        } else if indexPath.section == 1 && indexPath.row == 0 && self.paymentMethodSearch?.paymentMethods.count > 1 {
             self.checkoutTable.deselectRowAtIndexPath(indexPath, animated: true)
             self.showLoading()
             self.loadGroupsAndStartPaymentVault()

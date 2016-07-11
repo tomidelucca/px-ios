@@ -111,6 +111,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
         self.registerAllCells()
     
+        
+        
+        
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -120,8 +123,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
 
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLoading()
         self.loadPaymentMethodSearch()
+        
+      
         
     }
     
@@ -257,33 +261,33 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         if self.currentPaymentMethodSearch == nil {
             let excludedPaymentTypeIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentTypeIds : nil
             let excludedPaymentMethodIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentMethodIds : nil
-            
+            self.showLoading()
             MPServicesBuilder.searchPaymentMethods(self.amount, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 self.paymentMethods = paymentMethodSearchResponse.paymentMethods
                 self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
-                if self.currentPaymentMethodSearch.count == 1 {
-                    self.optionSelected(self.currentPaymentMethodSearch[0], animated: false)
-                }
-                self.paymentsTable.delegate = self
-                self.paymentsTable.dataSource = self
-                self.paymentsTable.reloadData()
                 self.hideLoading()
+                self.loadPaymentMethodSearch()
                 }, failure: { (error) -> Void in
+                    self.hideLoading()
                     self.requestFailure(error)
             })
+            
         } else {
+            
+            if self.currentPaymentMethodSearch.count == 1 && self.currentPaymentMethodSearch[0].children.count > 0 {
+                self.currentPaymentMethodSearch = self.currentPaymentMethodSearch[0].children
+            }
+            
             if self.currentPaymentMethodSearch.count == 1 {
                 self.optionSelected(self.currentPaymentMethodSearch[0], animated: false)
             } else {
                 self.paymentsTable.delegate = self
                 self.paymentsTable.dataSource = self
                 self.paymentsTable.reloadData()
-                self.hideLoading()
-                
             }
         }
-    
     }
+
     
     
     private func getCellFor(currentPaymentMethodItem : PaymentMethodSearchItem) -> UITableViewCell {
