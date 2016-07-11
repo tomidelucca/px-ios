@@ -13,10 +13,13 @@ public class MerchantPayment : NSObject {
     public var cardTokenId : String!
     public var campaignId : Int = 0
     public var installments : Int = 0
-    public var items : [Item]
+    public var items : [Item]?
     public var merchantAccessToken : String!
     public var paymentMethod : PaymentMethod!
     
+    public override init(){
+        super.init()
+    }
     
     public init(items: [Item], installments: Int, cardIssuer: Issuer?, tokenId: String, paymentMethod: PaymentMethod, campaignId: Int) {
         self.items = items

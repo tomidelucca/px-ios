@@ -32,6 +32,7 @@ class ServicesExamplesViewController: UIViewController, UITableViewDataSource, U
         self.paymentMethod = pm
         
         //Initialize MercadoPagoContext
+        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
     }

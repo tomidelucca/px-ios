@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		02A60D0F6F98D701FF8A8F29D0563495 /* Pods-MercadoPagoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F97742BC488A95A9C819BD1E2A1BD9F /* Pods-MercadoPagoSDK-dummy.m */; };
 		142D44A49280458010BB23A78041FFBF /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = 459E38B4083BADC667C409D33877C63B /* Info.plist */; };
-		1E8DD45021BAAE41628F9CF49E53FB1E /* MPGoogleAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ACB3FB36017D2F6385E2A247E72A305 /* MPGoogleAnalytics.framework */; };
 		20C95B681CC836468B002F9B7249C6DE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B329D49490D68AFCB0B3ADF53CF43A36 /* CoreData.framework */; };
 		35C60BC76E1B86E39213A7B402CCE087 /* GAIEcommerceProductAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A1E602BEE85555B5B781903E75453B2 /* GAIEcommerceProductAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		42BC81C5AC482551B06AF74485866F09 /* GAITracker.h in Headers */ = {isa = PBXBuildFile; fileRef = B0F4681313CAC3476B8DBF8B6C0165A7 /* GAITracker.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -37,7 +36,6 @@
 		CC67DA5D1DDA8535A24258A5418419A0 /* GAILogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 87200FF0786F302A59399A9123105948 /* GAILogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CCEC61D7CB62D9367EFA75224355DA2B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C596EA26C3C39480186EAC68DEAB1A5A /* UIKit.framework */; };
 		D2D42EF8BCD7D838F3A7889F5E9C601E /* MercadoPagoTracker-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5671119C75802A8B444B1D3A596A08D9 /* MercadoPagoTracker-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4CA02D58B6ACF9C6A80743FC9F860AA /* MPGoogleAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8E017627A7FC1A96767424D3E66367 /* MPGoogleAnalytics.framework */; };
 		D59B35D0D457C0B1BF3DEB2E1373AF6F /* MPGoogleAnalytics-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 75AA3104C955641574467AD8228F156D /* MPGoogleAnalytics-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D640F4D24F9743551A014500B845D11B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35C82B07D8586B1E4E002C828925745 /* SystemConfiguration.framework */; };
 		DCA297617605792EE3BB7723033804F4 /* MPTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8A51D6FF136CAA659B67EA5330967 /* MPTracker.swift */; settings = {COMPILER_FLAGS = "$(inherited) -framework UIKit -framework CoreData -framework SystemConfiguration -framework Foundation -framework MPGoogleAnalytics -lz -lstdc++ -ObjC"; }; };
@@ -156,8 +154,6 @@
 			files = (
 				20C95B681CC836468B002F9B7249C6DE /* CoreData.framework in Frameworks */,
 				4E2F3A9BE0D3EA5D0D5366190F95BE0C /* Foundation.framework in Frameworks */,
-				D4CA02D58B6ACF9C6A80743FC9F860AA /* MPGoogleAnalytics.framework in Frameworks */,
-				1E8DD45021BAAE41628F9CF49E53FB1E /* MPGoogleAnalytics.framework in Frameworks */,
 				D640F4D24F9743551A014500B845D11B /* SystemConfiguration.framework in Frameworks */,
 				CCEC61D7CB62D9367EFA75224355DA2B /* UIKit.framework in Frameworks */,
 			);
