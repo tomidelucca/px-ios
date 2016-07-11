@@ -39,6 +39,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    override func loadMPStyles(){
+        
+    }
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.registerCells()
@@ -97,7 +101,11 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         exitButtonCell.exitButton.setAttributedTitle(NSAttributedString(string: "Seguir comprando".localized), forState: .Normal)
         exitButtonCell.userInteractionEnabled = true
         exitButtonCell.defaultCallback = {
+            if self.navigationController != nil && self.navigationController?.navigationBar != nil {
+                self.navigationController?.setNavigationBarHidden(false, animated: false)
+            }
             self.invokeCallback("OK")
+            
         }
         return exitButtonCell
     }

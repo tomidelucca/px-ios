@@ -23,7 +23,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
     
-    var paymentMethod : PaymentMethod!
+    var paymentMethod : PaymentMethod?
+    var selectedIssuer : Issuer?
+    var createdToken : Token?
+    var installmentsSelected : PayerCost?
     
     init(){
         super.init(nibName: "StepsExamplesViewController", bundle: nil)
@@ -43,6 +46,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         self.stepsExamplesTable.delegate = self
         self.stepsExamplesTable.dataSource = self
+        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
     }
     
     override func didReceiveMemoryWarning() {
@@ -89,7 +93,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func startPaymentVault(){
         let pv = MPFlowBuilder.startPaymentVaultViewController(1000, currencyId: "ARS") { (paymentMethod, token, issuer, payerCost) in
-            
+            self.paymentMethod = paymentMethod
+            self.createdToken = token
+            self.selectedIssuer = issuer
+            self.installmentsSelected = payerCost
         }
         self.presentViewController(pv, animated: true, completion: {})
     }
@@ -97,6 +104,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     private func startCardFlow(){
         var cf : UINavigationController!
         cf = MPFlowBuilder.startCardFlow(amount: 1000, callback: { (paymentMethod, token, issuer, payerCost) in
+            self.paymentMethod = paymentMethod
+            self.createdToken = token
+            self.selectedIssuer = issuer
+            self.installmentsSelected = payerCost
            cf!.dismissViewControllerAnimated(true, completion: {})
             }, callbackCancel : {
                 cf!.dismissViewControllerAnimated(true, completion: {})
@@ -107,6 +118,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     private func startCardForm(){
         var cf : UINavigationController!
         cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
+            self.paymentMethod = paymentMethod
+            self.createdToken = token
+            self.selectedIssuer = issuer
             cf!.dismissViewControllerAnimated(true, completion: {})
             }, callbackCancel : {
                 cf!.dismissViewControllerAnimated(true, completion: {})
@@ -117,13 +131,15 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func startPaymentMethods(){
         let pms = MPStepBuilder.startPaymentMethodsStep(nil) { (paymentMethod) in
+            self.paymentMethod = paymentMethod
             self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(pms, animated: true)
     }
     
     private func statIssuersStep(){
-        let issuersVC = MPStepBuilder.startIssuersStep(self.paymentMethod) { (issuer) in
+        let issuersVC = MPStepBuilder.startIssuersStep(self.paymentMethod!) { (issuer) in
+            self.selectedIssuer = issuer
             self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(issuersVC, animated: true)
@@ -133,6 +149,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     private func startInstallmentsStep(){
         
         let installmentsVC = MPStepBuilder.startInstallmentsStep(amount: 10000, issuer: nil, paymentMethodId: "visa") { (payerCost) in
+            self.installmentsSelected = payerCost
             self.navigationController!.popViewControllerAnimated(true)
         }
         self.navigationController?.pushViewController(installmentsVC, animated: true)
@@ -141,14 +158,16 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func createPayment(){
         
-        MercadoPagoContext.setBaseURL("http://server.com")
-        MercadoPagoContext.setPaymentURI("/payment_uri")
+        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
+        MercadoPagoContext.setPaymentURI(ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)
         
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
                                unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
 
         //CardIssuer is optional
-        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: 3, cardIssuer: nil, tokenId: "tokenId", paymentMethod: self.paymentMethod, campaignId: 0)
+        let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments
+        let cardTokenId = (self.createdToken == nil) ? "" : self.createdToken!._id
+        let merchantPayment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: self.selectedIssuer, tokenId: cardTokenId, paymentMethod: self.paymentMethod!, campaignId: 0)
         
 
         MerchantServer.createPayment(merchantPayment, success: { (payment) in
