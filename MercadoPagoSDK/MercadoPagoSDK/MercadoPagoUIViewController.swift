@@ -39,22 +39,13 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.loadMPStyles()
 
     }
-    
-   public static var primaryColor : UIColor = UIColor(red: 48, green: 175, blue: 226)
-   public static var secundaryColor : UIColor = UIColor.whiteColor()
-    
-    
+
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
 
     
-    static func setupPrimaryColor(color: UIColor){
-        MercadoPagoUIViewController.primaryColor = color
-    }
-    static func setupSecundaryColor(color: UIColor){
-        MercadoPagoUIViewController.secundaryColor = color
-    }
+   
     static func loadFont(fontName: String) -> Bool {
         
         if let path = MercadoPago.getBundle()!.pathForResource(fontName, ofType: "ttf")
@@ -101,14 +92,14 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
 
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: MercadoPagoUIViewController.secundaryColor, NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = MercadoPagoUIViewController.primaryColor
+                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                   self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons

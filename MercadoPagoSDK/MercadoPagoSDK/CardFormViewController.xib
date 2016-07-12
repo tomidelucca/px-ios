@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFormViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
+                <outlet property="cardBackground" destination="HQg-yC-PDa" id="0O0-1b-hau"/>
                 <outlet property="cardView" destination="1e7-Cv-GMx" id="xhN-uC-Dfj"/>
                 <outlet property="textBox" destination="cn0-aq-63o" id="zao-Py-yva"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -68,6 +69,13 @@
                         <constraint firstAttribute="height" constant="44" id="aFP-zn-PR6"/>
                     </constraints>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4wC-Ci-WCV">
+                    <rect key="frame" x="91" y="352" width="139" height="129"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="129" id="HdT-BW-Kkz"/>
+                        <constraint firstAttribute="width" constant="139" id="Ol2-Hh-EPO"/>
+                    </constraints>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-yC-PDa">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                     <subviews>
@@ -114,7 +122,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="duM-jG-gy1" secondAttribute="bottom" id="3TX-cs-cC9"/>
                         <constraint firstItem="X6O-69-9IX" firstAttribute="width" secondItem="4KY-tj-034" secondAttribute="width" id="Be0-jk-UPc"/>
@@ -146,13 +154,6 @@
                         </mask>
                     </variation>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4wC-Ci-WCV">
-                    <rect key="frame" x="91" y="352" width="139" height="129"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="129" id="HdT-BW-Kkz"/>
-                        <constraint firstAttribute="width" constant="139" id="Ol2-Hh-EPO"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.3529411764705882" green="0.74509803921568629" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>

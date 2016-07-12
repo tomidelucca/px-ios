@@ -13,6 +13,7 @@ import MercadoPagoTracker
 public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
 
     
+    @IBOutlet weak var cardBackground: UIView!
     
     @IBOutlet weak var cardView: UIView!
     var cardViewBack:UIView?
@@ -66,11 +67,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
            //     self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
             //    self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
-                self.navigationController?.navigationBar.tintColor = MercadoPagoUIViewController.secundaryColor
-                self.navigationController?.navigationBar.barTintColor = MercadoPagoUIViewController.primaryColor
+              //  self.navigationController?.navigationBar.tintColor = MercadoPagoContext.secundaryColor
+                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
-                
+            self.cardBackground.backgroundColor =  MercadoPagoContext.getSecundaryColor()
  
                 var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
 

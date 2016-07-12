@@ -68,6 +68,37 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return self.public_key
     }
     
+    private static var primaryColor : UIColor = UIColor(red: 48, green: 175, blue: 226)
+    private static var secundaryColor : UIColor = UIColor(red: 48, green: 175, blue: 226).lighter()
+    private static var textColor : UIColor = UIColor.whiteColor()
+    
+    public static func setupPrimaryColor(color: UIColor){
+        MercadoPagoContext.primaryColor = color
+        MercadoPagoContext.setupSecundaryColor(color.lighter())
+    }
+    private static func setupSecundaryColor(color: UIColor){
+        MercadoPagoContext.secundaryColor = color
+    }
+    
+    public static func getPrimaryColor() -> UIColor {
+        return primaryColor
+    }
+    
+    public static func getSecundaryColor() -> UIColor {
+        return secundaryColor
+    }
+    
+    public static func getTextColor() -> UIColor {
+        return textColor
+    }
+    public static func setDarkTextColor(){
+        textColor = UIColor.blackColor()
+    }
+    public static func setLightTextColor(){
+        textColor = UIColor.whiteColor()
+    }
+    
+    
     private override init() {
     
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
@@ -243,4 +274,15 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
     }
     
+}
+
+extension UIColor{
+    func lighter() -> UIColor {
+        return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
+    }
+    func adjust(red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
+    }
 }
