@@ -10,12 +10,12 @@ import UIKit
 import MercadoPagoSDK
 
 class MainExamplesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    let examples = [["title" : "Nuestro Checkout".localized, "image" : "PlugNplay"],
-                               ["title" : "Components de UI".localized, "image" : "Puzzle"],
-                               ["title" : "Servicios".localized, "image" : "Ninja"]
-                            ]
-
+    
+    let examples = [["title" : "Nuestro Checkout", "image" : "PlugNplay"],
+                    ["title" : "Components de UI", "image" : "Puzzle"],
+                    ["title" : "Servicios", "image" : "Ninja"]
+    ]
+    
     @IBOutlet weak var tableExamples: UITableView!
     
     init(){
@@ -26,7 +26,7 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +37,7 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         self.tableExamples.delegate = self
         self.tableExamples.dataSource = self
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -64,26 +64,24 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         self.tableExamples.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.row {
         case 0:
-        
-            MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
-            //Checkout Example
-            let choFlow = MPFlowBuilder.startCheckoutViewController(ExamplesUtils.PREF_ID_NO_EXCLUSIONS, callback: { (payment: Payment) in
-                
-            })
-            self.presentViewController(choFlow, animated: true, completion: {})
+            
+            let tests = TestCheckoutExamplesViewController()
+            self.navigationController?.pushViewController(tests, animated: true)
+            
         case 1:
             //UI Components
-            let stepsExamples = StepsExamplesViewController()
-            self.navigationController?.pushViewController(stepsExamples, animated: true)
+           // let stepsExamples = StepsExamplesViewController()
+          //  self.navigationController?.pushViewController(stepsExamples, animated: true)
+            return
         case 2:
             //Services
-            let servicesExamples = ServicesExamplesViewController()
-            self.navigationController?.pushViewController(servicesExamples, animated: true)
+            //let servicesExamples = ServicesExamplesViewController()
+            //self.navigationController?.pushViewController(servicesExamples, animated: true)
             return
         default:
             break
         }
     }
-
+    
     
 }
