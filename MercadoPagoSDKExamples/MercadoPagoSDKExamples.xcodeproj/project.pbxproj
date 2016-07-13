@@ -38,13 +38,10 @@
 		15A327F61D1DC8F000F4B403 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; };
 		762713691D343424008DC3AB /* CardFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762713681D343424008DC3AB /* CardFlowTest.swift */; };
 		7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136B1D343580008DC3AB /* CardFormActions.swift */; };
-		7639DAB31D353F80003E3DCB /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7639DAB21D353F80003E3DCB /* MainExamplesViewController.swift */; };
 		7639DAB41D353FB5003E3DCB /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
 		7639DAB51D353FF6003E3DCB /* ComponentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */; };
 		7639DAB61D353FFE003E3DCB /* ComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */; };
 		7639DAB71D354018003E3DCB /* ExamplesUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F98852A1AD2BD3700F750F0 /* ExamplesUtils.swift */; };
-		7639DABA1D35404D003E3DCB /* TestCheckoutExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7639DAB81D35404D003E3DCB /* TestCheckoutExamplesViewController.swift */; };
-		7639DABB1D35404D003E3DCB /* TestCheckoutExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7639DAB91D35404D003E3DCB /* TestCheckoutExamplesViewController.xib */; };
 		7639DABC1D354215003E3DCB /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9885321AD2BD8700F750F0 /* CardViewController.swift */; };
 		7639DABD1D354218003E3DCB /* SimpleVaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F98853E1AD2BDA700F750F0 /* SimpleVaultViewController.swift */; };
 		7639DABE1D354221003E3DCB /* AdvancedVaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9885441AD2BDB300F750F0 /* AdvancedVaultViewController.swift */; };
@@ -52,9 +49,6 @@
 		7639DAC01D35423A003E3DCB /* SimpleSecurityCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9885381AD2BD9100F750F0 /* SimpleSecurityCodeTableViewCell.swift */; };
 		7639DAC11D354241003E3DCB /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE50A31AF2B05600A30177 /* String+Additions.swift */; };
 		7639DACC1D357A40003E3DCB /* CheckoutFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */; };
-		7639DAD21D35829C003E3DCB /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7639DACF1D357AAD003E3DCB /* TestAppDelegate.swift */; };
-		7639DAD41D35834F003E3DCB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7639DAD31D35834F003E3DCB /* main.swift */; };
-		7639DAD51D35845C003E3DCB /* TestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7639DACF1D357AAD003E3DCB /* TestAppDelegate.swift */; };
 		7639DAD61D358D8A003E3DCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9884FB1AD2BCB900F750F0 /* AppDelegate.swift */; };
 		766CDFCE1D21CB8C00F9FAD4 /* MercadoPagoTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; };
 		766CDFCF1D21CBA100F9FAD4 /* MPGoogleAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */; };
@@ -176,11 +170,6 @@
 		762713681D343424008DC3AB /* CardFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowTest.swift; sourceTree = "<group>"; };
 		7627136B1D343580008DC3AB /* CardFormActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormActions.swift; sourceTree = "<group>"; };
 		7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutFlowTest.swift; sourceTree = "<group>"; };
-		7639DAB21D353F80003E3DCB /* MainExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainExamplesViewController.swift; sourceTree = "<group>"; };
-		7639DAB81D35404D003E3DCB /* TestCheckoutExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCheckoutExamplesViewController.swift; sourceTree = "<group>"; };
-		7639DAB91D35404D003E3DCB /* TestCheckoutExamplesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestCheckoutExamplesViewController.xib; sourceTree = "<group>"; };
-		7639DACF1D357AAD003E3DCB /* TestAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAppDelegate.swift; sourceTree = "<group>"; };
-		7639DAD31D35834F003E3DCB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainExamplesViewController.swift; sourceTree = "<group>"; };
 		766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainExamplesViewController.xib; sourceTree = "<group>"; };
 		76AFD39D1D34236A00A9DDAD /* MercadoPagoSDKExamplesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MercadoPagoSDKExamplesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -406,10 +395,6 @@
 			children = (
 				762713681D343424008DC3AB /* CardFlowTest.swift */,
 				7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */,
-				7639DAB21D353F80003E3DCB /* MainExamplesViewController.swift */,
-				7639DAB81D35404D003E3DCB /* TestCheckoutExamplesViewController.swift */,
-				7639DAB91D35404D003E3DCB /* TestCheckoutExamplesViewController.xib */,
-				7639DACF1D357AAD003E3DCB /* TestAppDelegate.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -433,7 +418,6 @@
 				76EF7E621D2415E60087C785 /* StepsExamplesViewController.xib */,
 				76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */,
 				76EF7E6D1D24229A0087C785 /* ServicesExamplesViewController.xib */,
-				7639DAD31D35834F003E3DCB /* main.swift */,
 			);
 			name = "Component Examples";
 			sourceTree = "<group>";
@@ -649,7 +633,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7639DABB1D35404D003E3DCB /* TestCheckoutExamplesViewController.xib in Resources */,
 				7639DAB41D353FB5003E3DCB /* MainExamplesViewController.xib in Resources */,
 				7639DAB51D353FF6003E3DCB /* ComponentTableViewCell.xib in Resources */,
 			);
@@ -670,10 +653,8 @@
 				0F98852B1AD2BD3700F750F0 /* ExamplesUtils.swift in Sources */,
 				0F9884FC1AD2BCB900F750F0 /* AppDelegate.swift in Sources */,
 				0F9885481AD2BDBE00F750F0 /* FinalVaultViewController.swift in Sources */,
-				7639DAD41D35834F003E3DCB /* main.swift in Sources */,
 				0F9885401AD2BDA700F750F0 /* SimpleVaultViewController.swift in Sources */,
 				766CDFF01D240ED000F9FAD4 /* MainExamplesViewController.swift in Sources */,
-				7639DAD51D35845C003E3DCB /* TestAppDelegate.swift in Sources */,
 				76EF7E6E1D24229A0087C785 /* ServicesExamplesViewController.swift in Sources */,
 				0FCE50A41AF2B05600A30177 /* String+Additions.swift in Sources */,
 				76EF7E731D2447870087C785 /* ComponentTableViewCell.swift in Sources */,
@@ -702,16 +683,13 @@
 				7639DAC11D354241003E3DCB /* String+Additions.swift in Sources */,
 				76BE8CC41D343E6E00DF5D66 /* CommonActions.swift in Sources */,
 				7639DAB61D353FFE003E3DCB /* ComponentTableViewCell.swift in Sources */,
-				7639DAB31D353F80003E3DCB /* MainExamplesViewController.swift in Sources */,
 				762713691D343424008DC3AB /* CardFlowTest.swift in Sources */,
 				7639DABC1D354215003E3DCB /* CardViewController.swift in Sources */,
 				7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */,
 				7639DAB71D354018003E3DCB /* ExamplesUtils.swift in Sources */,
 				7639DAD61D358D8A003E3DCB /* AppDelegate.swift in Sources */,
 				7639DACC1D357A40003E3DCB /* CheckoutFlowTest.swift in Sources */,
-				7639DABA1D35404D003E3DCB /* TestCheckoutExamplesViewController.swift in Sources */,
 				7639DABD1D354218003E3DCB /* SimpleVaultViewController.swift in Sources */,
-				7639DAD21D35829C003E3DCB /* TestAppDelegate.swift in Sources */,
 				7639DAC01D35423A003E3DCB /* SimpleSecurityCodeTableViewCell.swift in Sources */,
 				7639DABF1D354226003E3DCB /* FinalVaultViewController.swift in Sources */,
 				7639DABE1D354221003E3DCB /* AdvancedVaultViewController.swift in Sources */,

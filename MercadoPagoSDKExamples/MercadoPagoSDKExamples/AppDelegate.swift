@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import MercadoPagoSDK
 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
