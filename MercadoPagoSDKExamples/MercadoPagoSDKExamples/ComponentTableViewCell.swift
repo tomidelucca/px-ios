@@ -29,7 +29,7 @@ class ComponentTableViewCell: UITableViewCell {
         var image = UIImage(named: iconImage)
         image = image?.imageWithRenderingMode(.AlwaysTemplate)
         self.icon.image = image
-        self.icon.tintColor = UIColor().blueMercadoPago()
+        self.icon.tintColor = UIColor.blueMercadoPago()
         self.title.text = title
     }
     

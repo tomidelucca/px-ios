@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import MercadoPagoSDK
 
 public class VaultViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
