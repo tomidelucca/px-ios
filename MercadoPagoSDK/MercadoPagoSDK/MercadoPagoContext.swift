@@ -68,8 +68,10 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return self.public_key
     }
     
-    private static var primaryColor : UIColor = UIColor(red: 48, green: 175, blue: 226)
-    private static var secundaryColor : UIColor = UIColor(red: 48, green: 175, blue: 226).lighter()
+    private static var primaryColor : UIColor = UIColor(red: 48  , green: 175, blue: 226)
+
+        //UIColor = UIColor(red: 48, green: 175, blue: 226)
+    private static var secundaryColor : UIColor = UIColor.blueMercadoPago()        //UIColor(red: 48, green: 175, blue: 226).lighter()
     private static var textColor : UIColor = UIColor.whiteColor()
     
     public static func setupPrimaryColor(color: UIColor){
@@ -80,15 +82,15 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         MercadoPagoContext.secundaryColor = color
     }
     
-    public static func getPrimaryColor() -> UIColor {
+    internal static func getPrimaryColor() -> UIColor {
         return primaryColor
     }
     
-    public static func getSecundaryColor() -> UIColor {
+    internal static func getSecundaryColor() -> UIColor {
         return secundaryColor
     }
     
-    public static func getTextColor() -> UIColor {
+    internal static func getTextColor() -> UIColor {
         return textColor
     }
     public static func setDarkTextColor(){
@@ -276,13 +278,4 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
 }
 
-extension UIColor{
-    func lighter() -> UIColor {
-        return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
-    }
-    func adjust(red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
-        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-        self.getRed(&r, green: &g, blue: &b, alpha: &a)
-        return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
-    }
-}
+

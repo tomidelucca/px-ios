@@ -34,7 +34,7 @@ public class GenericErrorView : UIView {
         
         self.errorLabel = MPLabel(frame: CGRectMake(kLabelXOffset, 0, self.frame.size.width - 2*kLabelXOffset, self.frame.size.height))
         self.errorLabel.numberOfLines = 0
-        self.errorLabel.textColor = UIColor().errorCellColor()
+        self.errorLabel.textColor = UIColor.errorCellColor()
         self.errorLabel.font = UIFont(name: "HelveticaNeue-Light", size: 13)
         self.errorLabel.autoresizingMask = UIViewAutoresizing.FlexibleHeight
         self.errorLabel.backgroundColor = UIColor.clearColor()

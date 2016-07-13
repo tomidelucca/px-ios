@@ -59,7 +59,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -71,10 +71,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             self.cardBackground.backgroundColor =  MercadoPagoContext.getSecundaryColor()
  
                 var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
+                promocionesButton.tintColor = UIColor.systemFontColor()
 
                 
                 self.navigationItem.rightBarButtonItem = promocionesButton
-                
+       
                 
                 //Create navigation buttons
                 displayBackButton()

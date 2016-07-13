@@ -16,7 +16,7 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         super.awakeFromNib()
         self.payAgainButton.layer.cornerRadius = 5
         self.payAgainButton.layer.borderWidth = 1
-        self.payAgainButton.layer.borderColor = UIColor().blueMercadoPago().CGColor
+        self.payAgainButton.layer.borderColor = UIColor.primaryColor().CGColor
         self.payAgainButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
         
     }

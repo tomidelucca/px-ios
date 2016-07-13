@@ -41,14 +41,14 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
             
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
@@ -71,6 +71,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.primaryColor()
          tableView.tableFooterView = UIView()
         let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
         self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")

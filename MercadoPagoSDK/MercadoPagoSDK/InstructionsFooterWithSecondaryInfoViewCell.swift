@@ -20,7 +20,7 @@ class InstructionsFooterWithSecondaryInfoViewCell: UITableViewCell, Instructions
         super.awakeFromNib()
         let tintedImage = self.clockIcon.image?.imageWithRenderingMode(.AlwaysTemplate)
         self.clockIcon.image = tintedImage
-        self.clockIcon.tintColor = UIColor().UIColorFromRGB(0xB29054)
+        self.clockIcon.tintColor = UIColor.UIColorFromRGB(0xB29054)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
