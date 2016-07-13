@@ -10,6 +10,8 @@ import UIKit
 import MercadoPagoTracker
 
 public class MPNavigationController : UINavigationController {
+    
+    
     internal func showLoading(){
 
         LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.whiteColor())
@@ -37,11 +39,13 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         self.loadMPStyles()
 
     }
-    
+
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
 
+    
+   
     static func loadFont(fontName: String) -> Bool {
         
         if let path = MercadoPago.getBundle()!.pathForResource(fontName, ofType: "ttf")
@@ -88,14 +92,14 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
 
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor(red: 48, green: 175, blue: 226)
+                self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
+                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                   self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
@@ -180,7 +184,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         backButton.image = MercadoPago.getImage("left_arrow")
         backButton.style = UIBarButtonItemStyle.Bordered
         backButton.target = self
-        backButton.tintColor = UIColor.whiteColor()
+        backButton.tintColor = UIColor.systemFontColor()
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         backButton.action = "executeBack"
         self.navigationItem.leftBarButtonItem = backButton

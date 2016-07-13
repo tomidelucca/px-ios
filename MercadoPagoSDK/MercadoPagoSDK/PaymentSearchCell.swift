@@ -40,7 +40,8 @@ class PaymentSearchCell: UITableViewCell {
         if tintColor {
             let tintedImage = iconImage.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
             self.paymentIcon.image = tintedImage
-            self.paymentIcon.tintColor = UIColor().blueMercadoPago()
+            self.paymentIcon.tintColor = MercadoPagoContext.getPrimaryColor()
+            //UIColor().blueMercadoPago()
         } else {
             self.paymentIcon.image = iconImage
             self.paymentTitle.hidden = true

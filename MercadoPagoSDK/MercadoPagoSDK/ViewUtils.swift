@@ -14,7 +14,7 @@ class ViewUtils {
     class func getTableCellSeparatorLineView(x : CGFloat, y : CGFloat, width : CGFloat, height : CGFloat) -> UIView {
         let separatorLineView = UIView(frame: CGRect(x: x, y: y, width: width, height: height))
         separatorLineView.layer.zPosition = 1
-        separatorLineView.backgroundColor = UIColor().grayTableSeparator()
+        separatorLineView.backgroundColor = UIColor.grayTableSeparator()
         return separatorLineView
     }
     
@@ -32,7 +32,7 @@ class ViewUtils {
         view.addSubview(imageView)
     }
 
-    class func loadImageFromUrl(url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor().UIColorFromRGB(0x5ABEE7), loadingIndicatorColor : UIColor = UIColor().backgroundColor()){
+    class func loadImageFromUrl(url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor.primaryColor(), loadingIndicatorColor : UIColor = UIColor.systemFontColor()){
         LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             let url = NSURL(string: url)
@@ -56,7 +56,7 @@ class ViewUtils {
     
     class func drawBottomLine(x : CGFloat = 0, y : CGFloat, width : CGFloat, inView view: UIView){
         let overLinewView = UIView(frame: CGRect(x: x, y: y, width: width, height: 1))
-        overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
+        overLinewView.backgroundColor = UIColor.UIColorFromRGB(0xDEDEDE)
         view.addSubview(overLinewView)
     }
     

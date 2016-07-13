@@ -10,7 +10,7 @@ import UIKit
 
 public class ErrorViewController: MercadoPagoUIViewController {
 
-    @IBOutlet weak var errorTitle: MPLabel!
+    @IBOutlet weak var  errorTitle: MPLabel! 
     
     @IBOutlet internal weak var errorSubtitle: MPLabel!
     

@@ -11,7 +11,7 @@ import UIKit
 
 extension UIColor {
     
-    public func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+    class public func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
@@ -32,71 +32,97 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
     
-    public func errorCellColor() -> UIColor
+    class public func errorCellColor() -> UIColor
     {
         return UIColorFromRGB(0xB34C42)
     }
     
-    public func greenOkColor() -> UIColor
+    class public func greenOkColor() -> UIColor
     {
     return UIColorFromRGB(0x6FBB2A)
     }
     
-    public func redFailureColor() -> UIColor
+    class public func redFailureColor() -> UIColor
     {
     return UIColorFromRGB(0xB94A48)
     }
     
     //should say red at the begining?
-    public func errorValidationTextColor() -> UIColor
+    class public func errorValidationTextColor() -> UIColor
     {
     return UIColorFromRGB(0xB34C42)
     }
     
-    public func yellowFailureColor() -> UIColor
+    class public func yellowFailureColor() -> UIColor
     {
     return UIColorFromRGB(0xF5CC00)
     }
     
-    public func blueMercadoPago() -> UIColor
+    class public func blueMercadoPago() -> UIColor
     {
     return UIColorFromRGB(0x5ABEE7)
     }
     
-    public func grayBaseText() -> UIColor
+    class public func grayBaseText() -> UIColor
     {
     return UIColorFromRGB(0x333333)
     }
     
-    public func grayDark() -> UIColor
+    class public func grayDark() -> UIColor
     {
     return UIColorFromRGB(0x666666)
     }
     
-    public func grayLight() -> UIColor
+    class public func grayLight() -> UIColor
     {
     return UIColorFromRGB(0x999999)
     }
     
-    public func grayLines() -> UIColor
+    class public func grayLines() -> UIColor
     {
     return UIColorFromRGB(0xCCCCCC)
     }
     
-    public func grayTableSeparator() -> UIColor{
+    class public func grayTableSeparator() -> UIColor{
     return UIColorFromRGB(0xEFEFF4)
     }
-    public func backgroundColor() -> UIColor
+    class public func backgroundColor() -> UIColor
     {
     return UIColorFromRGB(0xEBEBF0)
     }
 
-    public func white() -> UIColor
+    class public func white() -> UIColor
     {
     return UIColorFromRGB(0xFFFFFF)
     }
     
-    public func installments() -> UIColor {
+    class public func installments() -> UIColor {
         return UIColorFromRGB(0x2BA2EC)
     }
+    
+    
+    class public func systemFontColor() -> UIColor{
+        return MercadoPagoContext.getTextColor()
+    }
+    
+    class public func primaryColor() -> UIColor {
+        return MercadoPagoContext.getPrimaryColor()
+    }
+    
+    class public func secundaryColor() -> UIColor {
+        return MercadoPagoContext.getSecundaryColor()
+    }
+    
+    func lighter() -> UIColor {
+            return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
+    }
+    
+    func adjust(red: CGFloat, green: CGFloat, blue: CGFloat, alpha:CGFloat) -> UIColor{
+            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            self.getRed(&r, green: &g, blue: &b, alpha: &a)
+            return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
+    }
+
+    
+    
 }

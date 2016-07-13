@@ -31,10 +31,7 @@ public class MPStepBuilder : NSObject {
         return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
     }
     
-    public class func startIssuersStep(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) -> IssuersViewController {
-        MercadoPagoContext.initFlavor2()
-        return IssuersViewController(paymentMethod: paymentMethod, callback: callback)
-    }
+
     
     public class func startInstallmentsStep(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) -> InstallmentsViewController {
         MercadoPagoContext.initFlavor2()
@@ -111,6 +108,10 @@ public class MPStepBuilder : NSObject {
         return IdentificationViewController(callback: callback)
     }
     
+    public class func startIssuersStep(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) -> IssuersViewController {
+        MercadoPagoContext.initFlavor2()
+        return IssuersViewController(paymentMethod: paymentMethod, callback: callback)
+    }
     
     public class func startIssuerForm(paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil, callback : ((issuer: Issuer?) -> Void)) -> IssuerCardViewController {
         MercadoPagoContext.initFlavor2()

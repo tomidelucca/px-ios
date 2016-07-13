@@ -31,7 +31,7 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
             currencySymbol = String(currency!.getCurrencySymbolOrDefault())
         }
         let total = NSMutableAttributedString(string: "Total a pagar ".localized, attributes: fontAttrs)
-        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color : UIColor().UIColorFromRGB(0x666666), fontSize: 18, baselineOffset : 4)
+        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color : UIColor.UIColorFromRGB(0x666666), fontSize: 18, baselineOffset : 4)
         total.appendAttributedString(attributedAmount)
         self.paymentTotalDescription.attributedText = total
     }

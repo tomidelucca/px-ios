@@ -25,7 +25,7 @@ class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDeleg
         super.awakeFromNib()
         self.button.layer.borderWidth = 1.0
         self.button.layer.cornerRadius = 5
-        self.button.layer.borderColor = UIColor().blueMercadoPago().CGColor
+        self.button.layer.borderColor = UIColor.primaryColor().CGColor
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
