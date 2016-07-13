@@ -98,7 +98,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
                 self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                   self.navigationController?.navigationBar.translucent = false
@@ -184,7 +184,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         backButton.image = MercadoPago.getImage("left_arrow")
         backButton.style = UIBarButtonItemStyle.Bordered
         backButton.target = self
-        backButton.tintColor = UIColor.whiteColor()
+        backButton.tintColor = UIColor.systemFontColor()
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         backButton.action = "executeBack"
         self.navigationItem.leftBarButtonItem = backButton

@@ -26,8 +26,6 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var initialFlavor: Flavor?
 
-    
-    //TODO : complete with default preference_uri
     var preference_uri: String = ""
     
     var payment_uri: String = ""
@@ -70,8 +68,8 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     private static var primaryColor : UIColor = UIColor(red: 48  , green: 175, blue: 226)
 
-        //UIColor = UIColor(red: 48, green: 175, blue: 226)
-    private static var secundaryColor : UIColor = UIColor.blueMercadoPago()        //UIColor(red: 48, green: 175, blue: 226).lighter()
+    
+    private static var secundaryColor : UIColor = UIColor.blueMercadoPago()
     private static var textColor : UIColor = UIColor.whiteColor()
     
     public static func setupPrimaryColor(color: UIColor){
@@ -104,8 +102,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     private override init() {
     
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-    } //This prevents others from using the default '()' initializer for this class.
-
+    }
     
     public class func setPrivateKey(private_key : String){
         
@@ -142,35 +139,6 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
-    
-    /*
-    private func registerAllCells(){
-        
-        //Register rows
-        let offlinePaymentMethodNib = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(offlinePaymentMethodNib, forCellReuseIdentifier: "offlinePaymentCell")
-        let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
-        let selectPaymentMethodCell = UINib(nibName: "SelectPaymentMethodCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(selectPaymentMethodCell, forCellReuseIdentifier: "selectPaymentMethodCell")
-        let paymentDescriptionFooter = UINib(nibName: "PaymentDescriptionFooterTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(paymentDescriptionFooter, forCellReuseIdentifier: "paymentDescriptionFooter")
-        let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(purchaseTermsAndConditions, forCellReuseIdentifier: "purchaseTermsAndConditions")
-        let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
-        
-        // Payment ON rows
-        let paymentSelectedCell = UINib(nibName: "PaymentMethodSelectedTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(paymentSelectedCell, forCellReuseIdentifier: "paymentSelectedCell")
-        let installmentSelectionCell = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
-        self.checkoutTable.registerNib(installmentSelectionCell, forCellReuseIdentifier: "installmentSelectionCell")
-        
-        self.checkoutTable.delegate = self
-        self.checkoutTable.dataSource = self
-        self.checkoutTable.separatorStyle = .None
-    }
-*/
     
     
     public class func setBaseURL(base_url : String){
