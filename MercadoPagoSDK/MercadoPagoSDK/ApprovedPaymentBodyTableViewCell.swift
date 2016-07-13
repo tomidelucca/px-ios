@@ -22,7 +22,7 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
     override func awakeFromNib() {
         super.awakeFromNib()
         let overLinewView = UIView(frame: CGRect(x: 0, y: 140, width: self.bounds.width, height: 1))
-        overLinewView.backgroundColor = UIColor().UIColorFromRGB(0xDEDEDE)
+        overLinewView.backgroundColor = UIColor.UIColorFromRGB(0xDEDEDE)
         self.addSubview(overLinewView)
 
     }

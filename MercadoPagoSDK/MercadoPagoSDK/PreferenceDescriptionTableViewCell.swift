@@ -22,12 +22,14 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         let tintedImage = self.shoppingCartIcon.image!.imageWithRenderingMode(.AlwaysTemplate)
-        self.shoppingCartIcon.image = tintedImage
-        self.shoppingCartIcon.tintColor = UIColor().white()
         
+        self.shoppingCartIcon.image = tintedImage
+        self.shoppingCartIcon.backgroundColor = UIColor.primaryColor()
+        self.shoppingCartIcon.tintColor = UIColor.systemFontColor()
+        self.backgroundColor = MercadoPagoContext.getSecundaryColor()
         self.shoppingCartIconContainer.layer.borderWidth = 1.0
         self.shoppingCartIconContainer.layer.borderColor = UIColor.whiteColor().CGColor
-        
+        self.shoppingCartIconContainer.backgroundColor = UIColor.primaryColor()
     
     }
 
@@ -52,12 +54,10 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
                 ViewUtils.loadImageFromUrl(pictureUrl!, inView: self.shoppingCartIconContainer)
             }
         }
-        
+         self.preferenceAmount.textColor = UIColor.systemFontColor()
+        self.preferenceDescription.textColor = UIColor.systemFontColor()
     }
     
-    public func loadPreference(preference: CheckoutPreference!){
-       
-        
-    }
+  
     
 }

@@ -79,7 +79,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     
     override public func viewWillAppear(animated: Bool) {
         self.loadMPStyles()
-        self.navigationController?.navigationBar.barTintColor = UIColor().UIColorFromRGB(0xFBF8E3)
+        self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
     }
     
     override public func viewWillDisappear(animated: Bool) {
@@ -125,14 +125,14 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
         
         let exitButtonCell =  self.congratsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
-        let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor().UIColorFromRGB(0x0066CC)]
+        let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x0066CC)]
         let title = NSAttributedString(string: "Seguir comprando".localized, attributes: attributes)
         exitButtonCell.exitButton.setAttributedTitle(title, forState: .Normal)
         exitButtonCell.defaultCallback = { self.finishInstructions() }
         
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
-        separatorLineView.backgroundColor = UIColor().grayTableSeparator()
+        separatorLineView.backgroundColor = UIColor.grayTableSeparator()
         exitButtonCell.addSubview(separatorLineView)
         exitButtonCell.bringSubviewToFront(separatorLineView)
         return exitButtonCell

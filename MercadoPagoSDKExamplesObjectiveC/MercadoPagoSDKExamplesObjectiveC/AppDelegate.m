@@ -25,7 +25,8 @@
     [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
-    
+   [MercadoPagoContext setupPrimaryColor:[UIColor redColor] ];
+   [MercadoPagoContext setDarkTextColor];
     return YES;
 }
 

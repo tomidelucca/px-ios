@@ -32,7 +32,7 @@ public class MPInstallmentsTableViewCell : UITableViewCell {
             installmentsLabel.textColor = UIColor.blackColor()
         } else {
             installmentsLabel.text = payerCost!.recommendedMessage
-            installmentsLabel.textColor = UIColor.installments(UIColor.greenColor())()
+            installmentsLabel.textColor = UIColor.installments()
         }
     }
 }

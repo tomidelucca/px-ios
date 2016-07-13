@@ -52,7 +52,6 @@
 		7639DAD61D358D8A003E3DCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9884FB1AD2BCB900F750F0 /* AppDelegate.swift */; };
 		766CDFCE1D21CB8C00F9FAD4 /* MercadoPagoTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; };
 		766CDFCF1D21CBA100F9FAD4 /* MPGoogleAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */; };
-		766CDFD11D22B72E00F9FAD4 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766CDFD21D22B73100F9FAD4 /* MercadoPagoTracker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766CDFD31D22B73400F9FAD4 /* MPGoogleAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766CDFF01D240ED000F9FAD4 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
@@ -102,6 +101,13 @@
 			remoteGlobalIDString = 5D018857919DD57A0CB67AD359D297D5;
 			remoteInfo = "Pods-MercadoPagoSDKTests";
 		};
+		158F17791D3416D500E7EBDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
+			remoteInfo = MercadoPagoSDK;
+		};
 		15FCA7881C84980B00D9E8CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */;
@@ -132,7 +138,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				766CDFD11D22B72E00F9FAD4 /* MercadoPagoSDK.framework in Embed Frameworks */,
+				158F17781D3416D500E7EBDA /* MercadoPagoSDK.framework in Embed Frameworks */,
 				766CDFD21D22B73100F9FAD4 /* MercadoPagoTracker.framework in Embed Frameworks */,
 				766CDFD31D22B73400F9FAD4 /* MPGoogleAnalytics.framework in Embed Frameworks */,
 			);
@@ -188,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15A327F61D1DC8F000F4B403 /* MercadoPagoSDK.framework in Frameworks */,
+				158F17771D3416D500E7EBDA /* MercadoPagoSDK.framework in Frameworks */,
 				766CDFCE1D21CB8C00F9FAD4 /* MercadoPagoTracker.framework in Frameworks */,
 				766CDFCF1D21CBA100F9FAD4 /* MPGoogleAnalytics.framework in Frameworks */,
 			);
@@ -456,6 +462,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				158F177A1D3416D500E7EBDA /* PBXTargetDependency */,
 			);
 			name = MercadoPagoSDKExamples;
 			productName = MercadoPagoSDKExamples;
@@ -704,10 +711,12 @@
 			target = 0F9884F51AD2BCB900F750F0 /* MercadoPagoSDKExamples */;
 			targetProxy = 0F98850F1AD2BCB900F750F0 /* PBXContainerItemProxy */;
 		};
+
 		76AFD3A31D34236B00A9DDAD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0F9884F51AD2BCB900F750F0 /* MercadoPagoSDKExamples */;
 			targetProxy = 76AFD3A21D34236B00A9DDAD /* PBXContainerItemProxy */;
+
 		};
 /* End PBXTargetDependency section */
 
@@ -811,6 +820,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -839,6 +849,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (

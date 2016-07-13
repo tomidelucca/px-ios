@@ -39,13 +39,13 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         
         if self.navigationController != nil {
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor =  UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.barTintColor =  UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
                 //Create navigation buttons
@@ -121,6 +121,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.secundaryColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.No
         numberTextField.keyboardType = UIKeyboardType.NumberPad
         numberTextField.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
@@ -128,6 +129,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         self.setupInputAccessoryView()
         self.getIdentificationTypes()
         typePicker.hidden = true;
+        
         
     }
     public override func viewDidAppear(animated: Bool) {

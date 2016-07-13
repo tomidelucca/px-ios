@@ -13,6 +13,7 @@ import MercadoPagoTracker
 public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
 
     
+    @IBOutlet weak var cardBackground: UIView!
     
     @IBOutlet weak var cardView: UIView!
     var cardViewBack:UIView?
@@ -58,23 +59,23 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-                self.navigationController?.navigationBar.barTintColor = UIColor(red: 90, green: 190, blue: 231)
+                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
-                
+            self.cardBackground.backgroundColor =  MercadoPagoContext.getSecundaryColor()
  
                 var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
+                promocionesButton.tintColor = UIColor.systemFontColor()
 
                 
                 self.navigationItem.rightBarButtonItem = promocionesButton
-                
+       
                 
                 //Create navigation buttons
                 displayBackButton()
