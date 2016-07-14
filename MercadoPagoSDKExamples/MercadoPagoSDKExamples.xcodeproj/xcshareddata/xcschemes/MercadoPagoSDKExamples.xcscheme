@@ -39,6 +39,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0F9884F51AD2BCB900F750F0"
+            BuildableName = "MercadoPagoSDKExamples.app"
+            BlueprintName = "MercadoPagoSDKExamples"
+            ReferencedContainer = "container:MercadoPagoSDKExamples.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

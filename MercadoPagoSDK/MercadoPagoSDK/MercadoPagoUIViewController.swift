@@ -27,13 +27,14 @@ public class MPNavigationController : UINavigationController {
 public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     internal var displayPreferenceDescription = false
-    public var callbackCancel : (Void -> Void)?
+    public var callbackCancel : (Void -> Void)? 
+    
     
     
     public var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
     override public func viewDidLoad() {
-        
+     
         super.viewDidLoad()
         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
         self.loadMPStyles()

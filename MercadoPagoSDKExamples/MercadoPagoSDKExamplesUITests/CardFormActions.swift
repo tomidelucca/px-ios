@@ -8,36 +8,44 @@
 
 import XCTest
 
-class CardFormActions: NSObject {
+class CardFormActions: MPTestActions {
 
-    static func fillCreditCardForm(app : XCUIApplication){
+    static private func fillCreditCardForm( creditCardNumber : String = "4509953566233704", identificationName : String = "APRO"  ){
         
-        app.textFields["Número de tarjeta"].tap()
-        let cardNumberField = app.textFields["Número de tarjeta"]
-        cardNumberField.typeText("450995")
+        let binIndex = creditCardNumber.endIndex.advancedBy(6 - creditCardNumber.characters.count)
+        let binNumber = creditCardNumber.substringToIndex(binIndex)
+        let additionalNumbers = creditCardNumber.substringFromIndex(binIndex)
+        let continuarButton = application.navigationBars.buttons["Continuar"]
+        let cardNumberField = application.textFields["Número de tarjeta"]
         
-        let continuarButton = app.navigationBars.buttons["Continuar"]
+        
+       // application.textFields["Número de tarjeta"].tap()
+        cardNumberField.typeText(binNumber)
+      //  continuarButton.tap()
+        cardNumberField.typeText(additionalNumbers)
         continuarButton.tap()
-        cardNumberField.typeText("3566233704")
-        continuarButton.tap()
-        let cardholderNameField = app.textFields["Nombre y apellido"]
-        cardholderNameField.typeText("APRO")
+        let cardholderNameField = application.textFields["Nombre y apellido"]
+        cardholderNameField.typeText(identificationName)
         continuarButton.tap()
         
-        let expirationDateField = app.textFields["Fecha de expiración"]
+        let expirationDateField = application.textFields["Fecha de expiración"]
         expirationDateField.typeText("1122")
         continuarButton.tap()
         
-        let securityCodeField = app.textFields["Código de seguridad"]
+        let securityCodeField = application.textFields["Código de seguridad"]
         securityCodeField.typeText("123")
         continuarButton.tap()
         
-        let identificationNumberField = app.textFields["Número"]
+        let identificationNumberField = application.textFields["Número"]
         identificationNumberField.typeText("12123123")
         
         continuarButton.pressForDuration(0.2);
-        
         XCUIApplication().tables.staticTexts["3 de $ 397 29 ( $ 1.191 89 ) "].pressForDuration(1.3);
 
+    }
+    
+    
+    static func fillVISA() {
+        fillCreditCardForm("4509953566233704", identificationName: "APRO")
     }
 }
