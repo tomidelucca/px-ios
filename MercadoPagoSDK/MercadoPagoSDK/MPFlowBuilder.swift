@@ -18,11 +18,11 @@ public class MPFlowBuilder : NSObject {
         
     }
     
-    public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void) -> MPNavigationController {
+    public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void, callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
         MercadoPagoContext.initFlavor3()
             let checkoutVC = CheckoutViewController(preferenceId: preferenceId, callback: { (payment : Payment) -> Void in
             callback(payment)
-        })
+            }, callbackCancel :callbackCancel)
         return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     

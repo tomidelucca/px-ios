@@ -28,20 +28,18 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     @IBOutlet weak var checkoutTable: UITableView!
     
-    init(preferenceId : String, callback : (Payment -> Void)){
+    init(preferenceId : String, callback : (Payment -> Void),  callbackCancel : (Void -> Void)? = nil){
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
         self.preferenceId = preferenceId
         self.callback = callback
         self.callbackCancel = {
-            if self.paymentMethod == nil {
                 self.dismissViewControllerAnimated(true, completion: {
-                
+                    if(callbackCancel != nil){
+                            callbackCancel!()
+                  }
                 })
-            } else {
-                self.loadGroupsAndStartPaymentVault(false)
-            }
         }
     }
     
@@ -285,10 +283,11 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         })
         
         var callbackCancel : (Void -> Void)
+        
         // Set action for cancel callback
         if self.paymentMethod == nil {
             callbackCancel = { Void -> Void in
-                self.dismissViewControllerAnimated(true, completion: {})
+                self.callbackCancel!()
             }
         } else {
             callbackCancel = { Void -> Void in
@@ -459,6 +458,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
  
     internal func exitCheckoutFlow(){
-        self.navigationController?.dismissViewControllerAnimated(true, completion: {})
+        self.callbackCancel!()
+        //    self.navigationController?.dismissViewControllerAnimated(true, completion: {})
     }
 }
