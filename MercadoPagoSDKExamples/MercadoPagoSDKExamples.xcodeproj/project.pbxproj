@@ -402,7 +402,6 @@
 		762713611D34340E008DC3AB /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */,
 				762713681D343424008DC3AB /* CardFlowTest.swift */,
 				7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */,
 			);
@@ -436,6 +435,7 @@
 		76AFD39E1D34236B00A9DDAD /* MercadoPagoSDKExamplesUITests */ = {
 			isa = PBXGroup;
 			children = (
+				15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */,
 				7627136A1D34350E008DC3AB /* Actions */,
 				762713611D34340E008DC3AB /* UI */,
 				76AFD3A11D34236B00A9DDAD /* Info.plist */,

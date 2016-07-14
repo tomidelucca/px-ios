@@ -9,19 +9,35 @@
 import XCTest
 
 class CardFlowTest: MercadoPagoUITest {
-        
     
+   
     func testCardForm() {
  
+        testApproved(visa())
+        testApproved(amex())
+    }
+    
+    
+    
+    func testApproved(card:TestCard){
+        self.testCard(card, user: approvedUser())
+    }
+    
+    func testCard(card : TestCard , user : TestUser){
         let tablesQuery = application.tables
         tablesQuery.staticTexts["Components de UI"].tap()
         tablesQuery.staticTexts["Cobra con tarjeta con cuotas"].tap()
-        CardFormActions.fillVISA()
-        
-        
-        //---
-             
+        CardFormActions.testCard(card, user: user)
+        backToMenu()
     }
     
+    
+    func backToMenu(){
+        
+        let cMoQuieresPagarNavigationBar = XCUIApplication().navigationBars[""]
+        cMoQuieresPagarNavigationBar.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        cMoQuieresPagarNavigationBar.childrenMatchingType(.Button).elementBoundByIndex(0).tap()
+        
+    }
     
 }
