@@ -91,7 +91,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    private func startPaymentVault(){
+    public func startPaymentVault(){
         let pv = MPFlowBuilder.startPaymentVaultViewController(1000, currencyId: "ARS") { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
@@ -178,3 +178,4 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
 }
+

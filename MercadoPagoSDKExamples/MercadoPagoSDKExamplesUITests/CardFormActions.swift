@@ -14,7 +14,7 @@ import XCTest
 
 class CardFormActions: MPTestActions {
 
-    static public func testCard( card : TestCard, user : TestUser ){
+    static internal func testCard( card : TestCard, user : TestUser ){
         
         //Card Form
         let binIndex = card.number.endIndex.advancedBy(6 - card.number.characters.count)
@@ -27,7 +27,6 @@ class CardFormActions: MPTestActions {
         let securityCodeField = application.textFields["Código de seguridad"]
         //Identification Form
         let identificationNumberField = application.textFields["Número"]
-        let view = application.collectionViews["view"]
         
         cardNumberField.tap()
         cardNumberField.typeText(binNumber)
@@ -38,8 +37,13 @@ class CardFormActions: MPTestActions {
         continuarButton.tap()
         expirationDateField.typeText(card.expirationDate)
         continuarButton.tap()
-        securityCodeField.typeText(card.cvv)
-        continuarButton.tap()
+        
+        
+        if(card.cvv != nil){
+            securityCodeField.typeText(card.cvv!)
+            continuarButton.tap()
+        }
+        
         
         
         identificationNumberField.typeText(user.identification.number)
@@ -52,7 +56,7 @@ class CardFormActions: MPTestActions {
         */
     }
     
-        
+ 
 }
 
 

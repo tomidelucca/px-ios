@@ -13,8 +13,15 @@ class CardFlowTest: MercadoPagoUITest {
    
     func testCardForm() {
  
-        testApproved(visa())
-        testApproved(amex())
+        testApproved(mercadopago())
+        /*
+        for (_, card) in cardsTestArray!.enumerate() {
+            print("---------------------------------------------------------")
+            print("Testing  \(card.name)")
+            testApproved(card)
+        }
+        */
+        
     }
     
     

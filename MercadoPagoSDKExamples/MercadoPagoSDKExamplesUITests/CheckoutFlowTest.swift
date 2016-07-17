@@ -61,4 +61,12 @@ class CheckoutFlowTest: XCTestCase {
         
     }
     
+    func testVault (){
+        
+        let tablesQuery = XCUIApplication().tables
+        tablesQuery.staticTexts["Components de UI"].tap()
+        tablesQuery.staticTexts["Selección de medio de pago completa"].tap()
+        
+    }
+    
 }

@@ -542,6 +542,13 @@ var changeNumber = false
             prepareExpirationLabelForEdit()
             
         case expirationDateLabel! :
+            
+            if (paymentMethod != nil){
+                if (!(paymentMethod?.isSecurityCodeRequired(getBIN()!))!){
+                    self.confirmPaymentMethod()
+                    return
+                }
+            }
             if (checkExpirationDateCard() == false){
                 showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
 
@@ -552,8 +559,11 @@ var changeNumber = false
                     self.updateLabelsFontColors()
                 })
             }
+           
             
             self.prepareCVVLabelForEdit()
+            
+            
             
         case cvvLabel! :
             if (checkCVV() == false){
@@ -793,12 +803,15 @@ var changeNumber = false
             markErrorLabel(nameLabel!)
             return
         }
-        let errorCVV = cardtoken!.validateSecurityCode()
-        if((errorCVV) != nil){
-            markErrorLabel(cvvLabel!)
-            UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
-            return
+        if(paymentMethod!.isSecurityCodeRequired(getBIN()!)){
+            let errorCVV = cardtoken!.validateSecurityCode()
+            if((errorCVV) != nil){
+                markErrorLabel(cvvLabel!)
+                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+                return
+            }
         }
+        
 
         
          self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
@@ -1026,7 +1039,7 @@ var changeNumber = false
         
         
         //Check for max length including the spacers we added
-        if label?.text?.characters.count == 19
+        if label?.text?.characters.count == numberOfDots()+3
         {
             return false
         }
@@ -1043,7 +1056,16 @@ var changeNumber = false
         
     }
 
-    
+    func numberOfDots() -> Int {
+        let provPM = matchedPaymentMethod()
+        if (provPM != nil){
+            let lenght = (provPM?.cardNumberLenght())!
+            if (lenght > 0){
+              return lenght
+            }
+        }
+        return 16
+    }
     
     
 }
