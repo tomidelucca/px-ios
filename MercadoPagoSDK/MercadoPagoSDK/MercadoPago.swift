@@ -248,6 +248,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     public class func getImage(name: String) -> UIImage? {
         let bundle = getBundle()
+
         if (UIDevice.currentDevice().systemVersion as NSString).compare("8.0", options: NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending {
             var nameArr = name.characters.split {$0 == "."}.map(String.init)
             let imageExtension : String = nameArr[1]

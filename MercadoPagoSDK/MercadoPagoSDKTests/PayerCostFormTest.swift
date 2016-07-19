@@ -15,8 +15,8 @@ class PayerCostFormTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
-       /*
+       /* MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
+       
         self.payerCostFormViewController = MPStepBuilder.startPayerCostForm(nil, issuer: nil, cardToken: <#T##CardToken#>, amount: 10000, minInstallments: 1, callback: { (payerCost) -> Void in
         })
         */

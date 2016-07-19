@@ -67,7 +67,7 @@ public class CardToken : NSObject {
     
     public func validateCardNumber(paymentMethod: PaymentMethod) -> NSError? {
         var userInfo : [String : String]?
-        
+        cardNumber = cardNumber?.stringByReplacingOccurrencesOfString("•", withString: "")
         let validCardNumber = self.validateCardNumber()
         if validCardNumber != nil {
             return validCardNumber

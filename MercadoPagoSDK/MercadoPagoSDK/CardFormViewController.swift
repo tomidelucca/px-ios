@@ -161,7 +161,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     //    expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
         expirationDateLabel?.text = "MM/AA".localized
      //   cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
-        cvvLabel?.text = "...".localized
+        cvvLabel?.text = "..."
         editingLabel = cardNumberLabel
 
         
@@ -294,12 +294,12 @@ var changeNumber = false
          MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
         if(isAmexCard()){
             cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = "••••".localized
+            cardBack?.cardCVV.text = "••••"
             cardBack?.cardCVV.alpha = 0
             cardFront?.cardCVV.alpha = 1
         }else{
             cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = "•••".localized
+            cardFront?.cardCVV.text = "•••"
             cardFront?.cardCVV.alpha = 0
             cardBack?.cardCVV.alpha = 1
         }
@@ -444,8 +444,8 @@ var changeNumber = false
         navItem = UINavigationItem()
         
         
-        doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
-        donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: "rightArrowKeyTapped")
+        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: "leftArrowKeyTapped")
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
             doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
@@ -522,9 +522,9 @@ var changeNumber = false
                         showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
                 }else{
                     if (cardNumberLabel?.text?.characters.count == 0){
-                        showErrorMessage("Ingresa el número de la tarjeta de crédito")
+                        showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
                     }else{
-                        showErrorMessage("Revisa este dato")
+                        showErrorMessage("Revisa este dato".localized)
                     }
 
                 }
@@ -535,13 +535,20 @@ var changeNumber = false
             
         case nameLabel! :
           if (checkCardName() == false){
-                showErrorMessage("Ingresa el nombre y apellido impreso en la tarjeta")
+                showErrorMessage("Ingresa el nombre y apellido impreso en la tarjeta".localized)
 
                 return
             }
             prepareExpirationLabelForEdit()
             
         case expirationDateLabel! :
+            
+            if (paymentMethod != nil){
+                if (!(paymentMethod?.isSecurityCodeRequired(getBIN()!))!){
+                    self.confirmPaymentMethod()
+                    return
+                }
+            }
             if (checkExpirationDateCard() == false){
                 showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
 
@@ -552,14 +559,16 @@ var changeNumber = false
                     self.updateLabelsFontColors()
                 })
             }
+           
             
             self.prepareCVVLabelForEdit()
+            
+            
             
         case cvvLabel! :
             if (checkCVV() == false){
                 
-                showErrorMessage("Ingresa los " + ((paymentMethod?.secCodeLenght())! as NSNumber).stringValue + " números del código de seguridad")
-                
+                showErrorMessage(("Ingresa los %1$s números del código de seguridad".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: ((paymentMethod?.secCodeLenght())! as NSNumber).stringValue))
                    return
             }
             self.confirmPaymentMethod()
@@ -793,12 +802,15 @@ var changeNumber = false
             markErrorLabel(nameLabel!)
             return
         }
-        let errorCVV = cardtoken!.validateSecurityCode()
-        if((errorCVV) != nil){
-            markErrorLabel(cvvLabel!)
-            UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
-            return
+        if(paymentMethod!.isSecurityCodeRequired(getBIN()!)){
+            let errorCVV = cardtoken!.validateSecurityCode()
+            if((errorCVV) != nil){
+                markErrorLabel(cvvLabel!)
+                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+                return
+            }
         }
+        
 
         
          self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
@@ -1026,7 +1038,7 @@ var changeNumber = false
         
         
         //Check for max length including the spacers we added
-        if label?.text?.characters.count == 19
+        if label?.text?.characters.count == numberOfDots()+3
         {
             return false
         }
@@ -1043,7 +1055,16 @@ var changeNumber = false
         
     }
 
-    
+    func numberOfDots() -> Int {
+        let provPM = matchedPaymentMethod()
+        if (provPM != nil){
+            let lenght = (provPM?.cardNumberLenght())!
+            if (lenght > 0){
+              return lenght
+            }
+        }
+        return 16
+    }
     
     
 }

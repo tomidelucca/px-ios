@@ -11,6 +11,7 @@ import UIKit
 public class IdentificationViewController: MercadoPagoUIViewController , UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     
+    @IBOutlet weak var tipoDeDocumentoLabel: UILabel!
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var numberDocLabel: UILabel!
@@ -66,7 +67,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         toolBar.sizeToFit()
         
         
-        let doneButton = UIBarButtonItem(title: "OK", style: UIBarButtonItemStyle.Bordered, target: self, action: "donePicker")
+        let doneButton = UIBarButtonItem(title: "OK".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: "donePicker")
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
@@ -121,6 +122,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
+        self.numberTextField.placeholder = "Número".localized
+        self.textField.placeholder = "Tipo".localized
         self.view.backgroundColor = UIColor.secundaryColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.No
         numberTextField.keyboardType = UIKeyboardType.NumberPad
@@ -189,8 +193,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
         
-        doneNext = UIBarButtonItem(title: "Continuar", style: .Plain, target: self, action: "rightArrowKeyTapped")
-        donePrev =  UIBarButtonItem(title: "Anterior", style: .Plain, target: self, action: "leftArrowKeyTapped")
+        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: "rightArrowKeyTapped")
+        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: "leftArrowKeyTapped")
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
             doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)

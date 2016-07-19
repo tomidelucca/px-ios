@@ -11,14 +11,14 @@ import XCTest
 class PaymentVaultViewControllerTest: BaseTest {
     
     var paymentVaultViewController : MockPaymentVaultViewController?
+    var mpNavigationController : MPNavigationController?
+    var paymentMethodSelected : PaymentMethod?
+    var tokenCreated : Token?
+    var issuerSelected : Issuer?
+    var payerCostSelected : PayerCost?
     
     override func setUp() {
         super.setUp()
-
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase title", excludedPaymentTypes: nil, excludedPaymentMethods: nil, defaultPaymentMethodId: nil, installments: 1, defaultInstallments: 1, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-            
-        })
-        MPFlowController.createNavigationControllerWith(self.paymentVaultViewController!)
     }
     
     override func tearDown() {
@@ -26,13 +26,20 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testInit() {
+        
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+            
+        })
+        
         XCTAssertEqual(paymentVaultViewController!.merchantBaseUrl, MercadoPagoContext.baseURL())
         XCTAssertEqual(paymentVaultViewController!.publicKey, MercadoPagoContext.publicKey())
         XCTAssertEqual(paymentVaultViewController!.merchantAccessToken,  MercadoPagoContext.merchantAccessToken())
         XCTAssertNil(paymentVaultViewController?.currentPaymentMethodSearch)
         XCTAssertNil(paymentVaultViewController?.paymentMethods)
         
+        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForGroups")
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
+        waitForExpectationsWithTimeout(60, handler: nil)
         
         XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
         XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch!.count > 1)
@@ -45,194 +52,143 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(1) > 0)
 
     }
-    
-    func testDrawingCards(){
-    
+
+    /*
+     * Selección de medio de pago: se excluyen medios off (solo tarjeta disponible). Se redirige al usuario al formulario de tarjeta.
+     * Selección de tarjeta inicia formulario de tarjeta.
+     *
+     */
+    func testPaymentVaultMLA_onlyCreditCard(){
+        
+        let excludedPaymentTypeIds = Set([PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue])
+        let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
+        
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+            XCTAssertNotNil(paymentMethod)
+            // Verificar selección correcta
+            XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
+            XCTAssertEqual(token, self.tokenCreated)
+            XCTAssertEqual(issuer, self.issuerSelected)
+            XCTAssertEqual(payerCost, self.payerCostSelected)
+        })
+        
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let preferenceDescriptionCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
-        XCTAssertNotNil(preferenceDescriptionCell)
         
-        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 0)
+        XCTAssertEqual(self.paymentVaultViewController!.paymentPreference, paymentPreference)
+        XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
         
-        let cardsOption = self.paymentVaultViewController!.currentPaymentMethodSearch[0] as PaymentMethodSearchItem
-        let cardsGroupCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! PaymentSearchCell
+        let availablePaymentTypes = MockBuilder.MLA_PAYMENT_TYPES.subtract(excludedPaymentTypeIds)
+        XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch.count == availablePaymentTypes.count)
         
-        XCTAssertEqual(cardsGroupCell.paymentTitle.text, cardsOption.description)
+        // Se seleccionó opción de CC
+        XCTAssertEqual(self.paymentVaultViewController!.currentPaymentMethodSearch[0].idPaymentMethodSearchItem, PaymentTypeId.CREDIT_CARD.rawValue)
         
-        let cardsChildren = cardsOption.children
+        // Se selecciono una acción por default
+        XCTAssertTrue(self.paymentVaultViewController!.optionSelected)
         
-        // Select cards
-        self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1))
+    }
+    
+    /*
+     * Selección de medio de pago: sin exlusiones. Todos los medios de pago disponibles.
+     * Selección de tarjeta inicia formulario de tarjeta.
+     * Selección de medio off retorna el medio de pago correspondiente.
+     *
+     */
+    func testPaymentVaultMLA_noPaymentPreference(){
         
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: cardsChildren, paymentMethodSearchParent: cardsOption, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
-            
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
+            XCTAssertNotNil(paymentMethod)
+            // Verificar selección correcta
+            XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
+            XCTAssertEqual(token, self.tokenCreated)
+            XCTAssertEqual(issuer, self.issuerSelected)
+            XCTAssertEqual(payerCost, self.payerCostSelected)
+        })
+        
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
+        
+        XCTAssertNil(paymentVaultViewController?.paymentPreference)
+        XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
+        XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch.count == MockBuilder.MLA_PAYMENT_TYPES.count)
+        
+        
+        let ccCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! PaymentSearchCell
+        XCTAssertEqual(self.paymentVaultViewController?.currentPaymentMethodSearch[0].description, ccCell.paymentTitle.text)
+        
+        let cashOptions = self.paymentVaultViewController?.currentPaymentMethodSearch[1].children
+        XCTAssertNotNil(cashOptions)
+        XCTAssertTrue(cashOptions?.count == 4)
+        
+        let redLinkOptions = self.paymentVaultViewController?.currentPaymentMethodSearch[2].children
+        XCTAssertNotNil(redLinkOptions)
+        XCTAssertTrue(redLinkOptions?.count == 2)
+
+        
+    }
+    
+    /*
+     * Selección de medio de pago: se excluyen tarjetas y Transferencia bancaria. Ticket únicamente disponible.
+     * Solo selección de medio de ticket disponible. Se retorna el medio de pago correspondiente.
+     *
+     */
+    func testPaymentVaultMLA_ticketAvailable(){
+        
+        let excludedPaymentTypeIds = Set([PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue])
+        let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
+        
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+            XCTAssertNotNil(paymentMethod)
+            // Verificar selección correcta
+            XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
+            XCTAssertEqual(token, self.tokenCreated)
+            XCTAssertEqual(issuer, self.issuerSelected)
+            XCTAssertEqual(payerCost, self.payerCostSelected)
+        })
+        
+        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
+        
+        XCTAssertEqual(self.paymentVaultViewController?.paymentPreference, paymentPreference)
+        XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
+        XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch.count == 4)
+        
+        
+        let offlinePM = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
+        for paymentMethodOff in (self.paymentVaultViewController?.currentPaymentMethodSearch)! {
+            XCTAssertNotNil(offlinePM)
+            XCTAssertEqual(offlinePM.comment.text, paymentMethodOff.comment)
         }
         
-        self.simulateViewDidLoadFor(paymentVault)
-        XCTAssertEqual(paymentVault.title, "VC Title")
-        let debitCardOptionCell = paymentVault.paymentsTable.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as! PaymentTitleViewCell
-        XCTAssertEqual(debitCardOptionCell.paymentTitle.text, cardsChildren[0].description)
-    }
-    
-    func testDrawinfOfflinePaymentsCells(){
-    
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        
-        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 1)
-        
-        let bankTransferOptionSelected = self.paymentVaultViewController!.currentPaymentMethodSearch[1] as PaymentMethodSearchItem
-        let bankTransferCell = self.paymentVaultViewController!.tableView(self.paymentVaultViewController!.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 1, inSection: 1)) as! PaymentSearchCell
-        
-        XCTAssertEqual(bankTransferCell.paymentTitle.text, bankTransferOptionSelected.description)
-
-        let bankTransferOptions = bankTransferOptionSelected.children
-        
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
-            
-        }
-    
-        
-        self.simulateViewDidLoadFor(paymentVault)
-        XCTAssertEqual(paymentVault.title, "VC Title")
-        XCTAssertEqual(paymentVault.currentPaymentMethodSearch, bankTransferOptions)
-
-    }
-    
-    func testDrawinfOfflinePaymentMethodCell(){
-        
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        
-        XCTAssertTrue(self.paymentVaultViewController!.currentPaymentMethodSearch.count > 1)
-        
-        let bankTransferOptionSelected = self.paymentVaultViewController!.currentPaymentMethodSearch[1] as PaymentMethodSearchItem
-        let bankTransferOptions = bankTransferOptionSelected.children
-        XCTAssertTrue(bankTransferOptions.count > 0)
-        
-        let offlinePaymentMethods = PaymentMethodSearch.fromJSON(MockManager.getMockFor("groups")!).groups[1].children
-
-        let paymentVault = PaymentVaultViewController(amount: 7.5, currencyId: "MXN", purchaseTitle: "Purchase Title", paymentMethodSearchItem: bankTransferOptions, paymentMethodSearchParent: bankTransferOptionSelected, paymentMethods: self.paymentVaultViewController!.paymentMethods, title: "VC Title") { (paymentMethod, cardToken, issuer, installments) in
-            
-        }
-        
-        
-        
-        self.simulateViewDidLoadFor(paymentVault)
-        XCTAssertEqual(paymentVault.title, "VC Title")
-        XCTAssertEqual(paymentVault.currentPaymentMethodSearch, bankTransferOptions)
-        let bankTransferOptionCell = paymentVault.tableView(paymentVault.paymentsTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
-        XCTAssertNotNil(bankTransferOptionCell)
-        XCTAssertEqual(bankTransferOptionCell.comment.text, offlinePaymentMethods[0].comment)
         
     }
     
-    func testViewWillDissapear(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        self.paymentVaultViewController!.viewWillDisappear(true)
-        XCTAssertTrue(self.paymentVaultViewController!.mpStylesCleared)
-    }
-
-    func testPaymentsTableConstraints(){
+    /*
+     * Selección de medio de pago: Un solo medio de pago off disponible.
+     * No se visualiza pantalla de medios de pago. Se reotrna el medio de pago correspondiente.
+     *
+     */
+    func testPaymentVaultMLA_onePaymentMethodOff(){
+        
+        let excludedPaymentTypeIds = Set([PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue])
+        let excludedPaymentMethodIds = Set(arrayLiteral: "bapropagos", "rapipago", "cargavirtual")
+        let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: excludedPaymentMethodIds, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
+        
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+            XCTAssertNotNil(paymentMethod)
+            // Verificar selección correcta
+            XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
+            XCTAssertEqual(token, self.tokenCreated)
+            XCTAssertEqual(issuer, self.issuerSelected)
+            XCTAssertEqual(payerCost, self.payerCostSelected)
+        })
         
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
         
-       XCTAssertEqual(self.paymentVaultViewController!.numberOfSectionsInTableView(self.paymentVaultViewController!.paymentsTable), 3)
-       self.paymentVaultViewController!.displayPreferenceDescription = false
-       XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 0), 0)
-       self.paymentVaultViewController!.displayPreferenceDescription = true
-       XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 0), 1)
+        XCTAssertEqual(self.paymentVaultViewController?.paymentPreference, paymentPreference)
+        XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
+        XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch.count == 1)
         
-       XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, numberOfRowsInSection: 1), self.paymentVaultViewController?.currentPaymentMethodSearch.count)
-
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 0), 0)
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForHeaderInSection: 1), 10)
-        
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)), 120)
-        self.paymentVaultViewController!.displayPreferenceDescription = false
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)), 0)
-        
-        XCTAssertEqual(self.paymentVaultViewController?.tableView(self.paymentVaultViewController!.paymentsTable, heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)), 52)
-    }
-
-    func testTogglePreference(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        self.paymentVaultViewController!.togglePreferenceDescription(self.paymentVaultViewController!.paymentsTable)
-        XCTAssertTrue(self.paymentVaultViewController!.displayPreferenceDescription)
-    }
-    
-    func testExecuteBack(){
-        self.paymentVaultViewController!.executeBack()
-        XCTAssertTrue(self.paymentVaultViewController!.mpStylesCleared)
-    }
-    
-    func testOptionSelectedPaymentMethodOffline(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let pmSearchItem = PaymentMethodSearchItem()
-        pmSearchItem.comment = "comment"
-        pmSearchItem.idPaymentMethodSearchItem = "oxxo"
-        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
-        
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
-        }
-        
-        self.paymentVaultViewController!.optionSelected(pmSearchItem)
-        //XCTAssertTrue(paymentMethodOffSelected)
-    }
-    
-    func testOptionSelectedCard() {
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let pmSearchItem = PaymentMethodSearchItem()
-        pmSearchItem.comment = "comment"
-        pmSearchItem.idPaymentMethodSearchItem = "credit_card"
-        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_TYPE
-        
-        self.paymentVaultViewController!.optionSelected(pmSearchItem)
-        XCTAssertTrue(self.paymentVaultViewController!.cardFlowStarted)
-    }
-    
-    func testOptionSelectedOfflinePaymentMethod(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let pmSearchItem = PaymentMethodSearchItem()
-        pmSearchItem.comment = "comment"
-        pmSearchItem.idPaymentMethodSearchItem = "oxxo"
-        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
-
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
-            
-        }
-        self.paymentVaultViewController!.optionSelected(pmSearchItem)
-        //TODO: TEST EXPECTATION DE CALLBACK :|
-
-    }
-    
-    func testOptionSelectedBitcoin(){
-
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let pmSearchItem = PaymentMethodSearchItem()
-        pmSearchItem.comment = "comment"
-        pmSearchItem.idPaymentMethodSearchItem = "bitcoin"
-        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_METHOD
-        
-        self.paymentVaultViewController?.callback = {(paymentMethod: PaymentMethod, cardToken:CardToken?, issuer: Issuer?, installments: Int) -> Void in
-           
-        }
-        self.paymentVaultViewController!.optionSelected(pmSearchItem)
-    }
-        
-    func testOptionSelectedPaymentGroup(){
-        
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let pmSearchItem = PaymentMethodSearchItem()
-        pmSearchItem.comment = "comment"
-        pmSearchItem.idPaymentMethodSearchItem = "ticket"
-        pmSearchItem.type = PaymentMethodSearchItemType.PAYMENT_TYPE
-        
-        self.paymentVaultViewController!.optionSelected(pmSearchItem)
-    }
-    
-    func testCardFlow(){
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        self.paymentVaultViewController!.cardFlow(MockBuilder.buildPaymentType(), animated: true)
-        XCTAssertTrue(self.paymentVaultViewController!.cardFlowStarted)
+        // Se seleccionó una acción por default
+        XCTAssertTrue(self.paymentVaultViewController!.optionSelected)
         
     }
 }

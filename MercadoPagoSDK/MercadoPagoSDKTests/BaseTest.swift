@@ -12,15 +12,16 @@ class BaseTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
+        MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
     }
     
     override func tearDown() {
         super.tearDown()
+        MercadoPagoTestContext.sharedInstance.expectation = nil
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController){
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+       // MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         let nav = UINavigationController()
         nav.pushViewController(viewController, animated: false)
         let _ = viewController.view

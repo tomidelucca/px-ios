@@ -139,6 +139,17 @@ public class PaymentMethod : NSObject  {
             return 0 //si la longitud de sus codigos, en sus settings no es siempre la misma entonces responde 0
         }
     }
+    public func cardNumberLenght() -> Int {
+        if (self.settings.count == 0){
+            return 0 //Si no tiene settings la longitud es cero
+        }
+        let filterList = self.settings.filter({ return $0.cardNumber.length == self.settings[0].cardNumber.length })
+        if (filterList.count == self.settings.count){
+            return self.settings[0].cardNumber.length
+        }else{
+            return 0 //si la longitud de sus numberos, en sus settings no es siempre la misma entonces responde 0
+        }
+    }
     
     public func secCodeInBack() -> Bool {
         if (self.settings.count == 0){

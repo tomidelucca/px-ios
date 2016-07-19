@@ -12,6 +12,7 @@
                 <outlet property="numberDocLabel" destination="l5i-w3-sw9" id="nJE-a8-4Zq"/>
                 <outlet property="numberTextField" destination="7N3-XK-uvA" id="GjH-Tj-7ax"/>
                 <outlet property="textField" destination="Zck-A3-VIw" id="ofA-CJ-qob"/>
+                <outlet property="tipoDeDocumentoLabel" destination="VAe-cS-ifU" id="2EZ-fb-cxb"/>
                 <outlet property="typePicker" destination="h9Z-Aa-2AR" id="mPD-uT-h1V"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -131,7 +132,7 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardBackShadow" translatesAutoresizingMaskIntoConstraints="NO" id="wBK-08-Ba2">
                             <rect key="frame" x="0.0" y="1" width="160" height="144"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="dni_man" translatesAutoresizingMaskIntoConstraints="NO" id="opS-yI-TNr">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dni_man" translatesAutoresizingMaskIntoConstraints="NO" id="opS-yI-TNr">
                             <rect key="frame" x="16" y="34" width="69" height="74"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -139,10 +140,10 @@
                                 <constraint firstAttribute="width" constant="69" id="oVg-N7-9sl"/>
                             </constraints>
                         </imageView>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xF0-fi-6d9">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xF0-fi-6d9">
                             <rect key="frame" x="105" y="34" width="127" height="81"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAe-cS-ifU">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAe-cS-ifU">
                                     <rect key="frame" x="0.0" y="0.0" width="127" height="40"/>
                                     <attributedString key="attributedText">
                                         <fragment content="DOCUMENTO DEL TITULAR DE LA TARJETA">
@@ -155,7 +156,7 @@
                                     </attributedString>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="•• ••• •••" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5i-w3-sw9">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•• ••• •••" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l5i-w3-sw9">
                                     <rect key="frame" x="0.0" y="40" width="127" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

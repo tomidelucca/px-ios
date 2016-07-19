@@ -16,17 +16,24 @@ class GuessingFormTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        MercadoPagoContext.setPublicKey(Examples)
+        MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
 
-        self.cardFormViewController = MPStepBuilder.startCreditCardForm(nil, amount: 10000, callback: { (paymentMethod, cardToken, issuer, installment) -> Void in
+        self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: nil, callback: { (paymentMethod, cardToken) in
             
+            }, callbackCancel: {
+                
         })
+        
+        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForPaymentMethods")
+        
         self.simulateViewDidLoadFor(self.cardFormViewController!)
-    }
+        waitForExpectationsWithTimeout(60, handler: nil)    }
 
     func testCreditCardScreen(){
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
+        cardFormViewController?.textBox?.text = "4170068810108020"
+        NSLog(String(cardFormViewController?.paymentMethods?.count))
+        NSLog((cardFormViewController?.paymentMethod?._id)!)
     }
 
     /**
@@ -37,7 +44,7 @@ class GuessingFormTest: BaseTest {
     func testViewDidLoad() {
         
         XCTAssertNotNil(self.cardFormViewController?.textBox)
-        XCTAssertNotNil(self.cardFormViewController?.promoButton)
+      //  XCTAssertNotNil(self.cardFormViewController?.promoButton)
         XCTAssertNotNil(self.cardFormViewController?.cardView)
     } 
     

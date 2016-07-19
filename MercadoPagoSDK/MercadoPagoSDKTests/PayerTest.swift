@@ -16,7 +16,6 @@ class PayerTest: BaseTest {
         let payer = Payer(_id: 1, email: "email", type: "type", identification: identification)
         XCTAssertEqual(payer._id, 1)
         XCTAssertEqual(payer.email, "email")
-        XCTAssertEqual(payer.type, "type")
         XCTAssertEqual(payer.identification, identification)
     }
     func testFromJSON(){
