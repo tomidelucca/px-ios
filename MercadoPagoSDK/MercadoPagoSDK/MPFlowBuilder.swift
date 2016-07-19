@@ -29,7 +29,7 @@ public class MPFlowBuilder : NSObject {
     
     public class func startPaymentVaultViewController(amount: Double, currencyId : String!,paymentPreference : PaymentPreference? = nil, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
          MercadoPagoContext.initFlavor2()
-        let paymentVault = GroupsViewController(amount: amount, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentPreference : paymentPreference, callback: callback)
 
         paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
             paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
