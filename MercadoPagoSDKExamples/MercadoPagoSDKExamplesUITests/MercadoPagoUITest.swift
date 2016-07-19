@@ -11,6 +11,7 @@ import XCTest
 public class MercadoPagoUITest: XCTestCase {
     
     
+    var arguments : [String] = ["UITestingEnabled"]
     static var sharedApplication =  XCUIApplication()
     static var initializedApplication = false
     var application : XCUIApplication =  MercadoPagoUITest.sharedApplication
@@ -18,19 +19,24 @@ public class MercadoPagoUITest: XCTestCase {
     var rejected : [TestCard]?
     override public func setUp() {
         super.setUp()
-        cardsTestArray = [visaGaliciaII(),amexI(),amexII(),amexIII(),amexIV(),amexMacro(),visaNaranja(),tarshop(),tarshopWithoutCVV(),amexPatagonia(),visaPatagonia(),visaHipotecario(),naranja(),naranjaMaster(),cencosud(),master(),argencard(),cargencardII(),cabal(),visaGoldSantander(),nativa(),masterPatagonia(),visaPatagoniaII(),masterItau(),diners(),masterII(),visaNacion(),masterNacion(),visaIndustrial(),masterIndustrial(),visaProvincia(),masterProvincia(),masterCencosud(),cordial(),cordialII(),cordialIII(),cmr(),cordobesa(),mercadopago(),visaGalicia(),visaNaranjaII(),visaGaliciaGold()]
-        rejected = []
+        cardsTestArray = [visaGaliciaII(),amexI(),amexII(),amexIII(),amexIV(),amexMacro(),visaNaranja(),tarshop(),tarshopWithoutCVV(),amexPatagonia(),visaPatagonia(),visaHipotecario(),naranja(),naranjaMaster(),cencosud(),master(),argencard(),cargencardII(),cabal(),visaGoldSantander(),nativa(),masterPatagonia(),visaPatagoniaII(),masterItau(),diners(),masterII(),visaNacion(),masterNacion(),visaIndustrial(),masterIndustrial(),visaProvincia(),masterProvincia(),masterCencosud(),cordial(),cordialII(),cordialIII(),cmr(),cordobesa(),visaGalicia(),visaNaranjaII(),visaGaliciaGold()]
+        rejected = [mercadopago()]
         continueAfterFailure = false
         if(!MercadoPagoUITest.initializedApplication){
             MercadoPagoUITest.initializedApplication = true
-            MercadoPagoUITest.sharedApplication.launchArguments = ["UITestingEnabled"]
+            MercadoPagoUITest.sharedApplication.launchArguments = arguments
+            AppUtils.preferenceSelectedID = AppUtils.PREF_ID_MLA_ONLY_CC
             MercadoPagoUITest.sharedApplication.launch()
         }
-        
-        //application = MercadoPagoUITest.sharedApplication
-        
+  
     }
 
+   
+    internal func randomTestCard() -> TestCard{
+        let randomIndex = Int(arc4random_uniform(UInt32(cardsTestArray!.count)))
+        
+        return cardsTestArray![randomIndex]
+    }
     
     override public func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.

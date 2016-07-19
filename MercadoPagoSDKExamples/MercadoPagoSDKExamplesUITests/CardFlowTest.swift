@@ -13,17 +13,18 @@ class CardFlowTest: MercadoPagoUITest {
    
     func testCardForm() {
  
-        testApproved(mercadopago())
-        /*
+        testApproved(randomTestCard())
+    }
+    
+    func testAllCards(){
+      
         for (_, card) in cardsTestArray!.enumerate() {
             print("---------------------------------------------------------")
             print("Testing  \(card.name)")
             testApproved(card)
+            backToMenu()
         }
-        */
-        
     }
-    
     
     
     func testApproved(card:TestCard){
@@ -35,7 +36,7 @@ class CardFlowTest: MercadoPagoUITest {
         tablesQuery.staticTexts["Components de UI"].tap()
         tablesQuery.staticTexts["Cobra con tarjeta con cuotas"].tap()
         CardFormActions.testCard(card, user: user)
-        backToMenu()
+        
     }
     
     

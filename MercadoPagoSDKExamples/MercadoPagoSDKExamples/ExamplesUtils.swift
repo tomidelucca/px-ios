@@ -11,6 +11,10 @@ import MercadoPagoSDK
 
 class ExamplesUtils {
 
+    
+    
+    
+    
     class var MERCHANT_PUBLIC_KEY : String {
 		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
 		 //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
@@ -91,6 +95,7 @@ class ExamplesUtils {
     class var ITEM_UNIT_PRICE : Double {
         return 1000.00
     }
+ 
  
     class var PREF_ID_NO_EXCLUSIONS : String {
         return "150216849-e131b785-10d3-48c0-a58b-2910935512e0"

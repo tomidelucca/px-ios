@@ -16,6 +16,7 @@ class CardFormActions: MPTestActions {
 
     static internal func testCard( card : TestCard, user : TestUser ){
         
+        
         //Card Form
         let binIndex = card.number.endIndex.advancedBy(6 - card.number.characters.count)
         let binNumber = card.number.substringToIndex(binIndex)
@@ -27,6 +28,8 @@ class CardFormActions: MPTestActions {
         let securityCodeField = application.textFields["Código de seguridad"]
         //Identification Form
         let identificationNumberField = application.textFields["Número"]
+        
+        
         
         cardNumberField.tap()
         cardNumberField.typeText(binNumber)
@@ -48,7 +51,7 @@ class CardFormActions: MPTestActions {
         
         identificationNumberField.typeText(user.identification.number)
         
-        
+        continuarButton.tap()
         
         /*
         continuarButton.pressForDuration(0.2);
@@ -56,7 +59,8 @@ class CardFormActions: MPTestActions {
         */
     }
     
- 
+    
+   
 }
 
 

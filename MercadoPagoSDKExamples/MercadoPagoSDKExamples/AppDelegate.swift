@@ -21,10 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication,
             didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
-        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
-        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
-        MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
+      
+        MercadoPagoContext.setPublicKey(AppUtils.MERCHANT_PUBLIC_KEY)
+        MercadoPagoContext.setMerchantAccessToken(AppUtils.MERCHANT_ACCESS_TOKEN)
+        MercadoPagoContext.setBaseURL(AppUtils.MERCHANT_MOCK_BASE_URL)
+        MercadoPagoContext.setCustomerURI(AppUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
        
         //Pinto de rojo el color primerio
         MercadoPagoContext.setupPrimaryColor(UIColor.redColor())
