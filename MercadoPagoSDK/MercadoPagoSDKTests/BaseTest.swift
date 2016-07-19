@@ -21,7 +21,7 @@ class BaseTest: XCTestCase {
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController){
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+       // MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         let nav = UINavigationController()
         nav.pushViewController(viewController, animated: false)
         let _ = viewController.view

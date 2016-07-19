@@ -18,15 +18,22 @@ class GuessingFormTest: BaseTest {
         super.setUp()
         MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
 
- /*       self.cardFormViewController = MPStepBuilder.startCreditCardForm(nil, amount: 10000, callback: { (paymentMethod, cardToken, issuer, installment) -> Void in
+        self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: nil, callback: { (paymentMethod, cardToken) in
             
-        }, callbackCancel : nil)
-        self.simulateViewDidLoadFor(self.cardFormViewController!)*/
-    }
+            }, callbackCancel: {
+                
+        })
+        
+        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForPaymentMethods")
+        
+        self.simulateViewDidLoadFor(self.cardFormViewController!)
+        waitForExpectationsWithTimeout(60, handler: nil)    }
 
     func testCreditCardScreen(){
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
+        cardFormViewController?.textBox?.text = "4170068810108020"
+        NSLog(String(cardFormViewController?.paymentMethods?.count))
+        NSLog((cardFormViewController?.paymentMethod?._id)!)
     }
 
     /**

@@ -33,6 +33,4 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
         self.optionSelected = true
     }
 
-
-    
 }
