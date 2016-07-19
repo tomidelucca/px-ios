@@ -43,7 +43,7 @@ public class MPFlowBuilder : NSObject {
     
     internal class func startPaymentVaultInCheckout(amount: Double, currencyId : String!, paymentSettings: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, currencyId : currencyId, paymentPreference: paymentSettings, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
         
         paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)

@@ -16,7 +16,7 @@ class MerchantPaymentTest: BaseTest {
     func testInit(){
         let merchantPayment = MerchantPayment(items: self.items, installments: 12, cardIssuer: nil, tokenId: "tokenId", paymentMethod: amexPaymentMethod, campaignId: 0)
         
-        XCTAssertEqual(merchantPayment.items, items)
+        XCTAssertEqual(merchantPayment.items!, items)
         XCTAssertEqual(merchantPayment.installments, 12)
         XCTAssertNil(merchantPayment.issuer)
         XCTAssertEqual(merchantPayment.cardTokenId, "tokenId")

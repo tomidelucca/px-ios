@@ -18,6 +18,18 @@ public class MockBuilder: NSObject {
         return "167833503-bbb3c69e-d91e-4328-9f50-169a06ebc749"
     }
     
+    class var MLA_PK : String {
+        return "PK_MLA"
+    }
+    
+    class var MLA_CURRENCY : String {
+        return "ARS"
+    }
+    
+    class var MLA_PAYMENT_TYPES : Set<String> {
+        return [PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue]
+    }
+    
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
         preference._id = PREF_ID_MOCK

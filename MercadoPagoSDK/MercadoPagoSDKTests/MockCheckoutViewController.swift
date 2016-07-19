@@ -15,20 +15,5 @@ class MockCheckoutViewController: CheckoutViewController {
     var mpStylesLoaded = false
     var preferenceDescriptionDisplayed = false
     
-    override init(preference : CheckoutPreference, callback : (Payment -> Void)){
-        super.init(preference: preference, callback: callback)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override internal func startPaymentVault(){
-        paymentVaultLoaded = true
-    }
-    
-    internal override func loadMPStyles(){
-        mpStylesLoaded = true
-    }
     
 }

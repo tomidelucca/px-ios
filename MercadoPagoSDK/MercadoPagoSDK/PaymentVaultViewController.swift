@@ -16,7 +16,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     var publicKey : String!
     var amount : Double!
     var currencyId : String!
-    var paymentSettings : PaymentPreference?
+    var paymentPreference : PaymentPreference?
     var callback : ((paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void)!
 
     var defaultInstallments : Int?
@@ -36,7 +36,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var paymentsTable: UITableView!
     
 
-    internal init(amount: Double, currencyId : String, paymentSettings : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    internal init(amount: Double, currencyId : String, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
@@ -51,7 +51,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.tintColor = tintColor
         self.amount = amount // mayor o igual a 0
         self.currencyId = currencyId
-        self.paymentSettings = paymentSettings
+        self.paymentPreference = paymentPreference
 
         self.currentPaymentMethodSearch = paymentMethodSearchItem
         self.paymentMethods = paymentMethods
@@ -80,7 +80,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.publicKey = MercadoPagoContext.publicKey()
         self.amount = amount
         self.currencyId = currencyId
-        self.paymentSettings = paymentPreference
+        self.paymentPreference = paymentPreference
         self.callback = callback
         
         if callbackCancel == nil {
@@ -202,7 +202,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         if indexPath.section == 1 {
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
             if (paymentSearchItemSelected.children.count > 0) {
-                let paymentVault = PaymentVaultViewController(amount: self.amount, currencyId : self.currencyId, paymentSettings: paymentSettings, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+                let paymentVault = PaymentVaultViewController(amount: self.amount, currencyId : self.currencyId, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
                     self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
                 paymentVault.isRoot = false
@@ -221,7 +221,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
                 if paymentTypeId!.isCard() {
-                    let cardFlow = MPFlowBuilder.startCardFlow(self.paymentSettings, amount: self.amount, paymentMethods : self.paymentMethods, callback: { (paymentMethod, token, issuer, payerCost) in
+                    let cardFlow = MPFlowBuilder.startCardFlow(self.paymentPreference, amount: self.amount, paymentMethods : self.paymentMethods, callback: { (paymentMethod, token, issuer, payerCost) in
                         self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                         }, callbackCancel: {
                             if self.currentPaymentMethodSearch.count > 1 {
@@ -260,8 +260,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     private func loadPaymentMethodSearch(){
         
         if self.currentPaymentMethodSearch == nil {
-            let excludedPaymentTypeIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentTypeIds : nil
-            let excludedPaymentMethodIds = (self.paymentSettings != nil) ? self.paymentSettings!.excludedPaymentMethodIds : nil
+            let excludedPaymentTypeIds = (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentTypeIds : nil
+            let excludedPaymentMethodIds = (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
             self.showLoading()
             MPServicesBuilder.searchPaymentMethods(self.amount, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 self.paymentMethods = paymentMethodSearchResponse.paymentMethods

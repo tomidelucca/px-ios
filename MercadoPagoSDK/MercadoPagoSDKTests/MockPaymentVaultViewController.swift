@@ -12,7 +12,7 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
     
     var mpStylesLoaded = false
     var mpStylesCleared = false
-    var cardFlowStarted = false
+    var optionSelected = false
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -29,22 +29,10 @@ class MockPaymentVaultViewController: PaymentVaultViewController {
         
     }
     
-  /*  override internal func loadMPStyles(){
-        self.mpStylesLoaded = true
-    }*/
-
-    
-    override internal func clearMercadoPagoStyle(){
-        self.mpStylesCleared = true
-    }
-    
-    override internal func togglePreferenceDescription(){
-        self.togglePreferenceDescription(self.paymentsTable)
-    }
-    
-    internal override func cardFlow(paymentType: PaymentType, animated : Bool){
-        super.cardFlow(paymentType, animated: true)
-        self.cardFlowStarted = true
+    override internal func optionSelected(paymentSearchItemSelected: PaymentMethodSearchItem, animated: Bool? = true) {
+        self.optionSelected = true
     }
 
+
+    
 }
