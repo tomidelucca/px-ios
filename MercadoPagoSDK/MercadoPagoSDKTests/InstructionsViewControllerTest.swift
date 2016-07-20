@@ -15,7 +15,7 @@ class InstructionsViewControllerTest: BaseTest {
     override func setUp() {
         super.setUp()
        // MercadoPagoContext.setPublicKey(MockBuilder.MOCK_PUBLIC_KEY)
-        let offlinePayment = MockBuilder.buildPayment("oxxo")
+      //  let offlinePayment = MockBuilder.buildPayment("oxxo")
        /* self.instructionsViewController = InstructionsViewController(payment: offlinePayment, callback: { (Payment) -> Void in
             
         })
@@ -27,7 +27,7 @@ class InstructionsViewControllerTest: BaseTest {
         super.tearDown()
     }
     
-    func testInstructionsScreens(){
+  /*  func testInstructionsScreens(){
          MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         
         XCTAssertEqual((instructionsViewController?.instructionsByPaymentMethod["oxxo"])!, ["body" : "simpleInstructionsCell", "body_heigth" : 130, "footer" : "defaultInstructionsFooterCell", "footer_height" : 86])
@@ -96,9 +96,9 @@ class InstructionsViewControllerTest: BaseTest {
         self.instructionsViewController?.callback = { (Payment) -> Void in
             expectMercadoPagoStylesAreCleared.fulfill()
         }
-        self.instructionsViewController!.finishInstructions()
-        self.waitForExpectationsWithTimeout(10.0, handler: nil)
+/*        self.instructionsViewController!.finishInstructions()
+        self.waitForExpectationsWithTimeout(10.0, handler: nil)*/
     }
-    
+    */
    
 }

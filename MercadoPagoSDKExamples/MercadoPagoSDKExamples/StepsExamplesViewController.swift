@@ -46,7 +46,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         self.stepsExamplesTable.delegate = self
         self.stepsExamplesTable.dataSource = self
-        MercadoPagoContext.setPublicKey(AppUtils.MERCHANT_PUBLIC_KEY)
+        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
     }
     
     override func didReceiveMemoryWarning() {
@@ -158,11 +158,11 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     private func createPayment(){
         
-        MercadoPagoContext.setBaseURL(AppUtils.MERCHANT_MOCK_BASE_URL)
-        MercadoPagoContext.setPaymentURI(AppUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)
+        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
+        MercadoPagoContext.setPaymentURI(ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)
         
-        let item : Item = Item(_id: AppUtils.ITEM_ID, title: AppUtils.ITEM_TITLE, quantity: AppUtils.ITEM_QUANTITY,
-                               unitPrice: AppUtils.ITEM_UNIT_PRICE)
+        let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
+                               unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
 
         //CardIssuer is optional
         let installments = (self.installmentsSelected == nil) ? 1 : self.installmentsSelected!.installments

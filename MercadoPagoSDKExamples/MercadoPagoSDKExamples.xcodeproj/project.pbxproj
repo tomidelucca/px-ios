@@ -45,11 +45,8 @@
 		152FE86F1D3D7E5F0068A7DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9884FB1AD2BCB900F750F0 /* AppDelegate.swift */; };
 		1561DA921D382F2F00E4DAFF /* StepsExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */; };
 		15A08EB91D36B1FF00CE3E71 /* MercadoPagoUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */; };
-		15A2B9A31D3E5921003D3720 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2B9A21D3E5921003D3720 /* AppUtils.swift */; };
 		15A2B9AB1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		15A2B9AC1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
-		15A2B9AD1D3E6364003D3720 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2B9A21D3E5921003D3720 /* AppUtils.swift */; };
-		15A2B9AE1D3E6364003D3720 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A2B9A21D3E5921003D3720 /* AppUtils.swift */; };
 		762713691D343424008DC3AB /* CardFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762713681D343424008DC3AB /* CardFlowTest.swift */; };
 		7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136B1D343580008DC3AB /* CardFormActions.swift */; };
 		7639DAB41D353FB5003E3DCB /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
@@ -181,7 +178,6 @@
 		151D084C1D36D65F00ECD232 /* MPTestActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTestActions.swift; sourceTree = "<group>"; };
 		157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../MercadoPagoSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUITest.swift; sourceTree = "<group>"; };
-		15A2B9A21D3E5921003D3720 /* AppUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppUtils.swift; path = ../../AppUtils.swift; sourceTree = "<group>"; };
 		15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoSDK.xcodeproj; path = ../MercadoPagoSDK/MercadoPagoSDK.xcodeproj; sourceTree = "<group>"; };
 		762713681D343424008DC3AB /* CardFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowTest.swift; sourceTree = "<group>"; };
 		7627136B1D343580008DC3AB /* CardFormActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormActions.swift; sourceTree = "<group>"; };
@@ -337,7 +333,6 @@
 			children = (
 				0FCE50A31AF2B05600A30177 /* String+Additions.swift */,
 				0F98852A1AD2BD3700F750F0 /* ExamplesUtils.swift */,
-				15A2B9A21D3E5921003D3720 /* AppUtils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -669,7 +664,6 @@
 				76EF7E631D2415E60087C785 /* StepsExamplesViewController.swift in Sources */,
 				0F9884FF1AD2BCB900F750F0 /* MercadoPagoSDKExamples.xcdatamodeld in Sources */,
 				0F98853A1AD2BD9200F750F0 /* SimpleSecurityCodeTableViewCell.swift in Sources */,
-				15A2B9A31D3E5921003D3720 /* AppUtils.swift in Sources */,
 				0F98852B1AD2BD3700F750F0 /* ExamplesUtils.swift in Sources */,
 				0F9884FC1AD2BCB900F750F0 /* AppDelegate.swift in Sources */,
 				0F9885481AD2BDBE00F750F0 /* FinalVaultViewController.swift in Sources */,
@@ -687,7 +681,6 @@
 				152FE86F1D3D7E5F0068A7DC /* AppDelegate.swift in Sources */,
 				0F9885351AD2BD8700F750F0 /* CardViewController.swift in Sources */,
 				0F9885151AD2BCB900F750F0 /* MercadoPagoSDKExamplesTests.swift in Sources */,
-				15A2B9AD1D3E6364003D3720 /* AppUtils.swift in Sources */,
 				0F9885461AD2BDB300F750F0 /* AdvancedVaultViewController.swift in Sources */,
 				0F9885411AD2BDA700F750F0 /* SimpleVaultViewController.swift in Sources */,
 				0FCE50A51AF2B05600A30177 /* String+Additions.swift in Sources */,
@@ -718,7 +711,6 @@
 				1561DA921D382F2F00E4DAFF /* StepsExamplesViewController.swift in Sources */,
 				7639DACC1D357A40003E3DCB /* CheckoutFlowTest.swift in Sources */,
 				7639DABD1D354218003E3DCB /* SimpleVaultViewController.swift in Sources */,
-				15A2B9AE1D3E6364003D3720 /* AppUtils.swift in Sources */,
 				7639DAC01D35423A003E3DCB /* SimpleSecurityCodeTableViewCell.swift in Sources */,
 				15A08EB91D36B1FF00CE3E71 /* MercadoPagoUITest.swift in Sources */,
 				7639DABF1D354226003E3DCB /* FinalVaultViewController.swift in Sources */,

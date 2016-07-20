@@ -26,8 +26,8 @@ public class MockBuilder: NSObject {
         return "ONLY_TICKET"
     }
     
-    class var PREF_ID_RAPIPAGO : String {
-        return "ONLY_RAPIPAGO"
+    class var PREF_ID_PAGOFACIL : String {
+        return "ONLY_PAGOFACIL"
     }
     
     

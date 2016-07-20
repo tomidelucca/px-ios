@@ -13,6 +13,7 @@ class ExamplesUtils {
 
     
     
+    static var preferenceSelectedID : String = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
     
     
     class var MERCHANT_PUBLIC_KEY : String {

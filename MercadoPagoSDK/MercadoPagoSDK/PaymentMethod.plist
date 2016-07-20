@@ -233,5 +233,27 @@
 		<key>editing_font_color</key>
 		<string>333333</string>
 	</dict>
+	<key>hipercard</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTC_hipercard</string>
+		<key>first_color</key>
+		<string>941F16</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+	</dict>
+	<key>elo</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTC_mppa</string>
+		<key>first_color</key>
+		<string>666666</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+	</dict>
 </dict>
 </plist>

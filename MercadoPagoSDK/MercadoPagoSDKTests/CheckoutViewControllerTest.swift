@@ -233,7 +233,7 @@ class CheckoutViewControllerTest: BaseTest {
      */
     func testCheckoutMLA_preferenceOnlyPagoFacilPaymentMethodOff(){
         
-        self.checkoutViewController = MockCheckoutViewController(preferenceId: MockBuilder.PREF_ID_RAPIPAGO, callback: { (payment : Payment) in
+        self.checkoutViewController = MockCheckoutViewController(preferenceId: MockBuilder.PREF_ID_PAGOFACIL, callback: { (payment : Payment) in
             
         })
         
@@ -241,6 +241,7 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertNil(checkoutViewController?.paymentMethod)
         
         self.simulateViewDidLoadFor(checkoutViewController!)
+        
         
         // Solo pagofacil disponible
         XCTAssertNotNil(checkoutViewController?.paymentMethodSearch)
