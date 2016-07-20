@@ -14,9 +14,22 @@ public class MockBuilder: NSObject {
         return 1826290155
     }
     
-    class var PREF_ID_MOCK : String {
-        return "167833503-bbb3c69e-d91e-4328-9f50-169a06ebc749"
+    class var PREF_ID_NO_EXCLUSIONS : String {
+        return "NO_EXCLUSIONS"
     }
+    
+    class var PREF_ID_CC : String {
+        return "ONLY_CREDIT_CARD"
+    }
+    
+    class var PREF_ID_TICKET : String {
+        return "ONLY_TICKET"
+    }
+    
+    class var PREF_ID_RAPIPAGO : String {
+        return "ONLY_RAPIPAGO"
+    }
+    
     
     class var MLA_PK : String {
         return "PK_MLA"
@@ -30,9 +43,15 @@ public class MockBuilder: NSObject {
         return [PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue]
     }
     
+    class var MERCHANT_ACCESS_TOKEN : String {
+        return "MERCHANT_ACCESS_TOKEN"
+    }
+    
+    
+    
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
-        preference._id = PREF_ID_MOCK
+        preference._id = PREF_ID_NO_EXCLUSIONS
         preference.items = [self.buildItem("itemId", quantity: 1, unitPrice: 10), self.buildItem("itemId2", quantity: 2, unitPrice: 10)]
         preference.payer = Payer.fromJSON(MockManager.getMockFor("Payer")!)
         return preference
@@ -53,7 +72,7 @@ public class MockBuilder: NSObject {
         preferencePM.defaultInstallments = 1
         preferencePM.defaultPaymentMethodId = "visa"
         preferencePM.excludedPaymentMethodIds = ["amex"]
-      //  preferencePM.excludedPaymentTypeIds = self.getMockPaymentTypeIds()
+        preferencePM.excludedPaymentTypeIds = self.getMockPaymentTypeIds()
         return preferencePM
     }
     
@@ -107,12 +126,35 @@ public class MockBuilder: NSObject {
     }
     
     
-    class func getMockPaymentTypeIds() -> Set<PaymentTypeId>{
-        return Set([PaymentTypeId.BITCOIN, PaymentTypeId.ACCOUNT_MONEY])
+    class func getMockPaymentTypeIds() -> Set<String>{
+        return Set([PaymentTypeId.BITCOIN.rawValue, PaymentTypeId.ACCOUNT_MONEY.rawValue])
     }
     
     class func buildPaymentType() -> PaymentType{
         let creditCardPaymentTypeId = PaymentTypeId.CREDIT_CARD
         return PaymentType(paymentTypeId: creditCardPaymentTypeId)
+    }
+    
+    
+    class func buildToken() -> Token {
+        let token = Token(_id: "tokenId", publicKey: MLA_PK, cardId: "cardId", luhnValidation: "luhn", status: "status", usedDate: "11", cardNumberLength: 16, creationDate: NSDate(), lastFourDigits: "1234", firstSixDigit: "123456", securityCodeLength: 3, expirationMonth: 11, expirationYear: 22, lastModifiedDate: NSDate(), dueDate: NSDate(), cardHolder: MockBuilder.buildCardholder())
+        return token
+    }
+    
+    class func buildCardholder() -> Cardholder {
+        let cardHolder = Cardholder()
+        cardHolder.name = "name"
+        return cardHolder
+    }
+    
+    class func buildPayerCost() -> PayerCost {
+        let payerCost = PayerCost(installments: 1, installmentRate: 10, labels: ["label"], minAllowedAmount: 10, maxAllowedAmount: 100, recommendedMessage: "", installmentAmount: 10, totalAmount: 10)
+        return payerCost
+    }
+    
+    class func buildIssuer() -> Issuer {
+        let issuer = Issuer()
+        issuer._id = 1234
+        return issuer
     }
 }

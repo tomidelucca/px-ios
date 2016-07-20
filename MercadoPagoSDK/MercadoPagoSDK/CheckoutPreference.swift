@@ -208,3 +208,4 @@ public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
 }
 
 
+

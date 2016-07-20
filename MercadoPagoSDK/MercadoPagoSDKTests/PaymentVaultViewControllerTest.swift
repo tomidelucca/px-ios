@@ -27,7 +27,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     
     func testInit() {
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2579, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
             
         })
         
@@ -63,7 +63,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         let excludedPaymentTypeIds = Set([PaymentTypeId.TICKET.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue])
         let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2579, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -96,7 +96,7 @@ class PaymentVaultViewControllerTest: BaseTest {
      */
     func testPaymentVaultMLA_noPaymentPreference(){
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2579, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -136,7 +136,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         let excludedPaymentTypeIds = Set([PaymentTypeId.CREDIT_CARD.rawValue, PaymentTypeId.BANK_TRANSFER.rawValue])
         let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2579, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -172,7 +172,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         let excludedPaymentMethodIds = Set(arrayLiteral: "bapropagos", "rapipago", "cargavirtual")
         let paymentPreference = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: excludedPaymentMethodIds, excludedPaymentTypesIds: excludedPaymentTypeIds, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 7.5, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2579, currencyId: MockBuilder.MLA_CURRENCY, paymentPreference: paymentPreference, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -191,6 +191,7 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertTrue(self.paymentVaultViewController!.optionSelected)
         
     }
+    
 }
 
 

@@ -24,6 +24,22 @@ public class MercadoPagoService: NSObject {
             if params != nil {
                 finalUri = finalUri + "?" + params!
             }
+        
+        
+            if method == "POST" {
+                let bodyData = (body as! String).dataUsingEncoding(NSUTF8StringEncoding)
+                let bodyParams = JSON(data: bodyData!)
+                
+                    if let public_key = (bodyParams["public_key"].asString) {
+                        finalUri = finalUri + "?public_key=" + public_key
+                    }
+                    
+                    if let paymentMethodId = bodyParams["payment_method_id"].asString {
+                        finalUri = finalUri + "&payment_method_id=" + paymentMethodId
+                    }
+                
+            }
+        
             do {
                 let jsonResponse = try MockManager.getMockResponseFor(finalUri, method: method)
                /* if (jsonResponse != nil && jsonResponse!["error"] != nil){
