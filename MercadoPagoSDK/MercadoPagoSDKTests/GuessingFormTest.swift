@@ -36,7 +36,7 @@ class GuessingFormTest: BaseTest {
     }
     
     
-    func testCreditCardFormWithPaymentMethodList(){
+    func testCreditCardFormWithPaymentMethodList(settings : PaymentPreference?){
 
         var pms : [PaymentMethod] = []
         MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
@@ -49,7 +49,7 @@ class GuessingFormTest: BaseTest {
         }
         waitForExpectationsWithTimeout(60, handler: nil)
         
-        self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: pms, callback: { (paymentMethod, cardToken) in
+        self.cardFormViewController = CardFormViewController(paymentSettings: settings, amount: 1000, token: nil, paymentMethods: pms, callback: { (paymentMethod, cardToken) in
             
             }, callbackCancel: {
                 
@@ -59,6 +59,13 @@ class GuessingFormTest: BaseTest {
         self.cardFormViewController?.textBox?.delegate = self.cardFormViewController
         
        self.checkCards()
+    }
+    
+    func testAll(){
+        var pp :PaymentPreference? = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: ["amex"], excludedPaymentTypesIds: nil, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
+        pp = nil
+        testCreditCardFormWithPaymentMethodList(pp)
+        
     }
     
     
