@@ -13,6 +13,7 @@ class BaseTest: XCTestCase {
     override func setUp() {
         super.setUp()
         MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
+        MercadoPagoContext.setMerchantAccessToken(MockBuilder.MERCHANT_ACCESS_TOKEN)
     }
     
     override func tearDown() {

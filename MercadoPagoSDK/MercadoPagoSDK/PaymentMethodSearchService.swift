@@ -18,12 +18,12 @@ public class PaymentMethodSearchService: MercadoPagoService {
     
     public func getPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
-        if excludedPaymentTypeIds != nil {
+        if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
             let excludedPaymentTypesParams = excludedPaymentTypeIds!.map({$0}).joinWithSeparator(",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }
         
-        if excludedPaymentMethodIds != nil {
+        if excludedPaymentMethodIds != nil && excludedPaymentMethodIds!.count > 0 {
             let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joinWithSeparator(",")
             params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
         }
