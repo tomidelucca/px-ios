@@ -1182,7 +1182,7 @@
   ]
 }</string>
 	<key>GET/v1/payment_methods?public_key=PK_MLA</key>
-	<string>{
+	<string>[{
       &quot;id&quot;:&quot;visa&quot;,
       &quot;name&quot;:&quot;Visa&quot;,
       &quot;payment_type_id&quot;:&quot;credit_card&quot;,
@@ -1743,6 +1743,6 @@
       &quot;min_allowed_amount&quot;:0,
       &quot;max_allowed_amount&quot;:250000,
       &quot;accreditation_time&quot;:2880
-   }</string>
+   }]</string>
 </dict>
 </plist>

@@ -125,6 +125,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
        
     }
+    
+    public func setPMs(pms : [PaymentMethod]){
+        self.paymentMethods = pms
+    }
   
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +136,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
         if (self.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
-                self.paymentMethods = paymentMethods
+                self.setPMs(paymentMethods!)
                 }) { (error) -> Void in
                     // Mensaje de error correspondiente, ver que hacemos con el flujo
             }

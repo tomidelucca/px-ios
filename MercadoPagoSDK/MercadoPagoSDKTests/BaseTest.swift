@@ -27,6 +27,7 @@ class BaseTest: XCTestCase {
         let _ = viewController.view
         viewController.viewWillAppear(false)
         viewController.viewDidAppear(false)
+        viewController.viewDidLoad()
     }
     
     

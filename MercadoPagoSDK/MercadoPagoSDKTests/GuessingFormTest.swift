@@ -17,118 +17,69 @@ class GuessingFormTest: BaseTest {
     override func setUp() {
         super.setUp()
         MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
+    }
 
+    func testCreditCardFormWithoutSettings(){
+        
         self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: nil, callback: { (paymentMethod, cardToken) in
             
             }, callbackCancel: {
                 
         })
-        
         MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForPaymentMethods")
-        
         self.simulateViewDidLoadFor(self.cardFormViewController!)
-        waitForExpectationsWithTimeout(60, handler: nil)    }
-
-    func testCreditCardScreen(){
+        waitForExpectationsWithTimeout(60, handler: nil)
+        self.cardFormViewController?.textBox?.delegate = self.cardFormViewController
+       
+       self.checkCards()
+    }
+    
+    
+    func testCreditCardFormWithPaymentMethodList(){
         
-        cardFormViewController?.textBox?.text = "4170068810108020"
-        NSLog(String(cardFormViewController?.paymentMethods?.count))
-        NSLog((cardFormViewController?.paymentMethod?._id)!)
+        var pms : [PaymentMethod] = []
+        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
+        
+        MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+            pms = paymentMethods!
+       //     MercadoPagoTestContext.fulfillExpectation()
+        }) { (error) -> Void in
+            // Mensaje de error correspondiente, ver que hacemos con el flujo
+        }
+        waitForExpectationsWithTimeout(60, handler: nil)
+        
+        self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: pms, callback: { (paymentMethod, cardToken) in
+            
+            }, callbackCancel: {
+                
+        })
+        self.simulateViewDidLoadFor(self.cardFormViewController!)
+      
+        self.cardFormViewController?.textBox?.delegate = self.cardFormViewController
+        
+       self.checkCards()
+    }
+    
+    
+    func checkCards (){
+        //VISA
+        checkPaymentMethodGuessing("4170068810108020", pmId: "visa")
+        //MASTER
+        checkPaymentMethodGuessing("5031755734530604", pmId: "master")
+        //AMEX
+        checkPaymentMethodGuessing("371180303257522", pmId: "amex")
+    }
+    
+    func checkPaymentMethodGuessing(number: String, pmId: String){
+        let binIndex = number.endIndex.advancedBy(7 - number.characters.count)
+        let binNumber = number.substringToIndex(binIndex)
+        self.cardFormViewController?.textBox?.text = binNumber
+        self.cardFormViewController?.cardNumberLabel?.text = binNumber
+        self.cardFormViewController?.numberLabelEmpty = false
+        self.cardFormViewController?.updateCardSkin()
+        XCTAssertNotNil(self.cardFormViewController?.paymentMethod)
+        XCTAssert(self.cardFormViewController?.paymentMethod?._id == pmId)
     }
 
-    /**
-      Si se pasa este test, 
-      la pantalla se levanta correctamente y
-      cada elemento necesiario para la interfaz grafica es correctamente inicializado.
-    */
-    func testViewDidLoad() {
-        
-        XCTAssertNotNil(self.cardFormViewController?.textBox)
-      //  XCTAssertNotNil(self.cardFormViewController?.promoButton)
-        XCTAssertNotNil(self.cardFormViewController?.cardView)
-    } 
-    
-    /**
-     Si se pasa este test,
-     El guessing detecta correctamente tarjetas VISA
-     */
-    func testGuessingVISA(){
-        cardFormViewController?.textBox?.text = "4544 4466"
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertTrue(cardFormViewController!.paymentMethod!.isVISA())
-    }
-    /**
-     Si se pasa este test,
-     El guessing detecta correctamente tarjetas MASTERCARD
-     */
-    func testGuessingMASTER(){
-        cardFormViewController?.textBox?.text = "5355 5558"
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertTrue(cardFormViewController!.paymentMethod!.isMASTERCARD())
-    }
-    
-    
-    /**
-     Si se pasa este test,
-     Cuando el guessing falla limpia el paymentMethod seleccionado.
-     */
-    func testGuessingNoResult(){
-        cardFormViewController?.textBox?.text = "5355 5558"
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertTrue(cardFormViewController!.paymentMethod!.isMASTERCARD())
-        cardFormViewController?.textBox?.text = "0101 0909"
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertNil(cardFormViewController!.paymentMethod)
-    }
-    
-    
-    
-    /**
-     Si se pasa este test,
-     La navegacion automatica entre los campos a completar es correcta.
-     */
-    func testTextFieldSelection(){
-        
-        cardFormViewController?.editingLabel = cardFormViewController?.cardNumberLabel
-        cardFormViewController?.textBox?.text = "4544 4466 5555 6099 "
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertEqual(cardFormViewController?.editingLabel, cardFormViewController?.nameLabel)
-        cardFormViewController?.textBox?.text = "Jose de San Martin  "
-         cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertEqual(cardFormViewController?.editingLabel, cardFormViewController?.expirationDateLabel)
-        cardFormViewController?.textBox?.text = "11/40"
-        cardFormViewController?.editingChanged(cardFormViewController!.textBox!)
-        XCTAssertEqual(cardFormViewController?.editingLabel, cardFormViewController?.cvvLabel)
-        cardFormViewController?.textBox?.text = "101"
-        cardFormViewController?.confirmPaymentMethod()
-        XCTAssertEqual(cardFormViewController?.cardNumberLabel?.textColor, MPLabel.errorColorText)
-
-    }
-    
- 
-    
-    /*
-    Dado valores validos para la creacion de la tarjeta
-    se crea el cardtoken correspondiente de forma correcta
-    **/
-    
-    
-    /*
-    El field del numero de la tarjeta se marque como erroneo
-    en caso de que no se ingrese el numero de tarjeta
-    y se intente crear el cardtoken
-    **/
-    
-    /*
-    el campo de date se marca como erroneo en caso de ingresar una fecha no valida
-    */
-    
-    /*
-    el campo de nombre se marca como erroneo en caso de no ingresar nombre
-    */
-    
-    /*
-    el campo de cvv se marca como erroneo en caso de no ingresar cvv
-    */
     
 }
