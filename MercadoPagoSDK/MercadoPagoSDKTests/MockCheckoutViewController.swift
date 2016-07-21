@@ -11,9 +11,12 @@ import UIKit
 
 class MockCheckoutViewController: CheckoutViewController {
     
-    var paymentVaultLoaded = false
-    var mpStylesLoaded = false
-    var preferenceDescriptionDisplayed = false
+
+    var startPaymentVaultInvoked = false
     
+    override internal func startPaymentVault(animated : Bool = false){
+        self.startPaymentVaultInvoked = true
+        super.startPaymentVault()
+    }
     
 }

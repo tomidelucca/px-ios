@@ -28,6 +28,7 @@ class GuessingFormTest: BaseTest {
         })
         MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForPaymentMethods")
         self.simulateViewDidLoadFor(self.cardFormViewController!)
+
         waitForExpectationsWithTimeout(60, handler: nil)
         self.cardFormViewController?.textBox?.delegate = self.cardFormViewController
        
@@ -36,7 +37,7 @@ class GuessingFormTest: BaseTest {
     
     
     func testCreditCardFormWithPaymentMethodList(){
-        
+
         var pms : [PaymentMethod] = []
         MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
         

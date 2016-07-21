@@ -20,7 +20,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     var paymentMethod : PaymentMethod?
     var issuer : Issuer?
     var token : Token?
-    var paymentButton : MPButton?
     var paymentMethodSearch : PaymentMethodSearch?
     var payerCost : PayerCost?
     override public var screenName : String { get{ return "REVIEW_AND_CONFIRM" } }
@@ -73,7 +72,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.showLoading()
         if preference == nil {
             self.displayBackButton()
-            self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
+            self.navigationItem.leftBarButtonItem?.action = Selector("invokeCallbackCancel")
             self.loadPreference()
         } else {
             if self.paymentMethod != nil {
@@ -82,7 +81,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.hideLoading()
             } else {
                 self.displayBackButton()
-                self.navigationItem.leftBarButtonItem?.action = "invokeCallbackCancel"
+                self.navigationItem.leftBarButtonItem?.action = Selector("invokeCallbackCancel")
                 self.loadGroupsAndStartPaymentVault(true)
             }
         }
@@ -151,7 +150,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             preferenceDescriptionCell.fillRowWithPreference(self.preference!)
             
             return preferenceDescriptionCell
-        }else if indexPath.row == 0 {
+        } else if indexPath.row == 0 {
             if self.paymentMethod != nil {
                 if self.paymentMethod!.isOfflinePaymentMethod() {
                     let cell = tableView.dequeueReusableCellWithIdentifier("offlinePaymentCell", forIndexPath: indexPath) as! OfflinePaymentMethodCell
@@ -178,7 +177,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             
             if !paymentMethod!.isOfflinePaymentMethod() {
                 let installmentsCell = self.checkoutTable.dequeueReusableCellWithIdentifier("installmentSelectionCell") as! InstallmentSelectionTableViewCell
-                let installments = self.payerCost!.installments
                 installmentsCell.fillCell(self.payerCost!)
                 return installmentsCell
             }
@@ -193,11 +191,10 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             return footer
 
         } else if indexPath.row == 2 {
-            if paymentMethod!.isOfflinePaymentMethod() {
+            if paymentMethod != nil && paymentMethod!.isOfflinePaymentMethod() {
                 let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
                 termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
                 termsAndConditionsButton.delegate = self
-                self.paymentButton = termsAndConditionsButton.paymentButton
                 return termsAndConditionsButton
             } else {
                 let totalAmount = self.payerCost == nil ? self.preference!.getAmount() : self.payerCost!.totalAmount
@@ -217,7 +214,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         } else if indexPath.row == 3 {
             let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
             termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
-            self.paymentButton = termsAndConditionsButton.paymentButton
             return termsAndConditionsButton
         }
         
@@ -314,7 +310,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     
     internal func paymentVaultCallback(paymentMethod : PaymentMethod, token : Token?, issuer : Issuer?, payerCost : PayerCost?, animated : Bool = true){
 
-       
         let transition = CATransition()
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromRight
