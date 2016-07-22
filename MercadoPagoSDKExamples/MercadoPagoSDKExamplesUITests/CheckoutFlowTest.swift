@@ -11,15 +11,60 @@ import XCTest
 public class CheckoutFlowTest: MercadoPagoUITest {
     
     
+    func testfullCHO(){
+        self.testCheckOutWithCard()
+        self.testCheckOutWithEfectivo()
+        self.testCheckOutWithRedLink()
+    }
     
     func testCheckOutWithCard(){
         let tablesQuery = application.tables
         tablesQuery.cells.elementBoundByIndex(0).tap()
         tablesQuery.cells.elementBoundByIndex(0).tap()
-        CardFormActions.testCard(tarshopWithoutCVV(), user: approvedUser())
+        CardFormActions.testCard(visaGaliciaII(), user: approvedUser())
         tablesQuery.cells.elementBoundByIndex(0).tap()
         tablesQuery.buttons["Pagar"].tap()
-        tablesQuery.buttons["Seguir comprando"].tap()
+        let buton = application.buttons["Seguir comprando"]
+        let exists = NSPredicate(format: "exists == 1")
+        
+        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
+        waitForExpectationsWithTimeout(30, handler: nil)
+        
+        buton.tap()
+        
+    }
+    
+    func testCheckOutWithEfectivo(){
+        
+        let tablesQuery = application.tables
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.elementBoundByIndex(1).tap()
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.buttons["Pagar"].tap()
+        let buton = application.buttons["Seguir comprando"]
+        let exists = NSPredicate(format: "exists == 1")
+        
+        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
+        waitForExpectationsWithTimeout(30, handler: nil)
+        
+        buton.tap()
+        
+    }
+    
+    func testCheckOutWithRedLink(){
+        
+        let tablesQuery = application.tables
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.elementBoundByIndex(2).tap()
+        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.buttons["Pagar"].tap()
+        let buton = application.buttons["Seguir comprando"]
+        let exists = NSPredicate(format: "exists == 1")
+        
+        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
+        waitForExpectationsWithTimeout(30, handler: nil)
+        
+        buton.tap()
         
     }
     

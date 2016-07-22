@@ -45,9 +45,7 @@ class GuessingFormTest: BaseTest {
         
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
-       //     MercadoPagoTestContext.fulfillExpectation()
         }) { (error) -> Void in
-            // Mensaje de error correspondiente, ver que hacemos con el flujo
         }
         waitForExpectationsWithTimeout(60, handler: nil)
         
@@ -71,9 +69,7 @@ class GuessingFormTest: BaseTest {
         
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
-            //     MercadoPagoTestContext.fulfillExpectation()
         }) { (error) -> Void in
-            // Mensaje de error correspondiente, ver que hacemos con el flujo
         }
         waitForExpectationsWithTimeout(60, handler: nil)
         
