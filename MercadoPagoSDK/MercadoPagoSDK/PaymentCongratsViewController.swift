@@ -194,7 +194,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         
     }
     
-    private func getLayoutName(payment : Payment) -> String! {
+    internal func getLayoutName(payment : Payment) -> String! {
     
         if payment.status == PaymentStatus.REJECTED.rawValue {
             if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {

@@ -14,7 +14,6 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
     
     @IBOutlet weak var creditCardLabel: MPLabel!
     @IBOutlet weak var amountDescription: UILabel!
-    @IBOutlet weak var cancelButton: MPButton!
     @IBOutlet weak var subtitle: MPLabel!
     
     @IBOutlet weak var voucherId: MPLabel!
@@ -53,8 +52,10 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
                     additionalString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes : noRateTextAttributes))
                 }
             }
-
+        } else if payment.installments != 1 {
+                additionalString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes : noRateTextAttributes))
         }
+        
         
         self.amountDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payment.installments), installmentAmount: payment.transactionDetails.installmentAmount, additionalString: additionalString)
         return self
