@@ -42,7 +42,7 @@ class CheckoutViewControllerTest: BaseTest {
         MPServicesBuilder.getPreference(MockBuilder.PREF_ID_NO_EXCLUSIONS, success: { (preference) in
             self.preference = preference
         }) { (error) in
-            XCTFail()
+            
         }
         
         // Cargar vista
