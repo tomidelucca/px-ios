@@ -92,7 +92,6 @@
                             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="252:157" id="pfr-Ir-i7t"/>
-                                <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="252:157" id="yhA-Ly-E34"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -100,11 +99,6 @@
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                             </userDefinedRuntimeAttributes>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="yhA-Ly-E34"/>
-                                </mask>
-                            </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KY-tj-034">
                             <rect key="frame" x="311" y="0.0" width="9" height="227"/>
@@ -141,6 +135,7 @@
                         <constraint firstAttribute="trailing" secondItem="7pi-6h-zuI" secondAttribute="trailing" id="bNe-1y-3gI"/>
                         <constraint firstAttribute="trailing" secondItem="4KY-tj-034" secondAttribute="trailing" id="bbw-hC-xCu"/>
                         <constraint firstAttribute="bottom" secondItem="X6O-69-9IX" secondAttribute="bottom" id="jmB-la-QA9"/>
+                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="centerX" secondItem="HQg-yC-PDa" secondAttribute="centerX" id="kwt-Tl-bVy"/>
                         <constraint firstItem="X6O-69-9IX" firstAttribute="top" secondItem="HQg-yC-PDa" secondAttribute="top" id="lW8-tc-ZPG"/>
                         <constraint firstAttribute="bottom" secondItem="4KY-tj-034" secondAttribute="bottom" id="m7a-Jp-Ega"/>
                         <constraint firstItem="1e7-Cv-GMx" firstAttribute="leading" secondItem="X6O-69-9IX" secondAttribute="trailing" constant="25" id="m8l-eV-MuX"/>
@@ -176,7 +171,7 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="-170" y="456"/>
+            <point key="canvasLocation" x="200" y="361"/>
         </view>
     </objects>
     <resources>
