@@ -16,47 +16,20 @@ class CardFormActions: MPTestActions {
 
     static internal func testCard( card : TestCard, user : TestUser ){
         
-        
+        let poCard = POGuessingForm()
         //Card Form
         let binIndex = card.number.endIndex.advancedBy(6 - card.number.characters.count)
         let binNumber = card.number.substringToIndex(binIndex)
         let additionalNumbers = card.number.substringFromIndex(binIndex)
-        let continuarButton = application.navigationBars.buttons["Continuar"]
-        let cardNumberField = application.textFields["Número de tarjeta"]
-        let cardholderNameField = application.textFields["Nombre y apellido"]
-        let expirationDateField = application.textFields["Fecha de expiración"]
-        let securityCodeField = application.textFields["Código de seguridad"]
-        //Identification Form
-        let identificationNumberField = application.textFields["Número"]
         
-        
-        
-        cardNumberField.tap()
-        cardNumberField.typeText(binNumber)
-        continuarButton.tap()
-        cardNumberField.typeText(additionalNumbers)
-        continuarButton.tap()
-        cardholderNameField.typeText(user.name)
-        continuarButton.tap()
-        expirationDateField.typeText(card.expirationDate)
-        continuarButton.tap()
-        
-        
-        if(card.cvv != nil){
-            securityCodeField.typeText(card.cvv!)
-            continuarButton.tap()
+        poCard.completeNumeroAndContinue(binNumber)
+        poCard.completeNumeroAndContinue(additionalNumbers)
+        poCard.completeNombreAndContinue(card.name)
+        var poIdentification = poCard.completeFechaAndContinue(card.expirationDate, cvvRequired: card.cvv != nil)
+        if (poIdentification == nil){
+            poIdentification = poCard.completeCVVAndContinue(card.cvv!)
         }
-        
-        
-        
-        identificationNumberField.typeText(user.identification.number)
-        
-        continuarButton.tap()
-        
-        /*
-        continuarButton.pressForDuration(0.2);
-        XCUIApplication().tables.staticTexts["3 de $ 397 29 ( $ 1.191 89 ) "].pressForDuration(1.3);
-        */
+        poIdentification?.completeNumberAndContinue(user.identification.number)
     }
     
     

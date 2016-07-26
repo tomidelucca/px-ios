@@ -14,7 +14,7 @@ public class MercadoPagoUITest: XCTestCase {
     var arguments : [String] = ["UITestingEnabled"]
     static var sharedApplication =  XCUIApplication()
     static var initializedApplication = false
-    var application : XCUIApplication =  MercadoPagoUITest.sharedApplication
+    static var application : XCUIApplication =  MercadoPagoUITest.sharedApplication
     var cardsTestArray : [TestCard]?
     
     //DEMO
