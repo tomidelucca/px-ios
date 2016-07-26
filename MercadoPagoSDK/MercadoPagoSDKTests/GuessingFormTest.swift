@@ -28,10 +28,10 @@ class GuessingFormTest: BaseTest {
             }, callbackCancel: {
                 
         })
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForPaymentMethods")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION))
         self.simulateViewDidLoadFor(self.cardFormViewController!)
 
-        waitForExpectationsWithTimeout(60, handler: nil)
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         self.cardFormViewController?.textBox?.delegate = self.cardFormViewController
        
        self.checkCards()
@@ -41,13 +41,13 @@ class GuessingFormTest: BaseTest {
     func testCreditCardFormWithPaymentMethodList(){
 
         var pms : [PaymentMethod] = []
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION))
         
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
         }) { (error) -> Void in
         }
-        waitForExpectationsWithTimeout(60, handler: nil)
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         
         self.cardFormViewController = CardFormViewController(paymentSettings: nil, amount: 1000, token: nil, paymentMethods: pms, callback: { (paymentMethod, cardToken) in
             
@@ -65,7 +65,7 @@ class GuessingFormTest: BaseTest {
     func testPreferencePM(){
         let pp :PaymentPreference? = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: ["visa"], excludedPaymentTypesIds: nil, defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
         var pms : [PaymentMethod] = []
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription("waitPMs"))
         
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!
@@ -96,7 +96,7 @@ class GuessingFormTest: BaseTest {
     func testPreferencePT(){
         let pp :PaymentPreference? = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: ["credit_card"], defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
         var pms : [PaymentMethod] = []
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPMs")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription("waitPMs"))
         
         MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
             pms = paymentMethods!

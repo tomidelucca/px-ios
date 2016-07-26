@@ -58,6 +58,20 @@ public class Card : NSObject {
         return card
     }
     
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "customer_id": self.customerId != nil ? JSON.null : self.customerId!,
+            "dateCreated" : self.dateCreated == nil ? JSON.null : self.dateCreated!,
+            "dateLastUpdated" : self.dateLastUpdated == nil ? JSON.null : self.dateLastUpdated!,
+            "expirationMonth" : self.expirationMonth,
+            "expirationMonth" : self.expirationMonth,
+            "firstSixDigits" : self.firstSixDigits == nil ? JSON.null : self.firstSixDigits!,
+            "idCard" : self.idCard,
+            "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!
+            ]
+        return JSON(obj).toString()
+    }
+    
     public func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {

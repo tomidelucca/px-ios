@@ -32,6 +32,17 @@ public class IdentificationType : NSObject {
 		
         return identificationType
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "_id": self._id != nil ? JSON.null : self._id!,
+            "name" : self.name == nil ? JSON.null : self.name!,
+            "type" : self.type == nil ? JSON.null : self.type!,
+            "min_length" : self.minLength,
+            "max_length" : self.maxLength
+        ]
+        return JSON(obj).toString()
+    }
 }
 
 public func ==(obj1: IdentificationType, obj2: IdentificationType) -> Bool {

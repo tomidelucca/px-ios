@@ -84,6 +84,9 @@ public class MockBuilder: NSObject {
     class func buildPaymentMethod(id : String) -> PaymentMethod {
         let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
+        paymentMethod.name = id
+        paymentMethod.paymentTypeId = "credit_card"
+        paymentMethod.name = id
         return paymentMethod
     }
     
@@ -117,6 +120,7 @@ public class MockBuilder: NSObject {
         let payment = Payment()
         payment._id = self.MOCK_PAYMENT_ID
         payment.paymentMethodId = paymentMethodId
+        payment.paymentTypeId = "credit_card"
         payment.status = status
         payment.installments = installments!
         payment.transactionDetails = TransactionDetails()

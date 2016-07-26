@@ -48,7 +48,7 @@ public class MercadoPagoService: NSObject {
                 }*/
                 
                 success(jsonResult: jsonResponse)
-                MercadoPagoTestContext.fulfillExpectation()
+                MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION)
             } catch {
                 failure!(error: NSError(domain: uri, code: 400, userInfo: nil))
             }

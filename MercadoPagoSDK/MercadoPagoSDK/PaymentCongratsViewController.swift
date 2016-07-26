@@ -47,6 +47,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         super.viewDidLoad()
         self.registerCells()
         self.layoutTemplate = getLayoutName(self.payment)
+        
         self.congratsContentTable.delegate = self
         self.congratsContentTable.dataSource = self
         
@@ -60,7 +61,7 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         super.viewWillAppear(animated)
         self.navigationItem.backBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
-        
+
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
             ViewUtils.addStatusBar(self.view, color: self.congratsLayout[self.layoutTemplate]!["headerColor"] as! UIColor)
@@ -235,6 +236,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         }
     }
     
+    private func validPayment() -> Bool {
+        return self.payment != nil && self.payment.statusDetail != nil && self.payment.statusDetail.isNotEmpty && self.paymentMethod != nil && self.paymentMethod._id != nil && self.paymentMethod._id.isNotEmpty && self.paymentMethod.name != nil && self.paymentMethod.name.isNotEmpty && self.paymentMethod.paymentTypeId != nil && self.paymentMethod.paymentTypeId.isNotEmpty
+        
+    }
 
 }
 

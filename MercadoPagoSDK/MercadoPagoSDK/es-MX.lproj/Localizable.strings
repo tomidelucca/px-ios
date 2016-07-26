@@ -38,7 +38,7 @@
 
 "rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "¡No te desanimes! Puedes elegir otro medio de pago.";
-"cc_rejected_other_reason_subtitle_credit_card"="Usar otra tarjeta u otro medio de pago.";
+"cc_rejected_other_reason_subtitle_credit_card"="Usa otra tarjeta u otro medio de pago.";
 "cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
 "cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";

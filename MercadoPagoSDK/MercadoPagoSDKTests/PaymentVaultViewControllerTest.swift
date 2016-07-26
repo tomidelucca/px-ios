@@ -37,9 +37,9 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertNil(paymentVaultViewController?.currentPaymentMethodSearch)
         XCTAssertNil(paymentVaultViewController?.paymentMethods)
         
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitForGroups")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION))
         self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        waitForExpectationsWithTimeout(60, handler: nil)
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         
         XCTAssertNotNil(self.paymentVaultViewController?.currentPaymentMethodSearch)
         XCTAssertTrue(self.paymentVaultViewController?.currentPaymentMethodSearch!.count > 1)

@@ -61,6 +61,19 @@ public class Customer : NSObject {
         customer.cards = cards
         return customer
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "defaultCard": self.defaultCard != nil ? JSON.null : self.defaultCard!,
+            "_description" : self._description == nil ? JSON.null : self._description!,
+            "dateCreated" : self.dateCreated == nil ? JSON.null : self.dateCreated!,
+            "email" : self.email == nil ? JSON.null : self.email!,
+            "firstName" : self.firstName == nil ? JSON.null : self.firstName!,
+            "lastName" : self.lastName == nil ? JSON.null : self.lastName!,
+            "_id" : self._id == nil ? JSON.null : self._id!
+            ]
+        return JSON(obj).toString()
+    }
 }
 
 

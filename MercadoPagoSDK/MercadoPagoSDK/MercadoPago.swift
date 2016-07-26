@@ -246,11 +246,15 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
        return NSBundle(forClass:MercadoPago.self)
     }
     
-    public class func getImage(name: String) -> UIImage? {
+    public class func getImage(name: String?) -> UIImage? {
+        if name == nil || (name?.isEmpty)! {
+            return nil
+        }
+        
         let bundle = getBundle()
 
         if (UIDevice.currentDevice().systemVersion as NSString).compare("8.0", options: NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending {
-            var nameArr = name.characters.split {$0 == "."}.map(String.init)
+            var nameArr = name!.characters.split {$0 == "."}.map(String.init)
             let imageExtension : String = nameArr[1]
             let filePath = bundle?.pathForResource(name, ofType: imageExtension)
             if filePath != nil {
@@ -260,7 +264,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             }
         }
         if #available(iOS 8.0, *) {
-            return UIImage(named:name, inBundle: bundle, compatibleWithTraitCollection:nil)
+            return UIImage(named:name!, inBundle: bundle, compatibleWithTraitCollection:nil)
         } else {
         }
         return nil

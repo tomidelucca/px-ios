@@ -64,7 +64,11 @@ class AuthorizePaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDele
     }
 
     private func getTitle(payment : Payment, paymentMethod : PaymentMethod) -> NSMutableAttributedString {
-        let title = NSMutableAttributedString(string: "Debes autorizar ante ".localized + paymentMethod.name + " el pago de ".localized)
+        if paymentMethod._id == nil || paymentMethod._id == nil || paymentMethod.name == nil || paymentMethod.name.isEmpty {
+            return NSMutableAttributedString(string: "Debes autorizar el pago ante tu tarjeta".localized)
+        }
+        
+        let title = NSMutableAttributedString(string: "Debes autorizar ante ".localized + paymentMethod.name.localized + " el pago de ".localized)
         let attributedAmount = Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
         title.appendAttributedString(attributedAmount)
         title.appendAttributedString(NSMutableAttributedString(string : " a MercadoPago".localized))
