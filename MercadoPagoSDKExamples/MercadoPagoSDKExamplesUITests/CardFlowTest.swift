@@ -33,7 +33,7 @@ class CardFlowTest: MercadoPagoUITest {
     }
     
     func testCard(card : TestCard , user : TestUser){
-        let tablesQuery = application.tables
+        let tablesQuery = CardFlowTest.application.tables
         tablesQuery.cells.elementBoundByIndex(1).tap()
         tablesQuery.cells.elementBoundByIndex(1).tap()
         CardFormActions.testCard(card, user: user)

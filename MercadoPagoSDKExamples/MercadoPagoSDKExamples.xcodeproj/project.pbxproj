@@ -35,6 +35,11 @@
 		0FCE50A51AF2B05600A30177 /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE50A31AF2B05600A30177 /* String+Additions.swift */; };
 		0FFDB7261AF2B1F600F7AF9D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FFDB7291AF2B1F600F7AF9D /* Localizable.strings */; };
 		0FFDB7271AF2B1F600F7AF9D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FFDB7291AF2B1F600F7AF9D /* Localizable.strings */; };
+		150ABE621D47971F00BF9271 /* POGuessingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE611D47971F00BF9271 /* POGuessingForm.swift */; };
+		150ABE641D47984000BF9271 /* MPPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE631D47984000BF9271 /* MPPageObject.swift */; };
+		150ABE671D479B0600BF9271 /* POPromos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE661D479B0600BF9271 /* POPromos.swift */; };
+		150ABE691D47A0F700BF9271 /* POIdentificationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE681D47A0F700BF9271 /* POIdentificationForm.swift */; };
+		150ABE6F1D47AF3600BF9271 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		150B498A1D368C5300E21C7F /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		150B498B1D368C6200E21C7F /* StepsExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */; };
 		150B498D1D368C7100E21C7F /* ServicesExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */; };
@@ -77,6 +82,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0F9884F51AD2BCB900F750F0;
 			remoteInfo = MercadoPagoSDKExamples;
+		};
+		150ABE701D47AF3600BF9271 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
+			remoteInfo = MercadoPagoSDK;
 		};
 		157FAE821D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -129,6 +141,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		150ABE761D47AF3600BF9271 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				150ABE6F1D47AF3600BF9271 /* MercadoPagoSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0F9884F61AD2BCB900F750F0 /* MercadoPagoSDKExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MercadoPagoSDKExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9884FA1AD2BCB900F750F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,6 +179,10 @@
 		0FFDB72B1AF2B21A00F7AF9D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FFDB72C1AF2B59700F7AF9D /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-CO"; path = "es-CO.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0FFDB72D1AF2B5BB00F7AF9D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		150ABE611D47971F00BF9271 /* POGuessingForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POGuessingForm.swift; sourceTree = "<group>"; };
+		150ABE631D47984000BF9271 /* MPPageObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPPageObject.swift; sourceTree = "<group>"; };
+		150ABE661D479B0600BF9271 /* POPromos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POPromos.swift; sourceTree = "<group>"; };
+		150ABE681D47A0F700BF9271 /* POIdentificationForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIdentificationForm.swift; sourceTree = "<group>"; };
 		151D084C1D36D65F00ECD232 /* MPTestActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTestActions.swift; sourceTree = "<group>"; };
 		157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../MercadoPagoSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUITest.swift; sourceTree = "<group>"; };
@@ -358,6 +388,17 @@
 			name = FinalVault;
 			sourceTree = "<group>";
 		};
+		150ABE5A1D47962E00BF9271 /* PageObjects */ = {
+			isa = PBXGroup;
+			children = (
+				150ABE631D47984000BF9271 /* MPPageObject.swift */,
+				150ABE611D47971F00BF9271 /* POGuessingForm.swift */,
+				150ABE661D479B0600BF9271 /* POPromos.swift */,
+				150ABE681D47A0F700BF9271 /* POIdentificationForm.swift */,
+			);
+			name = PageObjects;
+			sourceTree = "<group>";
+		};
 		157FAE7A1D1B28EF00AB13B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +455,7 @@
 		76AFD39E1D34236B00A9DDAD /* MercadoPagoSDKExamplesUITests */ = {
 			isa = PBXGroup;
 			children = (
+				150ABE5A1D47962E00BF9271 /* PageObjects */,
 				15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */,
 				7627136A1D34350E008DC3AB /* Actions */,
 				762713611D34340E008DC3AB /* UI */,
@@ -441,10 +483,12 @@
 				0F9884F21AD2BCB900F750F0 /* Sources */,
 				0F9884F31AD2BCB900F750F0 /* Frameworks */,
 				0F9884F41AD2BCB900F750F0 /* Resources */,
+				150ABE761D47AF3600BF9271 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				150ABE711D47AF3600BF9271 /* PBXTargetDependency */,
 			);
 			name = MercadoPagoSDKExamples;
 			productName = MercadoPagoSDKExamples;
@@ -682,10 +726,14 @@
 				151D084D1D36D65F00ECD232 /* MPTestActions.swift in Sources */,
 				7639DABC1D354215003E3DCB /* CardViewController.swift in Sources */,
 				7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */,
+				150ABE621D47971F00BF9271 /* POGuessingForm.swift in Sources */,
 				7639DAB71D354018003E3DCB /* ExamplesUtils.swift in Sources */,
 				7639DAD61D358D8A003E3DCB /* AppDelegate.swift in Sources */,
 				1561DA921D382F2F00E4DAFF /* StepsExamplesViewController.swift in Sources */,
 				7639DACC1D357A40003E3DCB /* CheckoutFlowTest.swift in Sources */,
+				150ABE671D479B0600BF9271 /* POPromos.swift in Sources */,
+				150ABE641D47984000BF9271 /* MPPageObject.swift in Sources */,
+				150ABE691D47A0F700BF9271 /* POIdentificationForm.swift in Sources */,
 				7639DABD1D354218003E3DCB /* SimpleVaultViewController.swift in Sources */,
 				7639DAC01D35423A003E3DCB /* SimpleSecurityCodeTableViewCell.swift in Sources */,
 				15A08EB91D36B1FF00CE3E71 /* MercadoPagoUITest.swift in Sources */,
@@ -701,6 +749,11 @@
 			isa = PBXTargetDependency;
 			target = 0F9884F51AD2BCB900F750F0 /* MercadoPagoSDKExamples */;
 			targetProxy = 0F98850F1AD2BCB900F750F0 /* PBXContainerItemProxy */;
+		};
+		150ABE711D47AF3600BF9271 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MercadoPagoSDK;
+			targetProxy = 150ABE701D47AF3600BF9271 /* PBXContainerItemProxy */;
 		};
 		76AFD3A31D34236B00A9DDAD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -809,6 +862,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -834,6 +888,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
