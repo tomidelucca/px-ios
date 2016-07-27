@@ -47,6 +47,9 @@ public class MockBuilder: NSObject {
         return "MERCHANT_ACCESS_TOKEN"
     }
     
+    class var INSTALLMENT_AMOUNT : Double {
+        return 100.0
+    }
     
     
     class func buildCheckoutPreference() -> CheckoutPreference {
@@ -61,9 +64,10 @@ public class MockBuilder: NSObject {
         return Item(_id: id, title : "item title", quantity: quantity, unitPrice: unitPrice)
     }
     
-    class func buildPayer(id : NSNumber, type : String) -> Payer {
+    class func buildPayer(id : NSNumber) -> Payer {
         let payer =  Payer()
         payer._id = id
+        payer.email = "thisisanem@il.com"
         return payer
     }
     
@@ -80,6 +84,9 @@ public class MockBuilder: NSObject {
     class func buildPaymentMethod(id : String) -> PaymentMethod {
         let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
+        paymentMethod.name = id
+        paymentMethod.paymentTypeId = "credit_card"
+        paymentMethod.name = id
         return paymentMethod
     }
     
@@ -101,16 +108,48 @@ public class MockBuilder: NSObject {
     class func buildCard() -> Card {
         let card = Card()
         card.idCard = 1234567890
+        card.firstSixDigits = "123456"
+        card.lastFourDigits = "1234"
+        card.expirationMonth = 11
+        card.expirationYear = 22
+        card.cardHolder = buildCardholder()
         return card
     }
-    
-    class func buildPayment(paymentMethodId : String) -> Payment {
+        
+    class func buildPayment(paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         let payment = Payment()
         payment._id = self.MOCK_PAYMENT_ID
         payment.paymentMethodId = paymentMethodId
+        payment.paymentTypeId = "credit_card"
+        payment.status = status
+        payment.installments = installments!
+        payment.transactionDetails = TransactionDetails()
+        payment.transactionDetails.installmentAmount = MockBuilder.INSTALLMENT_AMOUNT
+        payment.statusDetail = statusDetail
+        payment.feesDetails = [FeesDetail]()
+        if (includeFinancingFee != nil && includeFinancingFee!) {
+            let feesDetail = FeesDetail()
+            feesDetail.type = "financing_fee"
+            payment.feesDetails.append(feesDetail)
+            let amount = MockBuilder.INSTALLMENT_AMOUNT * Double(installments!)
+            payment.transactionDetails.totalPaidAmount =  amount + (amount * 0.20)
+        }
+        payment.payer = buildPayer(1)
+        payment.card = buildCard()
         return payment
     }
+
+    class func buildMastercardPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+        return MockBuilder.buildPayment("master", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
+    }
+
+    class func buildVisaPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+        return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
+    }
     
+    class func buildAmexPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+        return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
+    }
     
     class func buildPaymentMethodSearchItem(paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
         let paymentMethodSearchItem = PaymentMethodSearchItem()

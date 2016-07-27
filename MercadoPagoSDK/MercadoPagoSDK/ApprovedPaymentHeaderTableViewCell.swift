@@ -11,6 +11,7 @@ import UIKit
 class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelegate {
 
     
+    @IBOutlet weak var headerDescription: MPLabel!
     @IBOutlet weak var subtitle: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,11 +31,12 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         var subtitle : String = ""
-        if (payment.payer != nil) {
-            subtitle = payment.payer!.email ?? ""
+        if (payment.payer != nil && payment.payer!.email != nil && payment.payer!.email.isNotEmpty) {
+            self.subtitle.text = payment.payer!.email
+        } else {
+            self.subtitle.text = ""
+            self.headerDescription.text = ""
         }
-        
-        self.subtitle.text = subtitle
         return self
     }
     

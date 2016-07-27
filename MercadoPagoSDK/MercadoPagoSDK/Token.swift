@@ -81,6 +81,28 @@ public class Token : NSObject {
 			securityCodeLength: securityCodeLength, expirationMonth: expMonth, expirationYear: expYear, lastModifiedDate: lastModifiedDate,
             dueDate: dueDate, cardHolder: cardHolder)
 	}
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "_id": self._id != nil ? JSON.null : self._id!,
+            "cardId" : self.cardId == nil ? JSON.null : self.cardId!,
+            "luhnValidation" : self.luhnValidation == nil ? JSON.null : self.luhnValidation!,
+            "status" : self.status,
+            "usedDate" : self.usedDate,
+            "cardNumberLength" : self.cardNumberLength,
+            "creationDate" : self.creationDate,
+            "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits,
+            "firstSixDigit" : self.firstSixDigit == nil ? JSON.null : self.firstSixDigit,
+            "securityCodeLength" : self.securityCodeLength,
+            "expirationMonth" : self.expirationMonth,
+            "expirationYear" : self.expirationYear,
+            "lastModifiedDate" : self.lastModifiedDate,
+            "dueDate" : self.dueDate,
+        ]
+
+        return JSON(obj).toString()
+    }
+    
     public func getCardExpirationDateFormated() -> String {
         return (String(expirationMonth) + String(expirationYear))
     }

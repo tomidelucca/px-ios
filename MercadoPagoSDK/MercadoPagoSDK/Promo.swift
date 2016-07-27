@@ -47,6 +47,24 @@ public class Promo : NSObject {
 		
 		return promo
 	}
+    
+    public func toJSONString() -> String {
+        var obj:[String:AnyObject] = [
+            "promoId": self.promoId,
+            "issuer" : self.issuer.toJSONString(),
+            "recommendedMessage" : self.recommendedMessage,
+            "legals" : self.legals,
+            "url" : self.url
+        ]
+        
+        var pmsJson = ""
+        for pm in self.paymentMethods {
+            pmsJson = pmsJson + pm.toJSONString()
+        }
+        obj["payment_methods"] = pmsJson
+
+        return JSON(obj).toString()
+    }
 	
 	public class func getDateFromString(string: String!) -> NSDate! {
 		if string == nil {

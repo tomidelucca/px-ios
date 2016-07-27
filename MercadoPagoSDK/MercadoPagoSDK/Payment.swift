@@ -166,12 +166,14 @@ public class Payment : NSObject {
         let obj:[String:AnyObject] = [
             "transaction_amount": self.transactionAmount,
             "token": self.tokenId == nil ? "" : self.tokenId!,
+            "issuerId" : self.issuerId,
             "description": self._description,
-            //TODO : should be plural
-            //            "items": JSON(self.items[0]),
             "installments" : self.installments == 0 ? 0 : self.installments,
-            "payment_method_id" : self.paymentMethodId
+            "payment_method_id" : self.paymentMethodId,
+            "status" : self.status,
+            "status_detail" : self.statusDetail
         ]
+        
         return JSON(obj).toString()
     }
     

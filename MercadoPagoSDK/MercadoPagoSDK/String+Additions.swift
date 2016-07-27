@@ -18,6 +18,11 @@ extension String {
 		return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
 	}
 	
+    public func existsLocalized() -> Bool {
+        let localizedString = self.localized
+        return localizedString != self
+    }
+    
     static public func isNullOrEmpty(value: String?) -> Bool
     {
         return value == nil || value!.isEmpty

@@ -65,6 +65,14 @@ public class Instruction: NSObject {
 
         return instruction
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "title": self.title,
+            "accreditationMessage" : self.accreditationMessage
+            ]
+        return JSON(obj).toString()
+    }
 }
 
 

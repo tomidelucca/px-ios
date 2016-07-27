@@ -1939,7 +1939,7 @@
     }
   ]
 }</string>
-	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=bank_transfer,ticket</key>
+	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=ticket,bank_transfer</key>
 	<string>{
   &quot;groups&quot;: [
     {
@@ -2376,7 +2376,7 @@
     }
   ]
 }</string>
-	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_methods=rapipago,pagofacil,cargavirtual,bapropagos,redlink</key>
+	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_methods=redlink,rapipago,bapropagos,pagofacil,cargavirtual</key>
 	<string>{
   &quot;groups&quot;: [
     {
@@ -2906,6 +2906,190 @@
   ]
 }</string>
 	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_methods=redlink,visa,cordobesa,amex,nativa,tarshop,argencard,master,cabal,cordial,cencosud,cmr,naranja,diners</key>
+	<string>{
+  &quot;groups&quot;: [
+    {
+      &quot;children&quot;: [
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;bapropagos&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        },
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;pagofacil&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        },
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;rapipago&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        }
+      ],
+      &quot;children_header&quot;: &quot;¿Dónde quieres pagar?&quot;,
+      &quot;comment&quot;: null,
+      &quot;description&quot;: &quot;Efectivo&quot;,
+      &quot;id&quot;: &quot;ticket&quot;,
+      &quot;show_icon&quot;: true,
+      &quot;type&quot;: &quot;payment_type&quot;
+    }
+  ],
+  &quot;payment_methods&quot;: [
+    {
+      &quot;id&quot;: &quot;bapropagos&quot;,
+      &quot;name&quot;: &quot;Provincia Pagos&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/bapropagos.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 0.01,
+      &quot;max_allowed_amount&quot;: 60000,
+      &quot;accreditation_time&quot;: 10080
+    },
+    {
+      &quot;id&quot;: &quot;pagofacil&quot;,
+      &quot;name&quot;: &quot;Pago Fácil&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/pagofacil.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/pagofacil.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 2,
+      &quot;max_allowed_amount&quot;: 5000,
+      &quot;accreditation_time&quot;: 10080
+    },
+    {
+      &quot;id&quot;: &quot;rapipago&quot;,
+      &quot;name&quot;: &quot;Rapipago&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/rapipago.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/rapipago.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 0.01,
+      &quot;max_allowed_amount&quot;: 60000,
+      &quot;accreditation_time&quot;: 10080
+    }
+  ]
+}</string>
+	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_methods=cordial,cmr,master,naranja,nativa,cabal,tarshop,argencard,cencosud,bapropagos,cordobesa,visa,rapipago,cargavirtual,redlink,diners,amex</key>
+	<string>{
+  &quot;groups&quot;: [
+    {
+      &quot;children&quot;: [
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;bapropagos&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        },
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;pagofacil&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        },
+        {
+          &quot;children&quot;: null,
+          &quot;children_header&quot;: null,
+          &quot;comment&quot;: &quot;Se acreditará en 7 dias hábiles&quot;,
+          &quot;description&quot;: &quot;&quot;,
+          &quot;id&quot;: &quot;rapipago&quot;,
+          &quot;show_icon&quot;: true,
+          &quot;type&quot;: &quot;payment_method&quot;
+        }
+      ],
+      &quot;children_header&quot;: &quot;¿Dónde quieres pagar?&quot;,
+      &quot;comment&quot;: null,
+      &quot;description&quot;: &quot;Efectivo&quot;,
+      &quot;id&quot;: &quot;ticket&quot;,
+      &quot;show_icon&quot;: true,
+      &quot;type&quot;: &quot;payment_type&quot;
+    }
+  ],
+  &quot;payment_methods&quot;: [
+    {
+      &quot;id&quot;: &quot;bapropagos&quot;,
+      &quot;name&quot;: &quot;Provincia Pagos&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/bapropagos.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/bapropagos.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 0.01,
+      &quot;max_allowed_amount&quot;: 60000,
+      &quot;accreditation_time&quot;: 10080
+    },
+    {
+      &quot;id&quot;: &quot;pagofacil&quot;,
+      &quot;name&quot;: &quot;Pago Fácil&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/pagofacil.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/pagofacil.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 2,
+      &quot;max_allowed_amount&quot;: 5000,
+      &quot;accreditation_time&quot;: 10080
+    },
+    {
+      &quot;id&quot;: &quot;rapipago&quot;,
+      &quot;name&quot;: &quot;Rapipago&quot;,
+      &quot;payment_type_id&quot;: &quot;ticket&quot;,
+      &quot;status&quot;: &quot;active&quot;,
+      &quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/rapipago.gif&quot;,
+      &quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/rapipago.gif&quot;,
+      &quot;deferred_capture&quot;: &quot;does_not_apply&quot;,
+      &quot;settings&quot;: [
+      ],
+      &quot;additional_info_needed&quot;: [
+      ],
+      &quot;min_allowed_amount&quot;: 0.01,
+      &quot;max_allowed_amount&quot;: 60000,
+      &quot;accreditation_time&quot;: 10080
+    }
+  ]
+}</string>
+	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_methods=cordial,cmr,master,naranja,nativa,cabal,tarshop,argencard,cencosud,cordobesa,visa,redlink,diners,amex</key>
 	<string>{
   &quot;groups&quot;: [
     {

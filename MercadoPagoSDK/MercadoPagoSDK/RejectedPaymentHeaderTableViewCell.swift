@@ -31,11 +31,21 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     
     func fillCell(payment : Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
         
+        var title = (payment.statusDetail + "_title")
+        if !title.existsLocalized() {
+            title = "Uy, no pudimos procesar el pago".localized
+        }
         
-        let title = ((payment.statusDetail + "_title").localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
-        self.title.text = title
-        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
-        self.subtitle.text = subtitle
+        let titleWithParams = (title.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name.localized)")
+        self.title.text = titleWithParams
+        
+        var subtitle = (payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId)
+        if !subtitle.existsLocalized() {
+            subtitle = "Algún dato es incorrecto.".localized
+        }
+        
+        let subtitleWithParams = (subtitle.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name.localized)")
+        self.subtitle.text = subtitleWithParams
         return self
     }
  

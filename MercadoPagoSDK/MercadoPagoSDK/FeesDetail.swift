@@ -31,6 +31,16 @@ public class FeesDetail : NSObject {
         return self.type == "financing_fee"
     }
     
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "type": self.type != nil ? JSON.null : self.type!,
+            "amountRefunded" : self.amountRefunded,
+            "amount" : self.amount,
+            "type" : self.type
+            ]
+        return JSON(obj).toString()
+    }
+    
 }
 
 public func ==(obj1: FeesDetail, obj2: FeesDetail) -> Bool {

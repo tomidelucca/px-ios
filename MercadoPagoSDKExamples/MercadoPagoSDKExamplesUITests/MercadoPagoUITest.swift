@@ -14,18 +14,22 @@ public class MercadoPagoUITest: XCTestCase {
     var arguments : [String] = ["UITestingEnabled"]
     static var sharedApplication =  XCUIApplication()
     static var initializedApplication = false
-    var application : XCUIApplication =  MercadoPagoUITest.sharedApplication
+    static var application : XCUIApplication =  MercadoPagoUITest.sharedApplication
     var cardsTestArray : [TestCard]?
+    
+    //DEMO
+    var cardsForDemo : [TestCard]?
     var rejected : [TestCard]?
     override public func setUp() {
         super.setUp()
         cardsTestArray = [visaGaliciaII(),amexI(),amexII(),amexIII(),amexIV(),amexMacro(),visaNaranja(),tarshop(),tarshopWithoutCVV(),amexPatagonia(),visaPatagonia(),visaHipotecario(),naranja(),naranjaMaster(),cencosud(),master(),argencard(),cargencardII(),cabal(),visaGoldSantander(),nativa(),masterPatagonia(),visaPatagoniaII(),masterItau(),diners(),masterII(),visaNacion(),masterNacion(),visaIndustrial(),masterIndustrial(),visaProvincia(),masterProvincia(),masterCencosud(),cordial(),cordialII(),cordialIII(),cmr(),cordobesa(),visaGalicia(),visaNaranjaII(),visaGaliciaGold()]
+        
+        cardsForDemo = [cabal(),naranja(),tarshopWithoutCVV(),diners(),cordial()]
         rejected = [mercadopago()]
         continueAfterFailure = false
         if(!MercadoPagoUITest.initializedApplication){
             MercadoPagoUITest.initializedApplication = true
             MercadoPagoUITest.sharedApplication.launchArguments = arguments
-            AppUtils.preferenceSelectedID = AppUtils.PREF_ID_MLA_ONLY_CC
             MercadoPagoUITest.sharedApplication.launch()
         }
   

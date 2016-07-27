@@ -27,7 +27,9 @@ class PendingPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDelega
     }
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
-        if payment.statusDetail == "pending_contingency" {
+        if payment.statusDetail == nil || payment.statusDetail.isEmpty {
+            self.subtitle.text = ""
+        } else if payment.statusDetail == "pending_contingency" {
             self.subtitle.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
         } else {
             self.subtitle.text = "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.".localized
