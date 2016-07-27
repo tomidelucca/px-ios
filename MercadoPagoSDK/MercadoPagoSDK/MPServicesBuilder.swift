@@ -47,6 +47,7 @@ public class MPServicesBuilder : NSObject {
                 if let tokenDic = jsonResult as? NSDictionary {
                     if tokenDic["error"] == nil {
                         token = Token.fromJSON(tokenDic)
+                         MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
                         success(token: token)
                     } else {
                         if failure != nil {
@@ -179,7 +180,7 @@ public class MPServicesBuilder : NSObject {
         let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
-            
+            // TODO TRACKS
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {

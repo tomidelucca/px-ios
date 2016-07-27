@@ -59,8 +59,13 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return "0.9.1"
     }
  
+    var site = GAKey.MLA
+    
     public func siteId() -> GAKey!{
-        return GAKey.MLA
+        return site
+    }
+    public func setSideID(gaKey : GAKey){
+        self.site = gaKey
     }
     public func publicKey() -> String!{
         return self.public_key
