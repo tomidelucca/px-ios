@@ -227,8 +227,11 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     }
     
     private func getInstructions(){
-        MPServicesBuilder.getInstructions(payment._id, paymentMethodId: self.payment.paymentMethodId, paymentTypeId : self.paymentTypeId.rawValue.lowercaseString, success: { (instruction) -> Void in
-            self.currentInstruction = instruction
+        let paymentTypeId = self.paymentTypeId != nil ? self.paymentTypeId!.rawValue.lowercaseString : ""
+        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : paymentTypeId, success: { (instructions) -> Void in
+            //if instructions.count == 1 {
+                self.currentInstruction = instructions[0]
+            //}
             self.congratsTable.delegate = self
             self.congratsTable.dataSource = self
             self.congratsTable.reloadData()

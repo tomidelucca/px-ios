@@ -213,12 +213,12 @@ public class MPServicesBuilder : NSObject {
     
     }
     
-    public class func getInstructions(paymentId : Int, paymentMethodId : String, paymentTypeId: String, success : (instruction : Instruction) -> Void, failure: ((error: NSError) -> Void)?){
+    public class func getInstructions(paymentId : Int, paymentTypeId: String? = "", success : (instructions : [Instruction]) -> Void, failure: ((error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTRUCTIONS", result: nil)
         let instructionsService = InstructionsService()
-        instructionsService.getInstructions(paymentId, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, success:  { (instruction) -> Void in
-            success(instruction: instruction)
+        instructionsService.getInstructions(paymentId, paymentTypeId: paymentTypeId, success:  { (instructions) -> Void in
+            success(instructions: instructions)
         }, failure : failure)
     }
     
