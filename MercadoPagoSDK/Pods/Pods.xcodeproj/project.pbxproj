@@ -871,7 +871,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 <<<<<<< Updated upstream
 =======
+<<<<<<< Updated upstream
 				ONLY_ACTIVE_ARCH = NO;
+=======
+				ONLY_ACTIVE_ARCH = YES;
+>>>>>>> Stashed changes
 >>>>>>> Stashed changes
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";

@@ -52,6 +52,7 @@
 		15A2B9AC1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		762713691D343424008DC3AB /* CardFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762713681D343424008DC3AB /* CardFlowTest.swift */; };
 		7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136B1D343580008DC3AB /* CardFormActions.swift */; };
+		762DB31A1D4BADDB005688B8 /* MercadoPagoTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; };
 		7639DAB41D353FB5003E3DCB /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
 		7639DAB51D353FF6003E3DCB /* ComponentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */; };
 		7639DAB61D353FFE003E3DCB /* ComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */; };
@@ -208,6 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				762DB31A1D4BADDB005688B8 /* MercadoPagoTracker.framework in Frameworks */,
 				764CF8BA1D416BEA007F9B90 /* MercadoPagoSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -850,6 +852,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -875,7 +878,14 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+<<<<<<< Updated upstream
 				ONLY_ACTIVE_ARCH = NO;
+=======
+<<<<<<< Updated upstream
+=======
+				ONLY_ACTIVE_ARCH = YES;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -902,6 +912,7 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

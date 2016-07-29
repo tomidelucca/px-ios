@@ -17,6 +17,10 @@ public class Currency : NSObject {
     public var decimalSeparator : Character!
     public var thousandsSeparator : Character!
     
+    public override init() {
+        super.init()
+    }
+    
     public init(_id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: Character, thousandSeparator: Character) {
         super.init()
         self._id = _id
