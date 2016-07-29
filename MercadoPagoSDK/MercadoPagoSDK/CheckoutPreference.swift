@@ -22,7 +22,7 @@ public class CheckoutPreference : NSObject {
                                                         //excluded_payment_types < payment_types
     
     
-    
+    public var siteId : String = "MLA"
     
     
     //shipments
@@ -82,6 +82,9 @@ public class CheckoutPreference : NSObject {
         
         if json["id"] != nil && !(json["id"]! is NSNull) {
             preference._id = (json["id"]! as? String)
+        }
+        if json["site_id"] != nil && !(json["site_id"]! is NSNull) {
+            preference.siteId = (json["site_id"]! as? String)!
         }
         
         if json["payer"] != nil && !(json["payer"]! is NSNull) {
