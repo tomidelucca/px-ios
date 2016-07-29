@@ -180,7 +180,9 @@ public class MPServicesBuilder : NSObject {
         let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
-            // TODO TRACKS
+            
+            
+            
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
@@ -225,6 +227,8 @@ public class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PREFERENCE", result: nil)
         let preferenceService = PreferenceService()
         preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
+            
+            MercadoPagoContext.sharedInstance.setSideID(preference.siteId)
             success(preference: preference)
             }, failure: failure)
     }

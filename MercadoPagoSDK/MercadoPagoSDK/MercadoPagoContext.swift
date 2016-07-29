@@ -61,11 +61,28 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
  
     var site = GAKey.MLA
     
+    
     public func siteId() -> GAKey!{
         return site
     }
     public func setSideID(siteId : String){
-        self.site = GAKey(rawValue: siteId)!
+        switch siteId {
+        case "MLA":
+            site = GAKey.MLA
+        case "MLB":
+            site = GAKey.MLB
+        case "MLM":
+            site = GAKey.MLM
+        case "MLC":
+            site = GAKey.MLC
+        case "MCO":
+            site = GAKey.MCO
+        case "MLV":
+            site = GAKey.MLV
+        default:
+             site = GAKey.MLA
+        }
+  
     }
     public func publicKey() -> String!{
         return self.public_key
