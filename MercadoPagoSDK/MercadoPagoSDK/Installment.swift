@@ -36,6 +36,22 @@ public class Installment : NSObject {
         return installment
     }
     
+    public func toJSONString() -> String {
+        var obj:[String:AnyObject] = [
+            "issuer": self.issuer != nil ? JSON.null : self.issuer.toJSONString(),
+            "paymentMethodId" : self.paymentMethodId,
+            "paymentTypeId" : self.paymentTypeId
+            ]
+        
+        var payerCostsJson = ""
+        for pc in payerCosts! {
+            payerCostsJson = payerCostsJson + pc.toJSONString()
+        }
+        obj["payerCosts"] = payerCostsJson
+        
+        return JSON(obj).toString()
+    }
+    
     public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = nil) -> Int{
         var count = 0
         if (maxNumberOfInstallments == nil){

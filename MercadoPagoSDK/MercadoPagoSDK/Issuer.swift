@@ -24,6 +24,14 @@ public class Issuer : NSObject {
         issuer.name = JSON(json["name"]!).asString
         return issuer
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "id": self._id != nil ? JSON.null : self._id!,
+            "name" : self.name == nil ? JSON.null : self.name!,
+            ]
+        return JSON(obj).toString()
+    }
 }
 
 public func ==(obj1: Issuer, obj2: Issuer) -> Bool {

@@ -42,7 +42,7 @@ class CheckoutViewControllerTest: BaseTest {
         MPServicesBuilder.getPreference(MockBuilder.PREF_ID_NO_EXCLUSIONS, success: { (preference) in
             self.preference = preference
         }) { (error) in
-            XCTFail()
+            
         }
         
         // Cargar vista
@@ -80,7 +80,8 @@ class CheckoutViewControllerTest: BaseTest {
         verifyPaymentVaultSelection_paymentMethodOff("rapipago")
         
         
-        MercadoPagoTestContext.sharedInstance.expectation = expectationWithDescription("waitPostPayment")
+        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION))
+        
         // Pago con medio off
         verifyConfirmPaymentOff()
         
@@ -89,7 +90,7 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertNotNil(lastViewController)
         XCTAssertTrue(lastViewController!.isKindOfClass(InstructionsViewController))
 
-        waitForExpectationsWithTimeout(20, handler: nil)
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         //Verificar payment method id seleccionado en instrucciones
         let instructionsVC = (lastViewController as! InstructionsViewController)
         XCTAssertEqual(instructionsVC.payment.paymentMethodId, self.selectedPaymentMethod?._id)
@@ -110,7 +111,7 @@ class CheckoutViewControllerTest: BaseTest {
         // Metodo de pago no seleccionado
         XCTAssertNil(checkoutViewController?.paymentMethod)
         
-        self.simulateViewDidLoadFor(checkoutViewController!)
+       self.checkoutViewController = self.simulateViewDidLoadFor(checkoutViewController!) as! MockCheckoutViewController
         
         XCTAssertNotNil(checkoutViewController?.paymentMethodSearch)
         XCTAssertTrue(checkoutViewController?.paymentMethodSearch?.groups.count == MockBuilder.MLA_PAYMENT_TYPES.count)

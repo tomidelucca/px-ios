@@ -55,6 +55,19 @@ public class PayerCost : NSObject {
         payerCost.recommendedMessage = JSON(json["recommended_message"]!).asString
         return payerCost
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "installments": self.installments,
+            "installmentRate" : self.installmentRate,
+            "minAllowedAmount" : self.installmentRate,
+            "maxAllowedAmount" : self.installmentRate,
+            "recommendedMessage" : self.recommendedMessage,
+            "installmentAmount" : self.installmentAmount,
+            "totalAmount" : self.totalAmount,
+            ]
+        return JSON(obj).toString()
+    }
 }
 
 
