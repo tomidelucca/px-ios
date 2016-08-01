@@ -56,9 +56,9 @@ public class MPStepBuilder : NSObject {
         return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : callback)
     }
     
-    public class func startPromosStep() -> PromoViewController {
+    public class func startPromosStep(callback : (Void -> (Void))? = nil) -> PromoViewController {
         MercadoPagoContext.initFlavor2()
-        return PromoViewController()
+        return PromoViewController(callback : callback)
     }
     
 

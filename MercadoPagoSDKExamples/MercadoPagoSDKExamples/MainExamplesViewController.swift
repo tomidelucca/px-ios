@@ -67,10 +67,17 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         
             MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
             //Checkout Example
-            let choFlow = MPFlowBuilder.startCheckoutViewController( ExamplesUtils.preferenceSelectedID, callback: { (payment: Payment) in
-                
-            })
-            self.presentViewController(choFlow, animated: true, completion: {})
+//            let choFlow = MPFlowBuilder.startCheckoutViewController( ExamplesUtils.preferenceSelectedID, callback: { (payment: Payment) in
+//                
+//            })
+            
+            let callback = {
+                self.navigationController?.popViewControllerAnimated(true)
+                return
+            }
+            let promos = MPStepBuilder.startPromosStep(callback)
+//            self.presentViewController(choFlow, animated: true, completion: {})
+            self.navigationController?.pushViewController(promos, animated: true)
         case 1:
             //UI Components
             let stepsExamples = StepsExamplesViewController()

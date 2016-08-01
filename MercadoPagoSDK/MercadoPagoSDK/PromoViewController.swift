@@ -19,14 +19,16 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 	var promos : [Promo]!
 	
 	var bundle : NSBundle? = MercadoPago.getBundle()
+    var callback : (Void -> (Void))?
 	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
-	public init() {
+	public init(callback : (Void -> (Void))? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
+        self.callback = callback
 	}
 	
 	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -53,6 +55,11 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
         
 		self.view.addSubview(self.loadingView)
 		
+        if self.callback == nil {
+            self.callback = {
+                self.dismissViewControllerAnimated(true, completion: {})
+            }
+        }
 		var mercadoPago : MercadoPago
 		mercadoPago = MercadoPago(keyType: MercadoPago.PUBLIC_KEY, key: self.publicKey)
 		mercadoPago.getPromos({ (promos) -> Void in
@@ -112,9 +119,9 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
     
     
     internal override func executeBack(){
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            
-        }
+            if self.callback != nil {
+                self.callback!()
+            }
     }
 	
 }
