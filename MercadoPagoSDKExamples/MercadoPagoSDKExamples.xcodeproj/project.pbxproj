@@ -878,14 +878,7 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-<<<<<<< Updated upstream
 				ONLY_ACTIVE_ARCH = NO;
-=======
-<<<<<<< Updated upstream
-=======
-				ONLY_ACTIVE_ARCH = YES;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

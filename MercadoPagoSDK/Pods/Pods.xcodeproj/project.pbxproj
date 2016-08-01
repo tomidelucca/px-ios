@@ -20,8 +20,6 @@
 		6C88DD0577018731C9F004B23EF25C3D /* MPGoogleAnalytics-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB39E462D20CE018E28C26A193673 /* MPGoogleAnalytics-dummy.m */; };
 		6FDA22815D7693BCACB41374B1AC3CB7 /* GAITrackedViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 48CA19C88D625CE1600A1C1B9621B42A /* GAITrackedViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7172E5CEF533D59691AC6FB66492CEE3 /* GAIFields.h in Headers */ = {isa = PBXBuildFile; fileRef = C6AD0CA93EC93986689C417F223AF12B /* GAIFields.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7652C7151D4A818D000CCCA4 /* MPGoogleAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7652C7141D4A818D000CCCA4 /* MPGoogleAnalytics.framework */; };
-		7652C7171D4A8196000CCCA4 /* MercadoPagoTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7652C7161D4A8196000CCCA4 /* MercadoPagoTracker.framework */; };
 		7B206289FCC8BBB627790F5EE1B0F1BB /* Pods-MercadoPagoSDKTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C189F1D9B8D1E4AF1914D5871F82051 /* Pods-MercadoPagoSDKTests-dummy.m */; };
 		874AEE6221C921EBEFC573E87D2ABCA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EE6C2274F7E35EE35DE13EFBF7FE83 /* Foundation.framework */; };
 		87B33D075553F3D1C91BA0793142DDD1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EE6C2274F7E35EE35DE13EFBF7FE83 /* Foundation.framework */; };
@@ -115,8 +113,6 @@
 		6EC9994A551488601D61ADE0F35A6A1F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6EE3BB13CE70C433871C06DBB1C40421 /* GAI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = MPGoogleAnalytics/Classes/GAI.h; sourceTree = "<group>"; };
 		75AA3104C955641574467AD8228F156D /* MPGoogleAnalytics-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MPGoogleAnalytics-umbrella.h"; sourceTree = "<group>"; };
-		7652C7141D4A818D000CCCA4 /* MPGoogleAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MPGoogleAnalytics.framework; sourceTree = "<group>"; };
-		7652C7161D4A8196000CCCA4 /* MercadoPagoTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MercadoPagoTracker.framework; sourceTree = "<group>"; };
 		76C6B890CB228BF12488EF79588C30A2 /* Pods-MercadoPagoSDK-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MercadoPagoSDK-resources.sh"; sourceTree = "<group>"; };
 		7924F6BE9DE1F928CA896F4CBAD27089 /* PaymentTrackInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentTrackInfo.swift; path = MPTracker/PaymentTrackInfo.swift; sourceTree = "<group>"; };
 		79E003619442D168D6BBEFF44E3F1AFE /* MercadoPagoTracker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MercadoPagoTracker-dummy.m"; sourceTree = "<group>"; };
@@ -155,8 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				20C95B681CC836468B002F9B7249C6DE /* CoreData.framework in Frameworks */,
-				7652C7151D4A818D000CCCA4 /* MPGoogleAnalytics.framework in Frameworks */,
-				7652C7171D4A8196000CCCA4 /* MercadoPagoTracker.framework in Frameworks */,
 				4E2F3A9BE0D3EA5D0D5366190F95BE0C /* Foundation.framework in Frameworks */,
 				D640F4D24F9743551A014500B845D11B /* SystemConfiguration.framework in Frameworks */,
 				CCEC61D7CB62D9367EFA75224355DA2B /* UIKit.framework in Frameworks */,
@@ -222,8 +216,6 @@
 		60C782C1C7161A19B31517F3DD4A1041 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				7652C7161D4A8196000CCCA4 /* MercadoPagoTracker.framework */,
-				7652C7141D4A818D000CCCA4 /* MPGoogleAnalytics.framework */,
 				B329D49490D68AFCB0B3ADF53CF43A36 /* CoreData.framework */,
 				92EE6C2274F7E35EE35DE13EFBF7FE83 /* Foundation.framework */,
 				C35C82B07D8586B1E4E002C828925745 /* SystemConfiguration.framework */,
@@ -621,10 +613,6 @@
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-<<<<<<< Updated upstream
-=======
-				ONLY_ACTIVE_ARCH = NO;
->>>>>>> Stashed changes
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -639,15 +627,9 @@
 			};
 			name = Debug;
 		};
-<<<<<<< Updated upstream
 		16327D670AE63AFE2F2C657292AD019B /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5ED84F4424647196C3F742656AF99F7D /* Pods-MercadoPagoSDK.release.xcconfig */;
-=======
-		0723C61906F79877ED3653A83453E159 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EC83B67FFFB22DCDEF07833CE63377D /* Pods-MercadoPagoSDKTests.release.xcconfig */;
->>>>>>> Stashed changes
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
@@ -664,32 +646,18 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-<<<<<<< Updated upstream
 				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDK/Info.plist";
-=======
-				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
->>>>>>> Stashed changes
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-<<<<<<< Updated upstream
 				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
-=======
-				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = NO;
->>>>>>> Stashed changes
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-<<<<<<< Updated upstream
 				PRODUCT_NAME = Pods_MercadoPagoSDK;
-=======
-				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
->>>>>>> Stashed changes
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -698,7 +666,6 @@
 			};
 			name = Release;
 		};
-<<<<<<< Updated upstream
 		47BEF9D903506B003EA5C2B249729489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -738,10 +705,86 @@
 				ONLY_ACTIVE_ARCH = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
-=======
-		16327D670AE63AFE2F2C657292AD019B /* Release */ = {
+			};
+			name = Debug;
+		};
+		495F384EC1E310859D4B11CCB97EA495 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5ED84F4424647196C3F742656AF99F7D /* Pods-MercadoPagoSDK.release.xcconfig */;
+			baseConfigurationReference = 36E5268F3E8B8C648DA23CE66F4CB88D /* MercadoPagoTracker.xcconfig */;
+			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+					x86_64,
+				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MercadoPagoTracker/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MercadoPagoTracker;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AAF678CED40D3499169D10F63CA0719E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BCFF4E2091C0C9FD94C0201EB8D5C834 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EC83B67FFFB22DCDEF07833CE63377D /* Pods-MercadoPagoSDKTests.release.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
@@ -755,166 +798,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDK/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_MercadoPagoSDK;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
->>>>>>> Stashed changes
-			};
-			name = Release;
-		};
-<<<<<<< Updated upstream
-		495F384EC1E310859D4B11CCB97EA495 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36E5268F3E8B8C648DA23CE66F4CB88D /* MercadoPagoTracker.xcconfig */;
-=======
-		316442CC9E487201AADD8021990171CF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 963FAA1A335F042B8897BFFEC4BE5DC4 /* Pods-MercadoPagoSDKTests.debug.xcconfig */;
->>>>>>> Stashed changes
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					i386,
-					x86_64,
-				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-<<<<<<< Updated upstream
-				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MercadoPagoTracker/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = MercadoPagoTracker;
-=======
-				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
->>>>>>> Stashed changes
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		AAF678CED40D3499169D10F63CA0719E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-				ONLY_ACTIVE_ARCH = NO;
-=======
-				ONLY_ACTIVE_ARCH = YES;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-<<<<<<< Updated upstream
-		BCFF4E2091C0C9FD94C0201EB8D5C834 /* Release */ = {
-=======
-		495F384EC1E310859D4B11CCB97EA495 /* Debug */ = {
->>>>>>> Stashed changes
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EC83B67FFFB22DCDEF07833CE63377D /* Pods-MercadoPagoSDKTests.release.xcconfig */;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					i386,
-					x86_64,
-				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-<<<<<<< Updated upstream
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -923,57 +813,11 @@
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
-=======
-				MODULEMAP_FILE = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = MercadoPagoTracker;
->>>>>>> Stashed changes
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		AAF678CED40D3499169D10F63CA0719E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = NO;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1003,10 +847,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/MPGoogleAnalytics/MPGoogleAnalytics.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
-<<<<<<< Updated upstream
-=======
-				ONLY_ACTIVE_ARCH = NO;
->>>>>>> Stashed changes
 				PRODUCT_NAME = MPGoogleAnalytics;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1034,10 +874,6 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MercadoPagoTracker/MercadoPagoTracker-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/MercadoPagoTracker/Info.plist";
@@ -1055,15 +891,9 @@
 			};
 			name = Release;
 		};
-<<<<<<< Updated upstream
 		D4553640A71C46872C58F41489361E16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 963FAA1A335F042B8897BFFEC4BE5DC4 /* Pods-MercadoPagoSDKTests.debug.xcconfig */;
-=======
-		EFF3941F213A458EF0116A8D952D6BA7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3139DC4248D8CBB2067E80913AB1C361 /* MPGoogleAnalytics.xcconfig */;
->>>>>>> Stashed changes
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
@@ -1080,7 +910,6 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-<<<<<<< Updated upstream
 				INFOPLIST_FILE = "Target Support Files/Pods-MercadoPagoSDKTests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1093,26 +922,15 @@
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Pods_MercadoPagoSDKTests;
-=======
-				GCC_PREFIX_HEADER = "Target Support Files/MPGoogleAnalytics/MPGoogleAnalytics-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/MPGoogleAnalytics/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/MPGoogleAnalytics/MPGoogleAnalytics.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = MPGoogleAnalytics;
->>>>>>> Stashed changes
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-<<<<<<< Updated upstream
 		EFF3941F213A458EF0116A8D952D6BA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3139DC4248D8CBB2067E80913AB1C361 /* MPGoogleAnalytics.xcconfig */;
@@ -1148,8 +966,6 @@
 			};
 			name = Debug;
 		};
-=======
->>>>>>> Stashed changes
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
