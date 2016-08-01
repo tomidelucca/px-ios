@@ -39,7 +39,6 @@
 		150ABE641D47984000BF9271 /* MPPageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE631D47984000BF9271 /* MPPageObject.swift */; };
 		150ABE671D479B0600BF9271 /* POPromos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE661D479B0600BF9271 /* POPromos.swift */; };
 		150ABE691D47A0F700BF9271 /* POIdentificationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150ABE681D47A0F700BF9271 /* POIdentificationForm.swift */; };
-		150ABE6F1D47AF3600BF9271 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		150B498A1D368C5300E21C7F /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		150B498B1D368C6200E21C7F /* StepsExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */; };
 		150B498D1D368C7100E21C7F /* ServicesExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E6C1D24229A0087C785 /* ServicesExamplesViewController.swift */; };
@@ -52,7 +51,6 @@
 		15A2B9AC1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		762713691D343424008DC3AB /* CardFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762713681D343424008DC3AB /* CardFlowTest.swift */; };
 		7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136B1D343580008DC3AB /* CardFormActions.swift */; };
-		762DB31A1D4BADDB005688B8 /* MercadoPagoTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */; };
 		7639DAB41D353FB5003E3DCB /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
 		7639DAB51D353FF6003E3DCB /* ComponentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E721D2447870087C785 /* ComponentTableViewCell.xib */; };
 		7639DAB61D353FFE003E3DCB /* ComponentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E711D2447870087C785 /* ComponentTableViewCell.swift */; };
@@ -65,8 +63,9 @@
 		7639DAC11D354241003E3DCB /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCE50A31AF2B05600A30177 /* String+Additions.swift */; };
 		7639DACC1D357A40003E3DCB /* CheckoutFlowTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */; };
 		7639DAD61D358D8A003E3DCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9884FB1AD2BCB900F750F0 /* AppDelegate.swift */; };
-		764CF8BA1D416BEA007F9B90 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; };
 		766CDFF11D240ED000F9FAD4 /* MainExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766CDFEF1D240ED000F9FAD4 /* MainExamplesViewController.xib */; };
+		76B49AEF1D4FB228003CB84D /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B49AF01D4FB22B003CB84D /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; };
 		76BE8CC41D343E6E00DF5D66 /* CommonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE8CC31D343E6E00DF5D66 /* CommonActions.swift */; };
 		76EF7E631D2415E60087C785 /* StepsExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7E611D2415E60087C785 /* StepsExamplesViewController.swift */; };
 		76EF7E641D2415E60087C785 /* StepsExamplesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76EF7E621D2415E60087C785 /* StepsExamplesViewController.xib */; };
@@ -149,7 +148,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				150ABE6F1D47AF3600BF9271 /* MercadoPagoSDK.framework in Embed Frameworks */,
+				76B49AEF1D4FB228003CB84D /* MercadoPagoSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +208,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				762DB31A1D4BADDB005688B8 /* MercadoPagoTracker.framework in Frameworks */,
-				764CF8BA1D416BEA007F9B90 /* MercadoPagoSDK.framework in Frameworks */,
+				76B49AF01D4FB22B003CB84D /* MercadoPagoSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,7 +876,7 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

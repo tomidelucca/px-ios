@@ -18,8 +18,8 @@ public class InstructionsInfo: NSObject {
         
         let instructionsInfo : InstructionsInfo = InstructionsInfo()
         
-        if json["payment_info"] != nil && !(json["payment_info"]! is NSNull) {
-            instructionsInfo.paymentInfo = PaymentInfo.fromJSON(json["payment_info"] as! NSDictionary)
+        if json["amount_info"] != nil && !(json["amount_info"]! is NSNull) {
+            instructionsInfo.paymentInfo = PaymentInfo.fromJSON(json["amount_info"] as! NSDictionary)
         }
        
         if json["instructions"] != nil && !(json["instructions"]! is NSNull) {

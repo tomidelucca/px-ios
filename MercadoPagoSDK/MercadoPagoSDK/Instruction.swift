@@ -61,8 +61,6 @@ public class Instruction: NSObject {
             instruction.actions = (json["actions"] as! Array).map({InstructionAction.fromJSON($0)})
         }
         
-
-
         return instruction
     }
     

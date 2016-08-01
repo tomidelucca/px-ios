@@ -48,7 +48,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         self.callback = callback
         self.paymentTypeId = paymentTypeId
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -111,7 +111,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if indexPath.section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
-            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.payment.transactionAmount, currency: CurrenciesUtil.getCurrencyFor(self.payment.currencyId))
+            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.paymentInfo!.amount!, currency: self.paymentInfo!.currency!)
         }
         
         let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString

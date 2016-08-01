@@ -51,14 +51,17 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, var callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
+        var currentCallbackCancel : (Void -> Void)
         if (callbackCancel == nil){
-            callbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
+            currentCallbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
             }) }
+        } else {
+            currentCallbackCancel = callbackCancel!
         }
         cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods, callback: { (paymentMethod, token, issuer) -> Void in
             
@@ -69,7 +72,7 @@ public class MPFlowBuilder : NSObject {
                         let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0] ,callback: { (payerCost) -> Void in
                             callback(paymentMethod: paymentMethod, token: token!, issuer: issuer, payerCost: payerCost)
                         })
-                        pcvc.callbackCancel = callbackCancel
+                        pcvc.callbackCancel = currentCallbackCancel
                         
                         ccf.navigationController!.pushViewController(pcvc, animated: false)
 
@@ -83,7 +86,7 @@ public class MPFlowBuilder : NSObject {
             })
 
             
-            }, callbackCancel : callbackCancel)
+            }, callbackCancel : currentCallbackCancel)
     
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
     

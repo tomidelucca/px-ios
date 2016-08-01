@@ -27,10 +27,6 @@ public class CheckoutPreference : NSObject {
     
     //shipments
     
-    //DATE ACTIVE = expiration_date_from
-    //DATE EXPIRATION = expiration_date_to
-    // que el dia actual caiga en ese rango (de activacion) OJO!!! PUEDEN SER NULAS LAS FECHAS, en ese caso, no mueren nunca, y siempre es valida la preference
-    
     public func validate() -> String?{
     
     
@@ -47,17 +43,6 @@ public class CheckoutPreference : NSObject {
                  return "Los items tienen diferente moneda".localized
             }
         }
-        //validar precio item(!= nil & >0), y que la currency exista
-        // que pref no esté expirada -> expirationDateTo
-        // que pref esté activa -> dateFrom
-        
-        // que installments : sea null || > 0 
-        // maxInstallments lo mismo
-        //que no esten todos los payment types exluidos!
-        
-        
-        
-        //VALIDAR PREFERENCE PAYMENT METHOD
         
         if self.payer == nil {
             return "No hay información de payer".localized

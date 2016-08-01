@@ -26,11 +26,13 @@ public class PaymentInfo: NSObject {
         
         let currency = Currency()
         if json["thousands_separator"] != nil && !(json["thousands_separator"]! is NSNull) {
-            currency.thousandsSeparator = json["thousands_separator"] as! Character
+            let thousandsSeparatorText = (json["thousands_separator"] as! String)
+            currency.thousandsSeparator = thousandsSeparatorText[thousandsSeparatorText.startIndex.advancedBy(0)]
         }
         
         if json["decimal_separator"] != nil && !(json["decimal_separator"]! is NSNull) {
-            currency.decimalSeparator = json["decimal_separator"] as! Character
+            let decimalsSeparatorText = (json["decimal_separator"] as! String)
+            currency.decimalSeparator = decimalsSeparatorText[decimalsSeparatorText.startIndex.advancedBy(0)]
         }
         
         if json["symbol"] != nil && !(json["symbol"]! is NSNull) {
@@ -44,4 +46,35 @@ public class PaymentInfo: NSObject {
         paymentInfo.currency = currency
         return paymentInfo
     }
+    
+    public class func toJSON(json : NSDictionary) -> PaymentInfo {
+        let paymentInfo : PaymentInfo = PaymentInfo()
+        
+        if json["amount"] != nil && !(json["amount"]! is NSNull) {
+            paymentInfo.amount = JSON(json["amount"]!).asDouble!
+        }
+        
+        let currency = Currency()
+        if json["thousands_separator"] != nil && !(json["thousands_separator"]! is NSNull) {
+            let thousandsSeparatorText = (json["thousands_separator"] as! String)
+            currency.thousandsSeparator = thousandsSeparatorText[thousandsSeparatorText.startIndex.advancedBy(0)]
+        }
+        
+        if json["decimal_separator"] != nil && !(json["decimal_separator"]! is NSNull) {
+            let decimalsSeparatorText = (json["thousands_separator"] as! String)
+            currency.decimalSeparator = decimalsSeparatorText[decimalsSeparatorText.startIndex.advancedBy(0)]
+        }
+        
+        if json["symbol"] != nil && !(json["symbol"]! is NSNull) {
+            currency.symbol = json["symbol"] as! String
+        }
+        
+        if json["decimal_places"] != nil && !(json["decimal_places"]! is NSNull) {
+            currency.decimalPlaces = json["decimal_places"] as! Int
+        }
+        
+        paymentInfo.currency = currency
+        return paymentInfo
+    }
+    
 }

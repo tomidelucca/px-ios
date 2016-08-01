@@ -449,7 +449,9 @@
 		76B085301CE519DF00C157BF /* InstallmentSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B0852A1CE5045D00C157BF /* InstallmentSelectionTableViewCell.xib */; };
 		76B085311CE51C5800C157BF /* PaymentMethodSelectedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085251CE500D100C157BF /* PaymentMethodSelectedTableViewCell.swift */; };
 		76B085321CE51C6200C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B085261CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib */; };
-		76B49AE11D4F9DD1003CB84D /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B49AE01D4F9DD1003CB84D /* Pods_MercadoPagoSDK.framework */; };
+		76B49AE31D4FA03B003CB84D /* MercadoPagoTracker.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76B49AE21D4FA03B003CB84D /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B49AE61D4FA06F003CB84D /* MPGoogleAnalytics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76B49AE51D4FA06F003CB84D /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		76B49AE71D4FA085003CB84D /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B49AE01D4F9DD1003CB84D /* Pods_MercadoPagoSDK.framework */; };
 		76B64B161C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B171C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */; };
 		76B64B181C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */; };
@@ -823,6 +825,8 @@
 		76B085291CE5045D00C157BF /* InstallmentSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallmentSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		76B0852A1CE5045D00C157BF /* InstallmentSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstallmentSelectionTableViewCell.xib; sourceTree = "<group>"; };
 		76B49AE01D4F9DD1003CB84D /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_MercadoPagoSDK.framework; path = "../../../../Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-agowycilgfvevqdpjnbljdhlqjht/Build/Products/Debug-iphonesimulator/Pods_MercadoPagoSDK.framework"; sourceTree = "<group>"; };
+		76B49AE21D4FA03B003CB84D /* MercadoPagoTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MercadoPagoTracker.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-agowycilgfvevqdpjnbljdhlqjht/Build/Products/Debug-iphonesimulator/MercadoPagoTracker/MercadoPagoTracker.framework"; sourceTree = "<absolute>"; };
+		76B49AE51D4FA06F003CB84D /* MPGoogleAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MPGoogleAnalytics.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-agowycilgfvevqdpjnbljdhlqjht/Build/Products/Debug-iphonesimulator/MPGoogleAnalytics/MPGoogleAnalytics.framework"; sourceTree = "<absolute>"; };
 		76B64B141C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsAndButtonViewCell.swift; sourceTree = "<group>"; };
 		76B64B151C75F45C00300F50 /* InstructionsTwoLabelsAndButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsAndButtonViewCell.xib; sourceTree = "<group>"; };
 		76B64B1A1C75F91D00300F50 /* InstructionsWithButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsWithButtonViewCell.swift; sourceTree = "<group>"; };
@@ -901,7 +905,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76B49AE11D4F9DD1003CB84D /* Pods_MercadoPagoSDK.framework in Frameworks */,
+				76B49AE71D4FA085003CB84D /* Pods_MercadoPagoSDK.framework in Frameworks */,
 				0F9883271AD2AA9900F750F0 /* UIKit.framework in Frameworks */,
 				0F9883291AD2AAA100F750F0 /* Foundation.framework in Frameworks */,
 				BA33FE7842EED4984A0F7CC9 /* Pods_MercadoPagoSDK.framework in Frameworks */,
@@ -923,10 +927,8 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
-				76C834201D4FE6A8003C4717 /* MercadoPagoTracker.framework */,
-				76C834211D4FE6A8003C4717 /* MPGoogleAnalytics.framework */,
-				76C8341C1D4FE69F003C4717 /* MercadoPagoTracker.framework */,
-				76C8341D1D4FE69F003C4717 /* MPGoogleAnalytics.framework */,
+				76B49AE51D4FA06F003CB84D /* MPGoogleAnalytics.framework */,
+				76B49AE21D4FA03B003CB84D /* MercadoPagoTracker.framework */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
 				15C84A941D2D48FA002E4988 /* MercadoPagoTracker.framework */,
 				15C84A921D2D48F5002E4988 /* MPGoogleAnalytics.framework */,
@@ -2640,10 +2642,12 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/MPGoogleAnalytics",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = MercadoPagoSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2672,10 +2676,12 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos/MPGoogleAnalytics",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = MercadoPagoSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadopago.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
