@@ -10,10 +10,10 @@ import UIKit
 
 public class InstructionsService: MercadoPagoService {
 
-    public let MP_INSTRUCTIONS_URI = "/payments/${payment_id}/results"
+    public let MP_INSTRUCTIONS_URI = "/beta/checkout/payments/${payment_id}/results"
     
     public init(){
-        super.init(baseURL: "http://d6cf7abc.ngrok.io")
+        super.init(baseURL: MercadoPagoService.MP_BASE_URL)
     }
     
     public func getInstructions(paymentId : Int, paymentTypeId: String? = "", success : (instructionsInfo : InstructionsInfo) -> Void, failure: ((error: NSError) -> Void)?){
