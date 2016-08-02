@@ -236,7 +236,11 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
             self.congratsTable.reloadData()
             self.hideLoading()
             }, failure: { (error) -> Void in
-                self.requestFailure(error)
+                self.requestFailure(error, callback: {
+                    self.getInstructions()
+                    }, callbackCancel: {
+                        self.dismissViewControllerAnimated(true, completion: {})
+                })
                 self.hideLoading()
         })
     }
