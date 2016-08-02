@@ -165,13 +165,14 @@ public class Payment : NSObject {
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
             "transaction_amount": self.transactionAmount,
-            "token": self.tokenId == nil ? "" : self.tokenId!,
+            "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId" : self.issuerId,
             "description": self._description,
             "installments" : self.installments == 0 ? 0 : self.installments,
             "payment_method_id" : self.paymentMethodId,
             "status" : self.status,
-            "status_detail" : self.statusDetail
+            "status_detail" : self.statusDetail,
+            "card" : card == nil ? "" : card.toJSONString()
         ]
         
         return JSON(obj).toString()
