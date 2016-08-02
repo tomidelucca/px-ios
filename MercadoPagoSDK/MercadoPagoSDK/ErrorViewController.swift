@@ -24,16 +24,18 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     override public var screenName : String { get { return "ERROR" } }
     
+    public var exitErrorCallback : (Void -> Void)!
+    
     public init(error : MPError!, callback : (Void -> Void)?, callbackCancel : (Void -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
-        self.callbackCancel = {
-            self.dismissViewControllerAnimated(true, completion: {
-                if callbackCancel != nil {
-                    callbackCancel!()
-                }
-            })
+        self.exitErrorCallback = {
+            self.dismissViewControllerAnimated(true, completion: {})
+            if self.callbackCancel != nil {
+                self.callbackCancel!()
+            }
         }
+        self.callbackCancel = callbackCancel
         self.callback = callback
     }
     
@@ -44,8 +46,8 @@ public class ErrorViewController: MercadoPagoUIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
-        
-        self.exitButton.addTarget(self, action: "invokeCallbackCancel", forControlEvents: .TouchUpInside)
+        self.errorSubtitle.text = error.messageDetail
+        self.exitButton.addTarget(self, action: "invokeExitCallback", forControlEvents: .TouchUpInside)
         
         if self.error.retry! {
             self.retryButton.addTarget(self, action: "invokeCallback", forControlEvents: .TouchUpInside)
@@ -70,5 +72,11 @@ public class ErrorViewController: MercadoPagoUIViewController {
             }
         }
     }
+    
+    internal func invokeExitCallback(){
+       self.exitErrorCallback()
+    }
+    
+    
     
 }

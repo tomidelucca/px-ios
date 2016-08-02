@@ -402,7 +402,9 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 }
             }, failure: { (error) in
                 // Error in service - retry
-                self.requestFailure(error, callback: nil, callbackCancel: {
+                self.requestFailure(error, callback: {
+                    self.loadPreference()
+                    }, callbackCancel: {
                     self.navigationController!.dismissViewControllerAnimated(true, completion: {})
                 })
         })

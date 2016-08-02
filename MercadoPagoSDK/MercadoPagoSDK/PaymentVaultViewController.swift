@@ -270,7 +270,11 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 self.loadPaymentMethodSearch()
                 }, failure: { (error) -> Void in
                     self.hideLoading()
-                    self.requestFailure(error)
+                    self.requestFailure(error, callback: {
+                        self.navigationController!.dismissViewControllerAnimated(true, completion: {})
+                        }, callbackCancel: {
+                            self.invokeCallbackCancel()
+                    })
             })
             
         } else {

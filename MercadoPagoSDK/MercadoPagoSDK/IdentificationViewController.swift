@@ -268,7 +268,14 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
             self.textField.text = self.identificationTypes![0].name
             self.numberTextField.becomeFirstResponder()
             }, failure : { (error) -> Void in
-                self.requestFailure(error)
+                self.requestFailure(error, callback: {
+                    self.dismissViewControllerAnimated(true, completion: {})
+                    self.getIdentificationTypes()
+                    }, callbackCancel: {
+                        if self.callbackCancel != nil {
+                            self.callbackCancel!()
+                        }
+                    })
         })
     }
 }
