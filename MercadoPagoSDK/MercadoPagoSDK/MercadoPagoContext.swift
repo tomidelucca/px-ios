@@ -85,7 +85,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
   
     }
     public func publicKey() -> String!{
-        return self.public_key
+        return "PULPO"
     }
     
     private static var primaryColor : UIColor = UIColor(red: 48  , green: 175, blue: 226)

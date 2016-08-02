@@ -14,7 +14,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var congratsTable: UITableView!
     
     var currentInstruction : Instruction?
-    var paymentInfo : PaymentInfo?
+    var amountInfo : AmountInfo?
     override public var screenName : String { get { return "INSTRUCTIONS" } }
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
@@ -111,7 +111,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         
         if indexPath.section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
-            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.paymentInfo!.amount!, currency: self.paymentInfo!.currency!)
+            return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.amountInfo!.amount!, currency: self.amountInfo!.currency!)
         }
         
         let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
@@ -230,7 +230,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     private func getInstructions(){
         MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.rawValue.lowercaseString, success: { (instructionsInfo : InstructionsInfo) -> Void in
             self.currentInstruction = instructionsInfo.instructions[0]
-            self.paymentInfo = instructionsInfo.paymentInfo
+            self.amountInfo = instructionsInfo.amountInfo
             self.congratsTable.delegate = self
             self.congratsTable.dataSource = self
             self.congratsTable.reloadData()

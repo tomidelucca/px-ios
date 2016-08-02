@@ -10,7 +10,7 @@ import UIKit
 
 public class InstructionsInfo: NSObject {
     
-    var paymentInfo : PaymentInfo!
+    var amountInfo : AmountInfo!
     var instructions : [Instruction]!
     
     
@@ -19,7 +19,7 @@ public class InstructionsInfo: NSObject {
         let instructionsInfo : InstructionsInfo = InstructionsInfo()
         
         if json["amount_info"] != nil && !(json["amount_info"]! is NSNull) {
-            instructionsInfo.paymentInfo = PaymentInfo.fromJSON(json["amount_info"] as! NSDictionary)
+            instructionsInfo.amountInfo = AmountInfo.fromJSON(json["amount_info"] as! NSDictionary)
         }
        
         if json["instructions"] != nil && !(json["instructions"]! is NSNull) {
@@ -34,6 +34,19 @@ public class InstructionsInfo: NSObject {
         
         return instructionsInfo
     }
-
+    
+    public func toJSONString() -> String {
+        var obj:[String:AnyObject] = [
+            "amount_info": self.amountInfo.toJSONString()
+        ]
+    
+        var instructionsJson = ""
+        for item in self.instructions {
+            instructionsJson = instructionsJson + item.toJSONString()
+        }
+        obj["instructions"] = instructionsJson
+            
+        return JSON(obj).toString()
+    }
 
 }
