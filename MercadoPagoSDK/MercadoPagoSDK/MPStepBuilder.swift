@@ -119,7 +119,7 @@ public class MPStepBuilder : NSObject {
         return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
     }
     
-    public class func startErrorViewController(error : MPError, callback : (Void -> Void)? = nil, callbackCancel : (Void -> Void)? = nil) -> UIViewController {
+    public class func startErrorViewController(error : MPError, callback : (Void -> Void)? = nil, callbackCancel : (Void -> Void)? = nil) -> ErrorViewController {
         MercadoPagoContext.initFlavor2()
         return ErrorViewController(error: error, callback: callback, callbackCancel: callbackCancel)
     }
@@ -144,8 +144,9 @@ public class MPStepBuilder : NSObject {
             }, failure: { (error) -> Void in
                 (ccf.navigationController as! MPNavigationController).hideLoading()
                 let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
-                    ccf.navigationController?.popViewControllerAnimated(true)
                     self.getIssuers(paymentMethod, cardToken: cardToken, ccf: ccf, callback: callback)
+                    }, callbackCancel: {
+                        ccf.navigationController?.dismissViewControllerAnimated(true, completion: {})
                 })
                 ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
             })
@@ -160,12 +161,11 @@ public class MPStepBuilder : NSObject {
 
             ccf.hideLoading()
         }) { (error) -> Void in
-            print(error)
-        //   return
             let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: { (Void) in
-                ccf.navigationController?.popViewControllerAnimated(true)
+                ccf.dismissViewControllerAnimated(true, completion: {})
                 self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer, ccf : ccf, callback: callback)
             })
+            errorVC.callbackCancel = { ccf.hideLoading() }
             ccf.navigationController?.presentViewController(errorVC, animated: true, completion: {})
         }
     }
