@@ -48,6 +48,10 @@ public class AmountInfo: NSObject {
     }
     
     public func toJSONString() -> String {
+       return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "amount": self.amount!,
             "thousands_separator": self.currency == nil ? JSON.null : String(self.currency!.thousandsSeparator),
@@ -56,7 +60,7 @@ public class AmountInfo: NSObject {
             "decimal_places": self.currency == nil ? JSON.null : self.currency!.decimalPlaces
         ]
         
-        return JSON(obj).toString()
+        return JSON(obj)
     }
     
 }

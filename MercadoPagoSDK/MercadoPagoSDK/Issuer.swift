@@ -26,11 +26,15 @@ public class Issuer : NSObject {
     }
     
     public func toJSONString() -> String {
+       return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "id": self._id != nil ? JSON.null : self._id!,
             "name" : self.name == nil ? JSON.null : self.name!,
             ]
-        return JSON(obj).toString()
+        return JSON(obj)
     }
 }
 
