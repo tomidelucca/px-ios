@@ -16,7 +16,7 @@ public class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    public func getPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)) {
+    public func getPaymentMethods(amount : Double, customerEmail : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
         
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
@@ -28,6 +28,15 @@ public class PaymentMethodSearchService: MercadoPagoService {
             let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joinWithSeparator(",")
             params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
         }
+        
+        if customerEmail != nil && customerEmail!.characters.count > 0 {
+            params = params + "&email=" + customerEmail!
+        }
+        
+        if customerId != nil && customerId!.characters.count > 0 {
+            params = params + "&customer_id=" + customerId!
+        }
+        
         self.request(MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
