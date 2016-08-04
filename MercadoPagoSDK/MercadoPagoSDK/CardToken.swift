@@ -289,15 +289,14 @@ public class CardToken : NSObject {
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
             "card_number": String.isNullOrEmpty(self.cardNumber) ? JSON.null : self.cardNumber!,
+            "cardholder": (self.cardholder == nil) ? JSON.null : self.cardholder!.toJSON().mutableCopyOfTheObject(),
             "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
             "expiration_month" : self.expirationMonth,
             "expiration_year" : self.expirationYear,
-            "cardholder" : self.cardholder == nil ? JSON.null : JSON.parse(self.cardholder!.toJSONString()).mutableCopyOfTheObject(),
             "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
         ]
         return JSON(obj).toString()
     }
-    
     
     public func getNumberFormated() -> NSString {
         

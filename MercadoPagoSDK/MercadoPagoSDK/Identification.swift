@@ -27,11 +27,15 @@ public class Identification : NSObject {
     }
     
     public func toJSONString() -> String {
+        return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "type": String.isNullOrEmpty(self.type) ? JSON.null : self.type!,
             "number": String.isNullOrEmpty(self.number) ? JSON.null : self.number!
         ]
-        return JSON(obj).toString()
+        return JSON(obj)
     }
 }
 

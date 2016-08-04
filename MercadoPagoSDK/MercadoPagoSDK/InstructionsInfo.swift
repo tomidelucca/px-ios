@@ -37,14 +37,14 @@ public class InstructionsInfo: NSObject {
     
     public func toJSONString() -> String {
         var obj:[String:AnyObject] = [
-            "amount_info": self.amountInfo.toJSONString()
+            "amount_info": self.amountInfo.toJSON()
         ]
     
-        var instructionsJson = ""
-        for item in self.instructions {
-            instructionsJson = instructionsJson + item.toJSONString()
+        if self.instructions != nil && self.instructions.count > 0 {
+            let instructionsStringArr = self.instructions.map({$0.toJSON()})
+            obj["instructions"] = NSArray(array :instructionsStringArr)
+            
         }
-        obj["instructions"] = instructionsJson
             
         return JSON(obj).toString()
     }

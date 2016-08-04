@@ -65,11 +65,15 @@ public class Instruction: NSObject {
     }
     
     public func toJSONString() -> String {
+        return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "title": self.title,
             "accreditationMessage" : self.accreditationMessage
-            ]
-        return JSON(obj).toString()
+        ]
+        return JSON(obj)
     }
 }
 
