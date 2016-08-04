@@ -41,10 +41,12 @@ public class InstructionsInfo: NSObject {
         ]
     
         var instructionsJson = ""
-        for item in self.instructions {
-            instructionsJson = instructionsJson + item.toJSONString()
+        if self.instructions != nil && self.instructions.count > 0 {
+            for item in self.instructions {
+                instructionsJson = instructionsJson + item.toJSONString()
+            }
+            obj["instructions"] = instructionsJson
         }
-        obj["instructions"] = instructionsJson
             
         return JSON(obj).toString()
     }

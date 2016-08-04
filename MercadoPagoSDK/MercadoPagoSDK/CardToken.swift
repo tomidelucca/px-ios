@@ -292,7 +292,6 @@ public class CardToken : NSObject {
             "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
             "expiration_month" : self.expirationMonth,
             "expiration_year" : self.expirationYear,
-            "cardholder" : self.cardholder == nil ? JSON.null : JSON.parse(self.cardholder!.toJSONString()).mutableCopyOfTheObject(),
             "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
         ]
         return JSON(obj).toString()

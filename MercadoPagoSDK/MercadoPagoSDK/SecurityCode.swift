@@ -30,6 +30,17 @@ public class SecurityCode : NSObject {
         }
         return securityCode
     }
+    
+    public func toJSONString() -> String {
+        let obj:[String:AnyObject] = [
+            "length": self.length,
+            "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
+            "mode" : self.mode
+        ]
+        
+        return JSON(obj).toString()
+    }
+
 }
 
 public func ==(obj1: SecurityCode, obj2: SecurityCode) -> Bool {

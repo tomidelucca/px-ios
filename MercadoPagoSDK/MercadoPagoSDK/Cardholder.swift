@@ -24,7 +24,7 @@ public class Cardholder : NSObject {
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
             "name": String.isNullOrEmpty(self.name) ? JSON.null : self.name!,
-            "identification" : self.identification == nil ? JSON.null : JSON.parse(self.identification!.toJSONString()).mutableCopyOfTheObject()
+            "identification" : self.identification == nil ? JSON.null : self.identification!.toJSONString()
         ]
         return JSON(obj).toString()
     }
