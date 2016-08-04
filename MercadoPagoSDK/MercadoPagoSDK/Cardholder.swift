@@ -22,11 +22,15 @@ public class Cardholder : NSObject {
     }
     
     public func toJSONString() -> String {
+        return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "name": String.isNullOrEmpty(self.name) ? JSON.null : self.name!,
-            "identification" : self.identification == nil ? JSON.null : self.identification!.toJSONString()
+            "identification" : self.identification == nil ? JSON.null : self.identification!.toJSON().mutableCopyOfTheObject()
         ]
-        return JSON(obj).toString()
+        return JSON(obj)
     }
 }
 

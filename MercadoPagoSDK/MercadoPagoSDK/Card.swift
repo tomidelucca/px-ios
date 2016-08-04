@@ -34,7 +34,7 @@ public class Card : NSObject {
 			card.expirationMonth = JSON(json["expiration_month"]!).asInt!
 		}
 		if json["expiration_year"] != nil && !(json["expiration_year"]! is NSNull) {
-			card.expirationMonth = JSON(json["expiration_year"]!).asInt!
+			card.expirationYear = JSON(json["expiration_year"]!).asInt!
 		}
 		if json["id"] != nil && !(json["id"]! is NSNull) {
 			card.idCard = NSNumber(longLong: (json["id"]! as? NSString)!.longLongValue)
@@ -59,6 +59,10 @@ public class Card : NSObject {
     }
     
     public func toJSONString() -> String {
+        return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSONString(),
             "customer_id": self.customerId == nil ? JSON.null : self.customerId!,
@@ -69,11 +73,10 @@ public class Card : NSObject {
             "firstSixDigits" : self.firstSixDigits == nil ? JSON.null : self.firstSixDigits!,
             "idCard" : self.idCard,
             "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!,
-            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSONString(),
+            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON().mutableCopyOfTheObject(),
             "issuer" : self.issuer == nil ? JSON.null : self.issuer!.toJSONString(),
-            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSONString()
-            ]
-        return JSON(obj).toString()
+            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON().mutableCopyOfTheObject()       ]
+        return JSON(obj)
     }
     
     public func isSecurityCodeRequired() -> Bool {

@@ -172,7 +172,7 @@ public class Payment : NSObject {
             "payment_method_id" : self.paymentMethodId,
             "status" : self.status,
             "status_detail" : self.statusDetail,
-            "card" : card == nil ? "" : card.toJSONString()
+            "card" : card == nil ? "" : card.toJSON().mutableCopyOfTheObject()
         ]
         
         return JSON(obj).toString()
