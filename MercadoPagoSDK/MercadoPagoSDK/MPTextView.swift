@@ -20,17 +20,12 @@ public class MPTextView: UITextView {
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
-        }
+   
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        if(self.font != nil) {
-            self.font = UIFont(name: "ProximaNova-Light", size: (self.font?.pointSize)!)
-        }
-    }
+            }
     
     func addCharactersSpacing(spacing:CGFloat) {
         let attributedString = NSMutableAttributedString()

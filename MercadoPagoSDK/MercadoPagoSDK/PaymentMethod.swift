@@ -60,13 +60,18 @@ public class PaymentMethod : NSObject  {
     }
     
     public func toJSONString() -> String {
+        return self.toJSON().toString()
+    }
+    
+    public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
             "id": String.isNullOrEmpty(self._id) ? JSON.null : self._id!,
             "name" : self.name == nil ? JSON.null : self.name,
             "payment_type_id" : self.paymentTypeId == nil ? JSON.null : self.paymentTypeId,
-        ]
-        return JSON(obj).toString()
+            ]
+        return JSON(obj)
     }
+    
     
     public class func fromJSON(json : NSDictionary) -> PaymentMethod {
         let paymentMethod : PaymentMethod = PaymentMethod()

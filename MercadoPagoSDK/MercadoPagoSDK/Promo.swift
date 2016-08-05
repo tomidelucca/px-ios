@@ -15,7 +15,7 @@ public class Promo : NSObject {
 	public var recommendedMessage : String!
 	public var paymentMethods : [PaymentMethod]!
 	public var legals : String!
-	public var url : String!
+	public var url : String?
 	
 	public class func fromJSON(json : NSDictionary) -> Promo {
 		
@@ -51,17 +51,16 @@ public class Promo : NSObject {
     public func toJSONString() -> String {
         var obj:[String:AnyObject] = [
             "promoId": self.promoId,
-            "issuer" : self.issuer.toJSONString(),
+            "issuer" : self.issuer != nil ? self.issuer.toJSON().mutableCopyOfTheObject() : JSON.null,
             "recommendedMessage" : self.recommendedMessage,
             "legals" : self.legals,
-            "url" : self.url
+            "url" : (self.url != nil && self.url!.characters.count > 0) ? self.url! : ""
         ]
         
-        var pmsJson = ""
-        for pm in self.paymentMethods {
-            pmsJson = pmsJson + pm.toJSONString()
+        if self.paymentMethods != nil && self.paymentMethods.count > 0 {
+            let paymentMethodsArr = self.paymentMethods.map({$0.toJSON()})
+            obj["payment_methods"] = NSArray(array :paymentMethodsArr)
         }
-        obj["payment_methods"] = pmsJson
 
         return JSON(obj).toString()
     }
