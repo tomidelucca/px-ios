@@ -11,7 +11,7 @@ import MercadoPagoTracker
 
 public class MPServicesBuilder : NSObject {
    
-    static let MP_PAYMENTS_URI = "/v1/checkout/payments"
+    static let MP_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/checkout/payments"
 
 
     public class func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
@@ -25,7 +25,6 @@ public class MPServicesBuilder : NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    //TrackService.trackToken(token?._id)
                     MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
                     success(token: token)
                 } else {
