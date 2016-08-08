@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         //Pinto de rojo el color primerio
         MercadoPagoContext.setupPrimaryColor(UIColor.redColor())
+        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
       //  MercadoPagoContext.secundaryColor = UIColor.yellowColor()
         
         

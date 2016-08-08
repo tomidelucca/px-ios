@@ -29,7 +29,8 @@ class InstallmentSelectionTableViewCell: UITableViewCell {
         let additionalText = NSMutableAttributedString(string : "")
         if payerCost.installmentRate > 0 && payerCost.installments > 1 {
             let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
-            let totalAmount = Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpLightGrayColor)
+            let currency = MercadoPagoContext.getCurrency()
+            let totalAmount = Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:mpLightGrayColor)
             totalAmountStr.appendAttributedString(totalAmount)
             totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
             additionalText.appendAttributedString(totalAmountStr)

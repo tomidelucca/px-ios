@@ -32,6 +32,12 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var payment_key : String = ""
     
+    var site = Site.MLA
+    
+    var language = "es"
+    
+    var currency = CurrenciesUtil.getCurrencyFor("ARS")!
+    
     public class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -59,32 +65,80 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return "1.0.0"
     }
  
-    let siteIdsSettings : [String : NSDictionary] = [
-        "MLA" : ["language" : "es"],
-        "MLB" : ["language" : "pt"],
-        "MLC" : ["language" : "es"],
-        "MLM" : ["language" : "es"]
+    static let siteIdsSettings : [String : NSDictionary] = [
+        "MLA" : ["language" : "es", "currency" : "ARS"],
+        "MLB" : ["language" : "pt", "currency" : "BRL"],
+        "MLC" : ["language" : "es", "currency" : "CLP"],
+        "MLM" : ["language" : "es", "currency" : "MXN"]
      ]
 
-    var gaSiteId = GAKey.MLA
-    var language = "es"
-    var mpSiteId = "MLA"
-    
-    public func siteId() -> GAKey!{
-        return gaSiteId
+    public enum Site : Int {
+        case MLA = 1
+        case MLB = 2
+        case MLM = 3
+        case MLV = 4
+        case MLU = 5
+        case MPE = 6
+        case MLC = 7
+        case MCO = 8
+        
+        func getName()->String!{
+            switch self.rawValue {
+            case 1 : return "MLA"
+            case 2 : return "MLB"
+            case 3 : return "MLM"
+            case 4 : return "MLV"
+            case 5 : return "MLU"
+            case 6 : return "MPE"
+            case 7 : return "MLC"
+            case 8 : return "MCO"
+            default : return "MLA"
+            }
+        }
+        
+        static func getByName(siteId : String) -> Site {
+            switch siteId {
+            case "MLA" : return MLA
+            case "MLB" : return MLB
+            case "MLM" : return MLM
+            case "MLV" : return MLV
+            case "MLU" : return MLU
+            case "MPE" : return MPE
+            case "MLC" : return MLC
+            case "MCO" : return MCO
+            default : return MLA
+            }
+        }
     }
     
-    public func setSiteID(siteId : String) {
-        let siteIdConfig = siteIdsSettings[siteId]
-        if siteIdConfig != nil {
-            self.gaSiteId = siteIdConfig!["GASiteId"] as! GAKey
-            self.language = siteIdConfig!["language"] as! String
-            self.mpSiteId = siteId
+    
+    
+    public func siteId() -> String! {
+        return site.getName()
+    }
+    
+    public class func setSite(site : Site) {
+        let siteConfig = siteIdsSettings[site.getName()]
+        if siteConfig != nil {
+            sharedInstance.site = site
+            sharedInstance.language = siteConfig!["language"] as! String
+            let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
+            if currency != nil {
+                sharedInstance.currency = currency!
+            }
         }
+    }
+    
+    public class func setSiteID(siteId : String) {
+        MercadoPagoContext.setSite(Site.getByName(siteId))
     }
     
     public static func getLanguage() -> String {
         return sharedInstance.language
+    }
+    
+    public static func getCurrency() -> Currency {
+        return sharedInstance.currency
     }
     
     public func publicKey() -> String!{

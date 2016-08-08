@@ -55,9 +55,10 @@ class ApprovedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         if payment.feesDetails != nil && payment.feesDetails.count > 0 {
             let financingFee = payment.feesDetails.filter({ return $0.isFinancingFeeType()})
             if financingFee.count > 0 {
+                let currency = MercadoPagoContext.getCurrency()
                 if payment.transactionDetails != nil && payment.transactionDetails.totalPaidAmount > 0 && payment.installments > 0 {
                     additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
-                    additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: greenLabelColor, fontSize : 14, baselineOffset: 3))
+                    additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol:currency.symbol, color: greenLabelColor, fontSize : 14, baselineOffset: 3))
                     additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
                 } else {
                     self.amountDescription.hidden = true

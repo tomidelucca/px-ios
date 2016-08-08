@@ -63,7 +63,7 @@ int installmentsSelected = 1;
 }
 
 - (void)startPaymentVault {
-    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT currencyId:CURRENCY paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
+    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
