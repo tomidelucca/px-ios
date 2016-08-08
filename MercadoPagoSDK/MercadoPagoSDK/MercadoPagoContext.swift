@@ -59,31 +59,34 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return "1.0.0"
     }
  
-    var site = GAKey.MLA
-    
+    let siteIdsSettings : [String : NSDictionary] = [
+        "MLA" : ["language" : "es"],
+        "MLB" : ["language" : "pt"],
+        "MLC" : ["language" : "es"],
+        "MLM" : ["language" : "es"]
+     ]
+
+    var gaSiteId = GAKey.MLA
+    var language = "es"
+    var mpSiteId = "MLA"
     
     public func siteId() -> GAKey!{
-        return site
+        return gaSiteId
     }
-    public func setSideID(siteId : String){
-        switch siteId {
-        case "MLA":
-            site = GAKey.MLA
-        case "MLB":
-            site = GAKey.MLB
-        case "MLM":
-            site = GAKey.MLM
-        case "MLC":
-            site = GAKey.MLC
-        case "MCO":
-            site = GAKey.MCO
-        case "MLV":
-            site = GAKey.MLV
-        default:
-             site = GAKey.MLA
+    
+    public func setSiteID(siteId : String) {
+        let siteIdConfig = siteIdsSettings[siteId]
+        if siteIdConfig != nil {
+            self.gaSiteId = siteIdConfig!["GASiteId"] as! GAKey
+            self.language = siteIdConfig!["language"] as! String
+            self.mpSiteId = siteId
         }
-  
     }
+    
+    public static func getLanguage() -> String {
+        return sharedInstance.language
+    }
+    
     public func publicKey() -> String!{
         return self.public_key
     }

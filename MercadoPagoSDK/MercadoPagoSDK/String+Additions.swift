@@ -15,7 +15,10 @@ extension String {
 		if bundle == nil {
 			bundle = NSBundle.mainBundle()
 		}
-		return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
+        let currentLanguage = MercadoPagoContext.getLanguage()
+        let path = bundle!.pathForResource(currentLanguage, ofType : "lproj")
+        let languageBundle = NSBundle(path : path!)
+        return languageBundle!.localizedStringForKey(self, value : "", table : nil)
 	}
 	
     public func existsLocalized() -> Bool {

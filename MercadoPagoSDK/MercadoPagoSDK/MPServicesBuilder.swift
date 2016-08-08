@@ -227,7 +227,7 @@ public class MPServicesBuilder : NSObject {
         let preferenceService = PreferenceService()
         preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
             
-            MercadoPagoContext.sharedInstance.setSideID(preference.siteId)
+            MercadoPagoContext.sharedInstance.setSiteID(preference.siteId)
             success(preference: preference)
             }, failure: failure)
     }
