@@ -910,11 +910,11 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
+				0F9883261AD2AA9900F750F0 /* UIKit.framework */,
+				0F9883281AD2AAA100F750F0 /* Foundation.framework */,
 				15142CF01D5385570037E504 /* MercadoPagoTracker.framework */,
 				15142CF11D5385570037E504 /* MPGoogleAnalytics.framework */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
-				0F9883281AD2AAA100F750F0 /* Foundation.framework */,
-				0F9883261AD2AA9900F750F0 /* UIKit.framework */,
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
 				0F9883191AD2A97A00F750F0 /* MercadoPagoSDKTests */,
 				0F98830B1AD2A97A00F750F0 /* Products */,
