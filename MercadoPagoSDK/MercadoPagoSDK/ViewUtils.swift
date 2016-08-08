@@ -56,6 +56,7 @@ class ViewUtils {
     
     class func loadImageFromUrl(url : String) -> UIImage?{
     
+        
             let url = NSURL(string: url)
             if url != nil {
                 let data = NSData(contentsOfURL: url!)
