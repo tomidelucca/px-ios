@@ -68,8 +68,9 @@ class AuthorizePaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDele
             return NSMutableAttributedString(string: "Debes autorizar el pago ante tu tarjeta".localized)
         }
         
+        let currency = MercadoPagoContext.getCurrency()
         let title = NSMutableAttributedString(string: "Debes autorizar ante ".localized + paymentMethod.name.localized + " el pago de ".localized)
-        let attributedAmount = Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
+        let attributedAmount = Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor(red: 102, green: 102, blue: 102))
         title.appendAttributedString(attributedAmount)
         title.appendAttributedString(NSMutableAttributedString(string : " a MercadoPago".localized))
         return title

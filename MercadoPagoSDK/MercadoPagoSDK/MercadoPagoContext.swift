@@ -32,6 +32,12 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var payment_key : String = ""
     
+    var site : Site!
+    
+    var language : String!
+    
+    var currency : Currency!
+    
     public class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -59,31 +65,57 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return "1.0.0"
     }
  
-    var site = GAKey.MLA
-    
-    
-    public func siteId() -> GAKey!{
-        return site
+    static let siteIdsSettings : [String : NSDictionary] = [
+        "MLA" : ["language" : "es", "currency" : "ARS"],
+        "MLB" : ["language" : "pt", "currency" : "BRL"],
+        "MLC" : ["language" : "es", "currency" : "CLP"],
+        "MLM" : ["language" : "es", "currency" : "MXN"]
+     ]
+
+    public enum Site : String {
+        case MLA = "MLA"
+        case MLB = "MLB"
+        case MLM = "MLM"
+        case MLV = "MLV"
+        case MLU = "MLU"
+        case MPE = "MPE"
+        case MLC = "MLC"
+        case MCO = "MCO"
     }
-    public func setSideID(siteId : String){
-        switch siteId {
-        case "MLA":
-            site = GAKey.MLA
-        case "MLB":
-            site = GAKey.MLB
-        case "MLM":
-            site = GAKey.MLM
-        case "MLC":
-            site = GAKey.MLC
-        case "MCO":
-            site = GAKey.MCO
-        case "MLV":
-            site = GAKey.MLV
-        default:
-             site = GAKey.MLA
+    
+    
+    
+    public func siteId() -> String! {
+        return site.rawValue
+    }
+    
+    public class func setSite(site : Site) {
+        let siteConfig = siteIdsSettings[site.rawValue]
+        if siteConfig != nil {
+            sharedInstance.site = site
+            sharedInstance.language = siteConfig!["language"] as! String
+            let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
+            if currency != nil {
+                sharedInstance.currency = currency!
+            }
         }
-  
     }
+    
+    public class func setSiteID(siteId : String) {
+        let site = Site(rawValue: siteId)
+        if site != nil {
+            MercadoPagoContext.setSite(site!)
+        }
+    }
+    
+    public static func getLanguage() -> String {
+        return sharedInstance.language
+    }
+    
+    public static func getCurrency() -> Currency {
+        return sharedInstance.currency
+    }
+    
     public func publicKey() -> String!{
         return self.public_key
     }
@@ -124,6 +156,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     private override init() {
     
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+        MercadoPagoContext.setSite(Site.MLA)
     }
     
     public class func setPrivateKey(private_key : String){
