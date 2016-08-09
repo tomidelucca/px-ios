@@ -89,16 +89,20 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return site.rawValue
     }
     
-    public class func setSite(site : Site) {
-        let siteConfig = siteIdsSettings[site.rawValue]
+    private func setSite(site : Site) {
+        let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
-            sharedInstance.site = site
-            sharedInstance.language = siteConfig!["language"] as! String
+            self.site = site
+            self.language = siteConfig!["language"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
-                sharedInstance.currency = currency!
+                self.currency = currency!
             }
         }
+    }
+
+    public class func setSite(site : Site) {
+        MercadoPagoContext.sharedInstance.setSite(site)
     }
     
     public class func setSiteID(siteId : String) {
@@ -154,9 +158,9 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     
     private override init() {
-    
+        super.init()
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        MercadoPagoContext.setSite(Site.MLA)
+        self.setSite(Site.MLA)
     }
     
     public class func setPrivateKey(private_key : String){
