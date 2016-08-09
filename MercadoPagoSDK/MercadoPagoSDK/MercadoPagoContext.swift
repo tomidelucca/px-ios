@@ -32,11 +32,11 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var payment_key : String = ""
     
-    var site = Site.MLA
+    var site : Site!
     
-    var language = "es"
+    var language : String!
     
-    var currency = CurrenciesUtil.getCurrencyFor("ARS")!
+    var currency : Currency!
     
     public class var PUBLIC_KEY : String {
         return "public_key"
