@@ -156,6 +156,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     private override init() {
     
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+        MercadoPagoContext.setSite(Site.MLA)
     }
     
     public class func setPrivateKey(private_key : String){
