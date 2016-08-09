@@ -72,53 +72,25 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         "MLM" : ["language" : "es", "currency" : "MXN"]
      ]
 
-    public enum Site : Int {
-        case MLA = 1
-        case MLB = 2
-        case MLM = 3
-        case MLV = 4
-        case MLU = 5
-        case MPE = 6
-        case MLC = 7
-        case MCO = 8
-        
-        func getName()->String!{
-            switch self.rawValue {
-            case 1 : return "MLA"
-            case 2 : return "MLB"
-            case 3 : return "MLM"
-            case 4 : return "MLV"
-            case 5 : return "MLU"
-            case 6 : return "MPE"
-            case 7 : return "MLC"
-            case 8 : return "MCO"
-            default : return "MLA"
-            }
-        }
-        
-        static func getByName(siteId : String) -> Site {
-            switch siteId {
-            case "MLA" : return MLA
-            case "MLB" : return MLB
-            case "MLM" : return MLM
-            case "MLV" : return MLV
-            case "MLU" : return MLU
-            case "MPE" : return MPE
-            case "MLC" : return MLC
-            case "MCO" : return MCO
-            default : return MLA
-            }
-        }
+    public enum Site : String {
+        case MLA = "MLA"
+        case MLB = "MLB"
+        case MLM = "MLM"
+        case MLV = "MLV"
+        case MLU = "MLU"
+        case MPE = "MPE"
+        case MLC = "MLC"
+        case MCO = "MCO"
     }
     
     
     
     public func siteId() -> String! {
-        return site.getName()
+        return site.rawValue
     }
     
     public class func setSite(site : Site) {
-        let siteConfig = siteIdsSettings[site.getName()]
+        let siteConfig = siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             sharedInstance.site = site
             sharedInstance.language = siteConfig!["language"] as! String
@@ -130,7 +102,10 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
     public class func setSiteID(siteId : String) {
-        MercadoPagoContext.setSite(Site.getByName(siteId))
+        let site = Site(rawValue: siteId)
+        if site != nil {
+            MercadoPagoContext.setSite(site!)
+        }
     }
     
     public static func getLanguage() -> String {
