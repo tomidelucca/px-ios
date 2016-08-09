@@ -16,7 +16,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     
-    public static let DEFAULT_FONT_NAME = UIFont.systemFontOfSize(10).fontName
+    public static let DEFAULT_FONT_NAME = ".SFUIDisplay-Light"
     
     public class var PUBLIC_KEY : String {
         return "public_key"
