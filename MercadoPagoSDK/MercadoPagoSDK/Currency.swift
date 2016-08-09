@@ -14,14 +14,14 @@ public class Currency : NSObject {
     public var _description : String!
     public var symbol : String!
     public var decimalPlaces : Int = 0
-    public var decimalSeparator : Character!
-    public var thousandsSeparator : Character!
+    public var decimalSeparator : String!
+    public var thousandsSeparator : String!
     
     public override init() {
         super.init()
     }
     
-    public init(_id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: Character, thousandSeparator: Character) {
+    public init(_id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
         super.init()
         self._id = _id
         self._description = description
@@ -40,11 +40,11 @@ public class Currency : NSObject {
      Default values are ARS values
      *
      **/
-    public func getThousandsSeparatorOrDefault() -> Character {
+    public func getThousandsSeparatorOrDefault() -> String {
         return self.thousandsSeparator ?? ","
     }
     
-    public func getDecimalSeparatorOrDefault() -> Character {
+    public func getDecimalSeparatorOrDefault() -> String {
         return self.decimalSeparator ?? ","
     }
 

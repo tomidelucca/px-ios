@@ -35,7 +35,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     @IBOutlet weak var paymentsTable: UITableView!
     
-
+    
     internal init(amount: Double, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
 
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
@@ -72,7 +72,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    init(amount: Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+    public init(amount: Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()

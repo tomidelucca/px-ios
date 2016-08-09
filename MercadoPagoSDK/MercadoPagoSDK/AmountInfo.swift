@@ -26,13 +26,11 @@ public class AmountInfo: NSObject {
         
         let currency = Currency()
         if json["thousands_separator"] != nil && !(json["thousands_separator"]! is NSNull) {
-            let thousandsSeparatorText = (json["thousands_separator"] as! String)
-            currency.thousandsSeparator = thousandsSeparatorText[thousandsSeparatorText.startIndex.advancedBy(0)]
+            currency.thousandsSeparator = (json["thousands_separator"] as! String)
         }
         
         if json["decimal_separator"] != nil && !(json["decimal_separator"]! is NSNull) {
-            let decimalsSeparatorText = (json["decimal_separator"] as! String)
-            currency.decimalSeparator = decimalsSeparatorText[decimalsSeparatorText.startIndex.advancedBy(0)]
+            currency.decimalSeparator = (json["decimal_separator"] as! String)
         }
         
         if json["symbol"] != nil && !(json["symbol"]! is NSNull) {
