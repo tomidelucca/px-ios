@@ -185,8 +185,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
             case 0:
-                //TODO : hardcode
-                return (self.customerPaymentMethods != nil && self.customerPaymentMethods!.count > 0) ? 52 : 0
+                return (self.customerPaymentMethods != nil && self.customerPaymentMethods!.count > 0) ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
             case 1:
                 let currentPaymentMethodSearchItem = self.currentPaymentMethodSearch[indexPath.row]
                 if currentPaymentMethodSearchItem.showIcon.boolValue {
@@ -209,11 +208,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
             case 0 :
-                //TODO hardcode row
-                let paymentSearch = self.paymentsTable.dequeueReusableCellWithIdentifier("paymentSearchCell") as! PaymentSearchCell
-                paymentSearch.paymentIcon.image = MercadoPago.getImage(self.customerPaymentMethods![indexPath.row]._id)
-                paymentSearch.paymentTitle.text = self.customerPaymentMethods![indexPath.row]._description
-                return paymentSearch
+                let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCellWithIdentifier("customerPaymentMethodCell") as! CustomerPaymentMethodCell
+                customerPaymentMethodCell.fillRowWithCustomerPayment(self.customerPaymentMethods![indexPath.row])
+                return customerPaymentMethodCell
             default :
                 let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
                 
@@ -374,6 +371,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
         let offlinePaymentWithDescription = UINib(nibName: "OfflinePaymentMethodWithDescriptionCell", bundle: self.bundle)
         let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
+        let customerPaymentMethodCell = UINib(nibName: "CustomerPaymentMethodCell", bundle: self.bundle)
         
         self.paymentsTable.registerNib(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
         self.paymentsTable.registerNib(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
@@ -381,7 +379,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.registerNib(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
         self.paymentsTable.registerNib(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
         self.paymentsTable.registerNib(offlinePaymentWithDescription, forCellReuseIdentifier: "offlinePaymentWithDescription")
+        self.paymentsTable.registerNib(customerPaymentMethodCell, forCellReuseIdentifier: "customerPaymentMethodCell")
         self.paymentsTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
+        
     }
     
     public override func didReceiveMemoryWarning() {
