@@ -21,6 +21,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    
     [MercadoPagoContext setPublicKey: TEST_PUBLIC_KEY];
     [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
@@ -28,6 +29,7 @@
     [MercadoPagoContext setSiteID:@"MLB"];
    [MercadoPagoContext setupPrimaryColor:[UIColor redColor] ];
    [MercadoPagoContext setDarkTextColor];
+    
     return YES;
 }
 

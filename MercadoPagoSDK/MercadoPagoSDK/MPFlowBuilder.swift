@@ -18,32 +18,39 @@ public class MPFlowBuilder : NSObject {
         
     }
     
-    public class func startCheckoutViewController(preferenceId: String, callback: (Payment) -> Void, callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+    public class func startCheckoutViewController(preferenceId: String,
+                        callback: (Payment) -> Void,
+                        callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+        
         MercadoPagoContext.initFlavor3()
-            let checkoutVC = CheckoutViewController(preferenceId: preferenceId, callback: { (payment : Payment) -> Void in
-            callback(payment)
-            }, callbackCancel :callbackCancel)
+        let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
+                                                callback: { (payment : Payment) -> Void in callback(payment) },
+                                                callbackCancel :callbackCancel)
         return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     
-    
-    public class func startPaymentVaultViewController(amount: Double, paymentPreference : PaymentPreference? = nil, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
-         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
-
-        paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
-            paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
-                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
-            })
-        }
+    //TODO CallbackCancel
+    public class func startPaymentVaultViewController(amount: Double, paymentPreference : PaymentPreference? = nil,
+                        callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
         
-        paymentVault.modalTransitionStyle = .CrossDissolve
-        return MPFlowController.createNavigationControllerWith(paymentVault)
-    }
-    
-    internal class func startPaymentVaultInCheckout(amount: Double, paymentPreference: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true, callback: callback)
+        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
+            paymentVault.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
+                                    paymentVault.dismissViewControllerAnimated(true, completion: { () -> Void in
+                                            callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)}
+                                    )}
+        
+        paymentVault.modalTransitionStyle = .CrossDissolve
+        return MPFlowController.createNavigationControllerWith(paymentVault)
+    }
+    
+    //TODO CallbackCancel
+    internal class func startPaymentVaultInCheckout(amount: Double, paymentPreference: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch,
+                          callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void) -> MPNavigationController {
+        
+        MercadoPagoContext.initFlavor2()
+        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true,
+                                                      callback: callback)
         
         paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
@@ -51,19 +58,22 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil,
+                                      callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void,
+                                      callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+        
         MercadoPagoContext.initFlavor2()
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
         var currentCallbackCancel : (Void -> Void)
         if (callbackCancel == nil){
-            currentCallbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in
-            }) }
+            currentCallbackCancel = { cardVC?.dismissViewControllerAnimated(true, completion: { () -> Void in })}
         } else {
             currentCallbackCancel = callbackCancel!
         }
-        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods, callback: { (paymentMethod, token, issuer) -> Void in
+        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods,
+                                                     callback: { (paymentMethod, token, issuer) -> Void in
             
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
                 let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
