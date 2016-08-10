@@ -20,6 +20,15 @@ class Utils {
         return dateFormatter.dateFromString(dateArr[0])
     }
     
+    class func getStringFromDate(date: NSDate!) -> String! {
+        
+        if date == nil {
+            return nil
+        }
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.stringFromDate(date)
+    }
 
     class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
