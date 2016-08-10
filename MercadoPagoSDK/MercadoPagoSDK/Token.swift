@@ -90,14 +90,14 @@ public class Token : NSObject {
             "status" : self.status,
             "usedDate" : self.usedDate,
             "cardNumberLength" : self.cardNumberLength,
-            "creationDate" : self.creationDate,
+            "creationDate" : Utils.getStringFromDate(self.creationDate),
             "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits,
             "firstSixDigit" : self.firstSixDigit == nil ? JSON.null : self.firstSixDigit,
             "securityCodeLength" : self.securityCodeLength,
             "expirationMonth" : self.expirationMonth,
             "expirationYear" : self.expirationYear,
-            "lastModifiedDate" : self.lastModifiedDate,
-            "dueDate" : self.dueDate,
+            "lastModifiedDate" : Utils.getStringFromDate(self.lastModifiedDate),
+            "dueDate" : Utils.getStringFromDate(self.dueDate)
         ]
 
         return JSON(obj).toString()
