@@ -17,7 +17,6 @@ class CustomerPaymentMethodCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.frame.width, height: 1))
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -26,9 +25,9 @@ class CustomerPaymentMethodCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func fillRowWithCustomerPayment(customerPaymentMethod : CustomerPaymentMethod){
-        self.paymentIcon.image = MercadoPago.getImage(customerPaymentMethod._id)
-        self.paymentMethodTitle.text = customerPaymentMethod._description
+    func fillRowWithCustomerPayment(card : Card){
+        self.paymentIcon.image = MercadoPago.getImage(card.paymentMethod!._id)
+        self.paymentMethodTitle.text = "terminada en ".localized + card.lastFourDigits!
     }
 
 }
