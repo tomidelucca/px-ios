@@ -124,7 +124,8 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return self.public_key
     }
     
-    private static var primaryColor : UIColor = UIColor(red: 48  , green: 175, blue: 226)
+    
+    private static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
     private static var secundaryColor : UIColor = UIColor.blueMercadoPago()
@@ -132,7 +133,12 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     public static func setupPrimaryColor(color: UIColor){
         MercadoPagoContext.primaryColor = color
-        MercadoPagoContext.setupSecundaryColor(color.lighter())
+        if (color == UIColor.mpDefaultColor()){
+            MercadoPagoContext.setupSecundaryColor(UIColor.blueMercadoPago())
+        }else{
+            MercadoPagoContext.setupSecundaryColor(color.lighter())
+        }
+        
     }
     private static func setupSecundaryColor(color: UIColor){
         MercadoPagoContext.secundaryColor = color

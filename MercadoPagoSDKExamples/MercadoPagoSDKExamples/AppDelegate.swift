@@ -26,13 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
         MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
-       NSLog(MercadoPago.DEFAULT_FONT_NAME)
+
         //Pinto de rojo el color primerio
         MercadoPagoContext.setupPrimaryColor(UIColor.blackColor())
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
-        
-      //  MercadoPagoContext.secundaryColor = UIColor.yellowColor()
         
         
         // Initialize window
