@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
 
         //Pinto de rojo el color primerio
-        MercadoPagoContext.setupPrimaryColor(UIColor.blackColor())
+        MercadoPagoContext.setupPrimaryColor(UIColor.blackColor(), complentaryColor: UIColor.orangeColor())
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
         

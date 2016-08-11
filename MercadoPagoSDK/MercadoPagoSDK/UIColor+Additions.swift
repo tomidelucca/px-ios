@@ -115,8 +115,8 @@ extension UIColor {
         return MercadoPagoContext.getPrimaryColor()
     }
     
-    class public func secundaryColor() -> UIColor {
-        return MercadoPagoContext.getSecundaryColor()
+    class public func complementaryColor() -> UIColor {
+        return MercadoPagoContext.getComplementaryColor()
     }
     
     func lighter() -> UIColor {

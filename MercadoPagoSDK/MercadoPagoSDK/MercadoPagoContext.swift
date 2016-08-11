@@ -128,28 +128,31 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     private static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
-    private static var secundaryColor : UIColor = UIColor.blueMercadoPago()
+    private static var complentaryColor : UIColor = UIColor.blueMercadoPago()
     private static var textColor : UIColor = UIColor.whiteColor()
     
-    public static func setupPrimaryColor(color: UIColor){
+    public static func setupPrimaryColor(color: UIColor, complentaryColor: UIColor? = nil){
         MercadoPagoContext.primaryColor = color
-        if (color == UIColor.mpDefaultColor()){
-            MercadoPagoContext.setupSecundaryColor(UIColor.blueMercadoPago())
+        if (complentaryColor != nil){
+            MercadoPagoContext.setupSecundaryColor(complentaryColor!)
         }else{
-            MercadoPagoContext.setupSecundaryColor(color.lighter())
+            if (color == UIColor.mpDefaultColor()){
+                MercadoPagoContext.setupSecundaryColor(UIColor.blueMercadoPago())
+            }else{
+                MercadoPagoContext.setupSecundaryColor(color.lighter())
+            }
         }
-        
     }
-    private static func setupSecundaryColor(color: UIColor){
-        MercadoPagoContext.secundaryColor = color
+    public static func setupSecundaryColor(color: UIColor){
+        MercadoPagoContext.complentaryColor = color
     }
     
     internal static func getPrimaryColor() -> UIColor {
         return primaryColor
     }
     
-    internal static func getSecundaryColor() -> UIColor {
-        return secundaryColor
+    internal static func getComplementaryColor() -> UIColor {
+        return complentaryColor
     }
     
     internal static func getTextColor() -> UIColor {
