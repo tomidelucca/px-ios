@@ -57,19 +57,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentMethods = paymentMethods
         self.callback = callback
         
-        if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
-                if self.navigationController?.viewControllers[0] == self {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                } else {
-                    self.navigationController!.popViewControllerAnimated(true)
-                }
-            }
-        } else {
-            self.callbackCancel = callbackCancel
-        }
+      
     }
     
     public init(amount: Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
@@ -125,6 +113,19 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.loadPaymentMethodSearch()
+        if callbackCancel == nil {
+            self.callbackCancel = {(Void) -> Void in
+                if self.navigationController?.viewControllers[0] == self {
+                    self.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                } else {
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+            }
+        } else {
+            self.callbackCancel = callbackCancel
+        }
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
