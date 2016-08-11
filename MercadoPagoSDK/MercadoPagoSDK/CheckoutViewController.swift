@@ -126,7 +126,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return (self.paymentMethod != nil) ? 2 : 0
     }
     
 
@@ -175,7 +175,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             return tableView.dequeueReusableCellWithIdentifier("selectPaymentMethodCell", forIndexPath: indexPath) as! SelectPaymentMethodCell
         } else if indexPath.row == 1 {
             
-            if !paymentMethod!.isOfflinePaymentMethod() {
+            if paymentMethod != nil && !paymentMethod!.isOfflinePaymentMethod() {
                 let installmentsCell = self.checkoutTable.dequeueReusableCellWithIdentifier("installmentSelectionCell") as! InstallmentSelectionTableViewCell
                 installmentsCell.fillCell(self.payerCost!)
                 return installmentsCell
