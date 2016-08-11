@@ -68,7 +68,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
-            self.cardBackground.backgroundColor =  MercadoPagoContext.getSecundaryColor()
+            self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
  
                 var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
                 promocionesButton.tintColor = UIColor.systemFontColor()

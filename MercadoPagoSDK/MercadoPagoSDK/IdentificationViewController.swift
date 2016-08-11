@@ -125,7 +125,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
-        self.view.backgroundColor = UIColor.secundaryColor()
+        self.view.backgroundColor = UIColor.complementaryColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.No
         numberTextField.keyboardType = UIKeyboardType.NumberPad
         numberTextField.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
