@@ -172,8 +172,7 @@ public class MPServicesBuilder : NSObject {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_BANK_DEALS", result: nil)
-
-        // TODO: Está hecho para MLA fijo porque va a cambiar la URL para que dependa de una API y una public key
+        
         let service : PromosService = PromosService(baseURL: MercadoPagoService.MP_BASE_URL)
         service.getPromos(public_key: MercadoPagoContext.publicKey(), success: { (jsonResult) -> Void in
             let promosArray = jsonResult as? NSArray?
