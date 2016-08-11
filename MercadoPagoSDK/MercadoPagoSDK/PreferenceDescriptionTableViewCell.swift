@@ -27,7 +27,7 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
         self.shoppingCartIcon.image = tintedImage
         self.shoppingCartIcon.backgroundColor = UIColor.primaryColor()
         self.shoppingCartIcon.tintColor = UIColor.systemFontColor()
-        self.backgroundColor = MercadoPagoContext.getSecundaryColor()
+        self.backgroundColor = MercadoPagoContext.getComplementaryColor()
         self.shoppingCartIconContainer.layer.borderWidth = 1.0
         self.shoppingCartIconContainer.layer.borderColor = UIColor.whiteColor().CGColor
         self.shoppingCartIconContainer.backgroundColor = UIColor.primaryColor()

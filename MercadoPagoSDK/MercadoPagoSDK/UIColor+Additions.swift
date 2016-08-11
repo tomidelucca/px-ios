@@ -32,6 +32,12 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
     
+    
+    class public func mpDefaultColor() -> UIColor
+    {
+        return UIColorFromRGB(0x30AFE2)
+    }
+    
     class public func errorCellColor() -> UIColor
     {
         return UIColorFromRGB(0xB34C42)
@@ -109,8 +115,8 @@ extension UIColor {
         return MercadoPagoContext.getPrimaryColor()
     }
     
-    class public func secundaryColor() -> UIColor {
-        return MercadoPagoContext.getSecundaryColor()
+    class public func complementaryColor() -> UIColor {
+        return MercadoPagoContext.getComplementaryColor()
     }
     
     func lighter() -> UIColor {

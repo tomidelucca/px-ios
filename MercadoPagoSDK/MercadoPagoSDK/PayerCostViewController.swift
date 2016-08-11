@@ -127,7 +127,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:view];
         */
-        self.view.backgroundColor = UIColor.secundaryColor()
+        self.view.backgroundColor = UIColor.complementaryColor()
         tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
