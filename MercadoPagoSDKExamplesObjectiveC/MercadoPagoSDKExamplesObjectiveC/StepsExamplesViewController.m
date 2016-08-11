@@ -67,9 +67,7 @@ int installmentsSelected = 1;
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
-    } callbackCancel:^(void){
-        
-    }];
+    } callbackCancel:nil];
     
    
     [self presentViewController:paymentVaultVC animated:YES completion:^{}];
