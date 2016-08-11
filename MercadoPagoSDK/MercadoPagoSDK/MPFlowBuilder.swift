@@ -30,7 +30,7 @@ public class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     
-    //TODO CallbackCancel
+
     public class func startPaymentVaultViewController(amount: Double, paymentPreference : PaymentPreference? = nil,
                                                       callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void,
                                                       callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
@@ -45,8 +45,7 @@ public class MPFlowBuilder : NSObject {
         paymentVault.modalTransitionStyle = .CrossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
-    
-    //TODO CallbackCancel
+
     internal class func startPaymentVaultInCheckout(amount: Double, paymentPreference: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch,
                                                     callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void,
                                                     callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
