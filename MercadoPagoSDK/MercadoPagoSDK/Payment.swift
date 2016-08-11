@@ -164,6 +164,7 @@ public class Payment : NSObject {
     
     public func toJSONString() -> String {
         let obj:[String:AnyObject] = [
+            "id" : String(self._id),
             "transaction_amount": self.transactionAmount,
             "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId" : self.issuerId,

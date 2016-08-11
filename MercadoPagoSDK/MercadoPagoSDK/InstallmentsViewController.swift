@@ -122,5 +122,14 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         callback!(payerCost: self.payerCosts![indexPath.row])
     }
     
+    internal override func executeBack(){
+        if self.callbackCancel != nil {
+            self.callbackCancel!()
+        }else{
+            super.executeBack()
+        }
+        
+    }
+
    
 }
