@@ -1058,6 +1058,7 @@
 		0F9883C01AD2AD3200F750F0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				15F561EA1D5B9379005577DA /* Base */,
 				766012D71CEB920C00897F9D /* Error */,
 				76445AD91CC8114F008EE68E /* Common */,
 				76FD246F1C5BFE45008C5DC0 /* GuessingForm */,
@@ -1376,6 +1377,15 @@
 			name = Json;
 			sourceTree = "<group>";
 		};
+		15F561EA1D5B9379005577DA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */,
+				762B8C1E1D19752A00A86097 /* MPFlowController.swift */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		671F813A9DC7C990E31C7739 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1480,7 +1490,6 @@
 			children = (
 				762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */,
 				762B8C1D1D19752A00A86097 /* MPFlowBuilder.swift */,
-				762B8C1E1D19752A00A86097 /* MPFlowController.swift */,
 				762B8C1F1D19752A00A86097 /* MPServicesBuilder.swift */,
 				762B8C201D19752A00A86097 /* MPStepBuilder.swift */,
 			);
@@ -1491,7 +1500,6 @@
 			isa = PBXGroup;
 			children = (
 				763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */,
-				76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */,
 				766012ED1CF284A600897F9D /* WebViewController.swift */,
 				766012EE1CF284A600897F9D /* WebViewController.xib */,
 			);

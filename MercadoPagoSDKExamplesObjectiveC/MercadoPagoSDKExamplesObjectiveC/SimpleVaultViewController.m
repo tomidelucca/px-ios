@@ -28,12 +28,14 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
     [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
         currentPaymentMethods = paymentMethods;
         [[self tableView] reloadData];
+        
     } failure:^(NSError *error) {
         
     }];
 }
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

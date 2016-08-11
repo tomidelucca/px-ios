@@ -31,12 +31,14 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, callback : ((payerCost: PayerCost) -> Void)) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, callback : ((payerCost: PayerCost) -> Void),
+                callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge.None
          self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
+        self.callbackCancel = callbackCancel
         if (paymentPreference != nil){
             self.maxInstallments = paymentPreference?.maxAcceptedInstallments
         }

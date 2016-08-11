@@ -76,6 +76,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     public init (publicKey: String) {
         self.pk = publicKey
         
+        
     }
     
     static var temporalNav : UINavigationController?
