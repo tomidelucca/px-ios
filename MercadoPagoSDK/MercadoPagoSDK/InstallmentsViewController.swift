@@ -18,6 +18,7 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     
     var payerCosts : [PayerCost]?
     var issuer : Issuer?
+    
     var paymentMethodId : String?
     var amount : Double = 0
     var callback : ((payerCost: PayerCost?) -> Void)?
