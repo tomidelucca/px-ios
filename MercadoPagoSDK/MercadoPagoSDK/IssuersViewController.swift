@@ -87,4 +87,15 @@ public class IssuersViewController: MercadoPagoUIViewController, UITableViewData
         callback!(issuer: self.items![indexPath.row])
     }
     
+    
+    internal override func executeBack(){
+        if self.callbackCancel != nil {
+            self.callbackCancel!()
+        }else{
+            super.executeBack()
+        }
+        
+    }
+
+    
 }

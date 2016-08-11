@@ -104,4 +104,15 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.callback!(paymentMethod: self.items![indexPath.row])
     }
+    
+    
+    internal override func executeBack(){
+        if self.callbackCancel != nil {
+            self.callbackCancel!()
+        }else{
+            super.executeBack()
+        }
+    
+    }
+    
 }
