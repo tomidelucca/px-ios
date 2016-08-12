@@ -29,7 +29,7 @@
 "Datos de tu tarjeta" = "Dados do seu cartão";
 
 "Atrás" = "Voltar";
-"Número de tarjeta" = "Número do cartão";
+
 "Válida hasta" = "Válido até";
 "Mes / Año" = "Mês / Ano";
 "Nombre y apellido impreso en la tarjeta" = "Nome e sobrenome impresso no cartão de crédito";
@@ -61,25 +61,24 @@
 
 
 
-"Ver promociones"="XXX";
-"Número de tarjeta"="XXX";
-"NOMBRE APELLIDO"="XXX";
-"MM/AA"="XXX";
-"Número de tarjeta"="XXX";
-"Fecha de expiración"="XXX";
-"Código de seguridad"="XXX";
-"Continuar"="XXX";
-"Anterior"="XXX";
-"Ingresa el número de la tarjeta de crédito"="XXX";
-"Revisa este dato"="XXX";
-"Ingresa el nombre y apellido impreso en la tarjeta"="XXX";
-"Ingresa los %1$s números del código de seguridad"="XXX";
-"Método de pago no soportado"="XXX";
+"Ver promociones"="";
+"Número de tarjeta" = "Número do cartão";
+"NOMBRE APELLIDO"="NOME SOBRENOME";
+"MM/AA"="MM/AA";
+"Fecha de expiración"="Data de expiração";
+"Código de seguridad"="Código de segurança";
+"Continuar"="Continuar";
+"Anterior"="Anterior";
+"Ingresa el número de la tarjeta de crédito"="Digite todos os números do cartão";
+"Revisa este dato"="Verifique este dado";
+"Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
+"Ingresa los %1$s números del código de seguridad"="Digite os %1$s números do código de segurança";
+"Método de pago no soportado"="Você não pode pagar com este método de pagamento";
 //---Identification
-"OK"="XXX";
-"DOCUMENTO DEL TITULAR DE LA TARJETA"="XXX";
-"Número"="XXX";
-"Tipo"="XXX";
+"OK"="OK";
+"DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DO TITULAR DO CARTÃO";
+"Número"="Número";
+"Tipo"="Tipo";
 
 
 
