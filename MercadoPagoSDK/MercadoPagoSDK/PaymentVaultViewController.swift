@@ -32,7 +32,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     private var tintColor = true
     internal var isRoot = true
-    
+    private var loadCustomerCards = false
     
     
     @IBOutlet weak var paymentsTable: UITableView!
@@ -150,71 +150,74 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.getCustomerCards()
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return (self.customerCards != nil) ? self.customerCards!.count : 0
-            case 1:
-                return self.currentPaymentMethodSearch.count
-            default :
-                return 1
-        }
-    }
-    
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            if self.loadCustomerCards {
+                return (self.customerCards != nil) ? self.customerCards!.count : 0
+            }
+            return 0
+        default:
+            return self.currentPaymentMethodSearch.count
+        }
+    }
+    
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 16
+        return !self.loadCustomerCards ? 0 : 16
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
-            case 0:
+        case 0:
+            if self.loadCustomerCards {
                 return (self.customerCards != nil && self.customerCards!.count > 0) ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
-            case 1:
-                let currentPaymentMethodSearchItem = self.currentPaymentMethodSearch[indexPath.row]
-                if currentPaymentMethodSearchItem.showIcon.boolValue {
-                    if currentPaymentMethodSearchItem.isPaymentMethod() && !currentPaymentMethodSearchItem.isBitcoin() {
-                        if currentPaymentMethodSearchItem.comment != nil && currentPaymentMethodSearchItem.comment!.characters.count > 0 {
-                            return OfflinePaymentMethodCell.ROW_HEIGHT
-                        } else {
-                            return OfflinePaymentMethodWithDescriptionCell.ROW_HEIGHT
-                        }
+            }
+            return 0
+        case 1:
+            let currentPaymentMethodSearchItem = self.currentPaymentMethodSearch[indexPath.row]
+            if currentPaymentMethodSearchItem.showIcon.boolValue {
+                if currentPaymentMethodSearchItem.isPaymentMethod() && !currentPaymentMethodSearchItem.isBitcoin() {
+                    if currentPaymentMethodSearchItem.comment != nil && currentPaymentMethodSearchItem.comment!.characters.count > 0 {
+                        return OfflinePaymentMethodCell.ROW_HEIGHT
+                    } else {
+                        return OfflinePaymentMethodWithDescriptionCell.ROW_HEIGHT
                     }
-                    return PaymentSearchCell.ROW_HEIGHT
                 }
-                return PaymentTitleViewCell.ROW_HEIGHT
-            case 2:
+                return PaymentSearchCell.ROW_HEIGHT
+            }
+            return PaymentTitleViewCell.ROW_HEIGHT
+        default:
                 return 100
-            default : return 0
         }
+        
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        switch indexPath.section {
-            case 0 :
-                let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCellWithIdentifier("customerPaymentMethodCell") as! CustomerPaymentMethodCell
-                customerPaymentMethodCell.fillRowWithCustomerPayment(self.customerCards![indexPath.row])
-                return customerPaymentMethodCell
-            default :
-                let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
-                
-                let paymentMethodCell = getCellFor(currentPaymentMethod)
-                // Add shadow effect to last cell in table
-                if (indexPath.row == self.currentPaymentMethodSearch.count - 1) {
-                    paymentMethodCell.clipsToBounds = false
-                    paymentMethodCell.layer.masksToBounds = false
-                    paymentMethodCell.layer.shadowOffset = CGSizeMake(0, 1)
-                    paymentMethodCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
-                    paymentMethodCell.layer.shadowRadius = 1
-                    paymentMethodCell.layer.shadowOpacity = 0.6
-                }
-                return paymentMethodCell
+        if indexPath.section == 0 && self.loadCustomerCards {
+            let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCellWithIdentifier("customerPaymentMethodCell") as! CustomerPaymentMethodCell
+            customerPaymentMethodCell.fillRowWithCustomerPayment(self.customerCards![indexPath.row])
+            return customerPaymentMethodCell
         }
         
+        
+        let currentPaymentMethod = self.currentPaymentMethodSearch[indexPath.row]
+                
+        let paymentMethodCell = getCellFor(currentPaymentMethod)
+        // Add shadow effect to last cell in table
+        if (indexPath.row == self.currentPaymentMethodSearch.count - 1) {
+            paymentMethodCell.clipsToBounds = false
+            paymentMethodCell.layer.masksToBounds = false
+            paymentMethodCell.layer.shadowOffset = CGSizeMake(0, 1)
+            paymentMethodCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+            paymentMethodCell.layer.shadowRadius = 1
+            paymentMethodCell.layer.shadowOpacity = 0.6
+        }
+        return paymentMethodCell
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -314,9 +317,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
 
     private func getCustomerCards(){
-        if MercadoPagoContext.isCustomerInfoAvailable() {
+        if MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.customerCards = customer.cards
+                self.loadCustomerCards = true
                 self.loadPaymentMethodSearch()
                 
                 }, failure: { (error: NSError?) -> Void in

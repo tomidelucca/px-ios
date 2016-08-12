@@ -21,13 +21,11 @@ class CustomerPaymentMethodCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
-    func fillRowWithCustomerPayment(card : Card){
-        self.paymentIcon.image = MercadoPago.getImage(card.paymentMethod!._id)
-        self.paymentMethodTitle.text = "terminada en ".localized + card.lastFourDigits!
+    func fillRowWithCustomerPayment(card : CardInformation){
+        self.paymentIcon.image = MercadoPago.getImage(card.getPaymentMethodId())
+        self.paymentMethodTitle.text = card.getCardDescription()
     }
 
 }
