@@ -27,11 +27,20 @@ public class MPStepBuilder : NSObject {
         
     }
     
-    public class func startPaymentMethodsStep(paymentPreference: PaymentPreference? = nil,
+    public class func startPaymentMethodsStep(withPreference paymentPreference: PaymentPreference? = nil,
                                               callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
         MercadoPagoContext.initFlavor2()
         return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
     }
+    
+    @available(*, deprecated=2.0.0, message="Use startPaymentMethodsStep with paymentPreference instead")
+    public class func startPaymentMethodsStep(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
+        MercadoPagoContext.initFlavor2()
+        let paymentPreference = PaymentPreference()
+        paymentPreference.excludedPaymentTypeIds = PaymentType.allPaymentIDs.subtract(supportedPaymentTypes)
+        return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
+    }
+
     
 
     public class func startInstallmentsStep(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?,
@@ -42,7 +51,7 @@ public class MPStepBuilder : NSObject {
     
     
 
-    @available(*, deprecated=2.0, message="Use startPaymentCongratsStep instead")
+    @available(*, deprecated=2.0.0, message="Use startPaymentCongratsStep instead")
     public class func startCongratsStep(payment: Payment, paymentMethod: PaymentMethod) -> CongratsViewController {
         MercadoPagoContext.initFlavor2()
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)

@@ -166,7 +166,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
-            let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(self.paymentPreference, callback: getSelectionCallbackPaymentMethod())
+            let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(withPreference: self.paymentPreference, callback: getSelectionCallbackPaymentMethod())
             
             if self.cards != nil {
                 if self.cards!.count > 0 {
