@@ -12,10 +12,10 @@ public class PaymentPreference: NSObject {
     
     public var excludedPaymentMethodIds : Set<String>?
     public var excludedPaymentTypeIds : Set<String>?
-    var defaultPaymentMethodId : String?
-    var maxAcceptedInstallments : Int?
-    var defaultInstallments : Int?
-    var defaultPaymentTypeId : String?
+    public var defaultPaymentMethodId : String?
+    public var maxAcceptedInstallments : Int?
+    public var defaultInstallments : Int?
+    public var defaultPaymentTypeId : String?
     
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
@@ -139,6 +139,32 @@ public class PaymentPreference: NSObject {
         
         return preferencePaymentMethods
     }
+    
+    public func toJSONString() -> String {
+        var obj:[String:AnyObject] = [
+            
+            "defaultInstallments": self.defaultInstallments == nil ? JSON.null : (self.defaultInstallments)!,
+            "defaultPaymentTypeId": self.defaultPaymentTypeId == nil ? JSON.null : (self.defaultPaymentTypeId)!,
+            "defaultPaymentMethodId": self.defaultPaymentMethodId == nil ? JSON.null : (self.defaultPaymentMethodId)!,
+            "maxAcceptedInstallments": self.maxAcceptedInstallments == nil ? JSON.null : (self.maxAcceptedInstallments)!,
+        ]
+        
+        var excludedPaymentMethodIdsJson = ""
+        if excludedPaymentMethodIds != nil && excludedPaymentMethodIds?.count > 0 {
+            excludedPaymentMethodIdsJson = self.excludedPaymentMethodIds!.reduce("", combine: {$0.stringByAppendingString($1).stringByAppendingString(",")})
+        }
+        obj["excludedPaymentMethodIds"] = String(excludedPaymentMethodIdsJson.characters.dropLast())
+        
+        var excludedPaymentTypeIdsJson = ""
+        if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
+            excludedPaymentTypeIdsJson = self.excludedPaymentTypeIds!.reduce("", combine: {$0.stringByAppendingString($1).stringByAppendingString(",")})
+        }
+        obj["excludedPaymentTypeIds"] = String(excludedPaymentTypeIdsJson.characters.dropLast(1))
+        
+        
+        return JSON(obj).toString()
+    }
+
 }
 
 public func ==(obj1: PaymentPreference, obj2: PaymentPreference) -> Bool {
