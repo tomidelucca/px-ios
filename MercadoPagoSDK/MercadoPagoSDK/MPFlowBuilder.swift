@@ -73,7 +73,7 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil,
+    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, token : Token? = nil, 
                                       callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void,
                                       callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
         
@@ -87,7 +87,7 @@ public class MPFlowBuilder : NSObject {
         } else {
             currentCallbackCancel = callbackCancel!
         }
-        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods,
+        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods, token: token,
                                                      callback: { (paymentMethod, token, issuer) -> Void in
             
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
