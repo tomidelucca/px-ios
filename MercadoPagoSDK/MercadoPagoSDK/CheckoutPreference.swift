@@ -142,10 +142,10 @@ public class CheckoutPreference : NSObject {
     
     public func getInstallments() -> Int {
         if self.paymentPreference != nil {
-            if (self.paymentPreference!.maxAcceptedInstallments != nil) {
-                return self.paymentPreference!.maxAcceptedInstallments!
-            } else if (self.paymentPreference!.defaultInstallments != nil) {
-                return self.paymentPreference!.defaultInstallments!
+            if (self.paymentPreference!.maxAcceptedInstallments > 0) {
+                return self.paymentPreference!.maxAcceptedInstallments
+            } else if (self.paymentPreference!.defaultInstallments > 0) {
+                return self.paymentPreference!.defaultInstallments
             }
         }
         return 1
@@ -166,14 +166,14 @@ public class CheckoutPreference : NSObject {
     }
     
     public func getDefaultInstallments() -> Int? {
-        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments != nil) {
+        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments > 0) {
             return self.paymentPreference!.defaultInstallments
         }
         return nil
     }
     
     public func getMaxAcceptedInstallments() -> Int? {
-        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments != nil) {
+        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments > 0) {
             return self.paymentPreference!.maxAcceptedInstallments
         }
         return nil
