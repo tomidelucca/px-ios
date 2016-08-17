@@ -21,6 +21,10 @@ public class PaymentPreference: NSObject {
     // excluded_payment_method < payment_methods
     //excluded_payment_types < payment_types
     
+    public override init(){
+        super.init()
+    }
+    
     public func autoSelectPayerCost(payerCostList:[PayerCost])-> PayerCost?
     {
         if (payerCostList.count == 0){
@@ -55,16 +59,6 @@ public class PaymentPreference: NSObject {
         }
 
         return true
-    }
-    
-    
-    public init(defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil){
-        self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
-        self.excludedPaymentTypeIds = excludedPaymentTypesIds
-        self.defaultPaymentMethodId = defaultPaymentMethodId
-        self.maxAcceptedInstallments = maxAcceptedInstallment!
-        self.defaultInstallments = defaultInstallments!
-        self.defaultPaymentTypeId = defaultPaymentTypeId
     }
     
     
