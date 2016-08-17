@@ -54,7 +54,7 @@ public class Installment : NSObject {
     
     public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = nil) -> Int{
         var count = 0
-        if (maxNumberOfInstallments == nil){
+        if (maxNumberOfInstallments == 0){
             return self.payerCosts!.count
         }
         for pc in payerCosts! {
