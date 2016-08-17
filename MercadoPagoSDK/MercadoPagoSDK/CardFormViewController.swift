@@ -14,10 +14,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
     
     @IBOutlet weak var cardBackground: UIView!
-    
     @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var textBox: HoshiTextField!
+    
     var cardViewBack:UIView?
- 
     var cardFront : CardFrontView?
     var cardBack : CardBackView?
     
@@ -31,23 +31,29 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var cvvLabelEmpty: Bool = true
 
     var editingLabel : UILabel?
-    @IBOutlet weak var textBox: HoshiTextField!
-   
+    
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?
-    
     var token : Token?
     var cardToken : CardToken?
-    
     var paymentSettings : PaymentPreference?
     var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?) -> Void)?
-    
     var amount : Double?
     
-    //DNI
-     var identificationCard : IdentificationCardView?
+    var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
+    var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
+   
+    
+    var inputButtons : UINavigationBar?
+    var errorLabel : MPLabel?
+    
+    var navItem : UINavigationItem?
+    var doneNext : UIBarButtonItem?
+    var donePrev : UIBarButtonItem?
+    
     
     override public var screenName : String { get { return "CARD_NUMBER" } }
+    
     
     
     required public init?(coder aDecoder: NSCoder) {
@@ -68,7 +74,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
-            self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
+                self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
  
                 var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
                 promocionesButton.tintColor = UIColor.systemFontColor()
@@ -76,8 +82,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 
                 self.navigationItem.rightBarButtonItem = promocionesButton
        
-                
-                //Create navigation buttons
+
                 displayBackButton()
             }
         }
@@ -111,6 +116,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         }
         
+         textEditMaskFormater.emptyMaskElement = ""
+        let textMasked = TextMaskFormater(mask: "XXXX- XXXX&% XXXXXX-XXXX")
+     //   print(textMasked.textMasked("213"))
+     //   print(textMasked.textMasked(""))
+        print(textMasked.textMasked("21333333"))
+        print(textMasked.textMasked("2"))
+        print(textMasked.textMasked("1111222233334444555566667777888899990000"))
+        print(textMasked.textMasked(""))
+        
 
     }
     
@@ -119,7 +133,6 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
-      
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
 
@@ -145,12 +158,12 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         textBox.autocorrectionType = UITextAutocorrectionType.No
          textBox.keyboardType = UIKeyboardType.NumberPad
-        textBox.addTarget(self, action: "editingChanged:", forControlEvents: UIControlEvents.EditingChanged)
+        textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), forControlEvents: UIControlEvents.EditingChanged)
         setupInputAccessoryView()
         textBox.delegate = self
         cardFront = CardFrontView()
         cardBack = CardBackView()
-        identificationCard = IdentificationCardView()
+
         cardBack!.backgroundColor = UIColor.clearColor()
         
         cardNumberLabel = cardFront?.cardNumber
@@ -158,17 +171,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         expirationDateLabel = cardFront?.cardExpirationDate
         cvvLabel = cardBack?.cardCVV
         
-      //  cardNumberLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchNumber:"))
-        cardNumberLabel?.text = "•••• •••• •••• ••••"
-     //   nameLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchName:"))
-        nameLabel?.text = "NOMBRE APELLIDO".localized
-    //    expirationDateLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchDate:"))
+        cardNumberLabel?.text = textMaskFormater.textMasked("")
+         nameLabel?.text = "NOMBRE APELLIDO".localized
         expirationDateLabel?.text = "MM/AA".localized
-     //   cvvLabel!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "touchCVV:"))
         cvvLabel?.text = "..."
         editingLabel = cardNumberLabel
-
-        
 
         view.setNeedsUpdateConstraints()
         hidratateWithToken()
@@ -177,9 +184,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-var changeNumber = false
-    
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if (string.characters.count == 0){
+            textField.text = textField.text!.stringByTrimmingCharactersInSet(
+                NSCharacterSet.whitespaceAndNewlineCharacterSet()
+            )
+        }
+        
         let value : Bool = validateInput(textField, shouldChangeCharactersInRange: range, replacementString: string)
         updateLabelsFontColors()
 
@@ -191,24 +202,18 @@ var changeNumber = false
         self.navigationController?.presentViewController(UINavigationController(rootViewController: MPStepBuilder.startPromosStep()), animated: true, completion: {})
     }
     
+    
     public func editingChanged(textField:UITextField){
-        if ((textField.text?.characters.last == " ") && (editingLabel != nameLabel)){
-            textField.text = textField.text!.substringToIndex(textField.text!.endIndex.predecessor())
-        }
+    
+
         hideErrorMessage()
         if(editingLabel == cardNumberLabel){
-            editingLabel?.text = formatCardNumberText(textField.text!)
-            if(!changeNumber){
-                changeNumber = true
-                completeNumberLabel()
-                changeNumber = false
-            }
+            editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
+            textField.text! = textEditMaskFormater.textMasked(textField.text!, remasked: true)
             self.updateCardSkin()
-
              updateLabelsFontColors()
         }else if(editingLabel == nameLabel){
             editingLabel?.text = formatName(textField.text!)
-
              updateLabelsFontColors()
         }else if(editingLabel == expirationDateLabel){
             editingLabel?.text = formatExpirationDate(textField.text!)
@@ -234,15 +239,7 @@ var changeNumber = false
     
     /* Metodos para formatear el texto ingresado de forma que se muestre
         de forma adecuada dependiendo de cada campo de texto */
-    private func formatCardNumberText(numberText:String) -> String{
-        if(numberText.characters.count == 0){
-            numberLabelEmpty = true
-            return "•••• •••• •••• ••••"
-        }
-        numberLabelEmpty = false
-        return numberText
-    }
-    
+
     private func formatName(name:String) -> String{
         if(name.characters.count == 0){
             nameLabelEmpty = true
@@ -272,7 +269,7 @@ var changeNumber = false
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
         textBox.becomeFirstResponder()
-        textBox.text = numberLabelEmpty ?  "" : cardNumberLabel!.text
+        textBox.text = textEditMaskFormater.textMasked(cardNumberLabel!.text?.trimSpaces())
         textBox.placeholder = "Número de tarjeta".localized
     }
     private func prepareNameLabelForEdit(){
@@ -316,44 +313,27 @@ var changeNumber = false
     }
     
     
-    /* Metodos para escucha de los touch sobre los labels */
-    func touchNumber(sender:UITapGestureRecognizer){
-        prepareNumberLabelForEdit()
-        updateLabelsFontColors()
-    }
-    func touchName(sender:UITapGestureRecognizer){
-        prepareNameLabelForEdit()
-        updateLabelsFontColors()
-    }
-    func touchDate(sender:UITapGestureRecognizer){
-        prepareExpirationLabelForEdit()
-        updateLabelsFontColors()
-    }
-    func touchCVV(sender:UITapGestureRecognizer){
-        prepareCVVLabelForEdit()
-        updateLabelsFontColors()
-    }
-
     /* Metodos para validar si un texto ingresado es valido, dependiendo del tipo
         de campo que se este llenando */
     
     func validateInput(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
        
-        
         switch editingLabel! {
-       
         case cardNumberLabel! :
-            if(((textField.text?.characters.count)! == 7) && (string.characters.count > 0)){
+            if (string.characters.count == 0){
+                return true
+            }
+            if(((textEditMaskFormater.textUnmasked(textField.text).characters.count) == 6) && (string.characters.count > 0)){
                 if (paymentMethod == nil){
                     return false
                 }
-            }
-            if(isAmexCard()){
-                return validAmexInputNumber(textField, shouldChangeCharactersInRange: range, replacementString: string)
             }else{
-                return validInputNumber(textField, shouldChangeCharactersInRange: range, replacementString: string)
+                if ((textEditMaskFormater.textUnmasked(textField.text).characters.count) == paymentMethod?.cardNumberLenght()){
+                    return false
+                }
+                
             }
-
+           return true
        
         case nameLabel! : return validInputName(textField.text! + string)
        
@@ -433,12 +413,7 @@ var changeNumber = false
     }
     
     
-    var inputButtons : UINavigationBar?
-    var errorLabel : MPLabel?
-    
-    var navItem : UINavigationItem?
-    var doneNext : UIBarButtonItem?
-    var donePrev : UIBarButtonItem?
+
 
     func setupInputAccessoryView() {
         inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
@@ -446,17 +421,12 @@ var changeNumber = false
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
-        
-        
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: "rightArrowKeyTapped")
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: "leftArrowKeyTapped")
-        
+        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
             doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
             donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         }
-        
-        
         donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
@@ -480,9 +450,6 @@ var changeNumber = false
         textBox.setNeedsDisplay()
         textBox.resignFirstResponder()
         textBox.becomeFirstResponder()
-     
-       
-       
     }
     
     func hideErrorMessage(){
@@ -587,10 +554,8 @@ var changeNumber = false
     }
     
     func getBIN() -> String?{
-        if(numberLabelEmpty){
-            return nil
-        }
-        let trimmedNumber = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString(" ", withString: "")
+        var trimmedNumber = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString(" ", withString: "")
+       trimmedNumber = trimmedNumber!.stringByReplacingOccurrencesOfString(textMaskFormater.emptyMaskElement, withString: "")
         
         
         if (trimmedNumber!.characters.count < 6){
@@ -631,6 +596,15 @@ var changeNumber = false
                 self.cardFront?.cardLogo.image =  nil
                 
         }
+        let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
+        let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
+
+        cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
+        if (editingLabel == cardNumberLabel){
+            textBox.text = textEditMaskFormaterAux.textMasked(textEditMaskFormater.textUnmasked(textBox.text))
+        }
+        textMaskFormater = textMaskFormaterAux
+        textEditMaskFormater = textEditMaskFormaterAux
         cardFront?.cardCVV.alpha = 0
         paymentMethod = nil
         self.updateLabelsFontColors()
@@ -639,7 +613,7 @@ var changeNumber = false
     
     func updateCardSkin(){
        
-        if (textBox.text?.characters.count==7){
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6){
             let pmMatched = self.matchedPaymentMethod()
             
                paymentMethod = pmMatched
@@ -649,13 +623,22 @@ var changeNumber = false
                     self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
                     self.cardFront?.cardLogo.alpha = 1
                 })
-                
-               
+                let labelMask = (paymentMethod?.getLabelMask() != nil) ? paymentMethod?.getLabelMask() : "XXXX XXXX XXXX XXXX"
+                let editTextMask = (paymentMethod?.getEditTextMask() != nil) ? paymentMethod?.getEditTextMask() : "XXXX XXXX XXXX XXXX"
+                let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
+                let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)
+                cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
+                if (editingLabel == cardNumberLabel){
+                    textBox.text = textEditMaskFormaterAux.textMasked(textEditMaskFormater.textUnmasked(textBox.text))
+                }
+                textMaskFormater = textMaskFormaterAux
+                textEditMaskFormater = textEditMaskFormaterAux
             }else{
                 self.clearCardSkin()
                 showErrorMessage("Método de pago no soportado".localized)
                 return
             }
+            
         }else if (textBox.text?.characters.count<7){
             self.clearCardSkin()
         }
@@ -732,7 +715,7 @@ var changeNumber = false
     var cardtoken : CardToken?
     
     func tokenHidratate(){
-        let number =  numberLabelEmpty ? "" :cardNumberLabel?.text
+        let number = cardNumberLabel?.text
         let month = getMonth()
         let year = getYear()
         let secCode = cvvLabelEmpty ? "" :cvvLabel?.text
@@ -843,19 +826,6 @@ var changeNumber = false
         return yy
     }
     
-    
-    
-    func completeNumberLabel(){
-        if (cardNumberLabel!.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count == 0){
-            cardNumberLabel?.text = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "")
-        }
-        
-        while (addDot() != false){
-            
-        }
-    }
-    
-    
     func addCvvDot() -> Bool {
     
         var label = self.cvvLabel
@@ -898,177 +868,4 @@ var changeNumber = false
         self.expirationDateLabel?.text = self.token?.getExpirationDateFormated()
     }
 
-    
-    
-    
-    func validInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        
-        if (textField.text?.characters.count == 0){
-            return true
-        }
-        //Range.Lenth will greater than 0 if user is deleting text - Allow it to replce
-        if range.length > 0
-        {
-            return true
-        }
-        
-        //Dont allow empty strings
-        if string == " "
-        {
-            return false
-        }
-        
-        //Check for max length including the spacers we added
-        if range.location == 19
-        {
-            return false
-        }
-        
-        var originalText = textField.text
-        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
-        
-        //Verify entered text is a numeric value
-        let digits = NSCharacterSet.decimalDigitCharacterSet()
-        for char in replacementText.unicodeScalars
-        {
-            if !digits.longCharacterIsMember(char.value)
-            {
-                return false
-            }
-        }
-        
-        //Put an empty space after every 4 places
-        if (originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count % 4 == 0)
-        {
-            originalText?.appendContentsOf(" ")
-            textField.text = originalText
-        }
-        
-        return true
-        
-        
-    }
-    func validAmexInputNumber(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool{
-        
-        if range.length > 0
-        {
-            return true
-        }
-        
-        //Dont allow empty strings
-        if string == " "
-        {
-            return false
-        }
-        var originalText = textField.text
-        let numberOfDigits = originalText!.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count
-        let replacementText = string.stringByReplacingOccurrencesOfString(" ", withString: "")
-         let numberOfDigitsToAdd = replacementText.characters.count
-        //Check for max length including the spacers we added
-        if (numberOfDigits + numberOfDigitsToAdd) > 15
-        {
-            return false
-        }
-        
-        
-        
-        
-        //Verify entered text is a numeric value
-        let digits = NSCharacterSet.decimalDigitCharacterSet()
-        for char in replacementText.unicodeScalars
-        {
-            if !digits.longCharacterIsMember(char.value)
-            {
-                return false
-            }
-        }
-        
-        
-        if ((numberOfDigits == 4)||(numberOfDigits == 10))
-        {
-            originalText?.appendContentsOf(" ")
-            textField.text = originalText
-        }
-        
-        return true
-        
-        
-    }
-    
-    
-    
-    
-    func addDot() -> Bool{
-        if ((paymentMethod == nil) || (!paymentMethod!.isAmex())){
-            return addDotDefault()
-        } else {
-            return  addDotAmex()
-        }
-    }
-    
-    func addDotAmex() -> Bool{
-        
-
-        var label = cardNumberLabel
-   
-        
-        if label?.text?.characters.count == 19
-        {
-            return false
-        }
-
-        
-        let digits = (label?.text?.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count)!
-        
-        if ( digits == 4) ||  ( digits == 9)
-        {
-            
-            label?.text?.appendContentsOf(" ")
-            label?.text = label?.text?.stringByReplacingOccurrencesOfString("  ", withString: " •")
-        }
-        if (label?.text?.characters.count < 17){
-            label?.text?.appendContentsOf("•")
-        }else{
-            label?.text?.appendContentsOf(" ")
-        }
-        
-        return true
-        
-    }
-
-    func addDotDefault() -> Bool{
-        
-        var label = cardNumberLabel
-        
-        
-        //Check for max length including the spacers we added
-        if label?.text?.characters.count == numberOfDots()+3
-        {
-            return false
-        }
-        
-        if ((label?.text?.stringByReplacingOccurrencesOfString(" ", withString: "").characters.count)! % 4 == 0)
-        {
-            
-            label?.text?.appendContentsOf(" ")
-            label?.text = label?.text?.stringByReplacingOccurrencesOfString("  ", withString: " •")
-        }
-        label?.text?.appendContentsOf("•")
-        return true
-        
-        
-    }
-
-    func numberOfDots() -> Int {
-        let provPM = matchedPaymentMethod()
-        if (provPM != nil){
-            let lenght = (provPM?.cardNumberLenght())!
-            if (lenght > 0){
-              return lenght
-            }
-        }
-        return 16
-    }
-    
-    
 }

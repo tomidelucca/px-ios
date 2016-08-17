@@ -61,7 +61,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     
     static var MP_TEST_ENV = "/beta"
     static let MP_PROD_ENV = "/v1"
-    static let MP_ENVIROMENT = MP_PROD_ENV
+    static let MP_ENVIROMENT = MP_TEST_ENV
     
     static let MP_API_BASE_URL : String = "https://api.mercadopago.com"
     static let MP_CUSTOMER_URI = "/customers?preference_id="
@@ -328,6 +328,27 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         return UIColor(netHex:Int(stringColor, radix: 16)!)
         
     }
+    
+    public class func getLabelMaskFor(paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let etMask = pmConfig.valueForKey("label_mask") as! String
+        
+        return etMask
+    }
+    
+    public class func getEditTextMaskFor(paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let etMask = pmConfig.valueForKey("editText_mask") as! String
+
+        return etMask
+    }
+    
     
     public class func getFontColorFor(paymentMethod : PaymentMethod) -> UIColor?{
         let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
