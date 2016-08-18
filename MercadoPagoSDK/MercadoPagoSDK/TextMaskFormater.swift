@@ -54,9 +54,6 @@ public class TextMaskFormater: NSObject {
         
         
     }
-    
-    
-    
     private func emptyTextMasked() -> String!{
         if(completeEmptySpaces){
             return (mask?.stringByReplacingOccurrencesOfString(characterSpace, withString: emptyMaskElement))!
@@ -97,10 +94,7 @@ public class TextMaskFormater: NSObject {
             }
             
             if (charText == nil){
-              //  if (leftToRight){
-                    resultString.appendContentsOf(String(charMask))
-               // }
-                
+                resultString.appendContentsOf(String(charMask))
                 indexMask += 1
             }else if( String(charMask) != characterSpace ){
                 resultString.appendContentsOf(String(charMask))
@@ -110,9 +104,6 @@ public class TextMaskFormater: NSObject {
                 indexMask += 1
                 indexText += 1
             }
-           
-            
-            
         }
         
         return self.replaceEmpySpot(resultString)
@@ -144,6 +135,22 @@ public class TextMaskFormater: NSObject {
         return String(textCharacter)
     }
     
+    
+    
+}
+
+struct Number {
+    static let formatterWithSepator: NSNumberFormatter = {
+        let formatter = NSNumberFormatter()
+        formatter.groupingSeparator = "."
+        formatter.numberStyle = .DecimalStyle
+        return formatter
+    }()
+}
+extension IntegerType {
+    var stringFormatedWithSepator: String {
+        return Number.formatterWithSepator.stringFromNumber(hashValue) ?? ""
+    }
 }
 
 

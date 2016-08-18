@@ -40,6 +40,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?) -> Void)?
     var amount : Double?
     
+    
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
    
@@ -117,24 +118,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
          textEditMaskFormater.emptyMaskElement = ""
-        let textMasked = TextMaskFormater(mask: "XXXX- XXXX&% XXXXXX-XXXX")
-        
-        
-        //   print(textMasked.textMasked("213"))
-     //   print(textMasked.textMasked(""))
-        print(textMasked.textMasked("21333333"))
-        print(textMasked.textMasked("2"))
-        print(textMasked.textMasked("1111222233334444555566667777888899990000"))
-        print(textMasked.textMasked(""))
-        print(textMasked.textUnmasked("000---123"))
-        textMasked.unmask = myUnmask
-        print(textMasked.textUnmasked("000---123"))
+       
     }
-    
-    func myUnmask(text :String)-> String{
-        return "text desesnmascarado!"
-    }
-    
+   
     public override func viewDidAppear(animated: Bool) {
         
         
@@ -195,6 +181,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         if (string.characters.count == 0){
             textField.text = textField.text!.stringByTrimmingCharactersInSet(
                 NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                
             )
         }
         
