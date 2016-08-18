@@ -300,7 +300,6 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
     internal func confirmPayment(){
         
         self.showLoading()
-
         if (self.paymentMethod!.isOfflinePaymentMethod()){
             self.confirmPaymentOff()
         } else {
@@ -328,26 +327,8 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.paymentMethod!,success: { (payment) -> Void in
 
             MPTracker.trackPaymentOffEvent(String(payment._id), mpDelegate: MercadoPagoContext.sharedInstance)
-
-            if payment.isRejected() {
-                //TODO : confirm
-                let congratsRejected = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod: self.paymentMethod!, callback : { (payment : Payment, status: String) in
-                        if status == "CANCEL" || status == "AUTH" {
-                            self.navigationController!.setNavigationBarHidden(false, animated: false)
-                            self.paymentMethod = nil
-                            self.navigationController?.viewControllers[0].title = ""
-                            self.navigationController!.popToRootViewControllerAnimated(false)
-                        } else {
-                            self.dismissViewControllerAnimated(true, completion: {})
-                            self.callback(payment)
-                        }
-                })
-                self.navigationController!.pushViewController(congratsRejected, animated: true)
-            } else {
-                self.navigationController!.pushViewController(MPStepBuilder.startInstructionsStep(payment, paymentTypeId: self.paymentMethod!.paymentTypeId, callback: {(payment : Payment) -> Void  in
-                        self.dismissViewControllerAnimated(true, completion: { self.callback(payment) })
-                }), animated: true)
-            }
+            
+           self.displayPaymentResult(payment)
            }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
                     self.navigationController?.dismissViewControllerAnimated(true, completion: {})
@@ -364,7 +345,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 self.clearMercadoPagoStyle()
                 self.navigationController!.popViewControllerAnimated(true)
 
-                self.displayCongrats(payment)
+                self.displayPaymentResult(payment)
           
             }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
@@ -374,20 +355,20 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         })
     }
     
-    internal func displayCongrats(payment: Payment){
-        let congratsVC = MPStepBuilder.startPaymentCongratsStep(payment, paymentMethod : self.paymentMethod!, callback : { (payment : Payment, status: String) in
-            if status == "CANCEL" || status == "AUTH" {
+    internal func displayPaymentResult(payment: Payment){
+        
+        let congrats = MPStepBuilder.startPaymentResultStep(payment, paymentMethod: self.paymentMethod!, callback: { (payment, status) in
+            if status == MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER || status == MPStepBuilder.CongratsState.CANCEL_RETRY {
                 self.navigationController!.setNavigationBarHidden(false, animated: false)
                 self.paymentMethod = nil
-                self.navigationController?.viewControllers[0].title = ""
+                self.navigationController!.viewControllers[0].title = ""
                 self.navigationController!.popToRootViewControllerAnimated(false)
             } else {
                 self.dismissViewControllerAnimated(true, completion: {})
                 self.callback(payment)
             }
-            
         })
-        self.navigationController!.pushViewController(congratsVC, animated: true)
+        self.navigationController!.pushViewController(congrats, animated: true)
     }
  
     private func loadPreference(){

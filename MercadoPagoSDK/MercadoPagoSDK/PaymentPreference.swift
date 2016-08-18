@@ -25,6 +25,7 @@ public class PaymentPreference: NSObject {
         super.init()
     }
     
+    
     public func autoSelectPayerCost(payerCostList:[PayerCost])-> PayerCost?
     {
         if (payerCostList.count == 0){
@@ -128,7 +129,7 @@ public class PaymentPreference: NSObject {
         }
         
         if json["default_installments"] != nil && !(json["default_installments"]! is NSNull) {
-            preferencePaymentMethods.maxAcceptedInstallments = JSON(json["default_installments"]!).asInt!
+            preferencePaymentMethods.defaultInstallments = JSON(json["default_installments"]!).asInt!
         }
         
         return preferencePaymentMethods
@@ -137,23 +138,31 @@ public class PaymentPreference: NSObject {
     public func toJSONString() -> String {
         var obj:[String:AnyObject] = [
             
-            "defaultInstallments": self.defaultInstallments == 0 ? JSON.null : (self.defaultInstallments),
-            "defaultPaymentTypeId": self.defaultPaymentTypeId == nil ? JSON.null : (self.defaultPaymentTypeId)!,
-            "defaultPaymentMethodId": self.defaultPaymentMethodId == nil ? JSON.null : (self.defaultPaymentMethodId)!,
-            "maxAcceptedInstallments": self.maxAcceptedInstallments == 0 ? JSON.null : (self.maxAcceptedInstallments),
+            "default_installments": self.defaultInstallments == 0 ? JSON.null : (self.defaultInstallments),
+            "default_payment_method_id": self.defaultPaymentMethodId == nil ? JSON.null : (self.defaultPaymentMethodId)!,
+            "installments": self.maxAcceptedInstallments == 0 ? JSON.null : (self.maxAcceptedInstallments),
         ]
         
-        var excludedPaymentMethodIdsJson = ""
+        var excludedPaymentMethodIdsJson = [NSDictionary]()
         if excludedPaymentMethodIds != nil && excludedPaymentMethodIds?.count > 0 {
-            excludedPaymentMethodIdsJson = self.excludedPaymentMethodIds!.reduce("", combine: {$0.stringByAppendingString($1).stringByAppendingString(",")})
+            for pmId in excludedPaymentMethodIds! {
+                let pmIdElement = NSMutableDictionary()
+                pmIdElement.setValue(pmId, forKey: "id")
+                excludedPaymentMethodIdsJson.append(pmIdElement)
+            }
         }
-        obj["excludedPaymentMethodIds"] = String(excludedPaymentMethodIdsJson.characters.dropLast())
+        obj["excluded_payment_methods"] = excludedPaymentMethodIdsJson
         
-        var excludedPaymentTypeIdsJson = ""
+        
+        var excludedPaymentTypeIdsJson = [NSDictionary]()
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
-            excludedPaymentTypeIdsJson = self.excludedPaymentTypeIds!.reduce("", combine: {$0.stringByAppendingString($1).stringByAppendingString(",")})
+            for ptId in excludedPaymentTypeIds! {
+                let ptIdElement = NSMutableDictionary()
+                ptIdElement.setValue(ptId, forKey: "id")
+                excludedPaymentTypeIdsJson.append(ptIdElement)
+            }
         }
-        obj["excludedPaymentTypeIds"] = String(excludedPaymentTypeIdsJson.characters.dropLast(1))
+        obj["excluded_payment_types"] = excludedPaymentTypeIdsJson
         
         
         return JSON(obj).toString()
