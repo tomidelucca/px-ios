@@ -221,9 +221,9 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
             var status = MPStepBuilder.CongratsState.OK
             if self.payment.status == PaymentStatus.REJECTED.rawValue {
                 if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
-                    status = MPStepBuilder.CongratsState.CANCEl_SELECT_OTHER
+                    status = MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER
                 } else {
-                    status = MPStepBuilder.CongratsState.CANCEl_SELECT_OTHER
+                    status = MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER
                 }
             } else {
                 //status = "OK"
