@@ -81,9 +81,11 @@ UILabel *identificationType;
                 Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount];
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
-                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    
+                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:paymentMethod callback:^(Payment * _Nonnull payment, enum CongratsState status) {
+                         [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
+
                     [self.navigationController pushViewController:congrats animated:YES];
                 } failure:^(NSError *error) {
                     NSLog(@"Error ocurred : %@", error.description);
@@ -100,7 +102,8 @@ UILabel *identificationType;
                 Item *item = [[Item alloc] initWith_id:@"1" title:@"item title" quantity:1 unitPrice:amount];
                 MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installments cardIssuer:nil tokenId:token._id paymentMethod:customerCard.paymentMethod campaignId:0];
                 [MerchantServer createPayment:merchantPayment success:^(Payment *payment) {
-                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, NSString *congratsStatus) {
+
+                    UIViewController *congrats = [MPStepBuilder startPaymentCongratsStep:payment paymentMethod:customerCard.paymentMethod callback:^(Payment *payment, enum CongratsState congratsStatus) {
                         [self.navigationController popToRootViewControllerAnimated:YES];
                     }];
                     [self.navigationController pushViewController:congrats animated:YES];
