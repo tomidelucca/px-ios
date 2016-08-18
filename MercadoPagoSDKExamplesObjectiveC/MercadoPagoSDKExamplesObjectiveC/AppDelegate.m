@@ -27,8 +27,10 @@
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     [MercadoPagoContext setSiteID:@"MLB"];
-  // [MercadoPagoContext setupPrimaryColor:[UIColor redColor] ];
-   [MercadoPagoContext setDarkTextColor];
+
+    [MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
+    [MercadoPagoContext setDarkTextColor];
+
     
     return YES;
 }

@@ -107,7 +107,8 @@ class ServicesExamplesViewController: UIViewController, UITableViewDataSource, U
     
     
     private func startFinalVault(){
-        let settings = PaymentPreference(defaultPaymentTypeId: nil, excludedPaymentMethodsIds: nil, excludedPaymentTypesIds: ["credit_card"], defaultPaymentMethodId: nil, maxAcceptedInstallment: nil, defaultInstallments: nil)
+        let settings = PaymentPreference()
+        settings.excludedPaymentTypeIds = ["credit_card"]
         let finalVault = MPFlowBuilder.startPaymentVaultViewController(1000, paymentPreference: settings, callback: { (paymentMethod, token, issuer, payerCost) in
             
         })

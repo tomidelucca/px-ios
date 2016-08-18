@@ -22,13 +22,13 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
     var payment : Payment!
     var paymentMethod : PaymentMethod!
     var layoutTemplate : String!
-    var callback : ((payment : Payment, status : String) -> Void)!
+    var callback : ((payment : Payment, status : MPStepBuilder.CongratsState) -> Void)!
     
     
     
     @IBOutlet weak var congratsContentTable: UITableView!
 
-    init(payment: Payment, paymentMethod : PaymentMethod, callback : (payment : Payment, status : String) -> Void){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : (payment : Payment, status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "PaymentCongratsViewController", bundle : bundle)
         self.payment = payment
         self.callback = callback
@@ -105,14 +105,10 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
             if self.navigationController != nil && self.navigationController?.navigationBar != nil {
                 self.navigationController?.setNavigationBarHidden(false, animated: false)
             }
-            self.invokeCallback("OK")
+            self.invokeCallback(MPStepBuilder.CongratsState.OK)
             
         }
         return exitButtonCell
-    }
-    
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
     }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -216,21 +212,21 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
         return false
     }
     
-    internal func invokeCallback(status : String){
+    internal func invokeCallback(status : MPStepBuilder.CongratsState){
         self.callback(payment: self.payment, status: status)
     }
     
     func congratsCallback() -> (Void -> Void){
         return {
-            var status = ""
+            var status = MPStepBuilder.CongratsState.OK
             if self.payment.status == PaymentStatus.REJECTED.rawValue {
                 if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
-                    status = "AUTH"
+                    status = MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER
                 } else {
-                    status = "CANCEL"
+                    status = MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER
                 }
             } else {
-                status = "OK"
+                //status = "OK"
             }
             self.invokeCallback(status)
         }

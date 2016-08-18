@@ -12,6 +12,12 @@ import MercadoPagoTracker
 
 public class MPStepBuilder : NSObject {
     
+    @objc
+    public enum CongratsState : Int {
+        case OK = 0
+        case CANCEL_SELECT_OTHER = 1
+        case CANCEL_RETRY = 2
+    }
     
     public class func startCustomerCardsStep(cards: [Card],
                                              callback: (selectedCard: Card?) -> Void) -> CustomerCardsViewController {
@@ -27,11 +33,20 @@ public class MPStepBuilder : NSObject {
         
     }
     
-    public class func startPaymentMethodsStep(paymentPreference: PaymentPreference? = nil,
+    public class func startPaymentMethodsStep(withPreference paymentPreference: PaymentPreference? = nil,
                                               callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
         MercadoPagoContext.initFlavor2()
         return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
     }
+    
+    @available(*, deprecated=2.0.0, message="Use startPaymentMethodsStep with paymentPreference instead")
+    public class func startPaymentMethodsStep(supportedPaymentTypes: Set<String>, callback:(paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
+        MercadoPagoContext.initFlavor2()
+        let paymentPreference = PaymentPreference()
+        paymentPreference.excludedPaymentTypeIds = PaymentType.allPaymentIDs.subtract(supportedPaymentTypes)
+        return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
+    }
+
     
 
     public class func startInstallmentsStep(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?,
@@ -42,24 +57,39 @@ public class MPStepBuilder : NSObject {
     
     
 
-    @available(*, deprecated=2.0, message="Use startPaymentCongratsStep instead")
+    @available(*, deprecated=2.0.0, message="Use startPaymentCongratsStep instead")
     public class func startCongratsStep(payment: Payment, paymentMethod: PaymentMethod) -> CongratsViewController {
         MercadoPagoContext.initFlavor2()
         return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
     }
 
+    
+    public class func startPaymentResultStep(payment: Payment, paymentMethod : PaymentMethod,
+                                               callback : (payment : Payment, status : CongratsState) -> Void) -> MercadoPagoUIViewController {
+        
+        MercadoPagoContext.initFlavor2()
+        if (paymentMethod.isOfflinePaymentMethod()){
+            return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
+        } else {
+            return self.startPaymentCongratsStep(payment, paymentMethod: paymentMethod, callback : callback)
+        }
+
+    }
+    
     public class func startPaymentCongratsStep(payment: Payment, paymentMethod : PaymentMethod,
-                         callback : (payment : Payment, status : String) -> Void) -> PaymentCongratsViewController {
+                         callback : (payment : Payment, status : CongratsState) -> Void) -> PaymentCongratsViewController {
         
         MercadoPagoContext.initFlavor2()
         return PaymentCongratsViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
     }
     
     public class func startInstructionsStep(payment: Payment, paymentTypeId : String,
-                        callback : (payment : Payment) -> Void) -> InstructionsViewController {
+                        callback : (payment : Payment, status: CongratsState) -> Void) -> InstructionsViewController {
         
         MercadoPagoContext.initFlavor2()
-        return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : callback)
+        return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : {(payment : Payment) -> Void in
+            callback(payment: payment, status: CongratsState.OK)
+        })
     }
     
      public class func startPromosStep(

@@ -92,13 +92,18 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func startPaymentVault(){
-        let pv = MPFlowBuilder.startPaymentVaultViewController(1000 , callback: { (paymentMethod, token, issuer, payerCost) in
-            self.paymentMethod = paymentMethod
-            self.createdToken = token
-            self.selectedIssuer = issuer
-            self.installmentsSelected = payerCost
-        })
-        self.presentViewController(pv, animated: true, completion: {})
+        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+        MPServicesBuilder.searchPaymentMethods(200, excludedPaymentTypeIds: ["credit_card"], excludedPaymentMethodIds: ["rapipago"], success: { (paymentMethodSearch : PaymentMethodSearch) in
+                let pv = MPFlowBuilder.startPaymentVaultViewController(200, paymentMethodSearch: paymentMethodSearch, callback: { (paymentMethod, token, issuer, payerCost) in
+                    NSLog(paymentMethod._id)
+                })
+            
+            self.presentViewController(pv, animated: true, completion: {})
+
+            }) { (error) in
+                
+        }
+        
     }
     
     private func startCardFlow(){
@@ -130,7 +135,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func startPaymentMethods(){
-        let pms = MPStepBuilder.startPaymentMethodsStep(nil) { (paymentMethod) in
+        let pms = MPStepBuilder.startPaymentMethodsStep(withPreference: nil) { (paymentMethod) in
             self.paymentMethod = paymentMethod
             self.navigationController!.popViewControllerAnimated(true)
         }

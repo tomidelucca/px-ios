@@ -36,30 +36,6 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var paymentsTable: UITableView!
     
     
-    internal init(amount: Double, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
-
-        super.init(nibName: "PaymentVaultViewController", bundle: bundle)
-        
-        self.merchantBaseUrl = MercadoPagoContext.baseURL() //distinta de null y vacia
-        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()//Distinta de null y vacio
-        //Installment > 0
-        
-        //Vaidar que no excluyo todos los payment method
-        
-        self.publicKey = MercadoPagoContext.publicKey()
-        self.currency = MercadoPagoContext.getCurrency()
-        self.title = title
-        self.tintColor = tintColor
-        self.amount = amount // mayor o igual a 0
-        self.paymentPreference = paymentPreference
-
-        self.currentPaymentMethodSearch = paymentMethodSearchItem
-        self.paymentMethods = paymentMethods
-        self.callback = callback
-        
-      
-    }
-    
     public init(amount: Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
@@ -84,6 +60,59 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         } else {
             self.callbackCancel = callbackCancel
         }
+    }
+    
+    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void) {
+        super.init(nibName: "PaymentVaultViewController", bundle: bundle)
+        
+        self.merchantBaseUrl = MercadoPagoContext.baseURL()
+        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
+        self.publicKey = MercadoPagoContext.publicKey()
+        self.currency = MercadoPagoContext.getCurrency()
+        self.amount = amount
+        self.paymentPreference = paymentPreference
+        self.callback = callback
+        self.paymentMethods = paymentMethodSearch.paymentMethods
+        self.currentPaymentMethodSearch = paymentMethodSearch.groups
+        
+        if callbackCancel == nil {
+            self.callbackCancel = {(Void) -> Void in
+                if self.navigationController?.viewControllers[0] == self {
+                    self.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                } else {
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+            }
+        } else {
+            self.callbackCancel = callbackCancel
+        }
+
+    }
+    
+    internal init(amount: Double, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem], paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) {
+        
+        super.init(nibName: "PaymentVaultViewController", bundle: bundle)
+        
+        self.merchantBaseUrl = MercadoPagoContext.baseURL() //distinta de null y vacia
+        self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()//Distinta de null y vacio
+        //Installment > 0
+        
+        //Vaidar que no excluyo todos los payment method
+        
+        self.publicKey = MercadoPagoContext.publicKey()
+        self.currency = MercadoPagoContext.getCurrency()
+        self.title = title
+        self.tintColor = tintColor
+        self.amount = amount // mayor o igual a 0
+        self.paymentPreference = paymentPreference
+        
+        self.currentPaymentMethodSearch = paymentMethodSearchItem
+        self.paymentMethods = paymentMethods
+        self.callback = callback
+        
+        
     }
     
     required  public init(coder aDecoder: NSCoder) {

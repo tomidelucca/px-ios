@@ -63,6 +63,7 @@ int installmentsSelected = 1;
 }
 
 - (void)startPaymentVault {
+    
     UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
         currentToken = token;
         selectedIssuer = issuer;
@@ -75,7 +76,8 @@ int installmentsSelected = 1;
 }
 
 - (void)startCardFlow {
-    UIViewController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT paymentMethods:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
+    
+    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token * token, Issuer *issuer, PayerCost *payerCost) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
@@ -83,6 +85,7 @@ int installmentsSelected = 1;
     } callbackCancel:^{
         [self dismissViewControllerAnimated:YES completion:^{}];
     }];
+
     [self presentViewController:cf animated:YES completion:^{}];
 
 }
