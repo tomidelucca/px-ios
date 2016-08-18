@@ -19,6 +19,8 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     var callback : (( identification: Identification) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
+    var indentificationMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
+     var editTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXX",completeEmptySpaces: false,leftToRight: false)
   //  @IBOutlet weak var typeButton: UIButton!
 
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
@@ -103,6 +105,10 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     public func editingChanged(textField:UITextField) {
           hideErrorMessage()
+       
+         numberDocLabel.text = indentificationMask.textMasked(editTextMask.textUnmasked(textField.text))
+         textField.text = editTextMask.textMasked(textField.text,remasked: true)
+        return
         if(textField.text?.characters.count > 0){
             let num : Int = Int(textField.text!)!
             let myIntString = num.stringFormatedWithSepator
@@ -122,6 +128,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        numberDocLabel.text = indentificationMask.textMasked("")
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
@@ -210,9 +217,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
 
     func rightArrowKeyTapped(){
-        let idnt = Identification(type: identificationType?.name , number: numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))
+        let idnt = Identification(type: identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
         
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  (numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))!)
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
 
         if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
