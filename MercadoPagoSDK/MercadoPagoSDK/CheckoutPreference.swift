@@ -142,20 +142,24 @@ public class CheckoutPreference : NSObject {
     
     public func getInstallments() -> Int {
         if self.paymentPreference != nil {
-            if (self.paymentPreference!.maxAcceptedInstallments != nil) {
-                return self.paymentPreference!.maxAcceptedInstallments!
-            } else if (self.paymentPreference!.defaultInstallments != nil) {
-                return self.paymentPreference!.defaultInstallments!
+            if (self.paymentPreference!.maxAcceptedInstallments > 0) {
+                return self.paymentPreference!.maxAcceptedInstallments
+            } else if (self.paymentPreference!.defaultInstallments > 0) {
+                return self.paymentPreference!.defaultInstallments
             }
         }
         return 1
     }
     
     
-    public func getPaymentSettings () -> PaymentPreference {
-        let settings = PaymentPreference(excludedPaymentMethodsIds: self.getExcludedPaymentMethodsIds(), excludedPaymentTypesIds: self.getExcludedPaymentTypesIds(), defaultPaymentMethodId: self.getDefaultPaymentMethodId(), maxAcceptedInstallment: self.getMaxAcceptedInstallments(), defaultInstallments: self.getDefaultInstallments())
-        
-        return settings
+    public func getPaymentPreference () -> PaymentPreference {
+        let paymentPreference = PaymentPreference()
+        paymentPreference.excludedPaymentMethodIds = self.getExcludedPaymentMethodsIds()
+        paymentPreference.excludedPaymentTypeIds = self.getExcludedPaymentTypesIds()
+        paymentPreference.defaultPaymentMethodId = self.getDefaultPaymentMethodId()
+        paymentPreference.maxAcceptedInstallments = self.getMaxAcceptedInstallments()
+        paymentPreference.defaultInstallments = self.getDefaultInstallments()
+        return paymentPreference
     }
     
     public func getExcludedPaymentTypesIds() -> Set<String>? {
@@ -165,18 +169,18 @@ public class CheckoutPreference : NSObject {
         return nil
     }
     
-    public func getDefaultInstallments() -> Int? {
-        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments != nil) {
+    public func getDefaultInstallments() -> Int {
+        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments > 0) {
             return self.paymentPreference!.defaultInstallments
         }
-        return nil
+        return 0
     }
     
-    public func getMaxAcceptedInstallments() -> Int? {
-        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments != nil) {
+    public func getMaxAcceptedInstallments() -> Int {
+        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments > 0) {
             return self.paymentPreference!.maxAcceptedInstallments
         }
-        return nil
+        return 0
     }
     
     public func getExcludedPaymentMethodsIds() -> Set<String>? {

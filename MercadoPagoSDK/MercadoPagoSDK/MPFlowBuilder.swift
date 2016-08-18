@@ -11,7 +11,7 @@ import UIKit
 
 public class MPFlowBuilder : NSObject {
     
-    @available(*, deprecated=2.0, message="Use startCheckoutViewController instead")
+    @available(*, deprecated=2.0.0, message="Use startCheckoutViewController instead")
     public class func startVaultViewController(amount: Double, paymentPreference : PaymentPreference? = nil,
                             callback: (paymentMethod: PaymentMethod, tokenId: String?, issuer: Issuer?, installments: Int) -> Void) -> VaultViewController {
         MercadoPagoContext.initFlavor3()
@@ -46,6 +46,19 @@ public class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
 
+    
+    public class func startPaymentVaultViewController(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void, callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
+        MercadoPagoContext.initFlavor2()
+        var paymentVault : PaymentVaultViewController?
+        paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch)  {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
+                paymentVault!.dismissViewControllerAnimated(true, completion: { () -> Void in
+                callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)}
+        )}
+        paymentVault!.callbackCancel = callbackCancel
+        paymentVault!.modalTransitionStyle = .CrossDissolve
+        return MPFlowController.createNavigationControllerWith(paymentVault!)
+    }
+    
     internal class func startPaymentVaultInCheckout(amount: Double, paymentPreference: PaymentPreference?, paymentMethodSearch : PaymentMethodSearch,
                                                     callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void,
                                                     callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
@@ -60,7 +73,7 @@ public class MPFlowBuilder : NSObject {
 
     
     
-    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil,
+    public class func startCardFlow(paymentPreference: PaymentPreference? = nil  , amount: Double, paymentMethods : [PaymentMethod]? = nil, token : Token? = nil, 
                                       callback: (paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?, payerCost: PayerCost?) -> Void,
                                       callbackCancel : (Void -> Void)? = nil) -> MPNavigationController {
         
@@ -74,7 +87,7 @@ public class MPFlowBuilder : NSObject {
         } else {
             currentCallbackCancel = callbackCancel!
         }
-        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods,
+        cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, paymentMethods : paymentMethods, token: token,
                                                      callback: { (paymentMethod, token, issuer) -> Void in
             
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in

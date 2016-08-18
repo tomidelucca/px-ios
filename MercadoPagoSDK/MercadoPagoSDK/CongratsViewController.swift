@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@available(*, deprecated=1.0, message="Use PaymentCongratsViewController instead")
+@available(*, deprecated=2.0.0, message="Use PaymentCongratsViewController instead")
 public class CongratsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     var payment: Payment!
