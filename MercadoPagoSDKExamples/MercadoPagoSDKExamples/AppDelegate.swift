@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Pinto de rojo el color primerio
         MercadoPagoContext.setupPrimaryColor(UIColor.blackColor(), complementaryColor: UIColor.orangeColor())
         MercadoPagoContext.setLightTextColor()
-        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLB)
         
         
         // Initialize window

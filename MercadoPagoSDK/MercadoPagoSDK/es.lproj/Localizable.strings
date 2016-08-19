@@ -57,14 +57,11 @@
 
 
 
-/*
- card
- */
+//----
 "Ver promociones"="Ver promociones";
 "Número de tarjeta"="Número de tarjeta";
 "NOMBRE APELLIDO"="NOMBRE APELLIDO";
 "MM/AA"="MM/AA";
-"Número de tarjeta"="Número de tarjeta";
 "Fecha de expiración"="Fecha de expiración";
 "Código de seguridad"="Código de seguridad";
 "Continuar"="Continuar";
@@ -74,9 +71,61 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Ingresa el nombre y apellido impreso en la tarjeta";
 "Ingresa los %1$s números del código de seguridad"="Ingresa los %1$s números del código de seguridad";
 "Método de pago no soportado"="Método de pago no soportado";
+
+"Nombre y apellido"="Nombre y apellido"//--
+
 //---Identification
 "OK"="OK";
 "DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DEL TITULAR DE LA TARJETA";
 "Número"="Número";
 "Tipo"="Tipo";
+
+
+
+//Installment Cell
+
+" Sin interés"=" Sin interés";//--
+
+//Instructions
+
+"Seguir comprando"= "Seguir comprando";//--
+
+
+//--
+"¡Felicitaciones!"="¡Felicitaciones!";
+"Se aprobó tu pago."="Se aprobó tu pago.";
+"Estamos procesando el pago"="Estamos procesando el pago";
+"¡Ups! Ocurrió un problema"="¡Ups! Ocurrió un problema";
+"Se aprobó tu pago."="Se aprobó tu pago.";
+"Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
+"En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
+"No se pudo realizar el pago."="No se pudo realizar el pago.";
+//--
+
+
+
+//CONGRATS
+
+"Comprobante"="Comprobante";
+
+//"terminada en "
+"Sin interés"="Sin interés";
+"Uy, no pudimos procesar el pago"="Uy, no pudimos procesar el pago";
+"Algún dato es incorrecto."="Algún dato es incorrecto.";
+"El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
+"Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
+//"Debes autorizar ante ".localized + paymentMethod.name.localized + " el pago de ".localized
+
+//" a MercadoPago"
+
+//"Ya hablé con " + paymentMethod.name.localized + " y me autorizó"
+
+"En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";
+"En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.";
+"Total"="Total";
+"Medio de pago"="Medio de pago";
+"Operación"="Operación";
+"Fecha"="Fecha";
+
+
 
