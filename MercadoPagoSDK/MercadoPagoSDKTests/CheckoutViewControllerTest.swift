@@ -39,6 +39,7 @@ class CheckoutViewControllerTest: BaseTest {
     }
     
     func testSetupCheckoutWithPreference(){
+        
         MPServicesBuilder.getPreference(MockBuilder.PREF_ID_NO_EXCLUSIONS, success: { (preference) in
             self.preference = preference
         }) { (error) in
@@ -55,7 +56,7 @@ class CheckoutViewControllerTest: BaseTest {
         checkInitialScreenAttributes()
         
     }
-    
+   
    
     /*
      *  Todos los medios de pago disponibles.
@@ -67,7 +68,8 @@ class CheckoutViewControllerTest: BaseTest {
             
             
         })
-        
+
+
         // Metodo de pago no seleccionado
         XCTAssertNil(checkoutViewController?.paymentMethod)
         
@@ -80,8 +82,6 @@ class CheckoutViewControllerTest: BaseTest {
         verifyPaymentVaultSelection_paymentMethodOff("rapipago")
         
         
-        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION))
-        
         // Pago con medio off
         verifyConfirmPaymentOff()
         
@@ -90,7 +90,7 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertNotNil(lastViewController)
         XCTAssertTrue(lastViewController!.isKindOfClass(InstructionsViewController))
 
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+
         //Verificar payment method id seleccionado en instrucciones
         let instructionsVC = (lastViewController as! InstructionsViewController)
         XCTAssertEqual(instructionsVC.payment.paymentMethodId, self.selectedPaymentMethod?._id)
@@ -285,7 +285,6 @@ class CheckoutViewControllerTest: BaseTest {
     }
     
     
-    
     func verifyPaymentVaultSelection_creditCard(){
         
         self.selectedPaymentMethod = Utils.findPaymentMethod((self.checkoutViewController?.paymentMethodSearch!.paymentMethods)!, paymentMethodId: "visa")
@@ -308,22 +307,7 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertTrue(checkoutViewController!.displayPreferenceDescription)
         
         let sections = checkoutViewController?.numberOfSectionsInTableView((checkoutViewController?.checkoutTable)!)
-        XCTAssertEqual(sections, 2)
-        
-        checkoutViewController?.checkoutTable.reloadData()
-        XCTAssertNotNil(checkoutViewController?.checkoutTable)
-        
-        let preferenceDescriptionCell = checkoutViewController?.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! PreferenceDescriptionTableViewCell
-        XCTAssertEqual(preferenceDescriptionCell.preferenceDescription.text, self.checkoutViewController?.preference?.items![0].title!)
-        
-        let preferenceAmount = preferenceDescriptionCell.preferenceAmount.attributedText
-        
-        let amountInCHOVC = self.checkoutViewController!.preference!.getAmount()
-        let amountAttributedText = Utils.getAttributedAmount(amountInCHOVC, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$")
-        XCTAssertEqual(preferenceAmount!.string, amountAttributedText.string)
-    
-        let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 3, inSection: 1)) as!TermsAndConditionsViewCell
-        XCTAssertNotNil(termsAndConditionsCell)
+        XCTAssertEqual(sections, 0)
         
     }
     
@@ -338,6 +322,7 @@ class CheckoutViewControllerTest: BaseTest {
         XCTAssertTrue(paymentButton.enabled.boolValue)
         self.checkoutViewController!.confirmPayment()
         
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         
     }
     
@@ -348,53 +333,9 @@ class CheckoutViewControllerTest: BaseTest {
         
         XCTAssertTrue(paymentButton.enabled.boolValue)
         self.checkoutViewController!.confirmPayment()
-
-    }
-//
-//    func testConfirmPaymentOn() {
-//        self.simulateViewDidLoadFor(self.checkoutViewController!)
-//        self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("visa")
-//      //  self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.CREDIT_CARD
-//        
-//        let termsAndConditionsCell = checkoutViewController!.tableView(checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as!TermsAndConditionsViewCell
-//        XCTAssertNotNil(termsAndConditionsCell)
-//        self.checkoutViewController!.paymentButton = termsAndConditionsCell.paymentButton
-//        
-//       // self.checkoutViewController!.confirmPayment()
-//        //TODO
-//    }
-    
-//    func testViewForFooterInSection() {
-//        self.simulateViewDidLoadFor(self.checkoutViewController!)
-//        let noCopyrightCell = self.checkoutViewController?.tableView(self.checkoutViewController!.checkoutTable, viewForFooterInSection: 0)
-//        XCTAssertNil(noCopyrightCell)
-//        
-//        let copyrightCell = self.checkoutViewController?.tableView(self.checkoutViewController!.checkoutTable, viewForFooterInSection: 1)
-//        XCTAssertNotNil(copyrightCell)
-//        
-//        var footerHeight = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, heightForFooterInSection: 0)
-//        XCTAssertEqual(footerHeight, 0)
-//        footerHeight = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, heightForFooterInSection: 1)
-//       // XCTAssertEqual(footerHeight, 140)
-//    }
-//
-//    
-
-
-    func testOfflinePaymentMethodSelectedCell(){
-//        self.simulateViewDidLoadFor(self.checkoutViewController!)
-//        self.checkoutViewController!.paymentMethod = MockBuilder.buildPaymentMethod("bancomer_ticket")
-//        self.checkoutViewController!.paymentMethod?.paymentTypeId = PaymentTypeId.TICKET
-//        self.checkoutViewController!.paymentMethod!.comment = "comment"
-//        
-//        let paymentMethodCell = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 1)) as! OfflinePaymentMethodCell
-//        XCTAssertEqual(checkoutViewController?.title, "Revisa si está todo bien...".localized)
-//        let termsAndConditions = self.checkoutViewController!.tableView(self.checkoutViewController!.checkoutTable, cellForRowAtIndexPath: NSIndexPath(forRow: 2, inSection: 1)) as! TermsAndConditionsViewCell
-//        XCTAssertEqual(termsAndConditions.termsAndConditionsText.text, "Al pagar afirme que es mayor de edad y acepto los términos y condiciones de Mercado Pago")
-//        let cellComment = paymentMethodCell.comment.text!
-//        XCTAssertEqual(cellComment, self.checkoutViewController!.paymentMethod!.comment!)
-//        
         
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+
     }
     
 }
