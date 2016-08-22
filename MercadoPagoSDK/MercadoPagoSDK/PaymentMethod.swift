@@ -224,6 +224,22 @@ public class PaymentMethod : NSObject  {
         
         return true
     }
+    
+    
+    public func getColor()-> UIColor? {
+     return MercadoPago.getColorFor(self)
+    }
+    public func getImage()-> UIImage? {
+      return MercadoPago.getImageFor(self)
+    }
+    public func getLabelMask()-> String? {
+        return MercadoPago.getLabelMaskFor(self)
+    }
+    public func getEditTextMask()-> String? {
+        return MercadoPago.getEditTextMaskFor(self)
+    }
+
+
 
 }
 

@@ -15,7 +15,7 @@ class CardFlowTest: MercadoPagoUITest {
  
         testApproved(diners())
     }
-    
+ /*
     func testAllCards(){
       
       //  for (_, card) in cardsTestArray!.enumerate() {
@@ -27,7 +27,7 @@ class CardFlowTest: MercadoPagoUITest {
         }
     }
     
-    
+    */
     func testApproved(card:TestCard){
         self.testCard(card, user: approvedUser())
     }

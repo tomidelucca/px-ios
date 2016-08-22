@@ -329,6 +329,27 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
+    public class func getLabelMaskFor(paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let etMask = pmConfig.valueForKey("label_mask") as! String
+        
+        return etMask
+    }
+    
+    public class func getEditTextMaskFor(paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+        let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let pmConfig = dictPM?.valueForKey(paymentMethod._id) as! NSDictionary
+        let etMask = pmConfig.valueForKey("editText_mask") as! String
+
+        return etMask
+    }
+    
+    
     public class func getFontColorFor(paymentMethod : PaymentMethod) -> UIColor?{
         let path = MercadoPago.getBundle()!.pathForResource("PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)

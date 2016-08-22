@@ -19,7 +19,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     var callback : (( identification: Identification) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
-  //  @IBOutlet weak var typeButton: UIButton!
+    var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
+    var indentificationMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
+     var editTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXX",completeEmptySpaces: false,leftToRight: false)
 
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     
@@ -28,18 +30,12 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     public init(callback : (( identification: Identification) -> Void)) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
-       
-      //  self.edgesForExtendedLayout = UIRectEdge.None
-
         self.callback = callback
-        
-        
          
     }
     override func loadMPStyles(){
         
         if self.navigationController != nil {
-            //Navigation bar colors
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -49,7 +45,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
                 self.navigationController?.navigationBar.barTintColor =  UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.translucent = false
-                //Create navigation buttons
                 displayBackButton()
             }
         }
@@ -62,8 +57,6 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         pickerView.delegate = self
         var toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
-//      toolBar.translucent = true
-//      toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
         
         
@@ -73,9 +66,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
             doneButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
           }
-        
-     //   let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Bordered, target: self, action: "canclePicker")
-        
+
         toolBar.setItems([spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
@@ -103,12 +94,11 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     public func editingChanged(textField:UITextField) {
           hideErrorMessage()
-        if(textField.text?.characters.count > 0){
-            let num : Int = Int(textField.text!)!
-            let myIntString = num.stringFormatedWithSepator
-
-            numberDocLabel.text = myIntString
-        }
+       
+         numberDocLabel.text = indentificationMask.textMasked(editTextMask.textUnmasked(textField.text))
+         textField.text = editTextMask.textMasked(textField.text,remasked: true)
+    
+        
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -122,6 +112,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        numberDocLabel.text = indentificationMask.textMasked("")
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
@@ -173,6 +164,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     //    typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
         textField.text = self.identificationTypes![row].name
         typePicker.hidden = true;
+       self.remask()
     }
     
     @IBAction func setType(sender: AnyObject) {
@@ -210,9 +202,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
 
     func rightArrowKeyTapped(){
-        let idnt = Identification(type: identificationType?.name , number: numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))
+        let idnt = Identification(type: identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
         
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  (numberDocLabel.text?.stringByReplacingOccurrencesOfString(".", withString: ""))!)
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
 
         if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
@@ -264,9 +256,9 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
-         //   self.typeButton.setTitle( self.identificationTypes![0].name, forState: .Normal)
             self.textField.text = self.identificationTypes![0].name
             self.numberTextField.becomeFirstResponder()
+            self.remask()
             }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
                     self.dismissViewControllerAnimated(true, completion: {})
@@ -278,20 +270,20 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
                     })
         })
     }
-}
-
-
-struct Number {
-    static let formatterWithSepator: NSNumberFormatter = {
-        let formatter = NSNumberFormatter()
-        formatter.groupingSeparator = "."
-        formatter.numberStyle = .DecimalStyle
-        return formatter
-    }()
-}
-extension IntegerType {
-    var stringFormatedWithSepator: String {
-        return Number.formatterWithSepator.stringFromNumber(hashValue) ?? ""
+    
+    
+    private func remask(){
+        if (self.identificationType!.name == "CPF"){
+            self.indentificationMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX",completeEmptySpaces: true,leftToRight: true)
+        }else if (self.identificationType!.name == "CNPJ"){
+            self.indentificationMask = TextMaskFormater(mask: "XX.XXX.XXX/XXXX-XX",completeEmptySpaces: true,leftToRight: true)
+        }else{
+            self.indentificationMask = defaultMask
+        }
+        self.numberTextField.text = ""
+        self.numberDocLabel.text = indentificationMask.textMasked("")
     }
 }
+
+
 
