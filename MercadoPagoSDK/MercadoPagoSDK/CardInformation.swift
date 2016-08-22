@@ -8,10 +8,13 @@
 
 import UIKit
 
-protocol CardInformation {
+@objc
+public protocol CardInformation : NSObjectProtocol {
 
     func getPaymentMethodId() -> String
     
     func getCardDescription() -> String
+    
+    func getPaymentMethod() -> PaymentMethod
     
 }

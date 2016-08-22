@@ -99,15 +99,13 @@ public class MPStepBuilder : NSObject {
     }
     
 
-    public class func startCreditCardForm(paymentSettings : PaymentPreference? = nil , amount: Double, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,
-                         callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void),
-                         callbackCancel : (Void -> Void)?) -> MPNavigationController {
-        
+
+    public class func startCreditCardForm(paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil ,callback : ((paymentMethod: PaymentMethod, token: Token? ,  issuer: Issuer?) -> Void), callbackCancel : (Void -> Void)?) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
 
-        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken) -> Void in
+        ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, cardInformation: cardInformation, paymentMethods : paymentMethods, token: token, callback : { (paymentMethod, cardToken) -> Void in
             
             if(paymentMethod.isIdentificationRequired()){
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in

@@ -27,7 +27,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     // Info loaded from groups service :
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
-    var customerCards : [Card]?
+    var customerCards : [CardInformation]?
     var bundle = MercadoPago.getBundle()
     
     private var tintColor = true
@@ -39,7 +39,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
 
     
-    public init(amount : Double, paymentPreference : PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void) {
+    public init(amount : Double, paymentPreference : PaymentPreference?, customerCards : [CardInformation]? = nil, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
@@ -200,7 +200,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 && self.loadCustomerCards {
             let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCellWithIdentifier("customerPaymentMethodCell") as! CustomerPaymentMethodCell
-            customerPaymentMethodCell.fillRowWithCustomerPayment(self.customerCards![indexPath.row])
+            customerPaymentMethodCell.fillRowWithCustomerPayment(self.customerCards![indexPath.row] as! CardInformation)
             return customerPaymentMethodCell
         }
         
@@ -221,8 +221,18 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let paymentSearchItemSelected = self.currentPaymentMethodSearch[indexPath.row]
-        if indexPath.section == 1 {
+        
+        switch indexPath.section {
+        case 0:
+            if self.loadCustomerCards {
+                let customerCardSelected = self.customerCards![indexPath.row] as! CardInformation
+                let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
+                    
+                })
+                self.presentViewController(cardFlow, animated: true, completion: {})
+            }
+        default:
+            let paymentSearchItemSelected = self.currentPaymentMethodSearch[indexPath.row]
             self.paymentsTable.deselectRowAtIndexPath(indexPath, animated: true)
             if (paymentSearchItemSelected.children.count > 0) {
                 let paymentVault = PaymentVaultViewController(amount: self.amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
@@ -317,7 +327,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
 
     private func getCustomerCards(){
-        if MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot {
+        if MercadoPagoContext.isCustomerInfoAvailable() && self.customerCards == nil {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.customerCards = customer.cards
                 self.loadCustomerCards = true

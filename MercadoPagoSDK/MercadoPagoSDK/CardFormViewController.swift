@@ -91,7 +91,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken?) -> Void), callbackCancel : (Void -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken?) -> Void), callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
@@ -99,6 +99,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.callback = callback
         self.amount = amount
         self.callbackCancel = callbackCancel
+        self.paymentMethod = cardInformation?.getPaymentMethod()
         
     }
     
@@ -128,6 +129,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
+
+        if paymentMethod != nil {
+            self.updateCardSkin()
+        }
 
        
     }
@@ -561,6 +566,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     
     func matchedPaymentMethod () -> PaymentMethod? {
+        if paymentMethod != nil {
+            return self.paymentMethod
+        }
         if(paymentMethods == nil){
             return nil
         }
@@ -607,7 +615,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func updateCardSkin(){
        
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6){
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || paymentMethod != nil){
             let pmMatched = self.matchedPaymentMethod()
             
                paymentMethod = pmMatched
@@ -667,7 +675,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     
     func delightedLabels(){
-        if (paymentMethod == nil){
+        if (self.paymentMethod == nil){0
             cardNumberLabel?.textColor = MPLabel.defaultColorText
             nameLabel?.textColor = MPLabel.defaultColorText
             expirationDateLabel?.textColor = MPLabel.defaultColorText
@@ -700,7 +708,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     func updateLabelsFontColors(){
         self.delightedLabels()
         self.lightEditingLabel()
+
     }
+    
     func markErrorLabel(label: UILabel){
         label.textColor = MPLabel.errorColorText
     }

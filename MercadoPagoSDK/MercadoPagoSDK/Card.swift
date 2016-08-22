@@ -91,12 +91,16 @@ public class Card : NSObject, CardInformation {
         }
     }
     
-    func getPaymentMethodId() -> String {
+    public func getPaymentMethodId() -> String {
         return self.paymentMethod!._id
     }
     
-    func getCardDescription() -> String {
+    public func getCardDescription() -> String {
         return "terminada en " + lastFourDigits!
+    }
+    
+    public func getPaymentMethod() -> PaymentMethod {
+        return self.paymentMethod!
     }
 
 }
