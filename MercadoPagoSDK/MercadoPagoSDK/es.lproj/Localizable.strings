@@ -58,17 +58,19 @@
 
 
 /*
- card
- */
+ card  */
+
 "Ver promociones"="Ver promociones";
 "Número de tarjeta"="Número de tarjeta";
 "NOMBRE APELLIDO"="NOMBRE APELLIDO";
 "MM/AA"="MM/AA";
+
 "Número de tarjeta"="Número de tarjeta";
 "Fecha de expiración"="Fecha de expiración";
 "Código de seguridad"="Código de seguridad";
 "Continuar"="Continuar";
 "Anterior"="Anterior";
+
 "Ingresa el número de la tarjeta de crédito"="Ingresa el número de la tarjeta de crédito";
 "Revisa este dato"="Revisa este dato";
 "Ingresa el nombre y apellido impreso en la tarjeta"="Ingresa el nombre y apellido impreso en la tarjeta";
@@ -79,4 +81,3 @@
 "DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DEL TITULAR DE LA TARJETA";
 "Número"="Número";
 "Tipo"="Tipo";
-
