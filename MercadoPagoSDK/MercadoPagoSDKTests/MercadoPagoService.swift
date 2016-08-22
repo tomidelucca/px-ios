@@ -20,6 +20,8 @@ public class MercadoPagoService: NSObject {
     
     public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, cache : Bool? = true, success: (jsonResult: AnyObject?) -> Void,
         failure: ((error: NSError) -> Void)?) {
+        
+            MercadoPagoTestContext.addExpectation(withDescription: BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
             var finalUri = uri
             if params != nil {
                 finalUri = finalUri + "?" + params!
@@ -48,7 +50,7 @@ public class MercadoPagoService: NSObject {
                 }*/
                 
                 success(jsonResult: jsonResponse)
-                MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION)
+                MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
             } catch {
                 failure!(error: NSError(domain: uri, code: 400, userInfo: nil))
             }

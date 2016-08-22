@@ -13,18 +13,17 @@ class MercadoPagoUIViewControllerTest: BaseTest {
     let viewController = MercadoPagoUIViewController()
 
     override func setUp() {
+        super.setUp()
         self.simulateViewDidLoadFor(self.viewController)
     }
 
     func testClearMercadoPagoStyleAndGoBack(){
-        self.setUp()
         self.viewController.clearMercadoPagoStyleAndGoBack()
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.titleTextAttributes == nil)
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.barTintColor == nil)
     }
     
     func testClearMercadoPagoStyleAndGoBackAnimated(){
-        self.setUp()
         self.viewController.clearMercadoPagoStyleAndGoBackAnimated()
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.titleTextAttributes == nil)
         XCTAssertTrue(self.viewController.navigationController == nil || self.viewController.navigationController!.navigationBar.barTintColor == nil)

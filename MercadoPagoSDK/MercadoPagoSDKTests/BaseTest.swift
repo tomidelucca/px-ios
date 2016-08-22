@@ -12,12 +12,14 @@ class BaseTest: XCTestCase {
     
     static let WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION = "waitForRequest"
     static let WAIT_FOR_NAVIGATION_CONTROLLER = "waitForNavigationController"
-    static let WAIT_EXPECTATION_TIME_INTERVAL = 1000.0
+    static let WAIT_FOR_VIEW_LOADED = "waitForViewDidLoad"
+    static let WAIT_EXPECTATION_TIME_INTERVAL = 10.0
     
     override func setUp() {
         super.setUp()
         MercadoPagoContext.setPublicKey(MockBuilder.MLA_PK)
         MercadoPagoContext.setMerchantAccessToken(MockBuilder.MERCHANT_ACCESS_TOKEN)
+        MercadoPagoTestContext.sharedInstance.testEnvironment = self
     }
     
     override func tearDown() {
@@ -25,17 +27,15 @@ class BaseTest: XCTestCase {
     }
     
     func simulateViewDidLoadFor(viewController : UIViewController) -> UIViewController{
-       // MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        MercadoPagoTestContext.addExpectation(expectationWithDescription(BaseTest.WAIT_FOR_NAVIGATION_CONTROLLER))
+        MercadoPagoTestContext.addExpectation(withDescription: BaseTest.WAIT_FOR_VIEW_LOADED)
         let nav = UINavigationController()
         nav.pushViewController(viewController, animated: false) {
-            MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_NAVIGATION_CONTROLLER)
+            MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_VIEW_LOADED)
         }
         let _ = viewController.view
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
-        viewController.viewDidLoad()
         viewController.viewWillAppear(false)
         viewController.viewDidAppear(false)
+        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         return viewController
     }
     

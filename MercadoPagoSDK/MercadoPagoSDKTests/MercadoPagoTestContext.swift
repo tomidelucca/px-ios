@@ -13,12 +13,18 @@ public class MercadoPagoTestContext : NSObject {
     
     static let sharedInstance = MercadoPagoTestContext()
     var expectations = ExpectationHash()
-
+    var testEnvironment : XCTestCase?
+    
     private override init() {
         
     }
     
     class func addExpectation(expectation : XCTestExpectation){
+        self.sharedInstance.expectations.add(expectation)
+    }
+    
+    class func addExpectation(withDescription expectationDescription : String) {
+        let expectation = self.sharedInstance.testEnvironment!.expectationWithDescription(expectationDescription)
         self.sharedInstance.expectations.add(expectation)
     }
     
@@ -49,9 +55,10 @@ struct ExpectationHash {
         print(items)
     }
     
-    func fulfillExpectation(withKey : String) {
+    mutating func fulfillExpectation(withKey : String) {
         if let expectation = items[withKey] {
-            expectation.fulfill()
+           expectation.fulfill()
+           items.removeValueForKey(withKey)
         }
     }
 }
