@@ -279,6 +279,8 @@
 		15DA7E601CD92C670068896E /* IdentificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15DA7E5D1CD92C670068896E /* IdentificationViewController.xib */; };
 		15DA7E611CD92C670068896E /* IdentificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15DA7E5D1CD92C670068896E /* IdentificationViewController.xib */; };
 		15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF3F821D6347BF0051C798 /* TextMaskFormater.swift */; };
+		15E19C6F1D6CC9B700D49D7B /* MPGoogleAnalytics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1568828D1D5A25B4005EF18A /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		15E19C701D6CC9B700D49D7B /* MercadoPagoTracker.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1568828B1D5A25B0005EF18A /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15E7D6E81C87164E00101872 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
@@ -374,8 +376,6 @@
 		7656F5281C975EEF0076A14D /* PaymentDescriptionFooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64631C907DC5004F9A7C /* PaymentDescriptionFooterTableViewCell.swift */; };
 		7656F52C1C988C510076A14D /* MercadoPagoUIViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656F52B1C988C510076A14D /* MercadoPagoUIViewControllerTest.swift */; };
 		7656F5301C98A2E50076A14D /* InstructionsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7656F52F1C98A2E50076A14D /* InstructionsViewControllerTest.swift */; };
-		765FE5531D677CE800145506 /* MercadoPagoTracker.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 765FE5511D677CE800145506 /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		765FE5541D677CE800145506 /* MPGoogleAnalytics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 765FE5521D677CE800145506 /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766012D61CEB7DE600897F9D /* InstallmentSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085291CE5045D00C157BF /* InstallmentSelectionTableViewCell.swift */; };
 		766012E21CEB963300897F9D /* MPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012E11CEB963300897F9D /* MPError.swift */; };
 		766012E31CEB963300897F9D /* MPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012E11CEB963300897F9D /* MPError.swift */; };
@@ -560,8 +560,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				765FE5531D677CE800145506 /* MercadoPagoTracker.framework in CopyFiles */,
-				765FE5541D677CE800145506 /* MPGoogleAnalytics.framework in CopyFiles */,
+				15E19C6F1D6CC9B700D49D7B /* MPGoogleAnalytics.framework in CopyFiles */,
+				15E19C701D6CC9B700D49D7B /* MercadoPagoTracker.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,8 +771,6 @@
 		7656F5241C9726A60076A14D /* PaymentMethodSearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchServiceTest.swift; sourceTree = "<group>"; };
 		7656F52B1C988C510076A14D /* MercadoPagoUIViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewControllerTest.swift; sourceTree = "<group>"; };
 		7656F52F1C98A2E50076A14D /* InstructionsViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewControllerTest.swift; sourceTree = "<group>"; };
-		765FE5511D677CE800145506 /* MercadoPagoTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MercadoPagoTracker.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-eiajqppcsdjrwwecqwxhmelyhsvk/Build/Products/Debug-iphonesimulator/MercadoPagoTracker/MercadoPagoTracker.framework"; sourceTree = "<absolute>"; };
-		765FE5521D677CE800145506 /* MPGoogleAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MPGoogleAnalytics.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-eiajqppcsdjrwwecqwxhmelyhsvk/Build/Products/Debug-iphonesimulator/MPGoogleAnalytics/MPGoogleAnalytics.framework"; sourceTree = "<absolute>"; };
 		766012E11CEB963300897F9D /* MPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPError.swift; sourceTree = "<group>"; };
 		766012E51CEBA19700897F9D /* ErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		766012E61CEBA19700897F9D /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
@@ -873,8 +871,6 @@
 		76EC48051C862B000086FA53 /* InstructionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionTest.swift; sourceTree = "<group>"; };
 		76EC48071C862B160086FA53 /* InstructionReferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionReferenceTest.swift; sourceTree = "<group>"; };
 		76EC48091C862B2D0086FA53 /* InstructionActionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionActionTest.swift; sourceTree = "<group>"; };
-		76EEF75E1D67736C0095D5A5 /* MercadoPagoTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MercadoPagoTracker.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-eiajqppcsdjrwwecqwxhmelyhsvk/Build/Products/Debug-iphonesimulator/MercadoPagoTracker/MercadoPagoTracker.framework"; sourceTree = "<absolute>"; };
-		76EEF75F1D67736C0095D5A5 /* MPGoogleAnalytics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = MPGoogleAnalytics.framework; path = "/Users/macrodriguez/Library/Developer/Xcode/DerivedData/MercadoPagoSDKExamples-eiajqppcsdjrwwecqwxhmelyhsvk/Build/Products/Debug-iphonesimulator/MPGoogleAnalytics/MPGoogleAnalytics.framework"; sourceTree = "<absolute>"; };
 		76F41E2F1D3D5F5800B25E5B /* MercadoPagoTestContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoTestContext.swift; sourceTree = "<group>"; };
 		76FD24701C5BFEA1008C5DC0 /* CardBackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardBackView.swift; sourceTree = "<group>"; };
 		76FD24711C5BFEA1008C5DC0 /* CardBackView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardBackView.xib; sourceTree = "<group>"; };
@@ -913,10 +909,6 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
-				765FE5511D677CE800145506 /* MercadoPagoTracker.framework */,
-				765FE5521D677CE800145506 /* MPGoogleAnalytics.framework */,
-				76EEF75E1D67736C0095D5A5 /* MercadoPagoTracker.framework */,
-				76EEF75F1D67736C0095D5A5 /* MPGoogleAnalytics.framework */,
 				1568828D1D5A25B4005EF18A /* MPGoogleAnalytics.framework */,
 				1568828B1D5A25B0005EF18A /* MercadoPagoTracker.framework */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,

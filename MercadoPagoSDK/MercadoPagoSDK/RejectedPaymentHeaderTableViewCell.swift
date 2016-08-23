@@ -36,15 +36,19 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
             title = "Uy, no pudimos procesar el pago".localized
         }
         
-        let titleWithParams = (title.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name.localized)")
+        let titleWithParams = (title.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.title.text = titleWithParams
         
+        
+        
+        
+       
         var subtitle = (payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId)
         if !subtitle.existsLocalized() {
-            subtitle = "Algún dato es incorrecto.".localized
+            subtitle =  ("Algún dato de tu %1$s es incorrecto.".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: paymentMethod.name)
         }
         
-        let subtitleWithParams = (subtitle.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name.localized)")
+        let subtitleWithParams = (subtitle.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
         self.subtitle.text = subtitleWithParams
         return self
     }

@@ -18,7 +18,7 @@
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
-"Medio de pago" = "Meio de pagamento";
+
 "Medios de pago" = "Meios de pagamento";
 "terminada en" = "terminado em";
 
@@ -35,8 +35,7 @@
 "Nombre y apellido impreso en la tarjeta" = "Nome e sobrenome impresso no cartão de crédito";
 "Otro banco" = "Outro banco";
 
-"Operación" = "Operação";
-"Fecha" = "Data";
+
 "Imprimir cupón" = "Imprima o boleto";
 
 "¡Felicitaciones!" = "Parabéns!";
@@ -74,6 +73,9 @@
 "Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
 "Ingresa los %1$s números del código de seguridad"="Digite os %1$s números do código de segurança";
 "Método de pago no soportado"="Você não pode pagar com este método de pagamento";
+
+"Nombre y apellido"="Nome e sobrenome";
+
 //---Identification
 "OK"="OK";
 "DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DO TITULAR DO CARTÃO";
@@ -81,4 +83,35 @@
 "Tipo"="Tipo";
 
 
+//CONGRATS
 
+"Comprobante"="Comprovante";
+
+"terminada en "="terminado em ";
+"Sin interés"="Sem juros";
+"Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
+"Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
+"El teléfono está al dorso de tu tarjeta"="O telefone do banco está no verso do seu cartão.";
+"Debes autorizar el pago ante tu tarjeta"="Você deve autorizar o pagamento de seu cartão";
+"Debes autorizar ante %1$s el pago de " = "Você deve autorizar junto ao %1$s o pagamento do ";
+" a MercadoPago" = " o Mercado Pago";
+"Ya hablé con %1$s y me autorizó" = "Já falei com %1$s e me autoriza";
+
+
+"En menos de 1 hora te enviaremos por e-mail el resultado."="Em menos de 1 hora, nós enviaremos o resultado por e-mail.";
+"En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="Em menos de 1 hora, nós enviaremos o resultado por e-mail.";
+"Total"="Total";
+
+"Medio de pago" = "Meio de pagamento";
+"Operación" = "Operação";
+"Fecha" = "Data";
+
+
+"Revisa si está todo bien..." = "Verifique para ver se está tudo bem...";
+"Total a pagar " = "Total a pagar ";
+"Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Ao pagar, afirmo que eu sou maior de idade e concordar com os Termos e Condições do Mercado Pago";
+
+"¿Cómo quieres pagar?"="Como você prefere pagar?";
+"Cancelar Pago"="Cancelar pagamento";
+
+"Términos y Condiciones"="Termos e Condições";
