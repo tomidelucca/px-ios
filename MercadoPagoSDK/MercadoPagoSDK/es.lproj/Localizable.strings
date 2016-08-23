@@ -113,8 +113,7 @@
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
 "El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
 "Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
-"Debes autorizar ante " = "Debes autorizar ante ";
-" el pago de " = " el pago de ";
+"Debes autorizar ante %1$s el pago de " = "Debes autorizar ante %1$s el pago de ";
 " a MercadoPago" = " a MercadoPago";
 "Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
 

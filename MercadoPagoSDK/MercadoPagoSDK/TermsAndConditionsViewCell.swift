@@ -23,9 +23,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12)!,NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x999999)]
         self.paymentButton.setTitleColor(UIColor.systemFontColor(), forState: .Normal)
         let mutableAttributedString = NSMutableAttributedString(string: self.termsAndConditionsText.text, attributes: normalAttributes)
-        let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized as NSString
-            //self.termsAndConditionsText.text as? NSString
-        let tycLinkRange = termsAndConditionsText.rangeOfString("Términos y Condiciones".localized)
+        let tycLinkRange = (self.termsAndConditionsText.text as NSString).rangeOfString("Términos y Condiciones".localized)
         //TODO  hardcoded
         mutableAttributedString.addAttribute(NSLinkAttributeName, value: "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299", range: tycLinkRange)
        self.termsAndConditionsText.delegate = self
