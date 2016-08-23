@@ -34,6 +34,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     var paymentMethods : [PaymentMethod]?
     var paymentMethod : PaymentMethod?
+    var customerCard : CardInformation?
     var token : Token?
     var cardToken : CardToken?
     var paymentSettings : PaymentPreference?
@@ -100,6 +101,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         self.amount = amount
         self.callbackCancel = callbackCancel
         self.paymentMethod = cardInformation?.getPaymentMethod()
+        self.customerCard = cardInformation
         
     }
     
@@ -132,6 +134,10 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
         if paymentMethod != nil {
             self.updateCardSkin()
+        }
+        
+        if self.customerCard != nil {
+            self.prepareCVVLabelForEdit()
         }
 
        
@@ -292,6 +298,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     private func prepareCVVLabelForEdit(){
          MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
+        
+        if(!isAmexCard()){
+            UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
+                self.updateLabelsFontColors()
+            })
+        }
+
         if(isAmexCard()){
             cvvLabel = cardFront?.cardCVV
             cardBack?.cardCVV.text = "••••"
@@ -489,7 +502,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         case cardNumberLabel! :
             if (checkCardNumber() == false){
                 if (paymentMethod != nil){
-                        showErrorMessage((cardtoken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
+                        showErrorMessage((cardToken?.validateCardNumber(paymentMethod!)?.userInfo["cardNumber"] as? String)!)
                 }else{
                     if (cardNumberLabel?.text?.characters.count == 0){
                         showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
@@ -520,16 +533,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 }
             }
             if (checkExpirationDateCard() == false){
-                showErrorMessage((cardtoken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
+                showErrorMessage((cardToken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
 
                 return
             }
-            if(!isAmexCard()){
-                UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
-                    self.updateLabelsFontColors()
-                })
-            }
-           
+            
             
             self.prepareCVVLabelForEdit()
             
@@ -715,18 +723,21 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         label.textColor = MPLabel.errorColorText
     }
     
-    
-    var cardtoken : CardToken?
-    
-    func tokenHidratate(){
+    func tokenHidratate() {
         let number = cardNumberLabel?.text
         let month = getMonth()
         let year = getYear()
         let secCode = cvvLabelEmpty ? "" :cvvLabel?.text
         let name = nameLabelEmpty ? "" : nameLabel?.text
         
-        cardtoken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
         
+        self.cardToken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name!, docType: "", docNumber: "")
+        
+    }
+    
+    private func createSavedCardToken() -> CardToken {
+        let securityCode = self.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
+        return  SavedCardToken(card: customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
     }
     
     func checkCardNumber() -> Bool{
@@ -735,7 +746,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             return false
         }
         tokenHidratate()
-        let errorMethod = cardtoken!.validateCardNumber(paymentMethod!)
+        let errorMethod = self.cardToken!.validateCardNumber(paymentMethod!)
         if((errorMethod) != nil){
             return false
         }
@@ -743,14 +754,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     func checkCardName() -> Bool{
         tokenHidratate()
-        if ( cardtoken!.validateCardholderName() != nil ){
+        if ( cardToken!.validateCardholderName() != nil ){
             return false
         }
         return true
     }
     func checkExpirationDateCard() -> Bool{
          tokenHidratate()
-        let errorMethod = cardtoken!.validateExpiryDate()
+        let errorMethod = cardToken!.validateExpiryDate()
         if((errorMethod) != nil){
             return false
         }
@@ -761,7 +772,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         if (cvvLabel?.text?.stringByReplacingOccurrencesOfString("•", withString: "").characters.count < paymentMethod?.secCodeLenght()){
             return false
         }
-        let errorMethod = cardtoken!.validateSecurityCode()
+        let errorMethod = cardToken!.validateSecurityCode()
         if((errorMethod) != nil){
             return false
         }
@@ -769,42 +780,48 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
     
     func makeToken(){
-        tokenHidratate()
         
-        if (paymentMethod != nil){ 
-            let errorMethod = cardtoken!.validateCardNumber(paymentMethod!)
-            if((errorMethod) != nil){
-                markErrorLabel(cardNumberLabel!)
-                return
-            }
-        }else{
-
-                markErrorLabel(cardNumberLabel!)
-                return
-        }
-        
-        let errorDate = cardtoken!.validateExpiryDate()
-        if((errorDate) != nil){
-            markErrorLabel(expirationDateLabel!)
-            return
-        }
-        let errorName = cardtoken!.validateCardholderName()
-        if((errorName) != nil){
-            markErrorLabel(nameLabel!)
-            return
-        }
-        if(paymentMethod!.isSecurityCodeRequired(getBIN()!)){
-            let errorCVV = cardtoken!.validateSecurityCode()
-            if((errorCVV) != nil){
+        if customerCard != nil {
+            cardToken = createSavedCardToken()
+            if !cardToken!.validate() {
                 markErrorLabel(cvvLabel!)
-                UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+            }
+        } else {
+            tokenHidratate()
+            
+            if (paymentMethod != nil){
+                let errorMethod = cardToken!.validateCardNumber(paymentMethod!)
+                if((errorMethod) != nil){
+                    markErrorLabel(cardNumberLabel!)
+                    return
+                }
+            }else{
+                
+                markErrorLabel(cardNumberLabel!)
                 return
+            }
+            
+            let errorDate = cardToken!.validateExpiryDate()
+            if((errorDate) != nil){
+                markErrorLabel(expirationDateLabel!)
+                return
+            }
+            let errorName = cardToken!.validateCardholderName()
+            if((errorName) != nil){
+                markErrorLabel(nameLabel!)
+                return
+            }
+            if(paymentMethod!.isSecurityCodeRequired(getBIN()!)){
+                let errorCVV = cardToken!.validateSecurityCode()
+                if((errorCVV) != nil){
+                    markErrorLabel(cvvLabel!)
+                    UIView.transitionFromView(self.cardBack!, toView: self.cardFront!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: nil)
+                    return
+                }
             }
         }
         
-
-        
-         self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
+        self.callback!(paymentMethod: self.paymentMethod!, cardtoken: self.cardToken!)
     }
     
     

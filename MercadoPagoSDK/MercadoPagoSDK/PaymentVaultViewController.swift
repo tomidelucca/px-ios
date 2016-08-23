@@ -227,9 +227,9 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
             if self.loadCustomerCards {
                 let customerCardSelected = self.customerCards![indexPath.row] as! CardInformation
                 let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
-                    
+                    self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })
-                self.presentViewController(cardFlow, animated: true, completion: {})
+                self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
             }
         default:
             let paymentSearchItemSelected = self.currentPaymentMethodSearch[indexPath.row]
@@ -327,7 +327,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     }
 
     private func getCustomerCards(){
-        if MercadoPagoContext.isCustomerInfoAvailable() && self.customerCards == nil {
+        if MercadoPagoContext.isCustomerInfoAvailable() && self.customerCards == nil && self.isRoot {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.customerCards = customer.cards
                 self.loadCustomerCards = true

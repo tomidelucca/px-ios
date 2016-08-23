@@ -11,10 +11,16 @@ import UIKit
 @objc
 public protocol CardInformation : NSObjectProtocol {
 
-    func getPaymentMethodId() -> String
+    func isSecurityCodeRequired() -> Bool
+    
+    func getCardId() -> String
+    
+    func getCardSecurityCode() -> String
     
     func getCardDescription() -> String
     
     func getPaymentMethod() -> PaymentMethod
+    
+    func getPaymentMethodId() -> String
     
 }
