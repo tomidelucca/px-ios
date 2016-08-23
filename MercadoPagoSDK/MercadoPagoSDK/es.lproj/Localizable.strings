@@ -72,7 +72,7 @@
 "Ingresa los %1$s números del código de seguridad"="Ingresa los %1$s números del código de seguridad";
 "Método de pago no soportado"="Método de pago no soportado";
 
-"Nombre y apellido"="Nombre y apellido"//--
+"Nombre y apellido"="Nombre y apellido";
 
 //---Identification
 "OK"="OK";
@@ -96,7 +96,6 @@
 "Se aprobó tu pago."="Se aprobó tu pago.";
 "Estamos procesando el pago"="Estamos procesando el pago";
 "¡Ups! Ocurrió un problema"="¡Ups! Ocurrió un problema";
-"Se aprobó tu pago."="Se aprobó tu pago.";
 "Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles."="Imprime el cupón y paga. Se acreditará en 1 a 3 días hábiles.";
 "En unos minutos te enviaremos por e-mail el resultado."="En unos minutos te enviaremos por e-mail el resultado.";
 "No se pudo realizar el pago."="No se pudo realizar el pago.";
@@ -108,17 +107,16 @@
 
 "Comprobante"="Comprobante";
 
-//"terminada en "
+"terminada en "="terminada en ";
 "Sin interés"="Sin interés";
 "Uy, no pudimos procesar el pago"="Uy, no pudimos procesar el pago";
-"Algún dato es incorrecto."="Algún dato es incorrecto.";
+"Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
 "El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
 "Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
-//"Debes autorizar ante ".localized + paymentMethod.name.localized + " el pago de ".localized
-
-//" a MercadoPago"
-
-//"Ya hablé con " + paymentMethod.name.localized + " y me autorizó"
+"Debes autorizar ante " = "Debes autorizar ante ";
+" el pago de " = " el pago de ";
+" a MercadoPago" = " a MercadoPago";
+"Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
 
 "En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";
 "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información.";
@@ -128,4 +126,10 @@
 "Fecha"="Fecha";
 
 
+"Revisa si está todo bien..." = "Revisa si está todo bien...";
+"Total a pagar " = "Total a pagar ";
+"Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago";
 
+"¿Cómo quieres pagar?"="¿Cómo quieres pagar?";
+"Cancelar Pago"="Cancelar Pago";
+"Términos y Condiciones"="Términos y Condiciones";
