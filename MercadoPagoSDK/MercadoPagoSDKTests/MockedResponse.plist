@@ -2,6 +2,101 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GET/customerUri?merchant_access_token=MERCHANT_ACCESS_TOKEN</key>
+	<string>{
+	&quot;default_address&quot;: null,
+	&quot;phone&quot;: {
+		&quot;area_code&quot;: null,
+		&quot;number&quot;: null
+	},
+	&quot;date_created&quot;: &quot;2015-02-27T12:45:47.000-04:00&quot;,
+	&quot;date_last_updated&quot;: &quot;2015-05-05T17:04:08.814-04:00&quot;,
+	&quot;date_registered&quot;: null,
+	&quot;id&quot;: &quot;178101336&quot;,
+	&quot;first_name&quot;: &quot;test user&quot;,
+	&quot;email&quot;: &quot;test_user_61065665@testuser.com&quot;,
+	&quot;address&quot;: {
+		&quot;zip_code&quot;: null,
+		&quot;street_name&quot;: null,
+		&quot;street_number&quot;: null
+	},
+	&quot;identification&quot;: {
+		&quot;number&quot;: null,
+		&quot;type&quot;: null
+	},
+	&quot;description&quot;: null,
+	&quot;default_card&quot;: &quot;149024476&quot;,
+	&quot;last_name&quot;: null,
+	&quot;addresses&quot;: [],
+	&quot;cards&quot;: [{
+		&quot;date_last_updated&quot;: null,
+		&quot;date_created&quot;: null,
+		&quot;last_four_digits&quot;: &quot;0604&quot;,
+		&quot;id&quot;: &quot;149024476&quot;,
+		&quot;first_six_digits&quot;: &quot;503175&quot;,
+		&quot;issuer&quot;: {
+			&quot;id&quot;: 3,
+			&quot;name&quot;: &quot;Mastercard&quot;
+		},
+		&quot;expiration_month&quot;: 11,
+		&quot;card_number_id&quot;: &quot;A0F4AFA3E93689A1C9E7DAD0A375B119ECF256AA&quot;,
+		&quot;cardholder&quot;: {
+			&quot;identification&quot;: {
+				&quot;number&quot;: &quot;12345678&quot;,
+				&quot;type&quot;: &quot;DNI&quot;
+			},
+			&quot;name&quot;: &quot;APRO&quot;
+		},
+		&quot;expiration_year&quot;: 2019,
+		&quot;security_code&quot;: {
+			&quot;length&quot;: 3,
+			&quot;card_location&quot;: &quot;back&quot;
+		},
+		&quot;payment_method&quot;: {
+			&quot;id&quot;: &quot;master&quot;,
+			&quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/master.gif&quot;,
+			&quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/master.gif&quot;,
+			&quot;name&quot;: &quot;Mastercard&quot;,
+			&quot;payment_type_id&quot;: &quot;credit_card&quot;
+		},
+		&quot;customer_id&quot;: &quot;178101336&quot;
+	}, 
+	{
+		&quot;date_last_updated&quot;: null,
+		&quot;date_created&quot;: null,
+		&quot;last_four_digits&quot;: &quot;3704&quot;,
+		&quot;id&quot;: &quot;149024476&quot;,
+		&quot;first_six_digits&quot;: &quot;450995&quot;,
+		&quot;issuer&quot;: {
+			&quot;id&quot;: 3,
+			&quot;name&quot;: &quot;Visa&quot;
+		},
+		&quot;expiration_month&quot;: 11,
+		&quot;card_number_id&quot;: &quot;cardNumberId&quot;,
+		&quot;cardholder&quot;: {
+			&quot;identification&quot;: {
+				&quot;number&quot;: &quot;12345678&quot;,
+				&quot;type&quot;: &quot;DNI&quot;
+			},
+			&quot;name&quot;: &quot;APRO&quot;
+		},
+		&quot;expiration_year&quot;: 2019,
+		&quot;security_code&quot;: {
+			&quot;length&quot;: 3,
+			&quot;card_location&quot;: &quot;back&quot;
+		},
+		&quot;payment_method&quot;: {
+			&quot;id&quot;: &quot;visa&quot;,
+			&quot;thumbnail&quot;: &quot;http://img.mlstatic.com/org-img/MP3/API/logos/visa.gif&quot;,
+			&quot;secure_thumbnail&quot;: &quot;https://www.mercadopago.com/org-img/MP3/API/logos/visa.gif&quot;,
+			&quot;name&quot;: &quot;Visa&quot;,
+			&quot;payment_type_id&quot;: &quot;credit_card&quot;
+		},
+		&quot;customer_id&quot;: &quot;178101336&quot;
+	}],
+	&quot;live_mode&quot;: true,
+	&quot;metadata&quot;: {}
+}</string>
 	<key>GET/v1/checkout/payment_methods/search/options?public_key=PK_MLA&amp;amount=2579.0&amp;excluded_payment_types=bank_transfer,ticket</key>
 	<string>{
   &quot;groups&quot;: [
