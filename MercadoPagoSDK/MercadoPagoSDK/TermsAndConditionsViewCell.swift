@@ -25,7 +25,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         let mutableAttributedString = NSMutableAttributedString(string: self.termsAndConditionsText.text, attributes: normalAttributes)
         let tycLinkRange = (self.termsAndConditionsText.text as NSString).rangeOfString("Términos y Condiciones".localized)
         //TODO  hardcoded
-        mutableAttributedString.addAttribute(NSLinkAttributeName, value: "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299", range: tycLinkRange)
+        mutableAttributedString.addAttribute(NSLinkAttributeName, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
        self.termsAndConditionsText.delegate = self
         let style = NSMutableParagraphStyle()
         style.alignment = .Center

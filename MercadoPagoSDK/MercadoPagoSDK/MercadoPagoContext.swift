@@ -36,6 +36,9 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var language : String!
     
+    var termsAndConditionsSite : String!
+
+    
     var currency : Currency!
     
     public class var PUBLIC_KEY : String {
@@ -66,10 +69,10 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
-        "MLA" : ["language" : "es", "currency" : "ARS"],
-        "MLB" : ["language" : "pt", "currency" : "BRL"],
-        "MLC" : ["language" : "es", "currency" : "CLP"],
-        "MLM" : ["language" : "es", "currency" : "MXN"]
+        "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
+        "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
+        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
+        "MLM" : ["language" : "es", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
      ]
 
     public enum Site : String {
@@ -94,6 +97,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         if siteConfig != nil {
             self.site = site
             self.language = siteConfig!["language"] as! String
+            self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
                 self.currency = currency!
@@ -114,6 +118,10 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     public static func getLanguage() -> String {
         return sharedInstance.language
+    }
+    
+    public static func getTermsAndConditionsSite() -> String {
+        return sharedInstance.termsAndConditionsSite
     }
     
     public static func getCurrency() -> Currency {
