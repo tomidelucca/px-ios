@@ -137,8 +137,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
         if self.customerCard != nil {
-            self.cardNumberLabel?.text = self.customerCard?.getCardBin()
+            let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true)
+            self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(self.customerCard?.getCardBin(), remasked: false)
             self.prepareCVVLabelForEdit()
+            
+            
         }
 
        
@@ -304,19 +307,17 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             UIView.transitionFromView(self.cardFront!, toView: self.cardBack!, duration: 1, options: UIViewAnimationOptions.TransitionFlipFromLeft, completion: { (completion) -> Void in
                 self.updateLabelsFontColors()
             })
-        }
-
-        if(isAmexCard()){
-            cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = "••••"
-            cardBack?.cardCVV.alpha = 0
-            cardFront?.cardCVV.alpha = 1
-        }else{
             cvvLabel = cardBack?.cardCVV
             cardFront?.cardCVV.text = "•••"
             cardFront?.cardCVV.alpha = 0
             cardBack?.cardCVV.alpha = 1
+        } else {
+            cvvLabel = cardFront?.cardCVV
+            cardBack?.cardCVV.text = "••••"
+            cardBack?.cardCVV.alpha = 0
+            cardFront?.cardCVV.alpha = 1
         }
+
         editingLabel = cvvLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.NumberPad
@@ -417,10 +418,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     func cvvLenght() -> Int{
         var lenght : Int
         
-        if ((paymentMethod?.settings == nil)||(paymentMethod?.settings.count == 0)){
-            lenght = 3 // Default
-        }else{
-            lenght = (paymentMethod?.settings[0].securityCode.length)!
+        if customerCard != nil {
+            lenght = (self.customerCard?.getCardSecurityCode().length)!
+        } else {
+            if ((paymentMethod?.settings == nil)||(paymentMethod?.settings.count == 0)){
+                lenght = 3 // Default
+            }else{
+                lenght = (paymentMethod?.settings[0].securityCode.length)!
+            }
         }
         return lenght
     }

@@ -10,12 +10,12 @@ import UIKit
 
 @objc
 public protocol CardInformation : NSObjectProtocol {
-
+    
     func isSecurityCodeRequired() -> Bool
     
     func getCardId() -> String
     
-    func getCardSecurityCode() -> String
+    func getCardSecurityCode() -> SecurityCode
     
     func getCardDescription() -> String
     
@@ -26,4 +26,6 @@ public protocol CardInformation : NSObjectProtocol {
     func getCardBin() -> String?
     
     func getCardLastForDigits() -> String?
+    
+    func setupPaymentMethodSettings(settings : [Setting])
 }

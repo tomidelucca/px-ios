@@ -226,6 +226,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         case 0:
             if self.loadCustomerCards {
                 let customerCardSelected = self.customerCards![indexPath.row] as! CardInformation
+                let paymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
+                customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
                 let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
                     self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                 })

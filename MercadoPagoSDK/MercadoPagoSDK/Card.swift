@@ -108,8 +108,8 @@ public class Card : NSObject, CardInformation {
         return (self.paymentMethod?._id)!
     }
     
-    public func getCardSecurityCode() -> String {
-        return ""
+    public func getCardSecurityCode() -> SecurityCode {
+        return self.securityCode!
     }
     
     public func getCardBin() -> String? {
@@ -118,6 +118,10 @@ public class Card : NSObject, CardInformation {
 
     public func getCardLastForDigits() -> String? {
         return self.lastFourDigits
+    }
+    
+    public func setupPaymentMethodSettings(settings: [Setting]) {
+        self.paymentMethod?.settings = settings
     }
 }
 
