@@ -36,7 +36,7 @@ class InstallmentSelectionTableViewCell: UITableViewCell {
             additionalText.appendAttributedString(totalAmountStr)
         } else {
             if payerCost.installments > 1 {
-                additionalText.appendAttributedString(NSAttributedString(string: " Sin interes".localized, attributes: noRateAttributes))
+                additionalText.appendAttributedString(NSAttributedString(string: " Sin interés".localized, attributes: noRateAttributes))
             }
         }
         
