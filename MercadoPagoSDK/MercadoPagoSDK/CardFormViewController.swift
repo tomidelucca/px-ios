@@ -137,6 +137,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         }
         
         if self.customerCard != nil {
+            self.cardNumberLabel?.text = self.customerCard?.getCardBin()
             self.prepareCVVLabelForEdit()
         }
 
@@ -623,7 +624,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func updateCardSkin(){
        
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || paymentMethod != nil){
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || customerCard != nil){
             let pmMatched = self.matchedPaymentMethod()
             
                paymentMethod = pmMatched

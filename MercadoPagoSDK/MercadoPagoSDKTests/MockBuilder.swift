@@ -51,6 +51,17 @@ public class MockBuilder: NSObject {
         return 100.0
     }
     
+    class var AMEX_TEST_CARD_NUMBER : String {
+        return "371180303257522"
+    }
+    
+    class var MASTER_TEST_CARD_NUMBER : String {
+        return "5031755734530604"
+    }
+    
+    class var VISA_TEST_CARD_NUMBER : String {
+        return "4170068810108020"
+    }
     
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()

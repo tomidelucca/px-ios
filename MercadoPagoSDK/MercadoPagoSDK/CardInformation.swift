@@ -23,4 +23,7 @@ public protocol CardInformation : NSObjectProtocol {
     
     func getPaymentMethodId() -> String
     
+    func getCardBin() -> String?
+    
+    func getCardLastForDigits() -> String?
 }

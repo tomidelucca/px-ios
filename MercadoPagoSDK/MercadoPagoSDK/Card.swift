@@ -111,7 +111,14 @@ public class Card : NSObject, CardInformation {
     public func getCardSecurityCode() -> String {
         return ""
     }
+    
+    public func getCardBin() -> String? {
+        return self.firstSixDigits
+    }
 
+    public func getCardLastForDigits() -> String? {
+        return self.lastFourDigits
+    }
 }
 
 
