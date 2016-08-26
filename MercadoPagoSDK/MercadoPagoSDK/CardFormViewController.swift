@@ -440,6 +440,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
         doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+        
         donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
             doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
@@ -449,6 +450,9 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
+        if self.customerCard != nil {
+            navItem!.leftBarButtonItem?.enabled = false
+        }
         inputButtons!.pushNavigationItem(navItem!, animated: false)
         textBox.inputAccessoryView = inputButtons
        
