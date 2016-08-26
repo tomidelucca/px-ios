@@ -50,23 +50,11 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentPreference = paymentPreference
         self.callback = callback
         
-        if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
-                if self.navigationController?.viewControllers[0] == self {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                } else {
-                    self.navigationController!.popViewControllerAnimated(true)
-                }
-            }
-        } else {
-            self.callbackCancel = callbackCancel
-        }
-
     }
     
-    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void) {
+    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch,
+                callback: (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void,
+                callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "PaymentVaultViewController", bundle: bundle)
         
         self.merchantBaseUrl = MercadoPagoContext.baseURL()
@@ -76,24 +64,10 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.amount = amount
         self.paymentPreference = paymentPreference
         self.callback = callback
+        self.callbackCancel = callbackCancel
 
         self.paymentMethods = paymentMethodSearch.paymentMethods
         self.currentPaymentMethodSearch = paymentMethodSearch.groups
-
-        
-        if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
-                if self.navigationController?.viewControllers[0] == self {
-                    self.dismissViewControllerAnimated(true, completion: {
-                        
-                    })
-                } else {
-                    self.navigationController!.popViewControllerAnimated(true)
-                }
-            }
-        } else {
-            self.callbackCancel = callbackCancel
-        }
         
     }
     
@@ -117,6 +91,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.currentPaymentMethodSearch = paymentMethodSearchItem
         self.paymentMethods = paymentMethods
         self.callback = callback
+        self.callbackCancel = callbackCancel
         
         
     }
@@ -135,6 +110,20 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         self.paymentsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.paymentsTable.bounds.size.width, 0.01))
         self.registerAllCells()
     
+        if callbackCancel == nil {
+            self.callbackCancel = {(Void) -> Void in
+                if self.navigationController?.viewControllers[0] == self {
+                    self.dismissViewControllerAnimated(true, completion: {
+                        
+                    })
+                } else {
+                    self.navigationController!.popViewControllerAnimated(true)
+                }
+            }
+        } else {
+            self.callbackCancel = callbackCancel
+        }
+
         
         
         
@@ -230,6 +219,8 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
                 customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
                 let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
                     self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
+                    }, callbackCancel: {
+                        self.navigationController!.popToViewController(self, animated: true)
                 })
                 self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
             }
