@@ -117,7 +117,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
         }
         
-         textEditMaskFormater.emptyMaskElement = ""
+         textEditMaskFormater.emptyMaskElement = nil
        
     }
    
@@ -549,7 +549,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func getBIN() -> String?{
         var trimmedNumber = cardNumberLabel?.text?.stringByReplacingOccurrencesOfString(" ", withString: "")
-       trimmedNumber = trimmedNumber!.stringByReplacingOccurrencesOfString(textMaskFormater.emptyMaskElement, withString: "")
+       trimmedNumber = trimmedNumber!.stringByReplacingOccurrencesOfString(String(textMaskFormater.emptyMaskElement), withString: "")
         
         
         if (trimmedNumber!.characters.count < 6){

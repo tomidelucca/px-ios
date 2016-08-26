@@ -11,8 +11,8 @@ import UIKit
 public class TextMaskFormater: NSObject {
 
     var mask : String!
-    public var characterSpace : String! = "X"
-    public var emptyMaskElement : String! = "•"
+    public var characterSpace : Character! = "X"
+    public var emptyMaskElement : Character! = "•"
     var completeEmptySpaces : Bool = true
     var leftToRight : Bool = true
     var unmask : (( textToUnmask: String) -> String)?
@@ -56,7 +56,7 @@ public class TextMaskFormater: NSObject {
     }
     private func emptyTextMasked() -> String!{
         if(completeEmptySpaces){
-            return (mask?.stringByReplacingOccurrencesOfString(characterSpace, withString: emptyMaskElement))!
+            return (mask?.stringByReplacingOccurrencesOfString(String(characterSpace), withString: String(emptyMaskElement)))!
         }else{
             return ""
         }
@@ -64,7 +64,7 @@ public class TextMaskFormater: NSObject {
     }
     
     private func replaceEmpySpot(text : String!)-> String!{
-        return (text.stringByReplacingOccurrencesOfString(characterSpace, withString: emptyMaskElement))
+        return (text.stringByReplacingOccurrencesOfString(String(characterSpace), withString: String(emptyMaskElement)))
     }
     
     private func maskText(text:String!) -> String!{
@@ -96,7 +96,7 @@ public class TextMaskFormater: NSObject {
             if (charText == nil){
                 resultString.appendContentsOf(String(charMask))
                 indexMask += 1
-            }else if( String(charMask) != characterSpace ){
+            }else if( String(charMask) != String(characterSpace) ){
                 resultString.appendContentsOf(String(charMask))
                 indexMask += 1
             }else{
@@ -111,15 +111,18 @@ public class TextMaskFormater: NSObject {
     }
     
     private func completeWithEmptySpaces(text: String)->String{
-        let charset : Set<Character> = ["X"]
+        let charset : Set<Character> = [characterSpace]
         var xs: String = ""
         for char:Character in mask.characters {
             if charset.contains(char){
                 xs.append(char)
             }
         }
-        let max = xs.characters.count - text.characters.count
-        let x: Character = "X"
+        var max = xs.characters.count - text.characters.count
+        let x: Character = characterSpace
+        if (max < 0){
+           max = 0
+        }
         return (String(count:max, repeatedValue:x) + text)
         
     }
@@ -129,7 +132,7 @@ public class TextMaskFormater: NSObject {
         if (textCharacter == nil){
             return String(maskCharacter)
         }
-        if(String(maskCharacter) != characterSpace ){
+        if(String(maskCharacter) != String(characterSpace) ){
             return String(maskCharacter) + String(textCharacter)
         }
         return String(textCharacter)
