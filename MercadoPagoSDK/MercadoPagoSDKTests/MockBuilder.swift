@@ -81,11 +81,11 @@ public class MockBuilder: NSObject {
     }
     
     
-    class func buildPaymentMethod(id : String, name : String? = "") -> PaymentMethod {
+    class func buildPaymentMethod(id : String, name : String? = "", paymentTypeId : String? = "credit_card") -> PaymentMethod {
         let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
         paymentMethod.name = name
-        paymentMethod.paymentTypeId = "credit_card"
+        paymentMethod.paymentTypeId = paymentTypeId
         return paymentMethod
     }
     
@@ -138,6 +138,15 @@ public class MockBuilder: NSObject {
         return payment
     }
 
+    class func buildOffPayment(paymentMethodId : String, paymentTypeId : String? = "ticket") -> Payment {
+        let payment = Payment()
+        payment._id = self.MOCK_PAYMENT_ID
+        payment.paymentMethodId = paymentMethodId
+        payment.paymentTypeId = paymentTypeId
+        payment.status = "pending"
+        return payment
+    }
+    
     class func buildMastercardPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         return MockBuilder.buildPayment("master", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
