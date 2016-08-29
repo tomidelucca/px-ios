@@ -16,8 +16,8 @@ class PaymentCongratsViewControllerTest: BaseTest {
 
     override func setUp() {
         super.setUp()
-        MercadoPagoTestContext.addExpectation(withDescription: "MOCK")
-        MercadoPagoTestContext.fulfillExpectation("MOCK")
+        MercadoPagoTestContext.addExpectation(withDescription: "")
+        MercadoPagoTestContext.fulfillExpectation("")
     }
     
     override func tearDown() {
