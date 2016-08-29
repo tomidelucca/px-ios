@@ -81,12 +81,11 @@ public class MockBuilder: NSObject {
     }
     
     
-    class func buildPaymentMethod(id : String) -> PaymentMethod {
+    class func buildPaymentMethod(id : String, name : String? = "") -> PaymentMethod {
         let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
-        paymentMethod.name = id
+        paymentMethod.name = name
         paymentMethod.paymentTypeId = "credit_card"
-        paymentMethod.name = id
         return paymentMethod
     }
     

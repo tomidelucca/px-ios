@@ -16,6 +16,8 @@ class PaymentCongratsViewControllerTest: BaseTest {
 
     override func setUp() {
         super.setUp()
+        MercadoPagoTestContext.addExpectation(withDescription: "MOCK")
+        MercadoPagoTestContext.fulfillExpectation("MOCK")
     }
     
     override func tearDown() {
@@ -29,12 +31,12 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3)
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
+        
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
         attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
-        
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
         XCTAssertEqual("approved", self.paymentCongratsViewController?.getLayoutName(currentPayment))
         XCTAssertEqual(3, self.paymentCongratsViewController!.numberOfSectionsInTableView(self.paymentCongratsViewController!.congratsContentTable))
@@ -113,7 +115,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -151,7 +153,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         payment.payer = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -188,7 +190,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         payment.payer.email = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -225,7 +227,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         payment.payer.email = ""
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -263,7 +265,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         payment.card = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -298,7 +300,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         payment.card.lastFourDigits = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -333,7 +335,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         payment.card.lastFourDigits = ""
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -368,7 +370,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         payment.paymentMethodId = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -402,7 +404,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let payment = MockBuilder.buildPayment("test", installments: 3)
         let paymentMethod = MockBuilder.buildPaymentMethod("test")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -436,7 +438,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let payment = MockBuilder.buildPayment("test", installments: 3)
         let paymentMethod = MockBuilder.buildPaymentMethod("")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -470,7 +472,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let payment = MockBuilder.buildPayment("test", installments: 0)
         let paymentMethod = MockBuilder.buildPaymentMethod("")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
@@ -504,7 +506,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         payment.transactionDetails.installmentAmount = -100
         let paymentMethod = MockBuilder.buildPaymentMethod("")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
     
         
@@ -536,7 +538,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         payment.transactionDetails = nil
         let paymentMethod = MockBuilder.buildPaymentMethod("")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: payment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: payment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -598,7 +600,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
             XCTAssertEqual(payment._id, currentPayment._id)
-            XCTAssertEqual(status, "OK")
+            XCTAssertEqual(status, MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -623,7 +625,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("master")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
             XCTAssertEqual(payment._id, currentPayment._id)
-            XCTAssertEqual(status, "OK")
+            XCTAssertEqual(status, MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -648,10 +650,10 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true)
         currentPayment.status = "rejected"
         currentPayment.statusDetail = "cc_rejected_insufficient_amount"
-        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
             XCTAssertEqual(payment._id, currentPayment._id)
-            XCTAssertEqual(status, "OK")
+            XCTAssertEqual(status, MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -674,10 +676,10 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentRejected_statusOtherReason() {
         
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "rejected", statusDetail : "cc_rejected_other_reason")
-        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
             XCTAssertEqual(payment._id, currentPayment._id)
-            XCTAssertEqual(status, "OK")
+            XCTAssertEqual(status, MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -703,7 +705,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "rejected", statusDetail : "cc_rejected_max_attempts")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -727,9 +729,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentRejected_statusDuplicatedPayment() {
         
         let currentPayment = MockBuilder.buildMastercardPayment(3, includeFinancingFee : true, status : "rejected", statusDetail : "cc_rejected_duplicated_payment")
-        let paymentMethod = MockBuilder.buildPaymentMethod("master")
+        let paymentMethod = MockBuilder.buildPaymentMethod("master", name: "Mastercard")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -756,9 +758,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildPayment("amex", installments: 3, includeFinancingFee: true)
         currentPayment.statusDetail = "cc_rejected_card_disabled"
         currentPayment.status = "rejected"
-        let paymentMethod = MockBuilder.buildPaymentMethod("amex")
+        let paymentMethod = MockBuilder.buildPaymentMethod("amex", name: "Amex")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -781,9 +783,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentRejected_statusBadFilledOther() {
         
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "rejected", statusDetail : "cc_rejected_bad_filled_other")
-        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -806,9 +808,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentRejected_statusBadFilledCardNumber() {
         
         let currentPayment = MockBuilder.buildPayment("visa", installments: 3, includeFinancingFee: true, status: "rejected", statusDetail: "cc_rejected_bad_filled_card_number")
-        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
         let body = self.paymentCongratsViewController!.tableView(self.paymentCongratsViewController!.congratsContentTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as? RejectedPaymentHeaderTableViewCell
@@ -832,7 +834,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildPayment("visa", installments: 3, includeFinancingFee: true, status: "rejected", statusDetail: "cc_rejected_bad_filled_security_code")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -859,7 +861,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "rejected", statusDetail: "cc_rejected_bad_filled_date")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -882,16 +884,16 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentRejected_statusDetailInvalid() {
         
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "rejected", statusDetail: "test_invalid_status_detail")
-        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
         let body = self.paymentCongratsViewController!.tableView(self.paymentCongratsViewController!.congratsContentTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as? RejectedPaymentHeaderTableViewCell
         XCTAssertNotNil(body)
         XCTAssertEqual(body!.title.text, "Uy, no pudimos procesar el pago".localized)
-        XCTAssertEqual(body!.subtitle.text, "Algún dato es incorrecto.".localized)
+        XCTAssertEqual(body!.subtitle.text, "Algún dato de tu Visa es incorrecto.".localized)
         
         let exitButton = self.paymentCongratsViewController!.tableView(self.paymentCongratsViewController!.congratsContentTable, cellForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 2)) as? ExitButtonTableViewCell
         XCTAssertNotNil(exitButton)
@@ -910,7 +912,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         currentPayment.statusDetail = nil
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -933,7 +935,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "in_process", statusDetail: "")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -956,7 +958,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "in_process", statusDetail: "pending_review_manual")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -980,7 +982,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildVisaPayment(3, includeFinancingFee: true, status: "in_process", statusDetail: "pending_contingency")
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1003,9 +1005,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildPayment("amex", installments: 3, includeFinancingFee: true)
         currentPayment.status = "rejected"
         currentPayment.statusDetail = "cc_rejected_call_for_authorize"
-        let paymentMethod = MockBuilder.buildPaymentMethod("amex")
+        let paymentMethod = MockBuilder.buildPaymentMethod("amex", name: "Amex")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1039,11 +1041,11 @@ class PaymentCongratsViewControllerTest: BaseTest {
         let currentPayment = MockBuilder.buildPayment("amex", installments: 3, includeFinancingFee: true)
         currentPayment.status = "rejected"
         currentPayment.statusDetail = "cc_rejected_call_for_authorize"
-        let paymentMethod = MockBuilder.buildPaymentMethod("amex")
+        let paymentMethod = MockBuilder.buildPaymentMethod("amex", name : "Amex")
         //TODO
         //paymentMethod.name = nil
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "OK")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.OK)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1073,9 +1075,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentCallForAuth_cardEntityAuthorizedClicked() {
         
         let currentPayment = MockBuilder.buildMastercardPayment(3, includeFinancingFee : true, status : "rejected", statusDetail : "cc_rejected_call_for_authorize")
-        let paymentMethod = MockBuilder.buildPaymentMethod("master")
+        let paymentMethod = MockBuilder.buildPaymentMethod("master", name : "Mastercard")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "AUTH")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1101,9 +1103,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
     func testPaymentCallForAuth_cardAnotherPaymentMethodClicked() {
         
         let currentPayment = MockBuilder.buildMastercardPayment(3, includeFinancingFee : true, status : "rejected", statusDetail : "cc_rejected_call_for_authorize")
-        let paymentMethod = MockBuilder.buildPaymentMethod("master")
+        let paymentMethod = MockBuilder.buildPaymentMethod("master", name : "Mastercard")
         self.paymentCongratsViewController = PaymentCongratsViewController(payment: currentPayment, paymentMethod: paymentMethod, callback: { (payment, status) in
-            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: "AUTH")
+            self.validateCallback(payment, expectedPayment: currentPayment, status: status, statusExpected: MPStepBuilder.CongratsState.CANCEL_SELECT_OTHER)
         })
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1123,7 +1125,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         
     }
     
-    internal func validateCallback(payment : Payment, expectedPayment : Payment, status : String, statusExpected: String){
+    internal func validateCallback(payment : Payment, expectedPayment : Payment, status : MPStepBuilder.CongratsState, statusExpected: MPStepBuilder.CongratsState){
         XCTAssertEqual(payment._id, expectedPayment._id)
         XCTAssertEqual(status, statusExpected)
     }
