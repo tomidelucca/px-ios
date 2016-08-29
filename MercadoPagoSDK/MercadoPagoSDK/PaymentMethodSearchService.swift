@@ -10,14 +10,15 @@ import UIKit
 
 public class PaymentMethodSearchService: MercadoPagoService {
     
-    public let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/checkout/payment_methods/search/options"
+    public let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
     
     public init(){
-        super.init(baseURL: MercadoPagoService.MP_BASE_URL)
+        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
     public func getPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
+        params = params + "&access_token=" + "TEST-3655020329214032-122910-7f125ed5eecbaaa3d04f0c56953c95b6__LD_LC__-170206767"
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
             let excludedPaymentTypesParams = excludedPaymentTypeIds!.map({$0}).joinWithSeparator(",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()

@@ -13,7 +13,7 @@ public class InstructionsService: MercadoPagoService {
     public let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/checkout/payments/${payment_id}/results"
     
     public init(){
-        super.init(baseURL: MercadoPagoService.MP_BASE_URL)
+        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
     public func getInstructions(paymentId : Int, paymentTypeId: String? = "", success : (instructionsInfo : InstructionsInfo) -> Void, failure: ((error: NSError) -> Void)?){

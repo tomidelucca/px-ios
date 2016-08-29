@@ -13,7 +13,7 @@ public class PreferenceService: MercadoPagoService {
     private var MP_PREFERENCE_URI = MercadoPago.MP_ENVIROMENT + "/checkout/preferences/"
     
     init(){
-        super.init(baseURL: MercadoPagoService.MP_BASE_URL)
+        super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
     internal func getPreference(preferenceId : String, success : (CheckoutPreference) -> Void, failure : ((error: NSError) -> Void)){
