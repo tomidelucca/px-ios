@@ -51,7 +51,7 @@ public class PaymentService : MercadoPagoService {
         })
     }
     
-    public func getIssuers(method: String = "GET", uri : String = MercadoPago.MP_ENVIROMENT + "/payment_methods/card_issuers", public_key : String, payment_method_id: String, bin: String? = nil, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getIssuers(method: String = "GET", uri : String = "/v1/payment_methods/card_issuers", public_key : String, payment_method_id: String, bin: String? = nil, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         if(bin != nil){
             self.request(uri, params: "public_key=" + public_key + "&payment_method_id=" + payment_method_id + "&bin=" + bin!, body: nil, method: method, success: success, failure: failure)
         }else{
