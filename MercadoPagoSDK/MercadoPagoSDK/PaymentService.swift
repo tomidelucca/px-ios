@@ -10,11 +10,11 @@ import Foundation
 
 public class PaymentService : MercadoPagoService {
     
-    public func getPaymentMethods(method: String = "GET", uri : String = MercadoPago.MP_ENVIROMENT + "/payment_methods", public_key : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getPaymentMethods(method: String = "GET", uri : String = "/v1/payment_methods", public_key : String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
         self.request(uri, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
     }
 
-    public func getInstallments(method: String = "GET", uri : String = MercadoPago.MP_ENVIROMENT + "/payment_methods/installments", public_key : String, bin : String?, amount: Double, issuer_id: NSNumber?, payment_method_id: String, success: ([Installment]) -> Void, failure: ((error: NSError) -> Void)) {
+    public func getInstallments(method: String = "GET", uri : String = "/v1/payment_methods/installments", public_key : String, bin : String?, amount: Double, issuer_id: NSNumber?, payment_method_id: String, success: ([Installment]) -> Void, failure: ((error: NSError) -> Void)) {
         var params : String = "public_key=" + public_key
         if(bin != nil){
                     params = params + "&bin=" + bin!
