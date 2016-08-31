@@ -10,7 +10,7 @@ import Foundation
 
 public class PromosService : MercadoPagoService {
 	
-	public func getPromos(url : String = MercadoPago.MP_ENVIROMENT + "/payment_methods/deals", method : String = "GET", public_key: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
+	public func getPromos(url : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods/deals", method : String = "GET", public_key: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
 		self.request(url, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
 	}
     

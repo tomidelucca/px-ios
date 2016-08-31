@@ -10,7 +10,7 @@ import UIKit
 
 public class InstructionsService: MercadoPagoService {
 
-    public let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/checkout/payments/${payment_id}/results"
+    public let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/payments/${payment_id}/results"
     
     public init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
