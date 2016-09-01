@@ -15,6 +15,8 @@ public class CustomerPaymentMethod: NSObject {
     var type : String!
     var value : String!
     
+    var securityCode : SecurityCode = SecurityCode()
+    
     public class func fromJSON(json : NSDictionary) -> CustomerPaymentMethod {
         let customerPaymentMethod = CustomerPaymentMethod()
         
@@ -53,5 +55,42 @@ public class CustomerPaymentMethod: NSObject {
         return self.toJSON().toString()
     }
 
+    public func isSecurityCodeRequired() -> Bool {
+        return true;
+    }
+    
+    public func getCardId() -> String {
+        return self.value
+    }
+    
+    public func getCardSecurityCode() -> SecurityCode {
+        return self.securityCode
+    }
+    
+    public func getCardDescription() -> String {
+        return self._description
+    }
+    
+    public func getPaymentMethod() -> PaymentMethod {
+        let pm = PaymentMethod()
+        pm._id = self._id
+        return pm
+    }
+    
+    public func getPaymentMethodId() -> String {
+        return self._id
+    }
+    
+    public func getCardBin() -> String? {
+        return "XXXX"
+    }
+    
+    public func getCardLastForDigits() -> String? {
+        return "XXXX"
+    }
+    
+    public func setupPaymentMethodSettings(settings : [Setting]) {
+        self.securityCode = settings[0].securityCode
+    }
     
 }
