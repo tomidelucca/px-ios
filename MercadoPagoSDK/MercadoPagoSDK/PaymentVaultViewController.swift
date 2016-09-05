@@ -453,5 +453,4 @@ class PaymentVaultViewModel : NSObject {
 
     }
     
-
 }
