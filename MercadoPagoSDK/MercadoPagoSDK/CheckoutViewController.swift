@@ -498,3 +498,81 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.callbackCancel!()
     }
 }
+
+public class CheckoutViewModel {
+    
+    var paymentMethod : PaymentMethod?
+    var paymentMethodSearch : PaymentMethodSearch?
+    
+    func isPaymentMethodSelectedCard() -> Bool {
+        return self.paymentMethod != nil && !paymentMethod!.isOfflinePaymentMethod() && self.paymentMethod!._id != "account_money"
+    }
+    
+    func numberOfSections() -> Int {
+        return (self.paymentMethod != nil) ? 2 : 0
+    }
+    
+    func isPaymentMethodSelected() -> Bool {
+        return paymentMethod != nil
+    }
+    
+    func numberOfRowsInMainSection() -> Int {
+        if (self.paymentMethod == nil) {
+            return 2
+        } else if !isPaymentMethodSelectedCard(){
+            return 3
+        }
+        return 4
+    }
+    
+    func isUniquePaymentMethodAvailable() -> Bool {
+        return self.paymentMethodSearch != nil && self.paymentMethodSearch!.paymentMethods.count == 1
+    }
+    
+    func paymentMethodSearchItemSelected() -> PaymentMethodSearchItem {
+        let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)!
+        let paymentMethodSearchItemSelected : PaymentMethodSearchItem
+        if paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
+            paymentMethodSearchItemSelected = PaymentMethodSearchItem()
+            paymentMethodSearchItemSelected.description = "Dinero en cuenta"
+        } else {
+            paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: paymentTypeIdEnum)!
+        }
+        return paymentMethodSearchItemSelected
+    }
+    
+    func checkoutTableHeaderHeight(section : Int) -> CGFloat {
+        if section == 0 {
+            return 0.1
+        }
+        return 13
+    }
+    
+    func heightForRow(indexPath : NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 120
+        }
+        
+        switch indexPath.row {
+        case 0:
+            if self.isPaymentMethodSelectedCard() {
+                return 48
+            }
+            return 80
+        case 1:
+            if self.isPaymentMethodSelectedCard() {
+                return 48
+            }
+            return 60
+        case 2:
+            if self.isPaymentMethodSelectedCard() {
+                return 50
+            }
+            return 160
+        default:
+            return 160
+        }
+
+>>>>>>> 9b7831a... Fix uri env
+    }
+}
