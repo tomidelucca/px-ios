@@ -37,7 +37,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var token : Token?
     var cardToken : CardToken?
     var paymentSettings : PaymentPreference?
-    var callback : (( paymentMethod: PaymentMethod,cardtoken: CardToken?) -> Void)?
+    var callback : ((PaymentMethod, CardToken?) -> Void)?
     var amount : Double?
     
     
@@ -77,7 +77,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController?.navigationBar.translucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
  
-                var promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: "verPromociones")
+                let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = UIColor.systemFontColor()
 
                 
@@ -91,7 +91,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     }
 
 
-    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((paymentMethod: PaymentMethod, cardToken: CardToken?) -> Void), callbackCancel : (Void -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil,paymentMethods : [PaymentMethod]? = nil,  callback : ((PaymentMethod, CardToken?) -> Void), callbackCancel : (Void -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.paymentSettings = paymentSettings
         self.token = token
@@ -794,7 +794,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
 
         
-         self.callback!(paymentMethod: self.paymentMethod!, cardtoken: cardtoken)
+         self.callback!(self.paymentMethod!, cardtoken)
     }
     
     
@@ -822,7 +822,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func addCvvDot() -> Bool {
     
-        var label = self.cvvLabel
+        let label = self.cvvLabel
         //Check for max length including the spacers we added
         if label?.text?.characters.count == cvvLenght(){
             return false

@@ -101,7 +101,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
     }
     
 
-    public func createNewCardToken(cardToken : CardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func createNewCardToken(cardToken : CardToken, success: (_  : Token?) -> Void, failure: ((_ : NSError) -> Void)?) {
         
         if self.publicKey() != nil {
             cardToken.device = Device()
@@ -111,22 +111,22 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let tokenDic = jsonResult as? NSDictionary {
                     if tokenDic["error"] == nil {
                         token = Token.fromJSON(tokenDic)
-                        success(token: token)
+                        success(token)
                     } else {
                         if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
                         }
                     }
                 }
                 }, failure: failure)
         } else {
             if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
+                failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
             }
         }
     }
     
-    public func createToken(savedCardToken : SavedCardToken, success: (token : Token?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func createToken(savedCardToken : SavedCardToken, success: (_ : Token?) -> Void, failure: ((_ : NSError) -> Void)?) {
         
         if self.publicKey() != nil {
             savedCardToken.device = Device()
@@ -137,22 +137,22 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let tokenDic = jsonResult as? NSDictionary {
                     if tokenDic["error"] == nil {
                         token = Token.fromJSON(tokenDic)
-                        success(token: token)
+                        success(token)
                     } else {
                         if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
                         }
                     }
                 }
                 }, failure: failure)
         } else {
             if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
+                failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
             }
         }
     }
     
-    public func getIdentificationTypes(success: (identificationTypes: [IdentificationType]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getIdentificationTypes(success: (_ : [IdentificationType]?) -> Void, failure: ((_ : NSError) -> Void)?) {
         
         if self.publicKey() != nil {
             let service : IdentificationService = IdentificationService(baseURL: MercadoPago.MP_API_BASE_URL)
@@ -161,31 +161,31 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let error = jsonResult as? NSDictionary {
                     if (error["status"]! as? Int) == 404 {
                         if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as [NSObject : AnyObject]))
                         }
                     }
                 } else {
                     let identificationTypesResult = jsonResult as? NSArray?
                     var identificationTypes : [IdentificationType] = [IdentificationType]()
                     if identificationTypesResult != nil {
-                        for var i = 0; i < identificationTypesResult!!.count; i++ {
+                        for i in 0 ..< identificationTypesResult!!.count {
                             if let identificationTypeDic = identificationTypesResult!![i] as? NSDictionary {
                                 identificationTypes.append(IdentificationType.fromJSON(identificationTypeDic))
                             }
                         }
                     }
-                    success(identificationTypes: identificationTypes)
+                    success(identificationTypes)
                 }
                 }, failure: failure)
         } else {
             if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
+                failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
             }
         }
     }
     
-    @available(*, deprecated=2.0)
-    public func getInstallments(bin: String, amount: Double, issuerId: NSNumber?, paymentTypeId: String, success: (installments: [Installment]?) -> Void, failure: ((error: NSError) -> Void)) {
+    @available(*, deprecated=2.0.0)
+    public func getInstallments(bin: String, amount: Double, issuerId: NSNumber?, paymentTypeId: String, success: ([Installment]?) -> Void, failure: ((NSError) -> Void)) {
         
         if self.publicKey() != nil {
             let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
@@ -194,7 +194,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-    public func getIssuers(paymentMethodId : String, success: (issuers: [Issuer]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getIssuers(paymentMethodId : String, success: (_ : [Issuer]?) -> Void, failure: ((_ : NSError) -> Void)?) {
         
         if self.publicKey() != nil {
             let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
@@ -202,7 +202,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {
-                            failure!(error: NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
                         }
                     }
                 } else {
@@ -215,30 +215,30 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                             }
                         }
                     }
-                    success(issuers: issuers)
+                    success(issuers)
                 }
                 }, failure: failure)
         } else {
             if failure != nil {
-                failure!(error: NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
+                failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_KEY_CODE, userInfo: ["message": "Unsupported key type for this method"]))
             }
         }
     }
     
-    public func getPromos(success: (promos: [Promo]?) -> Void, failure: ((error: NSError) -> Void)?) {
+    public func getPromos(success: (_ : [Promo]?) -> Void, failure: ((_ : NSError) -> Void)?) {
         // TODO: Está hecho para MLA fijo porque va a cambiar la URL para que dependa de una API y una public key
         let service : PromosService = PromosService(baseURL: MercadoPago.MP_API_BASE_URL)
         service.getPromos(public_key: self.publicKey()!, success: { (jsonResult) -> Void in
             let promosArray = jsonResult as? NSArray?
             var promos : [Promo] = [Promo]()
             if promosArray != nil {
-                for var i = 0; i < promosArray!!.count; i++ {
+                for i in 0 ..< promosArray!!.count {
                     if let promoDic = promosArray!![i] as? NSDictionary {
                         promos.append(Promo.fromJSON(promoDic))
                     }
                 }
             }
-            success(promos: promos)
+            success(promos)
             }, failure: failure)
         
     }
@@ -374,7 +374,7 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
         
     }
     
-    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, success: (payment: Payment) -> Void, failure: ((error: NSError) -> Void)?) {
+    public class func createMPPayment(email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, success: (_ : Payment) -> Void, failure: ((_ : NSError) -> Void)?) {
     
         var issuerId = ""
         if issuer != nil {
@@ -395,22 +395,22 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
+                        failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
                         payment = Payment.fromJSON(paymentDic)
-                        success(payment: payment!)
+                        success(payment!)
                         // Clear payment key after post payment success
                         MercadoPagoContext.clearPaymentKey()
                     } else {
-                        failure!(error: NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
                     }
                     
                 }
             } else {
                 if failure != nil {
-                    failure!(error: NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
+                    failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
                 }
             }}, failure: failure)
 
