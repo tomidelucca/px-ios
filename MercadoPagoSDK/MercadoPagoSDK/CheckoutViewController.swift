@@ -193,7 +193,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         } else if indexPath.row == 2 {
             if paymentMethod != nil && paymentMethod!.isOfflinePaymentMethod() {
                 let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
-                termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+                termsAndConditionsButton.paymentButton.addTarget(self, action: #selector(CheckoutViewController.confirmPayment), forControlEvents: .TouchUpInside)
                 termsAndConditionsButton.delegate = self
                 return termsAndConditionsButton
             } else {
@@ -213,7 +213,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             }
         } else if indexPath.row == 3 {
             let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
-            termsAndConditionsButton.paymentButton.addTarget(self, action: "confirmPayment", forControlEvents: .TouchUpInside)
+            termsAndConditionsButton.paymentButton.addTarget(self, action: #selector(CheckoutViewController.confirmPayment), forControlEvents: .TouchUpInside)
             return termsAndConditionsButton
         }
         
@@ -246,7 +246,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             exitButtonCell.callbackCancel = {
                 self.dismissViewControllerAnimated(true, completion: {})
             }
-            exitButtonCell.exitButton.addTarget(self, action: "exitCheckoutFlow", forControlEvents: .TouchUpInside)
+            exitButtonCell.exitButton.addTarget(self, action: #selector(CheckoutViewController.exitCheckoutFlow), forControlEvents: .TouchUpInside)
             return exitButtonCell
         }
         return nil

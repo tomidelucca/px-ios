@@ -16,11 +16,11 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
     var items : [PaymentMethodRow]!
     var cards : [Card]?
     var bundle : NSBundle? = MercadoPago.getBundle()
-    var callback : ((selectedCard: Card?) -> Void)?
+    var callback : ((_ : Card?) -> Void)?
     override public var screenName : String { get { return "CUSTOMER_CARDS" } }
     
     
-    public init(cards: [Card]?, callback: (selectedCard: Card?) -> Void) {
+    public init(cards: [Card]?, callback: (_ : Card?) -> Void) {
         super.init(nibName: "CustomerCardsViewController", bundle: bundle)
         self.cards = cards
         self.callback = callback
@@ -41,7 +41,7 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
 
 		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "newCard")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(CustomerCardsViewController.newCard))
 
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
@@ -74,7 +74,7 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
     }
     
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        callback!(selectedCard: self.cards![indexPath.row])
+        callback!(self.cards![indexPath.row])
     }
     
     public func loadCards() {
@@ -91,6 +91,6 @@ public class CustomerCardsViewController : MercadoPagoUIViewController, UITableV
     }
     
     public func newCard() {
-        callback!(selectedCard: nil)
+        callback!(nil)
     }
 }
