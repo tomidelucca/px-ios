@@ -258,7 +258,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
             exitButtonCell.callbackCancel = {
                 self.dismissViewControllerAnimated(true, completion: {})
             }
-            exitButtonCell.exitButton.addTarget(self, action: "exitCheckoutFlow", forControlEvents: .TouchUpInside)
+            exitButtonCell.exitButton.addTarget(self, action: #selector(CheckoutViewController.exitCheckoutFlow), forControlEvents: .TouchUpInside)
             return exitButtonCell
         }
         return nil
@@ -485,6 +485,63 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .None
+    }
+    
+    internal func drawOfflinePaymentMethodTable(indexPath : NSIndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            let cell = self.checkoutTable.dequeueReusableCellWithIdentifier("offlinePaymentCell") as! OfflinePaymentMethodCell
+            cell.fillRowWithPaymentMethod(self.viewModel!.paymentMethod!, paymentMethodSearchItemSelected: self.viewModel!.paymentMethodSearchItemSelected())
+            if self.viewModel!.isUniquePaymentMethodAvailable() {
+                cell.selectionStyle = .None
+                cell.accessoryType = .None
+            }
+            return cell
+        case 1 :
+            let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
+            
+            footer.layer.shadowOffset = CGSizeMake(0, 1)
+            footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+            footer.layer.shadowRadius = 1
+            footer.layer.shadowOpacity = 0.6
+            footer.setAmount(self.preference!.getAmount(), currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
+            return footer
+        case 2 :
+            let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
+            termsAndConditionsButton.paymentButton.addTarget(self, action: #selector(CheckoutViewController.confirmPayment), forControlEvents: .TouchUpInside)
+            termsAndConditionsButton.delegate = self
+            return termsAndConditionsButton
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    internal func drawCreditCardTable(indexPath : NSIndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            let paymentSearchCell = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentSelectedCell") as! PaymentMethodSelectedTableViewCell
+            paymentSearchCell.fillRowWithPaymentMethod(self.viewModel!.paymentMethod!, lastFourDigits: self.token!.lastFourDigits)
+            ViewUtils.drawBottomLine(y : 47, width: self.view.bounds.width, inView: paymentSearchCell)
+            return paymentSearchCell
+        case 1:
+            let installmentsCell = self.checkoutTable.dequeueReusableCellWithIdentifier("installmentSelectionCell") as! InstallmentSelectionTableViewCell
+            installmentsCell.fillCell(self.payerCost!)
+            return installmentsCell
+        case 2 :
+            let totalAmount = self.payerCost == nil ? self.preference!.getAmount() : self.payerCost!.totalAmount
+            let footer = self.checkoutTable.dequeueReusableCellWithIdentifier("paymentDescriptionFooter") as! PaymentDescriptionFooterTableViewCell
+            
+            footer.layer.shadowOffset = CGSizeMake(0, 1)
+            footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+            footer.layer.shadowRadius = 1
+            footer.layer.shadowOpacity = 0.6
+            footer.setAmount(totalAmount, currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
+            return footer
+        default:
+            let termsAndConditionsButton = self.checkoutTable.dequeueReusableCellWithIdentifier("purchaseTermsAndConditions") as! TermsAndConditionsViewCell
+            termsAndConditionsButton.paymentButton.addTarget(self, action: #selector(CheckoutViewController.confirmPayment), forControlEvents: .TouchUpInside)
+            return termsAndConditionsButton
+        }
     }
     
     internal func openTermsAndConditions(title: String, url : NSURL){
