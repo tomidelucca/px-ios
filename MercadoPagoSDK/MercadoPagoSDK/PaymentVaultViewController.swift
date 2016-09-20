@@ -189,13 +189,12 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         
         switch indexPath.section {
         case 0:
-            if self.viewModel.getCustomerCardsToDisplayCount() > 0 {
+            if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
                 let customerCardSelected = self.viewModel.customerCards![indexPath.row] as CardInformation
                 let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
-                //TODO : balance CC & blacklabel
                customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
                 let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
-                    self.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
+                    self.viewModel!.callback(paymentMethod: paymentMethod, token: token, issuer: issuer, payerCost: payerCost)
                     }, callbackCancel: {
                         self.navigationController!.popToViewController(self, animated: true)
                 })
@@ -246,7 +245,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
         
         if self.viewModel.currentPaymentMethodSearch == nil {
             self.showLoading()
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, customerAccessToken: self.customerAccessToken, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 
                 self.viewModel.setPaymentMethodSearch(paymentMethodSearchResponse)
                 self.hideLoading()
@@ -374,11 +373,11 @@ class PaymentVaultViewModel : NSObject {
     }
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
-        let numberOfRows = self.displayPayWithMP() ? 1 : 0
         if (self.customerCards != nil && self.customerCards?.count > 0) {
-            return (self.customerCards!.count <= (3 - numberOfRows)) ? self.customerCards!.count + numberOfRows : 3
+            return (self.customerCards!.count <= 3 ? self.customerCards!.count : 3)
         }
-        return numberOfRows
+        return 0
+        
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
