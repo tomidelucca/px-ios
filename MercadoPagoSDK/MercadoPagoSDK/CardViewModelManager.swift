@@ -29,7 +29,11 @@ class CardViewModelManager: NSObject {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.paymentMethod = paymentMethod
-        self.customerCard = customerCard
+        
+        if customerCard != nil {
+            self.customerCard = customerCard
+            self.paymentMethod = customerCard?.getPaymentMethod()
+        }
         self.token = token
         self.paymentSettings = paymentSettings
     }
@@ -83,7 +87,6 @@ class CardViewModelManager: NSObject {
         }
     }
     
-    /*TODO : VER QUE ONDA, PORQUE DOS VALID CVV?? **/
     func isValidInputCVV(text : String) -> Bool{
         if( text.characters.count > self.cvvLenght() ){
             return false
