@@ -46,7 +46,6 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         self.stepsExamplesTable.delegate = self
         self.stepsExamplesTable.dataSource = self
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,13 +91,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func startPaymentVault(){
-         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
-        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
+        /*MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
         MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
-
-        MercadoPagoContext.setPublicKey("APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8")
+*/
         let pv = MPFlowBuilder.startPaymentVaultViewController(1000, callback: { (paymentMethod, token, issuer, payerCost) in
 
             self.paymentMethod = paymentMethod
