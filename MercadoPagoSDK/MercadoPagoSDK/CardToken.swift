@@ -13,14 +13,21 @@ public class CardToken : NSObject {
     
     let MIN_LENGTH_NUMBER : Int = 10
     let MAX_LENGTH_NUMBER : Int = 19
+    
+    public var device : Device?
+    public var securityCode : String?
+    
     let now = NSCalendar.currentCalendar().components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit], fromDate: NSDate())
     
     public var cardNumber : String?
-    public var securityCode : String?
     public var expirationMonth : Int = 0
     public var expirationYear : Int = 0
     public var cardholder : Cardholder?
-    public var device : Device?
+    
+    
+    public override init(){
+        super.init()
+    }
     
     public init (cardNumber: String?, expirationMonth: Int, expirationYear: Int,
         securityCode: String?, cardholderName: String, docType: String, docNumber: String) {
@@ -260,7 +267,7 @@ public class CardToken : NSObject {
             return false
         }
         
-        for var index = (cardNumber.characters.count-1); index >= 0; index-- {
+        for var index = (cardNumber.characters.count-1); index >= 0; index -= 1 {
             _ = NSRange(location: index, length: 1)
             var s = cardNumber as NSString
             s = s.substringWithRange(NSRange(location: index, length: 1))
@@ -319,4 +326,7 @@ public class CardToken : NSObject {
         return str
     }
     
+    public func isCustomerPaymentMethod() -> Bool {
+        return false
+    }
 }

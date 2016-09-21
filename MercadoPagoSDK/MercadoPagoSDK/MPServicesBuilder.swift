@@ -64,6 +64,34 @@ public class MPServicesBuilder : NSObject {
 
     }
     
+    public class func cloneToken(token : Token,
+                                 securityCode: String,
+                                  success: (token : Token?) -> Void,
+                                  failure: ((error: NSError) -> Void)?) {
+        
+        MercadoPagoContext.initFlavor1()
+        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CLONE_TOKEN", result: nil)
+        let service : GatewayService = GatewayService(baseURL: MercadoPago.MP_API_BASE_URL)
+        service.cloneToken(public_key: MercadoPagoContext.publicKey(), token: token,securityCode: securityCode, success:{(jsonResult: AnyObject?) -> Void in
+            var token : Token? = nil
+            if let tokenDic = jsonResult as? NSDictionary {
+                if tokenDic["error"] == nil {
+                    token = Token.fromJSON(tokenDic)
+                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                    success(token: token)
+                } else {
+                    if failure != nil {
+                        failure!(error: NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
+                    }
+                }
+            }
+            }, failure: failure)
+        
+        
+    }
+
+    
+    
     public class func getPaymentMethods(
                         success: (paymentMethods: [PaymentMethod]?) -> Void,
                         failure: ((error: NSError) -> Void)?) {
@@ -113,7 +141,7 @@ public class MPServicesBuilder : NSObject {
                     let identificationTypesResult = jsonResult as? NSArray?
                     var identificationTypes : [IdentificationType] = [IdentificationType]()
                     if identificationTypesResult != nil {
-                        for var i = 0; i < identificationTypesResult!!.count; i++ {
+                        for i in 0 ..< identificationTypesResult!!.count {
                             if let identificationTypeDic = identificationTypesResult!![i] as? NSDictionary {
                                 identificationTypes.append(IdentificationType.fromJSON(identificationTypeDic))
                             }
@@ -178,7 +206,7 @@ public class MPServicesBuilder : NSObject {
             let promosArray = jsonResult as? NSArray?
             var promos : [Promo] = [Promo]()
             if promosArray != nil {
-                for var i = 0; i < promosArray!!.count; i++ {
+                for i in 0 ..< promosArray!!.count {
                     if let promoDic = promosArray!![i] as? NSDictionary {
                         promos.append(Promo.fromJSON(promoDic))
                     }
@@ -224,11 +252,8 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    
-    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?,
-                         success: PaymentMethodSearch -> Void,
-                         failure: ((error: NSError) -> Void)?) {
-        
+
+    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: PaymentMethodSearch -> Void, failure: ((error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHOD_SEARCH", result: nil)
         let paymentMethodSearchService = PaymentMethodSearchService()

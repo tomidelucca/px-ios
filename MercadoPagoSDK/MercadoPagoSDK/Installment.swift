@@ -52,7 +52,7 @@ public class Installment : NSObject {
         return JSON(obj).toString()
     }
     
-    public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = nil) -> Int{
+    public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = 0) -> Int{
         var count = 0
         if (maxNumberOfInstallments == 0 || maxNumberOfInstallments == nil){
             return self.payerCosts!.count
@@ -61,7 +61,7 @@ public class Installment : NSObject {
             if (pc.installments > maxNumberOfInstallments){
                 return count
             }
-            count++
+            count += 1
         }
         
         return count
