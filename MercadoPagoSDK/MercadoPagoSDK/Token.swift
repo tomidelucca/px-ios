@@ -51,8 +51,12 @@ public class Token : NSObject {
 	}
     
     public func getBin() -> String? {
-        let range = Range(start: firstSixDigit!.startIndex, end: firstSixDigit!.characters.startIndex.advancedBy(6))
-        let bin :String? = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substringWithRange(range) : nil
+        var bin :String? = nil
+        if firstSixDigit != nil && firstSixDigit.characters.count > 0 {
+            let range = Range(start: firstSixDigit!.startIndex, end: firstSixDigit!.characters.startIndex.advancedBy(6))
+            bin = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substringWithRange(range) : nil
+        }
+        
         return bin
     }
       
@@ -120,12 +124,10 @@ public class Token : NSObject {
     }
     public func getExpirationDateFormated() -> String {
         
-        var str : String
-        
-        
-        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
-        
-        return str
+        if self.expirationYear > 0 && self.expirationMonth > 0 {
+            return String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+        }
+        return "DD/MM"
     }
 }
 

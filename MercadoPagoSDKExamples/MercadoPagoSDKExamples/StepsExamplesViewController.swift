@@ -92,18 +92,21 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     public func startPaymentVault(){
+         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
         MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
-        MPServicesBuilder.searchPaymentMethods(200, excludedPaymentTypeIds: ["credit_card"], excludedPaymentMethodIds: ["rapipago"], success: { (paymentMethodSearch : PaymentMethodSearch) in
-                let pv = MPFlowBuilder.startPaymentVaultViewController(200, paymentMethodSearch: paymentMethodSearch, callback: { (paymentMethod, token, issuer, payerCost) in
-                    NSLog(paymentMethod._id)
-                })
-            
-            self.presentViewController(pv, animated: true, completion: {})
+        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
+        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
+        MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
 
-            }) { (error) in
-                
-        }
-        
+        MercadoPagoContext.setPublicKey("APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8")
+        let pv = MPFlowBuilder.startPaymentVaultViewController(1000, callback: { (paymentMethod, token, issuer, payerCost) in
+
+            self.paymentMethod = paymentMethod
+            self.createdToken = token
+            self.selectedIssuer = issuer
+            self.installmentsSelected = payerCost
+        })
+        self.presentViewController(pv, animated: true, completion: {})
     }
     
     private func startCardFlow(){
