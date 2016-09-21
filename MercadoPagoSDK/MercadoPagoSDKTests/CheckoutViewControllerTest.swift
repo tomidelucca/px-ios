@@ -324,7 +324,7 @@ class CheckoutViewControllerTest: BaseTest {
         self.checkoutViewController = MockCheckoutViewController(preferenceId: MockBuilder.PREF_ID_NO_EXCLUSIONS, callback: { (payment : Payment) in
             
         })
-        let numberOfSections = self.checkoutViewController?.numberOfSectionsInTableView(self.checkoutViewController?.checkoutTable)
+        let numberOfSections = self.checkoutViewController?.numberOfSectionsInTableView((self.checkoutViewController?.checkoutTable)!)
         XCTAssertTrue(numberOfSections == 0)
         
         self.checkoutViewController?.paymentMethod = MockBuilder.buildPaymentMethod("amex")
