@@ -110,7 +110,6 @@ public class PayerCostViewController: MercadoPagoUIViewController {
             let labelMask = (paymentMethod?.getLabelMask() != nil) ? paymentMethod?.getLabelMask() : "XXXX XXXX XXXX XXXX"
             let textMaskFormaterAux = TextMaskFormater(mask: labelMask, leftToRight:false)
             cardFront?.cardNumber.text =  textMaskFormaterAux.textMasked((self.token!.lastFourDigits as String))
-        // TODO
 
         
                 
