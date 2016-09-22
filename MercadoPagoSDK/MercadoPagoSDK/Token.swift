@@ -127,7 +127,7 @@ public class Token : NSObject {
         if self.expirationYear > 0 && self.expirationMonth > 0 {
             return String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
         }
-        return "DD/MM"
+        return ""
     }
 }
 

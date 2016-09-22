@@ -57,36 +57,6 @@ class PaymentVaultViewControllerTest: BaseTest {
         XCTAssertNil(self.paymentVaultViewController!.viewModel.paymentPreference)
 
     }
-    
-    func testInitWithCustomerAccessToken() {
-        
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, customerAccessToken : MockBuilder.CUSTOMER_ACCESS_TOKEN, callback: { (paymentMethod, tokenId, issuer, installments) -> Void in
-            
-        })
-        
-        XCTAssertEqual(paymentVaultViewController!.merchantBaseUrl, MercadoPagoContext.baseURL())
-        XCTAssertEqual(paymentVaultViewController!.publicKey, MercadoPagoContext.publicKey())
-        XCTAssertEqual(paymentVaultViewController!.merchantAccessToken,  MercadoPagoContext.merchantAccessToken())
-        XCTAssertNil(paymentVaultViewController?.viewModel.currentPaymentMethodSearch)
-        XCTAssertNil(paymentVaultViewController?.viewModel.paymentMethods)
-        
-        self.simulateViewDidLoadFor(self.paymentVaultViewController!)
-        let nav = UINavigationController(rootViewController: self.paymentVaultViewController!)
-        
-        XCTAssertNotNil(self.paymentVaultViewController?.viewModel.currentPaymentMethodSearch)
-        XCTAssertTrue(self.paymentVaultViewController?.viewModel.currentPaymentMethodSearch!.count > 1)
-        XCTAssertNotNil(paymentVaultViewController?.viewModel.paymentMethods)
-        XCTAssertNotNil(paymentVaultViewController?.viewModel.paymentMethods.count > 1)
-        XCTAssertNotNil(self.paymentVaultViewController?.paymentsTable)
-        // Verify customer payment methods in section 0
-        XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(0) == 3)
-        // Payments options
-        XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(1) > 0)
-        
-        XCTAssertEqual(self.paymentVaultViewController?.viewModel.amount, 2000)
-        XCTAssertNil(self.paymentVaultViewController!.viewModel.paymentPreference)
-        XCTAssertEqual(self.paymentVaultViewController!.viewModel.customerAccessToken, MockBuilder.CUSTOMER_ACCESS_TOKEN)
-    }
 
     /*
      * Selección de medio de pago: se excluyen medios off (solo tarjeta disponible). Se redirige al usuario al formulario de tarjeta.
@@ -427,7 +397,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     func testPaymentVaultMLAwithCustomerPaymentMethodsFromGroups_selectPayWithMP(){
     
         
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, customerAccessToken: MockBuilder.CUSTOMER_ACCESS_TOKEN, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -486,7 +456,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testsCellForRow(){
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, customerAccessToken: MockBuilder.CUSTOMER_ACCESS_TOKEN, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
@@ -502,7 +472,7 @@ class PaymentVaultViewControllerTest: BaseTest {
     }
     
     func testsDidSelectRow(){
-        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, customerAccessToken: MockBuilder.CUSTOMER_ACCESS_TOKEN, callback: { (paymentMethod, token, issuer, payerCost) in
+        self.paymentVaultViewController = MockPaymentVaultViewController(amount: 2000, paymentPreference: nil, callback: { (paymentMethod, token, issuer, payerCost) in
             XCTAssertNotNil(paymentMethod)
             // Verificar selección correcta
             XCTAssertEqual(paymentMethod, self.paymentMethodSelected)
