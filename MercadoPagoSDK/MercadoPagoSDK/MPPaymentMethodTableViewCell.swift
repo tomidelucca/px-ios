@@ -45,8 +45,7 @@ public class MPPaymentMethodTableViewCell : UITableViewCell {
         if card == nil || paymentMethod == nil {
 			setEmptyPaymentMethod()
         } else {
-            let range = Range(start: card!.cardNumber!.characters.endIndex.advancedBy(-4),
-                end: card!.cardNumber!.endIndex)
+            let range = card!.cardNumber!.characters.endIndex.advancedBy(-4) ..< card!.cardNumber!.endIndex
             let lastFourDigits : String = card!.cardNumber!.substringWithRange(range)
             self.cardTextLabel.text = paymentMethod!.name + " " + "terminada en".localized + " " + lastFourDigits
             self.cardIcon.image = MercadoPago.getImage(paymentMethod!._id)

@@ -84,7 +84,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         
         self.showLoading()
         if(issuerList == nil){

@@ -276,11 +276,8 @@ public class MercadoPago : NSObject, UIAlertViewDelegate {
                 return nil
             }
         }
-        if #available(iOS 8.0, *) {
-            return UIImage(named:name!, inBundle: bundle, compatibleWithTraitCollection:nil)
-        } else {
-        }
-        return nil
+        return UIImage(named:name!, inBundle: bundle, compatibleWithTraitCollection:nil)
+    
     }
     
     public class func screenBoundsFixedToPortraitOrientation() -> CGRect {

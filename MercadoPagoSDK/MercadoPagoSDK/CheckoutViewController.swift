@@ -78,7 +78,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
         self.showLoading()
         if preference == nil {
             self.displayBackButton()
-            self.navigationItem.leftBarButtonItem?.action = Selector("invokeCallbackCancel")
+            self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
             self.loadPreference()
         } else {
             if self.viewModel!.paymentMethod != nil {
@@ -96,7 +96,7 @@ public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDat
                 
             } else {
                 self.displayBackButton()
-                self.navigationItem.leftBarButtonItem?.action = Selector("invokeCallbackCancel")
+                self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
                 self.loadGroupsAndStartPaymentVault(true)
             }
         }

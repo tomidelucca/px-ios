@@ -184,16 +184,16 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
         
         sharedInstance.private_key = private_key
-      let   cardFront = CardFrontView()
-      let  cardBack = CardBackView()
+      _ = CardFrontView()
+      _ = CardBackView()
         
     }
     
     public class func setPublicKey(public_key : String){
         
        sharedInstance.public_key = public_key
-       let cardFront = CardFrontView()
-       let  cardBack = CardBackView()
+       _ = CardFrontView()
+       _ = CardBackView()
         
     }
     

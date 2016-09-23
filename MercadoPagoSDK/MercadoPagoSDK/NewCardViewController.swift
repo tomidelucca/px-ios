@@ -287,10 +287,7 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		}
 		
 		if self.tableView.respondsToSelector(Selector("setSeparatorInset:")) {
-			if #available(iOS 8.0, *) {
 				self.tableView.layoutMargins = UIEdgeInsetsZero
-			} else {
-			}
 		}
 	}
 	
@@ -300,10 +297,7 @@ public class NewCardViewController : MercadoPagoUIViewController, UITableViewDat
 		}
 		
 		if cell.respondsToSelector(Selector("setSeparatorInset:")) {
-			if #available(iOS 8.0, *) {
 				cell.layoutMargins = UIEdgeInsetsZero
-			} else {
-			}
 		}
 	}
 	

@@ -224,8 +224,8 @@ public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaym
 
     private func getScreenName() -> String {
         let layoutName = self.getLayoutName(self.payment)
-        let t = self.congratsLayout[layoutName] as! NSDictionary
-        return t["screenName"] as! String
+        let t = self.congratsLayout[layoutName]
+        return t!["screenName"] as! String
     }
     
     override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {

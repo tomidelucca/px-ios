@@ -18,7 +18,6 @@ public class ErrorTableViewCell : UITableViewCell {
             if self.errorView != nil {
                 self.errorView!.removeFromSuperview()
             }
-            self.errorView == nil
         } else {
             self.errorView = GenericErrorView(frame: CGRectMake(0, height, self.frame.width, 0))
             self.errorView!.setErrorMessage(error!)

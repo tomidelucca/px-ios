@@ -248,16 +248,11 @@ public class VaultViewController : MercadoPagoUIViewController, UITableViewDataS
     }
     
     public func showViewController(vc: UIViewController) {
-        if #available(iOS 8.0, *) {
             self.showViewController(vc, sender: self)
-        } else {
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
     }
     
     public func loadPayerCosts() {
         self.view.addSubview(self.loadingView)
-        let mercadoPago : MercadoPago = MercadoPago(publicKey: self.publicKey!)
         MPServicesBuilder.getInstallments(self.bin, amount: self.amount, issuer: self.selectedIssuer!, paymentMethodId: self.selectedPaymentMethod!._id, success: { (installments) in
             if installments != nil {
                 self.payerCosts = installments![0].payerCosts

@@ -122,7 +122,7 @@ public class PaymentVaultViewController: MercadoPagoUIViewController, UITableVie
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
     public override func viewDidAppear(animated: Bool) {

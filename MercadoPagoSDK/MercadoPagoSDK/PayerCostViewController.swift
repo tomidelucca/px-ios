@@ -65,7 +65,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         super.viewDidAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         if self.installments == nil {
             self.showLoading()
             self.getInstallments()

@@ -104,7 +104,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         
         if(callbackCancel != nil){
             self.navigationItem.leftBarButtonItem?.target = self
-            self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         }
         
          textEditMaskFormater.emptyMaskElement = nil
@@ -126,17 +126,11 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
             let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true)
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(self.cardFormManager!.customerCard?.getCardBin(), remasked: false)
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(self.cardFormManager!.customerCard?.getCardBin(), remasked: false)
-            
-            let textMaskFormaterAuxSec = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true, leftToRight: false)
-         //   textMaskFormaterAuxSec.textMasked(self.)
-            self.prepareCVVLabelForEdit()
+             self.prepareCVVLabelForEdit()
         } else if cardFormManager!.token != nil {
             let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true)
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(cardFormManager!.token?.firstSixDigit, remasked: false)
             self.cardNumberLabel?.text = textMaskFormaterAux.textMasked(cardFormManager!.token?.firstSixDigit, remasked: false)
-            
-            let textMaskFormaterAuxSec = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces: true, leftToRight: false)
-            //   textMaskFormaterAuxSec.textMasked(self.)
             self.prepareCVVLabelForEdit()
             
             
@@ -670,7 +664,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
              markErrorLabel(cvvLabel!)
             }
         } else if (self.cardFormManager!.token != nil){ // C4A
-            var ct = CardToken()
+            let ct = CardToken()
             ct.securityCode = cvvLabel?.text
             self.callback!(paymentMethod: cardFormManager!.paymentMethod!, cardtoken: ct)
             return

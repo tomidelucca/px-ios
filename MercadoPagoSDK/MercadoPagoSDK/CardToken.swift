@@ -17,7 +17,7 @@ public class CardToken : NSObject {
     public var device : Device?
     public var securityCode : String?
     
-    let now = NSCalendar.currentCalendar().components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit], fromDate: NSDate())
+    let now = NSCalendar.currentCalendar().components([.Year, .Month], fromDate: NSDate())
     
     public var cardNumber : String?
     public var expirationMonth : Int = 0
@@ -131,8 +131,7 @@ public class CardToken : NSObject {
         if validSecurityCode != nil {
             return validSecurityCode
         } else {
-            let range = Range(start: cardNumber!.startIndex,
-                end: cardNumber!.characters.startIndex.advancedBy(6))
+            let range = cardNumber!.startIndex ..< cardNumber!.characters.startIndex.advancedBy(6)
             return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber!.substringWithRange(range))
         }
     }
@@ -250,8 +249,7 @@ public class CardToken : NSObject {
     public func normalizeYear(year: Int) -> Int {
         if year < 100 && year >= 0 {
             let currentYear : String = String(now.year)
-            let range = Range(start: currentYear.startIndex,
-                end: currentYear.characters.endIndex.advancedBy(-2))
+            let range = currentYear.startIndex ..< currentYear.characters.endIndex.advancedBy(-2)
             let prefix : String = currentYear.substringWithRange(range)
 			
 			let nsReturn : NSString = prefix + String(year)
@@ -267,7 +265,7 @@ public class CardToken : NSObject {
             return false
         }
         
-        for var index = (cardNumber.characters.count-1); index >= 0; index -= 1 {
+        for index in 0...(cardNumber.characters.count-1) {
             _ = NSRange(location: index, length: 1)
             var s = cardNumber as NSString
             s = s.substringWithRange(NSRange(location: index, length: 1))
@@ -288,7 +286,7 @@ public class CardToken : NSObject {
     }
     
     public func getBin() -> String? {
-        let range = Range(start: cardNumber!.startIndex, end: cardNumber!.characters.startIndex.advancedBy(6))
+        let range =  cardNumber!.startIndex ..< cardNumber!.characters.startIndex.advancedBy(6)
         let bin :String? = cardNumber!.characters.count >= 6 ? cardNumber!.substringWithRange(range) : nil
         return bin
     }

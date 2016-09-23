@@ -47,8 +47,7 @@ public class PaymentPreference: NSObject {
         }else{
             return nil
         }
-        
-        return nil
+
     }
 
     public func validate() -> Bool{

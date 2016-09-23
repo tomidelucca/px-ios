@@ -67,13 +67,8 @@ class Utils {
     
     class func getTransactionInstallmentsDescription(installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
         let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
-        let mpLightGrayColor = UIColor(netHex: 0x999999)
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
-        
-        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
-        
-
         
         let stringToWrite = NSMutableAttributedString()
         
@@ -153,7 +148,7 @@ class Utils {
         return formattedString
     }
 
-    static public func findPaymentMethodSearchItemInGroups(paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
         for item in paymentMethodSearch.groups {
             if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
                 return result
@@ -182,7 +177,7 @@ class Utils {
         return nil
     }
     
-    public static func findPaymentMethod(paymentMethods : [PaymentMethod], var paymentMethodId : String) -> PaymentMethod {
+    internal static func findPaymentMethod(paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
         let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
@@ -205,7 +200,7 @@ class Utils {
         return paymentMethod[0]
     }
     
-    public static func getAccreditationTitle(paymentMethod : PaymentMethod) -> String{
+    internal static func getAccreditationTitle(paymentMethod : PaymentMethod) -> String{
         if paymentMethod.accreditationTime == nil || !(paymentMethod.accreditationTime > 0) {
             return ""
         }
@@ -220,7 +215,7 @@ class Utils {
         return title
     }
     
-    public static func getExpirationYearFromLabelText(mmyy : String) -> Int {
+    internal static func getExpirationYearFromLabelText(mmyy : String) -> Int {
         let stringMMYY = mmyy.stringByReplacingOccurrencesOfString("/", withString: "")
         let validInt = Int(stringMMYY)
         if(validInt == nil){
@@ -233,7 +228,7 @@ class Utils {
         
     }
     
-    public static func getExpirationMonthFromLabelText(mmyy : String) -> Int {
+    internal static func getExpirationMonthFromLabelText(mmyy : String) -> Int {
         let stringMMYY = mmyy.stringByReplacingOccurrencesOfString("/", withString: "")
         let validInt = Int(stringMMYY)
         if(validInt == nil){

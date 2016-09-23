@@ -89,7 +89,7 @@ public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> 
     obj1.description == obj2.description &&
     obj1.comment == obj2.comment &&
     obj1.childrenHeader == obj2.childrenHeader &&
-    obj1.children == obj2.children
+    obj1.children == obj2.children &&
     obj1.showIcon == obj2.showIcon
     return areEqual
 }

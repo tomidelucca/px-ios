@@ -16,7 +16,7 @@ class ExitButtonTableViewCell: CallbackCancelTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.exitButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.exitButton.addTarget(self, action: #selector(invokeDefaultCallback), forControlEvents: .TouchUpInside)
         self.exitButton.setTitle("Cancelar Pago".localized, forState:.Normal)
     }
 

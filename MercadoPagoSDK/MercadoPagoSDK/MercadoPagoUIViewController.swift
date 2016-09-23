@@ -57,7 +57,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
                 let cfdata = CFDataCreate(nil, UnsafePointer<UInt8>(inData.bytes), inData.length)
                 if let provider = CGDataProviderCreateWithCFData(cfdata) {
                     let font = CGFontCreateWithDataProvider(provider)
-                        if (!CTFontManagerRegisterGraphicsFont(font!, &error)) {
+                        if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
                             print("Failed to load font: \(error)")
                         }
                         return true
@@ -154,7 +154,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         shoppingCartImage = shoppingCartImage!.imageWithRenderingMode(.AlwaysTemplate)
         let shoppingCartButton = UIBarButtonItem()
         shoppingCartButton.image = shoppingCartImage
-        shoppingCartButton.style = UIBarButtonItemStyle.Bordered
+        shoppingCartButton.style = .Plain
         shoppingCartButton.title = ""
         shoppingCartButton.target = self
         shoppingCartButton.tintColor = UIColor.whiteColor()
@@ -183,7 +183,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     internal func displayBackButton() {
         let backButton = UIBarButtonItem()
         backButton.image = MercadoPago.getImage("left_arrow")
-        backButton.style = UIBarButtonItemStyle.Bordered
+        backButton.style = .Plain
         backButton.target = self
         backButton.tintColor = UIColor.systemFontColor()
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)

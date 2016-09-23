@@ -60,7 +60,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         toolBar.sizeToFit()
         
         
-        let doneButton = UIBarButtonItem(title: "OK".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(IdentificationViewController.donePicker))
+        let doneButton = UIBarButtonItem(title: "OK".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
@@ -130,7 +130,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     public override func viewDidAppear(animated: Bool) {
         self.showLoading()
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
  public override func didReceiveMemoryWarning() {
@@ -154,7 +154,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         return self.identificationTypes!.count
     }
     
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.identificationTypes![row].name
     }
     
