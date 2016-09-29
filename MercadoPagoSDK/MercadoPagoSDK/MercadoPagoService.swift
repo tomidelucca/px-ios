@@ -43,7 +43,7 @@ public class MercadoPagoService : NSObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if headers !=  nil && headers!.count > 0 {
             for header in headers! {
-                request.setValue(header.value as! String, forHTTPHeaderField: header.key as! String)
+                request.setValue(header.value as? String, forHTTPHeaderField: header.key as! String)
             }
         }
         
@@ -53,13 +53,13 @@ public class MercadoPagoService : NSObject {
 
 		UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 		
-        let requestBeganAt  = NSDate()
+
 		NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) in
 				UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 				if error == nil {
 					do
 					{
-                        let requestFinishedAt = NSDate()
+
                         let responseJson = try NSJSONSerialization.JSONObjectWithData(data!, options:NSJSONReadingOptions.AllowFragments)
 						success(jsonResult: responseJson)
 					} catch {
@@ -68,7 +68,7 @@ public class MercadoPagoService : NSObject {
 						failure!(error: e)
 					}
                 } else {
-                    let requestFinishedAt = NSDate()
+
                     let response = String(error)
                     print(response)
 

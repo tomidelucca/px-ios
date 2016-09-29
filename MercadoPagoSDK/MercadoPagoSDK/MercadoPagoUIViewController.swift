@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoTracker
+// TODO TRACKER import MercadoPagoTracker
 
 public class MPNavigationController : UINavigationController {
     
@@ -36,7 +36,7 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
     override public func viewDidLoad() {
      
         super.viewDidLoad()
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
+   // TODO TRACKER      MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
         self.loadMPStyles()
 
     }

@@ -17,7 +17,7 @@ class RecoverPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFill
         self.tryAgainButton.layer.cornerRadius = 5
         self.tryAgainButton.layer.borderWidth = 1
         self.tryAgainButton.layer.borderColor = UIColor.primaryColor().CGColor
-        self.tryAgainButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.tryAgainButton.addTarget(self, action: Selector("invokeDefaultCallback"), forControlEvents: .TouchUpInside)
         
     }
     

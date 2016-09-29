@@ -26,11 +26,9 @@ class ApprovedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
     func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
-        var subtitle : String = ""
         if (payment.payer != nil && payment.payer!.email != nil && payment.payer!.email.isNotEmpty) {
             self.subtitle.text = payment.payer!.email
         } else {

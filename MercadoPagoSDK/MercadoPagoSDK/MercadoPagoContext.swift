@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
-import MercadoPagoTracker
+// TODO TRACKER import MercadoPagoTracker
 
-public class MercadoPagoContext : NSObject, MPTrackerDelegate {
+public class MercadoPagoContext : NSObject /* TODO TRACKER , MPTrackerDelegate */{
     
     static let sharedInstance = MercadoPagoContext()
     
@@ -24,7 +24,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var merchant_access_token: String = ""
     
-    var initialFlavor: Flavor?
+ // TODO TRACKER   var initialFlavor: Flavor?
 
     var preference_uri: String = ""
     
@@ -53,14 +53,14 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return !sharedInstance.private_key.isEmpty
     }
 
-   public func flavor() -> Flavor!{
-    if (initialFlavor == nil){
-        return Flavor.Flavor_3
-    }else{
-        return initialFlavor
-    }
+ // TODO TRACKER     public func flavor() -> Flavor!{
+  // TODO TRACKER     if (initialFlavor == nil){
+  // TODO TRACKER         return Flavor.Flavor_3
+  // TODO TRACKER     }else{
+   // TODO TRACKER        return initialFlavor
+   // TODO TRACKER    }
     
-    }
+  // TODO TRACKER     }
     public func framework() -> String!{
         return  "iOS"
     }
@@ -197,6 +197,8 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+     // TODO TRACKER 
+/*
     public class func initFlavor1(){
         if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
             return
@@ -215,7 +217,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
-    
+    */
     
     public class func setBaseURL(base_url : String){
         
