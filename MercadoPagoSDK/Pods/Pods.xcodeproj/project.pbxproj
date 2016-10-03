@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0717B4DD06C95D37BB02C35D04F9211A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 		0C1E2DA66F02006BEFD2F704306AC92B /* Pods-MercadoPagoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A4AE4A1704D6CDCD4ED38734047F474 /* Pods-MercadoPagoSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F1298751CFE72D19C3B4C2B09909A9F1 /* Pods-MercadoPagoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0B4CD2733F2BB257C32E54AA0EF226 /* Pods-MercadoPagoSDK-dummy.m */; };
 /* End PBXBuildFile section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0717B4DD06C95D37BB02C35D04F9211A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

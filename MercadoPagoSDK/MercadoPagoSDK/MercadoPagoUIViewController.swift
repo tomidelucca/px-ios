@@ -91,9 +91,12 @@ public class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerD
         
         if self.navigationController != nil {
 
-            
+            var titleDict: NSDictionary = [:]
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            if let fontChosed = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) {
+                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName:fontChosed]
+            }
+            
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]

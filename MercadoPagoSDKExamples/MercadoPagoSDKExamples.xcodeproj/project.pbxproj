@@ -90,20 +90,6 @@
 			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
 			remoteInfo = MercadoPagoSDK;
 		};
-		157FAE821D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AC14DD33BD6E02ADFCEED7E129B98614;
-			remoteInfo = MercadoPagoTracker;
-		};
-		157FAE841D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 407B83509C9710CB912718721904E816;
-			remoteInfo = MPGoogleAnalytics;
-		};
 		157FAE861D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
@@ -395,8 +381,6 @@
 		157FAE7A1D1B28EF00AB13B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */,
-				157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */,
 				157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */,
 			);
 			name = Products;
@@ -582,20 +566,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MercadoPagoTracker.framework;
-			remoteRef = 157FAE821D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MPGoogleAnalytics.framework;
-			remoteRef = 157FAE841D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -861,7 +831,7 @@
 					"Projects/sdk-ios/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -889,7 +859,7 @@
 					"Projects/sdk-ios/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
