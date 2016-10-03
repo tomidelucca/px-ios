@@ -61,23 +61,23 @@ public class PaymentMethod : NSObject  {
     }
     
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject] {
         let obj:[String:AnyObject] = [
-            "id": String.isNullOrEmpty(self._id) ? JSON.null : self._id!,
-            "name" : self.name == nil ? JSON.null : self.name,
+            "id": String.isNullOrEmpty(self._id) ?  JSON.null : self._id!,
+            "name" : self.name == nil ?  JSON.null : self.name,
             "payment_type_id" : self.paymentTypeId == nil ? JSON.null : self.paymentTypeId,
             ]
-        return JSON(obj)
+        return obj
     }
     
     
     public class func fromJSON(json : NSDictionary) -> PaymentMethod {
         let paymentMethod : PaymentMethod = PaymentMethod()
-        paymentMethod._id = JSON(json["id"]!).asString
-        paymentMethod.name = JSON(json["name"]!).asString
+        paymentMethod._id = json["id"] as? String
+        paymentMethod.name = json["name"] as? String
 
 		if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
 			paymentMethod.paymentTypeId = json["payment_type_id"] as! String

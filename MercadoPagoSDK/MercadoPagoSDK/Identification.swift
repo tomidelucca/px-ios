@@ -21,21 +21,21 @@ public class Identification : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Identification {
         let identification : Identification = Identification()
-        identification.type = JSON(json["type"]!).asString
-        identification.number = JSON(json["number"]!).asString
+        identification.type = json["type"] as? String
+        identification.number = json["number"] as? String
         return identification
     }
     
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject] {
         let obj:[String:AnyObject] = [
-            "type": String.isNullOrEmpty(self.type) ? JSON.null : self.type!,
-            "number": String.isNullOrEmpty(self.number) ? JSON.null : self.number!
+            "type": String.isNullOrEmpty(self.type) ?  JSON.null : self.type!,
+            "number": String.isNullOrEmpty(self.number) ?  JSON.null : self.number!
         ]
-        return JSON(obj)
+        return obj
     }
 }
 

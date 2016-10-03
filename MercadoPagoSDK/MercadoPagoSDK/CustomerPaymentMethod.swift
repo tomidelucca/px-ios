@@ -40,7 +40,7 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject] {
         let obj:[String:AnyObject] = [
             "_id": self._id,
             "_description": self._description == nil ? "" : self._description!,
@@ -48,11 +48,12 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
             "value": self.value
         ]
         
-        return JSON(obj)
+        return obj
     }
     
+    
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(self.toJSON())
     }
 
     public func isSecurityCodeRequired() -> Bool {
