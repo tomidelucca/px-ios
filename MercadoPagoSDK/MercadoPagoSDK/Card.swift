@@ -64,7 +64,7 @@ public class Card : NSObject, CardInformation {
     
     public func toJSON() -> JSON {
         let obj:[String:AnyObject] = [
-            "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSON().mutableCopyOfTheObject(),
+            "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSON(),
             "customer_id": self.customerId == nil ? JSON.null : self.customerId!,
             "dateCreated" : self.dateCreated == nil ? JSON.null : String(self.dateCreated!),
             "dateLastUpdated" : self.dateLastUpdated == nil ? JSON.null : String(self.dateLastUpdated!),
@@ -73,7 +73,7 @@ public class Card : NSObject, CardInformation {
             "firstSixDigits" : self.firstSixDigits == nil ? JSON.null : self.firstSixDigits!,
             "idCard" : self.idCard,
             "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!,
-            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON().mutableCopyOfTheObject(),
+            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON(),
             "issuer" : self.issuer == nil ? JSON.null : self.issuer!.toJSONString(),
             "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON().mutableCopyOfTheObject()       ]
         return JSON(obj)
