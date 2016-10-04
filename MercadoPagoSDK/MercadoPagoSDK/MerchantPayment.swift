@@ -47,7 +47,7 @@ public class MerchantPayment : NSObject {
         }
         obj["items"] = itemsJson
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
 }

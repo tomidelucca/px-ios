@@ -49,6 +49,6 @@ public class SavedCardToken : CardToken {
             "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
             "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }

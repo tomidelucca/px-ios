@@ -14,8 +14,12 @@ public class Phone : Equatable {
     
     public class func fromJSON(json : NSDictionary) -> Phone {
         let phone : Phone = Phone()
-        phone.areaCode = JSON(json["area_code"]!).asString
-        phone.number = JSON(json["number"]!).asString
+        if let areaCode = JSONHandler.attemptParseToString(json["area_code"]){
+             phone.areaCode = areaCode
+        }
+        if let number = JSONHandler.attemptParseToString(json["number"]){
+            phone.number = number
+        }
         return phone
     }
 }

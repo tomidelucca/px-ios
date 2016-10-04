@@ -29,20 +29,24 @@ public class Discount : Equatable {
     
     public class func fromJSON(json : NSDictionary) -> Discount {
         let discount : Discount = Discount()
-		if json["amount_off"] != nil && !(json["amount_off"]! is NSNull) {
-			discount.amountOff = NSNumber(longLong: (json["amount_off"] as? NSString)!.longLongValue)
-		}
-		if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
-			discount.couponAmount = NSNumber(longLong: (json["coupon_amount"] as? NSString)!.longLongValue)
-		}
-        discount.currencyId = JSON(json["currency_id"]!).asString
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			discount._id = (json["id"]! as? Int)!
-		}
-        discount.name = JSON(json["name"]!).asString
-		if json["percent_off"] != nil && !(json["percent_off"]! is NSNull) {
-			discount.percentOff = NSNumber(longLong: (json["percent_off"] as? NSString)!.longLongValue)
-		}
+        if let amountOff = JSONHandler.attemptParseToString(json["amount_off"])?.numberValue {
+            discount.amountOff = amountOff
+        }
+        if let couponAmount = JSONHandler.attemptParseToString(json["coupon_amount"])?.numberValue {
+            discount.couponAmount = couponAmount
+        }
+        if let currencyId = JSONHandler.attemptParseToString(json["currency_id"]) {
+            discount.currencyId = currencyId
+        }
+        if let _id = JSONHandler.attemptParseToInt(json["id"]) {
+            discount._id = _id
+        }
+        if let name = JSONHandler.attemptParseToString(json["name"]) {
+            discount.name = name
+        }
+        if let percentOff = JSONHandler.attemptParseToString(json["percent_off"])?.numberValue {
+            discount.percentOff = percentOff
+        }
         return discount
     }
     

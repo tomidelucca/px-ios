@@ -23,10 +23,13 @@ public class Payer : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Payer {
         let payer : Payer = Payer()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
+        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+             payer._id  = _id
         }
-        payer.email = JSON(json["email"]!).asString
+        if let email = JSONHandler.attemptParseToString(json["email"]) {
+            payer.email  = email
+        }
+        
         if let identificationDic = json["identification"] as? NSDictionary {
             payer.identification = Identification.fromJSON(identificationDic)
         }
@@ -40,7 +43,7 @@ public class Payer : NSObject {
             "_id": self._id == 0 ? JSON.null : self._id,
             "identification" : self.identification == nil ? JSON.null : self.identification.toJSONString()
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 
 }

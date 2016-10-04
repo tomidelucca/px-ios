@@ -90,13 +90,6 @@
 			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
 			remoteInfo = MercadoPagoSDK;
 		};
-		157FAE861D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B80DA2429DD86C4B17AA0EFCB718629A;
-			remoteInfo = "Pods-MercadoPagoSDK";
-		};
 		15FCA7881C84980B00D9E8CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */;
@@ -381,7 +374,6 @@
 		157FAE7A1D1B28EF00AB13B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -524,6 +516,7 @@
 					};
 					0F98850D1AD2BCB900F750F0 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 0F9884F51AD2BCB900F750F0;
 					};
 					76AFD39C1D34236A00A9DDAD = {
@@ -566,13 +559,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_MercadoPagoSDK.framework;
-			remoteRef = 157FAE861D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -831,7 +817,7 @@
 					"Projects/sdk-ios/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -859,7 +845,7 @@
 					"Projects/sdk-ios/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = MercadoPagoSDKExamples/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -886,6 +872,7 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamplesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MercadoPagoSDKExamples.app/MercadoPagoSDKExamples";
 			};
 			name = Debug;
@@ -903,6 +890,7 @@
 				INFOPLIST_FILE = MercadoPagoSDKExamplesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MercadoPagoSDKExamples.app/MercadoPagoSDKExamples";
 			};
 			name = Release;

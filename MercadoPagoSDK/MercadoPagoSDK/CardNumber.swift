@@ -18,10 +18,12 @@ public class CardNumber : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> CardNumber {
         let cardNumber : CardNumber = CardNumber()
-        cardNumber.validation = JSON(json["validation"]!).asString
-		if json["length"] != nil && !(json["length"]! is NSNull) {
-			cardNumber.length = JSON(json["length"]!).asInt!
-		}
+        if let validation = JSONHandler.attemptParseToString(json["validation"]){
+            cardNumber.validation = validation
+        }
+        if let length = JSONHandler.attemptParseToInt(json["length"]){
+            cardNumber.length = length
+        }
         return cardNumber
     }
     

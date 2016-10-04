@@ -16,9 +16,14 @@ public class Installment : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Installment {
         let installment : Installment = Installment()
-        installment.paymentMethodId = JSON(json["payment_method_id"]!).asString
-        installment.paymentTypeId = JSON(json["payment_type_id"]!).asString
         
+        if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]){
+               installment.paymentMethodId = paymentMethodId
+        }
+        if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]){
+            installment.paymentTypeId = paymentTypeId
+        }
+
         if let issuerDic = json["issuer"] as? NSDictionary {
             installment.issuer = Issuer.fromJSON(issuerDic)
         }
@@ -49,7 +54,7 @@ public class Installment : NSObject {
         }
         obj["payerCosts"] = payerCostsJson
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
     public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = 0) -> Int{

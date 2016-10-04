@@ -47,4 +47,59 @@ class JSONHandler: NSObject {
         return result
     }
     
+    class func attemptParseToString(anyobject: AnyObject?, defaultReturn: String? = nil) -> String?{
+
+        guard let _ = anyobject , let string = anyobject!.description else {
+            return defaultReturn
+        }
+        return string
+    }
+    
+    class func attemptParseToBool(anyobject: AnyObject?) -> Bool?{
+        if anyobject is Bool {
+            return anyobject as! Bool?
+        }
+        guard let string = attemptParseToString(anyobject) else {
+            return nil
+        }
+        return string.toBool()
+    }
+    
+    class func attemptParseToDouble(anyobject: AnyObject? , defaultReturn: Double? = nil) -> Double?{
+        
+        guard let string = attemptParseToString(anyobject) else {
+            return defaultReturn
+        }
+        return Double(string) ?? defaultReturn
+    }
+    class func attemptParseToInt(anyobject: AnyObject?, defaultReturn: Int? = nil) -> Int?{
+        
+        guard let string = attemptParseToString(anyobject) else {
+            return defaultReturn
+        }
+        return Int(string) ?? defaultReturn
+    }
+ }
+
+extension String {
+    func toBool() -> Bool? {
+        switch self {
+        case "True", "true", "YES", "yes", "1":
+            return true
+        case "False", "false", "NO", "no", "0":
+            return false
+        default:
+            return nil
+        }
+    }
 }
+
+extension String {
+    
+    var numberValue:NSNumber? {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .DecimalStyle
+        return formatter.numberFromString(self)
+    }
+}
+

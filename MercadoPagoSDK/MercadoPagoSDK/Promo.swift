@@ -22,14 +22,22 @@ public class Promo : NSObject {
 		let promo : Promo = Promo()
 		promo.promoId = json["id"] as? String
 		
+        
 		if let issuerDic = json["issuer"] as? NSDictionary {
 			promo.issuer = Issuer.fromJSON(issuerDic)
 		}
 
-		promo.recommendedMessage = json["recommended_message"] as? String
+        if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]){
+            promo.recommendedMessage = recommendedMessage
+        }
+        if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]){
+            promo.recommendedMessage = recommendedMessage
+        }
 		
 		if let picDic = json["picture"] as? NSDictionary {
-			promo.url = picDic["url"] as? String
+            if let url = JSONHandler.attemptParseToString(picDic["url"]){
+                promo.url = url
+            }
 		}
 		
 		var paymentMethods : [PaymentMethod] = [PaymentMethod]()
@@ -51,7 +59,7 @@ public class Promo : NSObject {
     public func toJSONString() -> String {
         var obj:[String:AnyObject] = [
             "promoId": self.promoId,
-            "issuer" : self.issuer != nil ? self.issuer.toJSON().mutableCopyOfTheObject() : JSON.null,
+            "issuer" : self.issuer != nil ? self.issuer.toJSON() : JSON.null,
             "recommendedMessage" : self.recommendedMessage,
             "legals" : self.legals,
             "url" : (self.url != nil && self.url!.characters.count > 0) ? self.url! : ""
@@ -62,7 +70,7 @@ public class Promo : NSObject {
             obj["payment_methods"] = NSArray(array :paymentMethodsArr)
         }
 
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 	
 	public class func getDateFromString(string: String!) -> NSDate! {

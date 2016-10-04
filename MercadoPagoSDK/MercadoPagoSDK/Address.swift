@@ -22,11 +22,15 @@ public class Address : Equatable {
     
     public class func fromJSON(json : NSDictionary) -> Address {
         let address : Address = Address()
-        address.streetName = JSON(json["street_name"]!).asString
-        if json["street_number"] != nil && !(json["street_number"]! is NSNull) {
-			address.streetNumber = NSNumber(longLong: (json["street_number"] as? NSString)!.longLongValue)
+        if let streetName = JSONHandler.attemptParseToString(json["street_name"]) {
+            address.streetName = streetName
         }
-        address.zipCode = JSON(json["zip_code"]!).asString
+        if let streetNumber = JSONHandler.attemptParseToString(json["street_number"])!.numberValue {
+            address.streetNumber = streetNumber
+        }
+        if let zipCode = JSONHandler.attemptParseToString(json["zip_code"]) {
+            address.zipCode = zipCode
+        }
         return address
     }
 }

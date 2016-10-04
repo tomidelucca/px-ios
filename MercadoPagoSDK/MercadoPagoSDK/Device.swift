@@ -20,6 +20,6 @@ public class Device : NSObject {
         let obj:[String:AnyObject] = [
             "fingerprint": self.fingerprint.toJSONString()
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }

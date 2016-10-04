@@ -25,9 +25,9 @@ public class PaymentType: NSObject {
     
     public class func fromJSON(json : NSDictionary) -> PaymentType {
         let paymentType = PaymentType()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            
-            paymentType.paymentTypeId = PaymentTypeId(rawValue: (json["id"]!.stringValue))
+        
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            paymentType.paymentTypeId = PaymentTypeId(rawValue: _id)
         }
         return paymentType
     }

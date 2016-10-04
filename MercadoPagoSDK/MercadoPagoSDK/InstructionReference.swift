@@ -33,10 +33,12 @@ public class InstructionReference: Equatable {
         
         if json["field_value"] != nil && !(json["field_value"]! is NSNull) {
             reference.value = [String]()
-            let values = json["field_value"] as! NSArray
-            for val in values {
-                reference.value.append(String(val))
+            if let values = json["field_value"] as? NSArray {
+                for val in values {
+                    reference.value.append(String(val))
+                }
             }
+            
             
         }
         

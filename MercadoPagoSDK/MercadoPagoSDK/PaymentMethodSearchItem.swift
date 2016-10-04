@@ -21,28 +21,23 @@ public class PaymentMethodSearchItem : Equatable {
     public class func fromJSON(json : NSDictionary) -> PaymentMethodSearchItem {
         let pmSearchItem = PaymentMethodSearchItem()
         
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            pmSearchItem.idPaymentMethodSearchItem = JSON(json["id"]!).asString
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            pmSearchItem.idPaymentMethodSearchItem = _id
         }
-        
-        if json["type"] != nil && !(json["type"]! is NSNull) {
-            pmSearchItem.type = PaymentMethodSearchItemType(rawValue: JSON(json["type"]!).asString!)
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            pmSearchItem.type = PaymentMethodSearchItemType(rawValue:type)
         }
-        
-        if json["description"] != nil && !(json["description"]! is NSNull) {
-            pmSearchItem.description = JSON(json["description"]!).asString!
+        if let description = JSONHandler.attemptParseToString(json["description"]){
+            pmSearchItem.description = description
         }
-        
-        if json["comment"] != nil && !(json["comment"]! is NSNull) {
-            pmSearchItem.comment = JSON(json["comment"]!).asString!
+        if let comment = JSONHandler.attemptParseToString(json["comment"]){
+            pmSearchItem.comment = comment
         }
-        
-        if json["show_icon"] != nil && !(json["show_icon"]! is NSNull) {
-            pmSearchItem.showIcon = JSON(json["show_icon"]!).asBool!
+        if let showIcon = JSONHandler.attemptParseToBool(json["show_icon"]){
+            pmSearchItem.showIcon = showIcon
         }
-        
-        if json["children_header"] != nil && !(json["children_header"]! is NSNull) {
-            pmSearchItem.childrenHeader = JSON(json["children_header"]!).asString!
+        if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]){
+            pmSearchItem.childrenHeader = childrenHeader
         }
         
         var children = [PaymentMethodSearchItem]()

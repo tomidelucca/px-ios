@@ -19,18 +19,24 @@ public class Refund : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Refund {
         let refund : Refund = Refund()
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			refund._id = (json["id"] as? Int)!
-		}
-		if json["amount"] != nil && !(json["amount"]! is NSNull) {
-			refund.amount = (json["amount"] as? Double)!
-		}
-        refund.source = JSON(json["source"]!).asString
-        refund.uniqueSequenceNumber = JSON(json["unique_sequence_number"]!).asString
-		if json["payment_id"] != nil && !(json["payment_id"]! is NSNull) {
-			refund.paymentId = (json["payment_id"] as? Int)!
-		}
-        refund.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
+        if let _id = JSONHandler.attemptParseToInt(json["id"]){
+            refund._id = _id
+        }
+        if let amount = JSONHandler.attemptParseToDouble(json["amount"]){
+            refund.amount = amount
+        }
+        if let source = JSONHandler.attemptParseToString(json["source"]){
+             refund.source = source
+        }
+        if let uniqueSequenceNumber = JSONHandler.attemptParseToString(json["unique_sequence_number"]){
+           refund.uniqueSequenceNumber = uniqueSequenceNumber
+        }
+        if let paymentId = JSONHandler.attemptParseToInt(json["payment_id"]){
+            refund.paymentId = paymentId
+        }
+        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]){
+            refund.dateCreated = Utils.getDateFromString(dateCreated)
+        }
         return refund
     }
     

@@ -21,6 +21,8 @@ public class Instruction: NSObject {
 
     public class func fromJSON(json : NSDictionary) -> Instruction {
         let instruction = Instruction()
+        
+        
         if json["title"] != nil && !(json["title"]! is NSNull) {
             instruction.title = (json["title"]! as? String)!
         }
@@ -65,15 +67,15 @@ public class Instruction: NSObject {
     }
     
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject] {
         let obj:[String:AnyObject] = [
             "title": self.title,
             "accreditationMessage" : self.accreditationMessage
         ]
-        return JSON(obj)
+        return obj
     }
 }
 

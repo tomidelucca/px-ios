@@ -19,9 +19,15 @@ public class BinMask : NSObject {
 
     public class func fromJSON(json : NSDictionary) -> BinMask {
         let binMask : BinMask = BinMask()
-        binMask.exclusionPattern = JSON(json["exclusion_pattern"]!).asString
-        binMask.installmentsPattern = JSON(json["installments_pattern"]!).asString
-        binMask.pattern = JSON(json["pattern"]!).asString
+        if let exclusionPattern = JSONHandler.attemptParseToString(json["exclusion_pattern"]) {
+            binMask.exclusionPattern = exclusionPattern
+        }
+        if let installmentsPattern = JSONHandler.attemptParseToString(json["installments_pattern"]) {
+            binMask.installmentsPattern = installmentsPattern
+        }
+        if let pattern = JSONHandler.attemptParseToString(json["pattern"]) {
+            binMask.pattern = pattern
+        }
         return binMask
     }
 }

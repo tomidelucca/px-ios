@@ -19,30 +19,30 @@ public class SecurityCode : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> SecurityCode {
         let securityCode : SecurityCode = SecurityCode()
-        if json["length"] != nil && !(json["length"]! is NSNull) {
-            securityCode.length = (json["length"]! as? Int)!
+        if let length = JSONHandler.attemptParseToInt(json["length"]){
+            securityCode.length = length
         }
-        if json["card_location"] != nil && !(json["card_location"]! is NSNull) {
-            securityCode.cardLocation = JSON(json["card_location"]!).asString
+        if let cardLocation = JSONHandler.attemptParseToString(json["card_location"]){
+            securityCode.cardLocation = cardLocation
         }
-        if json["mode"] != nil && !(json["mode"]! is NSNull) {
-            securityCode.mode = JSON(json["mode"]!).asString
+        if let mode = JSONHandler.attemptParseToString(json["mode"]){
+            securityCode.mode = mode
         }
         return securityCode
     }
     
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(toJSON())
     }
 
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject] {
         let obj:[String:AnyObject] = [
             "length": self.length,
             "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
             "mode" : self.mode
         ]
         
-        return JSON(obj)
+        return obj
     }
     
 }

@@ -19,17 +19,21 @@ public class IdentificationType : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> IdentificationType {
         let identificationType : IdentificationType = IdentificationType()
-        identificationType._id = JSON(json["id"]!).asString
-        identificationType.name = JSON(json["name"]!).asString
-        identificationType.type = JSON(json["type"]!).asString
-		
-		if json["min_length"] != nil && !(json["min_length"]! is NSNull) {
-			identificationType.minLength = (json["min_length"] as? Int)!
-		}
-		if json["max_length"] != nil && !(json["max_length"]! is NSNull) {
-			identificationType.maxLength = (json["max_length"] as? Int)!
-		}
-		
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            identificationType._id = _id
+        }
+        if let name = JSONHandler.attemptParseToString(json["name"]){
+            identificationType.name = name
+        }
+        if let type = JSONHandler.attemptParseToString(json["typed"]){
+            identificationType.type = type
+        }
+        if let minLength = JSONHandler.attemptParseToInt(json["min_length"]){
+            identificationType.minLength = minLength
+        }
+        if let maxLength = JSONHandler.attemptParseToInt(json["max_length"]){
+            identificationType.maxLength = maxLength
+        }
         return identificationType
     }
     
@@ -41,7 +45,7 @@ public class IdentificationType : NSObject {
             "min_length" : self.minLength,
             "max_length" : self.maxLength
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }
 

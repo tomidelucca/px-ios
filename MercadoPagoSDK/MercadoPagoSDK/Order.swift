@@ -14,10 +14,12 @@ public class Order : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Order {
         let order : Order = Order()
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			order._id = (json["id"] as? Int)!
-		}
-        order.type = json["type"] as? String
+        if let _id = JSONHandler.attemptParseToInt(json["id"]){
+            order._id = _id
+        }
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            order.type = type
+        }
         return order
     }
 }

@@ -34,9 +34,7 @@ public class Customer : NSObject {
         customer.firstName = json["first_name"] as? String!
         customer.lastName = json["last_name"] as? String!
         customer._description = json["description"] as? String!
-		/*if json["default_card"] != nil {
-			customer.defaultCard = NSNumber(json["default_card"] as! NSString).longValue
-		}*/
+        
         if let identificationDic = json["identification"] as? NSDictionary {
             customer.identification = Identification.fromJSON(identificationDic)
         }
@@ -72,7 +70,7 @@ public class Customer : NSObject {
             "lastName" : self.lastName == nil ? JSON.null : self.lastName!,
             "_id" : self._id == nil ? JSON.null : self._id!
             ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }
 

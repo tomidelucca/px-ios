@@ -19,6 +19,7 @@ public class PaymentMethodSearch: Equatable {
         var groups = [PaymentMethodSearchItem]()
         if let groupsJson = json["groups"] as? NSArray {
             for i in 0..<groupsJson.count {
+                print(groupsJson)
                 if let groupDic = groupsJson[i] as? NSDictionary {
                     groups.append(PaymentMethodSearchItem.fromJSON(groupDic))
                 }

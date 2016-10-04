@@ -47,7 +47,7 @@ public class MPPayment: NSObject {
             obj["issuer_id"] = self.issuerId
         }
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
 }

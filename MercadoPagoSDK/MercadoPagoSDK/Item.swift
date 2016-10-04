@@ -60,39 +60,33 @@ public class Item : NSObject {
             "categoryId" : (self.categoryId == nil) ? JSON.null : self.categoryId!,
             "pictureUrl" : (self.pictureUrl == nil) ? JSON.null : self.pictureUrl!,
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
     public class func fromJSON(json : NSDictionary) -> Item {
         let item = Item()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            item._id = JSON(json["id"]!).asString
+        if let _id = JSONHandler.attemptParseToString(json["json"]){
+            item._id = _id
         }
-        
-        if json["quantity"] != nil && !(json["quantity"]! is NSNull) {
-            item.quantity =  JSON(json["quantity"]!).asInt!
+        if let quantity = JSONHandler.attemptParseToInt(json["quantity"]){
+            item.quantity = quantity
         }
-        
-        if json["unit_price"] != nil && !(json["unit_price"]! is NSNull) {
-            item.unitPrice =  JSON(json["unit_price"]!).asDouble!
+        if let unitPrice = JSONHandler.attemptParseToDouble(json["unit_price"]){
+            item.unitPrice = unitPrice
         }
-        
-        if json["title"] != nil && !(json["title"]! is NSNull) {
-            item.title =  JSON(json["title"]!).asString
+        if let title = JSONHandler.attemptParseToString(json["title"]){
+            item.title = title
         }
-        
-        if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
-            item.currencyId =  JSON(json["currency_id"]!).asString
+        if let currencyId = JSONHandler.attemptParseToString(json["currency_id"]){
+            item.currencyId = currencyId
         }
-        
-        if json["category_id"] != nil && !(json["category_id"]! is NSNull) {
-            item.categoryId =  JSON(json["category_id"]!).asString
+        if let categoryId = JSONHandler.attemptParseToString(json["category_id"]){
+            item.categoryId = categoryId
         }
-        
-        if json["picture_url"] != nil && !(json["picture_url"]! is NSNull) {
-            item.pictureUrl =  JSON(json["picture_url"]!).asString
+        if let pictureUrl = JSONHandler.attemptParseToString(json["picture_url"]){
+            item.pictureUrl = pictureUrl
         }
-        
+
         return item
     }
 }

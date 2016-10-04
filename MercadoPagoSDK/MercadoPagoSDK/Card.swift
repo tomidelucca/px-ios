@@ -27,20 +27,24 @@ public class Card : NSObject, CardInformation {
 
    public class func fromJSON(json : NSDictionary) -> Card {
         let card : Card = Card()
-        if json["customer_id"] != nil && !(json["customer_id"]! is NSNull) {
-            card.customerId = JSON(json["customer_id"]!).asString
+        if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
+            card.customerId = customerId
         }
-		if json["expiration_month"] != nil && !(json["expiration_month"]! is NSNull) {
-			card.expirationMonth = JSON(json["expiration_month"]!).asInt!
-		}
-		if json["expiration_year"] != nil && !(json["expiration_year"]! is NSNull) {
-			card.expirationYear = JSON(json["expiration_year"]!).asInt!
-		}
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			card.idCard = NSNumber(longLong: (json["id"]! as? NSString)!.longLongValue)
-		}
-        card.lastFourDigits = JSON(json["last_four_digits"]!).asString
-        card.firstSixDigits = JSON(json["first_six_digits"]!).asString
+        if let expirationMonth = JSONHandler.attemptParseToInt(json["expiration_month"]) {
+            card.expirationMonth = expirationMonth
+        }
+        if let expirationYear = JSONHandler.attemptParseToInt(json["expiration_year"]) {
+            card.expirationYear = expirationYear
+        }
+        if let idCard = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+            card.idCard = idCard
+        }
+        if let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"]) {
+            card.lastFourDigits = lastFourDigits
+        }
+        if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
+            card.firstSixDigits = firstSixDigits
+        }
         if let issuerDic = json["issuer"] as? NSDictionary {
             card.issuer = Issuer.fromJSON(issuerDic)
         }
@@ -53,16 +57,19 @@ public class Card : NSObject, CardInformation {
         if let chDic = json["cardholder"] as? NSDictionary {
             card.cardHolder = Cardholder.fromJSON(chDic)
         }
-        card.dateLastUpdated = Utils.getDateFromString(json["date_last_updated"] as? String)
-        card.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
+        if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]) {
+            card.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
+        }
+        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]) {
+            card.dateCreated = Utils.getDateFromString(dateCreated)
+        }
         return card
     }
-    
     public func toJSONString() -> String {
-        return self.toJSON().toString()
+        return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String:AnyObject]  {
         let obj:[String:AnyObject] = [
             "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSON(),
             "customer_id": self.customerId == nil ? JSON.null : self.customerId!,
@@ -75,8 +82,8 @@ public class Card : NSObject, CardInformation {
             "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!,
             "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON(),
             "issuer" : self.issuer == nil ? JSON.null : self.issuer!.toJSONString(),
-            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON().mutableCopyOfTheObject()       ]
-        return JSON(obj)
+            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON()  ]
+        return obj
     }
     
     public func isSecurityCodeRequired() -> Bool {
@@ -93,7 +100,7 @@ public class Card : NSObject, CardInformation {
 
     
     public func getCardDescription() -> String {
-        return "terminada en " + lastFourDigits!
+        return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
     
     public func getPaymentMethod() -> PaymentMethod {

@@ -46,7 +46,7 @@ public class InstructionsInfo: NSObject {
             
         }
             
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 
 }

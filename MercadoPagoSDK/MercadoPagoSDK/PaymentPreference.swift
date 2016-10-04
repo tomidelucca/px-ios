@@ -119,16 +119,14 @@ public class PaymentPreference: NSObject {
             preferencePaymentMethods.excludedPaymentTypeIds = Set<String>(excludedPaymentTypesIds)
         }
         
-        if json["default_payment_method_id"] != nil && !(json["default_payment_method_id"]! is NSNull) {
-            preferencePaymentMethods.defaultPaymentMethodId = JSON(json["default_payment_method_id"]!).asString
+        if let defaultPaymentMethodId = JSONHandler.attemptParseToString(json["default_payment_method_id"]){
+            preferencePaymentMethods.defaultPaymentMethodId = defaultPaymentMethodId
         }
-        
-        if json["installments"] != nil && !(json["installments"]! is NSNull) {
-            preferencePaymentMethods.maxAcceptedInstallments = JSON(json["installments"]!).asInt!
+        if let maxAcceptedInstallments = JSONHandler.attemptParseToInt(json["installments"]){
+            preferencePaymentMethods.maxAcceptedInstallments = maxAcceptedInstallments
         }
-        
-        if json["default_installments"] != nil && !(json["default_installments"]! is NSNull) {
-            preferencePaymentMethods.defaultInstallments = JSON(json["default_installments"]!).asInt!
+        if let defaultInstallments = JSONHandler.attemptParseToInt(json["default_installments"]){
+            preferencePaymentMethods.defaultInstallments = defaultInstallments
         }
         
         return preferencePaymentMethods
@@ -164,7 +162,7 @@ public class PaymentPreference: NSObject {
         obj["excluded_payment_types"] = excludedPaymentTypeIdsJson
         
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 
 }

@@ -62,27 +62,35 @@ public class Token : NSObject {
       
 	
 	public class func fromJSON(json : NSDictionary) -> Token {
-		let id = JSON(json["id"]!).asString!
-		let publicKey = JSON(json["public_key"]!).asString!
-		let cardId = JSON(json["card_id"]!).asString
-		let status = JSON(json["status"]!).asString
-		let luhn = json.isKeyValid("luhn_validation") ? JSON(json["luhn_validation"]!).asString : ""
-		let usedDate = json.isKeyValid("date_used") ? JSON(json["date_used"]!).asString : ""
-		let cardNumberLength = json.isKeyValid("card_number_length") ? JSON(json["card_number_length"]!).asInt! : 0
-		let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : NSDate()
-		let lastFourDigits = json.isKeyValid("last_four_digits") ? JSON(json["last_four_digits"]!).asString : ""
-        let firstSixDigits = json.isKeyValid("first_six_digits") ? JSON(json["first_six_digits"]!).asString : ""
-		let securityCodeLength = json.isKeyValid("security_code_length") ? JSON(json["security_code_length"]!).asInt! : 0
-		let expMonth = json.isKeyValid("expiration_month") ? JSON(json["expiration_month"]!).asInt! : 0
-		let expYear = json.isKeyValid("expiration_year") ? JSON(json["expiration_year"]!).asInt! : 0
+        
+        let _id = JSONHandler.attemptParseToString(json["id"])
+        let publicKey = JSONHandler.attemptParseToString(json["public_key"])
+		let cardId =  JSONHandler.attemptParseToString(json["card_id"])
+		let status = JSONHandler.attemptParseToString(json["status"])
+		let luhn = JSONHandler.attemptParseToString(json["luhn_validation"],defaultReturn: "")
+		let usedDate = JSONHandler.attemptParseToString(json["date_used"],defaultReturn: "")
+		let cardNumberLength = JSONHandler.attemptParseToInt(json["date_used"],defaultReturn: 0)
+        
+		
+		let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"],defaultReturn: "")
+        let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"],defaultReturn: "")
+		let securityCodeLength = JSONHandler.attemptParseToInt(json["security_code_length"],defaultReturn: 0)
+        let expMonth = JSONHandler.attemptParseToInt(json["expiration_month"],defaultReturn: 0)
+		let expYear = JSONHandler.attemptParseToInt(json["expiration_year"],defaultReturn: 0)
+        
+        var cardHolder : Cardholder? = nil
+        if let dic = json["cardholder"] as? NSDictionary {
+            cardHolder = Cardholder.fromJSON(dic)
+        }
+
 		let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : NSDate()
 		let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : NSDate()
+        let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : NSDate()
         
-        let cardHolder : Cardholder? = json.isKeyValid("cardholder") ? Cardholder.fromJSON(json["cardholder"] as! NSDictionary) : nil
         
-		return Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhn, status: status,
-			usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigits,
-			securityCodeLength: securityCodeLength, expirationMonth: expMonth, expirationYear: expYear, lastModifiedDate: lastModifiedDate,
+		return Token(_id: _id!, publicKey: publicKey!, cardId: cardId, luhnValidation: luhn, status: status,
+			usedDate: usedDate, cardNumberLength: cardNumberLength!, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigits,
+			securityCodeLength: securityCodeLength!, expirationMonth: expMonth!, expirationYear: expYear!, lastModifiedDate: lastModifiedDate,
             dueDate: dueDate, cardHolder: cardHolder)
 	}
     
@@ -104,7 +112,7 @@ public class Token : NSObject {
             "dueDate" : Utils.getStringFromDate(self.dueDate)
         ]
 
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
     public func getCardExpirationDateFormated() -> String {

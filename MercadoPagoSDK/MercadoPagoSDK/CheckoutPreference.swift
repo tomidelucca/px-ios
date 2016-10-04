@@ -67,15 +67,15 @@ public class CheckoutPreference : NSObject {
     public class func fromJSON(json : NSDictionary) -> CheckoutPreference {
         let preference : CheckoutPreference = CheckoutPreference()
         
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            preference._id = (json["id"]! as? String)
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            preference._id = _id
         }
-        if json["site_id"] != nil && !(json["site_id"]! is NSNull) {
-            preference.siteId = (json["site_id"]! as? String)!
+        if let siteId = JSONHandler.attemptParseToString(json["site_id"]){
+            preference.siteId = siteId
         }
-        
-        if json["payer"] != nil && !(json["payer"]! is NSNull) {
-            preference.payer = Payer.fromJSON(json["payer"]! as! NSDictionary)
+
+        if let playerDic = json["payer"] as? NSDictionary {
+            preference.payer = Payer.fromJSON(playerDic)
         }
         
         var items = [Item]()
@@ -89,9 +89,8 @@ public class CheckoutPreference : NSObject {
             preference.items = items
         }
         
-        if json["payment_methods"] != nil && !(json["payment_methods"]! is NSNull) {
-            let jsonPaymentPreference = json["payment_methods"] as! NSDictionary
-            preference.paymentPreference = PaymentPreference.fromJSON(jsonPaymentPreference)
+        if let paymentPreference = json["payment_methods"] as? NSDictionary {
+            preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
         }
         
    
@@ -129,7 +128,7 @@ public class CheckoutPreference : NSObject {
         }
         obj["items"] = itemsJson
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
     public func getAmount() -> Double {

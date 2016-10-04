@@ -735,7 +735,6 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
 		15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
-		37DB7C1D71C9DE1107904676 /* Pods-MercadoPagoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.release.xcconfig"; sourceTree = "<group>"; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchService.swift; sourceTree = "<group>"; };
@@ -904,7 +903,6 @@
 		76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
 		C1645D89D5DBE86F5E65D5AE /* Pods_MercadoPagoSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD1C9F6E4E9EDDB95170C225 /* Pods-MercadoPagoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -933,7 +931,6 @@
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
 				0F9883191AD2A97A00F750F0 /* MercadoPagoSDKTests */,
 				0F98830B1AD2A97A00F750F0 /* Products */,
-				671F813A9DC7C990E31C7739 /* Pods */,
 				C21B34312E09C5D174785343 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1358,10 +1355,32 @@
 		15E08F6B1DA2CFC70087041B /* Parsed */ = {
 			isa = PBXGroup;
 			children = (
-				7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */,
-				0F9883391AD2AB6000F750F0 /* Cardholder.swift */,
-				0F9883441AD2AB6000F750F0 /* Identification.swift */,
-				0F98834E1AD2AB6000F750F0 /* PaymentMethod.swift */,
+				0F9883411AD2AB6000F750F0 /* Discount.swift */,
+				76743C751C45A00E00120347 /* CheckoutPreference.swift */,
+				0F98833B1AD2AB6000F750F0 /* CardNumber.swift */,
+				0F9883381AD2AB6000F750F0 /* Card.swift */,
+				0F9883371AD2AB6000F750F0 /* Bin.swift */,
+				0F9883351AD2AB6000F750F0 /* Address.swift */,
+				0F98834C1AD2AB6000F750F0 /* PayerCost.swift */,
+				76C834401D510CD4003C4717 /* AmountInfo.swift */,
+				0F9883421AD2AB6000F750F0 /* FeesDetail.swift */,
+				0F9883451AD2AB6000F750F0 /* IdentificationType.swift */,
+				0F9883461AD2AB6000F750F0 /* Installment.swift */,
+				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
+				0F9883481AD2AB6000F750F0 /* Item.swift */,
+				0F98834A1AD2AB6000F750F0 /* Order.swift */,
+				0F98834B1AD2AB6000F750F0 /* Payer.swift */,
+				0F98834D1AD2AB6000F750F0 /* Payment.swift */,
+				76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */,
+				76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */,
+				76743C7A1C46951100120347 /* PaymentType.swift */,
+				0F9883501AD2AB6000F750F0 /* Phone.swift */,
+				0FC4FC171B0FAA6400CF7148 /* Promo.swift */,
+				0F9883511AD2AB6000F750F0 /* Refund.swift */,
+				0F9883531AD2AB6000F750F0 /* SecurityCode.swift */,
+				0F9883561AD2AB6000F750F0 /* TransactionDetails.swift */,
+				0F9883551AD2AB6000F750F0 /* Token.swift */,
+				CCDE89851DA3E49F00A5CC15 /* No Pretty */,
 			);
 			name = Parsed;
 			sourceTree = "<group>";
@@ -1377,42 +1396,6 @@
 		15E7D6E51C85D4F900101872 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				76445AF51CCF9847008EE68E /* MPPayment.swift */,
-				0F9883521AD2AB6000F750F0 /* SavedCardToken.swift */,
-				0F9883491AD2AB6000F750F0 /* MerchantPayment.swift */,
-				0F9883401AD2AB6000F750F0 /* Device.swift */,
-				76943ED81D51405E00358442 /* InstructionsInfo.swift */,
-				76C834401D510CD4003C4717 /* AmountInfo.swift */,
-				0F9883351AD2AB6000F750F0 /* Address.swift */,
-				0F9883371AD2AB6000F750F0 /* Bin.swift */,
-				0F9883381AD2AB6000F750F0 /* Card.swift */,
-				0F98833B1AD2AB6000F750F0 /* CardNumber.swift */,
-				76743C751C45A00E00120347 /* CheckoutPreference.swift */,
-				0F98833F1AD2AB6000F750F0 /* Customer.swift */,
-				0F9883411AD2AB6000F750F0 /* Discount.swift */,
-				0F9883421AD2AB6000F750F0 /* FeesDetail.swift */,
-				0F9883451AD2AB6000F750F0 /* IdentificationType.swift */,
-				0F9883461AD2AB6000F750F0 /* Installment.swift */,
-				7656CA161C7644F10043BDB2 /* Instruction.swift */,
-				7656CA1C1C7646600043BDB2 /* InstructionAction.swift */,
-				7656CA191C7645450043BDB2 /* InstructionReference.swift */,
-				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
-				0F9883481AD2AB6000F750F0 /* Item.swift */,
-				0F98834A1AD2AB6000F750F0 /* Order.swift */,
-				0F98834B1AD2AB6000F750F0 /* Payer.swift */,
-				0F98834C1AD2AB6000F750F0 /* PayerCost.swift */,
-				0F98834D1AD2AB6000F750F0 /* Payment.swift */,
-				76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */,
-				76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */,
-				76743C7A1C46951100120347 /* PaymentType.swift */,
-				0F9883501AD2AB6000F750F0 /* Phone.swift */,
-				0FC4FC171B0FAA6400CF7148 /* Promo.swift */,
-				0F9883511AD2AB6000F750F0 /* Refund.swift */,
-				0F9883531AD2AB6000F750F0 /* SecurityCode.swift */,
-				0F9883541AD2AB6000F750F0 /* Setting.swift */,
-				0F9883551AD2AB6000F750F0 /* Token.swift */,
-				0F9883561AD2AB6000F750F0 /* TransactionDetails.swift */,
-				76743C771C45A24600120347 /* PaymentPreference.swift */,
 			);
 			name = Json;
 			sourceTree = "<group>";
@@ -1424,15 +1407,6 @@
 				762B8C1E1D19752A00A86097 /* MPFlowController.swift */,
 			);
 			name = Base;
-			sourceTree = "<group>";
-		};
-		671F813A9DC7C990E31C7739 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CD1C9F6E4E9EDDB95170C225 /* Pods-MercadoPagoSDK.debug.xcconfig */,
-				37DB7C1D71C9DE1107904676 /* Pods-MercadoPagoSDK.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		76062BCD1C4D20060067A14B /* PaymentVault */ = {
@@ -1802,6 +1776,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CCDE89851DA3E49F00A5CC15 /* No Pretty */ = {
+			isa = PBXGroup;
+			children = (
+				7656CA161C7644F10043BDB2 /* Instruction.swift */,
+				7656CA1C1C7646600043BDB2 /* InstructionAction.swift */,
+				7656CA191C7645450043BDB2 /* InstructionReference.swift */,
+				0F98833F1AD2AB6000F750F0 /* Customer.swift */,
+				76943ED81D51405E00358442 /* InstructionsInfo.swift */,
+				0F9883401AD2AB6000F750F0 /* Device.swift */,
+				0F9883491AD2AB6000F750F0 /* MerchantPayment.swift */,
+				0F9883521AD2AB6000F750F0 /* SavedCardToken.swift */,
+				76445AF51CCF9847008EE68E /* MPPayment.swift */,
+				7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */,
+				0F9883391AD2AB6000F750F0 /* Cardholder.swift */,
+				0F9883441AD2AB6000F750F0 /* Identification.swift */,
+				0F98834E1AD2AB6000F750F0 /* PaymentMethod.swift */,
+				0F9883541AD2AB6000F750F0 /* Setting.swift */,
+				76743C771C45A24600120347 /* PaymentPreference.swift */,
+			);
+			name = "No Pretty";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1820,12 +1816,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F9883201AD2A97A00F750F0 /* Build configuration list for PBXNativeTarget "MercadoPagoSDK" */;
 			buildPhases = (
-				A929E7AB4FAFDF757F9C6992 /* [CP] Check Pods Manifest.lock */,
 				0F9883051AD2A97A00F750F0 /* Sources */,
 				0F9883061AD2A97A00F750F0 /* Frameworks */,
 				0F9883071AD2A97A00F750F0 /* Headers */,
 				0F9883081AD2A97A00F750F0 /* Resources */,
-				049C08D2255BC0B8EBC34110 /* [CP] Copy Pods Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
 			);
 			buildRules = (
@@ -2068,39 +2062,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		049C08D2255BC0B8EBC34110 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDK/Pods-MercadoPagoSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A929E7AB4FAFDF757F9C6992 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0F9883051AD2A97A00F750F0 /* Sources */ = {
@@ -2577,7 +2538,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -2621,7 +2582,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -2635,7 +2596,6 @@
 		};
 		0F9883211AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD1C9F6E4E9EDDB95170C225 /* Pods-MercadoPagoSDK.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
@@ -2657,7 +2617,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = MercadoPagoSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2674,7 +2634,6 @@
 		};
 		0F9883221AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 37DB7C1D71C9DE1107904676 /* Pods-MercadoPagoSDK.release.xcconfig */;
 			buildSettings = {
 				ARCHS = (
 					"$(ARCHS_STANDARD)",
@@ -2696,7 +2655,7 @@
 				GENERATE_MASTER_OBJECT_FILE = YES;
 				INFOPLIST_FILE = MercadoPagoSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				ONLY_ACTIVE_ARCH = YES;

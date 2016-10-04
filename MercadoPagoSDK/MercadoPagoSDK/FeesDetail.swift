@@ -16,13 +16,17 @@ public class FeesDetail : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> FeesDetail {
         let fd : FeesDetail = FeesDetail()
-        fd.type = JSON(json["type"]!).asString
-        fd.feePayer = JSON(json["fee_payer"]!).asString
-		if json["amount"] != nil && !(json["amount"]! is NSNull) {
-			fd.amount = JSON(json["amount"]!).asDouble!
-		}
-        if json["amount_refunded"] != nil && !(json["amount_refunded"]! is NSNull) {
-            fd.amountRefunded = JSON(json["amount_refunded"]!).asDouble!
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            fd.type = type
+        }
+        if let feePayer = JSONHandler.attemptParseToString(json["fee_payer"]){
+            fd.feePayer = feePayer
+        }
+        if let amount = JSONHandler.attemptParseToDouble(json["amount"]){
+            fd.amount = amount
+        }
+        if let amountRefunded = JSONHandler.attemptParseToDouble(json["amount_refunded"]){
+            fd.amountRefunded = amountRefunded
         }
         return fd
     }
@@ -38,7 +42,7 @@ public class FeesDetail : NSObject {
             "amount" : self.amount,
             "type" : self.type
             ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
 }
