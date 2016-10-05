@@ -25,7 +25,7 @@ class ComponentTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    public func initializeWith(iconImage: String, title: String){
+    internal func initializeWith(iconImage: String, title: String){
         var image = UIImage(named: iconImage)
         image = image?.imageWithRenderingMode(.AlwaysTemplate)
         self.icon.image = image

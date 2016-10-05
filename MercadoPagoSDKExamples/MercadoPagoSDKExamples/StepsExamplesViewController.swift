@@ -90,7 +90,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    public func startPaymentVault(){
+    internal func startPaymentVault(){
         /*MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
         MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
