@@ -37,15 +37,28 @@ class JSONHandler: NSObject {
     
     //For compiling porpouse
     class func jsonCoding(jsonDictionary: [String:AnyObject]) -> String {
-        let result = ""
+        var result : String = ""
+        do{
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonDictionary as AnyObject, options: .PrettyPrinted)
+            let decoded = try NSJSONSerialization.JSONObjectWithData(jsonData, options: [])
+            result = decoded.description
+        }catch{
+            print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
+        }
         return result
         
     }
     
-    class func parseToJSON(data:NSData) -> NSDictionary{
-        let result : NSDictionary = [:]
+    class func parseToJSON(data:NSData) -> Any{
+        var result : Any = []
+        do{
+            result = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+        }catch{
+            print("ERROR PARSIBNG JSON, ERROR = \(error)")
+        }
         return result
     }
+
     
     class func attemptParseToString(anyobject: AnyObject?, defaultReturn: String? = nil) -> String?{
 
@@ -79,6 +92,8 @@ class JSONHandler: NSObject {
         }
         return Int(string) ?? defaultReturn
     }
+    
+    internal class var null:NSNull { return NSNull() }
  }
 
 extension String {
