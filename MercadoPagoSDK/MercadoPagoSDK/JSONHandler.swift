@@ -39,10 +39,10 @@ class JSONHandler: NSObject {
     class func jsonCoding(jsonDictionary: [String:Any]) -> String {
         var result : String = ""
         do{
-            let dict = NSMutableDictionary()
+            var dict = NSMutableDictionary()
             for (key,value) in jsonDictionary {
-                if let value = value as? String{
-                    dict.setValue(value, forUndefinedKey: key)
+                if let value = value as? AnyObject{
+                    dict.setValue(value, forKey: key)
                 }
             }
             let jsonData = try NSJSONSerialization.dataWithJSONObject(dict, options: .PrettyPrinted)
