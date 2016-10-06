@@ -281,7 +281,6 @@
 		15DA7E611CD92C670068896E /* IdentificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15DA7E5D1CD92C670068896E /* IdentificationViewController.xib */; };
 		15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF3F821D6347BF0051C798 /* TextMaskFormater.swift */; };
 		15E08F661DA2A2BF0087041B /* JSONHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E08F651DA2A2BF0087041B /* JSONHandler.swift */; };
-		15E08F6A1DA2CFBE0087041B /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E08F691DA2CFBE0087041B /* JSON.swift */; };
 		15E19C7D1D6F281700D49D7B /* MaskElementTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E19C7C1D6F281700D49D7B /* MaskElementTest.swift */; };
 		15E7D6E81C87164E00101872 /* MockedData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15E7D6E71C87164E00101872 /* MockedData.plist */; };
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
@@ -729,7 +728,6 @@
 		15DA7E5D1CD92C670068896E /* IdentificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentificationViewController.xib; sourceTree = "<group>"; };
 		15DF3F821D6347BF0051C798 /* TextMaskFormater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMaskFormater.swift; sourceTree = "<group>"; };
 		15E08F651DA2A2BF0087041B /* JSONHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHandler.swift; sourceTree = "<group>"; };
-		15E08F691DA2CFBE0087041B /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		15E19C7C1D6F281700D49D7B /* MaskElementTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskElementTest.swift; sourceTree = "<group>"; };
 		15E7D6E71C87164E00101872 /* MockedData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MockedData.plist; sourceTree = "<group>"; };
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
@@ -1005,7 +1003,6 @@
 			isa = PBXGroup;
 			children = (
 				15E08F6B1DA2CFC70087041B /* Parsed */,
-				15E08F691DA2CFBE0087041B /* JSON.swift */,
 				15E7D6E51C85D4F900101872 /* Json */,
 				76EEF75C1D674BA80095D5A5 /* CardInformation.swift */,
 				0F9883361AD2AB6000F750F0 /* ApiException.swift */,
@@ -2158,7 +2155,6 @@
 				0F9883671AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
 				76151B651C737608007DF0E3 /* InstructionsViewController.swift in Sources */,
-				15E08F6A1DA2CFBE0087041B /* JSON.swift in Sources */,
 				762B8C221D19752A00A86097 /* MPFlowBuilder.swift in Sources */,
 				15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,

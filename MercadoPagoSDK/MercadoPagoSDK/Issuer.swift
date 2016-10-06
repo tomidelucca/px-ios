@@ -29,10 +29,10 @@ public class Issuer : NSObject {
        return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
-            "id": self._id != nil ? JSON.null : self._id!,
-            "name" : self.name == nil ? JSON.null : self.name!,
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
+            "id": self._id != nil ? JSONHandler.null : self._id!,
+            "name" : self.name == nil ? JSONHandler.null : self.name!,
             ]
         return obj
     }

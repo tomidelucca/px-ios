@@ -59,7 +59,7 @@ public class PayerCost : NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+        let obj:[String:Any] = [
             "installments": self.installments,
             "installmentRate" : self.installmentRate,
             "minAllowedAmount" : self.installmentRate,

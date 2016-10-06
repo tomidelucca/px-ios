@@ -43,12 +43,12 @@ public class AmountInfo: NSObject {
        return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = ["amount": self.amount!,
-            "thousands_separator": self.currency == nil ? JSON.null : String(self.currency!.thousandsSeparator),
-            "decimal_separator": self.currency == nil ? JSON.null : String(self.currency!.decimalSeparator),
-            "symbol": self.currency == nil ? JSON.null : self.currency!.symbol,
-            "decimal_places": self.currency == nil ? JSON.null : self.currency!.decimalPlaces]
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = ["amount": self.amount!,
+            "thousands_separator": self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator),
+            "decimal_separator": self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator),
+            "symbol": self.currency == nil ? JSONHandler.null : self.currency!.symbol,
+            "decimal_places": self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces]
         return obj
     }
     

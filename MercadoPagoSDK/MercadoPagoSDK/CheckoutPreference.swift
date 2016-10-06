@@ -117,9 +117,9 @@ public class CheckoutPreference : NSObject {
     
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "id": self._id == nil ? JSON.null : (self._id)!,
-            "payer": self.payer == nil ? JSON.null : self.payer.toJSONString()
+        var obj:[String:Any] = [
+            "id": self._id == nil ? JSONHandler.null : (self._id)!,
+            "payer": self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
         ]
         
         var itemsJson = ""

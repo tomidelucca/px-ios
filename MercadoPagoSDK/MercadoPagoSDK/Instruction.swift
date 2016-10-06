@@ -70,8 +70,8 @@ public class Instruction: NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
             "title": self.title,
             "accreditationMessage" : self.accreditationMessage
         ]

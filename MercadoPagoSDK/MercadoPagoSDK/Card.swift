@@ -69,20 +69,28 @@ public class Card : NSObject, CardInformation {
         return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject]  {
-        let obj:[String:AnyObject] = [
-            "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSON(),
-            "customer_id": self.customerId == nil ? JSON.null : self.customerId!,
-            "dateCreated" : self.dateCreated == nil ? JSON.null : String(self.dateCreated!),
-            "dateLastUpdated" : self.dateLastUpdated == nil ? JSON.null : String(self.dateLastUpdated!),
+    public func toJSON() -> [String:Any]  {
+        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
+        let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
+        let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(self.dateCreated!)
+        let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(self.dateLastUpdated!)
+        let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
+        let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
+        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
+        let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
+        let obj:[String:Any] = [
+            "cardHolder" : cardHolder,
+            "customer_id": customer_id,
+            "dateCreated" : dateCreated,
+            "dateLastUpdated" : dateLastUpdated,
             "expirationMonth" : self.expirationMonth,
             "expirationYear" : self.expirationYear,
-            "firstSixDigits" : self.firstSixDigits == nil ? JSON.null : self.firstSixDigits!,
+            "firstSixDigits" : firstSixDigits,
             "idCard" : self.idCard,
-            "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!,
-            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON(),
-            "issuer" : self.issuer == nil ? JSON.null : self.issuer!.toJSONString(),
-            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON()  ]
+            "lastFourDigits" : lastFourDigits,
+            "paymentMethod" : paymentMethod,
+            "issuer" : issuer,
+            "securityCode" : securityCode  ]
         return obj
     }
     

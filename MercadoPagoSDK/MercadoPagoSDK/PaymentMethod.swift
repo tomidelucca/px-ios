@@ -64,11 +64,11 @@ public class PaymentMethod : NSObject  {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
-            "id": String.isNullOrEmpty(self._id) ?  JSON.null : self._id!,
-            "name" : self.name == nil ?  JSON.null : self.name,
-            "payment_type_id" : self.paymentTypeId == nil ? JSON.null : self.paymentTypeId,
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
+            "id": String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!,
+            "name" : self.name == nil ?  JSONHandler.null : self.name,
+            "payment_type_id" : self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId,
             ]
         return obj
     }

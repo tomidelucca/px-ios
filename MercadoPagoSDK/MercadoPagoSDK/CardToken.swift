@@ -292,15 +292,20 @@ public class CardToken : NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "card_number": String.isNullOrEmpty(self.cardNumber) ? JSON.null : self.cardNumber!,
-            "cardholder": (self.cardholder == nil) ? JSON.null : self.cardholder!.toJSON(),
-            "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
+        
+        let card_number : Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
+        let cardholder : Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
+        let security_code : Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
+        let device : Any = self.device == nil ? JSONHandler.null : self.device!.toJSONString()
+        let obj:[String:Any] = [
+            "card_number": card_number,
+            "cardholder":cardholder,
+            "security_code" : security_code,
             "expiration_month" : self.expirationMonth,
             "expiration_year" : self.expirationYear,
-            "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
+            "device" : device
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
     public func getNumberFormated() -> NSString {

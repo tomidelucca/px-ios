@@ -11,7 +11,7 @@ import UIKit
 
 public class Fingerprint : NSObject {
     
-    public var fingerprint : [String : AnyObject]?
+    public var fingerprint : [String : Any]?
     
     public override init () {
         super.init()
@@ -19,7 +19,10 @@ public class Fingerprint : NSObject {
     }
     
     public func toJSONString() -> String {
-        return JSON(self.fingerprint!).toString()
+        guard let fingerprint = fingerprint else {
+            return ""
+        }
+        return JSONHandler.jsonCoding(fingerprint)
     }
     
     public func deviceFingerprint() -> [String : AnyObject] {

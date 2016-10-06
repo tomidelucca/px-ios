@@ -16,7 +16,11 @@ public class Cardholder : NSObject {
     
     public class func fromJSON(json : NSDictionary) -> Cardholder {
         let cardholder : Cardholder = Cardholder()
-        cardholder.name = JSON(json["name"]!).asString
+        
+        if let name = json["name"] as? String{
+            cardholder.name = name
+        }
+        
         cardholder.identification = Identification.fromJSON(json["identification"]! as! NSDictionary)
         return cardholder
     }
@@ -25,11 +29,12 @@ public class Cardholder : NSObject {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-
-        let obj:[String:AnyObject] = [
-            "name": String.isNullOrEmpty(self.name) ? JSON.null : self.name!,
-            "identification" : self.identification == nil ? JSON.null : self.identification!.toJSON()
+    public func toJSON() -> [String:Any] {
+        let name : Any = String.isNullOrEmpty(self.name) ? JSONHandler.null : self.name!
+        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
+        let obj:[String:Any] = [
+            "name": name,
+            "identification" : identification
         ]
         return obj
     }

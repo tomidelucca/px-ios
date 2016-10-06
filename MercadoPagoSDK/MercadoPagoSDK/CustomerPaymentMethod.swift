@@ -40,8 +40,8 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
             "_id": self._id,
             "_description": self._description == nil ? "" : self._description!,
             "type" : self.type,

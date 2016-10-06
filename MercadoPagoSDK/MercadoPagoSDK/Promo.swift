@@ -57,17 +57,23 @@ public class Promo : NSObject {
 	}
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "promoId": self.promoId,
-            "issuer" : self.issuer != nil ? self.issuer.toJSON() : JSON.null,
+        let issuer : Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
+        let url : Any = (self.url != nil) ? self.url! : ""
+        var obj : [String:Any] = [
+            "promoId": self.promoId ,
+            "issuer" : issuer,
             "recommendedMessage" : self.recommendedMessage,
             "legals" : self.legals,
-            "url" : (self.url != nil && self.url!.characters.count > 0) ? self.url! : ""
+            "url" : url
         ]
         
+        let arrayPMs = NSMutableArray()
+        
         if self.paymentMethods != nil && self.paymentMethods.count > 0 {
-            let paymentMethodsArr = self.paymentMethods.map({$0.toJSON()})
-            obj["payment_methods"] = NSArray(array :paymentMethodsArr)
+            for pms in self.paymentMethods {
+               arrayPMs.addObject(pms)
+            }
+            obj["payment_methods"] = arrayPMs
         }
 
         return JSONHandler.jsonCoding(obj)

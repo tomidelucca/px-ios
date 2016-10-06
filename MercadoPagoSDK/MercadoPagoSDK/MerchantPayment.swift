@@ -32,13 +32,13 @@ public class MerchantPayment : NSObject {
     }
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "card_issuer_id": (issuer == nil || self.issuer?._id == 0) ? JSON.null : (self.issuer?._id)!,
-            "card_token": self.cardTokenId == nil ? JSON.null : self.cardTokenId!,
-            "campaign_id": self.campaignId == 0 ? JSON.null : String(self.campaignId),
-            "installments" : self.installments == 0 ? JSON.null : self.installments,
-            "merchant_access_token" : self.merchantAccessToken == nil ? JSON.null : self.merchantAccessToken!,
-            "payment_method_id" : (self.paymentMethod == nil || self.paymentMethod._id == nil) ? JSON.null : self.paymentMethod._id!
+        var obj:[String:Any] = [
+            "card_issuer_id": (issuer == nil || self.issuer?._id == 0) ? JSONHandler.null : (self.issuer?._id)!,
+            "card_token": self.cardTokenId == nil ? JSONHandler.null : self.cardTokenId!,
+            "campaign_id": self.campaignId == 0 ? JSONHandler.null : String(self.campaignId),
+            "installments" : self.installments == 0 ? JSONHandler.null : self.installments,
+            "merchant_access_token" : self.merchantAccessToken == nil ? JSONHandler.null : self.merchantAccessToken!,
+            "payment_method_id" : (self.paymentMethod == nil || self.paymentMethod._id == nil) ? JSONHandler.null : self.paymentMethod._id!
         ]
         
         var itemsJson = ""

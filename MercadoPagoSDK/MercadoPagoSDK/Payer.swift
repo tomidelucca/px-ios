@@ -38,10 +38,10 @@ public class Payer : NSObject {
     
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "email": self.email == nil ? JSON.null : (self.email!),
-            "_id": self._id == 0 ? JSON.null : self._id,
-            "identification" : self.identification == nil ? JSON.null : self.identification.toJSONString()
+        let obj:[String:Any] = [
+            "email": self.email == nil ? JSONHandler.null : (self.email!),
+            "_id": self._id == 0 ? JSONHandler.null : self._id,
+            "identification" : self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
         ]
         return JSONHandler.jsonCoding(obj)
     }

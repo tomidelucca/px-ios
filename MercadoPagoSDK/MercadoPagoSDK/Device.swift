@@ -17,7 +17,7 @@ public class Device : NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+        let obj:[String:Any] = [
             "fingerprint": self.fingerprint.toJSONString()
         ]
         return JSONHandler.jsonCoding(obj)

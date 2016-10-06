@@ -302,10 +302,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 		
 		if self.tableView.respondsToSelector(Selector("setSeparatorInset:")) {
-			if #available(iOS 8.0, *) {
 				self.tableView.layoutMargins = UIEdgeInsetsZero
-			} else {
-			}
 		}
 	}
 	
@@ -315,10 +312,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 		
 		if cell.respondsToSelector(Selector("setSeparatorInset:")) {
-			if #available(iOS 8.0, *) {
 				cell.layoutMargins = UIEdgeInsetsZero
-			} else {
-			}
 		}
 	}
 	

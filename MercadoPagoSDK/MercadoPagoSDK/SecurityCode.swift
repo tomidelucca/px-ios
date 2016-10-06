@@ -35,8 +35,8 @@ public class SecurityCode : NSObject {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
             "length": self.length,
             "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
             "mode" : self.mode

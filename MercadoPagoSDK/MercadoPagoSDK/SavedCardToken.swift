@@ -44,10 +44,10 @@ public class SavedCardToken : CardToken {
     }
     
     public override func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "card_id": String.isNullOrEmpty(self.cardId) ? JSON.null : self.cardId!,
-            "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
-            "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
+        let obj:[String:Any] = [
+            "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId!,
+            "security_code" : String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!,
+            "device" : self.device == nil ? JSONHandler.null : self.device!.toJSONString()
         ]
         return JSONHandler.jsonCoding(obj)
     }

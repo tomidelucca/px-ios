@@ -36,10 +36,16 @@ class JSONHandler: NSObject {
     */
     
     //For compiling porpouse
-    class func jsonCoding(jsonDictionary: [String:AnyObject]) -> String {
+    class func jsonCoding(jsonDictionary: [String:Any]) -> String {
         var result : String = ""
         do{
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonDictionary as AnyObject, options: .PrettyPrinted)
+            let dict = NSMutableDictionary()
+            for (key,value) in jsonDictionary {
+                if let value = value as? String{
+                    dict.setValue(value, forUndefinedKey: key)
+                }
+            }
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(dict, options: .PrettyPrinted)
             let decoded = try NSJSONSerialization.JSONObjectWithData(jsonData, options: [])
             result = decoded.description
         }catch{
@@ -115,6 +121,19 @@ extension String {
         let formatter = NSNumberFormatter()
         formatter.numberStyle = .DecimalStyle
         return formatter.numberFromString(self)
+    }
+}
+
+extension NSDictionary {
+    
+    func parseToLiteral() -> [String:Any] {
+
+        var anyDict = [String: Any]()
+        
+        for (value, key) in self {
+            anyDict[key as! String] = value
+        }
+        return anyDict
     }
 }
 

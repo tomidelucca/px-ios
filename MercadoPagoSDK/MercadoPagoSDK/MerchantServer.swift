@@ -68,7 +68,7 @@ public class MerchantServer : NSObject {
         let service : MerchantService = MerchantService()
 
         
-       let paramsStr = JSON.stringify(params)
+       let paramsStr = JSONHandler.jsonCoding(params.parseToLiteral())
             
             service.createPreference(merchantParams: paramsStr, success: { (jsonResult) in
             var checkoutPreference : CheckoutPreference? = nil

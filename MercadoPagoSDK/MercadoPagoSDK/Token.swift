@@ -95,16 +95,16 @@ public class Token : NSObject {
 	}
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "_id": self._id != nil ? JSON.null : self._id!,
-            "cardId" : self.cardId == nil ? JSON.null : self.cardId!,
-            "luhnValidation" : self.luhnValidation == nil ? JSON.null : self.luhnValidation!,
+        let obj:[String:Any] = [
+            "_id": self._id != nil ? JSONHandler.null : self._id!,
+            "cardId" : self.cardId == nil ? JSONHandler.null : self.cardId!,
+            "luhnValidation" : self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!,
             "status" : self.status,
             "usedDate" : self.usedDate,
             "cardNumberLength" : self.cardNumberLength,
             "creationDate" : Utils.getStringFromDate(self.creationDate),
-            "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits,
-            "firstSixDigit" : self.firstSixDigit == nil ? JSON.null : self.firstSixDigit,
+            "lastFourDigits" : self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits,
+            "firstSixDigit" : self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit,
             "securityCodeLength" : self.securityCodeLength,
             "expirationMonth" : self.expirationMonth,
             "expirationYear" : self.expirationYear,
@@ -142,7 +142,7 @@ public class Token : NSObject {
 
 extension NSDictionary {
 	public func isKeyValid(dictKey : String) -> Bool {
-		let dictValue: AnyObject? = self[dictKey]
+		let dictValue: Any? = self[dictKey]
 		return (dictValue == nil || dictValue is NSNull) ? false : true
 	}
 }

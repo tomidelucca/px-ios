@@ -133,11 +133,11 @@ public class PaymentPreference: NSObject {
     }
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
+        var obj:[String:Any] = [
             
-            "default_installments": self.defaultInstallments == 0 ? JSON.null : (self.defaultInstallments),
-            "default_payment_method_id": self.defaultPaymentMethodId == nil ? JSON.null : (self.defaultPaymentMethodId)!,
-            "installments": self.maxAcceptedInstallments == 0 ? JSON.null : (self.maxAcceptedInstallments),
+            "default_installments": self.defaultInstallments == 0 ? JSONHandler.null : (self.defaultInstallments),
+            "default_payment_method_id": self.defaultPaymentMethodId == nil ? JSONHandler.null : (self.defaultPaymentMethodId)!,
+            "installments": self.maxAcceptedInstallments == 0 ? JSONHandler.null : (self.maxAcceptedInstallments),
         ]
         
         var excludedPaymentMethodIdsJson = [NSDictionary]()

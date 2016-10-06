@@ -30,7 +30,7 @@ public class MPPayment: NSObject {
     }
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
+        var obj:[String:Any] = [
             "public_key": self.publicKey,
             "email": self.email,
             "payment_method_id": self.paymentMethodId,

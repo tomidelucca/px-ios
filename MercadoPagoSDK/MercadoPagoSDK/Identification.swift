@@ -30,10 +30,10 @@ public class Identification : NSObject {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:AnyObject] {
-        let obj:[String:AnyObject] = [
-            "type": String.isNullOrEmpty(self.type) ?  JSON.null : self.type!,
-            "number": String.isNullOrEmpty(self.number) ?  JSON.null : self.number!
+    public func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
+            "type": String.isNullOrEmpty(self.type) ?  JSONHandler.null : self.type!,
+            "number": String.isNullOrEmpty(self.number) ?  JSONHandler.null : self.number!
         ]
         return obj
     }

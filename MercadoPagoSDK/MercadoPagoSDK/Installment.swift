@@ -42,8 +42,8 @@ public class Installment : NSObject {
     }
     
     public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "issuer": self.issuer != nil ? JSON.null : self.issuer.toJSONString(),
+        var obj:[String:Any] = [
+            "issuer": self.issuer != nil ? JSONHandler.null : self.issuer.toJSONString(),
             "paymentMethodId" : self.paymentMethodId,
             "paymentTypeId" : self.paymentTypeId
             ]

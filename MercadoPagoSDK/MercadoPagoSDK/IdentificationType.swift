@@ -38,10 +38,10 @@ public class IdentificationType : NSObject {
     }
     
     public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "_id": self._id != nil ? JSON.null : self._id!,
-            "name" : self.name == nil ? JSON.null : self.name!,
-            "type" : self.type == nil ? JSON.null : self.type!,
+        let obj:[String:Any] = [
+            "_id": self._id != nil ? JSONHandler.null : self._id!,
+            "name" : self.name == nil ? JSONHandler.null : self.name!,
+            "type" : self.type == nil ? JSONHandler.null : self.type!,
             "min_length" : self.minLength,
             "max_length" : self.maxLength
         ]
