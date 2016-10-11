@@ -30,7 +30,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         constraintSize.width = screenSize.width - 46
         
-        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24)!]
+        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24) ?? UIFont.systemFontOfSize(24)]
         
         let frame = (title as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
         

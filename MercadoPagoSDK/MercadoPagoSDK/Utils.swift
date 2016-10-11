@@ -34,8 +34,8 @@ class Utils {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFontOfSize(fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFontOfSize(10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -52,8 +52,8 @@ class Utils {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(amount), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFontOfSize(fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFontOfSize(10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
         
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
@@ -68,7 +68,7 @@ class Utils {
     class func getTransactionInstallmentsDescription(installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
         let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
         
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFontOfSize(22),NSForegroundColorAttributeName:mpTurquesaColor]
         
         let stringToWrite = NSMutableAttributedString()
         

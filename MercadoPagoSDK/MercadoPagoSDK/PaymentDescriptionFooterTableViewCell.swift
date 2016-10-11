@@ -21,7 +21,7 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
     }
     
     func setAmount(amount : Double, currency : Currency?, additionalText : String = ""){
-        let fontAttrs : [String : AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 20)!]
+        let fontAttrs : [String : AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 20) ?? UIFont.systemFontOfSize(20)]
         var thousandSeparator = "."
         var decimalSeparator = ","
         var currencySymbol = "$"

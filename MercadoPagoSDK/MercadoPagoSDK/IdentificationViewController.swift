@@ -34,9 +34,11 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
          
     }
     override func loadMPStyles(){
-        
+        var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            if let font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18){
+                titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+            }
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
@@ -176,29 +178,46 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     var navItem : UINavigationItem?
     var doneNext : UIBarButtonItem?
     var donePrev : UIBarButtonItem?
+
     
     func setupInputAccessoryView() {
-        
         inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
         inputButtons!.barStyle = UIBarStyle.Default;
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width / 2, height: 40)
+        
+        let buttonNext = UIButton(frame: frame)
+        buttonNext.setTitle("Continuar".localized, forState: .Normal)
+        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), forControlEvents: .TouchUpInside)
+        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), forState: .Normal)
+        
+        let buttonPrev = UIButton(frame: frame)
+        buttonPrev.setTitle("Anterior".localized, forState: .Normal)
+        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), forControlEvents: .TouchUpInside)
+        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), forState: .Normal)
+        
+        /*
+         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         }
+         */
         navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(customView: buttonNext)
+        donePrev = UIBarButtonItem(customView: buttonPrev)
         
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        }
         donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
+        
+
         inputButtons!.pushNavigationItem(navItem!, animated: false)
         numberTextField.inputAccessoryView = inputButtons
-                
+        
+        
     }
 
     func rightArrowKeyTapped(){

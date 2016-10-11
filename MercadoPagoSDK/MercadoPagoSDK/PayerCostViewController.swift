@@ -78,9 +78,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
         if self.navigationController != nil {
             
-            
+            var titleDict: NSDictionary = [:]
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            if let font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) {
+                titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+            }
+            
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
