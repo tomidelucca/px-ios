@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MPButton: UIButton {
+open class MPButton: UIButton {
 
     var actionLink : String?
     

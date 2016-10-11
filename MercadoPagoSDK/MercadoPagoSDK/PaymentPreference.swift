@@ -7,15 +7,44 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class PaymentPreference: NSObject {
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class PaymentPreference: NSObject {
     
-    public var excludedPaymentMethodIds : Set<String>?
-    public var excludedPaymentTypeIds : Set<String>?
-    public var defaultPaymentMethodId : String?
-    public var maxAcceptedInstallments : Int = 0
-    public var defaultInstallments : Int = 0
-    public var defaultPaymentTypeId : String?
+    open var excludedPaymentMethodIds : Set<String>?
+    open var excludedPaymentTypeIds : Set<String>?
+    open var defaultPaymentMethodId : String?
+    open var maxAcceptedInstallments : Int = 0
+    open var defaultInstallments : Int = 0
+    open var defaultPaymentTypeId : String?
     
     //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
     // excluded_payment_method < payment_methods
@@ -26,7 +55,7 @@ public class PaymentPreference: NSObject {
     }
     
     
-    public func autoSelectPayerCost(payerCostList:[PayerCost])-> PayerCost?
+    open func autoSelectPayerCost(_ payerCostList:[PayerCost])-> PayerCost?
     {
         if (payerCostList.count == 0){
             return nil
@@ -50,7 +79,7 @@ public class PaymentPreference: NSObject {
 
     }
 
-    public func validate() -> Bool{
+    open func validate() -> Bool{
         if (maxAcceptedInstallments <= 0){
             return false
         }
@@ -62,7 +91,7 @@ public class PaymentPreference: NSObject {
     }
     
     
-    public func addSettings(defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
+    open func addSettings(_ defaultPaymentTypeId: String? = nil ,excludedPaymentMethodsIds : Set<String>? = nil, excludedPaymentTypesIds: Set<String>? = nil, defaultPaymentMethodId: String? = nil, maxAcceptedInstallment : Int? = nil, defaultInstallments : Int? = nil) -> PaymentPreference {
         
         if(excludedPaymentMethodsIds != nil){
            self.excludedPaymentMethodIds =  excludedPaymentMethodsIds
@@ -90,14 +119,14 @@ public class PaymentPreference: NSObject {
         return self
     }
     
-    public class func fromJSON(json : NSDictionary) -> PaymentPreference {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentPreference {
         let preferencePaymentMethods = PaymentPreference()
         
         var excludedPaymentMethods = Set<String>()
         if let pmArray = json["excluded_payment_methods"] as? NSArray {
             for i in 0..<pmArray.count {
                 if let pmDic = pmArray[i] as? NSDictionary {
-                    let pmDicValue = pmDic.valueForKey("id") as? String
+                    let pmDicValue = pmDic.value(forKey: "id") as? String
                     if pmDicValue != nil && pmDicValue!.characters.count > 0 {
                         excludedPaymentMethods.insert(pmDicValue!)
                     }
@@ -110,7 +139,7 @@ public class PaymentPreference: NSObject {
         if let ptArray = json["excluded_payment_types"] as? NSArray {
             for i in 0..<ptArray.count {
                 if let ptDic = ptArray[i] as? NSDictionary {
-                    let ptDicValue = ptDic.valueForKey("id") as? String
+                    let ptDicValue = ptDic.value(forKey: "id") as? String
                     if ptDicValue != nil && ptDicValue?.characters.count > 0 {
                         excludedPaymentTypesIds.insert(ptDicValue!)
                     }
@@ -132,12 +161,15 @@ public class PaymentPreference: NSObject {
         return preferencePaymentMethods
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        let default_installments : Any = self.defaultInstallments == 0 ? JSONHandler.null : (self.defaultInstallments)
+        let default_payment_method_id : Any =  self.defaultPaymentMethodId == nil ? JSONHandler.null : (self.defaultPaymentMethodId)!
+        let installments : Any =  self.maxAcceptedInstallments == 0 ? JSONHandler.null : (self.maxAcceptedInstallments)
         var obj:[String:Any] = [
             
-            "default_installments": self.defaultInstallments == 0 ? JSONHandler.null : (self.defaultInstallments),
-            "default_payment_method_id": self.defaultPaymentMethodId == nil ? JSONHandler.null : (self.defaultPaymentMethodId)!,
-            "installments": self.maxAcceptedInstallments == 0 ? JSONHandler.null : (self.maxAcceptedInstallments),
+            "default_installments": default_installments,
+            "default_payment_method_id": default_payment_method_id,
+            "installments": installments,
         ]
         
         var excludedPaymentMethodIdsJson = [NSDictionary]()

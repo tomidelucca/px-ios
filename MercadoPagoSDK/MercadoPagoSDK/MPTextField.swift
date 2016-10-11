@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MPTextField: UITextField {
+open class MPTextField: UITextField {
 
     /*
     // Only override drawRect: if you perform custom drawing.

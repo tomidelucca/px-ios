@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class TextMaskFormater: NSObject {
+open class TextMaskFormater: NSObject {
 
     var mask : String!
-    public var characterSpace : Character! = "X"
-    public var emptyMaskElement : Character! = "•"
+    open var characterSpace : Character! = "X"
+    open var emptyMaskElement : Character! = "•"
     var completeEmptySpaces : Bool = true
     var leftToRight : Bool = true
-    var unmask : (( textToUnmask: String) -> String)?
+    var unmask : (( _ textToUnmask: String) -> String)?
     
     
     
@@ -25,7 +25,7 @@ public class TextMaskFormater: NSObject {
         self.completeEmptySpaces = completeEmptySpaces
         self.leftToRight = leftToRight
     }
-    public func textMasked(text: String!, remasked: Bool = false) -> String!{
+    open func textMasked(_ text: String!, remasked: Bool = false) -> String!{
         
         if (remasked){
             return textMasked(textUnmasked(text))
@@ -37,10 +37,10 @@ public class TextMaskFormater: NSObject {
     }
     
 
-    public func textUnmasked(text: String!) -> String!{
+    open func textUnmasked(_ text: String!) -> String!{
         
         if (unmask != nil){
-            return unmask!(textToUnmask:text)
+            return unmask!(text)
         }else{
             let charset : Set<Character> = ["0","1","2","3","4","5","6","7","8","9"]
             var ints: String = ""
@@ -54,30 +54,30 @@ public class TextMaskFormater: NSObject {
         
         
     }
-    private func emptyTextMasked() -> String!{
+    fileprivate func emptyTextMasked() -> String!{
         if(completeEmptySpaces){
-            return (mask?.stringByReplacingOccurrencesOfString(String(characterSpace), withString: String(emptyMaskElement)))!
+            return (mask?.replacingOccurrences(of: String(characterSpace), with: String(emptyMaskElement)))!
         }else{
             return ""
         }
         
     }
     
-    private func replaceEmpySpot(text : String!)-> String!{
-        return (text.stringByReplacingOccurrencesOfString(String(characterSpace), withString: String(emptyMaskElement)))
+    fileprivate func replaceEmpySpot(_ text : String!)-> String!{
+        return (text.replacingOccurrences(of: String(characterSpace), with: String(emptyMaskElement)))
     }
     
-    private func maskText(text:String!) -> String!{
+    fileprivate func maskText(_ text:String!) -> String!{
         let maskArray = Array(mask.characters)
         var textToMask = text
         if ((!leftToRight)&&(completeEmptySpaces)){
             textToMask = completeWithEmptySpaces(text)
         }
-        let textArray = Array(textToMask.characters)
+        let textArray = Array(textToMask!.characters)
         var resultString : String = ""
         var charText : Character! = textArray[0]
         var charMask : Character!
-        if(!self.completeEmptySpaces && (textToMask.characters.count == 0)){
+        if(!self.completeEmptySpaces && (textToMask?.characters.count == 0)){
             return ""
         }
         
@@ -94,13 +94,13 @@ public class TextMaskFormater: NSObject {
             }
             
             if (charText == nil){
-                resultString.appendContentsOf(String(charMask))
+                resultString.append(String(charMask))
                 indexMask += 1
             }else if( String(charMask) != String(characterSpace) ){
-                resultString.appendContentsOf(String(charMask))
+                resultString.append(String(charMask))
                 indexMask += 1
             }else{
-                 resultString.appendContentsOf(String(charText))
+                 resultString.append(String(charText))
                 indexMask += 1
                 indexText += 1
             }
@@ -110,7 +110,7 @@ public class TextMaskFormater: NSObject {
         
     }
     
-    private func completeWithEmptySpaces(text: String)->String{
+    fileprivate func completeWithEmptySpaces(_ text: String)->String{
         let charset : Set<Character> = [characterSpace]
         var xs: String = ""
         for char:Character in mask.characters {
@@ -123,12 +123,12 @@ public class TextMaskFormater: NSObject {
         if (max < 0){
            max = 0
         }
-        return (String(count:max, repeatedValue:x) + text)
+        return (String(repeating: String(x), count: max) + text)
         
     }
     
     
-    private func stringByChoose(maskCharacter: Character, textCharacter: Character!) -> String{
+    fileprivate func stringByChoose(_ maskCharacter: Character, textCharacter: Character!) -> String{
         if (textCharacter == nil){
             return String(maskCharacter)
         }
@@ -143,17 +143,18 @@ public class TextMaskFormater: NSObject {
 }
 
 struct Number {
-    static let formatterWithSepator: NSNumberFormatter = {
-        let formatter = NSNumberFormatter()
+    static let formatterWithSepator: NumberFormatter = {
+        let formatter = NumberFormatter()
         formatter.groupingSeparator = "."
-        formatter.numberStyle = .DecimalStyle
+        formatter.numberStyle = .decimal
         return formatter
     }()
 }
-extension IntegerType {
+/*
+extension Integer {
     var stringFormatedWithSepator: String {
-        return Number.formatterWithSepator.stringFromNumber(hashValue) ?? ""
+        return Number.formatterWithSepator.string(from: NSNumber(hashValue)) ?? ""
     }
 }
-
+*/
 

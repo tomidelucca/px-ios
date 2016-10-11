@@ -8,24 +8,24 @@
 
 import UIKit
 
-public class InstructionReference: Equatable {
+open class InstructionReference: Equatable {
 
     var label : String!
     var value : [String]!
     var separator : String!
     
-    public func getFullReferenceValue() -> String {
+    open func getFullReferenceValue() -> String {
         if separator == nil  {
             self.separator = ""
         }
         if value.count == 0 {
             return ""
         }
-        let referenceFullValue : NSString = value.reduce("", combine: {($0 as String) + self.separator + $1})
-        return referenceFullValue.substringFromIndex(self.separator.characters.count)
+        let referenceFullValue : String = value.reduce("", {($0 as String) + self.separator + $1})
+        return referenceFullValue.substring(from: self.separator.characters.count)
     }
     
-    public class func fromJSON(json : NSDictionary) -> InstructionReference {
+    open class func fromJSON(_ json : NSDictionary) -> InstructionReference {
         let reference = InstructionReference()
         if json["label"] != nil && !(json["label"]! is NSNull) {
             reference.label = json["label"] as! String
@@ -35,7 +35,7 @@ public class InstructionReference: Equatable {
             reference.value = [String]()
             if let values = json["field_value"] as? NSArray {
                 for val in values {
-                    reference.value.append(String(val))
+                    reference.value.append(String(describing: val))
                 }
             }
             

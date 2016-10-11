@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class IdentificationType : NSObject {
-    public var _id : String?
-    public var name : String?
-    public var type : String?
-    public var minLength : Int = 0
-    public var maxLength : Int = 0
+open class IdentificationType : NSObject {
+    open var _id : String?
+    open var name : String?
+    open var type : String?
+    open var minLength : Int = 0
+    open var maxLength : Int = 0
     
     
     
-    public class func fromJSON(json : NSDictionary) -> IdentificationType {
+    open class func fromJSON(_ json : NSDictionary) -> IdentificationType {
         let identificationType : IdentificationType = IdentificationType()
         if let _id = JSONHandler.attemptParseToString(json["id"]){
             identificationType._id = _id
@@ -37,11 +37,15 @@ public class IdentificationType : NSObject {
         return identificationType
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        
+        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let name : Any = self.name == nil ? JSONHandler.null : self.name!
+        let type : Any = self.type == nil ? JSONHandler.null : self.type!
         let obj:[String:Any] = [
-            "_id": self._id != nil ? JSONHandler.null : self._id!,
-            "name" : self.name == nil ? JSONHandler.null : self.name!,
-            "type" : self.type == nil ? JSONHandler.null : self.type!,
+            "_id": _id,
+            "name" : name,
+            "type" : type,
             "min_length" : self.minLength,
             "max_length" : self.maxLength
         ]

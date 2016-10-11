@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-public class InstallmentTableViewCell : UITableViewCell {
-    @IBOutlet private weak var installmentsLabel : MPLabel!
+open class InstallmentTableViewCell : UITableViewCell {
+    @IBOutlet fileprivate weak var installmentsLabel : MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
@@ -25,7 +25,7 @@ public class InstallmentTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func fillWithPayerCost(payerCost : PayerCost, amount: Double) {
+    open func fillWithPayerCost(_ payerCost : PayerCost, amount: Double) {
         installmentsLabel.text = payerCost.recommendedMessage
     }
 }

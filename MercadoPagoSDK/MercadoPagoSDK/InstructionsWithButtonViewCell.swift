@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
@@ -25,14 +45,14 @@ class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDeleg
         super.awakeFromNib()
         self.button.layer.borderWidth = 1.0
         self.button.layer.cornerRadius = 5
-        self.button.layer.borderColor = UIColor.primaryColor().CGColor
+        self.button.layer.borderColor = UIColor.primaryColor().cgColor
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(instruction : Instruction) -> UITableViewCell {
+    func fillCell(_ instruction : Instruction) -> UITableViewCell {
         if instruction.references != nil && instruction.references.count > 0 {
 
             MPCellValidator.fillInstructionReference(instruction.references[0], label: self.referenceLabelFirst, referenceValueLabel: self.referenceValueFirst)
@@ -48,20 +68,20 @@ class InstructionsWithButtonViewCell: UITableViewCell, InstructionsFillmentDeleg
             if instruction.actions != nil && instruction.actions?.count > 0 {
                 if instruction.actions![0].tag == ActionTag.LINK.rawValue {
                     self.button.actionLink = instruction.actions![0].url
-                    self.button.addTarget(self, action: #selector(InstructionsWithButtonViewCell.openUrl), forControlEvents: .TouchUpInside)
+                    self.button.addTarget(self, action: #selector(InstructionsWithButtonViewCell.openUrl), for: .touchUpInside)
                 }
             } else {
-                self.button.hidden = true
+                self.button.isHidden = true
             }
         }
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize : CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize : CGFloat) -> CGFloat {
         return 276
     }
     
     internal func openUrl(){
-        UIApplication.sharedApplication().openURL(NSURL(string: self.button.actionLink!)!)
+        UIApplication.shared.openURL(URL(string: self.button.actionLink!)!)
     }
 }

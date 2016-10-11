@@ -21,13 +21,13 @@ class ComponentTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func initializeWith(iconImage: String, title: String){
+    internal func initializeWith(_ iconImage: String, title: String){
         var image = UIImage(named: iconImage)
-        image = image?.imageWithRenderingMode(.AlwaysTemplate)
+        image = image?.withRenderingMode(.alwaysTemplate)
         self.icon.image = image
         self.icon.tintColor = UIColor.blueMercadoPago()
         self.title.text = title

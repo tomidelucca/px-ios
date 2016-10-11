@@ -7,6 +7,17 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class CardViewModelManager: NSObject {
 
@@ -62,32 +73,32 @@ class CardViewModelManager: NSObject {
         return (self.paymentMethod == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(self.paymentMethod!)!
     }
     
-    func getExpirationMonthFromLabel(expirationDateLabel : MPLabel)->Int {
+    func getExpirationMonthFromLabel(_ expirationDateLabel : MPLabel)->Int {
         return Utils.getExpirationMonthFromLabelText(expirationDateLabel.text!)
     }
 
-    func getExpirationYearFromLabel(expirationDateLabel : MPLabel)->Int {
+    func getExpirationYearFromLabel(_ expirationDateLabel : MPLabel)->Int {
         return Utils.getExpirationYearFromLabelText(expirationDateLabel.text!)
     }
     
-    func getBIN(cardNumber : String) -> String?{
+    func getBIN(_ cardNumber : String) -> String?{
         if (token != nil){
             return token?.firstSixDigit
         }
         
-        var trimmedNumber = cardNumber.stringByReplacingOccurrencesOfString(" ", withString: "")
-        trimmedNumber = trimmedNumber.stringByReplacingOccurrencesOfString(String(textMaskFormater.emptyMaskElement), withString: "")
+        var trimmedNumber = cardNumber.replacingOccurrences(of: " ", with: "")
+        trimmedNumber = trimmedNumber.replacingOccurrences(of: String(textMaskFormater.emptyMaskElement), with: "")
         
         
         if (trimmedNumber.characters.count < 6){
             return nil
         }else{
-            let bin = trimmedNumber.substringToIndex((trimmedNumber.startIndex.advancedBy(6)))
+            let bin = trimmedNumber.substring(to: (trimmedNumber.characters.index(trimmedNumber.startIndex, offsetBy: 6)))
             return bin
         }
     }
     
-    func isValidInputCVV(text : String) -> Bool{
+    func isValidInputCVV(_ text : String) -> Bool{
         if( text.characters.count > self.cvvLenght() ){
             return false
         }
@@ -95,7 +106,7 @@ class CardViewModelManager: NSObject {
         return (num != nil)
     }
     
-    func validateCardNumber(cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
+    func validateCardNumber(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
         if(self.paymentMethod == nil){
             return false
@@ -110,7 +121,7 @@ class CardViewModelManager: NSObject {
         return true
     }
     
-    func validateCardholderName(cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
+    func validateCardholderName(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
@@ -120,11 +131,11 @@ class CardViewModelManager: NSObject {
         return true
     }
     
-    func validateCvv(cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
+    func validateCvv(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
-        if (cvvLabel.text!.stringByReplacingOccurrencesOfString("•", withString: "").characters.count < self.paymentMethod?.secCodeLenght()){
+        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.paymentMethod?.secCodeLenght()){
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()
@@ -134,7 +145,7 @@ class CardViewModelManager: NSObject {
         return true
     }
     
-    func validateExpirationDate(cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
+    func validateExpirationDate(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         let errorMethod = self.cardToken!.validateExpiryDate()
@@ -145,7 +156,7 @@ class CardViewModelManager: NSObject {
     }
     
     /*TODO : deberia validarse esto acá???*/
-    func isAmexCard(cardNumber : String) -> Bool{
+    func isAmexCard(_ cardNumber : String) -> Bool{
         if(self.getBIN(cardNumber) == nil){
             return false
         }
@@ -156,7 +167,7 @@ class CardViewModelManager: NSObject {
         }
     }
     
-    func matchedPaymentMethod (cardNumber : String) -> PaymentMethod? {
+    func matchedPaymentMethod (_ cardNumber : String) -> PaymentMethod? {
         if self.paymentMethod != nil {
             return self.paymentMethod
         }
@@ -168,7 +179,7 @@ class CardViewModelManager: NSObject {
         }
         
         
-        for (_, value) in self.paymentMethods!.enumerate() {
+        for (_, value) in self.paymentMethods!.enumerated() {
             
             if (value.conformsPaymentPreferences(self.paymentSettings)){
                 if (value.conformsToBIN(getBIN(cardNumber)!)){
@@ -181,7 +192,7 @@ class CardViewModelManager: NSObject {
     }
     
     
-    func tokenHidratate(cardNumber : String, expirationDate : String, cvv : String, cardholderName : String) {
+    func tokenHidratate(_ cardNumber : String, expirationDate : String, cvv : String, cardholderName : String) {
         let number = cardNumber
         let year = Utils.getExpirationYearFromLabelText(expirationDate)
         let month = Utils.getExpirationMonthFromLabelText(expirationDate)
@@ -191,7 +202,7 @@ class CardViewModelManager: NSObject {
         self.cardToken = CardToken(cardNumber: number, expirationMonth: month, expirationYear: year, securityCode: secCode, cardholderName: name, docType: "", docNumber: "")
     }
     
-    func buildSavedCardToken(cvv : String) -> CardToken {
+    func buildSavedCardToken(_ cvv : String) -> CardToken {
         let securityCode = self.customerCard!.isSecurityCodeRequired() ? cvv : ""
         self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!

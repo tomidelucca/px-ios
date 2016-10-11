@@ -9,23 +9,23 @@
 import Foundation
 import UIKit
 
-public class Card : NSObject, CardInformation {
+open class Card : NSObject, CardInformation {
     
-    public var cardHolder : Cardholder?
-    public var customerId : String?
-    public var dateCreated : NSDate?
-    public var dateLastUpdated : NSDate?
-    public var expirationMonth : Int = 0
-    public var expirationYear : Int = 0
-    public var firstSixDigits : String?
-    public var idCard : NSNumber = 0
-    public var lastFourDigits : String?
-    public var paymentMethod : PaymentMethod?
-    public var issuer : Issuer?
-    public var securityCode : SecurityCode?
+    open var cardHolder : Cardholder?
+    open var customerId : String?
+    open var dateCreated : Date?
+    open var dateLastUpdated : Date?
+    open var expirationMonth : Int = 0
+    open var expirationYear : Int = 0
+    open var firstSixDigits : String?
+    open var idCard : NSNumber = 0
+    open var lastFourDigits : String?
+    open var paymentMethod : PaymentMethod?
+    open var issuer : Issuer?
+    open var securityCode : SecurityCode?
     
 
-   public class func fromJSON(json : NSDictionary) -> Card {
+   open class func fromJSON(_ json : NSDictionary) -> Card {
         let card : Card = Card()
         if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
             card.customerId = customerId
@@ -65,15 +65,15 @@ public class Card : NSObject, CardInformation {
         }
         return card
     }
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:Any]  {
+    open func toJSON() -> [String:Any]  {
         let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
         let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
-        let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(self.dateCreated!)
-        let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(self.dateLastUpdated!)
+        let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
+        let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
         let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
         let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
@@ -94,7 +94,7 @@ public class Card : NSObject, CardInformation {
         return obj
     }
     
-    public func isSecurityCodeRequired() -> Bool {
+    open func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {
                 return true
@@ -107,35 +107,35 @@ public class Card : NSObject, CardInformation {
     }
 
     
-    public func getCardDescription() -> String {
+    open func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
     
-    public func getPaymentMethod() -> PaymentMethod {
+    open func getPaymentMethod() -> PaymentMethod {
         return self.paymentMethod!
     }
     
-    public func getCardId() -> String {
+    open func getCardId() -> String {
         return self.idCard.stringValue
     }
     
-    public func getPaymentMethodId() -> String {
+    open func getPaymentMethodId() -> String {
         return (self.paymentMethod?._id)!
     }
     
-    public func getCardSecurityCode() -> SecurityCode {
+    open func getCardSecurityCode() -> SecurityCode {
         return self.securityCode!
     }
     
-    public func getCardBin() -> String? {
+    open func getCardBin() -> String? {
         return self.firstSixDigits
     }
 
-    public func getCardLastForDigits() -> String? {
+    open func getCardLastForDigits() -> String? {
         return self.lastFourDigits
     }
     
-    public func setupPaymentMethodSettings(settings: [Setting]) {
+    open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
     }
 }

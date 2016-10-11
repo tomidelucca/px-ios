@@ -17,11 +17,11 @@ class InstallmentSelectionTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payerCost : PayerCost) {
+    func fillCell(_ payerCost : PayerCost) {
         let mpLightGrayColor = UIColor(netHex: 0x999999)
         let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 23)!,NSForegroundColorAttributeName:mpLightGrayColor]
         let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13)!]
@@ -31,12 +31,12 @@ class InstallmentSelectionTableViewCell: UITableViewCell {
             let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
             let currency = MercadoPagoContext.getCurrency()
             let totalAmount = Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:mpLightGrayColor)
-            totalAmountStr.appendAttributedString(totalAmount)
-            totalAmountStr.appendAttributedString(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
-            additionalText.appendAttributedString(totalAmountStr)
+            totalAmountStr.append(totalAmount)
+            totalAmountStr.append(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
+            additionalText.append(totalAmountStr)
         } else {
             if payerCost.installments > 1 {
-                additionalText.appendAttributedString(NSAttributedString(string: " Sin interés".localized, attributes: noRateAttributes))
+                additionalText.append(NSAttributedString(string: " Sin interés".localized, attributes: noRateAttributes))
             }
         }
         

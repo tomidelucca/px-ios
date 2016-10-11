@@ -8,17 +8,17 @@
 
 import UIKit
 
-public class PaymentMethodSearchItem : Equatable {
+open class PaymentMethodSearchItem : Equatable {
     
-    public var idPaymentMethodSearchItem : String!
-    public var type : PaymentMethodSearchItemType!
-    public var description : String!
-    public var comment : String?
-    public var childrenHeader : String?
-    public var children : [PaymentMethodSearchItem] = []
-    public var showIcon : Bool = false
+    open var idPaymentMethodSearchItem : String!
+    open var type : PaymentMethodSearchItemType!
+    open var description : String!
+    open var comment : String?
+    open var childrenHeader : String?
+    open var children : [PaymentMethodSearchItem] = []
+    open var showIcon : Bool = false
     
-    public class func fromJSON(json : NSDictionary) -> PaymentMethodSearchItem {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearchItem {
         let pmSearchItem = PaymentMethodSearchItem()
         
         if let _id = JSONHandler.attemptParseToString(json["id"]){
@@ -53,19 +53,19 @@ public class PaymentMethodSearchItem : Equatable {
         return pmSearchItem
     }
     
-    public func isOfflinePayment() -> Bool {
+    open func isOfflinePayment() -> Bool {
         return PaymentTypeId.offlinePayments().contains(self.idPaymentMethodSearchItem)
     }
     
-    public func isBitcoin() -> Bool {
-        return self.idPaymentMethodSearchItem.lowercaseString == "bitcoin"
+    open func isBitcoin() -> Bool {
+        return self.idPaymentMethodSearchItem.lowercased() == "bitcoin"
     }
     
-    public func isPaymentMethod() -> Bool {
+    open func isPaymentMethod() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_METHOD
     }
     
-    public func isPaymentType() -> Bool {
+    open func isPaymentType() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_TYPE
     }
     

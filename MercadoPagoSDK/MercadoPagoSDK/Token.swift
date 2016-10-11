@@ -8,30 +8,30 @@
 
 import Foundation
 
-public class Token : NSObject {
-	public var _id : String!
-	public var publicKey : String!
-	public var cardId : String!
-	public var luhnValidation : String!
-	public var status : String!
-	public var usedDate : String!
-	public var cardNumberLength : Int = 0
-	public var creationDate : NSDate!
-	public var lastFourDigits : String!
-    public var firstSixDigit : String!
-	public var securityCodeLength : Int = 0
-	public var expirationMonth : Int = 0
-	public var expirationYear : Int = 0
-	public var lastModifiedDate : NSDate!
-	public var dueDate : NSDate!
+open class Token : NSObject {
+	open var _id : String!
+	open var publicKey : String!
+	open var cardId : String!
+	open var luhnValidation : String!
+	open var status : String!
+	open var usedDate : String!
+	open var cardNumberLength : Int = 0
+	open var creationDate : Date!
+	open var lastFourDigits : String!
+    open var firstSixDigit : String!
+	open var securityCodeLength : Int = 0
+	open var expirationMonth : Int = 0
+	open var expirationYear : Int = 0
+	open var lastModifiedDate : Date!
+	open var dueDate : Date!
 	
-    public var cardHolder : Cardholder?
+    open var cardHolder : Cardholder?
     
     
 	public init (_id: String, publicKey: String, cardId: String!, luhnValidation: String!, status: String!,
-        usedDate: String!, cardNumberLength: Int, creationDate: NSDate!,lastFourDigits : String!,firstSixDigit : String!,
-		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: NSDate!,
-        dueDate: NSDate?, cardHolder : Cardholder?) {
+        usedDate: String!, cardNumberLength: Int, creationDate: Date!,lastFourDigits : String!,firstSixDigit : String!,
+		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
+        dueDate: Date?, cardHolder : Cardholder?) {
 			self._id = _id
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -50,42 +50,42 @@ public class Token : NSObject {
             self.cardHolder = cardHolder
 	}
     
-    public func getBin() -> String? {
+    open func getBin() -> String? {
         var bin :String? = nil
         if firstSixDigit != nil && firstSixDigit.characters.count > 0 {
-            let range = firstSixDigit!.startIndex ..< firstSixDigit!.characters.startIndex.advancedBy(6)
-            bin = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substringWithRange(range) : nil
+            let range = firstSixDigit!.startIndex ..< firstSixDigit!.characters.index(firstSixDigit!.characters.startIndex, offsetBy: 6)
+            bin = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substring(with: range) : nil
         }
         
         return bin
     }
       
 	
-	public class func fromJSON(json : NSDictionary) -> Token {
-        
-        let _id = JSONHandler.attemptParseToString(json["id"])
-        let publicKey = JSONHandler.attemptParseToString(json["public_key"])
-		let cardId =  JSONHandler.attemptParseToString(json["card_id"])
-		let status = JSONHandler.attemptParseToString(json["status"])
-		let luhn = JSONHandler.attemptParseToString(json["luhn_validation"],defaultReturn: "")
-		let usedDate = JSONHandler.attemptParseToString(json["date_used"],defaultReturn: "")
-		let cardNumberLength = JSONHandler.attemptParseToInt(json["date_used"],defaultReturn: 0)
+	open class func fromJSON(_ json : NSDictionary) -> Token {
+        let literalJson = json.parseToLiteral()
+        let _id = JSONHandler.attemptParseToString(literalJson["id"])
+        let publicKey = JSONHandler.attemptParseToString(literalJson["public_key"])
+		let cardId =  JSONHandler.attemptParseToString(literalJson["card_id"])
+		let status = JSONHandler.attemptParseToString(literalJson["status"])
+		let luhn = JSONHandler.attemptParseToString(literalJson["luhn_validation"],defaultReturn: "")
+		let usedDate = JSONHandler.attemptParseToString(literalJson["date_used"],defaultReturn: "")
+		let cardNumberLength = JSONHandler.attemptParseToInt(literalJson["date_used"],defaultReturn: 0)
         
 		
-		let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"],defaultReturn: "")
-        let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"],defaultReturn: "")
-		let securityCodeLength = JSONHandler.attemptParseToInt(json["security_code_length"],defaultReturn: 0)
-        let expMonth = JSONHandler.attemptParseToInt(json["expiration_month"],defaultReturn: 0)
-		let expYear = JSONHandler.attemptParseToInt(json["expiration_year"],defaultReturn: 0)
+		let lastFourDigits = JSONHandler.attemptParseToString(literalJson["last_four_digits"],defaultReturn: "")
+        let firstSixDigits = JSONHandler.attemptParseToString(literalJson["first_six_digits"],defaultReturn: "")
+		let securityCodeLength = JSONHandler.attemptParseToInt(literalJson["security_code_length"],defaultReturn: 0)
+        let expMonth = JSONHandler.attemptParseToInt(literalJson["expiration_month"],defaultReturn: 0)
+		let expYear = JSONHandler.attemptParseToInt(literalJson["expiration_year"],defaultReturn: 0)
         
         var cardHolder : Cardholder? = nil
         if let dic = json["cardholder"] as? NSDictionary {
             cardHolder = Cardholder.fromJSON(dic)
         }
 
-		let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : NSDate()
-		let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : NSDate()
-        let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : NSDate()
+		let lastModifiedDate = json.isKeyValid("date_last_updated") ? Utils.getDateFromString(json["date_last_updated"] as? String) : Date()
+		let dueDate = json.isKeyValid("date_due") ? Utils.getDateFromString(json["date_due"] as? String) : Date()
+        let creationDate = json.isKeyValid("date_created") ? Utils.getDateFromString(json["date_created"] as? String) : Date()
         
         
 		return Token(_id: _id!, publicKey: publicKey!, cardId: cardId, luhnValidation: luhn, status: status,
@@ -94,17 +94,23 @@ public class Token : NSObject {
             dueDate: dueDate, cardHolder: cardHolder)
 	}
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let cardId : Any = self.cardId == nil ? JSONHandler.null : self.cardId!
+        let luhn : Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
+        let lastFour : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
+        let firstSix : Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
+        
         let obj:[String:Any] = [
-            "_id": self._id != nil ? JSONHandler.null : self._id!,
-            "cardId" : self.cardId == nil ? JSONHandler.null : self.cardId!,
-            "luhnValidation" : self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!,
+            "_id": _id,
+            "cardId" : cardId,
+            "luhnValidation" : luhn,
             "status" : self.status,
             "usedDate" : self.usedDate,
             "cardNumberLength" : self.cardNumberLength,
             "creationDate" : Utils.getStringFromDate(self.creationDate),
-            "lastFourDigits" : self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits,
-            "firstSixDigit" : self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit,
+            "lastFourDigits" : lastFour,
+            "firstSixDigit" : firstSix,
             "securityCodeLength" : self.securityCodeLength,
             "expirationMonth" : self.expirationMonth,
             "expirationYear" : self.expirationYear,
@@ -115,10 +121,10 @@ public class Token : NSObject {
         return JSONHandler.jsonCoding(obj)
     }
     
-    public func getCardExpirationDateFormated() -> String {
+    open func getCardExpirationDateFormated() -> String {
         return (String(expirationMonth) + String(expirationYear))
     }
-    public func getMaskNumber() -> String {
+    open func getMaskNumber() -> String {
         
         var masknumber : String = ""
     
@@ -130,10 +136,10 @@ public class Token : NSObject {
         return masknumber
         
     }
-    public func getExpirationDateFormated() -> String {
+    open func getExpirationDateFormated() -> String {
         
         if self.expirationYear > 0 && self.expirationMonth > 0 {
-            return String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+            return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).characters.index(before: String(self.expirationYear).endIndex)))
         }
         return ""
     }
@@ -141,7 +147,7 @@ public class Token : NSObject {
 
 
 extension NSDictionary {
-	public func isKeyValid(dictKey : String) -> Bool {
+	public func isKeyValid(_ dictKey : String) -> Bool {
 		let dictValue: Any? = self[dictKey]
 		return (dictValue == nil || dictValue is NSNull) ? false : true
 	}

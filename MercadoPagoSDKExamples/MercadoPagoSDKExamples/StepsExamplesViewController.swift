@@ -52,24 +52,24 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         super.didReceiveMemoryWarning()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.stepsExamples.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        self.stepsExamplesTable.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        self.stepsExamplesTable.deselectRow(at: indexPath, animated: true)
         let cell = UITableViewCell()
-        cell.textLabel?.text = self.stepsExamples[indexPath.row]
+        cell.textLabel?.text = self.stepsExamples[(indexPath as NSIndexPath).row]
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.stepsExamplesTable.deselectRowAtIndexPath(indexPath, animated: true)
-        switch indexPath.row {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.stepsExamplesTable.deselectRow(at: indexPath, animated: true)
+        switch (indexPath as NSIndexPath).row {
         case 0:
            startPaymentVault()
         case 1:
@@ -102,65 +102,65 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
         })
-        self.presentViewController(pv, animated: true, completion: {})
+        self.present(pv, animated: true, completion: {})
     }
     
-    private func startCardFlow(){
+    fileprivate func startCardFlow(){
         var cf : UINavigationController!
         cf = MPFlowBuilder.startCardFlow(amount: 1000, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
-           cf!.dismissViewControllerAnimated(true, completion: {})
+           cf!.dismiss(animated: true, completion: {})
             }, callbackCancel : {
-                cf!.dismissViewControllerAnimated(true, completion: {})
+                cf!.dismiss(animated: true, completion: {})
         })
-        self.presentViewController(cf, animated: true, completion: {})
+        self.present(cf, animated: true, completion: {})
     }
     
-    private func startCardForm(){
+    fileprivate func startCardForm(){
         var cf : UINavigationController!
         cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
-            cf!.dismissViewControllerAnimated(true, completion: {})
+            cf!.dismiss(animated: true, completion: {})
             }, callbackCancel : {
-                cf!.dismissViewControllerAnimated(true, completion: {})
+                cf!.dismiss(animated: true, completion: {})
         })
         
-        self.presentViewController(cf, animated: true, completion: {})
+        self.present(cf, animated: true, completion: {})
     }
     
-    private func startPaymentMethods(){
+    fileprivate func startPaymentMethods(){
         let pms = MPStepBuilder.startPaymentMethodsStep(withPreference: nil) { (paymentMethod) in
             self.paymentMethod = paymentMethod
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
         self.navigationController?.pushViewController(pms, animated: true)
     }
     
-    private func statIssuersStep(){
+    fileprivate func statIssuersStep(){
         let issuersVC = MPStepBuilder.startIssuersStep(self.paymentMethod!) { (issuer) in
             self.selectedIssuer = issuer
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
         self.navigationController?.pushViewController(issuersVC, animated: true)
         
     }
     
-    private func startInstallmentsStep(){
+    fileprivate func startInstallmentsStep(){
         
         let installmentsVC = MPStepBuilder.startInstallmentsStep(amount: 10000, issuer: nil, paymentMethodId: "visa") { (payerCost) in
             self.installmentsSelected = payerCost
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
         self.navigationController?.pushViewController(installmentsVC, animated: true)
         
     }
     
-    private func createPayment(){
+    fileprivate func createPayment(){
         
         MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setPaymentURI(ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)

@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class Promo : NSObject {
+open class Promo : NSObject {
 	
-	public var promoId : String!
-	public var issuer : Issuer!
-	public var recommendedMessage : String!
-	public var paymentMethods : [PaymentMethod]!
-	public var legals : String!
-	public var url : String?
+	open var promoId : String!
+	open var issuer : Issuer!
+	open var recommendedMessage : String!
+	open var paymentMethods : [PaymentMethod]!
+	open var legals : String!
+	open var url : String?
 	
-	public class func fromJSON(json : NSDictionary) -> Promo {
+	open class func fromJSON(_ json : NSDictionary) -> Promo {
 		
 		let promo : Promo = Promo()
 		promo.promoId = json["id"] as? String
@@ -56,7 +56,7 @@ public class Promo : NSObject {
 		return promo
 	}
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         let issuer : Any = (self.issuer == nil) ? JSONHandler.null : self.issuer.toJSON()
         let url : Any = (self.url != nil) ? self.url! : ""
         var obj : [String:Any] = [
@@ -71,7 +71,7 @@ public class Promo : NSObject {
         
         if self.paymentMethods != nil && self.paymentMethods.count > 0 {
             for pms in self.paymentMethods {
-               arrayPMs.addObject(pms)
+               arrayPMs.add(pms)
             }
             obj["payment_methods"] = arrayPMs
         }
@@ -79,14 +79,14 @@ public class Promo : NSObject {
         return JSONHandler.jsonCoding(obj)
     }
 	
-	public class func getDateFromString(string: String!) -> NSDate! {
+	open class func getDateFromString(_ string: String!) -> Date! {
 		if string == nil {
 			return nil
 		}
-		let dateFormatter = NSDateFormatter()
+		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
 		var dateArr = string.characters.split {$0 == "T"}.map(String.init)
-		return dateFormatter.dateFromString(dateArr[0])
+		return dateFormatter.date(from: dateArr[0])
 	}
 }
 

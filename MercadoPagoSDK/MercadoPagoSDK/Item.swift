@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Item : NSObject {
+open class Item : NSObject {
     
     // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
     // que cada item no sea nulo, que su cantidad sea 1 o mayor
@@ -16,16 +16,16 @@ public class Item : NSObject {
     // currency no nula
     // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
 
-    public var _id : String!
-    public var quantity : Int = 0
-    public var unitPrice : Double = 0
-    public var title : String!
-    public var currencyId : String!
-    public var categoryId : String!
-    public var pictureUrl : String!
+    open var _id : String!
+    open var quantity : Int = 0
+    open var unitPrice : Double = 0
+    open var title : String!
+    open var currencyId : String!
+    open var categoryId : String!
+    open var pictureUrl : String!
     
     
-    public func validate() -> Bool{
+    open func validate() -> Bool{
         
         if(quantity <= 0){
             return false
@@ -50,20 +50,27 @@ public class Item : NSObject {
         
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        
+        let _id : Any = (self._id == nil) ? JSONHandler.null : self._id!
+        let title  : Any =  (self.title == nil) ? JSONHandler.null : self.title!
+        let currencyId : Any =  (self.currencyId == nil) ? JSONHandler.null : self.currencyId!
+        let categoryId : Any =  (self.categoryId == nil) ? JSONHandler.null : self.categoryId!
+        let pictureUrl : Any =  (self.pictureUrl == nil) ? JSONHandler.null : self.pictureUrl!
+        
         let obj:[String:Any] = [
-            "id": (self._id == nil) ? JSONHandler.null : self._id!,
+            "id": _id,
             "quantity" : self.quantity,
             "unit_price" : self.unitPrice,
-            "title" : (self.title == nil) ? JSONHandler.null : self.title!,
-            "currencyId" : (self.currencyId == nil) ? JSONHandler.null : self.currencyId!,
-            "categoryId" : (self.categoryId == nil) ? JSONHandler.null : self.categoryId!,
-            "pictureUrl" : (self.pictureUrl == nil) ? JSONHandler.null : self.pictureUrl!,
+            "title" : title,
+            "currencyId" : currencyId,
+            "categoryId" : categoryId,
+            "pictureUrl" :pictureUrl,
         ]
         return JSONHandler.jsonCoding(obj)
     }
     
-    public class func fromJSON(json : NSDictionary) -> Item {
+    open class func fromJSON(_ json : NSDictionary) -> Item {
         let item = Item()
         if let _id = JSONHandler.attemptParseToString(json["json"]){
             item._id = _id

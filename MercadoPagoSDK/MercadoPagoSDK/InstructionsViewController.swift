@@ -9,13 +9,13 @@
 import UIKit
 import Foundation
 
-public class InstructionsViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+open class InstructionsViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var congratsTable: UITableView!
     
     var currentInstruction : Instruction?
     var amountInfo : AmountInfo?
-    override public var screenName : String { get { return "INSTRUCTIONS" } }
+    override open var screenName : String { get { return "INSTRUCTIONS" } }
     // NSDictionary used to build instructions screens by paymentMethodId
     let instructionsByPaymentMethod = [
         "oxxo_ticket" : ["body" : "simpleInstructionsCell", "footer" : "defaultInstructionsFooterCell", "footer_height" : 86],
@@ -42,7 +42,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
     var bundle = MercadoPago.getBundle()
     
     
-    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : (Payment) -> Void) {
+    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : @escaping (Payment) -> Void) {
         super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.payment = payment
         self.callback = callback
@@ -53,10 +53,10 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         super.init(coder: aDecoder)
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.congratsTable.tableHeaderView = UIView(frame: CGRectMake(0.0, 0.0, self.congratsTable.bounds.size.width, 0.01))
+        self.congratsTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.congratsTable.bounds.size.width, height: 0.01))
         
         if self.navigationController != nil {
             self.navigationController!.interactivePopGestureRecognizer?.delegate = nil
@@ -67,7 +67,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
 
     }
     
-    override public func viewDidAppear(animated : Bool) {
+    override open func viewDidAppear(_ animated : Bool) {
         super.viewDidAppear(animated)
         self.showLoading()
         if currentInstruction == nil {
@@ -78,78 +78,78 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
-    override public func viewWillAppear(animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         self.loadMPStyles()
         self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
     }
     
-    override public func viewWillDisappear(animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         self.clearMercadoPagoStyle()
     }
 
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return  section == 1 ? 20 : 0.01
     }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
-            let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
+        if (indexPath as NSIndexPath).section == 0 {
+            let instructionsHeaderCell = self.congratsTable.dequeueReusableCell(withIdentifier: "instructionsHeaderCell") as! InstructionsHeaderViewCell
             return instructionsHeaderCell.fillCell(self.currentInstruction!.title, amount : self.amountInfo!.amount!, currency: self.amountInfo!.currency!)
         }
         
-        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
-        if indexPath.section == 1 {
+        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.rawValue.lowercased()
+        if (indexPath as NSIndexPath).section == 1 {
             let bodyViewCell = self.resolveInstructionsBodyViewCell(instructionsSelected)!
             return bodyViewCell
         }
         
-        if indexPath.section == 2 {
+        if (indexPath as NSIndexPath).section == 2 {
             let footer = self.resolveInstructionsFooter(instructionsSelected)!
             return footer
         }
         
-        let exitButtonCell =  self.congratsTable.dequeueReusableCellWithIdentifier("exitButtonCell") as! ExitButtonTableViewCell
+        let exitButtonCell =  self.congratsTable.dequeueReusableCell(withIdentifier: "exitButtonCell") as! ExitButtonTableViewCell
         let attributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!,NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x0066CC)]
         let title = NSAttributedString(string: "Seguir comprando".localized, attributes: attributes)
-        exitButtonCell.exitButton.setAttributedTitle(title, forState: .Normal)
+        exitButtonCell.exitButton.setAttributedTitle(title, for: UIControlState())
         exitButtonCell.defaultCallback = { self.finishInstructions() }
         
         let separatorLineView = UIView(frame: CGRect(x: 0, y: 139, width: self.view.bounds.size.width, height: 1))
         separatorLineView.layer.zPosition = 1
         separatorLineView.backgroundColor = UIColor.grayTableSeparator()
         exitButtonCell.addSubview(separatorLineView)
-        exitButtonCell.bringSubviewToFront(separatorLineView)
+        exitButtonCell.bringSubview(toFront: separatorLineView)
         return exitButtonCell
     }
     
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let instructionsSelected = self.payment.paymentMethodId.lowercaseString + "_" + self.paymentTypeId.rawValue.lowercaseString
-        if indexPath.section == 0 {
-            let instructionsHeaderCell = self.congratsTable.dequeueReusableCellWithIdentifier("instructionsHeaderCell") as! InstructionsHeaderViewCell
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.rawValue.lowercased()
+        if (indexPath as NSIndexPath).section == 0 {
+            let instructionsHeaderCell = self.congratsTable.dequeueReusableCell(withIdentifier: "instructionsHeaderCell") as! InstructionsHeaderViewCell
             
             return instructionsHeaderCell.getCellHeight(self.currentInstruction!.title)
         }
-        if indexPath.section == 1  {
+        if (indexPath as NSIndexPath).section == 1  {
             return self.resolveInstructionsBodyHeightForRow(instructionsSelected)
-        } else if indexPath.section == 2 {
+        } else if (indexPath as NSIndexPath).section == 2 {
             return self.resolveInstructionsFooterHeight(instructionsSelected) + 20
         }
         return 44
@@ -157,27 +157,27 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
 
     
 
-    internal func resolveInstructionsBodyViewCell(instructionsId : String) -> UITableViewCell? {
+    internal func resolveInstructionsBodyViewCell(_ instructionsId : String) -> UITableViewCell? {
         let instructionScreenStructure = self.instructionsByPaymentMethod[instructionsId]
         let instructionBodyCell = instructionScreenStructure!["body"] as! String
-        let cell = self.congratsTable.dequeueReusableCellWithIdentifier(instructionBodyCell) as! InstructionsFillmentDelegate
+        let cell = self.congratsTable.dequeueReusableCell(withIdentifier: instructionBodyCell) as! InstructionsFillmentDelegate
         return cell.fillCell(self.currentInstruction!)
     }
     
-    internal func resolveInstructionsBodyHeightForRow(instructionsId : String) -> CGFloat {
+    internal func resolveInstructionsBodyHeightForRow(_ instructionsId : String) -> CGFloat {
         let instructionsLayout = self.instructionsByPaymentMethod[instructionsId]!["body"] as! String
-        let cell = self.congratsTable.dequeueReusableCellWithIdentifier(instructionsLayout) as! InstructionsFillmentDelegate
+        let cell = self.congratsTable.dequeueReusableCell(withIdentifier: instructionsLayout) as! InstructionsFillmentDelegate
         return cell.getCellHeight(self.currentInstruction!, forFontSize: 22)
     }
     
-    internal func resolveInstructionsFooter(instructionsId : String) -> UITableViewCell? {
+    internal func resolveInstructionsFooter(_ instructionsId : String) -> UITableViewCell? {
         let instructionScreenStructure = self.instructionsByPaymentMethod[instructionsId]
         let instructionFooterCell = instructionScreenStructure!["footer"] as! String
-        let cell = self.congratsTable.dequeueReusableCellWithIdentifier(instructionFooterCell)  as! InstructionsFillmentDelegate
+        let cell = self.congratsTable.dequeueReusableCell(withIdentifier: instructionFooterCell)  as! InstructionsFillmentDelegate
         return cell.fillCell(self.currentInstruction!)
     }
     
-    internal func resolveInstructionsFooterHeight(instructionsId : String) -> CGFloat {
+    internal func resolveInstructionsFooterHeight(_ instructionsId : String) -> CGFloat {
         let instructionScreenStructure = self.instructionsByPaymentMethod[instructionsId]
         let instructionBodyHeight = instructionScreenStructure!["footer_height"] as! CGFloat
         return instructionBodyHeight
@@ -207,28 +207,28 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
         let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
         
         // Register cell nibs in table
-        self.congratsTable.registerNib(instructionsHeaderCell, forCellReuseIdentifier: "instructionsHeaderCell")
-        self.congratsTable.registerNib(instructionsCell, forCellReuseIdentifier: "instructionsCell")
-        self.congratsTable.registerNib(instructionsTwoLabelsCell, forCellReuseIdentifier: "instructionsTwoLabelsCell")
-        self.congratsTable.registerNib(simpleInstructionsViewCell, forCellReuseIdentifier: "simpleInstructionsCell")
+        self.congratsTable.register(instructionsHeaderCell, forCellReuseIdentifier: "instructionsHeaderCell")
+        self.congratsTable.register(instructionsCell, forCellReuseIdentifier: "instructionsCell")
+        self.congratsTable.register(instructionsTwoLabelsCell, forCellReuseIdentifier: "instructionsTwoLabelsCell")
+        self.congratsTable.register(simpleInstructionsViewCell, forCellReuseIdentifier: "simpleInstructionsCell")
 
-        self.congratsTable.registerNib(simpleInstructionsWithButtonViewCell, forCellReuseIdentifier: "simpleInstructionWithButtonViewCell")
-        self.congratsTable.registerNib(instructionsWithButtonCell, forCellReuseIdentifier: "instructionsWithButtonCell")
-        self.congratsTable.registerNib(instructionsTwoLabelsWithButtonCell, forCellReuseIdentifier: "instructionsTwoLabelsAndButtonViewCell")
+        self.congratsTable.register(simpleInstructionsWithButtonViewCell, forCellReuseIdentifier: "simpleInstructionWithButtonViewCell")
+        self.congratsTable.register(instructionsWithButtonCell, forCellReuseIdentifier: "instructionsWithButtonCell")
+        self.congratsTable.register(instructionsTwoLabelsWithButtonCell, forCellReuseIdentifier: "instructionsTwoLabelsAndButtonViewCell")
         
-        self.congratsTable.registerNib(defaultInstructionsFooterCell, forCellReuseIdentifier: "defaultInstructionsFooterCell")
-        self.congratsTable.registerNib(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
-        self.congratsTable.registerNib(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
-        self.congratsTable.registerNib(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
-        self.congratsTable.registerNib(instructionsAtmCell, forCellReuseIdentifier: "instructionsAtmCell")
+        self.congratsTable.register(defaultInstructionsFooterCell, forCellReuseIdentifier: "defaultInstructionsFooterCell")
+        self.congratsTable.register(instructionFooterWithTertiaryInfoCell, forCellReuseIdentifier: "intructionsWithTertiaryInfoFooterCell")
+        self.congratsTable.register(instructionFooterWithSecondaryInfoCell, forCellReuseIdentifier: "intructionsWithSecondaryInfoFooterCell")
+        self.congratsTable.register(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
+        self.congratsTable.register(instructionsAtmCell, forCellReuseIdentifier: "instructionsAtmCell")
     }
     
-    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
     
-    private func getInstructions(){
-        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.rawValue.lowercaseString, success: { (instructionsInfo : InstructionsInfo) -> Void in
+    fileprivate func getInstructions(){
+        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.rawValue.lowercased(), success: { (instructionsInfo : InstructionsInfo) -> Void in
             self.currentInstruction = instructionsInfo.instructions[0]
             self.amountInfo = instructionsInfo.amountInfo
             self.congratsTable.delegate = self
@@ -239,7 +239,7 @@ public class InstructionsViewController: MercadoPagoUIViewController, UITableVie
                 self.requestFailure(error, callback: {
                     self.getInstructions()
                     }, callbackCancel: {
-                        self.dismissViewControllerAnimated(true, completion: {})
+                        self.dismiss(animated: true, completion: {})
                 })
                 self.hideLoading()
         })

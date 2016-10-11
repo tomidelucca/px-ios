@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class FeesDetail : NSObject {
-    public var amount : Double = 0
-    public var amountRefunded : Double = 0
-    public var feePayer : String!
-    public var type : String!
+open class FeesDetail : NSObject {
+    open var amount : Double = 0
+    open var amountRefunded : Double = 0
+    open var feePayer : String!
+    open var type : String!
     
-    public class func fromJSON(json : NSDictionary) -> FeesDetail {
+    open class func fromJSON(_ json : NSDictionary) -> FeesDetail {
         let fd : FeesDetail = FeesDetail()
         if let type = JSONHandler.attemptParseToString(json["type"]){
             fd.type = type
@@ -35,9 +35,10 @@ public class FeesDetail : NSObject {
         return self.type == "financing_fee"
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        let type : Any = self.type != nil ? JSONHandler.null : self.type!
         let obj:[String:Any] = [
-            "type": self.type != nil ? JSONHandler.null : self.type!,
+            "type": type,
             "amountRefunded" : self.amountRefunded,
             "amount" : self.amount,
             "type" : self.type

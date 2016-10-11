@@ -7,13 +7,13 @@
 //
 import Foundation
 
-public class PaymentMethodSearch: Equatable {
+open class PaymentMethodSearch: Equatable {
     
     var groups : [PaymentMethodSearchItem]!
     var paymentMethods : [PaymentMethod]!
     var customerPaymentMethods : [CardInformation]?
     
-    public class func fromJSON(json : NSDictionary) -> PaymentMethodSearch {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
         
         var groups = [PaymentMethodSearchItem]()

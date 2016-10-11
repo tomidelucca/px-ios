@@ -7,10 +7,30 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class CurrenciesUtil {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class CurrenciesUtil {
  
-    public class var currenciesList : [String: Currency] { return [
+    open class var currenciesList : [String: Currency] { return [
         "ARS" : Currency(_id: "ARS", description: "Peso argentino", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
         "BRL" : Currency(_id: "BRL", description: "Real", symbol: "R$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
         "CLP" : Currency(_id: "CLP", description: "Peso chileno", symbol: "$", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: "."),
@@ -19,11 +39,11 @@ public class CurrenciesUtil {
 		"VEF" : Currency(_id: "VEF", description: "Bolivar fuerte", symbol: "BsF", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
         ]}
     
-    public class func getCurrencyFor(currencyId : String?) -> Currency? {
+    open class func getCurrencyFor(_ currencyId : String?) -> Currency? {
         return (currencyId != nil && currencyId?.characters.count > 0) ? self.currenciesList[currencyId!] : nil
     }
  
-    public class func formatNumber(amount: Double, currencyId: String) -> String? {
+    open class func formatNumber(_ amount: Double, currencyId: String) -> String? {
     
         // Get currency configuration
         let currency : Currency? = currenciesList[currencyId]
@@ -31,14 +51,14 @@ public class CurrenciesUtil {
         if currency != nil {
     
             // Set formatters
-            let formatter : NSNumberFormatter = NSNumberFormatter()
+            let formatter : NumberFormatter = NumberFormatter()
             formatter.decimalSeparator = String(currency!.decimalSeparator)
             formatter.groupingSeparator = String(currency!.thousandsSeparator)
-            formatter.numberStyle = .NoStyle
+            formatter.numberStyle = .none
             formatter.maximumFractionDigits = currency!.decimalPlaces
             // return formatted string
             let number = amount as NSNumber
-            return currency!.symbol + " " + formatter.stringFromNumber(number)!
+            return currency!.symbol + " " + formatter.string(from: number)!
         } else {
             return nil
         }

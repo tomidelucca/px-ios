@@ -9,7 +9,7 @@
 import UIKit
 // TODO TRACKER import MercadoPagoTracker
 
-public class MPLabel: UILabel {
+open class MPLabel: UILabel {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -41,24 +41,24 @@ public class MPLabel: UILabel {
         }
     }
     
-    func addCharactersSpacing(spacing:CGFloat) {
+    func addCharactersSpacing(_ spacing:CGFloat) {
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
-            attributedString.appendAttributedString(self.attributedText!)
+            attributedString.append(self.attributedText!)
         }
         attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, self.attributedText!.length))
         self.attributedText = attributedString
     }
     
-    func addLineSpacing(lineSpacing : Float, centered : Bool = true){
+    func addLineSpacing(_ lineSpacing : Float, centered : Bool = true){
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
-            attributedString.appendAttributedString(self.attributedText!)
+            attributedString.append(self.attributedText!)
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = CGFloat(lineSpacing)
         if centered {
-            paragraphStyle.alignment = .Center
+            paragraphStyle.alignment = .center
         }
         attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         self.attributedText = attributedString

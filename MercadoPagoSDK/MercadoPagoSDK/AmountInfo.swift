@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class AmountInfo: NSObject {
+open class AmountInfo: NSObject {
     
     var amount : Double?
     var currency : Currency?
@@ -17,7 +17,7 @@ public class AmountInfo: NSObject {
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> AmountInfo {
+    open class func fromJSON(_ json : NSDictionary) -> AmountInfo {
         let amountInfo : AmountInfo = AmountInfo()
         if let amount = JSONHandler.attemptParseToDouble(json["amount"]) {
             amountInfo.amount = amount
@@ -39,16 +39,21 @@ public class AmountInfo: NSObject {
         return amountInfo
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
        return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
+        let thousands_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
+        let decimal_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
+        let symbol : Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
+        let decimal_places : Any = self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces
+        
         let obj:[String:Any] = ["amount": self.amount!,
-            "thousands_separator": self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator),
-            "decimal_separator": self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator),
-            "symbol": self.currency == nil ? JSONHandler.null : self.currency!.symbol,
-            "decimal_places": self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces]
+            "thousands_separator": thousands_separator,
+            "decimal_separator": decimal_separator,
+            "symbol": symbol,
+            "decimal_places": decimal_places]
         return obj
     }
     

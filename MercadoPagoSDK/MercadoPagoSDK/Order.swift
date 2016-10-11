@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class Order : NSObject {
-    public var _id : Int = 0
-    public var type : String!
+open class Order : NSObject {
+    open var _id : Int = 0
+    open var type : String!
     
-    public class func fromJSON(json : NSDictionary) -> Order {
+    open class func fromJSON(_ json : NSDictionary) -> Order {
         let order : Order = Order()
         if let _id = JSONHandler.attemptParseToInt(json["id"]){
             order._id = _id

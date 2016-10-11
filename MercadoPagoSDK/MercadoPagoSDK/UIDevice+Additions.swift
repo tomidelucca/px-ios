@@ -11,18 +11,18 @@ import UIKit
 import MessageUI
 
 enum UIDeviceFamily : Int {
-	case UIDeviceFamilyiPhone = 0, UIDeviceFamilyiPod, UIDeviceFamilyiPad, UIDeviceFamilyAppleTV, UIDeviceFamilyUnknown
+	case uiDeviceFamilyiPhone = 0, uiDeviceFamilyiPod, uiDeviceFamilyiPad, uiDeviceFamilyAppleTV, uiDeviceFamilyUnknown
 }
 
 extension UIDevice {
 
 	var cameraAvailable: Bool {
-		return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+		return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
 	}
 	
 	var videoCameraAvailable: Bool {
 		let picker : UIImagePickerController = UIImagePickerController()
-		let sourceTypes : Array? = UIImagePickerController.availableMediaTypesForSourceType(picker.sourceType)
+		let sourceTypes : Array? = UIImagePickerController.availableMediaTypes(for: picker.sourceType)
 		if sourceTypes == nil {
 			return false
 		}
@@ -46,13 +46,13 @@ extension UIDevice {
 	}
 	
 	var canMakePhoneCalls: Bool {
-		return UIApplication.sharedApplication().canOpenURL(NSURL(string: "tel://")!)
+		return UIApplication.shared.canOpenURL(URL(string: "tel://")!)
 	}
 	
 	var retinaDisplayCapable: Bool {
 		var scale : CGFloat = CGFloat(1.0)
-		let screen : UIScreen = UIScreen.mainScreen()
-		if screen.respondsToSelector(#selector(NSDecimalNumberBehaviors.scale)) {
+		let screen : UIScreen = UIScreen.main
+		if screen.responds(to: #selector(NSDecimalNumberBehaviors.scale)) {
 			scale = screen.scale
 		}
 		
@@ -67,14 +67,14 @@ extension UIDevice {
 		#if __IPHONE_4_0
 			return MFMessageComposeViewController.canSendText()
 		#else
-			return UIApplication.sharedApplication().canOpenURL(NSURL(string: "sms://")!)
+			return UIApplication.shared.canOpenURL(URL(string: "sms://")!)
 		#endif
 	}
 	
 	var totalDiskSpace: NSNumber? {
 		do {
-			let fattributes : NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
-			return fattributes.objectForKey(NSFileSystemSize) as? NSNumber
+			let fattributes : NSDictionary = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()) as NSDictionary
+			return fattributes.object(forKey: FileAttributeKey.systemSize) as? NSNumber
 		} catch {
 			return nil
 		}
@@ -82,8 +82,8 @@ extension UIDevice {
 	
 	var freeDiskSpace: NSNumber? {
 		do {
-			let fattributes : NSDictionary = try NSFileManager.defaultManager().attributesOfFileSystemForPath(NSHomeDirectory())
-			return fattributes.objectForKey(NSFileSystemFreeSize) as? NSNumber
+			let fattributes : NSDictionary = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory()) as NSDictionary
+			return fattributes.object(forKey: FileAttributeKey.systemFreeSize) as? NSNumber
 		} catch {
 			return nil
 		}
@@ -92,17 +92,17 @@ extension UIDevice {
 	var platform: String {
 		var size : Int = 0
 		sysctlbyname("hw.machine", nil, &size, nil, 0)
-		var machine = [CChar](count: Int(size), repeatedValue: 0)
+		var machine = [CChar](repeating: 0, count: Int(size))
 		sysctlbyname("hw.machine", &machine, &size, nil, 0)
-		return String.fromCString(machine)!
+		return String(cString: machine)
 	}
 	
 	var hwmodel: String {
 		var size : Int = 0
 		sysctlbyname("hw.model", nil, &size, nil, 0)
-		var model = [CChar](count: Int(size), repeatedValue: 0)
+		var model = [CChar](repeating: 0, count: Int(size))
 		sysctlbyname("hw.model", &model, &size, nil, 0)
-		return String.fromCString(model)!
+		return String(cString: model)
 	}
 	
 	var totalMemory: Int {
@@ -124,19 +124,19 @@ extension UIDevice {
 	var deviceFamily: UIDeviceFamily {
 		let platform = self.platform
 		if platform.hasPrefix("iPhone") {
-			return UIDeviceFamily.UIDeviceFamilyiPhone
+			return UIDeviceFamily.uiDeviceFamilyiPhone
 		}
 		if platform.hasPrefix("iPod") {
-			return UIDeviceFamily.UIDeviceFamilyiPod
+			return UIDeviceFamily.uiDeviceFamilyiPod
 		}
 		if platform.hasPrefix("iPad") {
-			return UIDeviceFamily.UIDeviceFamilyiPad
+			return UIDeviceFamily.uiDeviceFamilyiPad
 		}
 		if platform.hasPrefix("AppleTV") {
-			return UIDeviceFamily.UIDeviceFamilyAppleTV
+			return UIDeviceFamily.uiDeviceFamilyAppleTV
 		}
 		
-		return UIDeviceFamily.UIDeviceFamilyUnknown
+		return UIDeviceFamily.uiDeviceFamilyUnknown
 	}
 	
 }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class PromosService : MercadoPagoService {
+open class PromosService : MercadoPagoService {
 	
-	public func getPromos(url : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods/deals", method : String = "GET", public_key: String, success: (jsonResult: AnyObject?) -> Void, failure: ((error: NSError) -> Void)?) {
-		self.request(url, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
+	open func getPromos(_ url : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods/deals", method : String = "GET", public_key: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+		self.request(uri: url, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
 	}
     
 

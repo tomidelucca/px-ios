@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-public class MPCardholderNameTableViewCell : ErrorTableViewCell {
-    @IBOutlet weak private var cardholderNameLabel: MPLabel!
-    @IBOutlet weak public var cardholderNameTextField: MPTextField!
+open class MPCardholderNameTableViewCell : ErrorTableViewCell {
+    @IBOutlet weak fileprivate var cardholderNameLabel: MPLabel!
+    @IBOutlet weak open var cardholderNameTextField: MPTextField!
 	
-	public override func focus() {
-		if !self.cardholderNameTextField.isFirstResponder() {
+	open override func focus() {
+		if !self.cardholderNameTextField.isFirstResponder {
 			self.cardholderNameTextField.becomeFirstResponder()
 		}
 	}
@@ -23,7 +23,7 @@ public class MPCardholderNameTableViewCell : ErrorTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.cardholderNameLabel.text = "Nombre y apellido impreso en la tarjeta".localized
     }
@@ -34,11 +34,11 @@ public class MPCardholderNameTableViewCell : ErrorTableViewCell {
     }
     
     
-    public func getCardholderName() -> String! {
-		return self.cardholderNameTextField.text != nil ? self.cardholderNameTextField.text!.uppercaseString : nil
+    open func getCardholderName() -> String! {
+		return self.cardholderNameTextField.text != nil ? self.cardholderNameTextField.text!.uppercased() : nil
     }
     
-    public func setTextFieldDelegate(delegate : UITextFieldDelegate) {
+    open func setTextFieldDelegate(_ delegate : UITextFieldDelegate) {
         self.cardholderNameTextField.delegate = delegate
     }
 }

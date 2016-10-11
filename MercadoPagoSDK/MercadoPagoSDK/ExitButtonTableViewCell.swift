@@ -16,11 +16,11 @@ class ExitButtonTableViewCell: CallbackCancelTableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.exitButton.addTarget(self, action: #selector(invokeDefaultCallback), forControlEvents: .TouchUpInside)
-        self.exitButton.setTitle("Cancelar Pago".localized, forState:.Normal)
+        self.exitButton.addTarget(self, action: #selector(invokeDefaultCallback), for: .touchUpInside)
+        self.exitButton.setTitle("Cancelar Pago".localized, for:UIControlState())
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     

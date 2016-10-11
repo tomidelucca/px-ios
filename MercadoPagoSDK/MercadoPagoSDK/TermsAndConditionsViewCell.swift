@@ -21,30 +21,30 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         self.paymentButton.backgroundColor = MercadoPagoContext.getPrimaryColor()
         self.termsAndConditionsText.text = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12)!,NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x999999)]
-        self.paymentButton.setTitleColor(UIColor.systemFontColor(), forState: .Normal)
+        self.paymentButton.setTitleColor(UIColor.systemFontColor(), for: UIControlState())
         let mutableAttributedString = NSMutableAttributedString(string: self.termsAndConditionsText.text, attributes: normalAttributes)
-        let tycLinkRange = (self.termsAndConditionsText.text as NSString).rangeOfString("Términos y Condiciones".localized)
+        let tycLinkRange = (self.termsAndConditionsText.text as NSString).range(of: "Términos y Condiciones".localized)
         //TODO  hardcoded
         mutableAttributedString.addAttribute(NSLinkAttributeName, value: MercadoPagoContext.getTermsAndConditionsSite(), range: tycLinkRange)
        self.termsAndConditionsText.delegate = self
         let style = NSMutableParagraphStyle()
-        style.alignment = .Center
+        style.alignment = .center
         style.lineSpacing = CGFloat(6)
         
         mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
         
-        self.termsAndConditionsText.userInteractionEnabled = true
+        self.termsAndConditionsText.isUserInteractionEnabled = true
         
         self.termsAndConditionsText.attributedText = mutableAttributedString
     
     }
     
-    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         self.delegate?.openTermsAndConditions("Términos y Condiciones".localized, url : URL)
         return false
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
     }
@@ -53,7 +53,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
 protocol TermsAndConditionsDelegate {
     
-    func openTermsAndConditions(title : String, url : NSURL)
+    func openTermsAndConditions(_ title : String, url : URL)
 }
 
 

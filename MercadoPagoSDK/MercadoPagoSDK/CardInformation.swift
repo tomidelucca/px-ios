@@ -27,5 +27,5 @@ public protocol CardInformation : NSObjectProtocol {
     
     func getCardLastForDigits() -> String?
     
-    func setupPaymentMethodSettings(settings : [Setting])
+    func setupPaymentMethodSettings(_ settings : [Setting])
 }

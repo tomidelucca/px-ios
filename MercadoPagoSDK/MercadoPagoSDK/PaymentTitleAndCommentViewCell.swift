@@ -19,13 +19,13 @@ class PaymentTitleAndCommentViewCell: UITableViewCell {
         self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.frame.width, height: 1))
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func fillRowWith(paymentTitle : String, paymentComment : String) {
+    func fillRowWith(_ paymentTitle : String, paymentComment : String) {
         self.paymentTitle.text = paymentTitle
         self.paymentComment.text = paymentComment
     }

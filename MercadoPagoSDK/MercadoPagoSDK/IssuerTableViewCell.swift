@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class IssuerTableViewCell: UITableViewCell {
-    @IBOutlet private weak var issuerLabel : MPLabel!
+open class IssuerTableViewCell: UITableViewCell {
+    @IBOutlet fileprivate weak var issuerLabel : MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
@@ -24,7 +24,7 @@ public class IssuerTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
  
-    public func fillWithIssuer(issuer : Issuer) {
+    open func fillWithIssuer(_ issuer : Issuer) {
         issuerLabel.text = issuer.name == "default" ? "Otro banco".localized : issuer.name
     }
     

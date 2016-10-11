@@ -9,37 +9,37 @@
 import Foundation
 import UIKit
 
-public class PaymentMethod : NSObject  {
+open class PaymentMethod : NSObject  {
     
-    public var _id : String!
+    open var _id : String!
 
-    public var name : String!
-    public var paymentTypeId : String!
-    public var settings : [Setting]!
-    public var additionalInfoNeeded : [String]!
-    public var accreditationTime : Int?
+    open var name : String!
+    open var paymentTypeId : String!
+    open var settings : [Setting]!
+    open var additionalInfoNeeded : [String]!
+    open var accreditationTime : Int?
     
     public override init(){
         super.init()
     }
     
-    public func isIssuerRequired() -> Bool {
+    open func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
     
-    public func isIdentificationRequired() -> Bool {
+    open func isIdentificationRequired() -> Bool {
         return isAdditionalInfoNeeded("cardholder_identification_number")
     }
-    public func isIdentificationTypeRequired() -> Bool {
+    open func isIdentificationTypeRequired() -> Bool {
         return isAdditionalInfoNeeded("cardholder_identification_type")
     }
     
-    public func isCard() -> Bool {
+    open func isCard() -> Bool {
         let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)!
         return paymentTypeId.isCard()
     }
     
-    public func isSecurityCodeRequired(bin: String) -> Bool {
+    open func isSecurityCodeRequired(_ bin: String) -> Bool {
         
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
         if setting != nil && setting!.securityCode.length != 0 {
@@ -49,7 +49,7 @@ public class PaymentMethod : NSObject  {
         }
     }
     
-    public func isAdditionalInfoNeeded(param: String!) -> Bool {
+    open func isAdditionalInfoNeeded(_ param: String!) -> Bool {
         if additionalInfoNeeded != nil && additionalInfoNeeded.count > 0 {
             for info in additionalInfoNeeded {
                 if info == param {
@@ -60,21 +60,25 @@ public class PaymentMethod : NSObject  {
         return false
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
+        let id : Any = String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!
+        let name : Any = self.name == nil ?  JSONHandler.null : self.name
+        let payment_type_id : Any = self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId
+        
         let obj:[String:Any] = [
-            "id": String.isNullOrEmpty(self._id) ?  JSONHandler.null : self._id!,
-            "name" : self.name == nil ?  JSONHandler.null : self.name,
-            "payment_type_id" : self.paymentTypeId == nil ? JSONHandler.null : self.paymentTypeId,
+            "id": id,
+            "name" : name,
+            "payment_type_id" : payment_type_id,
             ]
         return obj
     }
     
     
-    public class func fromJSON(json : NSDictionary) -> PaymentMethod {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentMethod {
         let paymentMethod : PaymentMethod = PaymentMethod()
         paymentMethod._id = json["id"] as? String
         paymentMethod.name = json["name"] as? String
@@ -110,10 +114,10 @@ public class PaymentMethod : NSObject  {
         return paymentMethod
     }
     
-    public func conformsToBIN(bin : String) -> Bool {
+    open func conformsToBIN(_ bin : String) -> Bool {
         return (Setting.getSettingByBin(self.settings, bin: bin) != nil)
     }
-    public func cloneWithBIN(bin : String) -> PaymentMethod? {
+    open func cloneWithBIN(_ bin : String) -> PaymentMethod? {
         let paymentMethod : PaymentMethod = PaymentMethod()
         paymentMethod._id = self._id
         paymentMethod.name = self.name
@@ -127,11 +131,11 @@ public class PaymentMethod : NSObject  {
         }
     }
     
-    public func isAmex() -> Bool{
+    open func isAmex() -> Bool{
         return self._id == "amex"
     }
     
-    public func secCodeMandatory() -> Bool {
+    open func secCodeMandatory() -> Bool {
         if (self.settings.count == 0){
             return false // Si no tiene settings el codigo no es mandatorio
         }
@@ -143,7 +147,7 @@ public class PaymentMethod : NSObject  {
         }
     }
     
-    public func secCodeLenght() -> Int {
+    open func secCodeLenght() -> Int {
         if (self.settings != nil && self.settings.count == 0 || self.settings == nil){
             return 3 //Si no tiene settings la longitud es cero
         }
@@ -154,7 +158,7 @@ public class PaymentMethod : NSObject  {
             return 0 //si la longitud de sus codigos, en sus settings no es siempre la misma entonces responde 0
         }
     }
-    public func cardNumberLenght() -> Int {
+    open func cardNumberLenght() -> Int {
         if (self.settings.count == 0){
             return 0 //Si no tiene settings la longitud es cero
         }
@@ -166,7 +170,7 @@ public class PaymentMethod : NSObject  {
         }
     }
     
-    public func secCodeInBack() -> Bool {
+    open func secCodeInBack() -> Bool {
         if (self.settings.count == 0){
             return true //si no tiene settings, por defecto el codigo de seguridad ira atras
         }
@@ -179,19 +183,19 @@ public class PaymentMethod : NSObject  {
     }
     
     
-    public func isOfflinePaymentMethod() -> Bool {
+    open func isOfflinePaymentMethod() -> Bool {
         return self.paymentTypeId != nil && PaymentTypeId(rawValue : self.paymentTypeId)!.isOfflinePayment()
     }
     
     
-    public func isVISA() -> Bool {
+    open func isVISA() -> Bool {
         return ((self._id == "visa") && (self._id == "debvisa"))
     }
-    public func isMASTERCARD() -> Bool {
+    open func isMASTERCARD() -> Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
 
-    public func conformsPaymentPreferences(paymentPreference : PaymentPreference?) -> Bool{
+    open func conformsPaymentPreferences(_ paymentPreference : PaymentPreference?) -> Bool{
         
         if(paymentPreference == nil){
             return true
@@ -207,7 +211,7 @@ public class PaymentMethod : NSObject  {
             }
         }
         if((paymentPreference?.excludedPaymentTypeIds) != nil){
-            for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerate())! {
+            for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerated())! {
                 if (value == self.paymentTypeId){
                     return false
                 }
@@ -215,7 +219,7 @@ public class PaymentMethod : NSObject  {
         }
         
         if((paymentPreference?.excludedPaymentMethodIds) != nil){
-            for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerate())! {
+            for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerated())! {
                 if (value == self._id){
                     return false
                 }
@@ -227,16 +231,16 @@ public class PaymentMethod : NSObject  {
     }
     
     
-    public func getColor()-> UIColor? {
+    open func getColor()-> UIColor? {
      return MercadoPago.getColorFor(self)
     }
-    public func getImage()-> UIImage? {
+    open func getImage()-> UIImage? {
       return MercadoPago.getImageFor(self)
     }
-    public func getLabelMask()-> String? {
+    open func getLabelMask()-> String? {
         return MercadoPago.getLabelMaskFor(self)
     }
-    public func getEditTextMask()-> String? {
+    open func getEditTextMask()-> String? {
         return MercadoPago.getEditTextMaskFor(self)
     }
 

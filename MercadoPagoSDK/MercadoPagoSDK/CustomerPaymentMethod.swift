@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CustomerPaymentMethod: NSObject, CardInformation {
+open class CustomerPaymentMethod: NSObject, CardInformation {
     
     var _id : String!
     var _description : String!
@@ -17,7 +17,7 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
     
     var securityCode : SecurityCode = SecurityCode()
     
-    public class func fromJSON(json : NSDictionary) -> CustomerPaymentMethod {
+    open class func fromJSON(_ json : NSDictionary) -> CustomerPaymentMethod {
         let customerPaymentMethod = CustomerPaymentMethod()
         
         if json["id"] != nil && !(json["id"]! is NSNull) {
@@ -40,7 +40,7 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [
             "_id": self._id,
             "_description": self._description == nil ? "" : self._description!,
@@ -52,45 +52,45 @@ public class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
-    public func isSecurityCodeRequired() -> Bool {
+    open func isSecurityCodeRequired() -> Bool {
         return true;
     }
     
-    public func getCardId() -> String {
+    open func getCardId() -> String {
         return self.value
     }
     
-    public func getCardSecurityCode() -> SecurityCode {
+    open func getCardSecurityCode() -> SecurityCode {
         return self.securityCode
     }
     
-    public func getCardDescription() -> String {
+    open func getCardDescription() -> String {
         return self._description
     }
     
-    public func getPaymentMethod() -> PaymentMethod {
+    open func getPaymentMethod() -> PaymentMethod {
         let pm = PaymentMethod()
         pm._id = self._id
         return pm
     }
     
-    public func getPaymentMethodId() -> String {
+    open func getPaymentMethodId() -> String {
         return self._id
     }
     
-    public func getCardBin() -> String? {
+    open func getCardBin() -> String? {
         return "XXXX"
     }
     
-    public func getCardLastForDigits() -> String? {
+    open func getCardLastForDigits() -> String? {
         return "XXXX"
     }
     
-    public func setupPaymentMethodSettings(settings : [Setting]) {
+    open func setupPaymentMethodSettings(_ settings : [Setting]) {
         self.securityCode = settings[0].securityCode
     }
     

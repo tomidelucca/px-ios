@@ -11,14 +11,14 @@ import Foundation
 extension String {
 	
 	var localized: String {
-		var bundle : NSBundle? = MercadoPago.getBundle()
+		var bundle : Bundle? = MercadoPago.getBundle()
 		if bundle == nil {
-			bundle = NSBundle.mainBundle()
+			bundle = Bundle.main
 		}
         let currentLanguage = MercadoPagoContext.getLanguage()
-        let path = bundle!.pathForResource(currentLanguage, ofType : "lproj")
-        let languageBundle = NSBundle(path : path!)
-        return languageBundle!.localizedStringForKey(self, value : "", table : nil)
+        let path = bundle!.path(forResource: currentLanguage, ofType : "lproj")
+        let languageBundle = Bundle(path : path!)
+        return languageBundle!.localizedString(forKey: self, value : "", table : nil)
 	}
 	
     public func existsLocalized() -> Bool {
@@ -26,12 +26,12 @@ extension String {
         return localizedString != self
     }
     
-    static public func isNullOrEmpty(value: String?) -> Bool
+    static public func isNullOrEmpty(_ value: String?) -> Bool
     {
         return value == nil || value!.isEmpty
     }
     
-    static public func isDigitsOnly(a: String) -> Bool {
+    static public func isDigitsOnly(_ a: String) -> Bool {
 		if Regex.init("^[0-9]*$").test(a) {
 			return true
 		} else {
@@ -39,9 +39,9 @@ extension String {
 		}
     }
     
-    public func startsWith(prefix : String) -> Bool {
-        let startIndex = self.rangeOfString(prefix)
-        if startIndex == nil  || self.startIndex != startIndex?.startIndex {
+    public func startsWith(_ prefix : String) -> Bool {
+        let startIndex = self.range(of: prefix)
+        if startIndex == nil  || self.startIndex != startIndex?.lowerBound {
             return false
         }
         return true
@@ -50,21 +50,21 @@ extension String {
     subscript (i: Int) -> String {
         
         if self.characters.count > i {
-            return String(self[self.startIndex.advancedBy(i)])
+            return String(self[self.characters.index(self.startIndex, offsetBy: i)])
         }
         
         return ""
     }
     
-    public func indexAt(theInt:Int)->String.Index {
+    public func indexAt(_ theInt:Int)->String.Index {
         
-        return self.characters.startIndex.advancedBy(theInt)
+        return self.characters.index(self.characters.startIndex, offsetBy: theInt)
     }
     
     public func trimSpaces()-> String {
         
-        var stringTrimmed = self.stringByReplacingOccurrencesOfString(" ", withString: "")
-        stringTrimmed = stringTrimmed.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        var stringTrimmed = self.replacingOccurrences(of: " ", with: "")
+        stringTrimmed = stringTrimmed.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return stringTrimmed
     }
 }

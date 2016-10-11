@@ -8,58 +8,78 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-    @IBOutlet weak private var userIdTypeLabel: MPLabel!
-    @IBOutlet weak private var userIdValueLabel: MPLabel!
-    @IBOutlet weak public var userIdTypeTextField: UITextField!
-    @IBOutlet weak public var userIdValueTextField: UITextField!
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
+
+open class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+    @IBOutlet weak fileprivate var userIdTypeLabel: MPLabel!
+    @IBOutlet weak fileprivate var userIdValueLabel: MPLabel!
+    @IBOutlet weak open var userIdTypeTextField: UITextField!
+    @IBOutlet weak open var userIdValueTextField: UITextField!
     
-    @IBOutlet public var pickerIdentificationType: UIPickerView! = UIPickerView()
+    @IBOutlet open var pickerIdentificationType: UIPickerView! = UIPickerView()
     
-    public var identificationTypes : [IdentificationType] = [IdentificationType]()
-    public var identificationType : IdentificationType?
+    open var identificationTypes : [IdentificationType] = [IdentificationType]()
+    open var identificationType : IdentificationType?
 	
-	public override func focus() {
-		if !self.userIdTypeTextField.isFirstResponder() {
+	open override func focus() {
+		if !self.userIdTypeTextField.isFirstResponder {
 			self.userIdTypeTextField.becomeFirstResponder()
 		}
 	}
 	
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		pickerIdentificationType.hidden = true
+		pickerIdentificationType.isHidden = true
 	}
 	
     // returns the number of 'columns' to display.
-    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     // returns the # of rows in each component..
-    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return identificationTypes.count
     }
     
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return identificationTypes[row].name
     }
     
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         setFormWithIndex(row)
-        pickerIdentificationType.hidden = true
+        pickerIdentificationType.isHidden = true
         userIdTypeTextField.resignFirstResponder()
     }
     
-    public func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    open func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == self.userIdTypeTextField {
-            pickerIdentificationType.hidden = false
+            pickerIdentificationType.isHidden = false
         }
         return true
     }
     
-    public func textField(textField: UITextField,shouldChangeCharactersInRange range: NSRange,    replacementString string: String) -> Bool {
+    open func textField(_ textField: UITextField,shouldChangeCharactersIn range: NSRange,    replacementString string: String) -> Bool {
         if textField == self.userIdValueTextField {
             
             if identificationType != nil && (((identificationType!.type! == "number" && !Regex("^[0-9]$").test(string)) ||
@@ -67,8 +87,8 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
                 return false
             }
 			if textField.text != nil {
-				var txtAfterUpdate: NSString = textField.text!
-				txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+				var txtAfterUpdate: NSString = textField.text! as NSString
+				txtAfterUpdate = txtAfterUpdate.replacingCharacters(in: range, with: string) as NSString
 				if txtAfterUpdate.length <= self.identificationType?.maxLength {
 					return true
 				}
@@ -78,17 +98,17 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
         return false
     }
     
-    public func setFormWithIndex(row: Int) {
+    open func setFormWithIndex(_ row: Int) {
         identificationType = identificationTypes[row]
         if identificationType != nil && identificationType!.type! == "number" {
-            userIdValueTextField.keyboardType = UIKeyboardType.NumberPad
+            userIdValueTextField.keyboardType = UIKeyboardType.numberPad
         } else {
-            userIdValueTextField.keyboardType = UIKeyboardType.Default
+            userIdValueTextField.keyboardType = UIKeyboardType.default
         }
         userIdTypeTextField.text = identificationTypes[row].name
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.userIdTypeLabel.text = "Tipo".localized
 		self.userIdValueLabel.text = "Documento".localized
@@ -103,7 +123,7 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
 		
     }
     
-    public func _setIdentificationTypes(identificationTypes: [IdentificationType]?) {
+    open func _setIdentificationTypes(_ identificationTypes: [IdentificationType]?) {
         if identificationTypes != nil {
             self.identificationTypes = identificationTypes!
             setFormWithIndex(0)
@@ -112,18 +132,18 @@ public class MPUserIdTableViewCell : ErrorTableViewCell, UITextFieldDelegate, UI
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        pickerIdentificationType.hidden = true
+        pickerIdentificationType.isHidden = true
     }
     
-    public func getUserIdType() -> String! {
+    open func getUserIdType() -> String! {
         return self.userIdTypeTextField.text
     }
 
-    public func getUserIdValue() -> String! {
+    open func getUserIdValue() -> String! {
         return self.userIdValueTextField.text
     }
     
-    public func setTextFieldDelegate(delegate : UITextFieldDelegate) {
+    open func setTextFieldDelegate(_ delegate : UITextFieldDelegate) {
         self.userIdValueTextField.delegate = delegate
     }
     

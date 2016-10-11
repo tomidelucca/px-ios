@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CongratsPaymentMethodTableViewCell: UITableViewCell {
+open class CongratsPaymentMethodTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var imgPayment: UIImageView!
@@ -22,12 +22,12 @@ public class CongratsPaymentMethodTableViewCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	override public func awakeFromNib() {
+	override open func awakeFromNib() {
         super.awakeFromNib()
 		self.lblTitle.text = "Medio de pago".localized
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

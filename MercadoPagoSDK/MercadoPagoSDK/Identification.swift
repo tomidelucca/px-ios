@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class Identification : NSObject {
+open class Identification : NSObject {
     
-    public var type : String?
-    public var number : String?
+    open var type : String?
+    open var number : String?
 
     
     public init (type: String? = nil, number : String? = nil) {
@@ -19,21 +19,23 @@ public class Identification : NSObject {
         self.number = number
     }
     
-    public class func fromJSON(json : NSDictionary) -> Identification {
+    open class func fromJSON(_ json : NSDictionary) -> Identification {
         let identification : Identification = Identification()
         identification.type = json["type"] as? String
         identification.number = json["number"] as? String
         return identification
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
+        let type : Any = String.isNullOrEmpty(self.type) ?  JSONHandler.null : self.type!
+        let number : Any = String.isNullOrEmpty(self.number) ?  JSONHandler.null : self.number!
         let obj:[String:Any] = [
-            "type": String.isNullOrEmpty(self.type) ?  JSONHandler.null : self.type!,
-            "number": String.isNullOrEmpty(self.number) ?  JSONHandler.null : self.number!
+            "type":type ,
+            "number": number
         ]
         return obj
     }

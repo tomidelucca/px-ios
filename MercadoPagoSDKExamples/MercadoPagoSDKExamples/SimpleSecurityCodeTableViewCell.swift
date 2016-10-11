@@ -10,12 +10,12 @@ import UIKit
 import MercadoPagoSDK
 
 class SimpleSecurityCodeTableViewCell: ErrorTableViewCell {
-    @IBOutlet weak private var securityCodeLabel: MPLabel!
+    @IBOutlet weak fileprivate var securityCodeLabel: MPLabel!
     @IBOutlet weak var securityCodeTextField: UITextField!
 	
 	
 	override func focus() {
-		if !self.securityCodeTextField.isFirstResponder() {
+		if !self.securityCodeTextField.isFirstResponder {
 			self.securityCodeTextField.becomeFirstResponder()
 		}
 	}
@@ -41,7 +41,7 @@ class SimpleSecurityCodeTableViewCell: ErrorTableViewCell {
         return self.securityCodeTextField.text
     }
 	
-    func setTextFieldDelegate(delegate : UITextFieldDelegate) {
+    func setTextFieldDelegate(_ delegate : UITextFieldDelegate) {
         self.securityCodeTextField.delegate = delegate
     }
 }

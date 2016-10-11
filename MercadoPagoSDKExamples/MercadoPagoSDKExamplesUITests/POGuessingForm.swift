@@ -35,7 +35,7 @@ class POGuessingForm: MPPageObject {
     }
     
     /* Numero */
-    func completeNumero(numero: String){
+    func completeNumero(_ numero: String){
    //     cardNumberField.tap()
         cardNumberField.typeText(numero)
        
@@ -43,31 +43,31 @@ class POGuessingForm: MPPageObject {
     func clearNumero(){
         completeNumero("")
     }
-    func completeNumeroAndContinue(numero: String){
+    func completeNumeroAndContinue(_ numero: String){
         completeNumero(numero)
         pressContinue()
     }
     
     /* Nombre */
-    func completeNombre(nombre: String){
+    func completeNombre(_ nombre: String){
         cardholderNameField.typeText(nombre)
     }
     func clearNombre(){
         completeNombre("")
     }
-    func completeNombreAndContinue(nombre: String){
+    func completeNombreAndContinue(_ nombre: String){
         completeNombre(nombre)
         pressContinue()
     }
     
     /* Fecha */
-    func completeFecha(fecha: String){
+    func completeFecha(_ fecha: String){
         expirationDateField.typeText(fecha)
     }
     func clearFecha(){
         completeFecha("")
     }
-    func completeFechaAndContinue(fecha: String, cvvRequired: Bool = true) -> POIdentificationForm?{
+    func completeFechaAndContinue(_ fecha: String, cvvRequired: Bool = true) -> POIdentificationForm?{
         completeFecha(fecha)
         pressContinue()
         if (cvvRequired){
@@ -79,14 +79,14 @@ class POGuessingForm: MPPageObject {
     
     
     /* CVV */
-    func completeCVV(cvv: String){
+    func completeCVV(_ cvv: String){
         securityCodeField.typeText(cvv)
     }
     func clearCVV(){
         securityCodeField.typeText("")
 
     }
-    func completeCVVAndContinue(cvv: String) -> POIdentificationForm{
+    func completeCVVAndContinue(_ cvv: String) -> POIdentificationForm{
         securityCodeField.typeText(cvv)
         pressContinue()
         return POIdentificationForm()

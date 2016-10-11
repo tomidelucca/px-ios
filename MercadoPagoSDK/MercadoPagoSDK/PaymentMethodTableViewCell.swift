@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-public class PaymentMethodTableViewCell : UITableViewCell {
-    @IBOutlet private weak var paymentMethodLabel : MPLabel!
-    @IBOutlet private var paymentMethodImage : UIImageView!
+open class PaymentMethodTableViewCell : UITableViewCell {
+    @IBOutlet fileprivate weak var paymentMethodLabel : MPLabel!
+    @IBOutlet fileprivate var paymentMethodImage : UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
@@ -26,11 +26,11 @@ public class PaymentMethodTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func setLabel(label : String) {
+    open func setLabel(_ label : String) {
         self.paymentMethodLabel.text = label
     }
 
-    public func setImageWithName(imageName : String) {
+    open func setImageWithName(_ imageName : String) {
         self.paymentMethodImage.image = MercadoPago.getImage(imageName)
     }
 }

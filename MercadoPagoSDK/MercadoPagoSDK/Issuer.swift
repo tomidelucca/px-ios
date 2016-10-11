@@ -8,11 +8,11 @@
 
 import Foundation
 
-public class Issuer : NSObject {
-    public var _id : NSNumber?
-    public var name : String?
+open class Issuer : NSObject {
+    open var _id : NSNumber?
+    open var name : String?
     
-    public class func fromJSON(json : NSDictionary) -> Issuer {
+    open class func fromJSON(_ json : NSDictionary) -> Issuer {
         let issuer : Issuer = Issuer()
         
         if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue{
@@ -25,14 +25,16 @@ public class Issuer : NSObject {
         return issuer
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
        return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
+        let id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let name : Any = self.name == nil ? JSONHandler.null : self.name!
         let obj:[String:Any] = [
-            "id": self._id != nil ? JSONHandler.null : self._id!,
-            "name" : self.name == nil ? JSONHandler.null : self.name!,
+            "id": id,
+            "name" : name,
             ]
         return obj
     }

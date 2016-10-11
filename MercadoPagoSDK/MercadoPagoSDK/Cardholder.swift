@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class Cardholder : NSObject {
-    public var name : String?
-    public var identification : Identification?
+open class Cardholder : NSObject {
+    open var name : String?
+    open var identification : Identification?
     
  
     
-    public class func fromJSON(json : NSDictionary) -> Cardholder {
+    open class func fromJSON(_ json : NSDictionary) -> Cardholder {
         let cardholder : Cardholder = Cardholder()
         
         if let name = json["name"] as? String{
@@ -25,11 +25,11 @@ public class Cardholder : NSObject {
         return cardholder
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
         let name : Any = String.isNullOrEmpty(self.name) ? JSONHandler.null : self.name!
         let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
         let obj:[String:Any] = [

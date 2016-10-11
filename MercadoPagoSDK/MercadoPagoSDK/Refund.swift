@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class Refund : NSObject {
-    public var amount : Double = 0
-    public var dateCreated : NSDate!
-    public var _id : Int = 0
-    public var metadata : NSObject!
-    public var paymentId : Int = 0
-    public var source : String!
-    public var uniqueSequenceNumber : String!
+open class Refund : NSObject {
+    open var amount : Double = 0
+    open var dateCreated : Date!
+    open var _id : Int = 0
+    open var metadata : NSObject!
+    open var paymentId : Int = 0
+    open var source : String!
+    open var uniqueSequenceNumber : String!
     
-    public class func fromJSON(json : NSDictionary) -> Refund {
+    open class func fromJSON(_ json : NSDictionary) -> Refund {
         let refund : Refund = Refund()
         if let _id = JSONHandler.attemptParseToInt(json["id"]){
             refund._id = _id

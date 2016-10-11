@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-public class MPPaymentMethodTableViewCell : UITableViewCell {
-	@IBOutlet weak private var paymentMethodTitleLabel : MPLabel!
-    @IBOutlet weak private var cardTextLabel : MPTextField!
-    @IBOutlet weak private var cardIcon : UIImageView!
+open class MPPaymentMethodTableViewCell : UITableViewCell {
+	@IBOutlet weak fileprivate var paymentMethodTitleLabel : MPLabel!
+    @IBOutlet weak fileprivate var cardTextLabel : MPTextField!
+    @IBOutlet weak fileprivate var cardIcon : UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.paymentMethodTitleLabel.text = "Medio de pago".localized
     }
@@ -27,12 +27,12 @@ public class MPPaymentMethodTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
 	
-	private func setEmptyPaymentMethod() {
+	fileprivate func setEmptyPaymentMethod() {
 		self.cardTextLabel.text = "Selecciona un medio de pago...".localized
 		self.cardIcon.image = MercadoPago.getImage("empty_tc")
 	}
 	
-    public func fillWithCard(card : Card?) {
+    open func fillWithCard(_ card : Card?) {
         if card == nil || card!.paymentMethod == nil {
 			setEmptyPaymentMethod()
         } else {
@@ -41,18 +41,18 @@ public class MPPaymentMethodTableViewCell : UITableViewCell {
         }
     }
     
-    public func fillWithCardTokenAndPaymentMethod(card : CardToken?, paymentMethod : PaymentMethod?) {
+    open func fillWithCardTokenAndPaymentMethod(_ card : CardToken?, paymentMethod : PaymentMethod?) {
         if card == nil || paymentMethod == nil {
 			setEmptyPaymentMethod()
         } else {
-            let range = card!.cardNumber!.characters.endIndex.advancedBy(-4) ..< card!.cardNumber!.endIndex
-            let lastFourDigits : String = card!.cardNumber!.substringWithRange(range)
+            let range = card!.cardNumber!.characters.index(card!.cardNumber!.characters.endIndex, offsetBy: -4) ..< card!.cardNumber!.endIndex
+            let lastFourDigits : String = card!.cardNumber!.substring(with: range)
             self.cardTextLabel.text = paymentMethod!.name + " " + "terminada en".localized + " " + lastFourDigits
             self.cardIcon.image = MercadoPago.getImage(paymentMethod!._id)
         }
     }
     
-    public func fillWithPaymentMethod(paymentMethod : PaymentMethod?) {
+    open func fillWithPaymentMethod(_ paymentMethod : PaymentMethod?) {
         if paymentMethod == nil {
 			setEmptyPaymentMethod()
         } else {

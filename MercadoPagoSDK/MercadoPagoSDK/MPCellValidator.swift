@@ -11,9 +11,9 @@ import UIKit
 
 class MPCellValidator: NSObject {
 
-    class func fillInstructionReference(reference : InstructionReference, label : MPLabel, referenceValueLabel : MPLabel) {
+    class func fillInstructionReference(_ reference : InstructionReference, label : MPLabel, referenceValueLabel : MPLabel) {
         if reference.value != nil && reference.value.count > 0 && reference.label != nil {
-            label.text = reference.label.uppercaseString
+            label.text = reference.label.uppercased()
             referenceValueLabel.text = reference.getFullReferenceValue()
         } else {
             label.text = ""

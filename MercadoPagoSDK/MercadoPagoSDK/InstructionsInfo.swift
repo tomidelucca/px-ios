@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class InstructionsInfo: NSObject {
+open class InstructionsInfo: NSObject {
     
     var amountInfo : AmountInfo!
     var instructions : [Instruction]!
     
     
-    public class func fromJSON(json : NSDictionary) -> InstructionsInfo {
+    open class func fromJSON(_ json : NSDictionary) -> InstructionsInfo {
         
         let instructionsInfo : InstructionsInfo = InstructionsInfo()
         
@@ -35,7 +35,7 @@ public class InstructionsInfo: NSObject {
         return instructionsInfo
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         var obj:[String:Any] = [
             "amount_info": self.amountInfo.toJSON()
         ]
@@ -44,7 +44,7 @@ public class InstructionsInfo: NSObject {
             let array = NSMutableArray()
             for inst in instructions {
                 if let instruction = inst.toJSON() as? [String : AnyObject]{
-                    array.addObject(instruction)
+                    array.add(instruction)
                 }
             }
            obj["instructions"] = array

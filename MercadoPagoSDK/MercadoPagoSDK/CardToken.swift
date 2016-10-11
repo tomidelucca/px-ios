@@ -9,20 +9,20 @@
 import Foundation
 import UIKit
 
-public class CardToken : NSObject {
+open class CardToken : NSObject {
     
     let MIN_LENGTH_NUMBER : Int = 10
     let MAX_LENGTH_NUMBER : Int = 19
     
-    public var device : Device?
-    public var securityCode : String?
+    open var device : Device?
+    open var securityCode : String?
     
-    let now = NSCalendar.currentCalendar().components([.Year, .Month], fromDate: NSDate())
+    let now = (Calendar.current as NSCalendar).components([.year, .month], from: Date())
     
-    public var cardNumber : String?
-    public var expirationMonth : Int = 0
-    public var expirationYear : Int = 0
-    public var cardholder : Cardholder?
+    open var cardNumber : String?
+    open var expirationMonth : Int = 0
+    open var expirationYear : Int = 0
+    open var cardholder : Cardholder?
     
     
     public override init(){
@@ -37,24 +37,24 @@ public class CardToken : NSObject {
             self.cardholder?.identification = Identification()
             self.cardholder?.identification?.number = docNumber
             self.cardholder?.identification?.type = docType
-            self.cardNumber = normalizeCardNumber(cardNumber!.stringByReplacingOccurrencesOfString(" ", withString: ""))
+            self.cardNumber = normalizeCardNumber(cardNumber!.replacingOccurrences(of: " ", with: ""))
             self.expirationMonth = expirationMonth
             self.expirationYear = normalizeYear(expirationYear)
             self.securityCode = securityCode
     }
     
-    public func normalizeCardNumber(number: String?) -> String? {
+    open func normalizeCardNumber(_ number: String?) -> String? {
         if number == nil {
             return nil
         }
-        return number!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("\\s+|-", withString: "")
+        return number!.trimmingCharacters(in: CharacterSet.whitespaces).replacingOccurrences(of: "\\s+|-", with: "")
     }
     
-    public func validate() -> Bool {
+    open func validate() -> Bool {
         return validate(true)
     }
     
-    public func validate(includeSecurityCode: Bool) -> Bool {
+    open func validate(_ includeSecurityCode: Bool) -> Bool {
         var result : Bool = validateCardNumber() == nil  && validateExpiryDate() == nil && validateIdentification() == nil && validateCardholderName() == nil
         if (includeSecurityCode) {
             result = result && validateSecurityCode() == nil
@@ -62,7 +62,7 @@ public class CardToken : NSObject {
         return result
     }
     
-    public func validateCardNumber() -> NSError? {
+    open func validateCardNumber() -> NSError? {
         if String.isNullOrEmpty(cardNumber) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardNumber" : "Ingresa el número de la tarjeta de crédito".localized])
         } else if self.cardNumber!.characters.count < MIN_LENGTH_NUMBER || self.cardNumber!.characters.count > MAX_LENGTH_NUMBER {
@@ -72,9 +72,9 @@ public class CardToken : NSObject {
         }
     }
     
-    public func validateCardNumber(paymentMethod: PaymentMethod) -> NSError? {
+    open func validateCardNumber(_ paymentMethod: PaymentMethod) -> NSError? {
         var userInfo : [String : String]?
-        cardNumber = cardNumber?.stringByReplacingOccurrencesOfString("•", withString: "")
+        cardNumber = cardNumber?.replacingOccurrences(of: "•", with: "")
         let validCardNumber = self.validateCardNumber()
         if validCardNumber != nil {
             return validCardNumber
@@ -94,7 +94,7 @@ public class CardToken : NSObject {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
-                    userInfo?.updateValue(("invalid_card_length".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: "\(setting?.cardNumber.length)"), forKey: "cardNumber")
+                    userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(setting?.cardNumber.length)"), forKey: "cardNumber")
                 }
                 
                 // Validate luhn
@@ -114,11 +114,11 @@ public class CardToken : NSObject {
         }
     }
 
-    public func validateSecurityCode()  -> NSError? {
+    open func validateSecurityCode()  -> NSError? {
         return validateSecurityCode(securityCode)
     }
     
-    public func validateSecurityCode(securityCode: String?) -> NSError? {
+    open func validateSecurityCode(_ securityCode: String?) -> NSError? {
         if String.isNullOrEmpty(self.securityCode) || self.securityCode!.characters.count < 3 || self.securityCode!.characters.count > 4 {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : "invalid_field".localized])
         } else {
@@ -126,32 +126,32 @@ public class CardToken : NSObject {
         }
     }
     
-    public func validateSecurityCodeWithPaymentMethod(paymentMethod: PaymentMethod) -> NSError? {
+    open func validateSecurityCodeWithPaymentMethod(_ paymentMethod: PaymentMethod) -> NSError? {
         let validSecurityCode = self.validateSecurityCode(securityCode)
         if validSecurityCode != nil {
             return validSecurityCode
         } else {
-            let range = cardNumber!.startIndex ..< cardNumber!.characters.startIndex.advancedBy(6)
-            return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber!.substringWithRange(range))
+            let range = cardNumber!.startIndex ..< cardNumber!.characters.index(cardNumber!.characters.startIndex, offsetBy: 6)
+            return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber!.substring(with: range))
         }
     }
     
-    public func validateSecurityCodeWithPaymentMethod(securityCode: String, paymentMethod: PaymentMethod, bin: String) -> NSError? {
+    open func validateSecurityCodeWithPaymentMethod(_ securityCode: String, paymentMethod: PaymentMethod, bin: String) -> NSError? {
         let setting : Setting? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
         // Validate security code length
         let cvvLength = setting?.securityCode.length
         if ((cvvLength != 0) && (securityCode.characters.count != cvvLength)) {
-            return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: "\(cvvLength)")])
+            return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
         } else {
             return nil
         }
     }
     
-    public func validateExpiryDate() -> NSError? {
+    open func validateExpiryDate() -> NSError? {
         return validateExpiryDate(expirationMonth, year: expirationYear)
     }
     
-    public func validateExpiryDate(month: Int, year: Int) -> NSError? {
+    open func validateExpiryDate(_ month: Int, year: Int) -> NSError? {
         if !validateExpMonth(month) {
 			return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["expiryDate" : "invalid_field".localized])
         }
@@ -166,15 +166,15 @@ public class CardToken : NSObject {
         return nil
     }
     
-    public func validateExpMonth(month: Int) -> Bool {
+    open func validateExpMonth(_ month: Int) -> Bool {
         return (month >= 1 && month <= 12)
     }
     
-    public func validateExpYear(year: Int) -> Bool {
+    open func validateExpYear(_ year: Int) -> Bool {
         return !hasYearPassed(year)
     }
     
-    public func validateIdentification() -> NSError? {
+    open func validateIdentification() -> NSError? {
         
         let validType = validateIdentificationType()
         if validType != nil {
@@ -188,7 +188,7 @@ public class CardToken : NSObject {
         return nil
     }
     
-    public func validateIdentificationType() -> NSError? {
+    open func validateIdentificationType() -> NSError? {
         
         if String.isNullOrEmpty(cardholder!.identification!.type) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
@@ -197,7 +197,7 @@ public class CardToken : NSObject {
         }
     }
     
-    public func validateIdentificationNumber() -> NSError? {
+    open func validateIdentificationNumber() -> NSError? {
         
         if String.isNullOrEmpty(cardholder!.identification!.number) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["identification" : "invalid_field".localized])
@@ -206,7 +206,7 @@ public class CardToken : NSObject {
         }
     }
     
-    public func validateIdentificationNumber(identificationType: IdentificationType?) -> NSError? {
+    open func validateIdentificationNumber(_ identificationType: IdentificationType?) -> NSError? {
         if identificationType != nil {
             if cardholder?.identification != nil && cardholder?.identification?.number != nil {
                 let len = cardholder!.identification!.number!.characters.count
@@ -229,7 +229,7 @@ public class CardToken : NSObject {
         }
     }
     
-    public func validateCardholderName() -> NSError? {
+    open func validateCardholderName() -> NSError? {
         if String.isNullOrEmpty(self.cardholder?.name) {
             return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["cardholder" : "invalid_field".localized])
         } else {
@@ -237,28 +237,28 @@ public class CardToken : NSObject {
         }
     }
 
-    public func hasYearPassed(year: Int) -> Bool {
+    open func hasYearPassed(_ year: Int) -> Bool {
         let normalized : Int = normalizeYear(year)
-        return normalized < now.year
+        return normalized < now.year!
     }
     
-    public func hasMonthPassed(year: Int, month: Int) -> Bool {
-        return hasYearPassed(year) || normalizeYear(year) == now.year && month < (now.month + 1)
+    open func hasMonthPassed(_ year: Int, month: Int) -> Bool {
+        return hasYearPassed(year) || normalizeYear(year) == now.year! && month < (now.month! + 1)
     }
     
-    public func normalizeYear(year: Int) -> Int {
+    open func normalizeYear(_ year: Int) -> Int {
         if year < 100 && year >= 0 {
-            let currentYear : String = String(now.year)
-            let range = currentYear.startIndex ..< currentYear.characters.endIndex.advancedBy(-2)
-            let prefix : String = currentYear.substringWithRange(range)
+            let currentYear : String = String(describing: now.year)
+            let range = currentYear.startIndex ..< currentYear.characters.index(currentYear.characters.endIndex, offsetBy: -2)
+            let prefix : String = currentYear.substring(with: range)
 			
-			let nsReturn : NSString = prefix + String(year)
+			let nsReturn : NSString = prefix.appending(String(year)) as NSString
             return nsReturn.integerValue
         }
         return year
     }
     
-    public func checkLuhn(cardNumber : String) -> Bool {
+    open func checkLuhn(_ cardNumber : String) -> Bool {
         var sum : Int = 0
         var alternate = false
         if cardNumber.characters.count == 0 {
@@ -268,7 +268,7 @@ public class CardToken : NSObject {
         for index in 0...(cardNumber.characters.count-1) {
             _ = NSRange(location: index, length: 1)
             var s = cardNumber as NSString
-            s = s.substringWithRange(NSRange(location: index, length: 1))
+            s = s.substring(with: NSRange(location: index, length: 1)) as NSString
             var n : Int = s.integerValue
             if (alternate)
             {
@@ -285,13 +285,13 @@ public class CardToken : NSObject {
         return (sum % 10 == 0)
     }
     
-    public func getBin() -> String? {
-        let range =  cardNumber!.startIndex ..< cardNumber!.characters.startIndex.advancedBy(6)
-        let bin :String? = cardNumber!.characters.count >= 6 ? cardNumber!.substringWithRange(range) : nil
+    open func getBin() -> String? {
+        let range =  cardNumber!.startIndex ..< cardNumber!.characters.index(cardNumber!.characters.startIndex, offsetBy: 6)
+        let bin :String? = cardNumber!.characters.count >= 6 ? cardNumber!.substring(with: range) : nil
         return bin
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         
         let card_number : Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
         let cardholder : Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
@@ -308,7 +308,7 @@ public class CardToken : NSObject {
         return JSONHandler.jsonCoding(obj)
     }
     
-    public func getNumberFormated() -> NSString {
+    open func getNumberFormated() -> NSString {
         
         //TODO AMEX
         var str : String
@@ -316,20 +316,20 @@ public class CardToken : NSObject {
         str = (str.insert(" ", ind: 8))
         str = (str.insert(" ", ind: 4))
         str = (str.insert(" ", ind: 0))
-        return str
+        return str as NSString
     }
     
-    public func getExpirationDateFormated() -> NSString {
+    open func getExpirationDateFormated() -> NSString {
         
         var str : String
         
         
-        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substringFromIndex(String(self.expirationYear).endIndex.predecessor().predecessor())
+        str = String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).characters.index(before: String(self.expirationYear).endIndex)))
 
-        return str
+        return str as NSString
     }
     
-    public func isCustomerPaymentMethod() -> Bool {
+    open func isCustomerPaymentMethod() -> Bool {
         return false
     }
 }

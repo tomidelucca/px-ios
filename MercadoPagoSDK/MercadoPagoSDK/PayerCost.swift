@@ -8,15 +8,15 @@
 
 import Foundation
 
-public class PayerCost : NSObject {
-    public var installments : Int = 0
-    public var installmentRate : Double = 0
-    public var labels : [String]!
-    public var minAllowedAmount : Double = 0
-    public var maxAllowedAmount : Double = 0
-    public var recommendedMessage : String!
-    public var installmentAmount : Double = 0
-    public var totalAmount : Double = 0
+open class PayerCost : NSObject {
+    open var installments : Int = 0
+    open var installmentRate : Double = 0
+    open var labels : [String]!
+    open var minAllowedAmount : Double = 0
+    open var maxAllowedAmount : Double = 0
+    open var recommendedMessage : String!
+    open var installmentAmount : Double = 0
+    open var totalAmount : Double = 0
     
     public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],
         minAllowedAmount : Double = 0, maxAllowedAmount : Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
@@ -32,7 +32,7 @@ public class PayerCost : NSObject {
     }
     
   
-    public class func fromJSON(json : NSDictionary) -> PayerCost {
+    open class func fromJSON(_ json : NSDictionary) -> PayerCost {
         let payerCost : PayerCost = PayerCost()
         if let installments = JSONHandler.attemptParseToInt(json["installments"]) {
             payerCost.installments = installments
@@ -58,7 +58,7 @@ public class PayerCost : NSObject {
         return payerCost
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         let obj:[String:Any] = [
             "installments": self.installments,
             "installmentRate" : self.installmentRate,

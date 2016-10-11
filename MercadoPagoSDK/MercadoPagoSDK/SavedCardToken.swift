@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class SavedCardToken : CardToken {
+open class SavedCardToken : CardToken {
     
-    public var cardId : String?
-    public var securityCodeRequired : Bool = true
+    open var cardId : String?
+    open var securityCodeRequired : Bool = true
     
     public init(cardId : String, securityCode : String) {
         super.init()
@@ -26,27 +26,27 @@ public class SavedCardToken : CardToken {
         self.securityCodeRequired = securityCodeRequired
     }
     
-    public override func validate() -> Bool {
+    open override func validate() -> Bool {
         return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
     }
     
-    public func validateCardId() -> Bool {
+    open func validateCardId() -> Bool {
         return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId!)
     }
     
-    public func validateSecurityCodeNumbers() -> Bool {
+    open func validateSecurityCodeNumbers() -> Bool {
         let isEmptySecurityCode : Bool = String.isNullOrEmpty(self.securityCode)
         return !isEmptySecurityCode && self.securityCode!.characters.count >= 3 && self.securityCode!.characters.count <= 4
     }
     
-    public override func isCustomerPaymentMethod() -> Bool {
+    open override func isCustomerPaymentMethod() -> Bool {
         return true
     }
     
-    public override func toJSONString() -> String {
+    open override func toJSONString() -> String {
         let obj:[String:Any] = [
-            "card_id": String.isNullOrEmpty(self.cardId) ? JSONHandler.null : self.cardId!,
-            "security_code" : String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!,
+            "card_id": String.isNullOrEmpty(self.cardId!) ? JSONHandler.null : self.cardId!,
+            "security_code" : String.isNullOrEmpty(self.securityCode!) ? JSONHandler.null : self.securityCode!,
             "device" : self.device == nil ? JSONHandler.null : self.device!.toJSONString()
         ]
         return JSONHandler.jsonCoding(obj)

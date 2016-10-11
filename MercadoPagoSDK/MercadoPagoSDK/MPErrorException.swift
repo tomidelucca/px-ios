@@ -6,7 +6,7 @@
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
-public enum MPErrorException: ErrorType {
-    case InvalidPaymentMethod
-    case InvalidInputData(message : String)
+public enum MPErrorException: Error {
+    case invalidPaymentMethod
+    case invalidInputData(message : String)
 }

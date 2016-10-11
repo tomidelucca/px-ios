@@ -7,47 +7,67 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class Payment : NSObject {
-    public var binaryMode : Bool!
-    public var callForAuthorizeId : String!
-    public var captured : Bool!
-    public var card : Card!
-    public var currencyId : String!
-    public var dateApproved : NSDate!
-    public var dateCreated : NSDate!
-    public var dateLastUpdated : NSDate!
-    public var _description : String!
-    public var externalReference : String!
-    public var feesDetails : [FeesDetail]!
-    public var _id : Int = 0
-    public var installments : Int = 0
-    public var liveMode : Bool!
-    public var metadata : NSObject!
-    public var moneyReleaseDate : NSDate!
-    public var notificationUrl : String!
-    public var order : Order!
-    public var payer : Payer!
-    public var paymentMethodId : String!
-    public var paymentTypeId : String!
-    public var refunds : [Refund]!
-    public var statementDescriptor : String!
-    public var status : String!
-    public var statusDetail : String!
-    public var transactionAmount : Double = 0
-    public var transactionAmountRefunded : Double = 0
-    public var transactionDetails : TransactionDetails!
-    public var collectorId : String!
-    public var couponAmount : Double = 0
-    public var differentialPricingId : NSNumber = 0
-    public var issuerId : Int = 0
-    public var tokenId : String?
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class Payment : NSObject {
+    open var binaryMode : Bool!
+    open var callForAuthorizeId : String!
+    open var captured : Bool!
+    open var card : Card!
+    open var currencyId : String!
+    open var dateApproved : Date!
+    open var dateCreated : Date!
+    open var dateLastUpdated : Date!
+    open var _description : String!
+    open var externalReference : String!
+    open var feesDetails : [FeesDetail]!
+    open var _id : Int = 0
+    open var installments : Int = 0
+    open var liveMode : Bool!
+    open var metadata : NSObject!
+    open var moneyReleaseDate : Date!
+    open var notificationUrl : String!
+    open var order : Order!
+    open var payer : Payer!
+    open var paymentMethodId : String!
+    open var paymentTypeId : String!
+    open var refunds : [Refund]!
+    open var statementDescriptor : String!
+    open var status : String!
+    open var statusDetail : String!
+    open var transactionAmount : Double = 0
+    open var transactionAmountRefunded : Double = 0
+    open var transactionDetails : TransactionDetails!
+    open var collectorId : String!
+    open var couponAmount : Double = 0
+    open var differentialPricingId : NSNumber = 0
+    open var issuerId : Int = 0
+    open var tokenId : String?
     
     override public init(){
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> Payment {
+    open class func fromJSON(_ json : NSDictionary) -> Payment {
         let payment : Payment = Payment()
 		
         if let _id = JSONHandler.attemptParseToInt(json["id"]){
@@ -163,9 +183,9 @@ public class Payment : NSObject {
         return payment
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         let obj:[String:Any] = [
-            "id" : String(self._id),
+            "id" : String(describing: self._id),
             "transaction_amount": self.transactionAmount,
             "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId" : self.issuerId,
@@ -180,17 +200,17 @@ public class Payment : NSObject {
         return JSONHandler.jsonCoding(obj)
     }
     
-    public class func getDateFromString(string: String!) -> NSDate! {
+    open class func getDateFromString(_ string: String!) -> Date! {
         if string == nil {
             return nil
         }
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         var dateArr = string.characters.split {$0 == "T"}.map(String.init)
-        return dateFormatter.dateFromString(dateArr[0])
+        return dateFormatter.date(from: dateArr[0])
     }
     
-    public func isRejected() -> Bool {
+    open func isRejected() -> Bool {
         return self.status == PaymentStatus.REJECTED.rawValue
     }
 }

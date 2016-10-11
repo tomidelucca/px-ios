@@ -20,14 +20,14 @@ class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillment
         super.awakeFromNib()
         self.button.layer.borderWidth = 1.0
         self.button.layer.cornerRadius = 5
-        self.button.layer.borderColor = UIColor.primaryColor().CGColor
+        self.button.layer.borderColor = UIColor.primaryColor().cgColor
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(instruction : Instruction) -> UITableViewCell {
+    func fillCell(_ instruction : Instruction) -> UITableViewCell {
         if instruction.info != nil && instruction.info.count > 0 {
             self.title.text  = instruction.info[0]
         }
@@ -38,7 +38,7 @@ class SimpleInstructionWithButtonViewCell: UITableViewCell, InstructionsFillment
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
         return 208
     }
 }

@@ -8,14 +8,14 @@
 
 import Foundation
 
-public class MerchantPayment : NSObject {
-    public var issuer : Issuer?
-    public var cardTokenId : String!
-    public var campaignId : Int = 0
-    public var installments : Int = 0
-    public var items : [Item]?
-    public var merchantAccessToken : String!
-    public var paymentMethod : PaymentMethod!
+open class MerchantPayment : NSObject {
+    open var issuer : Issuer?
+    open var cardTokenId : String!
+    open var campaignId : Int = 0
+    open var installments : Int = 0
+    open var items : [Item]?
+    open var merchantAccessToken : String!
+    open var paymentMethod : PaymentMethod!
     
     public override init(){
         super.init()
@@ -31,19 +31,28 @@ public class MerchantPayment : NSObject {
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
+        
+        let card_issuer_id : Any = (issuer == nil || self.issuer?._id == 0) ? JSONHandler.null : (self.issuer?._id)!
+        let card_token : Any =  self.cardTokenId == nil ? JSONHandler.null : self.cardTokenId!
+        let campaign_id : Any = self.campaignId == 0 ? JSONHandler.null : String(self.campaignId)
+        let installments : Any = self.installments == 0 ? JSONHandler.null : self.installments
+        let merchant_access_token : Any = self.merchantAccessToken == nil ? JSONHandler.null : self.merchantAccessToken!
+       let payment_method_id : Any = (self.paymentMethod == nil || self.paymentMethod._id == nil) ? JSONHandler.null : self.paymentMethod._id!
+        
+        
         var obj:[String:Any] = [
-            "card_issuer_id": (issuer == nil || self.issuer?._id == 0) ? JSONHandler.null : (self.issuer?._id)!,
-            "card_token": self.cardTokenId == nil ? JSONHandler.null : self.cardTokenId!,
-            "campaign_id": self.campaignId == 0 ? JSONHandler.null : String(self.campaignId),
-            "installments" : self.installments == 0 ? JSONHandler.null : self.installments,
-            "merchant_access_token" : self.merchantAccessToken == nil ? JSONHandler.null : self.merchantAccessToken!,
-            "payment_method_id" : (self.paymentMethod == nil || self.paymentMethod._id == nil) ? JSONHandler.null : self.paymentMethod._id!
+            "card_issuer_id": card_issuer_id,
+            "card_token": card_token,
+            "campaign_id": campaign_id,
+            "installments" : installments,
+            "merchant_access_token" : merchant_access_token,
+            "payment_method_id" : payment_method_id
         ]
         
         var itemsJson = ""
         for item in items! {
-            itemsJson.appendContentsOf(item.toJSONString())
+            itemsJson.append(item.toJSONString())
         }
         obj["items"] = itemsJson
         

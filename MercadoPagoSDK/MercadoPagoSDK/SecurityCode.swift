@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class SecurityCode : NSObject {
-    public var length : Int = 0
-    public var cardLocation : String!
-    public var mode : String!
+open class SecurityCode : NSObject {
+    open var length : Int = 0
+    open var cardLocation : String!
+    open var mode : String!
     
     public override init(){
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> SecurityCode {
+    open class func fromJSON(_ json : NSDictionary) -> SecurityCode {
         let securityCode : SecurityCode = SecurityCode()
         if let length = JSONHandler.attemptParseToInt(json["length"]){
             securityCode.length = length
@@ -31,11 +31,11 @@ public class SecurityCode : NSObject {
         return securityCode
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
 
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [
             "length": self.length,
             "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,

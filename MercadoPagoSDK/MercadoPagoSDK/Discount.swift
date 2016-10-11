@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class Discount : Equatable {
-    public var amountOff : NSNumber = 0
-    public var couponAmount : NSNumber = 0
-    public var currencyId : String!
-    public var _id : Int = 0
-    public var name : String!
-    public var percentOff : NSNumber = 0
+open class Discount : Equatable {
+    open var amountOff : NSNumber = 0
+    open var couponAmount : NSNumber = 0
+    open var currencyId : String!
+    open var _id : Int = 0
+    open var name : String!
+    open var percentOff : NSNumber = 0
     
     
     
@@ -27,7 +27,7 @@ public class Discount : Equatable {
         self.percentOff = percentOff!
     }
     
-    public class func fromJSON(json : NSDictionary) -> Discount {
+    open class func fromJSON(_ json : NSDictionary) -> Discount {
         let discount : Discount = Discount()
         if let amountOff = JSONHandler.attemptParseToString(json["amount_off"])?.numberValue {
             discount.amountOff = amountOff

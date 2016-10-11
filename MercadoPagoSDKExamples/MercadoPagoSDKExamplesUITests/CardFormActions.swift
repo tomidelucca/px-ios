@@ -14,13 +14,13 @@ import XCTest
 
 class CardFormActions: MPTestActions {
 
-    static internal func testCard( card : TestCard, user : TestUser ){
+    static internal func testCard( _ card : TestCard, user : TestUser ){
         
         let poCard = POGuessingForm()
         //Card Form
-        let binIndex = card.number.endIndex.advancedBy(6 - card.number.characters.count)
-        let binNumber = card.number.substringToIndex(binIndex)
-        let additionalNumbers = card.number.substringFromIndex(binIndex)
+        let binIndex = card.number.characters.index(card.number.endIndex, offsetBy: 6 - card.number.characters.count)
+        let binNumber = card.number.substring(to: binIndex)
+        let additionalNumbers = card.number.substring(from: binIndex)
         
         poCard.completeNumeroAndContinue(binNumber)
         poCard.completeNumeroAndContinue(additionalNumbers)

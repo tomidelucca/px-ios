@@ -36,18 +36,18 @@ class JSONHandler: NSObject {
     */
     
     //For compiling porpouse
-    class func jsonCoding(jsonDictionary: [String:Any]) -> String {
+    class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
         var result : String = ""
         do{
-            var dict = NSMutableDictionary()
+            let dict = NSMutableDictionary()
             for (key,value) in jsonDictionary {
                 if let value = value as? AnyObject{
                     dict.setValue(value, forKey: key)
                 }
             }
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(dict, options: .PrettyPrinted)
-            let decoded = try NSJSONSerialization.JSONObjectWithData(jsonData, options: [])
-            result = decoded.description
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+            result = (decoded as AnyObject).description
         }catch{
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
@@ -55,10 +55,10 @@ class JSONHandler: NSObject {
         
     }
     
-    class func parseToJSON(data:NSData) -> Any{
+    class func parseToJSON(_ data:Data) -> Any{
         var result : Any = []
         do{
-            result = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            result = try JSONSerialization.jsonObject(with: data, options: [])
         }catch{
             print("ERROR PARSIBNG JSON, ERROR = \(error)")
         }
@@ -66,15 +66,15 @@ class JSONHandler: NSObject {
     }
 
     
-    class func attemptParseToString(anyobject: AnyObject?, defaultReturn: String? = nil) -> String?{
+    class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String?{
 
-        guard let _ = anyobject , let string = anyobject!.description else {
+        guard let _ = anyobject , let string = (anyobject! as AnyObject).description else {
             return defaultReturn
         }
         return string
     }
     
-    class func attemptParseToBool(anyobject: AnyObject?) -> Bool?{
+    class func attemptParseToBool(_ anyobject: Any?) -> Bool?{
         if anyobject is Bool {
             return anyobject as! Bool?
         }
@@ -84,14 +84,14 @@ class JSONHandler: NSObject {
         return string.toBool()
     }
     
-    class func attemptParseToDouble(anyobject: AnyObject? , defaultReturn: Double? = nil) -> Double?{
+    class func attemptParseToDouble(_ anyobject: Any? , defaultReturn: Double? = nil) -> Double?{
         
         guard let string = attemptParseToString(anyobject) else {
             return defaultReturn
         }
         return Double(string) ?? defaultReturn
     }
-    class func attemptParseToInt(anyobject: AnyObject?, defaultReturn: Int? = nil) -> Int?{
+    class func attemptParseToInt(_ anyobject: Any?, defaultReturn: Int? = nil) -> Int?{
         
         guard let string = attemptParseToString(anyobject) else {
             return defaultReturn
@@ -118,9 +118,9 @@ extension String {
 extension String {
     
     var numberValue:NSNumber? {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .DecimalStyle
-        return formatter.numberFromString(self)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.number(from: self)
     }
 }
 

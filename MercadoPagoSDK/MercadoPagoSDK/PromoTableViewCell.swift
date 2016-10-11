@@ -8,17 +8,17 @@
 
 import UIKit
 
-public class PromoTableViewCell: UITableViewCell {
+open class PromoTableViewCell: UITableViewCell {
 
-	@IBOutlet weak public var issuerImageView: UIImageView!
-	@IBOutlet weak public var sharesSubtitle: MPLabel!
-	@IBOutlet weak public var paymentMethodsSubtitle: MPLabel!
+	@IBOutlet weak open var issuerImageView: UIImageView!
+	@IBOutlet weak open var sharesSubtitle: MPLabel!
+	@IBOutlet weak open var paymentMethodsSubtitle: MPLabel!
 	
 	override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 	}
 	
-	override public func awakeFromNib() {
+	override open func awakeFromNib() {
 		super.awakeFromNib()
 	}
 	
@@ -26,20 +26,20 @@ public class PromoTableViewCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	public func setPromoInfo(promo: Promo!) {
+	open func setPromoInfo(_ promo: Promo!) {
 		let placeholderImage = "empty_tc"
 		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && promo.url != nil {
-			let imgURL: NSURL = NSURL(string: promo.url!)!
-			let request: NSURLRequest = NSURLRequest(URL: imgURL)
+			let imgURL: URL = URL(string: promo.url!)!
+			let request: URLRequest = URLRequest(url: imgURL)
 			NSURLConnection.sendAsynchronousRequest(
-				request, queue: NSOperationQueue.mainQueue(),
-				completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?) -> Void in
+				request, queue: OperationQueue.main,
+				completionHandler: {(response: URLResponse?,data: Data?,error: NSError?) -> Void in
 					if error == nil {
 						self.issuerImageView.image = UIImage(data: data!)
 					} else {
 						self.issuerImageView.image = UIImage(named: placeholderImage)
 					}
-			})
+			} as! (URLResponse?, Data?, Error?) -> Void)
 		}
 
 		self.sharesSubtitle.text = promo.recommendedMessage

@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class Instruction: NSObject {
+open class Instruction: NSObject {
     
-    public var title : String = ""
-    public var accreditationMessage : String = ""
-    public var references : [InstructionReference]!
-    public var info : [String]!
-    public var secondaryInfo : [String]?
-    public var tertiaryInfo : [String]?
-    public var actions : [InstructionAction]?
+    open var title : String = ""
+    open var accreditationMessage : String = ""
+    open var references : [InstructionReference]!
+    open var info : [String]!
+    open var secondaryInfo : [String]?
+    open var tertiaryInfo : [String]?
+    open var actions : [InstructionAction]?
 
 
-    public class func fromJSON(json : NSDictionary) -> Instruction {
+    open class func fromJSON(_ json : NSDictionary) -> Instruction {
         let instruction = Instruction()
         
         
@@ -66,11 +66,11 @@ public class Instruction: NSObject {
         return instruction
     }
     
-    public func toJSONString() -> String {
+    open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> [String:Any] {
+    open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [
             "title": self.title,
             "accreditationMessage" : self.accreditationMessage

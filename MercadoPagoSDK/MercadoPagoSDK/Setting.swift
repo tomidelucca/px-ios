@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class Setting : NSObject {
-    public var binMask : BinMask!
-    public var cardNumber : CardNumber!
-    public var securityCode : SecurityCode!
+open class Setting : NSObject {
+    open var binMask : BinMask!
+    open var cardNumber : CardNumber!
+    open var securityCode : SecurityCode!
     
     public override init(){
         super.init()
     }
     
-    public class func getSettingByBin(settings: [Setting]!, bin: String!) -> Setting? {
+    open class func getSettingByBin(_ settings: [Setting]!, bin: String!) -> Setting? {
         var selectedSetting : Setting? = nil
         if settings != nil && settings.count > 0 {
             for setting in settings {
@@ -31,7 +31,7 @@ public class Setting : NSObject {
         return selectedSetting
     }
     
-    public class func fromJSON(json : NSDictionary) -> Setting {
+    open class func fromJSON(_ json : NSDictionary) -> Setting {
         let setting : Setting = Setting()
         setting.binMask = BinMask.fromJSON(json["bin"]!  as! NSDictionary)
         if json["card_number"] != nil && !(json["card_number"]! is NSNull) {

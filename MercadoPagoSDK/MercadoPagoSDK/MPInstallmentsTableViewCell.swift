@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-public class MPInstallmentsTableViewCell : UITableViewCell {
-    @IBOutlet weak private var rowTitle : MPLabel!
-    @IBOutlet weak private var installmentsLabel : MPLabel!
+open class MPInstallmentsTableViewCell : UITableViewCell {
+    @IBOutlet weak fileprivate var rowTitle : MPLabel!
+    @IBOutlet weak fileprivate var installmentsLabel : MPLabel!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.rowTitle.text = "Cuotas".localized
     }
@@ -26,10 +26,10 @@ public class MPInstallmentsTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func fillWithPayerCost(payerCost : PayerCost?, amount: Double) {
+    open func fillWithPayerCost(_ payerCost : PayerCost?, amount: Double) {
         if payerCost == nil {
             installmentsLabel.text = "Selecciona la cantidad de cuotas".localized
-            installmentsLabel.textColor = UIColor.blackColor()
+            installmentsLabel.textColor = UIColor.black
         } else {
             installmentsLabel.text = payerCost!.recommendedMessage
             installmentsLabel.textColor = UIColor.installments()

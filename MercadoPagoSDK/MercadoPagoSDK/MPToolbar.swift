@@ -9,42 +9,42 @@
 import Foundation
 import UIKit
 
-public class MPToolbar : UIToolbar {
+open class MPToolbar : UIToolbar {
 
 	var textFieldContainer : UITextField?
 	var keyboardDelegate: KeyboardDelegate?
 	
 	public init(prevEnabled: Bool, nextEnabled: Bool, delegate: KeyboardDelegate, textFieldContainer: UITextField) {
 
-		super.init(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 44))
+		super.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44))
 		
 		self.keyboardDelegate = delegate
 		self.textFieldContainer = textFieldContainer
 		
-		self.barStyle = UIBarStyle.Default
-		self.translucent = true
+		self.barStyle = UIBarStyle.default
+		self.isTranslucent = true
 		self.sizeToFit()
 		var items : [UIBarButtonItem] = []
 		
 		//  Create a done button to show on keyboard to resign it. Adding a selector to resign it.
-		let doneButton = UIBarButtonItem(title: "OK", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MPToolbar.done))
+		let doneButton = UIBarButtonItem(title: "OK", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MPToolbar.done))
 		
-		let prev = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowLeft"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MPToolbar.prev))
+		let prev = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowLeft"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(MPToolbar.prev))
 		
-		let fixed = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+		let fixed = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
 		fixed.width = 23
 		
-		let next = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowRight"), style: UIBarButtonItemStyle.Plain, target: self, action: #selector(MPToolbar.next))
+		let next = UIBarButtonItem(image: MercadoPago.getImage("IQButtonBarArrowRight"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(getter: MPToolbar.next))
 		
-		prev.enabled = prevEnabled
-		next.enabled = nextEnabled
+		prev.isEnabled = prevEnabled
+		next.isEnabled = nextEnabled
 		
 		items.append(prev)
 		items.append(fixed)
 		items.append(next)
 		
 		//  Create a fake button to maintain flexibleSpace between doneButton and nilButton. (Actually it moves done button to right side.
-		let nilButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+		let nilButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
 		
 		items.append(nilButton)
 		items.append(doneButton)
@@ -53,10 +53,10 @@ public class MPToolbar : UIToolbar {
 		self.items = items
 		
 		switch textFieldContainer.keyboardAppearance {
-		case UIKeyboardAppearance.Dark:
-			self.barStyle = UIBarStyle.Black
+		case UIKeyboardAppearance.dark:
+			self.barStyle = UIBarStyle.black
 		default:
-			self.barStyle = UIBarStyle.Default
+			self.barStyle = UIBarStyle.default
 		}
 		
 		textFieldContainer.inputAccessoryView = self

@@ -19,12 +19,12 @@ class CustomerPaymentMethodCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     //TODO : fixMe
-    func fillRowWithCustomerPayment(card : CardInformation){
+    func fillRowWithCustomerPayment(_ card : CardInformation){
         self.paymentIcon.image = MercadoPago.getImage(card.getPaymentMethodId())
         self.paymentMethodTitle.text = card.getCardDescription()
     }

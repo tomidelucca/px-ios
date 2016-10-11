@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class BinMask : NSObject {
-    public var exclusionPattern : String!
-    public var installmentsPattern : String!
-    public var pattern : String!
+open class BinMask : NSObject {
+    open var exclusionPattern : String!
+    open var installmentsPattern : String!
+    open var pattern : String!
     
     public override init(){
         super.init()
     }
 
-    public class func fromJSON(json : NSDictionary) -> BinMask {
+    open class func fromJSON(_ json : NSDictionary) -> BinMask {
         let binMask : BinMask = BinMask()
         if let exclusionPattern = JSONHandler.attemptParseToString(json["exclusion_pattern"]) {
             binMask.exclusionPattern = exclusionPattern

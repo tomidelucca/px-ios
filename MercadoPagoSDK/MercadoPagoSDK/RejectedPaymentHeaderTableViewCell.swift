@@ -18,25 +18,25 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
     override func awakeFromNib() {
         super.awakeFromNib()
         self.title.addCharactersSpacing(-0.4)
-        self.layer.shadowOffset = CGSizeMake(0, 1)
-        self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).CGColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
+        self.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).cgColor
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.6
 
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment : Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(_ payment : Payment, paymentMethod : PaymentMethod, callback : ((Void) -> Void)?) -> UITableViewCell {
         
         var title = (payment.statusDetail + "_title")
         if !title.existsLocalized() {
             title = "Uy, no pudimos procesar el pago".localized
         }
         
-        let titleWithParams = (title.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
         self.title.text = titleWithParams
         
         
@@ -45,25 +45,25 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
        
         var subtitle = (payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId)
         if !subtitle.existsLocalized() {
-            subtitle =  ("Algún dato de tu %1$s es incorrecto.".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: paymentMethod.name)
+            subtitle =  ("Algún dato de tu %1$s es incorrecto.".localized as NSString).replacingOccurrences(of: "%1$s", with: paymentMethod.name)
         }
         
-        let subtitleWithParams = (subtitle.localized as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let subtitleWithParams = (subtitle.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
         self.subtitle.text = subtitleWithParams
         return self
     }
  
-    func getCellHeight(payment : Payment, paymentMethod : PaymentMethod) -> CGFloat {
+    func getCellHeight(_ payment : Payment, paymentMethod : PaymentMethod) -> CGFloat {
         
         var constraintSize = CGSize()
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenSize: CGRect = UIScreen.main.bounds
         constraintSize.width = screenSize.width - 46
         
         let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
         
-        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).stringByReplacingOccurrencesOfString("%0", withString: "\(paymentMethod.name)")
+        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
 
-        let frame = (subtitle as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
+        let frame = (subtitle as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         
         let stringSize = frame.size
         return 180 + stringSize.height

@@ -8,15 +8,15 @@
 
 import Foundation
 
-public class CardNumber : NSObject {
-    public var length : Int = 0
-    public var validation : String!
+open class CardNumber : NSObject {
+    open var length : Int = 0
+    open var validation : String!
     
     public override init(){
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> CardNumber {
+    open class func fromJSON(_ json : NSDictionary) -> CardNumber {
         let cardNumber : CardNumber = CardNumber()
         if let validation = JSONHandler.attemptParseToString(json["validation"]){
             cardNumber.validation = validation

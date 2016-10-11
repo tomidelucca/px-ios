@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class PayerCostViewController: MercadoPagoUIViewController {
+open class PayerCostViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var bundle : NSBundle? = MercadoPago.getBundle()
+    var bundle : Bundle? = MercadoPago.getBundle()
     var installments : [Installment]?
     var payerCosts : [PayerCost]?
     var paymentMethod : PaymentMethod?
@@ -22,19 +22,19 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     var cardFront : CardFrontView?
     var maxInstallments : Int?
     var fontColor = UIColor(netHex:0x333333)
-    var callback : ((payerCost: PayerCost) -> Void)?
+    var callback : ((_ payerCost: PayerCost) -> Void)?
     @IBOutlet weak var cardView: UIView!
-    override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
+    override open var screenName : String { get { return "CARD_INSTALLMENTS" } }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, callback : ((payerCost: PayerCost) -> Void),
-                callbackCancel : (Void -> Void)? = nil) {
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, callback : @escaping ((_ payerCost: PayerCost) -> Void),
+                callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
-     self.edgesForExtendedLayout = UIRectEdge.None
+     self.edgesForExtendedLayout = UIRectEdge()
          self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
@@ -57,11 +57,11 @@ public class PayerCostViewController: MercadoPagoUIViewController {
 
     }
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    public override func viewDidAppear(animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
         self.navigationItem.rightBarButtonItem = nil
@@ -89,7 +89,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
                 self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
                 self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
-                self.navigationController?.navigationBar.translucent = false
+                self.navigationController?.navigationBar.isTranslucent = false
                 //Create navigation buttons
                 displayBackButton()
             }
@@ -97,7 +97,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         
     }
 
-    public func updateCardSkin() {
+    open func updateCardSkin() {
         
         if(self.paymentMethod != nil){
             
@@ -131,7 +131,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     }
 
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         /*
         UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
@@ -141,9 +141,9 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         self.view.backgroundColor = UIColor.complementaryColor()
         tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
-        cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let installmentNib = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "installmentCell")
+        self.tableView.register(installmentNib, forCellReuseIdentifier: "installmentCell")
         // Do any additional setup after loading the view.
         updateCardSkin()
     
@@ -152,7 +152,7 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
 
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
         if(self.payerCosts == nil){
@@ -164,24 +164,24 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     }
     
     
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
    
     
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
        
         return 50
     }
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if(self.payerCosts == nil){
             return 0
@@ -190,10 +190,10 @@ public class PayerCostViewController: MercadoPagoUIViewController {
         }
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         
-        let payerCost : PayerCost = payerCosts![indexPath.row]
-        let installmentCell = tableView.dequeueReusableCellWithIdentifier("installmentCell", forIndexPath: indexPath) as! InstallmentSelectionTableViewCell
+        let payerCost : PayerCost = payerCosts![(indexPath as NSIndexPath).row]
+        let installmentCell = tableView.dequeueReusableCell(withIdentifier: "installmentCell", for: indexPath) as! InstallmentSelectionTableViewCell
         installmentCell.fillCell(payerCost)
   
         
@@ -204,12 +204,12 @@ public class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let payerCost : PayerCost = payerCosts![indexPath.row]
-        self.callback!(payerCost: payerCost)
+    open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        let payerCost : PayerCost = payerCosts![(indexPath as NSIndexPath).row]
+        self.callback!(payerCost)
     }
     
-    private func getInstallments(){
+    fileprivate func getInstallments(){
         let bin = token?.getBin() ?? ""
         MPServicesBuilder.getInstallments(bin, amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethod!._id, success: { (installments) -> Void in
             self.installments = installments

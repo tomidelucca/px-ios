@@ -16,11 +16,11 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func setAmount(amount : Double, currency : Currency?, additionalText : String = ""){
+    func setAmount(_ amount : Double, currency : Currency?, additionalText : String = ""){
         let fontAttrs : [String : AnyObject] = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 20)!]
         var thousandSeparator = "."
         var decimalSeparator = ","
@@ -32,7 +32,7 @@ class PaymentDescriptionFooterTableViewCell: UITableViewCell {
         }
         let total = NSMutableAttributedString(string: "Total a pagar ".localized, attributes: fontAttrs)
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color : UIColor.UIColorFromRGB(0x666666), fontSize: 18, baselineOffset : 4)
-        total.appendAttributedString(attributedAmount)
+        total.append(attributedAmount)
         self.paymentTotalDescription.attributedText = total
     }
     

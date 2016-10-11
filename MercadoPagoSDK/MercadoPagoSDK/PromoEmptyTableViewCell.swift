@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class PromoEmptyTableViewCell: UITableViewCell {
+open class PromoEmptyTableViewCell: UITableViewCell {
 
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
