@@ -258,31 +258,19 @@ public class CardToken : NSObject {
         return year
     }
     
-    public func checkLuhn(cardNumber : String) -> Bool {
-        var sum : Int = 0
-        var alternate = false
-        if cardNumber.characters.count == 0 {
-            return false
-        }
-        
-        for index in 0...(cardNumber.characters.count-1) {
-            _ = NSRange(location: index, length: 1)
-            var s = cardNumber as NSString
-            s = s.substringWithRange(NSRange(location: index, length: 1))
-            var n : Int = s.integerValue
-            if (alternate)
-            {
-                n *= 2
-                if (n > 9)
-                {
-                    n = (n % 10) + 1
-                }
+
+    public func checkLuhn(cardNumber: String) -> Bool {
+        var sum = 0
+        let reversedCharacters = cardNumber.characters.reverse().map { String($0) }
+        for (idx, element) in reversedCharacters.enumerate() {
+            guard let digit = Int(element) else { return false }
+            switch ((idx % 2 == 1), digit) {
+            case (true, 9): sum += 9
+            case (true, 0...8): sum += (digit * 2) % 9
+            default: sum += digit
             }
-            sum += n
-            alternate = !alternate
         }
-        
-        return (sum % 10 == 0)
+        return sum % 10 == 0
     }
     
     public func getBin() -> String? {

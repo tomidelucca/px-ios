@@ -407,19 +407,35 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         inputButtons!.barStyle = UIBarStyle.Default;
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
-        navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-        
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width / 2, height: 40)
+       
+        let buttonNext = UIButton(frame: frame)
+        buttonNext.setTitle("Continuar".localized, forState: .Normal)
+        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), forControlEvents: .TouchUpInside)
+        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), forState: .Normal)
+
+        let buttonPrev = UIButton(frame: frame)
+        buttonPrev.setTitle("Anterior".localized, forState: .Normal)
+        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), forControlEvents: .TouchUpInside)
+        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), forState: .Normal)
+   
+        /*
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         }
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+ */
+        navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(customView: buttonNext)
+        donePrev = UIBarButtonItem(customView: buttonPrev)
+
+        
+       donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
-
+  
+        
         if self.cardFormManager!.customerCard != nil || self.cardFormManager!.token != nil{
             navItem!.leftBarButtonItem?.enabled = false
         }
@@ -427,6 +443,16 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.inputAccessoryView = inputButtons
        
         
+    }
+    
+    func recurseViews(view:UIView) {
+        print("recurseViews: \(view)") // helpful for sorting out which view is which
+        if view.frame.origin.x > 700 { // find _my_ button
+            view.layer.cornerRadius = 5
+            view.layer.borderColor = UIColor.redColor().CGColor
+            view.layer.borderWidth = 2
+        }
+        for v in view.subviews { recurseViews(v) }
     }
     
     func showErrorMessage(errorMessage:String){
