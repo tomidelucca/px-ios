@@ -16,6 +16,7 @@ enum UIDeviceFamily : Int {
 
 extension UIDevice {
 
+    /*
 	var cameraAvailable: Bool {
 		return UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
 	}
@@ -138,5 +139,5 @@ extension UIDevice {
 		
 		return UIDeviceFamily.uiDeviceFamilyUnknown
 	}
-	
+	*/ 
 }

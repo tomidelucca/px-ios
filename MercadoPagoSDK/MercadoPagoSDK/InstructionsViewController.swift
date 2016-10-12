@@ -99,11 +99,11 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         return 1
     }
     
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> Float {
         return  section == 1 ? 20 : 0.01
     }
     
-    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> Float {
         return 0.01
     }
     
@@ -140,7 +140,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     }
     
     
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> Float {
         let instructionsSelected = self.payment.paymentMethodId.lowercased() + "_" + self.paymentTypeId.rawValue.lowercased()
         if (indexPath as NSIndexPath).section == 0 {
             let instructionsHeaderCell = self.congratsTable.dequeueReusableCell(withIdentifier: "instructionsHeaderCell") as! InstructionsHeaderViewCell
@@ -164,10 +164,10 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         return cell.fillCell(self.currentInstruction!)
     }
     
-    internal func resolveInstructionsBodyHeightForRow(_ instructionsId : String) -> CGFloat {
+    internal func resolveInstructionsBodyHeightForRow(_ instructionsId : String) -> Float {
         let instructionsLayout = self.instructionsByPaymentMethod[instructionsId]!["body"] as! String
         let cell = self.congratsTable.dequeueReusableCell(withIdentifier: instructionsLayout) as! InstructionsFillmentDelegate
-        return cell.getCellHeight(self.currentInstruction!, forFontSize: 22)
+        return Float(cell.getCellHeight(self.currentInstruction!, forFontSize: 22))
     }
     
     internal func resolveInstructionsFooter(_ instructionsId : String) -> UITableViewCell? {
@@ -177,9 +177,9 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
         return cell.fillCell(self.currentInstruction!)
     }
     
-    internal func resolveInstructionsFooterHeight(_ instructionsId : String) -> CGFloat {
+    internal func resolveInstructionsFooterHeight(_ instructionsId : String) -> Float {
         let instructionScreenStructure = self.instructionsByPaymentMethod[instructionsId]
-        let instructionBodyHeight = instructionScreenStructure!["footer_height"] as! CGFloat
+        let instructionBodyHeight = instructionScreenStructure!["footer_height"] as! Float
         return instructionBodyHeight
     }
     

@@ -46,7 +46,7 @@ class CheckoutViewControllerTest: BaseTest {
             
         }
         
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+        waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         // Cargar vista
               self.simulateViewDidLoadFor(self.checkoutViewController!)
         
@@ -335,7 +335,7 @@ class CheckoutViewControllerTest: BaseTest {
         self.selectedPaymentMethod = Utils.findPaymentMethod((self.checkoutViewController?.paymentMethodSearch!.paymentMethods)!, paymentMethodId: paymentMethodId)
         
         // Selección de medio off
-        checkoutViewController?.navigationController?.popViewControllerAnimated(true)
+        checkoutViewController?.navigationController?.popViewController(animated: true)
         checkoutViewController?.paymentVaultCallback(selectedPaymentMethod!, token: nil, issuer: nil, payerCost: nil)
         
         XCTAssertEqual(checkoutViewController?.paymentMethod, selectedPaymentMethod)
@@ -378,7 +378,7 @@ class CheckoutViewControllerTest: BaseTest {
         // Verificar que este disponible botón de pago y pagar
         XCTAssertTrue(paymentButton.enabled.boolValue)
         self.checkoutViewController!.confirmPayment()
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+        waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         
     }
     
@@ -389,7 +389,7 @@ class CheckoutViewControllerTest: BaseTest {
         
         XCTAssertTrue(paymentButton.enabled.boolValue)
         self.checkoutViewController!.confirmPayment()
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+        waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
 
     }
     

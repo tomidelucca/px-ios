@@ -31,7 +31,7 @@ class BaseTest: XCTestCase {
         viewController.viewWillAppear(false)
         viewController.viewDidAppear(false)
         
-        waitForExpectationsWithTimeout(BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
+        waitForExpectations(timeout: BaseTest.WAIT_EXPECTATION_TIME_INTERVAL, handler: nil)
         
         return viewController
     }
@@ -43,7 +43,7 @@ class BaseTest: XCTestCase {
 extension UINavigationController {
     
     func pushViewController(viewController: UIViewController,
-                            animated: Bool, completion: Void -> Void) {
+                            animated: Bool, completion: @escaping (@escaping Void) -> Void) {
         
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)

@@ -36,7 +36,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
         XCTAssertEqual("approved", self.paymentCongratsViewController?.getLayoutName(currentPayment))
         XCTAssertEqual(3, self.paymentCongratsViewController!.numberOfSectionsInTableView(self.paymentCongratsViewController!.congratsContentTable))
@@ -92,9 +92,9 @@ class PaymentCongratsViewControllerTest: BaseTest {
         // Monto total de compra debería aparecer en pantalla
         let additionalTextAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
         let additionalString = NSMutableAttributedString(string: " ")
-        additionalString.appendAttributedString(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
-        additionalString.appendAttributedString(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: UIColor(red: 67, green: 176,blue: 0), fontSize : 14, baselineOffset: 3))
-        additionalString.appendAttributedString(NSAttributedString(string : " )", attributes: additionalTextAttributes))
+        additionalString.append(NSAttributedString(string : "( ", attributes: additionalTextAttributes))
+        additionalString.append(Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: UIColor(red: 67, green: 176,blue: 0), fontSize : 14, baselineOffset: 3))
+        additionalString.append(NSAttributedString(string : " )", attributes: additionalTextAttributes))
         
         
         let amountText = Utils.getTransactionInstallmentsDescription("6", installmentAmount: MockBuilder.INSTALLMENT_AMOUNT, additionalString: additionalString)
@@ -136,7 +136,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         XCTAssertEqual(body.creditCardLabel.text!, "terminada en ".localized + payment.card.lastFourDigits!)
         XCTAssertEqual(body.voucherId.text!, "Comprobante ".localized + String(payment._id))
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         let amountText = Utils.getTransactionInstallmentsDescription("6", installmentAmount: MockBuilder.INSTALLMENT_AMOUNT, additionalString: attributedNoRateString)
 
         XCTAssertEqual(body.amountDescription.attributedText!, amountText)
@@ -157,7 +157,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -194,7 +194,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -231,7 +231,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -269,7 +269,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -304,7 +304,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -339,7 +339,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -374,7 +374,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -408,7 +408,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -442,7 +442,7 @@ class PaymentCongratsViewControllerTest: BaseTest {
         })
         
         let attributedNoRateString = NSMutableAttributedString(string: " ")
-        attributedNoRateString.appendAttributedString(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
+        attributedNoRateString.append(NSAttributedString(string: "Sin interés".localized, attributes :PaymentCongratsViewControllerTest.noRateTextAttributes))
         
         
         self.simulateViewDidLoadFor(self.paymentCongratsViewController!)
@@ -1016,8 +1016,8 @@ class PaymentCongratsViewControllerTest: BaseTest {
         
         let expectedTitle = NSMutableAttributedString(string: "Debes autorizar ante ".localized + "Amex" + " el pago de ".localized)
         let attributedAmount = Utils.getAttributedAmount(currentPayment.transactionDetails.totalPaidAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$", color: UIColor(red: 102, green: 102, blue: 102))
-        expectedTitle.appendAttributedString(attributedAmount)
-        expectedTitle.appendAttributedString(NSMutableAttributedString(string : " a MercadoPago".localized))
+        expectedTitle.append(attributedAmount)
+        expectedTitle.append(NSMutableAttributedString(string : " a MercadoPago".localized))
         
      //   XCTAssertEqual(header!.title.attributedText, expectedTitle)
       

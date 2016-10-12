@@ -44,14 +44,14 @@ class PaymentVaultViewControllerTest: BaseTest {
         let nav = UINavigationController(rootViewController: self.paymentVaultViewController!)
         
         XCTAssertNotNil(self.paymentVaultViewController?.viewModel.currentPaymentMethodSearch)
-        XCTAssertTrue(self.paymentVaultViewController?.viewModel.currentPaymentMethodSearch!.count > 1)
+        XCTAssertTrue((self.paymentVaultViewController?.viewModel.currentPaymentMethodSearch!.count)! > 1)
         XCTAssertNotNil(paymentVaultViewController?.viewModel.paymentMethods)
-        XCTAssertNotNil(paymentVaultViewController?.viewModel.paymentMethods.count > 1)
+        XCTAssertNotNil((paymentVaultViewController?.viewModel.paymentMethods.count)! > 1)
         XCTAssertNotNil(self.paymentVaultViewController?.paymentsTable)
         // Verify no customer payment methods
-         XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(0) == 0)
+         XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRows(inSection: 0) == 0)
         // Payments options
-        XCTAssertTrue(self.paymentVaultViewController?.paymentsTable.numberOfRowsInSection(1) > 0)
+        XCTAssertTrue((self.paymentVaultViewController?.paymentsTable.numberOfRows(inSection: 1))! > 0)
         
         XCTAssertEqual(self.paymentVaultViewController?.viewModel.amount, 2579)
         XCTAssertNil(self.paymentVaultViewController!.viewModel.paymentPreference)
@@ -552,11 +552,11 @@ class PaymentVaultViewModelTest: BaseTest {
         
         XCTAssertEqual(self.paymentVaultViewModel!.getCustomerPaymentMethodsToDisplayCount(), 3)
         
-        self.paymentVaultViewModel!.customerCards!.removeAtIndex(3)
+        self.paymentVaultViewModel!.customerCards!.remove(at: 3)
         
         XCTAssertEqual(self.paymentVaultViewModel!.getCustomerPaymentMethodsToDisplayCount(), 3)
         
-        self.paymentVaultViewModel!.customerCards!.removeAtIndex(2)
+        self.paymentVaultViewModel!.customerCards!.remove(at: 2)
         
         XCTAssertEqual(self.paymentVaultViewModel!.getCustomerPaymentMethodsToDisplayCount(), 2)
         

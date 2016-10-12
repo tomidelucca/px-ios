@@ -25,7 +25,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func getCellHeight(_ title : String) -> CGFloat {
+    func getCellHeight(_ title : String) -> Float {
         var constraintSize = CGSize()
         let screenSize: CGRect = UIScreen.main.bounds
         constraintSize.width = screenSize.width - 46
@@ -35,7 +35,7 @@ class InstructionsHeaderViewCell: UITableViewCell {
         let frame = (title as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         
         let stringSize = frame.size
-        return 128 + stringSize.height
+        return Float(128) + Float(stringSize.height)
     }
     
     func fillCell(_ title : String, amount : Double, currency : Currency?) -> UITableViewCell {

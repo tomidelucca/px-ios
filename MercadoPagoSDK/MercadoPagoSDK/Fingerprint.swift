@@ -34,8 +34,8 @@ open class Fingerprint : NSObject {
             dictionary["vendor_ids"] = devicesId! as AnyObject?
         }
         
-        if !String.isNullOrEmpty(device.hwmodel) {
-            dictionary["model"] = device.hwmodel as AnyObject?
+        if !String.isNullOrEmpty(device.model) {
+            dictionary["model"] = device.model as AnyObject?
         }
         
         dictionary["os"] = "iOS" as AnyObject?
@@ -50,18 +50,18 @@ open class Fingerprint : NSObject {
         
         dictionary["resolution"] =  "\(width)x\(height)" as AnyObject?
         
-        dictionary["ram"] = device.totalMemory as AnyObject?
-        dictionary["disk_space"] = device.totalDiskSpace
-        dictionary["free_disk_space"] = device.freeDiskSpace
+  //      dictionary["ram"] = device.totalMemory as AnyObject?
+  //      dictionary["disk_space"] = device.totalDiskSpace
+   //     dictionary["free_disk_space"] = device.freeDiskSpace
         
 		var moreData = [String : AnyObject]()
         
-        moreData["feature_camera"] = device.cameraAvailable as AnyObject?
-        moreData["feature_flash"] = device.cameraFlashAvailable as AnyObject?
-        moreData["feature_front_camera"] = device.frontCameraAvailable as AnyObject?
-        moreData["video_camera_available"] = device.videoCameraAvailable as AnyObject?
-        moreData["cpu_count"] = device.cpuCount as AnyObject?
-        moreData["retina_display_capable"] = device.retinaDisplayCapable as AnyObject?
+  //      moreData["feature_camera"] = device.cameraAvailable as AnyObject?
+  //      moreData["feature_flash"] = device.cameraFlashAvailable as AnyObject?
+  //      moreData["feature_front_camera"] = device.frontCameraAvailable as AnyObject?
+  //      moreData["video_camera_available"] = device.videoCameraAvailable as AnyObject?
+  //      moreData["cpu_count"] = device.cpuCount as AnyObject?
+  //      moreData["retina_display_capable"] = device.retinaDisplayCapable as AnyObject?
         
         if device.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
             moreData["device_idiom"] = "Pad" as AnyObject?
@@ -69,17 +69,17 @@ open class Fingerprint : NSObject {
             moreData["device_idiom"] = "Phone" as AnyObject?
         }
         
-        if device.canSendSMS {
+ //       if device.canSendSMS {
             moreData["can_send_sms"] = 1 as AnyObject?
-        } else {
-            moreData["can_send_sms"] = 0 as AnyObject?
-        }
+ //       } else {
+    //        moreData["can_send_sms"] = 0 as AnyObject?
+  //      }
         
-        if device.canMakePhoneCalls {
+      //  if device.canMakePhoneCalls {
             moreData["can_make_phone_calls"] = 1 as AnyObject?
-        } else {
-            moreData["can_make_phone_calls"] = 0 as AnyObject?
-        }
+      //  } else {
+      //      moreData["can_make_phone_calls"] = 0 as AnyObject?
+      //  }
         
         if Locale.preferredLanguages.count > 0 {
             moreData["device_languaje"] = Locale.preferredLanguages[0] as AnyObject?
@@ -89,11 +89,11 @@ open class Fingerprint : NSObject {
             moreData["device_model"] = device.model as AnyObject?
         }
         
-        if !String.isNullOrEmpty(device.platform) {
-            moreData["platform"] = device.platform as AnyObject?
-        }
+      //  if !String.isNullOrEmpty(device.platform) {
+     //       moreData["platform"] = device.platform as AnyObject?
+     //   }
         
-        moreData["device_family"] = device.deviceFamily.rawValue as AnyObject?
+     //   moreData["device_family"] = device.deviceFamily.rawValue as AnyObject?
         
         if !String.isNullOrEmpty(device.name) {
             moreData["device_name"] = device.name as AnyObject?

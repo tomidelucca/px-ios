@@ -28,7 +28,7 @@ public class MercadoPagoTestContext : NSObject {
     }
     
     class func addExpectation(withDescription expectationDescription : String) {
-        let expectation = self.sharedInstance.testEnvironment!.expectationWithDescription(expectationDescription)
+        let expectation = self.sharedInstance.testEnvironment!.expectation(description: expectationDescription)
         self.sharedInstance.expectations.add(expectation)
     }
     
@@ -48,7 +48,7 @@ struct ExpectationHash {
     }
     
     mutating func remove(withKey : String) {
-        items.removeValueForKey(withKey)
+        items.removeValue(forKey: withKey)
     }
     
     mutating func count() -> Int {
