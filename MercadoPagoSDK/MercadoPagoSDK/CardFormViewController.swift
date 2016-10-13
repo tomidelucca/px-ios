@@ -281,6 +281,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     fileprivate func prepareNumberLabelForEdit(){
    // TODO TRACKER      MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_NUMBER")
         editingLabel = cardNumberLabel
+        cardFormManager?.cardToken = nil
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.becomeFirstResponder()
@@ -348,7 +349,10 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                     return false
                 }
             }else{
+                
+               
                 if ((textEditMaskFormater.textUnmasked(textField.text).characters.count) == cardFormManager!.paymentMethod?.cardNumberLenght()){
+                    
                     return false
                 }
                 

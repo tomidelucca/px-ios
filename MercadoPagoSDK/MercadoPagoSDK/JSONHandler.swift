@@ -46,8 +46,10 @@ class JSONHandler: NSObject {
                 }
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            result = (decoded as AnyObject).description
+          //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
+            result = NSString(data: jsonData,
+                                       encoding: String.Encoding.ascii.rawValue)  as! String
+          //  result = (decoded as AnyObject).description
         }catch{
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
@@ -71,7 +73,11 @@ class JSONHandler: NSObject {
         guard let _ = anyobject , let string = (anyobject! as AnyObject).description else {
             return defaultReturn
         }
-        return string
+        if ( string != "<null>" ){
+            return string
+        }else{
+            return defaultReturn
+        }
     }
     
     class func attemptParseToBool(_ anyobject: Any?) -> Bool?{
