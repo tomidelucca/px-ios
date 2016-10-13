@@ -138,7 +138,7 @@ class ExamplesUtils {
         return FinalVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: callback)
     }
     
-    class func createPayment(_ token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: (_ payment: Payment) -> Void) {
+    class func createPayment(_ token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: @escaping (_ payment: Payment) -> Void) {
         // Set item
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)

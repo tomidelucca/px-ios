@@ -34,9 +34,11 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
          
     }
     override func loadMPStyles(){
-        
+        var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            if let font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18){
+                titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+            }
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
@@ -176,41 +178,62 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     var navItem : UINavigationItem?
     var doneNext : UIBarButtonItem?
     var donePrev : UIBarButtonItem?
+
     
     func setupInputAccessoryView() {
-        
+
         inputButtons = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
         inputButtons!.barStyle = UIBarStyle.default;
+
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 2, height: 40)
+        
+        let buttonNext = UIButton(frame: frame)
+        buttonNext.setTitle("Continuar".localized, for: .normal)
+        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), for: .touchUpInside)
+        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        
+        let buttonPrev = UIButton(frame: frame)
+        buttonPrev.setTitle("Anterior".localized, for: .normal)
+        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), for: .touchUpInside)
+        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        
+        /*
+         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         }
+         */
         navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(customView: buttonNext)
+        donePrev = UIBarButtonItem(customView: buttonPrev)
         
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
+
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
-        }
         donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
+        
+
         inputButtons!.pushItem(navItem!, animated: false)
+        
         numberTextField.inputAccessoryView = inputButtons
-                
+        
+        
     }
 
     func rightArrowKeyTapped(){
-        let idnt = Identification(type: identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
+        let idnt = Identification(type: self.identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
         
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
 
-        if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
+        if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
         }else{
-            showErrorMessage((cardToken.validateIdentificationNumber(identificationType)?.userInfo["identification"] as? String)!)
+            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType)?.userInfo["identification"] as? String)!)
         }
        
     }

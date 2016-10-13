@@ -414,7 +414,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
             footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).cgColor
             footer.layer.shadowRadius = 1
             footer.layer.shadowOpacity = 0.6
-            footer.setAmount(self.preference!.getAmount(), currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
+            footer.setAmount(amount: self.preference!.getAmount(), currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
             return footer
         case 2 :
             let termsAndConditionsButton = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseTermsAndConditions") as! TermsAndConditionsViewCell
@@ -445,7 +445,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
             footer.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).cgColor
             footer.layer.shadowRadius = 1
             footer.layer.shadowOpacity = 0.6
-            footer.setAmount(totalAmount, currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
+            footer.setAmount(amount: totalAmount, currency: CurrenciesUtil.getCurrencyFor(self.preference!.getCurrencyId()))
             return footer
         default:
             let termsAndConditionsButton = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseTermsAndConditions") as! TermsAndConditionsViewCell

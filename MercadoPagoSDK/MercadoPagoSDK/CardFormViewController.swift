@@ -418,19 +418,35 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         inputButtons!.barStyle = UIBarStyle.default;
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
-        navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-        
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 2, height: 40)
+       
+        let buttonNext = UIButton(frame: frame)
+        buttonNext.setTitle("Continuar".localized, for: .normal)
+        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), for: .touchUpInside)
+        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+
+        let buttonPrev = UIButton(frame: frame)
+        buttonPrev.setTitle("Anterior".localized, for: .normal)
+        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), for: .touchUpInside)
+        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+   
+        /*
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
+            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
         }
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+ */
+        navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(customView: buttonNext)
+        donePrev = UIBarButtonItem(customView: buttonPrev)
+
+        
+       donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
-
+  
+        
         if self.cardFormManager!.customerCard != nil || self.cardFormManager!.token != nil{
             navItem!.leftBarButtonItem?.isEnabled = false
         }
@@ -580,7 +596,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     func updateCardSkin(){
        
 
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager!.customerCard != nil || cardFormManager!.token != nil){
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager!.customerCard != nil || cardFormManager!.cardToken != nil){
             let pmMatched = self.cardFormManager!.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager!.paymentMethod = pmMatched
             if(cardFormManager!.paymentMethod != nil){
@@ -597,6 +613,10 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 if (editingLabel == cardNumberLabel){
                     textBox.text = textEditMaskFormaterAux.textMasked(textEditMaskFormater.textUnmasked(textBox.text))
                 }
+                if (editingLabel == cvvLabel){
+                    editingLabel!.text = textBox.text
+                    cvvLabel!.text = textBox.text
+                }
                 textMaskFormater = textMaskFormaterAux
                 textEditMaskFormater = textEditMaskFormaterAux
             }else{
@@ -608,20 +628,22 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         }else if (textBox.text?.characters.count<7){
             self.clearCardSkin()
         }
-        
-        if((cardFormManager!.paymentMethod != nil)&&(!cardFormManager!.paymentMethod!.secCodeInBack())){
-            cvvLabel = cardFront?.cardCVV
-            cardBack?.cardCVV.text = ""
-            cardFront?.cardCVV.alpha = 1
-            cardFront?.cardCVV.text = "••••".localized
-            self.cardFormManager!.cvvEmpty = true
-        }else{
-            cvvLabel = cardBack?.cardCVV
-            cardFront?.cardCVV.text = ""
-            cardFront?.cardCVV.alpha = 0
-            cardBack?.cardCVV.text = "•••".localized
-            self.cardFormManager!.cvvEmpty = true
+        if self.cvvLabel == nil || self.cvvLabel!.text!.characters.count == 0 {
+            if((cardFormManager!.paymentMethod != nil)&&(!cardFormManager!.paymentMethod!.secCodeInBack())){
+                cvvLabel = cardFront?.cardCVV
+                cardBack?.cardCVV.text = ""
+                cardFront?.cardCVV.alpha = 1
+                cardFront?.cardCVV.text = "••••".localized
+                self.cardFormManager!.cvvEmpty = true
+            }else{
+                cvvLabel = cardBack?.cardCVV
+                cardFront?.cardCVV.text = ""
+                cardFront?.cardCVV.alpha = 0
+                cardBack?.cardCVV.text = "•••".localized
+                self.cardFormManager!.cvvEmpty = true
+            }
         }
+       
         self.updateLabelsFontColors()
     }
     

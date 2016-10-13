@@ -32,7 +32,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	var isKeyboardVisible : Bool?
 	var inputsCells : NSMutableArray!
 	
-	init(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (_ token: Token?) -> Void) {
+	init(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: @escaping (_ token: Token?) -> Void) {
 		super.init(nibName: "CardViewController", bundle: nil)
 		self.publicKey = merchantPublicKey
 		self.paymentMethod = paymentMethod
@@ -392,7 +392,7 @@ class CardViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		let mercadoPago = MercadoPago(publicKey: self.publicKey!)
 		mercadoPago.createNewCardToken(cardToken, success: { (token) -> Void in
 			self.loadingView.removeFromSuperview()
-			self.callback?(token: token)
+			self.callback?(token)
 			}, failure: nil)
 	}
     

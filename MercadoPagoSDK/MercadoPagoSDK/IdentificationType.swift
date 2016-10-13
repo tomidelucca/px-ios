@@ -25,7 +25,7 @@ open class IdentificationType : NSObject {
         if let name = JSONHandler.attemptParseToString(json["name"]){
             identificationType.name = name
         }
-        if let type = JSONHandler.attemptParseToString(json["typed"]){
+        if let type = JSONHandler.attemptParseToString(json["type"]){
             identificationType.type = type
         }
         if let minLength = JSONHandler.attemptParseToInt(json["min_length"]){

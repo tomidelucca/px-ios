@@ -20,8 +20,8 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         self.paymentButton.clipsToBounds = true
         self.paymentButton.backgroundColor = MercadoPagoContext.getPrimaryColor()
         self.termsAndConditionsText.text = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12)!,NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x999999)]
-        self.paymentButton.setTitleColor(UIColor.systemFontColor(), for: UIControlState())
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12),NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0x999999)]
+        self.paymentButton.setTitleColor(UIColor.systemFontColor(), for: .normal)
         let mutableAttributedString = NSMutableAttributedString(string: self.termsAndConditionsText.text, attributes: normalAttributes)
         let tycLinkRange = (self.termsAndConditionsText.text as NSString).range(of: "Términos y Condiciones".localized)
         //TODO  hardcoded

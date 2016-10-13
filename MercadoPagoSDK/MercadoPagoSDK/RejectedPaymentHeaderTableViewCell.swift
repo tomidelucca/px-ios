@@ -59,7 +59,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         let screenSize: CGRect = UIScreen.main.bounds
         constraintSize.width = screenSize.width - 46
         
-        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 14)!]
+        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)]
         
         let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
 

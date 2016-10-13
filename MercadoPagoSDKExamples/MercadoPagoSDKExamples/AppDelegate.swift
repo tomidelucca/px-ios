@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Initialize window
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = UIColor.white
+        self.window?.backgroundColor = UIColor.white()
         
         self.nav = UINavigationController()
 

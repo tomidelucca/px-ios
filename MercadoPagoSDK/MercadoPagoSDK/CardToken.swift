@@ -39,7 +39,7 @@ open class CardToken : NSObject {
             self.cardholder?.identification?.type = docType
             self.cardNumber = normalizeCardNumber(cardNumber!.replacingOccurrences(of: " ", with: ""))
             self.expirationMonth = expirationMonth
-            self.expirationYear = normalizeYear(expirationYear)
+            self.expirationYear = 2000 + expirationYear
             self.securityCode = securityCode
     }
     
@@ -98,7 +98,7 @@ open class CardToken : NSObject {
                 }
                 
                 // Validate luhn
-                if "standard" == setting?.cardNumber.validation && !checkLuhn((cardNumber?.trimSpaces())!) {
+                if "standard" == setting?.cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
@@ -258,31 +258,21 @@ open class CardToken : NSObject {
         return year
     }
     
-    open func checkLuhn(_ cardNumber : String) -> Bool {
-        var sum : Int = 0
-        var alternate = false
-        if cardNumber.characters.count == 0 {
-            return false
-        }
-        
-        for index in 0...(cardNumber.characters.count-1) {
-            _ = NSRange(location: index, length: 1)
-            var s = cardNumber as NSString
-            s = s.substring(with: NSRange(location: index, length: 1)) as NSString
-            var n : Int = s.integerValue
-            if (alternate)
-            {
-                n *= 2
-                if (n > 9)
-                {
-                    n = (n % 10) + 1
-                }
+
+
+    public func checkLuhn(cardNumber: String) -> Bool {
+        var sum = 0
+        let reversedCharacters = cardNumber.characters.reversed().map { String($0) }
+        for (idx, element) in reversedCharacters.enumerated() {
+            guard let digit = Int(element) else { return false }
+            switch ((idx % 2 == 1), digit) {
+            case (true, 9): sum += 9
+            case (true, 0...8): sum += (digit * 2) % 9
+            default: sum += digit
+
             }
-            sum += n
-            alternate = !alternate
         }
-        
-        return (sum % 10 == 0)
+        return sum % 10 == 0
     }
     
     open func getBin() -> String? {

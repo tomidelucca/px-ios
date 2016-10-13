@@ -180,7 +180,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String)-> Bool {
-        var txtAfterUpdate : NSString? = self.securityCodeCell.securityCodeTextField.text
+        var txtAfterUpdate : NSString? = self.securityCodeCell.securityCodeTextField.text as NSString?
 		if txtAfterUpdate != nil {
 			txtAfterUpdate = txtAfterUpdate!.replacingCharacters(in: range, with: string) as NSString?
 			
