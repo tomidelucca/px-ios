@@ -23,7 +23,7 @@ open class InstructionReference: Equatable {
         }
         let referenceFullValue : String = value.reduce("", {($0 as String) + self.separator + $1})
        // return referenceFullValue.substring(from: self.separator.characters.count)
-        return ""
+        return referenceFullValue
     }
     
     open class func fromJSON(_ json : NSDictionary) -> InstructionReference {
