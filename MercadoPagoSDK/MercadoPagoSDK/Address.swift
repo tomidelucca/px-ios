@@ -25,8 +25,8 @@ open class Address : Equatable {
         if let streetName = JSONHandler.attemptParseToString(json["street_name"]) {
             address.streetName = streetName
         }
-        if let streetNumber = JSONHandler.attemptParseToString(json["street_number"])!.numberValue {
-            address.streetNumber = streetNumber
+        if let streetNumber = JSONHandler.attemptParseToString(json["street_number"]) {
+            address.streetNumber = streetNumber.numberValue
         }
         if let zipCode = JSONHandler.attemptParseToString(json["zip_code"]) {
             address.zipCode = zipCode

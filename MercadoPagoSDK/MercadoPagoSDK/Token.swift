@@ -62,7 +62,7 @@ open class Token : NSObject {
       
 	
 	open class func fromJSON(_ json : NSDictionary) -> Token {
-        let literalJson = json.parseToLiteral()
+        let literalJson = json
         let _id = JSONHandler.attemptParseToString(literalJson["id"])
         let publicKey = JSONHandler.attemptParseToString(literalJson["public_key"])
 		let cardId =  JSONHandler.attemptParseToString(literalJson["card_id"])

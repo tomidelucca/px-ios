@@ -252,7 +252,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
                 self.loadPaymentMethodSearch()
                 
                 }, failure: { (error: NSError?) -> Void in
-                    
+                    print(error)
             })
         } else {
             self.loadPaymentMethodSearch()
