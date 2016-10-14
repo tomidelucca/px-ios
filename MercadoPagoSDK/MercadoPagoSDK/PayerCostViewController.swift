@@ -205,8 +205,6 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         return installmentCell
     }
     
-    
-    
     open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let payerCost : PayerCost = payerCosts![(indexPath as NSIndexPath).row]
         self.callback!(payerCost)
@@ -225,8 +223,6 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         }
 
     }
-
-    
   
 }
     

@@ -57,6 +57,9 @@ int installmentsSelected = 1;
         case 6:
             [self createPayment];
             break;
+        case 7:
+            [self startPayerCostStep];
+            break;
         default:
             break;
     }
@@ -131,6 +134,27 @@ int installmentsSelected = 1;
         [self.navigationController popViewControllerAnimated:YES];
     }];
      [self.navigationController pushViewController:installmentVC animated:YES];
+}
+- (void)startPayerCostStep{
+    Issuer *is = [[ Issuer alloc]init];
+    
+    is._id = [NSNumber numberWithInt: 326];
+    
+    [MPServicesBuilder getInstallments:@"503175" amount:200 issuer:is paymentMethodId:@"master" success:^(NSArray<Installment *> *installments) {
+        
+        
+        UIViewController *installmentVC =[MPStepBuilder startPayerCostStep:nil issuer:nil token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(PayerCost * payerCost) {
+            
+        } callbackCancel:^{
+            
+        }];
+        [self.navigationController pushViewController:installmentVC animated:YES];
+        
+    } failure:^(NSError * error) {
+        
+    }];
+
+
 }
 
 - (void)createPayment {

@@ -149,6 +149,12 @@ open class MPStepBuilder : NSObject {
      // TODO TRACKER    MercadoPagoContext.initFlavor2()
         return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
     }
+    open class func startPayerCostStep(_ paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
+                                       callback : @escaping ((_ payerCost: PayerCost?) -> Void),
+                                       callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
+        
+        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
+    }
     
     
     open class func startIdentificationForm(
