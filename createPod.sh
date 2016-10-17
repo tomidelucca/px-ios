@@ -10,7 +10,7 @@ fi
 VERSION=$1
 PROJECT="MercadoPagoSDK"
 PODSPEC_FILE="$PROJECT.podspec"
-GIT_BRANCH="master"
+GIT_BRANCH="development"
 
 if [ "$#" -eq 2 ]
   then

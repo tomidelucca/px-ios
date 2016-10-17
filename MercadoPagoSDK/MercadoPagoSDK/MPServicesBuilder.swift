@@ -98,7 +98,7 @@ open class MPServicesBuilder : NSObject {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHODS", result: nil)
-              let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
+            let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
             service.getPaymentMethods(public_key: MercadoPagoContext.publicKey(), success: {(jsonResult: AnyObject?) -> Void in
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
