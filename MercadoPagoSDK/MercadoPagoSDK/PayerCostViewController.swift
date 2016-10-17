@@ -35,7 +35,7 @@ open class PayerCostViewController: MercadoPagoUIViewController {
                 callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
      self.edgesForExtendedLayout = UIRectEdge()
-         self.paymentMethod = paymentMethod
+        self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
         self.callbackCancel = callbackCancel
@@ -136,24 +136,14 @@ open class PayerCostViewController: MercadoPagoUIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.view addSubview:view];
-        */
         self.view.backgroundColor = UIColor.complementaryColor()
         tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let installmentNib = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
         self.tableView.register(installmentNib, forCellReuseIdentifier: "installmentCell")
-        // Do any additional setup after loading the view.
         updateCardSkin()
-    
-        
     }
-    
-
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

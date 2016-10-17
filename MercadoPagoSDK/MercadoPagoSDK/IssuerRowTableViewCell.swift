@@ -1,19 +1,18 @@
 //
-//  PayerCostTitleTableViewCell.swift
+//  IssuerRowTableViewCell.swift
 //  MercadoPagoSDK
 //
-//  Created by Eden Torres on 10/13/16.
+//  Created by Eden Torres on 10/17/16.
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
 import UIKit
 
-class PayerCostTitleTableViewCell: UITableViewCell {
+class IssuerRowTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var title: UILabel!
-    func setTitle(string: String!){
-        title.text = string
-        title.textColor = UIColor.systemFontColor()
+    @IBOutlet weak var issuerImage: UIImageView!
+    func fillCell(issuer: Issuer, bundle: Bundle){
+        issuerImage.image = UIImage(named: "ico_bank_\(issuer._id!)", in: bundle, compatibleWith: nil)
     }
     override func awakeFromNib() {
         super.awakeFromNib()

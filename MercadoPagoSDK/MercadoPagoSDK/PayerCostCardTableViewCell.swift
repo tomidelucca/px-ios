@@ -18,7 +18,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         cardView.addSubview(cardFront!)
     }
-    func updateCardSkin(token: Token!, paymentMethod: PaymentMethod?) {
+    func updateCardSkin(token: Token?, paymentMethod: PaymentMethod?) {
         
         if let paymentMethod = paymentMethod{
             
@@ -26,22 +26,28 @@ class PayerCostCardTableViewCell: UITableViewCell {
             self.cardView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
             self.cardFront?.cardLogo.alpha = 1
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
+            if let token = token{
+            cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.lastFourDigits as String)
+            }
             
-            cardFront?.cardNumber.text =  "XXXX XXXX XXXX " + (token.lastFourDigits as String)
-            // TODO
-            
-            cardFront?.cardName.text = token.cardHolder!.name
-            cardFront?.cardExpirationDate.text = token.getExpirationDateFormated() as String
-            cardFront?.cardNumber.alpha = 0.7
-            cardFront?.cardName.alpha = 0.7
-            cardFront?.cardExpirationDate.alpha = 0.7
+            cardFront?.cardName.text = ""
+            cardFront?.cardExpirationDate.text = ""
+            cardFront?.cardNumber.alpha = 0.8
             cardFront?.cardNumber.textColor =  fontColor
-            cardFront?.cardName.textColor =  fontColor
-            cardFront?.cardExpirationDate.textColor =  fontColor
+        }
+    }
+    func fadeCard(){
+        UIView.animate(withDuration: 0.80) {
+            self.cardView?.alpha = 0
         }
         
     }
-
+    func showCard(){
+        UIView.animate(withDuration: 1.50) {
+            self.cardView?.alpha = 1
+        }
+        
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

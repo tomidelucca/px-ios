@@ -15,7 +15,7 @@ class PayerCostRowTableViewCell: UITableViewCell {
     
     func fillCell(payerCost : PayerCost) {
         let currency = MercadoPagoContext.getCurrency()
-        if (payerCost.installmentRate != 0){
+        if (payerCost.installmentRate != 0 && payerCost.installments != 1){
             let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor(red: 153, green: 153, blue: 153)]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 153, green: 153, blue: 153), fontSize:15))
             attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor(red: 153, green: 153, blue: 153)]))
@@ -25,14 +25,13 @@ class PayerCostRowTableViewCell: UITableViewCell {
         } else {
             interestDescription.text = "Sin interés"
         }
-        var message:String = String(format:"%i", payerCost.installments)
-        message = "\(message) x "
+        var installmentNumber:String = String(format:"%i", payerCost.installments)
+        installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 51, green: 51, blue: 51))
         
-        let cuotas = NSMutableAttributedString(string: message)
-        cuotas.append(totalAmount)
-        installmentDescription.attributedText =  cuotas
-        
+        let installmentLabel = NSMutableAttributedString(string: installmentNumber)
+        installmentLabel.append(totalAmount)
+        installmentDescription.attributedText =  installmentLabel
     }
 
     override func awakeFromNib() {

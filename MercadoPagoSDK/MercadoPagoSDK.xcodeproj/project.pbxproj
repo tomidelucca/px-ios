@@ -294,6 +294,8 @@
 		4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55EE1DB0019200501061 /* PayerCostRowTableViewCell.xib */; };
 		4BAA55FB1DB0241700501061 /* PayerCostTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* PayerCostTitleTableViewCell.swift */; };
 		4BAA55FC1DB0241700501061 /* PayerCostTitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55FA1DB0241700501061 /* PayerCostTitleTableViewCell.xib */; };
+		4BAA55FF1DB503E600501061 /* IssuerRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55FD1DB503E600501061 /* IssuerRowTableViewCell.swift */; };
+		4BAA56001DB503E600501061 /* IssuerRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55FE1DB503E600501061 /* IssuerRowTableViewCell.xib */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -748,6 +750,8 @@
 		4BAA55EE1DB0019200501061 /* PayerCostRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayerCostRowTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55F91DB0241700501061 /* PayerCostTitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostTitleTableViewCell.swift; sourceTree = "<group>"; };
 		4BAA55FA1DB0241700501061 /* PayerCostTitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayerCostTitleTableViewCell.xib; sourceTree = "<group>"; };
+		4BAA55FD1DB503E600501061 /* IssuerRowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssuerRowTableViewCell.swift; sourceTree = "<group>"; };
+		4BAA55FE1DB503E600501061 /* IssuerRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssuerRowTableViewCell.xib; sourceTree = "<group>"; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchService.swift; sourceTree = "<group>"; };
@@ -1447,6 +1451,8 @@
 				4BAA55EE1DB0019200501061 /* PayerCostRowTableViewCell.xib */,
 				4BAA55F91DB0241700501061 /* PayerCostTitleTableViewCell.swift */,
 				4BAA55FA1DB0241700501061 /* PayerCostTitleTableViewCell.xib */,
+				4BAA55FD1DB503E600501061 /* IssuerRowTableViewCell.swift */,
+				4BAA55FE1DB503E600501061 /* IssuerRowTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2019,6 +2025,7 @@
 				15C5279A1CDBC7E400D113F6 /* IssuerCardViewController.xib in Resources */,
 				0F9884331AD2AE5900F750F0 /* InstallmentTableViewCell.xib in Resources */,
 				4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */,
+				4BAA56001DB503E600501061 /* IssuerRowTableViewCell.xib in Resources */,
 				76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2139,6 +2146,7 @@
 				76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
 				15D799F91CA1CE9A00623A84 /* PayerCostViewController.swift in Sources */,
 				76134AB81C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */,
+				4BAA55FF1DB503E600501061 /* IssuerRowTableViewCell.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				0F9883CE1AD2AD5500F750F0 /* PaymentTotalTableViewCell.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,

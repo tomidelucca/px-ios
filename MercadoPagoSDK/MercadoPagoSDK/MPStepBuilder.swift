@@ -142,14 +142,14 @@ open class MPStepBuilder : NSObject {
 
     }
     
-    open class func startPayerCostForm(_ paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
+    open class func startPayerCostForm(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
                                          callback : @escaping ((_ payerCost: PayerCost?) -> Void),
-                                         callbackCancel : ((Void) -> Void)? = nil) -> PayerCostViewController {
+                                         callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
         
      // TODO TRACKER    MercadoPagoContext.initFlavor2()
-        return PayerCostViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
+        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
     }
-    open class func startPayerCostStep(_ paymentMethod : PaymentMethod? , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
+    open class func startPayerCostStep(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
                                        callback : @escaping ((_ payerCost: PayerCost?) -> Void),
                                        callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
         
@@ -171,12 +171,19 @@ open class MPStepBuilder : NSObject {
         return IssuersViewController(paymentMethod: paymentMethod, callback: callback)
     }
     
+//    open class func startIssuerForm(_ paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil,
+//                        callback : @escaping ((_ issuer: Issuer?) -> Void)) -> IssuerCardViewController {
+//        
+//     // TODO TRACKER    MercadoPagoContext.initFlavor2()
+//        return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
+//    }
     open class func startIssuerForm(_ paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil,
-                        callback : @escaping ((_ issuer: Issuer?) -> Void)) -> IssuerCardViewController {
+                                    callback : @escaping ((_ issuer: Issuer?) -> Void)) -> PayerCostStepViewController {
         
-     // TODO TRACKER    MercadoPagoContext.initFlavor2()
-        return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
+        // TODO TRACKER    MercadoPagoContext.initFlavor2()
+        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: nil, token: nil, amount: nil, paymentPreference: nil, installment : nil, callback: nil)
     }
+    
     
     open class func startErrorViewController(_ error : MPError,
                         callback : ((Void) -> Void)? = nil,
