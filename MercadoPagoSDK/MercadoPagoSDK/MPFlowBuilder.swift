@@ -14,7 +14,7 @@ open class MPFlowBuilder : NSObject {
     @available(*, deprecated: 2.0.0, message: "Use startCheckoutViewController instead")
     open class func startVaultViewController(_ amount: Double, paymentPreference : PaymentPreference? = nil,
                             callback: @escaping (_ paymentMethod: PaymentMethod, _ tokenId: String?, _ issuer: Issuer?, _ installments: Int) -> Void) -> VaultViewController {
-  // TODO TRACKER       MercadoPagoContext.initFlavor3()
+    MercadoPagoContext.initFlavor3()
         return VaultViewController(amount: amount, paymentPreference: paymentPreference, callback: callback)
         
     }
@@ -23,7 +23,7 @@ open class MPFlowBuilder : NSObject {
                         callback: @escaping (Payment) -> Void,
                         callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
         
-     // TODO TRACKER    MercadoPagoContext.initFlavor3()
+        MercadoPagoContext.initFlavor3()
         let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
                                                 callback: { (payment : Payment) -> Void in callback(payment) },
                                                 callbackCancel :callbackCancel)
@@ -35,7 +35,7 @@ open class MPFlowBuilder : NSObject {
                                                       callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
                                                       callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
         
-    // TODO TRACKER     MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
             paymentVault.viewModel.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
                                     paymentVault.dismiss(animated: true, completion: { () -> Void in
@@ -47,7 +47,7 @@ open class MPFlowBuilder : NSObject {
 
     
     open class func startPaymentVaultViewController(_ amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
-      // TODO TRACKER   MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         var paymentVault : PaymentVaultViewController?
         paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, callback: {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
                 paymentVault!.dismiss(animated: true, completion: { () -> Void in
@@ -61,7 +61,7 @@ open class MPFlowBuilder : NSObject {
                                                     callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
                                                     callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
         
-    // TODO TRACKER     MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true,
                                                       callback: callback, callbackCancel : callbackCancel)
         paymentVault.modalTransitionStyle = .crossDissolve
@@ -70,7 +70,7 @@ open class MPFlowBuilder : NSObject {
 
     
     open class func startCardFlow(_ paymentPreference: PaymentPreference? = nil  , amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
-     // TODO TRACKER    MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         var cardVC : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         

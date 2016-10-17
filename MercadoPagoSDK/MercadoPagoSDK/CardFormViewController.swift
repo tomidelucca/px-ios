@@ -18,7 +18,6 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-// TODO TRACKER import MercadoPagoTracker
 
 
 open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
@@ -279,7 +278,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     /* Metodos para preparar los diferentes labels del formulario para ser editados */
     fileprivate func prepareNumberLabelForEdit(){
-   // TODO TRACKER      MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_NUMBER")
+        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_NUMBER")
         editingLabel = cardNumberLabel
         cardFormManager?.cardToken = nil
         textBox.resignFirstResponder()
@@ -289,7 +288,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         textBox.placeholder = "Número de tarjeta".localized
     }
     fileprivate func prepareNameLabelForEdit(){
-   // TODO TRACKER       MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_HOLDER")
+        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_HOLDER")
         editingLabel = nameLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.alphabet
@@ -299,7 +298,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
 
     }
     fileprivate func prepareExpirationLabelForEdit(){
-     // TODO TRACKER     MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_EXPIRY_DATE")
+        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_EXPIRY_DATE")
         editingLabel = expirationDateLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
@@ -308,7 +307,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         textBox.placeholder = "Fecha de expiración".localized
     }
     fileprivate func prepareCVVLabelForEdit(){
-    // TODO TRACKER      MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
+        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
         
         if(!self.cardFormManager!.isAmexCard(self.cardNumberLabel!.text!)){
             UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: 1, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: { (completion) -> Void in
