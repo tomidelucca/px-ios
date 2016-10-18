@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.resources = ['MercadoPagoSDK/MercadoPagoSDK/*.xcassets', 'MercadoPagoSDK/MercadoPagoSDK/*.ttf']
-  s.source_files = 'MercadoPagoSDK/MercadoPagoSDK/*'
+  s.source_files = ['MercadoPagoSDK/MercadoPagoSDK/*' , 'MercadoPagoSDK/MercadoPagoSDK/Tracker/*']
 
   #s.dependency 'MercadoPagoTracker'
 
