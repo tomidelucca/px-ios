@@ -38,8 +38,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     var expirationDateLabel: MPLabel?
     var expirationLabelEmpty: Bool = true
     var cvvLabel: UILabel?
-
-
+        
     var editingLabel : UILabel?
     
     var callback : (( _ paymentMethod: PaymentMethod,_ cardtoken: CardToken?) -> Void)?
@@ -56,6 +55,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     var donePrev : UIBarButtonItem?
     
     var cardFormManager : CardViewModelManager?
+    
+    var timer : CountdownTimer?
     
     override open var screenName : String { get { return "CARD_NUMBER" } }
     
@@ -75,6 +76,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             if let fontChosed = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) {
                 titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName:fontChosed]
             }
+            
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
@@ -83,14 +85,20 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
- 
-                let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                promocionesButton.tintColor = UIColor.systemFontColor()
-
                 
-                self.navigationItem.rightBarButtonItem = promocionesButton
-       
-
+                if self.timer != nil {
+                    let button = UIButton(type: UIButtonType.custom)
+                    button.frame = CGRect(x: 0, y: 0, width: 58, height: 20)
+                    button.addSubview(self.timer!.label)
+                    self.timer?.startTimer()
+                
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+                } else {
+                    let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
+                    promocionesButton.tintColor = UIColor.systemFontColor()
+                    self.navigationItem.rightBarButtonItem = promocionesButton
+                }
+                
                 displayBackButton()
             }
         }
