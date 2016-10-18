@@ -70,7 +70,7 @@ fi
 echo "=========================================="
 echo "4) Push podspec into trunk/Specs"
 echo "=========================================="
-pod trunk push $PODSPEC_FILE --allow-warnings
+pod trunk push $PODSPEC_FILE --allow-warnings --verbose
 POD_TRUNK_STATUS=$?
 
 if [ $POD_TRUNK_STATUS -ne 0 ]
