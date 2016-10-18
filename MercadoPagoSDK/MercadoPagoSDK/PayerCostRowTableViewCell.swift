@@ -33,6 +33,13 @@ class PayerCostRowTableViewCell: UITableViewCell {
         installmentLabel.append(totalAmount)
         installmentDescription.attributedText =  installmentLabel
     }
+    func addSeparatorLineToTop(width: Double){
+        var lineFrame = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: width, height: 0.5))
+        var line = UIView(frame: lineFrame)
+        line.alpha = 0.6
+        line.backgroundColor = UIColor(red: 153, green: 153, blue: 153)
+        addSubview(line)
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

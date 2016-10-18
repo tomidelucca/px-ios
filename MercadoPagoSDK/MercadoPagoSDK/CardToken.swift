@@ -322,4 +322,8 @@ open class CardToken : NSObject {
     open func isCustomerPaymentMethod() -> Bool {
         return false
     }
+    open func lastFourDigits() -> String{
+        var index = cardNumber?.characters.count
+        return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
+    }
 }

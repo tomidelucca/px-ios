@@ -114,6 +114,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             return self.viewModel.numberofPayerCost()
         }
     }
+
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -122,6 +123,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! PayerCostTitleTableViewCell
             titleCell.selectionStyle = .none // Sacar color cuando click
             titleCell.setTitle(string: self.viewModel.getTilte())
+            
             return titleCell
             
         } else if (indexPath.section == 1){
@@ -129,20 +131,23 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             cardCell.selectionStyle = .none // Sacar color cuando click
             cardCell.loadCard()
             cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethod)
+            
             return cardCell
             
         } else {
             if self.viewModel.hasIssuer(){
                 let payerCost : PayerCost = self.viewModel.payerCosts![indexPath.row]
-                let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowNib", for: indexPath as IndexPath) as! PayerCostRowTableViewCell
+                let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath as IndexPath) as! PayerCostRowTableViewCell
                 installmentCell.fillCell(payerCost: payerCost)
-                drawBottomLine(layer: installmentCell.contentView.layer)
+                installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width))
+                
                 return installmentCell
             } else {
                 let issuer : Issuer = self.viewModel.issuersList![indexPath.row]
                 let issuerCell = tableView.dequeueReusableCell(withIdentifier: "rowIssuerNib", for: indexPath as IndexPath) as! IssuerRowTableViewCell
                 issuerCell.fillCell(issuer: issuer, bundle: self.bundle!)
-                drawBottomLine(layer: issuerCell.contentView.layer)
+                issuerCell.addSeparatorLineToTop(width: Double(issuerCell.contentView.frame.width))
+
                 return issuerCell
             }
         }
@@ -240,19 +245,6 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         }) { (error) -> Void in
             // HANDLE ERROR
         }
-    }
-    
-    func drawBottomLine(layer: CALayer) -> Void{
-        let line = CAShapeLayer()
-        let linePath = UIBezierPath()
-        linePath.move(to: CGPoint(x: layer.bounds.width, y: layer.bounds.height))
-        linePath.addLine(to: CGPoint(x: 0, y: layer.bounds.height))
-        line.path = linePath.cgPath
-        line.fillColor = nil
-        line.opacity = 0.6
-        line.lineWidth = 0.1
-        line.strokeColor = UIColor(red: 153, green: 153, blue: 153).cgColor
-        layer.addSublayer(line)
     }
     
 }
