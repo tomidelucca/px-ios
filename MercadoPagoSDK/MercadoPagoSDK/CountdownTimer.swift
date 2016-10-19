@@ -8,12 +8,12 @@
 
 import UIKit
 
-open class CountdownTimer: NSObject {
+open class CountdownTimer: NSObject, TimerDelegate {
 
     var timer : Timer!
     var secondsLeft = 0
     var timeoutCallback : (Void) -> Void?
-    var label : MPLabel?
+    var delegate : TimerDelegate? = nil
     
     public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
         self.secondsLeft = seconds
@@ -21,7 +21,6 @@ open class CountdownTimer: NSObject {
     }
     
     open func startTimer() {
-        self.displayTiming()
         self.timer = Timer.scheduledTimer(timeInterval: 1,
                                           target: self,
                                           selector: #selector(self.updateTimer),
@@ -31,7 +30,10 @@ open class CountdownTimer: NSObject {
     
     open func updateTimer(){
         secondsLeft -= 1
-        self.displayTiming()
+        if self.delegate != nil {
+            self.delegate?.updateTimer()
+        }
+        
         if secondsLeft == 0 {
             stopTimer()
             timeoutCallback()
@@ -42,7 +44,7 @@ open class CountdownTimer: NSObject {
         self.timer.invalidate()
     }
     
-    private func displayTiming() {
+    open func getCurrentTiming() -> String {
         var minutesStr = "", secondsStr = ""
         
         let minutes = secondsLeft / 60
@@ -57,8 +59,14 @@ open class CountdownTimer: NSObject {
             secondsStr = "0"
         }
         secondsStr += String(seconds)
-        label!.text = minutesStr + " : " + secondsStr
+        return minutesStr + " : " + secondsStr
     }
     
+
+}
+
+@objc public protocol TimerDelegate {
+
+    @objc func updateTimer()
 
 }

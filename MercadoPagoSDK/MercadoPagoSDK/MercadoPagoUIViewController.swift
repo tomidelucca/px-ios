@@ -24,7 +24,7 @@ open class MPNavigationController : UINavigationController {
    
     
 }
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
     internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
@@ -42,19 +42,20 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
-
+    var timerLabel : MPLabel?
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.timer != nil {
-            let timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 60, height: 20))
-            timerLabel.backgroundColor = MercadoPagoContext.getPrimaryColor()
-            timerLabel.textColor = MercadoPagoContext.getTextColor()
+            self.timer!.delegate = self
+            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 60, height: 20))
+            self.timerLabel!.backgroundColor = MercadoPagoContext.getPrimaryColor()
+            self.timerLabel!.textColor = MercadoPagoContext.getTextColor()
             
             let button = UIButton(type: UIButtonType.custom)
             button.frame = CGRect(x: 0, y: 0, width: 60, height: 20)
-            button.addSubview(timerLabel)
-            self.timer!.label = timerLabel
+            button.addSubview(timerLabel!)
+            
             self.timer!.startTimer()
             
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
@@ -269,6 +270,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {
             self.present(errorVC, animated: true, completion: {})
+        }
+    }
+    
+    open func updateTimer() {
+        if self.timerLabel != nil {
+            self.timerLabel!.text = self.timer!.getCurrentTiming()
         }
     }
 
