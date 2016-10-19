@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class CardToken : NSObject {
+open class CardToken : NSObject, CardInformationForm {
     
     let MIN_LENGTH_NUMBER : Int = 10
     let MAX_LENGTH_NUMBER : Int = 19
@@ -322,8 +322,12 @@ open class CardToken : NSObject {
     open func isCustomerPaymentMethod() -> Bool {
         return false
     }
-    open func lastFourDigits() -> String{
+    open func getCardLastForDigits() -> String{
         var index = cardNumber?.characters.count
         return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
     }
+    public func getCardBin() -> String? {
+        return getBin()
+    }
+
 }

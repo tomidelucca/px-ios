@@ -79,7 +79,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : Token?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: PayerCost?)->Void)? ){
+    public init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
         self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: nil, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
@@ -158,6 +158,9 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             if self.viewModel.hasIssuer(){
                 let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row]
                 self.viewModel.callback!(payerCost)
+            } else{
+                let issuer : Issuer = self.viewModel.issuersList![(indexPath as NSIndexPath).row]
+                self.viewModel.callback!(issuer)
             }
         }
     }
@@ -226,7 +229,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     }
     
     fileprivate func getInstallments(){
-        let bin = self.viewModel.token?.getBin() ?? ""
+        let bin = self.viewModel.token?.getCardBin() ?? ""
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethod!._id, success: { (installments) -> Void in
             self.viewModel.installment = installments?[0]
             self.viewModel.payerCosts = installments![0].payerCosts
@@ -238,7 +241,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         }
     }
     fileprivate func getIssuers(){
-        MPServicesBuilder.getIssuers(self.viewModel.paymentMethod!, bin: nil, success: { (issuers) -> Void in
+        MPServicesBuilder.getIssuers(self.viewModel.paymentMethod!, bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
             self.viewModel.issuersList = issuers
             self.hideLoading()
             self.tableView.reloadData()
@@ -253,14 +256,14 @@ class PayerCostViewModel : NSObject {
     var payerCosts : [PayerCost]?
     var installment : Installment?
     var paymentMethod : PaymentMethod?
-    var token : Token?
+    var token : CardInformationForm?
     var issuer: Issuer?
     var amount: Double!
     var paymentPreference: PaymentPreference?
     var issuersList:[Issuer]?
-    var callback : ((_ payerCost: PayerCost?) -> Void)?
+    var callback : ((_ payerCost: NSObject?) -> Void)?
     
-    init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : Token?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: PayerCost?)->Void)? ){
+    init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
         self.paymentMethod = paymentMethod
         self.payerCosts = installment?.payerCosts
         self.installment = installment

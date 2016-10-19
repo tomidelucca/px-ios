@@ -18,7 +18,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         cardView.addSubview(cardFront!)
     }
-    func updateCardSkin(token: Token?, paymentMethod: PaymentMethod?) {
+    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
         
         if let paymentMethod = paymentMethod{
             
@@ -27,7 +27,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
             self.cardFront?.cardLogo.alpha = 1
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
-            cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.lastFourDigits as String)
+            cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
             }
             
             cardFront?.cardName.text = ""

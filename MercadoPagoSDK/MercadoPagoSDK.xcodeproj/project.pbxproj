@@ -296,6 +296,8 @@
 		4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA56051DB57D1B00501061 /* IssuerRowTableViewCell.xib */; };
 		4BAA56081DB6861400501061 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA56071DB6861400501061 /* Images.xcassets */; };
 		4BAA56221DB6B13B00501061 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA56211DB6B13B00501061 /* CardInfo.swift */; };
+		4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */; };
+		4BAA56261DB6B58D00501061 /* CardTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA56241DB6B58D00501061 /* CardTypeTableViewCell.xib */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -753,6 +755,8 @@
 		4BAA56051DB57D1B00501061 /* IssuerRowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IssuerRowTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA56071DB6861400501061 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MercadoPagoSDK/Images.xcassets; sourceTree = "<group>"; };
 		4BAA56211DB6B13B00501061 /* CardInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
+		4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTypeTableViewCell.swift; sourceTree = "<group>"; };
+		4BAA56241DB6B58D00501061 /* CardTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardTypeTableViewCell.xib; sourceTree = "<group>"; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchService.swift; sourceTree = "<group>"; };
@@ -1455,6 +1459,8 @@
 				4BAA55FA1DB0241700501061 /* PayerCostTitleTableViewCell.xib */,
 				4BAA56051DB57D1B00501061 /* IssuerRowTableViewCell.xib */,
 				4BAA55FD1DB503E600501061 /* IssuerRowTableViewCell.swift */,
+				4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */,
+				4BAA56241DB6B58D00501061 /* CardTypeTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1999,6 +2005,7 @@
 				76B084F51CE1701D00C157BF /* RejectedPaymentBodyTableViewCell.xib in Resources */,
 				0F9883D01AD2AD5500F750F0 /* PaymentTotalTableViewCell.xib in Resources */,
 				76062BDF1C4D24050067A14B /* PaymentSearchCell.xib in Resources */,
+				4BAA56261DB6B58D00501061 /* CardTypeTableViewCell.xib in Resources */,
 				0F9884031AD2ADEE00F750F0 /* IssuersViewController.xib in Resources */,
 				766012F11CF284A600897F9D /* WebViewController.xib in Resources */,
 				76B085281CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
@@ -2189,6 +2196,7 @@
 				0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */,
 				76151B731C738E14007DF0E3 /* InstructionsViewCell.swift in Sources */,
 				0F9884431AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.swift in Sources */,
+				4BAA56251DB6B58D00501061 /* CardTypeTableViewCell.swift in Sources */,
 				7656CA1A1C7645450043BDB2 /* InstructionReference.swift in Sources */,
 				0F9883851AD2AB6000F750F0 /* PayerCost.swift in Sources */,
 				76445AF31CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.swift in Sources */,

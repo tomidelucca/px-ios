@@ -142,19 +142,19 @@ open class MPStepBuilder : NSObject {
         
     }
     
-    open class func startPayerCostForm(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
-                                       callback : @escaping ((_ payerCost: PayerCost?) -> Void),
+    open class func startPayerCostForm(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token? , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
+                                       callback : @escaping ((_ payerCost: NSObject?) -> Void),
                                        callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
         
         // TODO TRACKER    MercadoPagoContext.initFlavor2()
-        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
+        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback )
     }
-    open class func startPayerCostStep(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
-                                       callback : @escaping ((_ payerCost: PayerCost?) -> Void),
-                                       callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
-        
-        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
-    }
+//    open class func startPayerCostStep(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
+//                                       callback : @escaping ((_ payerCost: PayerCost?) -> Void),
+//                                       callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
+//        
+//        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : installment, callback: callback)
+//    }
     
     
     open class func startIdentificationForm(
@@ -178,10 +178,10 @@ open class MPStepBuilder : NSObject {
     //        return IssuerCardViewController(paymentMethod: paymentMethod, cardToken: cardToken, callback: callback)
     //    }
     open class func startIssuerForm(_ paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil,
-                                    callback : @escaping ((_ issuer: Issuer?) -> Void)) -> PayerCostStepViewController {
+                                    callback : @escaping ((_ issuer: NSObject?) -> Void)) -> PayerCostStepViewController {
         
         // TODO TRACKER    MercadoPagoContext.initFlavor2()
-        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: nil, token: nil, amount: nil, paymentPreference: nil, installment : nil, callback: nil)
+        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, callback: callback)
     }
     
     
@@ -202,7 +202,7 @@ open class MPStepBuilder : NSObject {
                 if(issuers!.count > 1){
                     let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, callback: { (issuer) -> Void in
                         (ccf.navigationController as! MPNavigationController).showLoading()
-                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer!, ccf : ccf, callback: callback)
+                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer! as! Issuer, ccf : ccf, callback: callback)
                     })
                     issuerForm.callbackCancel = { Void -> Void in
                         ccf.navigationController!.dismiss(animated: true, completion: {})
@@ -269,7 +269,7 @@ open class MPStepBuilder : NSObject {
         MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
             
             let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token, amount:amount, paymentPreference: nil, callback: { (payerCost) -> Void in
-                callback(paymentMethod, token, issuer, payerCost)
+                callback(paymentMethod, token, issuer, payerCost as! PayerCost?)
             })
             
             ccf.navigationController!.pushViewController(pcvc, animated: false)
