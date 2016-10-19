@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CountdownTimer: NSObject, TimerDelegate {
+open class CountdownTimer: NSObject {
 
     var timer : Timer!
     var secondsLeft = 0
