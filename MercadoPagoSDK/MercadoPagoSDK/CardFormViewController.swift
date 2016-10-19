@@ -56,8 +56,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     var cardFormManager : CardViewModelManager?
     
-    var timer : CountdownTimer?
-    
     override open var screenName : String { get { return "CARD_NUMBER" } }
     
     
@@ -85,19 +83,10 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
-                
-                if self.timer != nil {
-                    let button = UIButton(type: UIButtonType.custom)
-                    button.frame = CGRect(x: 0, y: 0, width: 58, height: 20)
-                    button.addSubview(self.timer!.label)
-                    self.timer?.startTimer()
-                
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-                } else {
-                    let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                    promocionesButton.tintColor = UIColor.systemFontColor()
-                    self.navigationItem.rightBarButtonItem = promocionesButton
-                }
+            
+                let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
+                promocionesButton.tintColor = UIColor.systemFontColor()
+                self.navigationItem.rightBarButtonItem = promocionesButton
                 
                 displayBackButton()
             }
@@ -106,11 +95,12 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
 
 
-    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil,  callback : @escaping ((_ paymentMethod: PaymentMethod, _ cardToken: CardToken?) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil,  timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ cardToken: CardToken?) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = CardViewModelManager(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, paymentSettings: paymentSettings)
         self.callbackCancel = callbackCancel
         self.callback = callback
+        self.timer = timer
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -134,7 +124,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
    
     open override func viewDidAppear(_ animated: Bool) {
         
-        
+        super.viewDidAppear(animated)
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Número de tarjeta".localized
@@ -805,5 +795,4 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         return self.cardFormManager!.validateExpirationDate(self.cardNumberLabel!, expirationDateLabel: self.expirationDateLabel!, cvvLabel: self.cvvLabel!, cardholderNameLabel: self.nameLabel!)
     }
     
-
 }

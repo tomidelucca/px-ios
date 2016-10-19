@@ -12,15 +12,11 @@ open class CountdownTimer: NSObject {
 
     var timer : Timer!
     var secondsLeft = 0
-    var label : UILabel!
     var timeoutCallback : (Void) -> Void?
-    
+    var label : MPLabel?
     
     public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
         self.secondsLeft = seconds
-        self.label = UILabel(frame: CGRect(x: 0, y: 0, width: 58, height: 20))
-        self.label!.backgroundColor = MercadoPagoContext.getPrimaryColor()
-        self.label!.textColor = MercadoPagoContext.getTextColor()
         self.timeoutCallback = timeoutCallback
     }
     
@@ -36,14 +32,13 @@ open class CountdownTimer: NSObject {
     open func updateTimer(){
         secondsLeft -= 1
         self.displayTiming()
-        if !(secondsLeft > 0) {
+        if secondsLeft == 0 {
             stopTimer()
             timeoutCallback()
         }
     }
     
     open func stopTimer() {
-        self.label.text = ""
         self.timer.invalidate()
     }
     
@@ -62,7 +57,7 @@ open class CountdownTimer: NSObject {
             secondsStr = "0"
         }
         secondsStr += String(seconds)
-        self.label!.text = minutesStr + " : " + secondsStr
+        label!.text = minutesStr + " : " + secondsStr
     }
     
 

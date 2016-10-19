@@ -28,11 +28,12 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     
     override open var screenName : String { get { return "IDENTIFICATION_NUMBER" } }
     
-    public init(callback : @escaping (( _ identification: Identification) -> Void)) {
+    public init(callback : @escaping (( _ identification: Identification) -> Void), timer : CountdownTimer? = nil) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
-         
+        self.timer = timer
     }
+    
     override func loadMPStyles(){
         var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
@@ -74,7 +75,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         
         textField.inputView = pickerView
         textField.inputAccessoryView = toolBar
-        
+
     }
 
     

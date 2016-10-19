@@ -28,17 +28,15 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
-    
-    
+    public var timer : CountdownTimer?
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
+    
     override open func viewDidLoad() {
-     
         super.viewDidLoad()
         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
         self.loadMPStyles()
-
     }
 
     var lastDefaultFontLabel : String?
@@ -46,7 +44,23 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var lastDefaultFontButton : String?
 
     
-   
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.timer != nil {
+            let timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 60, height: 20))
+            timerLabel.backgroundColor = MercadoPagoContext.getPrimaryColor()
+            timerLabel.textColor = MercadoPagoContext.getTextColor()
+            
+            let button = UIButton(type: UIButtonType.custom)
+            button.frame = CGRect(x: 0, y: 0, width: 60, height: 20)
+            button.addSubview(timerLabel)
+            self.timer!.label = timerLabel
+            self.timer!.startTimer()
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        }
+    }
+    
     static func loadFont(_ fontName: String) -> Bool {
         
         if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf")
