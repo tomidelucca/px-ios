@@ -21,11 +21,13 @@ open class CountdownTimer: NSObject, TimerDelegate {
     }
     
     open func startTimer() {
-        self.timer = Timer.scheduledTimer(timeInterval: 1,
+        if self.timer == nil || !self.timer!.isValid {
+            self.timer = Timer.scheduledTimer(timeInterval: 1,
                                           target: self,
                                           selector: #selector(self.updateTimer),
                                           userInfo: nil,
                                           repeats: true)
+        }
     }
     
     open func updateTimer(){
@@ -45,21 +47,31 @@ open class CountdownTimer: NSObject, TimerDelegate {
     }
     
     open func getCurrentTiming() -> String {
-        var minutesStr = "", secondsStr = ""
+        var hoursStr = "", minutesStr = "", secondsStr = ""
         
-        let minutes = secondsLeft / 60
+        var minutes = secondsLeft / 60
+        if minutes > 60 {
+            let hours = minutes / 60
+            if hours < 10 {
+                hoursStr = "0"
+            }
+            hoursStr += String(hours)
+            minutes = minutes % 60
+        }
         
-        if minutes < 10 {
+        
+        if minutes < 10  && minutes >= 0{
             minutesStr = "0"
         }
         minutesStr += String(minutes)
         
         let seconds = secondsLeft % 60
-        if seconds < 10 {
+        if seconds < 10 && seconds >= 0 {
             secondsStr = "0"
         }
         secondsStr += String(seconds)
-        return minutesStr + " : " + secondsStr
+        
+        return (hoursStr.characters.count > 0) ? (hoursStr + " : " + minutesStr + " : " + secondsStr) : (minutesStr + " : " + secondsStr)
     }
     
 
