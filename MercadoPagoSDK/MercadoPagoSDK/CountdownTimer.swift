@@ -12,22 +12,18 @@ open class CountdownTimer: NSObject, TimerDelegate {
 
     var timer : Timer!
     var secondsLeft = 0
-    var timeoutCallback : (Void) -> Void?
-    var delegate : TimerDelegate? = nil
+    var timeoutCallback : ((Void) -> Void?)!
+    var delegate : TimerDelegate!
     
     public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
+        super.init()
         self.secondsLeft = seconds
         self.timeoutCallback = timeoutCallback
-    }
-    
-    open func startTimer() {
-        if self.timer == nil || !self.timer!.isValid {
-            self.timer = Timer.scheduledTimer(timeInterval: 1,
+        self.timer = Timer.scheduledTimer(timeInterval: 1,
                                           target: self,
                                           selector: #selector(self.updateTimer),
                                           userInfo: nil,
                                           repeats: true)
-        }
     }
     
     open func updateTimer(){

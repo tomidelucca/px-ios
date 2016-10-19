@@ -56,8 +56,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             button.frame = CGRect(x: 0, y: 0, width: 86, height: 20)
             button.addSubview(timerLabel!)
             
-            self.timer!.startTimer()
-            
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         }
     }
