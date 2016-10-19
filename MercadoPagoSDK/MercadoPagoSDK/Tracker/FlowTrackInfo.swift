@@ -9,6 +9,9 @@
 
 open class FlowTrackInfo: NSObject {
     
+    static let FLOW_SDK_TYPE_NATIVE = "native"
+    static let FLOW_SDK_TYPE_HYBRID = "hybrid"
+    static let FLOW_SDK_TYPE = FLOW_SDK_TYPE_NATIVE
     
     static let FLOW_FLAVOR : UInt = 1
     static let FLOW_TYPE : UInt = 2
@@ -25,7 +28,7 @@ open class FlowTrackInfo: NSObject {
     init(flavor : Flavor!, framework : String!, sdkVersion : String!, publicKey : String!){
         
         self.flavor = flavor
-        self.type = "native"
+        self.type = FlowTrackInfo.FLOW_SDK_TYPE
         self.framework = framework
         self.sdkVersion = sdkVersion
         self.publicKey = publicKey
