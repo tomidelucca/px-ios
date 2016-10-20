@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class Address : Equatable {
-    public var streetName : String?
-    public var streetNumber : NSNumber?
-    public var zipCode : String?
+open class Address : Equatable {
+    open var streetName : String?
+    open var streetNumber : NSNumber?
+    open var zipCode : String?
     
 
     public init (streetName: String? = nil, streetNumber: NSNumber? = nil, zipCode : String? = nil) {
@@ -20,13 +20,17 @@ public class Address : Equatable {
         self.zipCode = zipCode
     }
     
-    public class func fromJSON(json : NSDictionary) -> Address {
+    open class func fromJSON(_ json : NSDictionary) -> Address {
         let address : Address = Address()
-        address.streetName = JSON(json["street_name"]!).asString
-        if json["street_number"] != nil && !(json["street_number"]! is NSNull) {
-			address.streetNumber = NSNumber(longLong: (json["street_number"] as? NSString)!.longLongValue)
+        if let streetName = JSONHandler.attemptParseToString(json["street_name"]) {
+            address.streetName = streetName
         }
-        address.zipCode = JSON(json["zip_code"]!).asString
+        if let streetNumber = JSONHandler.attemptParseToString(json["street_number"]) {
+            address.streetNumber = streetNumber.numberValue
+        }
+        if let zipCode = JSONHandler.attemptParseToString(json["zip_code"]) {
+            address.zipCode = zipCode
+        }
         return address
     }
 }

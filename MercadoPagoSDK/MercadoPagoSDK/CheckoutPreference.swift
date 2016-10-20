@@ -8,28 +8,28 @@
 
 import UIKit
 
-public class CheckoutPreference : NSObject {
+open class CheckoutPreference : NSObject {
     
-    public var _id : String!
-    public var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
+    open var _id : String!
+    open var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
                                // que cada item no sea nulo, que su cantidad sea 1 o mayor
                                 // que el precio no sea nulo, ni menor o igual a cero
                                 // currency no nula
                                 // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
-    public var payer : Payer!
-    public var paymentPreference : PaymentPreference! //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
+    open var payer : Payer!
+    open var paymentPreference : PaymentPreference! //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
                                                         // excluded_payment_method < payment_methods
                                                         //excluded_payment_types < payment_types
     
     
-    public var siteId : String = "MLA"
+    open var siteId : String = "MLA"
     
     
-    public var choImage : UIImage?
+    open var choImage : UIImage?
     
     //shipments
     
-    public func validate() -> String?{
+    open func validate() -> String?{
     
     
         if(items == nil){
@@ -40,7 +40,7 @@ public class CheckoutPreference : NSObject {
         }
         //VALIDAR CADA ITEM
         let currencyIdAllItems = items![0].currencyId
-        for (_, value) in items!.enumerate() {
+        for (_, value) in items!.enumerated() {
             if(value.currencyId != currencyIdAllItems){
                  return "Los items tienen diferente moneda".localized
             }
@@ -64,18 +64,18 @@ public class CheckoutPreference : NSObject {
     }
     
     
-    public class func fromJSON(json : NSDictionary) -> CheckoutPreference {
+    open class func fromJSON(_ json : NSDictionary) -> CheckoutPreference {
         let preference : CheckoutPreference = CheckoutPreference()
         
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            preference._id = (json["id"]! as? String)
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            preference._id = _id
         }
-        if json["site_id"] != nil && !(json["site_id"]! is NSNull) {
-            preference.siteId = (json["site_id"]! as? String)!
+        if let siteId = JSONHandler.attemptParseToString(json["site_id"]){
+            preference.siteId = siteId
         }
-        
-        if json["payer"] != nil && !(json["payer"]! is NSNull) {
-            preference.payer = Payer.fromJSON(json["payer"]! as! NSDictionary)
+
+        if let playerDic = json["payer"] as? NSDictionary {
+            preference.payer = Payer.fromJSON(playerDic)
         }
         
         var items = [Item]()
@@ -89,9 +89,8 @@ public class CheckoutPreference : NSObject {
             preference.items = items
         }
         
-        if json["payment_methods"] != nil && !(json["payment_methods"]! is NSNull) {
-            let jsonPaymentPreference = json["payment_methods"] as! NSDictionary
-            preference.paymentPreference = PaymentPreference.fromJSON(jsonPaymentPreference)
+        if let paymentPreference = json["payment_methods"] as? NSDictionary {
+            preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
         }
         
    
@@ -99,14 +98,14 @@ public class CheckoutPreference : NSObject {
     }
     
     
-    public func loadingImageWithCallback(callback :(Void -> Void)? = nil) -> Bool {
+    open func loadingImageWithCallback(_ callback :((Void) -> Void)? = nil) -> Bool {
         
         if (choImage != nil){
             return false
         }
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             self.choImage = ViewUtils.loadImageFromUrl(self.getPictureUrl())
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if (callback != nil){
                     callback!()
                 }
@@ -117,10 +116,13 @@ public class CheckoutPreference : NSObject {
     }
     
     
-    public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "id": self._id == nil ? JSON.null : (self._id)!,
-            "payer": self.payer == nil ? JSON.null : self.payer.toJSONString()
+    open func toJSONString() -> String {
+        
+        let _id : Any = self._id == nil ? JSONHandler.null : (self._id)!
+        let player : Any = self.payer == nil ? JSONHandler.null : self.payer.toJSONString()
+        var obj:[String:Any] = [
+            "id": _id,
+            "payer": player
         ]
         
         var itemsJson = ""
@@ -129,10 +131,10 @@ public class CheckoutPreference : NSObject {
         }
         obj["items"] = itemsJson
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
-    public func getAmount() -> Double {
+    open func getAmount() -> Double {
         var amount = 0.0
         for item in self.items! {
             amount = amount + (Double(item.quantity) * item.unitPrice)
@@ -140,7 +142,7 @@ public class CheckoutPreference : NSObject {
         return amount
     }
     
-    public func getInstallments() -> Int {
+    open func getInstallments() -> Int {
         if self.paymentPreference != nil {
             if (self.paymentPreference!.maxAcceptedInstallments > 0) {
                 return self.paymentPreference!.maxAcceptedInstallments
@@ -152,7 +154,7 @@ public class CheckoutPreference : NSObject {
     }
     
     
-    public func getPaymentPreference () -> PaymentPreference {
+    open func getPaymentPreference () -> PaymentPreference {
         let paymentPreference = PaymentPreference()
         paymentPreference.excludedPaymentMethodIds = self.getExcludedPaymentMethodsIds()
         paymentPreference.excludedPaymentTypeIds = self.getExcludedPaymentTypesIds()
@@ -162,50 +164,60 @@ public class CheckoutPreference : NSObject {
         return paymentPreference
     }
     
-    public func getExcludedPaymentTypesIds() -> Set<String>? {
+    open func getExcludedPaymentTypesIds() -> Set<String>? {
         if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
             return self.paymentPreference!.excludedPaymentTypeIds
         }
         return nil
     }
     
-    public func getDefaultInstallments() -> Int {
+    open func getDefaultInstallments() -> Int {
         if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments > 0) {
             return self.paymentPreference!.defaultInstallments
         }
         return 0
     }
     
-    public func getMaxAcceptedInstallments() -> Int {
+    open func getMaxAcceptedInstallments() -> Int {
         if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments > 0) {
             return self.paymentPreference!.maxAcceptedInstallments
         }
         return 0
     }
     
-    public func getExcludedPaymentMethodsIds() -> Set<String>? {
+    open func getExcludedPaymentMethodsIds() -> Set<String>? {
         if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentMethodIds != nil) {
             return self.paymentPreference!.excludedPaymentMethodIds
         }
         return nil
     }
 
-    public func getDefaultPaymentMethodId() -> String? {
+    open func getDefaultPaymentMethodId() -> String? {
         if (self.paymentPreference != nil && self.paymentPreference!.defaultPaymentMethodId != nil && self.paymentPreference!.defaultPaymentMethodId!.isNotEmpty) {
             return self.paymentPreference!.defaultPaymentMethodId
         }
         return nil
     }
     
-    public func getTitle() -> String {
+    open func getTitle() -> String {
+        
+        if self.items!.count > 1 {
+            var title = self.items!.reduce("", { (result, element) -> String in
+                return element.title + ", " + result
+            })
+            let index = title.index(title.endIndex, offsetBy: -2)
+            title.remove(at: index)
+            return title
+        }
+        
         return self.items![0].title
     }
     
-    public func getCurrencyId() -> String {
+    open func getCurrencyId() -> String {
         return self.items![0].currencyId
     }
     
-    public func getPictureUrl() -> String {
+    open func getPictureUrl() -> String {
         return self.items![0].pictureUrl
     }
 }

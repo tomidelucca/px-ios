@@ -9,55 +9,55 @@
 import UIKit
 import Foundation
 
-public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 	
 	var publicKey : String?
-	override public var screenName : String { get { return "BANK_DEALS" } }
-	@IBOutlet weak private var tableView : UITableView!
+	override open var screenName : String { get { return "BANK_DEALS" } }
+	@IBOutlet weak fileprivate var tableView : UITableView!
 	var loadingView : UILoadingView!
 	
 	var promos : [Promo]!
 	
-	var bundle : NSBundle? = MercadoPago.getBundle()
-    var callback : (Void -> (Void))?
+	var bundle : Bundle? = MercadoPago.getBundle()
+    var callback : ((Void) -> (Void))?
 	
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
 	
-	public init(callback : (Void -> (Void))? = nil) {
+	public init(callback : ((Void) -> (Void))? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback
 	}
 	
-	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 		self.title = "Promociones".localized
 	//	self.navigationItem.hidesBackButton = true
 
 	//	self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cerrar", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(PromoViewController.back))
 		
-		self.tableView.registerNib(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
-		self.tableView.registerNib(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
-		self.tableView.registerNib(UINib(nibName: "PromoEmptyTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoEmptyTableViewCell")
+		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
+		self.tableView.register(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
+		self.tableView.register(UINib(nibName: "PromoEmptyTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoEmptyTableViewCell")
 		
 		self.tableView.estimatedRowHeight = 44.0
 		self.tableView.rowHeight = UITableViewAutomaticDimension
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		
-		self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
+		self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
         
 		self.view.addSubview(self.loadingView)
 		
         if self.callback == nil {
             self.callback = {
-                self.dismissViewControllerAnimated(true, completion: {})
+                self.dismiss(animated: true, completion: {})
             }
         }
 		var mercadoPago : MercadoPago
@@ -75,31 +75,31 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 		
     }
 	
-	public func back() {
-		self.dismissViewControllerAnimated(true, completion: nil)
+	open func back() {
+		self.dismiss(animated: true, completion: nil)
 	}
 
-	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return promos == nil ? 1 : promos.count + 1
 	}
 	
-	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if self.promos != nil && self.promos.count > 0 {
-			if indexPath.row < self.promos.count {
-				let promoCell : PromoTableViewCell = tableView.dequeueReusableCellWithIdentifier("PromoTableViewCell", forIndexPath: indexPath) as! PromoTableViewCell
-				promoCell.setPromoInfo(self.promos[indexPath.row])
+			if (indexPath as NSIndexPath).row < self.promos.count {
+				let promoCell : PromoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PromoTableViewCell", for: indexPath) as! PromoTableViewCell
+				promoCell.setPromoInfo(self.promos[(indexPath as NSIndexPath).row])
 				return promoCell
 			} else {
-				return tableView.dequeueReusableCellWithIdentifier("PromosTyCTableViewCell", forIndexPath: indexPath) as! PromosTyCTableViewCell
+				return tableView.dequeueReusableCell(withIdentifier: "PromosTyCTableViewCell", for: indexPath) as! PromosTyCTableViewCell
 			}
 		} else {
-			return tableView.dequeueReusableCellWithIdentifier("PromoEmptyTableViewCell", forIndexPath: indexPath) as! PromoEmptyTableViewCell
+			return tableView.dequeueReusableCell(withIdentifier: "PromoEmptyTableViewCell", for: indexPath) as! PromoEmptyTableViewCell
 		}
 	}
 	
-	public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		if self.promos != nil && self.promos.count > 0 {
-			if indexPath.row == self.promos.count {
+			if (indexPath as NSIndexPath).row == self.promos.count {
 				return 55
 			} else {
 				return 151
@@ -109,9 +109,9 @@ public class PromoViewController: MercadoPagoUIViewController, UITableViewDataSo
 		}
 	}
 	
-	public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+	open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-		if indexPath.row == self.promos.count {
+		if (indexPath as NSIndexPath).row == self.promos.count {
 			self.navigationController?.pushViewController(PromosTyCViewController(promos: self.promos), animated: true)
 		}
 		

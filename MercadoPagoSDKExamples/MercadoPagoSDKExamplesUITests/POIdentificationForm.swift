@@ -25,14 +25,14 @@ class POIdentificationForm: MPPageObject{
         return POGuessingForm()
     }
     
-    func completeNumber(number : String){
+    func completeNumber(_ number : String){
         identificationNumberField.typeText(number)
     }
     func clearNumber(){
         identificationNumberField.typeText("")
     }
     
-    func completeNumberAndContinue(number : String){
+    func completeNumberAndContinue(_ number : String){
         completeNumber(number)
         pressContinue()
     }

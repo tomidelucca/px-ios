@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-public class InstallmentsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+open class InstallmentsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var publicKey : String?
     
-    @IBOutlet weak private var tableView : UITableView!
+    @IBOutlet weak fileprivate var tableView : UITableView!
     var loadingView : UILoadingView!
     
     var payerCosts : [PayerCost]?
@@ -21,14 +21,14 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
     
     var paymentMethodId : String?
     var amount : Double = 0
-    var callback : ((payerCost: PayerCost?) -> Void)?
+    var callback : ((_ payerCost: PayerCost?) -> Void)?
     var paymentPreference : PaymentPreference?
-    override public var screenName : String { get { return "CARD_INSTALLMENTS" } }
-    var bundle : NSBundle? = MercadoPago.getBundle()
+    override open var screenName : String { get { return "CARD_INSTALLMENTS" } }
+    var bundle : Bundle? = MercadoPago.getBundle()
     var maxInstallments : Int?
     var installment : Installment?
     
-    init(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: (payerCost: PayerCost?) -> Void) {
+    init(payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?, callback: @escaping (_ payerCost: PayerCost?) -> Void) {
         super.init(nibName: "InstallmentsViewController", bundle: bundle)
         if((payerCosts) != nil){
              self.payerCosts = payerCosts
@@ -51,11 +51,11 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         super.init(nibName: "InstallmentsViewController", bundle: self.bundle)
     }
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if self.payerCosts == nil {
@@ -64,7 +64,7 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         }
         self.tableView.reloadData()
     }
-    private func getInstallments(){
+    fileprivate func getInstallments(){
         MPServicesBuilder.getInstallments(amount: self.amount, issuer: self.issuer, paymentMethodId: self.paymentMethodId!, success: { (installments) -> Void in
             self.payerCosts = installments![0].payerCosts
             self.installment = installments![0]
@@ -76,15 +76,15 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         
     }
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Cuotas".localized
 
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         
        let installmentNib = UINib(nibName: "InstallmentTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(installmentNib, forCellReuseIdentifier: "installmentCell")
+        self.tableView.register(installmentNib, forCellReuseIdentifier: "installmentCell")
         
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -92,7 +92,7 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         self.tableView.dataSource = self
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(self.payerCosts == nil){
             return 0
         }else{
@@ -105,21 +105,21 @@ public class InstallmentsViewController : MercadoPagoUIViewController, UITableVi
         }
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let pccell : InstallmentTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("installmentCell") as! InstallmentTableViewCell
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let pccell : InstallmentTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "installmentCell") as! InstallmentTableViewCell
         
-        let payerCost : PayerCost = self.payerCosts![indexPath.row]
+        let payerCost : PayerCost = self.payerCosts![(indexPath as NSIndexPath).row]
         pccell.fillWithPayerCost(payerCost, amount: amount)
         
         return pccell
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        callback!(payerCost: self.payerCosts![indexPath.row])
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        callback!(self.payerCosts![(indexPath as NSIndexPath).row])
     }
     
     internal override func executeBack(){

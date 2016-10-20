@@ -36,12 +36,12 @@ class InstructionsAtmViewCell: UITableViewCell, InstructionsFillmentDelegate {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
     }
     
-    func fillCell(instruction : Instruction) -> UITableViewCell {
+    func fillCell(_ instruction : Instruction) -> UITableViewCell {
         
         if instruction.info != nil && instruction.info.count > 0 {
         self.instructionInfoTitle.text = instruction.info[0]
@@ -64,7 +64,7 @@ class InstructionsAtmViewCell: UITableViewCell, InstructionsFillmentDelegate {
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
         return 388
     }
     

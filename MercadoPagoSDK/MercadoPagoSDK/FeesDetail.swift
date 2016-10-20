@@ -8,21 +8,25 @@
 
 import Foundation
 
-public class FeesDetail : NSObject {
-    public var amount : Double = 0
-    public var amountRefunded : Double = 0
-    public var feePayer : String!
-    public var type : String!
+open class FeesDetail : NSObject {
+    open var amount : Double = 0
+    open var amountRefunded : Double = 0
+    open var feePayer : String!
+    open var type : String!
     
-    public class func fromJSON(json : NSDictionary) -> FeesDetail {
+    open class func fromJSON(_ json : NSDictionary) -> FeesDetail {
         let fd : FeesDetail = FeesDetail()
-        fd.type = JSON(json["type"]!).asString
-        fd.feePayer = JSON(json["fee_payer"]!).asString
-		if json["amount"] != nil && !(json["amount"]! is NSNull) {
-			fd.amount = JSON(json["amount"]!).asDouble!
-		}
-        if json["amount_refunded"] != nil && !(json["amount_refunded"]! is NSNull) {
-            fd.amountRefunded = JSON(json["amount_refunded"]!).asDouble!
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            fd.type = type
+        }
+        if let feePayer = JSONHandler.attemptParseToString(json["fee_payer"]){
+            fd.feePayer = feePayer
+        }
+        if let amount = JSONHandler.attemptParseToDouble(json["amount"]){
+            fd.amount = amount
+        }
+        if let amountRefunded = JSONHandler.attemptParseToDouble(json["amount_refunded"]){
+            fd.amountRefunded = amountRefunded
         }
         return fd
     }
@@ -31,14 +35,15 @@ public class FeesDetail : NSObject {
         return self.type == "financing_fee"
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "type": self.type != nil ? JSON.null : self.type!,
+    open func toJSONString() -> String {
+        let type : Any = self.type != nil ? JSONHandler.null : self.type!
+        let obj:[String:Any] = [
+            "type": type,
             "amountRefunded" : self.amountRefunded,
             "amount" : self.amount,
             "type" : self.type
             ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
 }

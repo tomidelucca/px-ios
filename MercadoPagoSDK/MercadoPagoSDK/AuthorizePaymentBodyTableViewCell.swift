@@ -11,6 +11,7 @@ import UIKit
 class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFillmentDelegate {
 
     static let ROW_HEIGHT = CGFloat(150)
+    var authCallback : ((Void) -> Void)?
     
     @IBOutlet weak var completeCardButton: MPButton!
     @IBOutlet weak var cancelButton: MPButton!
@@ -20,20 +21,27 @@ class AuthorizePaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFi
         self.cancelButton.titleLabel?.text = "Elegí otro medio de pago".localized
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
    
-    func fillCell(payment: Payment, paymentMethod : PaymentMethod,callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(_ payment: Payment, paymentMethod : PaymentMethod,callback : ((Void) -> Void)?) -> UITableViewCell {
         self.defaultCallback = callback
-        self.cancelButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
-        self.completeCardButton.setTitle( ("Ya hablé con %1$s y me autorizó".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: paymentMethod.name), forState: .Normal)
-        self.completeCardButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.cancelButton.addTarget(self, action: #selector(invokeDefaultCallback), for: .touchUpInside)
+        self.completeCardButton.setTitle( ("Ya hablé con %1$s y me autorizó".localized as NSString).replacingOccurrences(of: "%1$s", with: paymentMethod.name), for: UIControlState())
+        self.completeCardButton.addTarget(self, action: #selector(AuthorizePaymentBodyTableViewCell.invokeAuthCallback), for: .touchUpInside)
         return self
     }
     
-    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+    func getCellHeight(_ payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
         return 150
     }
+    
+    func invokeAuthCallback(){
+        if self.authCallback != nil {
+            self.authCallback!()
+        }
+    }
+
 
 }

@@ -8,80 +8,99 @@
 
 import Foundation
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class Utils {
-    class func getDateFromString(string: String!) -> NSDate! {
+    class func getDateFromString(_ string: String!) -> Date! {
         if string == nil {
             return nil
         }
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         var dateArr = string.characters.split {$0 == "T"}.map(String.init)
-        return dateFormatter.dateFromString(dateArr[0])
+        return dateFormatter.date(from: dateArr[0])
     }
     
-    class func getStringFromDate(date: NSDate!) -> String! {
+    class func getStringFromDate(_ date: Date!) -> String! {
         
         if date == nil {
             return nil
         }
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
 
-    class func getAttributedAmount(formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
 
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
+
 
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
         let space = NSAttributedString(string: " ", attributes: smallAttributes)
-        attributedSymbol.appendAttributedString(attributedAmount)
-        attributedSymbol.appendAttributedString(space)
-        attributedSymbol.appendAttributedString(attributedCents)
+        attributedSymbol.append(attributedAmount)
+        attributedSymbol.append(space)
+        attributedSymbol.append(attributedCents)
         return attributedSymbol
     }
     
     
-    class func getAttributedAmount(amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.whiteColor(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getAttributedAmount(_ amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(amount), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize)!,NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10)!,NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset]
+
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
+
         
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
         let space = NSAttributedString(string: " ", attributes: smallAttributes)
-        attributedSymbol.appendAttributedString(attributedAmount)
-        attributedSymbol.appendAttributedString(space)
-        attributedSymbol.appendAttributedString(attributedCents)
+        attributedSymbol.append(attributedAmount)
+        attributedSymbol.append(space)
+        attributedSymbol.append(attributedCents)
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString) -> NSAttributedString {
         let mpTurquesaColor = UIColor(netHex: 0x3F9FDA)
-        let mpLightGrayColor = UIColor(netHex: 0x999999)
         
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!,NSForegroundColorAttributeName:mpTurquesaColor]
-        
-        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16)!,NSForegroundColorAttributeName:mpLightGrayColor]
-        
-
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22),NSForegroundColorAttributeName:mpTurquesaColor]
         
         let stringToWrite = NSMutableAttributedString()
         
-        stringToWrite.appendAttributedString(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
+        stringToWrite.append(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
         
-        stringToWrite.appendAttributedString(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpTurquesaColor))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:mpTurquesaColor))
         
-        stringToWrite.appendAttributedString(additionalString)
+        stringToWrite.append(additionalString)
         
         return stringToWrite
     }
@@ -91,18 +110,18 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(formattedString : String, decimalSeparator : String) -> String {
-        let range = formattedString.rangeOfString(decimalSeparator)
+    class func getCentsFormatted(_ formattedString : String, decimalSeparator : String) -> String {
+        let range = formattedString.range(of: decimalSeparator)
         var cents = ""
         if range != nil {
-            let centsIndex = range!.startIndex.advancedBy(1)
-            cents = formattedString.substringFromIndex(centsIndex)
+            let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)
+            cents = formattedString.substring(from: centsIndex)
         }
 
         if cents.isEmpty || cents.characters.count < 2 {
             var missingZeros = 2 - cents.characters.count
             while missingZeros > 0 {
-                cents.appendContentsOf("0")
+                cents.append("0")
                 missingZeros = missingZeros - 1
             }
         }
@@ -114,7 +133,7 @@ class Utils {
      Ex: formattedString = "10200.90", decimalSeparator = ".", thousandSeparator: ","
      returns 10,200.90
      **/
-    class func getAmountFormatted(formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
+    class func getAmountFormatted(_ formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
  
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
@@ -129,15 +148,15 @@ class Utils {
         var initialPosition = amount.startIndex
         
         while cantSeparators > 0 && separatorPosition <= length {
-            let range = initialPosition..<amount.startIndex.advancedBy(separatorPosition)
-            finalAmountStr.appendContentsOf(amount.substringWithRange(range))
-            finalAmountStr.appendContentsOf(String(thousandSeparator))
+            let range = initialPosition..<amount.characters.index(amount.startIndex, offsetBy: separatorPosition)
+            finalAmountStr.append(amount.substring(with: range))
+            finalAmountStr.append(String(thousandSeparator))
             cantSeparators = cantSeparators - 1
-            initialPosition = amount.startIndex.advancedBy(separatorPosition)
+            initialPosition = amount.characters.index(amount.startIndex, offsetBy: separatorPosition)
             separatorPosition = separatorPosition + 3
         }
 
-        return finalAmountStr.substringToIndex(finalAmountStr.startIndex.advancedBy(finalAmountStr.characters.count-1))
+        return finalAmountStr.substring(to: finalAmountStr.characters.index(finalAmountStr.startIndex, offsetBy: finalAmountStr.characters.count-1))
     }
     
     /**
@@ -145,15 +164,15 @@ class Utils {
      Ex: formattedString = "1000.00" with decimalSeparator = "."
      returns 1000
     **/
-    class func getAmountDigits(formattedString : String, decimalSeparator : String) -> String {
-        let range = formattedString.rangeOfString(decimalSeparator)
+    class func getAmountDigits(_ formattedString : String, decimalSeparator : String) -> String {
+        let range = formattedString.range(of: decimalSeparator)
         if range != nil {
-            return formattedString.substringToIndex(range!.startIndex)
+            return formattedString.substring(to: range!.lowerBound)
         }
         return formattedString
     }
 
-    static public func findPaymentMethodSearchItemInGroups(paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
         for item in paymentMethodSearch.groups {
             if let result = self.findPaymentMethodSearchItemById(item, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
                 return result
@@ -162,7 +181,7 @@ class Utils {
         return nil
     }
     
-    static private func findPaymentMethodSearchItemById(paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
+    static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchItem : PaymentMethodSearchItem, paymentMethodId : String, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem? {
         
         if paymentMethodSearchItem.idPaymentMethodSearchItem == paymentMethodId {
             return paymentMethodSearchItem
@@ -182,15 +201,15 @@ class Utils {
         return nil
     }
     
-    public static func findPaymentMethod(paymentMethods : [PaymentMethod], var paymentMethodId : String) -> PaymentMethod {
+    internal static func findPaymentMethod(_ paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
         let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
-            let paymentMethodIdRange = paymentMethodId.rangeOfString(paymentMethod._id)
+            let paymentMethodIdRange = paymentMethodId.range(of: paymentMethod._id)
             if paymentMethodIdRange != nil {
-                paymentTypeSelected = paymentMethodId.substringFromIndex(paymentMethodIdRange!.endIndex)
+                paymentTypeSelected = paymentMethodId.substring(from: paymentMethodIdRange!.upperBound)
                 if paymentTypeSelected.characters.count > 0 {
-                    paymentTypeSelected.removeAtIndex(paymentTypeSelected.startIndex)
+                    paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                 }
                 return true
             }
@@ -205,7 +224,7 @@ class Utils {
         return paymentMethod[0]
     }
     
-    public static func getAccreditationTitle(paymentMethod : PaymentMethod) -> String{
+    internal static func getAccreditationTitle(_ paymentMethod : PaymentMethod) -> String{
         if paymentMethod.accreditationTime == nil || !(paymentMethod.accreditationTime > 0) {
             return ""
         }
@@ -218,6 +237,30 @@ class Utils {
             title = title + String(hours) + " horas".localized
         }
         return title
+    }
+    
+    internal static func getExpirationYearFromLabelText(_ mmyy : String) -> Int {
+        let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
+        let validInt = Int(stringMMYY)
+        if(validInt == nil){
+            return 0
+        }
+        let floatMMYY = Float( validInt! / 100 )
+        let mm : Int = Int(floor(floatMMYY))
+        let yy = Int(stringMMYY)! - (mm*100)
+        return yy
+        
+    }
+    
+    internal static func getExpirationMonthFromLabelText(_ mmyy : String) -> Int {
+        let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
+        let validInt = Int(stringMMYY)
+        if(validInt == nil){
+            return 0
+        }
+        let floatMMYY = Float( validInt! / 100 )
+        let mm : Int = Int(floor(floatMMYY))
+        return mm
     }
 
 }

@@ -8,13 +8,19 @@
 
 import UIKit
 
-public class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
-	@IBOutlet weak private var tableView : UITableView!
+    /*
+	private lazy var __once: () = {
+			let sizingCell = PromosTyCViewController.tableView.dequeueReusableCell(withIdentifier: "PromoTyCDetailTableViewCell") as? PromoTyCDetailTableViewCell
+		}()
+ */
+    
+	@IBOutlet weak fileprivate var tableView : UITableView!
 	
 	var promos : [Promo]!
 	
-	var bundle : NSBundle? = MercadoPago.getBundle()
+	var bundle : Bundle? = MercadoPago.getBundle()
 	
 	public init(promos: [Promo]) {
 		super.init(nibName: "PromosTyCViewController", bundle: self.bundle)
@@ -25,7 +31,7 @@ public class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDa
 		super.init(nibName: "PromosTyCViewController", bundle: self.bundle)
 	}
 	
-	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 
@@ -33,13 +39,13 @@ public class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDa
 	    fatalError("init(coder:) has not been implemented")
 	}
 	
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 		self.title = "Promociones".localized
 		
-		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+		self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
 		
-		self.tableView.registerNib(UINib(nibName: "PromoTyCDetailTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTyCDetailTableViewCell")
+		self.tableView.register(UINib(nibName: "PromoTyCDetailTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTyCDetailTableViewCell")
 		
 		self.tableView.estimatedRowHeight = 44.0
 		self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -50,50 +56,48 @@ public class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDa
 
     }
 	
-	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return self.promos.count
 	}
 	
-	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		return self.tyCCellAtIndexPath(indexPath)
 	}
 	
-	public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+	open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return self.heightForTyCCellAtIndexPath(indexPath)
 	}
 	
-	func heightForTyCCellAtIndexPath(indexPath: NSIndexPath) -> CGFloat {
+	func heightForTyCCellAtIndexPath(_ indexPath: IndexPath) -> CGFloat {
 		
-		var sizingCell : PromoTyCDetailTableViewCell? = nil
-		var onceToken : dispatch_once_t = 0
-		dispatch_once(&onceToken) {
-			sizingCell = self.tableView.dequeueReusableCellWithIdentifier("PromoTyCDetailTableViewCell") as? PromoTyCDetailTableViewCell
-		}
+		let sizingCell : PromoTyCDetailTableViewCell? = nil
+		var onceToken : Int = 0
+	//	_ = self.__once
 		
 		self.configureTyCCell(sizingCell!, atIndexPath: indexPath)
 		return self.calculateHeightForConfiguredSizingCell(sizingCell!)
 		
 	}
 	
-	func calculateHeightForConfiguredSizingCell(sizingCell: UITableViewCell) -> CGFloat {
+	func calculateHeightForConfiguredSizingCell(_ sizingCell: UITableViewCell) -> CGFloat {
 		sizingCell.setNeedsLayout()
 		sizingCell.layoutIfNeeded()
-		let size = sizingCell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+		let size = sizingCell.contentView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 		return size.height + 1
 	}
 	
-	func tyCCellAtIndexPath(indexPath: NSIndexPath) -> PromoTyCDetailTableViewCell {
-		let cell = self.tableView.dequeueReusableCellWithIdentifier("PromoTyCDetailTableViewCell", forIndexPath: indexPath) as! PromoTyCDetailTableViewCell
+	func tyCCellAtIndexPath(_ indexPath: IndexPath) -> PromoTyCDetailTableViewCell {
+		let cell = self.tableView.dequeueReusableCell(withIdentifier: "PromoTyCDetailTableViewCell", for: indexPath) as! PromoTyCDetailTableViewCell
 		self.configureTyCCell(cell, atIndexPath: indexPath)
 		return cell
 	}
 	
-	func configureTyCCell(cell: PromoTyCDetailTableViewCell, atIndexPath: NSIndexPath) {
-		let promo = self.promos[atIndexPath.row]
+	func configureTyCCell(_ cell: PromoTyCDetailTableViewCell, atIndexPath: IndexPath) {
+		let promo = self.promos[(atIndexPath as NSIndexPath).row]
 		self.setTyCForCell(cell, promo: promo)
 	}
 	
-	func setTyCForCell(cell: PromoTyCDetailTableViewCell, promo: Promo) {
+	func setTyCForCell(_ cell: PromoTyCDetailTableViewCell, promo: Promo) {
 		cell.setLabelWithIssuerName(promo.issuer!.name!, legals: promo.legals)
 	}
 

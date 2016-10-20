@@ -16,21 +16,21 @@ class RejectedPaymentBodyTableViewCell: CallbackCancelTableViewCell, CongratsFil
         super.awakeFromNib()
         self.payAgainButton.layer.cornerRadius = 5
         self.payAgainButton.layer.borderWidth = 1
-        self.payAgainButton.layer.borderColor = UIColor.primaryColor().CGColor
-        self.payAgainButton.addTarget(self, action: "invokeDefaultCallback", forControlEvents: .TouchUpInside)
+        self.payAgainButton.layer.borderColor = UIColor.primaryColor().cgColor
+        self.payAgainButton.addTarget(self, action: #selector(invokeDefaultCallback), for: .touchUpInside)
         
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(payment: Payment, paymentMethod : PaymentMethod, callback : (Void -> Void)?) -> UITableViewCell {
+    func fillCell(_ payment: Payment, paymentMethod : PaymentMethod, callback : ((Void) -> Void)?) -> UITableViewCell {
         self.defaultCallback = callback
         return self
     }
 
-    func getCellHeight(payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
+    func getCellHeight(_ payment: Payment, paymentMethod: PaymentMethod) -> CGFloat {
         return 120
     }
     

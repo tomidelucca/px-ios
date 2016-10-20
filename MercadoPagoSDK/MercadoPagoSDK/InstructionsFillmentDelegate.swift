@@ -10,6 +10,6 @@ import UIKit
 
 public protocol InstructionsFillmentDelegate {
 
-    func fillCell(instruction : Instruction) -> UITableViewCell
-    func getCellHeight(instruction : Instruction, forFontSize : CGFloat) -> CGFloat
+    func fillCell(_ instruction : Instruction) -> UITableViewCell
+    func getCellHeight(_ instruction : Instruction, forFontSize : CGFloat) -> CGFloat
 }

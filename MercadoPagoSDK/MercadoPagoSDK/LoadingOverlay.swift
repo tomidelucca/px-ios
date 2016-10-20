@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class LoadingOverlay {
+open class LoadingOverlay {
     
     var container = UIView()
     var screenContainer = UIView()
@@ -25,37 +25,37 @@ public class LoadingOverlay {
         
     }
     
-    public func getLoadingOverlay(view : UIView, backgroundColor : UIColor, indicatorColor : UIColor) -> UIView {
+    open func getLoadingOverlay(_ view : UIView, backgroundColor : UIColor, indicatorColor : UIColor) -> UIView {
         
         
         
-        self.activityIndicator.frame = CGRectMake(30,30, 20, 20)
-        self.activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        self.activityIndicator.frame = CGRect(x: 30,y: 30, width: 20, height: 20)
+        self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
         self.activityIndicator.color = indicatorColor
-        self.activityIndicator.hidden = false
+        self.activityIndicator.isHidden = false
         
-        self.container.frame = CGRectMake(0, 0, 80, 80)
-        self.container.backgroundColor = UIColor.clearColor()
+        self.container.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        self.container.backgroundColor = UIColor.clear
         self.container.alpha = 1
         self.container.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2 )
         self.container.layer.cornerRadius = 10.0
         self.container.addSubview(self.activityIndicator)
         
         self.screenContainer.frame = CGRect(x : view.bounds.minX, y : view.bounds.minY, width : view.bounds.width, height : view.bounds.height)
-        self.screenContainer.backgroundColor = backgroundColor.colorWithAlphaComponent(0.8)
+        self.screenContainer.backgroundColor = backgroundColor.withAlphaComponent(0.8)
         self.screenContainer.addSubview(self.container)
         
         self.activityIndicator.startAnimating()
         return self.screenContainer
     }
     
-    public func showOverlay(view: UIView, backgroundColor : UIColor, indicatorColor : UIColor) {
+    open func showOverlay(_ view: UIView, backgroundColor : UIColor, indicatorColor : UIColor) {
         let overlay = self.getLoadingOverlay(view, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
         view.addSubview(overlay)
-        view.bringSubviewToFront(overlay)
+        view.bringSubview(toFront: overlay)
     }
     
-    public func hideOverlayView() {
+    open func hideOverlayView() {
         activityIndicator.stopAnimating()
         screenContainer.removeFromSuperview()
     }

@@ -9,38 +9,42 @@
 import Foundation
 import UIKit
 
-public class Card : NSObject {
+open class Card : NSObject, CardInformation {
     
-    public var cardHolder : Cardholder?
-    public var customerId : String?
-    public var dateCreated : NSDate?
-    public var dateLastUpdated : NSDate?
-    public var expirationMonth : Int = 0
-    public var expirationYear : Int = 0
-    public var firstSixDigits : String?
-    public var idCard : NSNumber = 0
-    public var lastFourDigits : String?
-    public var paymentMethod : PaymentMethod?
-    public var issuer : Issuer?
-    public var securityCode : SecurityCode?
+    open var cardHolder : Cardholder?
+    open var customerId : String?
+    open var dateCreated : Date?
+    open var dateLastUpdated : Date?
+    open var expirationMonth : Int = 0
+    open var expirationYear : Int = 0
+    open var firstSixDigits : String?
+    open var idCard : NSNumber = 0
+    open var lastFourDigits : String?
+    open var paymentMethod : PaymentMethod?
+    open var issuer : Issuer?
+    open var securityCode : SecurityCode?
     
 
-   public class func fromJSON(json : NSDictionary) -> Card {
+   open class func fromJSON(_ json : NSDictionary) -> Card {
         let card : Card = Card()
-        if json["customer_id"] != nil && !(json["customer_id"]! is NSNull) {
-            card.customerId = JSON(json["customer_id"]!).asString
+        if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
+            card.customerId = customerId
         }
-		if json["expiration_month"] != nil && !(json["expiration_month"]! is NSNull) {
-			card.expirationMonth = JSON(json["expiration_month"]!).asInt!
-		}
-		if json["expiration_year"] != nil && !(json["expiration_year"]! is NSNull) {
-			card.expirationYear = JSON(json["expiration_year"]!).asInt!
-		}
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			card.idCard = NSNumber(longLong: (json["id"]! as? NSString)!.longLongValue)
-		}
-        card.lastFourDigits = JSON(json["last_four_digits"]!).asString
-        card.firstSixDigits = JSON(json["first_six_digits"]!).asString
+        if let expirationMonth = JSONHandler.attemptParseToInt(json["expiration_month"]) {
+            card.expirationMonth = expirationMonth
+        }
+        if let expirationYear = JSONHandler.attemptParseToInt(json["expiration_year"]) {
+            card.expirationYear = expirationYear
+        }
+        if let idCard = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+            card.idCard = idCard
+        }
+        if let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"]) {
+            card.lastFourDigits = lastFourDigits
+        }
+        if let firstSixDigits = JSONHandler.attemptParseToString(json["first_six_digits"]) {
+            card.firstSixDigits = firstSixDigits
+        }
         if let issuerDic = json["issuer"] as? NSDictionary {
             card.issuer = Issuer.fromJSON(issuerDic)
         }
@@ -53,33 +57,44 @@ public class Card : NSObject {
         if let chDic = json["cardholder"] as? NSDictionary {
             card.cardHolder = Cardholder.fromJSON(chDic)
         }
-        card.dateLastUpdated = Utils.getDateFromString(json["date_last_updated"] as? String)
-        card.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
+        if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]) {
+            card.dateLastUpdated = Utils.getDateFromString(dateLastUpdated)
+        }
+        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]) {
+            card.dateCreated = Utils.getDateFromString(dateCreated)
+        }
         return card
     }
-    
-    public func toJSONString() -> String {
-        return self.toJSON().toString()
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> JSON {
-        let obj:[String:AnyObject] = [
-            "cardHolder" : self.cardHolder == nil ? JSON.null : self.cardHolder!.toJSON().mutableCopyOfTheObject(),
-            "customer_id": self.customerId == nil ? JSON.null : self.customerId!,
-            "dateCreated" : self.dateCreated == nil ? JSON.null : String(self.dateCreated!),
-            "dateLastUpdated" : self.dateLastUpdated == nil ? JSON.null : String(self.dateLastUpdated!),
+    open func toJSON() -> [String:Any]  {
+        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
+        let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
+        let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
+        let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
+        let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
+        let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
+        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
+        let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
+        let obj:[String:Any] = [
+            "cardHolder" : cardHolder,
+            "customer_id": customer_id,
+            "dateCreated" : dateCreated,
+            "dateLastUpdated" : dateLastUpdated,
             "expirationMonth" : self.expirationMonth,
             "expirationYear" : self.expirationYear,
-            "firstSixDigits" : self.firstSixDigits == nil ? JSON.null : self.firstSixDigits!,
+            "firstSixDigits" : firstSixDigits,
             "idCard" : self.idCard,
-            "lastFourDigits" : self.lastFourDigits == nil ? JSON.null : self.lastFourDigits!,
-            "paymentMethod" : self.paymentMethod == nil ? JSON.null : self.paymentMethod!.toJSON().mutableCopyOfTheObject(),
-            "issuer" : self.issuer == nil ? JSON.null : self.issuer!.toJSONString(),
-            "securityCode" : self.securityCode == nil ? JSON.null : self.securityCode!.toJSON().mutableCopyOfTheObject()       ]
-        return JSON(obj)
+            "lastFourDigits" : lastFourDigits,
+            "paymentMethod" : paymentMethod,
+            "issuer" : issuer,
+            "securityCode" : securityCode  ]
+        return obj
     }
     
-    public func isSecurityCodeRequired() -> Bool {
+    open func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {
                 return true
@@ -89,6 +104,39 @@ public class Card : NSObject {
         } else {
             return false
         }
+    }
+
+    
+    open func getCardDescription() -> String {
+        return "terminada en " + lastFourDigits! //TODO: Make it localizable
+    }
+    
+    open func getPaymentMethod() -> PaymentMethod {
+        return self.paymentMethod!
+    }
+    
+    open func getCardId() -> String {
+        return self.idCard.stringValue
+    }
+    
+    open func getPaymentMethodId() -> String {
+        return (self.paymentMethod?._id)!
+    }
+    
+    open func getCardSecurityCode() -> SecurityCode {
+        return self.securityCode!
+    }
+    
+    open func getCardBin() -> String? {
+        return self.firstSixDigits
+    }
+
+    open func getCardLastForDigits() -> String? {
+        return self.lastFourDigits
+    }
+    
+    open func setupPaymentMethodSettings(_ settings: [Setting]) {
+        self.paymentMethod?.settings = settings
     }
 }
 

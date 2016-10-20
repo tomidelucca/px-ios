@@ -7,20 +7,40 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class PaymentMethodsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class PaymentMethodsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var publicKey : String?
     
-    @IBOutlet weak private var tableView : UITableView!
+    @IBOutlet weak fileprivate var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [PaymentMethod]!
     var paymentPreference: PaymentPreference?
-    var bundle : NSBundle? = MercadoPago.getBundle()
+    var bundle : Bundle? = MercadoPago.getBundle()
     
-    var callback : ((paymentMethod : PaymentMethod) -> Void)?
+    var callback : ((_ paymentMethod : PaymentMethod) -> Void)?
     
-    init(paymentPreference: PaymentPreference?, callback:(paymentMethod: PaymentMethod) -> Void) {
+    init(paymentPreference: PaymentPreference?, callback:@escaping (_ paymentMethod: PaymentMethod) -> Void) {
         super.init(nibName: "PaymentMethodsViewController", bundle: bundle)
         self.publicKey = MercadoPagoContext.publicKey()
         self.paymentPreference = paymentPreference
@@ -35,22 +55,22 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
         super.init(nibName: nil, bundle: nil)
     }
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Medio de pago".localized
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         
-        self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
+        self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
         self.view.addSubview(self.loadingView)
         
         MPServicesBuilder.getPaymentMethods({(paymentMethods: [PaymentMethod]?) -> Void in
@@ -77,32 +97,32 @@ public class PaymentMethodsViewController : MercadoPagoUIViewController, UITable
         })
         
         let paymentMethodNib = UINib(nibName: "PaymentMethodTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
+        self.tableView.register(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items == nil ? 0 : items.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("paymentMethodCell") as! PaymentMethodTableViewCell
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let pmcell : PaymentMethodTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "paymentMethodCell") as! PaymentMethodTableViewCell
         
-        let paymentMethod : PaymentMethod = items[indexPath.row]
+        let paymentMethod : PaymentMethod = items[(indexPath as NSIndexPath).row]
         pmcell.setLabel(paymentMethod.name)
         pmcell.setImageWithName(paymentMethod._id)
         
         return pmcell
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.callback!(paymentMethod: self.items![indexPath.row])
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.callback!(self.items![(indexPath as NSIndexPath).row])
     }
     
     

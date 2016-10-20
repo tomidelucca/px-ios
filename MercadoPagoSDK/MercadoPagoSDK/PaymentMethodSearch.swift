@@ -7,17 +7,19 @@
 //
 import Foundation
 
-public class PaymentMethodSearch: Equatable {
+open class PaymentMethodSearch: Equatable {
     
     var groups : [PaymentMethodSearchItem]!
     var paymentMethods : [PaymentMethod]!
-
-    public class func fromJSON(json : NSDictionary) -> PaymentMethodSearch {
+    var customerPaymentMethods : [CardInformation]?
+    
+    open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
         
         var groups = [PaymentMethodSearchItem]()
         if let groupsJson = json["groups"] as? NSArray {
             for i in 0..<groupsJson.count {
+                print(groupsJson)
                 if let groupDic = groupsJson[i] as? NSDictionary {
                     groups.append(PaymentMethodSearchItem.fromJSON(groupDic))
                 }
@@ -37,6 +39,18 @@ public class PaymentMethodSearch: Equatable {
             pmSearch.paymentMethods = paymentMethods
         }
         
+        var customerPaymentMethods = [CustomerPaymentMethod]()
+        if let customerPaymentMethodsJson = json["custom_options"] as? NSArray {
+            for i in 0..<customerPaymentMethodsJson.count {
+                if let customerPaymentMethodDic = customerPaymentMethodsJson[i] as? NSDictionary {
+                    let currentCustomerPaymentMethod = CustomerPaymentMethod.fromJSON(customerPaymentMethodDic)
+                    customerPaymentMethods.append(currentCustomerPaymentMethod)
+                }
+                
+            }
+            pmSearch.customerPaymentMethods = customerPaymentMethods
+        }
+
         return pmSearch
     }
     

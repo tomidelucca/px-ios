@@ -8,18 +8,18 @@
 
 import Foundation
 
-public class Device : NSObject {
-    public var fingerprint : Fingerprint!
+open class Device : NSObject {
+    open var fingerprint : Fingerprint!
     
     public override init() {
         super.init()
         self.fingerprint = Fingerprint()
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+    open func toJSONString() -> String {
+        let obj:[String:Any] = [
             "fingerprint": self.fingerprint.toJSONString()
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }

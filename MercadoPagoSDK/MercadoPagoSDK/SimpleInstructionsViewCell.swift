@@ -18,13 +18,13 @@ class SimpleInstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate 
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func fillCell(instruction : Instruction) -> UITableViewCell {
+    func fillCell(_ instruction : Instruction) -> UITableViewCell {
         
         if instruction.info != nil && instruction.info.count > 0 {
             self.infoTitle.text = instruction.info[0]
@@ -37,15 +37,15 @@ class SimpleInstructionsViewCell: UITableViewCell, InstructionsFillmentDelegate 
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
         
         var constraintSize = CGSize()
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let screenSize: CGRect = UIScreen.main.bounds
         constraintSize.width = screenSize.width - 30
         
-        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22)!]
+        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)]
         
-        let frame = (instruction.references[0].getFullReferenceValue() as NSString).boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attributes, context: nil)
+        let frame = (instruction.references[0].getFullReferenceValue() as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         
         let stringSize = frame.size
         return 85 + stringSize.height

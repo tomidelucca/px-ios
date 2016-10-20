@@ -3,7 +3,7 @@
 
 if [ $# -eq 0 ]
   then
-    echo "Need tag version! Ex: 0.9.2"
+    echo "Need tag version! Ex: 2.0.5"
     exit 0
 fi
 
@@ -43,7 +43,7 @@ echo "=========================================="
 echo "2) Validate .podspec --allow-warnings"
 echo "=========================================="
 
-pod lib lint --allow-warnings
+pod lib lint --allow-warnings --verbose
 STATUS=$?
 if [ $STATUS -ne 0 ]
 	then
@@ -70,7 +70,7 @@ fi
 echo "=========================================="
 echo "4) Push podspec into trunk/Specs"
 echo "=========================================="
-pod trunk push $PODSPEC_FILE --allow-warnings
+pod trunk push $PODSPEC_FILE --allow-warnings --verbose
 POD_TRUNK_STATUS=$?
 
 if [ $POD_TRUNK_STATUS -ne 0 ]

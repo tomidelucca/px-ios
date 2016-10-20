@@ -32,7 +32,7 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         
         let componentCell = UINib(nibName: "ComponentTableViewCell", bundle: nil)
         
-        self.tableExamples.registerNib(componentCell, forCellReuseIdentifier: "componentCell")
+        self.tableExamples.register(componentCell, forCellReuseIdentifier: "componentCell")
         
         self.tableExamples.delegate = self
         self.tableExamples.dataSource = self
@@ -42,34 +42,34 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         super.didReceiveMemoryWarning()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.examples.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableExamples.dequeueReusableCellWithIdentifier("componentCell") as! ComponentTableViewCell
-        cell.initializeWith(self.examples[indexPath.row]["image"]!, title: self.examples[indexPath.row]["title"]!)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableExamples.dequeueReusableCell(withIdentifier: "componentCell") as! ComponentTableViewCell
+        cell.initializeWith(self.examples[(indexPath as NSIndexPath).row]["image"]!, title: self.examples[(indexPath as NSIndexPath).row]["title"]!)
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableExamples.deselectRowAtIndexPath(indexPath, animated: true)
-        switch indexPath.row {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableExamples.deselectRow(at: indexPath, animated: true)
+        switch (indexPath as NSIndexPath).row {
         case 0:
             //Checkout Example
-            let choFlow = MPFlowBuilder.startCheckoutViewController( ExamplesUtils.preferenceSelectedID, callback: { (payment: Payment) in
+            let choFlow = MPFlowBuilder.startCheckoutViewController( "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1", callback: { (payment: Payment) in
             
             })
             
-            self.presentViewController(choFlow, animated: true, completion: {})
+            self.present(choFlow, animated: true, completion: {})
         case 1:
             //UI Components
             let stepsExamples = StepsExamplesViewController()

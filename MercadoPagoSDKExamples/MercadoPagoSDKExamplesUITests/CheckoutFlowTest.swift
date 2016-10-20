@@ -8,7 +8,7 @@
 import XCTest
 
 
-public class CheckoutFlowTest: MercadoPagoUITest {
+open class CheckoutFlowTest: MercadoPagoUITest {
     
     
     func testfullCHO(){
@@ -19,16 +19,16 @@ public class CheckoutFlowTest: MercadoPagoUITest {
     
     func testCheckOutWithCard(){
         let tablesQuery = CheckoutFlowTest.application.tables
-        tablesQuery.cells.elementBoundByIndex(0).tap()
-        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
         CardFormActions.testCard(visaGaliciaII(), user: approvedUser())
-        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
         tablesQuery.buttons["Pagar"].tap()
         let buton = CheckoutFlowTest.application.buttons["Seguir comprando"]
         let exists = NSPredicate(format: "exists == 1")
         
-        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
-        waitForExpectationsWithTimeout(30, handler: nil)
+        expectation(for: exists, evaluatedWith: buton, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
         
         buton.tap()
         
@@ -37,15 +37,15 @@ public class CheckoutFlowTest: MercadoPagoUITest {
     func testCheckOutWithEfectivo(){
         
         let tablesQuery = CheckoutFlowTest.application.tables
-        tablesQuery.cells.elementBoundByIndex(0).tap()
-        tablesQuery.cells.elementBoundByIndex(1).tap()
-        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
+        tablesQuery.cells.element(boundBy: 1).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
         tablesQuery.buttons["Pagar"].tap()
         let buton = CheckoutFlowTest.application.buttons["Seguir comprando"]
         let exists = NSPredicate(format: "exists == 1")
         
-        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
-        waitForExpectationsWithTimeout(30, handler: nil)
+        expectation(for: exists, evaluatedWith: buton, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
         
         buton.tap()
         
@@ -54,15 +54,15 @@ public class CheckoutFlowTest: MercadoPagoUITest {
     func testCheckOutWithRedLink(){
         
         let tablesQuery = CheckoutFlowTest.application.tables
-        tablesQuery.cells.elementBoundByIndex(0).tap()
-        tablesQuery.cells.elementBoundByIndex(2).tap()
-        tablesQuery.cells.elementBoundByIndex(0).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
+        tablesQuery.cells.element(boundBy: 2).tap()
+        tablesQuery.cells.element(boundBy: 0).tap()
         tablesQuery.buttons["Pagar"].tap()
         let buton = CheckoutFlowTest.application.buttons["Seguir comprando"]
         let exists = NSPredicate(format: "exists == 1")
         
-        expectationForPredicate(exists, evaluatedWithObject: buton, handler: nil)
-        waitForExpectationsWithTimeout(30, handler: nil)
+        expectation(for: exists, evaluatedWith: buton, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
         
         buton.tap()
         

@@ -9,24 +9,24 @@
 import Foundation
 import UIKit
 
-public class Customer : NSObject {
-    public var address : Address?
-    public var cards : [Card]?
-    public var defaultCard : NSNumber?
-    public var _description : String?
-    public var dateCreated : NSDate?
-    public var dateLastUpdated : NSDate?
-    public var email : String?
-    public var firstName : String?
-    public var _id : String?
-    public var identification : Identification?
-    public var lastName : String?
-    public var liveMode : Bool?
-    public var metadata : NSDictionary?
-    public var phone : Phone?
-    public var registrationDate : NSDate?
+open class Customer : NSObject {
+    open var address : Address?
+    open var cards : [Card]?
+    open var defaultCard : NSNumber?
+    open var _description : String?
+    open var dateCreated : Date?
+    open var dateLastUpdated : Date?
+    open var email : String?
+    open var firstName : String?
+    open var _id : String?
+    open var identification : Identification?
+    open var lastName : String?
+    open var liveMode : Bool?
+    open var metadata : NSDictionary?
+    open var phone : Phone?
+    open var registrationDate : Date?
     
-    public class func fromJSON(json : NSDictionary) -> Customer {
+    open class func fromJSON(_ json : NSDictionary) -> Customer {
         let customer : Customer = Customer()
         customer._id = json["id"] as! String!
         customer.liveMode = json["live_mode"] as? Bool!
@@ -34,9 +34,7 @@ public class Customer : NSObject {
         customer.firstName = json["first_name"] as? String!
         customer.lastName = json["last_name"] as? String!
         customer._description = json["description"] as? String!
-		if json["default_card"] != nil {
-			customer.defaultCard = NSNumber(longLong: (json["default_card"] as? NSString)!.longLongValue)
-		}
+        
         if let identificationDic = json["identification"] as? NSDictionary {
             customer.identification = Identification.fromJSON(identificationDic)
         }
@@ -62,17 +60,25 @@ public class Customer : NSObject {
         return customer
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "defaultCard": self.defaultCard != nil ? JSON.null : self.defaultCard!,
-            "_description" : self._description == nil ? JSON.null : self._description!,
-            "dateCreated" : self.dateCreated == nil ? JSON.null : self.dateCreated!,
-            "email" : self.email == nil ? JSON.null : self.email!,
-            "firstName" : self.firstName == nil ? JSON.null : self.firstName!,
-            "lastName" : self.lastName == nil ? JSON.null : self.lastName!,
-            "_id" : self._id == nil ? JSON.null : self._id!
+    open func toJSONString() -> String {
+        let defaultCard : Any =  self.defaultCard != nil ? JSONHandler.null : self.defaultCard!
+        let _description : Any =   self._description == nil ? JSONHandler.null : self._description!
+        let dateCreated : Any =  self.dateCreated == nil ? JSONHandler.null : self.dateCreated!
+        let email : Any =  self.email == nil ? JSONHandler.null : self.email!
+        let firstName : Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
+        let lastName : Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
+        let _id : Any =   self._id == nil ? JSONHandler.null : self._id!
+        
+        let obj:[String:Any] = [
+            "defaultCard": defaultCard,
+            "_description" : _description,
+            "dateCreated" : dateCreated,
+            "email" : email,
+            "firstName" : firstName,
+            "lastName" : lastName,
+            "_id" : _id
             ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }
 

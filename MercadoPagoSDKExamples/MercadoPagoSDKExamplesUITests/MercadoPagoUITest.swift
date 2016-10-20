@@ -8,7 +8,7 @@
 
 import XCTest
 
-public class MercadoPagoUITest: XCTestCase {
+open class MercadoPagoUITest: XCTestCase {
     
     
     var arguments : [String] = ["UITestingEnabled"]
@@ -20,7 +20,7 @@ public class MercadoPagoUITest: XCTestCase {
     //DEMO
     var cardsForDemo : [TestCard]?
     var rejected : [TestCard]?
-    override public func setUp() {
+    override open func setUp() {
         super.setUp()
         cardsTestArray = [visaGaliciaII(),amexI(),amexII(),amexIII(),amexIV(),amexMacro(),visaNaranja(),tarshop(),tarshopWithoutCVV(),amexPatagonia(),visaPatagonia(),visaHipotecario(),naranja(),naranjaMaster(),cencosud(),master(),argencard(),cargencardII(),cabal(),visaGoldSantander(),nativa(),masterPatagonia(),visaPatagoniaII(),masterItau(),diners(),masterII(),visaNacion(),masterNacion(),visaIndustrial(),masterIndustrial(),visaProvincia(),masterProvincia(),masterCencosud(),cordial(),cordialII(),cordialIII(),cmr(),cordobesa(),visaGalicia(),visaNaranjaII(),visaGaliciaGold()]
         
@@ -42,7 +42,7 @@ public class MercadoPagoUITest: XCTestCase {
         return cardsTestArray![randomIndex]
     }
     
-    override public func tearDown() {
+    override open func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }

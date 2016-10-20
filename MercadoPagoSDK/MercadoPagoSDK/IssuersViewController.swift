@@ -8,19 +8,19 @@
 
 import UIKit
 
-public class IssuersViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+open class IssuersViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var publicKey : String?
     var paymentMethod: PaymentMethod?
-    var callback: ((issuer: Issuer) -> Void)?
+    var callback: ((_ issuer: Issuer) -> Void)?
     
-    @IBOutlet weak private var tableView : UITableView!
+    @IBOutlet weak fileprivate var tableView : UITableView!
     var loadingView : UILoadingView!
     var items : [Issuer]!
-     override public var screenName : String { get { return "CARD_ISSUER" } }
-    var bundle: NSBundle? = MercadoPago.getBundle()
+     override open var screenName : String { get { return "CARD_ISSUER" } }
+    var bundle: Bundle? = MercadoPago.getBundle()
 
-    init(paymentMethod: PaymentMethod, callback: (issuer: Issuer) -> Void) {
+    init(paymentMethod: PaymentMethod, callback: @escaping (_ issuer: Issuer) -> Void) {
         super.init(nibName: "IssuersViewController", bundle: bundle)
         self.publicKey = MercadoPagoContext.publicKey()
         self.paymentMethod = paymentMethod
@@ -35,20 +35,20 @@ public class IssuersViewController: MercadoPagoUIViewController, UITableViewData
         super.init(nibName: nil, bundle: nil)
     }
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Banco".localized
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Atrás".localized, style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         
         let mercadoPago : MercadoPago = MercadoPago(publicKey: self.publicKey!)
         mercadoPago.getIssuers(self.paymentMethod!._id, success: { (issuers: [Issuer]?) -> Void in
@@ -57,34 +57,34 @@ public class IssuersViewController: MercadoPagoUIViewController, UITableViewData
                 self.loadingView.removeFromSuperview()
             }, failure: nil)
         
-        self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
+        self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
         self.view.addSubview(self.loadingView)
         
         let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")
+        self.tableView.register(issuerNib, forCellReuseIdentifier: "issuerCell")
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items == nil ? 0 : items.count
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("issuerCell") as! IssuerTableViewCell
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "issuerCell") as! IssuerTableViewCell
         
-        let issuer : Issuer = items[indexPath.row]
+        let issuer : Issuer = items[(indexPath as NSIndexPath).row]
         issuerCell.fillWithIssuer(issuer)
         return issuerCell
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        callback!(issuer: self.items![indexPath.row])
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        callback!(self.items![(indexPath as NSIndexPath).row])
     }
     
     

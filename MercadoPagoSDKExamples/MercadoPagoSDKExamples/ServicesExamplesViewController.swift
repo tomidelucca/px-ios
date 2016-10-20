@@ -31,10 +31,6 @@ class ServicesExamplesViewController: UIViewController, UITableViewDataSource, U
         
         self.paymentMethod = pm
         
-        //Initialize MercadoPagoContext
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY)
-        MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
-        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,23 +47,23 @@ class ServicesExamplesViewController: UIViewController, UITableViewDataSource, U
         super.didReceiveMemoryWarning()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.servicesExamples.count
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = self.servicesExamples[indexPath.row]
+        cell.textLabel?.text = self.servicesExamples[(indexPath as NSIndexPath).row]
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.servicesExamplesTable.deselectRowAtIndexPath(indexPath, animated: true)
-        switch indexPath.row {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.servicesExamplesTable.deselectRow(at: indexPath, animated: true)
+        switch (indexPath as NSIndexPath).row {
         case 0:
             startPaymentMethodsVault()
         case 1:
@@ -82,37 +78,37 @@ class ServicesExamplesViewController: UIViewController, UITableViewDataSource, U
         }
     }
     
-    private func startPaymentMethodsVault(){
+    fileprivate func startPaymentMethodsVault(){
         let vaultVC = MPFlowBuilder.startVaultViewController(ExamplesUtils.AMOUNT) { (paymentMethod, tokenId, issuer, installments) in
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
         self.navigationController!.pushViewController(vaultVC, animated: true)
     }
     
-    private func startSimpleVault(){
+    fileprivate func startSimpleVault(){
         let simpleVault = ExamplesUtils.startSimpleVaultActivity(MercadoPagoContext.publicKey(), merchantBaseUrl:  ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantGetCustomerUri: MercadoPagoContext.customerURI(), merchantAccessToken: MercadoPagoContext.merchantAccessToken(), paymentPreference: nil) { (paymentMethod, token) in
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         }
         
         self.navigationController?.pushViewController(simpleVault, animated: true)
     }
     
-    private func startAdvancedVault(){
+    fileprivate func startAdvancedVault(){
         let advancedVault = ExamplesUtils.startAdvancedVaultActivity(MercadoPagoContext.publicKey(), merchantBaseUrl:  ExamplesUtils.MERCHANT_MOCK_BASE_URL, merchantGetCustomerUri: MercadoPagoContext.customerURI(), merchantAccessToken: MercadoPagoContext.merchantAccessToken(), amount: 1000, paymentPreference: nil, callback: { (paymentMethod, token, issuer, installments) in
-            self.navigationController!.popViewControllerAnimated(true)
+            self.navigationController!.popViewController(animated: true)
         })
     
         self.navigationController?.pushViewController(advancedVault, animated: true)
     }
     
     
-    private func startFinalVault(){
+    fileprivate func startFinalVault(){
         let settings = PaymentPreference()
         settings.excludedPaymentTypeIds = ["credit_card"]
         let finalVault = MPFlowBuilder.startPaymentVaultViewController(1000, paymentPreference: settings, callback: { (paymentMethod, token, issuer, payerCost) in
             
         })
         
-        self.presentViewController(finalVault, animated: true, completion: {})
+        self.present(finalVault, animated: true, completion: {})
     }
 }

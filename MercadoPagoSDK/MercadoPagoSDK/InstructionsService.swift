@@ -7,27 +7,47 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class InstructionsService: MercadoPagoService {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
 
-    public let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/payments/${payment_id}/results"
+
+open class InstructionsService: MercadoPagoService {
+
+    open let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/payments/${payment_id}/results"
     
     public init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    public func getInstructions(paymentId : Int, paymentTypeId: String? = "", success : (instructionsInfo : InstructionsInfo) -> Void, failure: ((error: NSError) -> Void)?){
+    open func getInstructions(_ paymentId : Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?){
         var params =  "public_key=" + MercadoPagoContext.publicKey()
         if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
             params = params + "&payment_type=" + paymentTypeId!
         }
-        self.request(MP_INSTRUCTIONS_URI.stringByReplacingOccurrencesOfString("${payment_id}", withString: String(paymentId)), params: params, body: nil, method: "GET", cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", cache: false, success: { (jsonResult) -> Void in
             let error = jsonResult?["error"] as? String
             if error != nil && error!.characters.count > 0 {
                 let e : NSError = NSError(domain: "com.mercadopago.sdk.getInstructions", code: MercadoPago.ERROR_INSTRUCTIONS, userInfo: [NSLocalizedDescriptionKey : "No se ha podido obtener las intrucciones correspondientes al pago".localized, NSLocalizedFailureReasonErrorKey : jsonResult!["error"] as! String])
-                failure!(error: e)
+                failure!(e)
             } else {
-                success(instructionsInfo : InstructionsInfo.fromJSON(jsonResult as! NSDictionary))
+                success(InstructionsInfo.fromJSON(jsonResult as! NSDictionary))
             }
         }, failure: failure)
     }

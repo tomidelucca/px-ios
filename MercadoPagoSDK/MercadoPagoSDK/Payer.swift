@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class Payer : NSObject {
-    public var email : String!
-    public var _id : NSNumber = 0
-    public var identification : Identification!
+open class Payer : NSObject {
+    open var email : String!
+    open var _id : NSNumber = 0
+    open var identification : Identification!
     
     
     
@@ -21,12 +21,15 @@ public class Payer : NSObject {
         self.identification = identification
     }
     
-    public class func fromJSON(json : NSDictionary) -> Payer {
+    open class func fromJSON(_ json : NSDictionary) -> Payer {
         let payer : Payer = Payer()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            payer._id = NSNumber(longLong: (json["id"] as? NSString)!.longLongValue)
+        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+             payer._id  = _id
         }
-        payer.email = JSON(json["email"]!).asString
+        if let email = JSONHandler.attemptParseToString(json["email"]) {
+            payer.email  = email
+        }
+        
         if let identificationDic = json["identification"] as? NSDictionary {
             payer.identification = Identification.fromJSON(identificationDic)
         }
@@ -34,13 +37,16 @@ public class Payer : NSObject {
     }
     
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "email": self.email == nil ? JSON.null : (self.email!),
-            "_id": self._id == 0 ? JSON.null : self._id,
-            "identification" : self.identification == nil ? JSON.null : self.identification.toJSONString()
+    open func toJSONString() -> String {
+        let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
+        let _id : Any = self._id as! Decimal == 0 ? JSONHandler.null : self._id
+        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
+        let obj:[String:Any] = [
+            "email": email,
+            "_id": _id,
+            "identification" : identification
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 
 }

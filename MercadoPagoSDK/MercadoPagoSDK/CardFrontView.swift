@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable public class CardFrontView : UIView {
+@IBDesignable open class CardFrontView : UIView {
   var view:UIView!;
     
     @IBOutlet weak var cardLogo: UIImageView!
@@ -29,9 +29,9 @@ import UIKit
         loadViewFromNib ()
     }
     func loadViewFromNib() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
  //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view);
@@ -50,7 +50,7 @@ import UIKit
         cardCVV.numberOfLines = 0
     }
     
-    public func finishLoad(){
+    open func finishLoad(){
      
      // var context = NSStringDrawingContext().actualScaleFactor
         
@@ -69,16 +69,16 @@ import UIKit
 }
 
 extension UIView {
-    class func loadFromNibNamed(nibNamed: String, bundle : NSBundle? = nil) -> UIView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? UIView
+            ).instantiate(withOwner: nil, options: nil)[0] as? UIView
     }
 }
 
 extension String {
-    func insert(string:String,ind:Int) -> String {
+    func insert(_ string:String,ind:Int) -> String {
         return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
     }
 }

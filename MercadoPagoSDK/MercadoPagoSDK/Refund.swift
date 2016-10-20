@@ -8,29 +8,35 @@
 
 import Foundation
 
-public class Refund : NSObject {
-    public var amount : Double = 0
-    public var dateCreated : NSDate!
-    public var _id : Int = 0
-    public var metadata : NSObject!
-    public var paymentId : Int = 0
-    public var source : String!
-    public var uniqueSequenceNumber : String!
+open class Refund : NSObject {
+    open var amount : Double = 0
+    open var dateCreated : Date!
+    open var _id : Int = 0
+    open var metadata : NSObject!
+    open var paymentId : Int = 0
+    open var source : String!
+    open var uniqueSequenceNumber : String!
     
-    public class func fromJSON(json : NSDictionary) -> Refund {
+    open class func fromJSON(_ json : NSDictionary) -> Refund {
         let refund : Refund = Refund()
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			refund._id = (json["id"] as? Int)!
-		}
-		if json["amount"] != nil && !(json["amount"]! is NSNull) {
-			refund.amount = (json["amount"] as? Double)!
-		}
-        refund.source = JSON(json["source"]!).asString
-        refund.uniqueSequenceNumber = JSON(json["unique_sequence_number"]!).asString
-		if json["payment_id"] != nil && !(json["payment_id"]! is NSNull) {
-			refund.paymentId = (json["payment_id"] as? Int)!
-		}
-        refund.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
+        if let _id = JSONHandler.attemptParseToInt(json["id"]){
+            refund._id = _id
+        }
+        if let amount = JSONHandler.attemptParseToDouble(json["amount"]){
+            refund.amount = amount
+        }
+        if let source = JSONHandler.attemptParseToString(json["source"]){
+             refund.source = source
+        }
+        if let uniqueSequenceNumber = JSONHandler.attemptParseToString(json["unique_sequence_number"]){
+           refund.uniqueSequenceNumber = uniqueSequenceNumber
+        }
+        if let paymentId = JSONHandler.attemptParseToInt(json["payment_id"]){
+            refund.paymentId = paymentId
+        }
+        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]){
+            refund.dateCreated = Utils.getDateFromString(dateCreated)
+        }
         return refund
     }
     

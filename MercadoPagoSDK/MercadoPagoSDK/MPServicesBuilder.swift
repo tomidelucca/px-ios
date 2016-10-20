@@ -7,19 +7,19 @@
 //
 
 import Foundation
-import MercadoPagoTracker
 
-public class MPServicesBuilder : NSObject {
+
+open class MPServicesBuilder : NSObject {
    
     static let MP_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/checkout/payments"
 
 
-    public class func createNewCardToken(cardToken : CardToken,
-                                         success:(_  : Token?) -> Void,
-                                         failure: ((_ : NSError) -> Void)?) {
+    open class func createNewCardToken(_ cardToken : CardToken,
+                                         success:@escaping (_ token : Token?) -> Void,
+                                         failure: ((_ error: NSError) -> Void)?) {
         
-        MercadoPagoContext.initFlavor1()
-        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_CARD_TOKEN", result: nil)
+    MercadoPagoContext.initFlavor1()
+    MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_CARD_TOKEN", result: nil)
       
         cardToken.device = Device()
         let service = GatewayService(baseURL: MercadoPago.MP_API_BASE_URL)
@@ -32,19 +32,19 @@ public class MPServicesBuilder : NSObject {
                     success(token)
                 } else {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
+                        failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
                     }
                 }
             }
             }, failure: failure)
     }
     
-    public class func createToken(savedCardToken : SavedCardToken,
-                        success: (_ : Token?) -> Void,
-                        failure: ((_ : NSError) -> Void)?) {
+    open class func createToken(_ savedCardToken : SavedCardToken,
+                        success: @escaping (_ token : Token?) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
         
-            MercadoPagoContext.initFlavor1()
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_SAVED_TOKEN", result: nil)
+        MercadoPagoContext.initFlavor1()
+        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_SAVED_TOKEN", result: nil)
             savedCardToken.device = Device()
             let service : GatewayService = GatewayService(baseURL: MercadoPago.MP_API_BASE_URL)
             service.getToken(public_key: MercadoPagoContext.publicKey(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in
@@ -52,11 +52,11 @@ public class MPServicesBuilder : NSObject {
                 if let tokenDic = jsonResult as? NSDictionary {
                     if tokenDic["error"] == nil {
                         token = Token.fromJSON(tokenDic)
-                         MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                        MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
                         success(token)
                     } else {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
                         }
                     }
                 }
@@ -64,18 +64,46 @@ public class MPServicesBuilder : NSObject {
 
     }
     
-    public class func getPaymentMethods(
-                        success: (_ : [PaymentMethod]?) -> Void,
-                        failure: ((_ : NSError) -> Void)?) {
+    open class func cloneToken(_ token : Token,
+                                 securityCode: String,
+                                  success: @escaping (_ token : Token?) -> Void,
+                                  failure: ((_ error: NSError) -> Void)?) {
         
-            MercadoPagoContext.initFlavor1()
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHODS", result: nil)
-              let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
+        MercadoPagoContext.initFlavor1()
+        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CLONE_TOKEN", result: nil)
+        let service : GatewayService = GatewayService(baseURL: MercadoPago.MP_API_BASE_URL)
+        service.cloneToken(public_key: MercadoPagoContext.publicKey(), token: token,securityCode: securityCode, success:{(jsonResult: AnyObject?) -> Void in
+            var token : Token? = nil
+            if let tokenDic = jsonResult as? NSDictionary {
+                if tokenDic["error"] == nil {
+                    token = Token.fromJSON(tokenDic)
+                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                    success(token)
+                } else {
+                    if failure != nil {
+                        failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
+                    }
+                }
+            }
+            }, failure: failure)
+        
+        
+    }
+
+    
+    
+    open class func getPaymentMethods(
+                        _ success: @escaping (_ paymentMethods: [PaymentMethod]?) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
+        
+        MercadoPagoContext.initFlavor1()
+        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHODS", result: nil)
+            let service : PaymentService = PaymentService(baseURL: MercadoPago.MP_API_BASE_URL)
             service.getPaymentMethods(public_key: MercadoPagoContext.publicKey(), success: {(jsonResult: AnyObject?) -> Void in
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: Any]))
                         }
                     }
                 } else {
@@ -94,9 +122,9 @@ public class MPServicesBuilder : NSObject {
      
     }
     
-    public class func getIdentificationTypes(
-                        success: ([IdentificationType]?) -> Void,
-                        failure: ((NSError) -> Void)?) {
+    open class func getIdentificationTypes(
+                        _ success: @escaping (_ identificationTypes: [IdentificationType]?) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_IDENTIFICATION_TYPES", result: nil)
@@ -106,7 +134,7 @@ public class MPServicesBuilder : NSObject {
                 if let error = jsonResult as? NSDictionary {
                     if (error["status"]! as? Int) == 404 {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: Any]))
                         }
                     }
                 } else {
@@ -125,9 +153,9 @@ public class MPServicesBuilder : NSObject {
        
     }
     
-    public class func getInstallments(bin: String? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String,
-                                      success: (_ : [Installment]?) -> Void,
-                                      failure: ((_ : NSError) -> Void)) {
+    open class func getInstallments(_ bin: String? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String,
+                                      success: @escaping (_ installments: [Installment]?) -> Void,
+                                      failure: @escaping ((_ error: NSError) -> Void)) {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTALLMENTS", result: nil)
@@ -137,7 +165,7 @@ public class MPServicesBuilder : NSObject {
         
     }
     
-    public class func getIssuers(paymentMethod : PaymentMethod, bin: String? = nil, success: (_ : [Issuer]?) -> Void, failure: ((_ : NSError) -> Void)?) {
+    open class func getIssuers(_ paymentMethod : PaymentMethod, bin: String? = nil, success: @escaping (_ issuers: [Issuer]?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_ISSUERS", result: nil)
 
@@ -147,7 +175,7 @@ public class MPServicesBuilder : NSObject {
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as [NSObject : AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: Any]))
                         }
                     }
                 } else {
@@ -166,9 +194,9 @@ public class MPServicesBuilder : NSObject {
         
     }
     
-    public class func getPromos(
-                        success: (_ : [Promo]?) -> Void,
-                        failure: ((_ : NSError) -> Void)?) {
+    open class func getPromos(
+                        _ success: @escaping (_ promos: [Promo]?) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_BANK_DEALS", result: nil)
@@ -190,9 +218,9 @@ public class MPServicesBuilder : NSObject {
     }
 
         
-    public class func createPayment(merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment,
-                         success: (_ : Payment) -> Void,
-                         failure: ((_ : NSError) -> Void)?) {
+    open class func createPayment(_ merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment,
+                         success: @escaping (_ payment: Payment) -> Void,
+                         failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_PAYMENT", result: nil)
@@ -205,7 +233,7 @@ public class MPServicesBuilder : NSObject {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as [NSObject : AnyObject]))
+                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: Any]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
@@ -224,11 +252,8 @@ public class MPServicesBuilder : NSObject {
             }, failure: failure)
     }
 
-    
-    public class func searchPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?,
-                         success: PaymentMethodSearch -> Void,
-                         failure: ((_ : NSError) -> Void)?) {
-        
+
+    open class func searchPaymentMethods(_ amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHOD_SEARCH", result: nil)
         let paymentMethodSearchService = PaymentMethodSearchService()
@@ -236,21 +261,21 @@ public class MPServicesBuilder : NSObject {
     
     }
     
-    public class func getInstructions(paymentId : Int, paymentTypeId: String? = "",
-                        success : (_  : InstructionsInfo) -> Void,
-                        failure: ((_ : NSError) -> Void)?) {
+    open class func getInstructions(_ paymentId : Int, paymentTypeId: String? = "",
+                        success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void,
+                        failure: ((_ error: NSError) -> Void)?) {
         
-        MercadoPagoContext.initFlavor1()
-        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTRUCTIONS", result: nil)
+    MercadoPagoContext.initFlavor1()
+    MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTRUCTIONS", result: nil)
         let instructionsService = InstructionsService()
         instructionsService.getInstructions(paymentId, paymentTypeId: paymentTypeId, success:  { (instructionsInfo : InstructionsInfo) -> Void in
             success(instructionsInfo)
         }, failure : failure)
     }
     
-    public class func getPreference(preferenceId : String,
-                         success : (_  : CheckoutPreference) -> Void,
-                         failure: ((_ : NSError) -> Void)){
+    open class func getPreference(_ preferenceId : String,
+                         success : @escaping (_ preference : CheckoutPreference) -> Void,
+                         failure: @escaping ((_ error: NSError) -> Void)){
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PREFERENCE", result: nil)

@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-@available(*, deprecated=2.0.0, message="Use PaymentCongratsViewController instead")
-public class CongratsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+@available(*, deprecated: 2.0.0, message: "Use PaymentCongratsViewController instead")
+open class CongratsViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     var payment: Payment!
     var paymentMethod: PaymentMethod!
-    override public var screenName : String { get { return "CONGRATS" } }
+    override open var screenName : String { get { return "CONGRATS" } }
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +25,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
     var paymentIDCell : PaymentIDTableViewCell!
     var paymentDateCell : PaymentDateTableViewCell!
     
-    var bundle : NSBundle? = MercadoPago.getBundle()
+    var bundle : Bundle? = MercadoPago.getBundle()
     
     
     required public init?(coder aDecoder: NSCoder) {
@@ -39,7 +39,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         self.paymentMethod = paymentMethod
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
@@ -73,42 +73,42 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         self.tableView.reloadData()
     }
     
-    public func declareAndInitCells() {
-        self.tableView.registerNib(UINib(nibName: "PaymentTotalTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentTotalCell")
-        self.paymentTotalCell = self.tableView.dequeueReusableCellWithIdentifier("paymentTotalCell") as! PaymentTotalTableViewCell
+    open func declareAndInitCells() {
+        self.tableView.register(UINib(nibName: "PaymentTotalTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentTotalCell")
+        self.paymentTotalCell = self.tableView.dequeueReusableCell(withIdentifier: "paymentTotalCell") as! PaymentTotalTableViewCell
         
-        self.tableView.registerNib(UINib(nibName: "CongratsPaymentMethodTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "congratsPaymentMethodCell")
-        self.congratsPaymentMethodCell = self.tableView.dequeueReusableCellWithIdentifier("congratsPaymentMethodCell") as! CongratsPaymentMethodTableViewCell
+        self.tableView.register(UINib(nibName: "CongratsPaymentMethodTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "congratsPaymentMethodCell")
+        self.congratsPaymentMethodCell = self.tableView.dequeueReusableCell(withIdentifier: "congratsPaymentMethodCell") as! CongratsPaymentMethodTableViewCell
         
-        self.tableView.registerNib(UINib(nibName: "PaymentIDTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentIDCell")
-        self.paymentIDCell = self.tableView.dequeueReusableCellWithIdentifier("paymentIDCell") as! PaymentIDTableViewCell
+        self.tableView.register(UINib(nibName: "PaymentIDTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentIDCell")
+        self.paymentIDCell = self.tableView.dequeueReusableCell(withIdentifier: "paymentIDCell") as! PaymentIDTableViewCell
         
-        self.tableView.registerNib(UINib(nibName: "PaymentDateTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentDateCell")
-        self.paymentDateCell = self.tableView.dequeueReusableCellWithIdentifier("paymentDateCell") as! PaymentDateTableViewCell
+        self.tableView.register(UINib(nibName: "PaymentDateTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "paymentDateCell")
+        self.paymentDateCell = self.tableView.dequeueReusableCell(withIdentifier: "paymentDateCell") as! PaymentDateTableViewCell
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row == 0 {
             return self.paymentTotalCell
-        } else if indexPath.row == 1 {
+        } else if (indexPath as NSIndexPath).row == 1 {
             return self.congratsPaymentMethodCell
-        } else if indexPath.row == 2 {
+        } else if (indexPath as NSIndexPath).row == 2 {
             return self.paymentIDCell
-        } else if indexPath.row == 3 {
+        } else if (indexPath as NSIndexPath).row == 3 {
             return self.paymentDateCell
         }
         return UITableViewCell()
     }
 
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
     
-    public func _setTitle(payment: Payment) {
+    open func _setTitle(_ payment: Payment) {
         if payment.status == "approved" {
             self.lblTitle.text = "¡Felicitaciones!".localized
         } else if payment.status == "pending" {
@@ -120,7 +120,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         }
     }
     
-    public func _setIcon(payment: Payment) {
+    open func _setIcon(_ payment: Payment) {
         if payment.status == "approved" {
             self.icon.image = MercadoPago.getImage("ic_approved")
         } else if payment.status == "pending" {
@@ -132,7 +132,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         }
     }
     
-    public func setDescription(payment: Payment) {
+    open func setDescription(_ payment: Payment) {
         if payment.status == "approved" {
             self.lblDescription.text = "Se aprobó tu pago.".localized
         } else if payment.status == "pending" {
@@ -144,7 +144,7 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         }
     }
     
-    public func setAmount(payment: Payment) {
+    open func setAmount(_ payment: Payment) {
         if payment.currencyId != nil {
             let formattedAmount : String? = CurrenciesUtil.formatNumber(payment.transactionDetails.totalPaidAmount, currencyId: payment.currencyId)
             if formattedAmount != nil {
@@ -153,11 +153,11 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         }
     }
     
-    public func setPaymentId(payment: Payment) {
+    open func setPaymentId(_ payment: Payment) {
         self.paymentIDCell!.lblID.text = String(payment._id)
     }
     
-    public func setPaymentMethodDescription(payment: Payment) {
+    open func setPaymentMethodDescription(_ payment: Payment) {
         if payment.card != nil && payment.card.paymentMethod != nil {
         self.congratsPaymentMethodCell!.lblPaymentInfo.text = "terminada en".localized + " " + payment.card!.lastFourDigits!
             self.congratsPaymentMethodCell.imgPayment.image = MercadoPago.getImage("icoTc_" + payment.card!.paymentMethod!._id)
@@ -167,14 +167,14 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
         }
     }
     
-    public func setDateCreated(payment: Payment) {
-        let dateFormatter = NSDateFormatter()
+    open func setDateCreated(_ payment: Payment) {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        self.paymentDateCell.lblDate.text = dateFormatter.stringFromDate(payment.dateCreated!)
+        self.paymentDateCell.lblDate.text = dateFormatter.string(from: payment.dateCreated! as Date)
         
     }
     
-    public func setButtonText(payment: Payment) {
+    open func setButtonText(_ payment: Payment) {
         var title = "Imprimir cupón".localized
         if payment.status == "pending" {
             // TODO couponUrl = payment.transactionDetails.externalResourceUrl
@@ -182,10 +182,10 @@ public class CongratsViewController : MercadoPagoUIViewController, UITableViewDa
             title = "Continuar".localized
             // TODO couponUrl = nil
         }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CongratsViewController.submitForm))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: title, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CongratsViewController.submitForm))
     }
     
-    public func submitForm() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+    open func submitForm() {
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }

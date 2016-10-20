@@ -8,14 +8,18 @@
 
 import Foundation
 
-public class Phone : Equatable {
-    public var areaCode : String?
-    public var number : String?
+open class Phone : Equatable {
+    open var areaCode : String?
+    open var number : String?
     
-    public class func fromJSON(json : NSDictionary) -> Phone {
+    open class func fromJSON(_ json : NSDictionary) -> Phone {
         let phone : Phone = Phone()
-        phone.areaCode = JSON(json["area_code"]!).asString
-        phone.number = JSON(json["number"]!).asString
+        if let areaCode = JSONHandler.attemptParseToString(json["area_code"]){
+             phone.areaCode = areaCode
+        }
+        if let number = JSONHandler.attemptParseToString(json["number"]){
+            phone.number = number
+        }
         return phone
     }
 }

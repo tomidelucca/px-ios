@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
-import MercadoPagoTracker
 
-public class MercadoPagoContext : NSObject, MPTrackerDelegate {
+
+open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     static let sharedInstance = MercadoPagoContext()
     
@@ -41,31 +41,32 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var currency : Currency!
     
-    public class var PUBLIC_KEY : String {
+    open class var PUBLIC_KEY : String {
         return "public_key"
     }
     
-    public class var PRIVATE_KEY : String {
+    open class var PRIVATE_KEY : String {
         return "private_key"
     }
 
-    public class func isAuthenticatedUser() -> Bool{
+    open class func isAuthenticatedUser() -> Bool{
         return !sharedInstance.private_key.isEmpty
     }
 
-   public func flavor() -> Flavor!{
-    if (initialFlavor == nil){
+    public func flavor() -> Flavor!{
+        if (initialFlavor == nil){
         return Flavor.Flavor_3
     }else{
-        return initialFlavor
-    }
+                return initialFlavor
+        }
     
     }
-    public func framework() -> String!{
+    
+    open func framework() -> String!{
         return  "iOS"
     }
-    public func sdkVersion() -> String!{
-        return "1.0.0"
+    open func sdkVersion() -> String!{
+        return "2.0.5"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
@@ -88,11 +89,11 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     
     
-    public func siteId() -> String! {
+    open func siteId() -> String! {
         return site.rawValue
     }
     
-    private func setSite(site : Site) {
+    fileprivate func setSite(_ site : Site) {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
@@ -105,41 +106,41 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
     }
 
-    public class func setSite(site : Site) {
+    open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
     }
     
-    public class func setSiteID(siteId : String) {
+    open class func setSiteID(_ siteId : String) {
         let site = Site(rawValue: siteId)
         if site != nil {
             MercadoPagoContext.setSite(site!)
         }
     }
     
-    public static func getLanguage() -> String {
+    open static func getLanguage() -> String {
         return sharedInstance.language
     }
     
-    public static func getTermsAndConditionsSite() -> String {
+    open static func getTermsAndConditionsSite() -> String {
         return sharedInstance.termsAndConditionsSite
     }
     
-    public static func getCurrency() -> Currency {
+    open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
     
-    public func publicKey() -> String!{
+    open func publicKey() -> String!{
         return self.public_key
     }
     
     
-    private static var primaryColor : UIColor = UIColor.mpDefaultColor()
+    fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
-    private static var complementaryColor : UIColor = UIColor.blueMercadoPago()
-    private static var textColor : UIColor = UIColor.whiteColor()
+    fileprivate static var complementaryColor : UIColor = UIColor.blueMercadoPago()
+    fileprivate static var textColor : UIColor = UIColor.white()
     
-    public static func setupPrimaryColor(color: UIColor, complementaryColor: UIColor? = nil){
+    open static func setupPrimaryColor(_ color: UIColor, complementaryColor: UIColor? = nil){
         MercadoPagoContext.primaryColor = color
         if (complementaryColor != nil){
             MercadoPagoContext.setupComplementaryColor(complementaryColor!)
@@ -151,7 +152,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
             }
         }
     }
-    public static func setupComplementaryColor(color: UIColor){
+    open static func setupComplementaryColor(_ color: UIColor){
         MercadoPagoContext.complementaryColor = color
     }
     
@@ -166,34 +167,34 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
     internal static func getTextColor() -> UIColor {
         return textColor
     }
-    public static func setDarkTextColor(){
-        textColor = UIColor.blackColor()
+    open static func setDarkTextColor(){
+        textColor = UIColor.black
     }
-    public static func setLightTextColor(){
-        textColor = UIColor.whiteColor()
+    open static func setLightTextColor(){
+        textColor = UIColor.white()
     }
     
     
-    private override init() {
+    fileprivate override init() {
         super.init()
         MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         self.setSite(Site.MLA)
     }
     
-    public class func setPrivateKey(private_key : String){
+    open class func setPrivateKey(_ private_key : String){
         
         
         sharedInstance.private_key = private_key
-      let   cardFront = CardFrontView()
-      let  cardBack = CardBackView()
+      _ = CardFrontView()
+      _ = CardBackView()
         
     }
     
-    public class func setPublicKey(public_key : String){
+    open class func setPublicKey(_ public_key : String){
         
        sharedInstance.public_key = public_key
-       let cardFront = CardFrontView()
-       let  cardBack = CardBackView()
+       _ = CardFrontView()
+       _ = CardBackView()
         
     }
     
@@ -215,93 +216,97 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
+   
     
-    
-    public class func setBaseURL(base_url : String){
+    open class func setBaseURL(_ base_url : String){
         
         sharedInstance.base_url = base_url
         
     }
     
-    public class func setCustomerURI(customer_uri : String){
+    open class func setCustomerURI(_ customer_uri : String){
         
         sharedInstance.customer_uri = customer_uri
         
     }
     
-    public class func setPreferenceURI(preference_uri : String){
+    open class func setPreferenceURI(_ preference_uri : String){
         
         sharedInstance.preference_uri = preference_uri
         
     }
     
-    public class func setPaymentURI(payment_uri : String){
+    open class func setPaymentURI(_ payment_uri : String){
         
         sharedInstance.payment_uri = payment_uri
         
     }
     
-    public class func setMerchantAccessToken(merchant_access_token : String){
+    open class func setMerchantAccessToken(_ merchant_access_token : String){
         
         sharedInstance.merchant_access_token = merchant_access_token
         
     }
     
-    public class func merchantAccessToken() -> String {
+    open class func merchantAccessToken() -> String {
         
         return sharedInstance.merchant_access_token
         
     }
     
 
-    public class func publicKey() -> String {
+    open class func publicKey() -> String {
         
         return sharedInstance.public_key
         
     }
     
     
-    public class func privateKey() -> String {
+    open class func privateKey() -> String {
         
         return sharedInstance.private_key
         
     }
     
-    public class func baseURL() -> String {
+    open class func baseURL() -> String {
         
         return sharedInstance.base_url
         
     }
-    public class func customerURI() -> String {
+    open class func customerURI() -> String {
         
         return sharedInstance.customer_uri
         
     }
     
-    public class func preferenceURI() -> String {
+    open class func preferenceURI() -> String {
         
         return sharedInstance.preference_uri
         
     }
     
-    public class func paymentURI() -> String {
+    open class func paymentURI() -> String {
         
         return sharedInstance.payment_uri
         
     }
     
-    public class func paymentKey() -> String {
+    open class func isCustomerInfoAvailable() -> Bool {
+        return (self.sharedInstance.base_url.characters.count > 0 && self.sharedInstance.customer_uri.characters.count > 0 && self.sharedInstance.merchant_access_token.characters.count > 0)
+    }
+    
+    open class func paymentKey() -> String {
         if sharedInstance.payment_key == "" {
-            sharedInstance.payment_key = String(arc4random()) + String(NSDate().timeIntervalSince1970)
+            sharedInstance.payment_key = String(arc4random()) + String(Date().timeIntervalSince1970)
         }
         return sharedInstance.payment_key
     }
     
-    public class func clearPaymentKey(){
+    open class func clearPaymentKey(){
         sharedInstance.payment_key = ""
     }
     
-    public class func keyType() -> String{
+    open class func keyType() -> String{
         if(MercadoPagoContext.isAuthenticatedUser()){
             return MercadoPagoContext.PRIVATE_KEY
         }else{
@@ -309,7 +314,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
     }
     
-    public class func keyValue(forcingPublic : Bool = true) -> String{
+    open class func keyValue(_ forcingPublic : Bool = true) -> String{
         if forcingPublic {
             return MercadoPagoContext.publicKey()
         }

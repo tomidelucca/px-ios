@@ -21,11 +21,11 @@ class InstructionsTwoLabelsViewCell: UITableViewCell, InstructionsFillmentDelega
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(instruction : Instruction) -> UITableViewCell {
+    func fillCell(_ instruction : Instruction) -> UITableViewCell {
         
         if instruction.info != nil && instruction.info.count > 0 {
             self.infoTitle.text = instruction.info[0]
@@ -43,7 +43,7 @@ class InstructionsTwoLabelsViewCell: UITableViewCell, InstructionsFillmentDelega
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
         return 166
     }
     

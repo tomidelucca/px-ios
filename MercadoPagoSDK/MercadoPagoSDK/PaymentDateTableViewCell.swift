@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentDateTableViewCell: UITableViewCell {
+open class PaymentDateTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblTitle: MPLabel!
     @IBOutlet weak var lblDate: MPLabel!
@@ -21,12 +21,12 @@ public class PaymentDateTableViewCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 	
-	override public func awakeFromNib() {
+	override open func awakeFromNib() {
         super.awakeFromNib()
 		self.lblTitle.text = "Fecha".localized
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

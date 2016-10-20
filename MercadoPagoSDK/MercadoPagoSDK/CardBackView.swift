@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable public class CardBackView : UIView {
+@IBDesignable open class CardBackView : UIView {
     var view:UIView!;
 
     @IBOutlet weak var cardCVV: MPLabel!
@@ -24,13 +24,13 @@ import UIKit
         loadViewFromNib ()
     }
     func loadViewFromNib() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardBackView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
        // let screenSize: CGRect = UIScreen.mainScreen().bounds
        // let screenHeight = screenSize.height
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.addSubview(view)
         
         //let circlePath = UIBezierPath(arcCenter:cardCVV.center, radius: CGFloat(screenHeight*0.05), startAngle: CGFloat(0), endAngle:CGFloat(M_PI * 2), clockwise: true)

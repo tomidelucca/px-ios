@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class MockBuilder: NSObject {
+open class MockBuilder: NSObject {
     
     internal class var MOCK_PAYMENT_ID : Int {
         return 1826290155
@@ -47,24 +47,39 @@ public class MockBuilder: NSObject {
         return "MERCHANT_ACCESS_TOKEN"
     }
     
+    class var CUSTOMER_ACCESS_TOKEN : String {
+        return "ACCESS_TOKEN"
+    }
+    
     class var INSTALLMENT_AMOUNT : Double {
         return 100.0
     }
     
+    class var AMEX_TEST_CARD_NUMBER : String {
+        return "371180303257522"
+    }
+    
+    class var MASTER_TEST_CARD_NUMBER : String {
+        return "5031755734530604"
+    }
+    
+    class var VISA_TEST_CARD_NUMBER : String {
+        return "4170068810108020"
+    }
     
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
         preference._id = PREF_ID_NO_EXCLUSIONS
-        preference.items = [self.buildItem("itemId", quantity: 1, unitPrice: 10), self.buildItem("itemId2", quantity: 2, unitPrice: 10)]
+        preference.items = [self.buildItem("itemId", quantity: 1, unitPrice: 2559), self.buildItem("itemId2", quantity: 2, unitPrice: 10)]
         preference.payer = Payer.fromJSON(MockManager.getMockFor("Payer")!)
         return preference
     }
     
-    class func buildItem(id : String, quantity : Int, unitPrice : Double) -> Item {
+    class func buildItem(_ id : String, quantity : Int, unitPrice : Double) -> Item {
         return Item(_id: id, title : "item title", quantity: quantity, unitPrice: unitPrice)
     }
     
-    class func buildPayer(id : NSNumber) -> Payer {
+    class func buildPayer(_ id : NSNumber) -> Payer {
         let payer =  Payer()
         payer._id = id
         payer.email = "thisisanem@il.com"
@@ -81,7 +96,7 @@ public class MockBuilder: NSObject {
     }
     
     
-    class func buildPaymentMethod(id : String, name : String? = "", paymentTypeId : String? = "credit_card") -> PaymentMethod {
+    class func buildPaymentMethod(_ id : String, name : String? = "", paymentTypeId : String? = "credit_card") -> PaymentMethod {
         let paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
         paymentMethod._id = id
         paymentMethod.name = name
@@ -112,10 +127,14 @@ public class MockBuilder: NSObject {
         card.expirationMonth = 11
         card.expirationYear = 22
         card.cardHolder = buildCardholder()
+        card.securityCode = SecurityCode()
+        card.securityCode?.cardLocation = "cardLocation"
+        card.securityCode?.mode = "mandatory"
+        card.securityCode?.length = 3
         return card
     }
         
-    class func buildPayment(paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+    class func buildPayment(_ paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         let payment = Payment()
         payment._id = self.MOCK_PAYMENT_ID
         payment.paymentMethodId = paymentMethodId
@@ -138,7 +157,7 @@ public class MockBuilder: NSObject {
         return payment
     }
 
-    class func buildOffPayment(paymentMethodId : String, paymentTypeId : String? = "ticket") -> Payment {
+    class func buildOffPayment(_ paymentMethodId : String, paymentTypeId : String? = "ticket") -> Payment {
         let payment = Payment()
         payment._id = self.MOCK_PAYMENT_ID
         payment.paymentMethodId = paymentMethodId
@@ -147,19 +166,19 @@ public class MockBuilder: NSObject {
         return payment
     }
     
-    class func buildMastercardPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+    class func buildMastercardPayment(_ installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         return MockBuilder.buildPayment("master", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
 
-    class func buildVisaPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+    class func buildVisaPayment(_ installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
     
-    class func buildAmexPayment(installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
+    class func buildAmexPayment(_ installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
     
-    class func buildPaymentMethodSearchItem(paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
+    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
         let paymentMethodSearchItem = PaymentMethodSearchItem()
         paymentMethodSearchItem.idPaymentMethodSearchItem = paymentMethodId
         if type != nil {
@@ -184,7 +203,7 @@ public class MockBuilder: NSObject {
     
     
     class func buildToken() -> Token {
-        let token = Token(_id: "tokenId", publicKey: MLA_PK, cardId: "cardId", luhnValidation: "luhn", status: "status", usedDate: "11", cardNumberLength: 16, creationDate: NSDate(), lastFourDigits: "1234", firstSixDigit: "123456", securityCodeLength: 3, expirationMonth: 11, expirationYear: 22, lastModifiedDate: NSDate(), dueDate: NSDate(), cardHolder: MockBuilder.buildCardholder())
+        let token = Token(_id: "tokenId", publicKey: MLA_PK, cardId: "cardId", luhnValidation: "luhn", status: "status", usedDate: "11", cardNumberLength: 16, creationDate: Date(), lastFourDigits: "1234", firstSixDigit: "123456", securityCodeLength: 3, expirationMonth: 11, expirationYear: 22, lastModifiedDate: Date(), dueDate: Date(), cardHolder: MockBuilder.buildCardholder())
         return token
     }
     

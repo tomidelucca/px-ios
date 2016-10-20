@@ -24,7 +24,7 @@ class CheckoutPreferenceTest: XCTestCase {
     func testFromJSON() {
         
         let obj:[String:AnyObject] = [
-            "id": "id",
+            "id": "id" as AnyObject,
         ]
         
         let preferenceResult = CheckoutPreference.fromJSON(NSDictionary(dictionary: obj))
@@ -45,7 +45,7 @@ class CheckoutPreferenceTest: XCTestCase {
         self.preference!.items = [item1, item2, item3]
         
         XCTAssertEqual(preference?.getAmount(), 29)
-        preference?.items?.removeAtIndex(1)
+        preference?.items?.remove(at: 1)
         XCTAssertEqual(preference?.getAmount(), 14)
         
     }

@@ -7,6 +7,26 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDelegate {
 
@@ -17,18 +37,18 @@ class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDe
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        let tintedImage = self.clockIcon.image?.imageWithRenderingMode(.AlwaysTemplate)
+        let tintedImage = self.clockIcon.image?.withRenderingMode(.alwaysTemplate)
         self.clockIcon.image = tintedImage
         self.clockIcon.tintColor = UIColor.UIColorFromRGB(0xB29054)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func fillCell(instruction: Instruction) -> UITableViewCell {
+    func fillCell(_ instruction: Instruction) -> UITableViewCell {
         if instruction.secondaryInfo != nil && instruction.secondaryInfo?.count > 0 {
             self.secondaryInfoTitle.text = instruction.secondaryInfo![0]
             
@@ -37,7 +57,7 @@ class DefaultInstructionsFooterViewCell: UITableViewCell, InstructionsFillmentDe
         return self
     }
     
-    func getCellHeight(instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
+    func getCellHeight(_ instruction : Instruction, forFontSize: CGFloat) -> CGFloat {
         return 86
     }
 }

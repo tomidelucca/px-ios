@@ -9,31 +9,30 @@
 import Foundation
 import UIKit
 
-public class ErrorTableViewCell : UITableViewCell {
+open class ErrorTableViewCell : UITableViewCell {
     var errorView : GenericErrorView?
-    public var height : CGFloat = 0
+    open var height : CGFloat = 0
     
-    public func setError(error: String?) {
+    open func setError(_ error: String?) {
         if error == nil {
             if self.errorView != nil {
                 self.errorView!.removeFromSuperview()
             }
-            self.errorView == nil
         } else {
-            self.errorView = GenericErrorView(frame: CGRectMake(0, height, self.frame.width, 0))
+            self.errorView = GenericErrorView(frame: CGRect(x: 0, y: height, width: self.frame.width, height: 0))
             self.errorView!.setErrorMessage(error!)
             self.addSubview(self.errorView!)
         }
     }
 	
-	public func focus() {
+	open func focus() {
 	}
     
-    public func hasError() -> Bool {
+    open func hasError() -> Bool {
         return self.errorView != nil
     }
     
-    public func getHeight() -> CGFloat {
+    open func getHeight() -> CGFloat {
         var error : CGFloat = 0
         if self.hasError() {
             error = self.errorView!.frame.height

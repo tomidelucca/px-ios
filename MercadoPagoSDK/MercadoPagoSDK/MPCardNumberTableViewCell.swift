@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
-    @IBOutlet weak private var cardNumberLabel: MPLabel!
-    @IBOutlet weak private var cardNumberImageView: UIImageView!
-    @IBOutlet weak public var cardNumberTextField: MPTextField!
-    public var setting : Setting!
+open class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate {
+    @IBOutlet weak fileprivate var cardNumberLabel: MPLabel!
+    @IBOutlet weak fileprivate var cardNumberImageView: UIImageView!
+    @IBOutlet weak open var cardNumberTextField: MPTextField!
+    open var setting : Setting!
 	
-	public var keyboardDelegate : KeyboardDelegate!
+	open var keyboardDelegate : KeyboardDelegate!
 	
 	func next() {
 		keyboardDelegate?.next(self)
@@ -29,8 +29,8 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
 		keyboardDelegate?.done(self)
 	}
 	
-	public override func focus() {
-		if !self.cardNumberTextField.isFirstResponder() {
+	open override func focus() {
+		if !self.cardNumberTextField.isFirstResponder {
 			self.cardNumberTextField.becomeFirstResponder()
 		}
 	}
@@ -39,7 +39,7 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.cardNumberLabel.text = "Número de tarjeta".localized
 		
@@ -51,29 +51,29 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
         super.init(coder: aDecoder)
     }
     
-    public func getCardNumber() -> String! {
-        return self.cardNumberTextField.text!.stringByReplacingOccurrencesOfString(" ", withString:"")
+    open func getCardNumber() -> String! {
+        return self.cardNumberTextField.text!.replacingOccurrences(of: " ", with:"")
     }
     
-    public func setIcon(pmId : String?) {
+    open func setIcon(_ pmId : String?) {
         if String.isNullOrEmpty(pmId) {
-            self.cardNumberImageView.hidden = true
+            self.cardNumberImageView.isHidden = true
         } else {
             self.cardNumberImageView.image = MercadoPago.getImage("icoTc_" + pmId!)
-            self.cardNumberImageView.hidden = false
+            self.cardNumberImageView.isHidden = false
         }
     }
     
-    public func _setSetting(setting: Setting!) {
+    open func _setSetting(_ setting: Setting!) {
         self.setting = setting
         self.cardNumberTextField.delegate = self
     }
     
-    public func setTextFieldDelegate(delegate : UITextFieldDelegate) {
+    open func setTextFieldDelegate(_ delegate : UITextFieldDelegate) {
         self.cardNumberTextField.delegate = delegate
     }
     
-    public func textField(textField: UITextField,shouldChangeCharactersInRange range: NSRange,    replacementString string: String) -> Bool {
+    open func textField(_ textField: UITextField,shouldChangeCharactersIn range: NSRange,    replacementString string: String) -> Bool {
         
         if !Regex("^[0-9]$").test(string) && string != "" {
             return false
@@ -88,19 +88,19 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
         
 		
 		if textField.text != nil {
-			var txtAfterUpdate : NSString = textField.text!
-			txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+			var txtAfterUpdate : NSString = textField.text! as NSString
+			txtAfterUpdate = txtAfterUpdate.replacingCharacters(in: range, with: string) as NSString
 			if txtAfterUpdate.length <= maxLength+spaces {
 				if txtAfterUpdate.length > 4 {
-					let cardNumber : NSString = txtAfterUpdate.stringByReplacingOccurrencesOfString(" ", withString:"")
+					let cardNumber : NSString = txtAfterUpdate.replacingOccurrences(of: " ", with:"") as NSString
 					if maxLength == 16 {
 						// 4 4 4 4
 						let mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
 						for i in 0...(cardNumber.length-1) {
 							if i > 0 && i%4 == 0 {
-								mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
+								mutableString.appendFormat(" %C", cardNumber.character(at: i))
 							} else {
-								mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
+								mutableString.appendFormat("%C", cardNumber.character(at: i))
 							}
 						}
 						self.cardNumberTextField.text = mutableString as String
@@ -110,9 +110,9 @@ public class MPCardNumberTableViewCell : ErrorTableViewCell, UITextFieldDelegate
 						let mutableString : NSMutableString = NSMutableString(capacity: maxLength + spaces)
 						for i in 0...(cardNumber.length-1) {
 							if i == 4 || i == 10 {
-								mutableString.appendFormat(" %C", cardNumber.characterAtIndex(i))
+								mutableString.appendFormat(" %C", cardNumber.character(at: i))
 							} else {
-								mutableString.appendFormat("%C", cardNumber.characterAtIndex(i))
+								mutableString.appendFormat("%C", cardNumber.character(at: i))
 							}
 						}
 						self.cardNumberTextField.text = mutableString as String

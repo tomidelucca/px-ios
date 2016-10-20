@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class UILoadingView : UIView {
+open class UILoadingView : UIView {
 	
-	public init(frame rect: CGRect, text: NSString = "Cargando...".localized) {
+	public init(frame rect: CGRect, text: String = "Cargando...".localized) {
 		super.init(frame: rect)
-		self.backgroundColor = UIColor.whiteColor()
+		self.backgroundColor = UIColor.white()
 		self.label.text = text as String
 		self.label.textColor = self.spinner.color
 		self.spinner.startAnimating()
@@ -30,14 +30,14 @@ public class UILoadingView : UIView {
 		super.init(coder: aDecoder)
 	}
 	
-	public var label : MPLabel = {
+	open var label : MPLabel = {
 		var l = MPLabel()
 		//l.font = UIFont(name: "HelveticaNeue", size: 15)
 		return l
 		}()
-	public var spinner: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+	open var spinner: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
 	
-	override public func layoutSubviews() {
+	override open func layoutSubviews() {
 		self.label.sizeToFit()
 		let labelSize: CGSize = self.label.frame.size
 		var labelFrame: CGRect = CGRect()

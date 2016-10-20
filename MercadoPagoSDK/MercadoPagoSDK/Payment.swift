@@ -7,91 +7,108 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class Payment : NSObject {
-    public var binaryMode : Bool!
-    public var callForAuthorizeId : String!
-    public var captured : Bool!
-    public var card : Card!
-    public var currencyId : String!
-    public var dateApproved : NSDate!
-    public var dateCreated : NSDate!
-    public var dateLastUpdated : NSDate!
-    public var _description : String!
-    public var externalReference : String!
-    public var feesDetails : [FeesDetail]!
-    public var _id : Int = 0
-    public var installments : Int = 0
-    public var liveMode : Bool!
-    public var metadata : NSObject!
-    public var moneyReleaseDate : NSDate!
-    public var notificationUrl : String!
-    public var order : Order!
-    public var payer : Payer!
-    public var paymentMethodId : String!
-    public var paymentTypeId : String!
-    public var refunds : [Refund]!
-    public var statementDescriptor : String!
-    public var status : String!
-    public var statusDetail : String!
-    public var transactionAmount : Double = 0
-    public var transactionAmountRefunded : Double = 0
-    public var transactionDetails : TransactionDetails!
-    public var collectorId : String!
-    public var couponAmount : Double = 0
-    public var differentialPricingId : NSNumber = 0
-    public var issuerId : Int = 0
-    public var tokenId : String?
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class Payment : NSObject {
+    open var binaryMode : Bool!
+    open var callForAuthorizeId : String!
+    open var captured : Bool!
+    open var card : Card!
+    open var currencyId : String!
+    open var dateApproved : Date!
+    open var dateCreated : Date!
+    open var dateLastUpdated : Date!
+    open var _description : String!
+    open var externalReference : String!
+    open var feesDetails : [FeesDetail]!
+    open var _id : Int = 0
+    open var installments : Int = 0
+    open var liveMode : Bool!
+    open var metadata : NSObject!
+    open var moneyReleaseDate : Date!
+    open var notificationUrl : String!
+    open var order : Order!
+    open var payer : Payer!
+    open var paymentMethodId : String!
+    open var paymentTypeId : String!
+    open var refunds : [Refund]!
+    open var statementDescriptor : String!
+    open var status : String!
+    open var statusDetail : String!
+    open var transactionAmount : Double = 0
+    open var transactionAmountRefunded : Double = 0
+    open var transactionDetails : TransactionDetails!
+    open var collectorId : String!
+    open var couponAmount : Double = 0
+    open var differentialPricingId : NSNumber = 0
+    open var issuerId : Int = 0
+    open var tokenId : String?
     
     override public init(){
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> Payment {
+    open class func fromJSON(_ json : NSDictionary) -> Payment {
         let payment : Payment = Payment()
 		
-		if json["id"] != nil && !(json["id"]! is NSNull) {
-			payment._id = (json["id"]! as? Int)!
-		}
-		
-        if json["binary_mode"] != nil && !(json["binary_mode"]! is NSNull) {
-            payment.binaryMode = JSON(json["binary_mode"]!).asBool
+        if let _id = JSONHandler.attemptParseToInt(json["id"]){
+            payment._id = _id
         }
-        if json["captured"] != nil && !(json["captured"]! is NSNull) {
-            payment.captured = JSON(json["captured"]!).asBool
+        if let binaryMode = JSONHandler.attemptParseToBool(json["binary_mode"]){
+            payment.binaryMode = binaryMode
         }
-		
-		if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
-			payment.currencyId = JSON(json["currency_id"]!).asString
-		}
-		
-		if json["money_release_date"] != nil && !(json["money_release_date"]! is NSNull) {
-			payment.moneyReleaseDate = getDateFromString(json["money_release_date"] as? String)
-		}
-		if json["date_created"] != nil && !(json["date_created"]! is NSNull) {
-			payment.dateCreated = getDateFromString(json["date_created"] as? String)
-		}
-		if json["date_last_updated"] != nil && !(json["date_last_updated"]! is NSNull) {
-			payment.dateLastUpdated = getDateFromString(json["date_last_updated"] as? String)
-		}
-		if json["date_approved"] != nil && !(json["date_approved"]! is NSNull) {
-			payment.dateApproved = getDateFromString(json["date_approved"] as? String)
-		}
-		if json["description"] != nil && !(json["description"]! is NSNull) {
-			payment._description = JSON(json["description"]!).asString
-		}
-		if json["external_reference"] != nil && !(json["external_reference"]! is NSNull) {
-			payment.externalReference = JSON(json["external_reference"]!).asString
-		}
-		if json["installments"] != nil && !(json["installments"]! is NSNull) {
-			payment.installments = (json["installments"] as? Int	)!
-		}
-		if json["live_mode"] != nil && !(json["live_mode"]! is NSNull) {
-			payment.liveMode = JSON(json["live_mode"]!).asBool
-		}
-		if json["notification_url"] != nil && !(json["notification_url"]! is NSNull) {
-			payment.notificationUrl = JSON(json["notification_url"]!).asString
-		}
+        if let captured = JSONHandler.attemptParseToBool(json["captured"]){
+            payment.captured = captured
+        }
+        if let currencyId = JSONHandler.attemptParseToString(json["currency_id"]){
+            payment.currencyId = currencyId
+        }
+        if let moneyReleaseDate = JSONHandler.attemptParseToString(json["money_release_date"]){
+            payment.moneyReleaseDate = getDateFromString(moneyReleaseDate)
+        }
+        if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]){
+            payment.dateCreated = getDateFromString(dateCreated)
+        }
+        if let dateLastUpdated = JSONHandler.attemptParseToString(json["date_last_updated"]){
+            payment.dateLastUpdated = getDateFromString(dateLastUpdated)
+        }
+        if let dateApproved = JSONHandler.attemptParseToString(json["date_approved"]){
+            payment.dateApproved = getDateFromString(dateApproved)
+        }
+        if let _description = JSONHandler.attemptParseToString(json["description"]){
+            payment._description = _description
+        }
+        if let externalReference = JSONHandler.attemptParseToString(json["external_reference"]){
+            payment.externalReference = externalReference
+        }
+        if let installments = JSONHandler.attemptParseToInt(json["installments"]){
+            payment.installments = installments
+        }
+        if let liveMode = JSONHandler.attemptParseToBool(json["live_mode"]){
+            payment.liveMode = liveMode
+        }
+        if let notificationUrl = JSONHandler.attemptParseToString(json["notification_url"]){
+            payment.notificationUrl = notificationUrl
+        }
         var feesDetails : [FeesDetail] = [FeesDetail]()
         if let feesDetailsArray = json["fee_details"] as? NSArray {
             for i in 0..<feesDetailsArray.count {
@@ -111,12 +128,12 @@ public class Payment : NSObject {
         if let payerDic = json["payer"] as? NSDictionary {
             payment.payer = Payer.fromJSON(payerDic)
         }
-		if json["payment_method_id"] != nil && !(json["payment_method_id"]! is NSNull) {
-			payment.paymentMethodId = JSON(json["payment_method_id"]!).asString
-		}
-		if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
-			payment.paymentTypeId = JSON(json["payment_type_id"]!).asString
-		}
+        if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]){
+            payment.paymentMethodId = paymentMethodId
+        }
+        if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]){
+            payment.paymentTypeId = paymentTypeId
+        }
         var refunds : [Refund] = [Refund]()
         if let refArray = json["refunds"] as? NSArray {
             for i in 0..<refArray.count {
@@ -126,45 +143,49 @@ public class Payment : NSObject {
             }
         }
         payment.refunds = refunds
-		if json["statement_descriptor"] != nil && !(json["statement_descriptor"]! is NSNull) {
-			payment.statementDescriptor = JSON(json["statement_descriptor"]!).asString
-		}
-		if json["status"] != nil && !(json["status"]! is NSNull) {
-			payment.status = JSON(json["status"]!).asString
-		}
-		if json["status_detail"] != nil && !(json["status_detail"]! is NSNull) {
-			payment.statusDetail = JSON(json["status_detail"]!).asString
-		}
-		if json["transaction_amount"] != nil && !(json["transaction_amount"]! is NSNull) {
-			payment.transactionAmount = JSON(json["transaction_amount"]!).asDouble!
-		}
-		if json["transaction_amount_refunded"] != nil && !(json["transaction_amount_refunded"]! is NSNull) {
-			payment.transactionAmountRefunded = JSON(json["transaction_amount_refunded"]!).asDouble!
-		}
+        if let statementDescriptor = JSONHandler.attemptParseToString(json["statement_descriptor"]){
+            payment.statementDescriptor = statementDescriptor
+        }
+        if let status = JSONHandler.attemptParseToString(json["status"]){
+            payment.status = status
+        }
+        if let statusDetail = JSONHandler.attemptParseToString(json["status_detail"]){
+            payment.statusDetail = statusDetail
+        }
+        if let transactionAmount = JSONHandler.attemptParseToDouble(json["transaction_amount"]){
+            payment.transactionAmount = transactionAmount
+        }
+	
+        if let transactionAmountRefunded = JSONHandler.attemptParseToDouble(json["transaction_amount_refunded"]){
+            payment.transactionAmountRefunded = transactionAmountRefunded
+        }
         if let tdDic = json["transaction_details"] as? NSDictionary {
             payment.transactionDetails = TransactionDetails.fromJSON(tdDic)
         }
-        payment.collectorId = json["collector_id"] as? String
-		if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
-			payment.couponAmount = JSON(json["coupon_amount"]!).asDouble!
-		}
-		if json["differential_pricing_id"] != nil && !(json["differential_pricing_id"]! is NSNull) {
-			payment.differentialPricingId = NSNumber(longLong: (json["differential_pricing_id"]!.longLongValue))
-		}
-		
-		if json["issuer_id"] != nil && !(json["issuer_id"]! is NSNull) {
-			payment.issuerId = (json["issuer_id"] as? NSString)!.integerValue
-		}
-        
-        if json["token"] != nil && !(json["token"]! is NSNull) {
-            payment.tokenId = (json["token"] as? String)! 
+        if let collectorId = JSONHandler.attemptParseToString(json["collector_id"]){
+            payment.collectorId = collectorId
         }
+        if let couponAmount = JSONHandler.attemptParseToDouble(json["coupon_amount"]){
+            payment.couponAmount = couponAmount
+        }
+        if let differentialPricingId = JSONHandler.attemptParseToString(json["differential_pricing_id"])?.numberValue {
+            payment.differentialPricingId = differentialPricingId
+        }
+		
+        if let issuerId = JSONHandler.attemptParseToInt(json["issuer_id"]){
+            payment.issuerId = issuerId
+        }
+        
+        if let tokenId = JSONHandler.attemptParseToString(json["token"]){
+            payment.tokenId = tokenId
+        }
+        
         return payment
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "id" : String(self._id),
+    open func toJSONString() -> String {
+        let obj:[String:Any] = [
+            "id" : String(describing: self._id),
             "transaction_amount": self.transactionAmount,
             "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId" : self.issuerId,
@@ -173,23 +194,23 @@ public class Payment : NSObject {
             "payment_method_id" : self.paymentMethodId,
             "status" : self.status,
             "status_detail" : self.statusDetail,
-            "card" : card == nil ? "" : card.toJSON().mutableCopyOfTheObject()
+            "card" : card == nil ? "" : card.toJSON()
         ]
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
-    public class func getDateFromString(string: String!) -> NSDate! {
+    open class func getDateFromString(_ string: String!) -> Date! {
         if string == nil {
             return nil
         }
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         var dateArr = string.characters.split {$0 == "T"}.map(String.init)
-        return dateFormatter.dateFromString(dateArr[0])
+        return dateFormatter.date(from: dateArr[0])
     }
     
-    public func isRejected() -> Bool {
+    open func isRejected() -> Bool {
         return self.status == PaymentStatus.REJECTED.rawValue
     }
 }

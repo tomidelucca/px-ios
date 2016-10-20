@@ -8,16 +8,16 @@
 
 import UIKit
 
-public class PromosTyCTableViewCell: UITableViewCell {
+open class PromosTyCTableViewCell: UITableViewCell {
 
-	@IBOutlet weak private var title: MPLabel!
+	@IBOutlet weak fileprivate var title: MPLabel!
 	
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.title.text = "Términos y condiciones".localized
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

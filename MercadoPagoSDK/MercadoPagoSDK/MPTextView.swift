@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class MPTextView: UITextView {
+open class MPTextView: UITextView {
 
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -27,24 +27,24 @@ public class MPTextView: UITextView {
         super.init(coder: aDecoder)
             }
     
-    func addCharactersSpacing(spacing:CGFloat) {
+    func addCharactersSpacing(_ spacing:CGFloat) {
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
-            attributedString.appendAttributedString(self.attributedText!)
+            attributedString.append(self.attributedText!)
         }
         attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, self.attributedText!.length))
         self.attributedText = attributedString
     }
     
-    func addLineSpacing(lineSpacing : Float){
+    func addLineSpacing(_ lineSpacing : Float){
         
         let attributedString = NSMutableAttributedString()
         if self.attributedText != nil {
-            attributedString.appendAttributedString(self.attributedText!)
+            attributedString.append(self.attributedText!)
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = CGFloat(lineSpacing)
-        paragraphStyle.alignment = .Center
+        paragraphStyle.alignment = .center
         attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
         self.attributedText = attributedString
         

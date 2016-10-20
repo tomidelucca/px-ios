@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class MPError: NSObject {
+open class MPError: NSObject {
 
-    public var message : String = ""
-    public var messageDetail : String = ""
-    public var retry : Bool?
+    open var message : String = ""
+    open var messageDetail : String = ""
+    open var retry : Bool?
     
     public override init(){
         super.init()
@@ -25,7 +25,7 @@ public class MPError: NSObject {
         self.retry = retry
     }
     
-    public class func convertFrom(error : NSError) -> MPError {
+    open class func convertFrom(_ error : NSError) -> MPError {
         let mpError = MPError()
         if error.userInfo.count > 0 {
             mpError.message = error.userInfo[NSLocalizedDescriptionKey] as? String ?? ""

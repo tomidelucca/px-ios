@@ -8,41 +8,41 @@
 
 import Foundation
 
-public class SecurityCode : NSObject {
-    public var length : Int = 0
-    public var cardLocation : String!
-    public var mode : String!
+open class SecurityCode : NSObject {
+    open var length : Int = 0
+    open var cardLocation : String!
+    open var mode : String!
     
     public override init(){
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> SecurityCode {
+    open class func fromJSON(_ json : NSDictionary) -> SecurityCode {
         let securityCode : SecurityCode = SecurityCode()
-        if json["length"] != nil && !(json["length"]! is NSNull) {
-            securityCode.length = (json["length"]! as? Int)!
+        if let length = JSONHandler.attemptParseToInt(json["length"]){
+            securityCode.length = length
         }
-        if json["card_location"] != nil && !(json["card_location"]! is NSNull) {
-            securityCode.cardLocation = JSON(json["card_location"]!).asString
+        if let cardLocation = JSONHandler.attemptParseToString(json["card_location"]){
+            securityCode.cardLocation = cardLocation
         }
-        if json["mode"] != nil && !(json["mode"]! is NSNull) {
-            securityCode.mode = JSON(json["mode"]!).asString
+        if let mode = JSONHandler.attemptParseToString(json["mode"]){
+            securityCode.mode = mode
         }
         return securityCode
     }
     
-    public func toJSONString() -> String {
-        return self.toJSON().toString()
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
     }
 
-    public func toJSON() -> JSON {
-        let obj:[String:AnyObject] = [
+    open func toJSON() -> [String:Any] {
+        let obj:[String:Any] = [
             "length": self.length,
             "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
             "mode" : self.mode
         ]
         
-        return JSON(obj)
+        return obj
     }
     
 }

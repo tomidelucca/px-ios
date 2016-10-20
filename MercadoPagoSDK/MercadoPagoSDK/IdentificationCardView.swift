@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IdentificationCardView: UIView {
+open class IdentificationCardView: UIView {
 var view:UIView!;
     
     override init(frame: CGRect) {
@@ -22,9 +22,9 @@ var view:UIView!;
         loadViewFromNib ()
     }
     func loadViewFromNib() {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
         //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(view)

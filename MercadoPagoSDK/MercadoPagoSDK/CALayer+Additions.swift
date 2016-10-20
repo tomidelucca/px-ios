@@ -9,8 +9,8 @@
 
 extension CALayer {
     
-    func shadowColorFromUIColor(color: UIColor) {
-        self.shadowColor = color.CGColor
+    func shadowColorFromUIColor(_ color: UIColor) {
+        self.shadowColor = color.cgColor
     }
     
 }

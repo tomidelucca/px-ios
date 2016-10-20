@@ -8,33 +8,35 @@
 
 import Foundation
 
-public class Issuer : NSObject {
-    public var _id : NSNumber?
-    public var name : String?
+open class Issuer : NSObject {
+    open var _id : NSNumber?
+    open var name : String?
     
-    public class func fromJSON(json : NSDictionary) -> Issuer {
+    open class func fromJSON(_ json : NSDictionary) -> Issuer {
         let issuer : Issuer = Issuer()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-			if let issuerIdStr = json["id"]! as? NSString {
-				issuer._id = NSNumber(longLong: issuerIdStr.longLongValue)
-			} else {
-				issuer._id = NSNumber(longLong: (json["id"] as? NSNumber)!.longLongValue)
-			}
+        
+        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue{
+            issuer._id = _id
         }
-        issuer.name = JSON(json["name"]!).asString
+        if let name = JSONHandler.attemptParseToString(json["name"]){
+            issuer.name = name
+        }
+        
         return issuer
     }
     
-    public func toJSONString() -> String {
-       return self.toJSON().toString()
+    open func toJSONString() -> String {
+       return JSONHandler.jsonCoding(toJSON())
     }
     
-    public func toJSON() -> JSON {
-        let obj:[String:AnyObject] = [
-            "id": self._id != nil ? JSON.null : self._id!,
-            "name" : self.name == nil ? JSON.null : self.name!,
+    open func toJSON() -> [String:Any] {
+        let id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let name : Any = self.name == nil ? JSONHandler.null : self.name!
+        let obj:[String:Any] = [
+            "id": id,
+            "name" : name,
             ]
-        return JSON(obj)
+        return obj
     }
 }
 

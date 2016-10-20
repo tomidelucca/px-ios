@@ -8,15 +8,15 @@
 
 import Foundation
 
-public class PayerCost : NSObject {
-    public var installments : Int = 0
-    public var installmentRate : Double = 0
-    public var labels : [String]!
-    public var minAllowedAmount : Double = 0
-    public var maxAllowedAmount : Double = 0
-    public var recommendedMessage : String!
-    public var installmentAmount : Double = 0
-    public var totalAmount : Double = 0
+open class PayerCost : NSObject {
+    open var installments : Int = 0
+    open var installmentRate : Double = 0
+    open var labels : [String]!
+    open var minAllowedAmount : Double = 0
+    open var maxAllowedAmount : Double = 0
+    open var recommendedMessage : String!
+    open var installmentAmount : Double = 0
+    open var totalAmount : Double = 0
     
     public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],
         minAllowedAmount : Double = 0, maxAllowedAmount : Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
@@ -32,32 +32,34 @@ public class PayerCost : NSObject {
     }
     
   
-    public class func fromJSON(json : NSDictionary) -> PayerCost {
+    open class func fromJSON(_ json : NSDictionary) -> PayerCost {
         let payerCost : PayerCost = PayerCost()
-		if json["installments"] != nil && !(json["installments"]! is NSNull) {
-			payerCost.installments = JSON(json["installments"]!).asInt!
-		}
-		if json["installment_rate"] != nil && !(json["installment_rate"]! is NSNull) {
-			payerCost.installmentRate = JSON(json["installment_rate"]!).asDouble!
-		}
-		if json["min_allowed_amount"] != nil && !(json["min_allowed_amount"]! is NSNull) {
-			payerCost.minAllowedAmount = JSON(json["min_allowed_amount"]!).asDouble!
-		}
-		if json["max_allowed_amount"] != nil && !(json["max_allowed_amount"]! is NSNull) {
-			payerCost.maxAllowedAmount = JSON(json["max_allowed_amount"]!).asDouble!
-		}
-		if json["installment_amount"] != nil && !(json["installment_amount"]! is NSNull) {
-			payerCost.installmentAmount = JSON(json["installment_amount"]!).asDouble!
-		}
-		if json["total_amount"] != nil && !(json["total_amount"]! is NSNull) {
-			payerCost.totalAmount = JSON(json["total_amount"]!).asDouble!
-		}
-        payerCost.recommendedMessage = JSON(json["recommended_message"]!).asString
+        if let installments = JSONHandler.attemptParseToInt(json["installments"]) {
+            payerCost.installments = installments
+        }
+        if let installmentRate = JSONHandler.attemptParseToDouble(json["installment_rate"]) {
+            payerCost.installmentRate = installmentRate
+        }
+        if let minAllowedAmount = JSONHandler.attemptParseToDouble(json["min_allowed_amount"]) {
+            payerCost.installmentRate = minAllowedAmount
+        }
+        if let maxAllowedAmount = JSONHandler.attemptParseToDouble(json["max_allowed_amount"]) {
+            payerCost.installmentRate = maxAllowedAmount
+        }
+        if let installmentAmount = JSONHandler.attemptParseToDouble(json["installment_amount"]) {
+            payerCost.installmentAmount = installmentAmount
+        }
+        if let totalAmount = JSONHandler.attemptParseToDouble(json["total_amount"]) {
+            payerCost.totalAmount = totalAmount
+        }
+        if let recommendedMessage = JSONHandler.attemptParseToString(json["recommended_message"]) {
+            payerCost.recommendedMessage = recommendedMessage
+        }
         return payerCost
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
+    open func toJSONString() -> String {
+        let obj:[String:Any] = [
             "installments": self.installments,
             "installmentRate" : self.installmentRate,
             "minAllowedAmount" : self.installmentRate,
@@ -66,7 +68,7 @@ public class PayerCost : NSObject {
             "installmentAmount" : self.installmentAmount,
             "totalAmount" : self.totalAmount,
             ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }
 

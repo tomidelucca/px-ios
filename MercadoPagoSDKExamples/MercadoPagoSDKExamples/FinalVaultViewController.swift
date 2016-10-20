@@ -11,18 +11,18 @@ import MercadoPagoSDK
 
 class FinalVaultViewController : AdvancedVaultViewController {
 
-    var finalCallback : ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?
+    var finalCallback : ((_ paymentMethod: PaymentMethod, _ token: String?, _ issuer: Issuer?, _ installments: Int) -> Void)?
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 	
-	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: ((paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void)?) {
+	override init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: ((_ paymentMethod: PaymentMethod, _ token: String?, _ issuer: Issuer?, _ installments: Int) -> Void)?) {
 		super.init(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: callback)
 		self.finalCallback = callback
 	}
    
-    override func getSelectionCallbackPaymentMethod() -> (paymentMethod : PaymentMethod) -> Void {
+    override func getSelectionCallbackPaymentMethod() -> (_ paymentMethod : PaymentMethod) -> Void {
         return { (paymentMethod : PaymentMethod) -> Void in
             self.selectedPaymentMethod = paymentMethod
             if PaymentTypeId(rawValue:paymentMethod.paymentTypeId!)!.isCard() {
@@ -49,7 +49,7 @@ class FinalVaultViewController : AdvancedVaultViewController {
             }
         }
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         
         if (self.selectedCard == nil && self.selectedCardToken == nil) || (self.selectedPaymentMethod != nil && !self.selectedPaymentMethod!.isCard()) {
@@ -63,13 +63,13 @@ class FinalVaultViewController : AdvancedVaultViewController {
         return 3
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row == 0 {
             if self.selectedCardToken == nil && self.selectedCard == nil && self.selectedPaymentMethod == nil {
-                self.emptyPaymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("emptyPaymentMethodCell") as! MPPaymentMethodEmptyTableViewCell
+                self.emptyPaymentMethodCell = self.tableview.dequeueReusableCell(withIdentifier: "emptyPaymentMethodCell") as! MPPaymentMethodEmptyTableViewCell
                 return self.emptyPaymentMethodCell
             } else {
-                self.paymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("paymentMethodCell") as! MPPaymentMethodTableViewCell
+                self.paymentMethodCell = self.tableview.dequeueReusableCell(withIdentifier: "paymentMethodCell") as! MPPaymentMethodTableViewCell
                 let paymentTypeId = PaymentTypeId(rawValue : self.selectedPaymentMethod!.paymentTypeId!)
                 if !paymentTypeId!.isCard() {
                     self.paymentMethodCell.fillWithPaymentMethod(self.selectedPaymentMethod!)                    
@@ -81,12 +81,12 @@ class FinalVaultViewController : AdvancedVaultViewController {
                 }
                 return self.paymentMethodCell
             }
-        } else if indexPath.row == 1 {
-            self.installmentsCell = self.tableview.dequeueReusableCellWithIdentifier("installmentsCell") as! MPInstallmentsTableViewCell
+        } else if (indexPath as NSIndexPath).row == 1 {
+            self.installmentsCell = self.tableview.dequeueReusableCell(withIdentifier: "installmentsCell") as! MPInstallmentsTableViewCell
             self.installmentsCell.fillWithPayerCost(self.selectedPayerCost, amount: self.amount)
             return self.installmentsCell
-        } else if indexPath.row == 2 {
-            self.securityCodeCell = self.tableview.dequeueReusableCellWithIdentifier("securityCodeCell") as! MPSecurityCodeTableViewCell
+        } else if (indexPath as NSIndexPath).row == 2 {
+            self.securityCodeCell = self.tableview.dequeueReusableCell(withIdentifier: "securityCodeCell") as! MPSecurityCodeTableViewCell
             self.securityCodeCell.fillWithPaymentMethod(self.selectedPaymentMethod!)
             self.securityCodeCell.securityCodeTextField.delegate = self
             return self.securityCodeCell

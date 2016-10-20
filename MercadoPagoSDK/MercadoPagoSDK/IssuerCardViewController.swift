@@ -8,12 +8,12 @@
 
 import UIKit
 
-public class IssuerCardViewController: MercadoPagoUIViewController {
+open class IssuerCardViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    var bundle : NSBundle? = MercadoPago.getBundle()
-    var callback : (( issuer: Issuer) -> Void)?
+    var bundle : Bundle? = MercadoPago.getBundle()
+    var callback : (( _ issuer: Issuer) -> Void)?
     
     var cardToken : CardToken?
     var paymentMethod : PaymentMethod?
@@ -21,13 +21,13 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     var cardFront : CardFrontView?
     var fontColor = UIColor(netHex:0x333333)
     
-    override public var screenName : String { get { return "CARD_ISSUER" } }
+    override open var screenName : String { get { return "CARD_ISSUER" } }
     
-    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : (( issuer: Issuer) -> Void)) {
+    public init(paymentMethod: PaymentMethod,  cardToken: CardToken , issuerList: [Issuer]? = nil, callback : @escaping (( _ issuer: Issuer) -> Void)) {
         
         super.init(nibName: "IssuerCardViewController", bundle: MercadoPago.getBundle())
         
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = UIRectEdge()
         self.cardToken = cardToken
         self.callback = callback
         self.paymentMethod = paymentMethod
@@ -41,7 +41,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
             
             
             //Navigation bar colors
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) ?? UIFont.systemFont(ofSize: 18)]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -50,7 +50,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
                 self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
                 self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
-                self.navigationController?.navigationBar.translucent = false
+                self.navigationController?.navigationBar.isTranslucent = false
                 //Create navigation buttons
                 displayBackButton()
             }
@@ -59,7 +59,7 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     }
 
     
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cardView.addSubview(cardFront!)
         
@@ -69,22 +69,22 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.primaryColor()
          tableView.tableFooterView = UIView()
         let issuerNib = UINib(nibName: "IssuerTableViewCell", bundle: self.bundle)
-        self.tableView.registerNib(issuerNib, forCellReuseIdentifier: "issuerCell")
+        self.tableView.register(issuerNib, forCellReuseIdentifier: "issuerCell")
         cardFront = CardFrontView(frame: self.cardView.bounds)
-        cardFront?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.updateCardSkin()
         // Do any additional setup after loading the view.
     }
     
     
-    public override func viewDidAppear(animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         
         self.showLoading()
         if(issuerList == nil){
@@ -102,22 +102,22 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
     }
 
 
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         
         return 50
     }
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    open func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if(self.issuerList == nil){
             return 0
@@ -126,19 +126,19 @@ public class IssuerCardViewController: MercadoPagoUIViewController {
         }
     }
 
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("issuerCell") as! IssuerTableViewCell
+    open func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let issuerCell : IssuerTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "issuerCell") as! IssuerTableViewCell
         
-        let issuer : Issuer = issuerList![indexPath.row]
+        let issuer : Issuer = issuerList![(indexPath as NSIndexPath).row]
         issuerCell.fillWithIssuer(issuer)
         return issuerCell
     }
 
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        callback!(issuer: self.issuerList![indexPath.row])
+    open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+        callback!(self.issuerList![(indexPath as NSIndexPath).row])
     }
-    public func updateCardSkin() {
+    open func updateCardSkin() {
         
         if(self.paymentMethod != nil){
             

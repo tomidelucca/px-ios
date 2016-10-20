@@ -8,41 +8,36 @@
 
 import UIKit
 
-public class PaymentMethodSearchItem : Equatable {
+open class PaymentMethodSearchItem : Equatable {
     
-    public var idPaymentMethodSearchItem : String!
-    public var type : PaymentMethodSearchItemType!
-    public var description : String!
-    public var comment : String?
-    public var childrenHeader : String?
-    public var children : [PaymentMethodSearchItem] = []
-    public var showIcon : Bool = false
+    open var idPaymentMethodSearchItem : String!
+    open var type : PaymentMethodSearchItemType!
+    open var description : String!
+    open var comment : String?
+    open var childrenHeader : String?
+    open var children : [PaymentMethodSearchItem] = []
+    open var showIcon : Bool = false
     
-    public class func fromJSON(json : NSDictionary) -> PaymentMethodSearchItem {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearchItem {
         let pmSearchItem = PaymentMethodSearchItem()
         
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            pmSearchItem.idPaymentMethodSearchItem = JSON(json["id"]!).asString
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            pmSearchItem.idPaymentMethodSearchItem = _id
         }
-        
-        if json["type"] != nil && !(json["type"]! is NSNull) {
-            pmSearchItem.type = PaymentMethodSearchItemType(rawValue: JSON(json["type"]!).asString!)
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            pmSearchItem.type = PaymentMethodSearchItemType(rawValue:type)
         }
-        
-        if json["description"] != nil && !(json["description"]! is NSNull) {
-            pmSearchItem.description = JSON(json["description"]!).asString!
+        if let description = JSONHandler.attemptParseToString(json["description"]){
+            pmSearchItem.description = description
         }
-        
-        if json["comment"] != nil && !(json["comment"]! is NSNull) {
-            pmSearchItem.comment = JSON(json["comment"]!).asString!
+        if let comment = JSONHandler.attemptParseToString(json["comment"]){
+            pmSearchItem.comment = comment
         }
-        
-        if json["show_icon"] != nil && !(json["show_icon"]! is NSNull) {
-            pmSearchItem.showIcon = JSON(json["show_icon"]!).asBool!
+        if let showIcon = JSONHandler.attemptParseToBool(json["show_icon"]){
+            pmSearchItem.showIcon = showIcon
         }
-        
-        if json["children_header"] != nil && !(json["children_header"]! is NSNull) {
-            pmSearchItem.childrenHeader = JSON(json["children_header"]!).asString!
+        if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]){
+            pmSearchItem.childrenHeader = childrenHeader
         }
         
         var children = [PaymentMethodSearchItem]()
@@ -58,19 +53,19 @@ public class PaymentMethodSearchItem : Equatable {
         return pmSearchItem
     }
     
-    public func isOfflinePayment() -> Bool {
+    open func isOfflinePayment() -> Bool {
         return PaymentTypeId.offlinePayments().contains(self.idPaymentMethodSearchItem)
     }
     
-    public func isBitcoin() -> Bool {
-        return self.idPaymentMethodSearchItem.lowercaseString == "bitcoin"
+    open func isBitcoin() -> Bool {
+        return self.idPaymentMethodSearchItem.lowercased() == "bitcoin"
     }
     
-    public func isPaymentMethod() -> Bool {
+    open func isPaymentMethod() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_METHOD
     }
     
-    public func isPaymentType() -> Bool {
+    open func isPaymentType() -> Bool {
         return self.type == PaymentMethodSearchItemType.PAYMENT_TYPE
     }
     
@@ -89,7 +84,7 @@ public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> 
     obj1.description == obj2.description &&
     obj1.comment == obj2.comment &&
     obj1.childrenHeader == obj2.childrenHeader &&
-    obj1.children == obj2.children
+    obj1.children == obj2.children &&
     obj1.showIcon == obj2.showIcon
     return areEqual
 }

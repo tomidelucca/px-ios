@@ -11,35 +11,35 @@ import UIKit
 
 class ViewUtils {
     
-    class func getTableCellSeparatorLineView(x : CGFloat, y : CGFloat, width : CGFloat, height : CGFloat) -> UIView {
+    class func getTableCellSeparatorLineView(_ x : CGFloat, y : CGFloat, width : CGFloat, height : CGFloat) -> UIView {
         let separatorLineView = UIView(frame: CGRect(x: x, y: y, width: width, height: height))
         separatorLineView.layer.zPosition = 1
         separatorLineView.backgroundColor = UIColor.grayTableSeparator()
         return separatorLineView
     }
     
-    class func addStatusBar(view : UIView, color : UIColor) {
-        let addStatusBar = UIView(frame: CGRectMake(0, 0, view.bounds.width, 20))
+    class func addStatusBar(_ view : UIView, color : UIColor) {
+        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 20))
         addStatusBar.backgroundColor = color
         view.addSubview(addStatusBar)
     }
     
-    class func addScaledImage(image : UIImage, inView view: UIView){
+    class func addScaledImage(_ image : UIImage, inView view: UIView){
         let imageView = UIImageView()
         imageView.frame = view.bounds
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
         view.addSubview(imageView)
     }
 
-    class func loadImageFromUrl(url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor.primaryColor(), loadingIndicatorColor : UIColor = UIColor.systemFontColor()){
+    class func loadImageFromUrl(_ url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor.primaryColor(), loadingIndicatorColor : UIColor = UIColor.systemFontColor()){
         LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            let url = NSURL(string: url)
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
+            let url = URL(string: url)
             if url != nil {
-                let data = NSData(contentsOfURL: url!)
+                let data = try? Data(contentsOf: url!)
                 if data != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         let image = UIImage(data: data!)
                         if image != nil {
                             ViewUtils.addScaledImage(image!, inView: inView)
@@ -54,12 +54,12 @@ class ViewUtils {
         })
     }
     
-    class func loadImageFromUrl(url : String) -> UIImage?{
+    class func loadImageFromUrl(_ url : String) -> UIImage?{
     
         
-            let url = NSURL(string: url)
+            let url = URL(string: url)
             if url != nil {
-                let data = NSData(contentsOfURL: url!)
+                let data = try? Data(contentsOf: url!)
                 if data != nil {
                         let image = UIImage(data: data!)
                         return image!
@@ -73,7 +73,7 @@ class ViewUtils {
         
     }
     
-    class func drawBottomLine(x : CGFloat = 0, y : CGFloat, width : CGFloat, inView view: UIView){
+    class func drawBottomLine(_ x : CGFloat = 0, y : CGFloat, width : CGFloat, inView view: UIView){
         let overLinewView = UIView(frame: CGRect(x: x, y: y, width: width, height: 1))
         overLinewView.backgroundColor = UIColor.UIColorFromRGB(0xDEDEDE)
         view.addSubview(overLinewView)

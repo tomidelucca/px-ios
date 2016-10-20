@@ -7,16 +7,36 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class MPPayment: NSObject {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class MPPayment: NSObject {
     
-    public var email : String!
-    public var preferenceId : String!
-    public var publicKey : String!
-    public var paymentMethodId : String!
-    public var installments : Int = 0
-    public var issuerId : String?
-    public var tokenId : String?
+    open var email : String!
+    open var preferenceId : String!
+    open var publicKey : String!
+    open var paymentMethodId : String!
+    open var installments : Int = 0
+    open var issuerId : String?
+    open var tokenId : String?
     
 
     init(email : String, preferenceId : String, publicKey : String, paymentMethodId : String, installments : Int = 0, issuerId : String = "", tokenId : String = "") {
@@ -29,8 +49,8 @@ public class MPPayment: NSObject {
         self.tokenId = tokenId
     }
     
-    public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
+    open func toJSONString() -> String {
+        var obj:[String:Any] = [
             "public_key": self.publicKey,
             "email": self.email,
             "payment_method_id": self.paymentMethodId,
@@ -47,7 +67,7 @@ public class MPPayment: NSObject {
             obj["issuer_id"] = self.issuerId
         }
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
 }

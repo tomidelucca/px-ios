@@ -15,7 +15,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var baseUrl: String?
     var getCustomerUri: String?
     var merchantAccessToken: String?
-    var callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?
+    var callback: ((PaymentMethod, Token?) -> Void)?
     var paymentPreference: PaymentPreference?
     
     @IBOutlet weak var tableview : UITableView!
@@ -38,7 +38,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
     var securityCodeLength : Int = 0
     var bin : String?
     
-    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, paymentPreference: PaymentPreference?, callback: ((paymentMethod: PaymentMethod, token: Token?) -> Void)?) {
+    init(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, paymentPreference: PaymentPreference?, callback: ((_ paymentMethod: PaymentMethod, _ token: Token?) -> Void)?) {
         super.init(nibName: "SimpleVaultViewController", bundle: nil)
         self.publicKey = merchantPublicKey
         self.baseUrl = merchantBaseUrl
@@ -60,85 +60,85 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: "Cargando...".localized)
         self.view.addSubview(self.loadingView)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SimpleVaultViewController.submitForm))
-        self.navigationItem.rightBarButtonItem?.enabled = false
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Continuar".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(SimpleVaultViewController.submitForm))
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         self.tableview.delegate = self
         self.tableview.dataSource = self
         
         declareAndInitCells()
         
-        MerchantServer.getCustomer(self.baseUrl!, success: { (customer: Customer) -> Void in
+        MerchantServer.getCustomer({ (customer) -> Void in
                 self.cards = customer.cards
                 self.loadingView.removeFromSuperview()
                 self.tableview.reloadData()
             }, failure: nil)
     }
 	
-	override func viewWillAppear(animated: Bool) {
+	override func viewWillAppear(_ animated: Bool) {
 		declareAndInitCells()
 		super.viewWillAppear(animated)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimpleVaultViewController.willShowKeyboard(_:)), name: UIKeyboardWillShowNotification, object: nil)
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimpleVaultViewController.willHideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(SimpleVaultViewController.willShowKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(SimpleVaultViewController.willHideKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 	}
 	
-	override func viewWillDisappear(animated: Bool) {
+	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NotificationCenter.default.removeObserver(self)
 	}
 	
-	func willHideKeyboard(notification: NSNotification) {
+	func willHideKeyboard(_ notification: Notification) {
 		// resize content insets.
 		let contentInsets = UIEdgeInsetsMake(64, 0.0, 0.0, 0)
 		self.tableview.contentInset = contentInsets
 		self.tableview.scrollIndicatorInsets = contentInsets
-		self.scrollToRow(NSIndexPath(forRow: 0, inSection: 0))
+		self.scrollToRow(IndexPath(row: 0, section: 0))
 	}
 	
-	func willShowKeyboard(notification: NSNotification) {
-		let s:NSValue? = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)
-		let keyboardBounds :CGRect = s!.CGRectValue()
+	func willShowKeyboard(_ notification: Notification) {
+		let s:NSValue? = ((notification as NSNotification).userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)
+		let keyboardBounds :CGRect = s!.cgRectValue
 		
 		// resize content insets.
 		let contentInsets = UIEdgeInsetsMake(64, 0.0, keyboardBounds.size.height, 0)
 		self.tableview.contentInset = contentInsets
 		self.tableview.scrollIndicatorInsets = contentInsets
-		let securityIndexPath = self.tableview.indexPathForCell(self.securityCodeCell)
+		let securityIndexPath = self.tableview.indexPath(for: self.securityCodeCell)
 		if securityIndexPath != nil {
 			self.scrollToRow(securityIndexPath!)
 		}
 	}
 	
-	func scrollToRow(indexPath: NSIndexPath) {
-		self.tableview.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+	func scrollToRow(_ indexPath: IndexPath) {
+		self.tableview.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: true)
 	}
     
     func declareAndInitCells() {
         let paymentMethodNib = UINib(nibName: "MPPaymentMethodTableViewCell", bundle: MercadoPago.getBundle())
-        self.tableview.registerNib(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
-        self.paymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("paymentMethodCell") as! MPPaymentMethodTableViewCell
+        self.tableview.register(paymentMethodNib, forCellReuseIdentifier: "paymentMethodCell")
+        self.paymentMethodCell = self.tableview.dequeueReusableCell(withIdentifier: "paymentMethodCell") as! MPPaymentMethodTableViewCell
         
         let emptyPaymentMethodNib = UINib(nibName: "MPPaymentMethodEmptyTableViewCell", bundle: MercadoPago.getBundle())
-        self.tableview.registerNib(emptyPaymentMethodNib, forCellReuseIdentifier: "emptyPaymentMethodCell")
-        self.emptyPaymentMethodCell = self.tableview.dequeueReusableCellWithIdentifier("emptyPaymentMethodCell") as! MPPaymentMethodEmptyTableViewCell
+        self.tableview.register(emptyPaymentMethodNib, forCellReuseIdentifier: "emptyPaymentMethodCell")
+        self.emptyPaymentMethodCell = self.tableview.dequeueReusableCell(withIdentifier: "emptyPaymentMethodCell") as! MPPaymentMethodEmptyTableViewCell
 
         let securityCodeNib = UINib(nibName: "MPSecurityCodeTableViewCell", bundle: MercadoPago.getBundle())
-        self.tableview.registerNib(securityCodeNib, forCellReuseIdentifier: "securityCodeCell")
-        self.securityCodeCell = self.tableview.dequeueReusableCellWithIdentifier("securityCodeCell") as! MPSecurityCodeTableViewCell
+        self.tableview.register(securityCodeNib, forCellReuseIdentifier: "securityCodeCell")
+        self.securityCodeCell = self.tableview.dequeueReusableCell(withIdentifier: "securityCodeCell") as! MPSecurityCodeTableViewCell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.selectedCard == nil && self.selectedCardToken == nil {
             return 1
         } else if !self.securityCodeRequired {
-            self.navigationItem.rightBarButtonItem?.enabled = true
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             return 1
         }
         return 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row == 0 {
             if self.selectedCardToken == nil && self.selectedCard == nil {
                 return self.emptyPaymentMethodCell
             } else {
@@ -149,7 +149,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 }
                 return self.paymentMethodCell
             }
-        } else if indexPath.row == 1 {
+        } else if (indexPath as NSIndexPath).row == 1 {
             self.securityCodeCell.fillWithPaymentMethod(self.selectedPaymentMethod!)
             self.securityCodeCell.securityCodeTextField.delegate = self
             return self.securityCodeCell
@@ -157,15 +157,15 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (indexPath.row == 1) {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if ((indexPath as NSIndexPath).row == 1) {
             return 143
         }
         return 65
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath as NSIndexPath).row == 0 {
             let paymentMethodsViewController = MPStepBuilder.startPaymentMethodsStep(withPreference: self.paymentPreference, callback: getSelectionCallbackPaymentMethod())
             
             if self.cards != nil {
@@ -179,23 +179,23 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String)-> Bool {
-        var txtAfterUpdate : NSString? = self.securityCodeCell.securityCodeTextField.text
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String)-> Bool {
+        var txtAfterUpdate : NSString? = self.securityCodeCell.securityCodeTextField.text as NSString?
 		if txtAfterUpdate != nil {
-			txtAfterUpdate = txtAfterUpdate!.stringByReplacingCharactersInRange(range, withString: string)
+			txtAfterUpdate = txtAfterUpdate!.replacingCharacters(in: range, with: string) as NSString?
 			
 			if txtAfterUpdate!.length < self.securityCodeLength {
-				self.navigationItem.rightBarButtonItem?.enabled = false
+				self.navigationItem.rightBarButtonItem?.isEnabled = false
 				return true
 			} else if txtAfterUpdate!.length == self.securityCodeLength {
-				self.navigationItem.rightBarButtonItem?.enabled = true
+				self.navigationItem.rightBarButtonItem?.isEnabled = true
 				return true
 			}
 		}
         return false
     }
 	
-    func getCustomerPaymentMethodCallback(paymentMethodsViewController : PaymentMethodsViewController) -> (selectedCard: Card?) -> Void {
+    func getCustomerPaymentMethodCallback(_ paymentMethodsViewController : PaymentMethodsViewController) -> (_ selectedCard: Card?) -> Void {
         return {(selectedCard: Card?) -> Void in
             if selectedCard != nil {
                 self.selectedCard = selectedCard
@@ -204,14 +204,14 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
                 self.securityCodeLength = self.selectedCard!.securityCode!.length
                 self.bin = self.selectedCard!.firstSixDigits
                 self.tableview.reloadData()
-                self.navigationController!.popViewControllerAnimated(true)
+                self.navigationController!.popViewController(animated: true)
             } else {
                 self.showViewController(paymentMethodsViewController)
             }
         }
     }
     
-    func getSelectionCallbackPaymentMethod() -> (paymentMethod : PaymentMethod) -> Void {
+    func getSelectionCallbackPaymentMethod() -> (_ paymentMethod : PaymentMethod) -> Void {
         return { (paymentMethod : PaymentMethod) -> Void in
             self.selectedCard = nil
             self.selectedPaymentMethod = paymentMethod
@@ -223,7 +223,7 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func getNewCardCallback() -> (cardToken: CardToken) -> Void {
+    func getNewCardCallback() -> (_ cardToken: CardToken) -> Void {
         return { (cardToken: CardToken) -> Void in
             self.selectedCardToken = cardToken
             self.bin = self.selectedCardToken!.getBin()
@@ -236,9 +236,9 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func getCreatePaymentCallback() -> (token: Token?) -> Void {
+    func getCreatePaymentCallback() -> (_ token: Token?) -> Void {
         return { (token: Token?) -> Void in
-            self.callback!(paymentMethod: self.selectedPaymentMethod!, token: token)
+            self.callback!(self.selectedPaymentMethod!, token)
         }
     }
     
@@ -277,9 +277,9 @@ class SimpleVaultViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
 	
-	func showViewController(vc: UIViewController) {
+	func showViewController(_ vc: UIViewController) {
 		if #available(iOS 8.0, *) {
-			self.showViewController(vc, sender: self)
+			self.show(vc, sender: self)
 		} else {
 			self.navigationController?.pushViewController(vc, animated: true)
 		}

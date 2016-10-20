@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PaymentIDTableViewCell: UITableViewCell {
+open class PaymentIDTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblID: MPLabel!
     @IBOutlet weak var lblTitle: MPLabel!
@@ -21,12 +21,12 @@ public class PaymentIDTableViewCell: UITableViewCell {
 		super.init(coder: aDecoder)
 	}
 
-	override public func awakeFromNib() {
+	override open func awakeFromNib() {
         super.awakeFromNib()
 		self.lblTitle.text = "Operación".localized
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -21,12 +21,12 @@ class OfflinePaymentMethodWithDescriptionCell: UITableViewCell {
         self.addSubview(ViewUtils.getTableCellSeparatorLineView(0, y: 0, width: self.frame.width, height: 1))
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     
-    func fillRowWith(paymentMethodSearchItem : PaymentMethodSearchItem) -> UITableViewCell {
+    func fillRowWith(_ paymentMethodSearchItem : PaymentMethodSearchItem) -> UITableViewCell {
         self.paymentDescription.text = paymentMethodSearchItem.description
         self.paymentIcon.image = MercadoPago.getImage(paymentMethodSearchItem.idPaymentMethodSearchItem)
         return self

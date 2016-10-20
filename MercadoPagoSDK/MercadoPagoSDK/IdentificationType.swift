@@ -8,40 +8,48 @@
 
 import Foundation
 
-public class IdentificationType : NSObject {
-    public var _id : String?
-    public var name : String?
-    public var type : String?
-    public var minLength : Int = 0
-    public var maxLength : Int = 0
+open class IdentificationType : NSObject {
+    open var _id : String?
+    open var name : String?
+    open var type : String?
+    open var minLength : Int = 0
+    open var maxLength : Int = 0
     
     
     
-    public class func fromJSON(json : NSDictionary) -> IdentificationType {
+    open class func fromJSON(_ json : NSDictionary) -> IdentificationType {
         let identificationType : IdentificationType = IdentificationType()
-        identificationType._id = JSON(json["id"]!).asString
-        identificationType.name = JSON(json["name"]!).asString
-        identificationType.type = JSON(json["type"]!).asString
-		
-		if json["min_length"] != nil && !(json["min_length"]! is NSNull) {
-			identificationType.minLength = (json["min_length"] as? Int)!
-		}
-		if json["max_length"] != nil && !(json["max_length"]! is NSNull) {
-			identificationType.maxLength = (json["max_length"] as? Int)!
-		}
-		
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            identificationType._id = _id
+        }
+        if let name = JSONHandler.attemptParseToString(json["name"]){
+            identificationType.name = name
+        }
+        if let type = JSONHandler.attemptParseToString(json["type"]){
+            identificationType.type = type
+        }
+        if let minLength = JSONHandler.attemptParseToInt(json["min_length"]){
+            identificationType.minLength = minLength
+        }
+        if let maxLength = JSONHandler.attemptParseToInt(json["max_length"]){
+            identificationType.maxLength = maxLength
+        }
         return identificationType
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "_id": self._id != nil ? JSON.null : self._id!,
-            "name" : self.name == nil ? JSON.null : self.name!,
-            "type" : self.type == nil ? JSON.null : self.type!,
+    open func toJSONString() -> String {
+        
+        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let name : Any = self.name == nil ? JSONHandler.null : self.name!
+        let type : Any = self.type == nil ? JSONHandler.null : self.type!
+        let obj:[String:Any] = [
+            "_id": _id,
+            "name" : name,
+            "type" : type,
             "min_length" : self.minLength,
             "max_length" : self.maxLength
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }
 

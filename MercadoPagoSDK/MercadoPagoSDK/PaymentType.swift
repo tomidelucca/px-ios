@@ -8,9 +8,9 @@
 
 import UIKit
 
-public class PaymentType: NSObject {
+open class PaymentType: NSObject {
 
-    public static let allPaymentIDs : Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue,PaymentTypeId.CREDIT_CARD.rawValue,PaymentTypeId.ACCOUNT_MONEY.rawValue,PaymentTypeId.TICKET.rawValue,PaymentTypeId.BANK_TRANSFER.rawValue,PaymentTypeId.ATM.rawValue,PaymentTypeId.BITCOIN.rawValue,PaymentTypeId.PREPAID_CARD.rawValue]
+    open static let allPaymentIDs : Set<String> = [PaymentTypeId.DEBIT_CARD.rawValue,PaymentTypeId.CREDIT_CARD.rawValue,PaymentTypeId.ACCOUNT_MONEY.rawValue,PaymentTypeId.TICKET.rawValue,PaymentTypeId.BANK_TRANSFER.rawValue,PaymentTypeId.ATM.rawValue,PaymentTypeId.BITCOIN.rawValue,PaymentTypeId.PREPAID_CARD.rawValue]
     
     var paymentTypeId : PaymentTypeId!
     
@@ -23,11 +23,11 @@ public class PaymentType: NSObject {
         self.paymentTypeId = paymentTypeId
     }
     
-    public class func fromJSON(json : NSDictionary) -> PaymentType {
+    open class func fromJSON(_ json : NSDictionary) -> PaymentType {
         let paymentType = PaymentType()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            
-            paymentType.paymentTypeId = PaymentTypeId(rawValue: (json["id"]!.stringValue))
+        
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
+            paymentType.paymentTypeId = PaymentTypeId(rawValue: _id)
         }
         return paymentType
     }

@@ -122,23 +122,23 @@ class ExamplesUtils {
         return "150216849-77db2abc-a73d-4293-8914-4a35ddf835c0"
     }
     
-    class func startCardActivity(merchantPublicKey: String, paymentMethod: PaymentMethod, callback: (token: Token?) -> Void) -> CardViewController {
+    class func startCardActivity(_ merchantPublicKey: String, paymentMethod: PaymentMethod, callback: @escaping (_ token: Token?) -> Void) -> CardViewController {
         return CardViewController(merchantPublicKey: merchantPublicKey, paymentMethod: paymentMethod, callback: callback)
     }
     
-    class func startSimpleVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, paymentPreference: PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: Token?) -> Void) -> SimpleVaultViewController {
+    class func startSimpleVaultActivity(_ merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, paymentPreference: PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?) -> Void) -> SimpleVaultViewController {
         return SimpleVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, paymentPreference: paymentPreference, callback: callback)
     }
     
-    class func startAdvancedVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> AdvancedVaultViewController {
+    class func startAdvancedVaultActivity(_ merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: String?, _ issuer: Issuer?, _ installments: Int) -> Void) -> AdvancedVaultViewController {
         return AdvancedVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: callback)
     }
     
-    class func startFinalVaultActivity(merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: (paymentMethod: PaymentMethod, token: String?, issuer: Issuer?, installments: Int) -> Void) -> FinalVaultViewController {
+    class func startFinalVaultActivity(_ merchantPublicKey: String, merchantBaseUrl: String, merchantGetCustomerUri: String, merchantAccessToken: String, amount: Double, paymentPreference: PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: String?, _ issuer: Issuer?, _ installments: Int) -> Void) -> FinalVaultViewController {
         return FinalVaultViewController(merchantPublicKey: merchantPublicKey, merchantBaseUrl: merchantBaseUrl, merchantGetCustomerUri: merchantGetCustomerUri, merchantAccessToken: merchantAccessToken, amount: amount, paymentPreference: paymentPreference, callback: callback)
     }
     
-    class func createPayment(token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: (payment: Payment) -> Void) {
+    class func createPayment(_ token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: @escaping (_ payment: Payment) -> Void) {
         // Set item
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
             unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)

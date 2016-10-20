@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class AmountInfo: NSObject {
+open class AmountInfo: NSObject {
     
     var amount : Double?
     var currency : Currency?
@@ -17,48 +17,45 @@ public class AmountInfo: NSObject {
         super.init()
     }
     
-    public class func fromJSON(json : NSDictionary) -> AmountInfo {
+    open class func fromJSON(_ json : NSDictionary) -> AmountInfo {
         let amountInfo : AmountInfo = AmountInfo()
-        
-        if json["amount"] != nil && !(json["amount"]! is NSNull) {
-            amountInfo.amount = JSON(json["amount"]!).asDouble!
+        if let amount = JSONHandler.attemptParseToDouble(json["amount"]) {
+            amountInfo.amount = amount
         }
-        
         let currency = Currency()
-        if json["thousands_separator"] != nil && !(json["thousands_separator"]! is NSNull) {
-            currency.thousandsSeparator = (json["thousands_separator"] as! String)
+        if let thousandsSeparator = JSONHandler.attemptParseToString(json["thousands_separator"]) {
+            currency.thousandsSeparator = thousandsSeparator
         }
-        
-        if json["decimal_separator"] != nil && !(json["decimal_separator"]! is NSNull) {
-            currency.decimalSeparator = (json["decimal_separator"] as! String)
+        if let decimalSeparator = JSONHandler.attemptParseToString(json["decimal_separator"]) {
+            currency.decimalSeparator = decimalSeparator
         }
-        
-        if json["symbol"] != nil && !(json["symbol"]! is NSNull) {
-            currency.symbol = json["symbol"] as! String
+        if let symbol = JSONHandler.attemptParseToString(json["symbol"]) {
+            currency.symbol = symbol
         }
-        
-        if json["decimal_places"] != nil && !(json["decimal_places"]! is NSNull) {
-            currency.decimalPlaces = json["decimal_places"] as! Int
+        if let decimalPlaces = JSONHandler.attemptParseToInt(json["decimal_places"]) {
+            currency.decimalPlaces = decimalPlaces
         }
-        
         amountInfo.currency = currency
         return amountInfo
     }
     
-    public func toJSONString() -> String {
-       return self.toJSON().toString()
+    open func toJSONString() -> String {
+       return JSONHandler.jsonCoding(self.toJSON())
     }
     
-    public func toJSON() -> JSON {
-        let obj:[String:AnyObject] = [
-            "amount": self.amount!,
-            "thousands_separator": self.currency == nil ? JSON.null : String(self.currency!.thousandsSeparator),
-            "decimal_separator": self.currency == nil ? JSON.null : String(self.currency!.decimalSeparator),
-            "symbol": self.currency == nil ? JSON.null : self.currency!.symbol,
-            "decimal_places": self.currency == nil ? JSON.null : self.currency!.decimalPlaces
-        ]
+    open func toJSON() -> [String:Any] {
+        let thousands_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
+        let decimal_separator : Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
+        let symbol : Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
+        let decimal_places : Any = self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces
         
-        return JSON(obj)
+        let obj:[String:Any] = ["amount": self.amount!,
+            "thousands_separator": thousands_separator,
+            "decimal_separator": decimal_separator,
+            "symbol": symbol,
+            "decimal_places": decimal_places]
+        return obj
     }
+    
     
 }

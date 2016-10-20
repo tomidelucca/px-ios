@@ -10,10 +10,10 @@ import UIKit
 
 class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     
-    var url : NSURL?
-    override public var screenName : String { get{ return "TERMS_AND_CONDITIONS" } }
+    var url : URL?
+    override internal var screenName : String { get{ return "TERMS_AND_CONDITIONS" } }
     @IBOutlet weak var webView: UIWebView!
-    init( url : NSURL) {
+    init( url : URL) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
         self.url = url
         
@@ -29,7 +29,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         self.webView.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.showLoading()
     }
 
@@ -39,12 +39,12 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func loadUrl(url : NSURL){
-        let requestObj = NSURLRequest(URL: url);
+    func loadUrl(_ url : URL){
+        let requestObj = URLRequest(url: url);
         webView.loadRequest(requestObj);
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         self.hideLoading()
     }
     

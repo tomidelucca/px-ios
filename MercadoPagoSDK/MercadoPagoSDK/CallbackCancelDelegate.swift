@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class CallbackCancelTableViewCell : UITableViewCell {
+open class CallbackCancelTableViewCell : UITableViewCell {
 
-    var callbackCancel : (Void -> Void)?
-    var defaultCallback : (Void -> Void)?
+    var callbackCancel : ((Void) -> Void)?
+    var defaultCallback : ((Void) -> Void)?
     
     func invokeCallbackCancel() {
         self.callbackCancel!()

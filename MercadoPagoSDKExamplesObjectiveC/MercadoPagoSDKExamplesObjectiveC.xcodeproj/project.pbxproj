@@ -12,8 +12,6 @@
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
 		763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */; };
 		763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */; };
-		765EA3C61D380BAB00F725A1 /* MercadoPagoTracker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7F151D255AC20087C785 /* MercadoPagoTracker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		765EA3C71D380BAB00F725A1 /* MPGoogleAnalytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7F171D255AC20087C785 /* MPGoogleAnalytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
 		76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E0681D2AD33F006CE49B /* SimpleVaultViewController.m */; };
 		76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E06D1D2AE529006CE49B /* SimpleVaultFormViewController.m */; };
@@ -58,34 +56,6 @@
 			remoteGlobalIDString = 0F9883151AD2A97A00F750F0;
 			remoteInfo = MercadoPagoSDKTests;
 		};
-		76EF7F141D255AC20087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7F0D1D255AC20087C785 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AC14DD33BD6E02ADFCEED7E129B98614;
-			remoteInfo = MercadoPagoTracker;
-		};
-		76EF7F161D255AC20087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7F0D1D255AC20087C785 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 407B83509C9710CB912718721904E816;
-			remoteInfo = MPGoogleAnalytics;
-		};
-		76EF7F181D255AC20087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7F0D1D255AC20087C785 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B80DA2429DD86C4B17AA0EFCB718629A;
-			remoteInfo = "Pods-MercadoPagoSDK";
-		};
-		76EF7F1A1D255AC20087C785 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 76EF7F0D1D255AC20087C785 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D018857919DD57A0CB67AD359D297D5;
-			remoteInfo = "Pods-MercadoPagoSDKTests";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,8 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				765EA3C61D380BAB00F725A1 /* MercadoPagoTracker.framework in Embed Frameworks */,
-				765EA3C71D380BAB00F725A1 /* MPGoogleAnalytics.framework in Embed Frameworks */,
 				15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -257,10 +225,6 @@
 		76EF7F0E1D255AC20087C785 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				76EF7F151D255AC20087C785 /* MercadoPagoTracker.framework */,
-				76EF7F171D255AC20087C785 /* MPGoogleAnalytics.framework */,
-				76EF7F191D255AC20087C785 /* Pods_MercadoPagoSDK.framework */,
-				76EF7F1B1D255AC20087C785 /* Pods_MercadoPagoSDKTests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -378,34 +342,6 @@
 			fileType = wrapper.cfbundle;
 			path = MercadoPagoSDKTests.xctest;
 			remoteRef = 76EF7EFC1D255AA10087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EF7F151D255AC20087C785 /* MercadoPagoTracker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MercadoPagoTracker.framework;
-			remoteRef = 76EF7F141D255AC20087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EF7F171D255AC20087C785 /* MPGoogleAnalytics.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MPGoogleAnalytics.framework;
-			remoteRef = 76EF7F161D255AC20087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EF7F191D255AC20087C785 /* Pods_MercadoPagoSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_MercadoPagoSDK.framework;
-			remoteRef = 76EF7F181D255AC20087C785 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		76EF7F1B1D255AC20087C785 /* Pods_MercadoPagoSDKTests.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_MercadoPagoSDKTests.framework;
-			remoteRef = 76EF7F1A1D255AC20087C785 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

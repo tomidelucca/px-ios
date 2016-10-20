@@ -7,18 +7,43 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class Installment : NSObject {
-    public var issuer : Issuer!
-    public var payerCosts : [PayerCost]!
-    public var paymentMethodId : String!
-    public var paymentTypeId : String!
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class Installment : NSObject {
+    open var issuer : Issuer!
+    open var payerCosts : [PayerCost]!
+    open var paymentMethodId : String!
+    open var paymentTypeId : String!
     
-    public class func fromJSON(json : NSDictionary) -> Installment {
+    open class func fromJSON(_ json : NSDictionary) -> Installment {
         let installment : Installment = Installment()
-        installment.paymentMethodId = JSON(json["payment_method_id"]!).asString
-        installment.paymentTypeId = JSON(json["payment_type_id"]!).asString
         
+        if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]){
+               installment.paymentMethodId = paymentMethodId
+        }
+        if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]){
+            installment.paymentTypeId = paymentTypeId
+        }
+
         if let issuerDic = json["issuer"] as? NSDictionary {
             installment.issuer = Issuer.fromJSON(issuerDic)
         }
@@ -36,9 +61,11 @@ public class Installment : NSObject {
         return installment
     }
     
-    public func toJSONString() -> String {
-        var obj:[String:AnyObject] = [
-            "issuer": self.issuer != nil ? JSON.null : self.issuer.toJSONString(),
+    open func toJSONString() -> String {
+        
+        let issuer : Any = self.issuer != nil ? JSONHandler.null : self.issuer.toJSONString()
+        var obj:[String:Any] = [
+            "issuer": issuer,
             "paymentMethodId" : self.paymentMethodId,
             "paymentTypeId" : self.paymentTypeId
             ]
@@ -49,10 +76,10 @@ public class Installment : NSObject {
         }
         obj["payerCosts"] = payerCostsJson
         
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
     
-    public func numberOfPayerCostToShow(maxNumberOfInstallments : Int? = nil) -> Int{
+    open func numberOfPayerCostToShow(_ maxNumberOfInstallments : Int? = 0) -> Int{
         var count = 0
         if (maxNumberOfInstallments == 0 || maxNumberOfInstallments == nil){
             return self.payerCosts!.count
@@ -67,7 +94,7 @@ public class Installment : NSObject {
         return count
     }
     
-    public func containsInstallment(installment : Int) -> PayerCost? {
+    open func containsInstallment(_ installment : Int) -> PayerCost? {
         
          for pc in payerCosts! {
             if (pc.installments == installment){

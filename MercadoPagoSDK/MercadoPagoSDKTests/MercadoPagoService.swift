@@ -10,16 +10,14 @@ import UIKit
 
 public class MercadoPagoService: NSObject {
     
-    static let MP_BASE_URL = "https://api.mercadopago.com"
-    
     var baseURL : String!
     init (baseURL : String) {
         super.init()
         self.baseURL = baseURL
     }
     
-    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, cache : Bool? = true, success: (jsonResult: AnyObject?) -> Void,
-        failure: ((error: NSError) -> Void)?) {
+    public func request(uri: String, params: String?, body: AnyObject?, method: String, headers : NSDictionary? = nil, cache : Bool? = true, success: (_ jsonResult: AnyObject?) -> Void,
+        failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoTestContext.addExpectation(withDescription: BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
         var finalUri = uri
@@ -29,7 +27,7 @@ public class MercadoPagoService: NSObject {
         
         
         if method == "POST" {
-            let bodyData = (body as! String).dataUsingEncoding(NSUTF8StringEncoding)
+            let bodyData = (body as! String).data(using: String.Encoding.utf8)
             let bodyParams = JSON(data: bodyData!)
             
             if let public_key = (bodyParams["public_key"].asString) {
@@ -49,10 +47,10 @@ public class MercadoPagoService: NSObject {
              return
              }*/
             
-            success(jsonResult: jsonResponse)
+            success(jsonResponse)
             MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
         } catch {
-            failure!(error: NSError(domain: uri, code: 400, userInfo: nil))
+            failure!(NSError(domain: uri, code: 400, userInfo: nil))
         }
     }
 }

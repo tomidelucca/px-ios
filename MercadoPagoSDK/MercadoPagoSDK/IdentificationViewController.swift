@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IdentificationViewController: MercadoPagoUIViewController , UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+open class IdentificationViewController: MercadoPagoUIViewController , UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     
     @IBOutlet weak var tipoDeDocumentoLabel: UILabel!
@@ -16,7 +16,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
-    var callback : (( _ : Identification) -> Void)?
+    var callback : (( Identification) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
     var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
@@ -26,49 +26,51 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     
     
-    override public var screenName : String { get { return "IDENTIFICATION_NUMBER" } }
+    override open var screenName : String { get { return "IDENTIFICATION_NUMBER" } }
     
-    public init(callback : (( _ : Identification) -> Void)) {
+    public init(callback : @escaping (( _ identification: Identification) -> Void)) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
          
     }
     override func loadMPStyles(){
-        
+        var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18)!]
+            if let font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18){
+                titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+            }
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+                self.navigationController?.navigationBar.tintColor = UIColor.white()
                 self.navigationController?.navigationBar.barTintColor =  UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
-                self.navigationController?.navigationBar.translucent = false
+                self.navigationController?.navigationBar.isTranslucent = false
                 displayBackButton()
             }
         }
-        let pickerView = UIPickerView(frame: CGRectMake(0, 150, view.frame.width, 216))
-        pickerView.backgroundColor = .whiteColor()
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height: 216))
+        pickerView.backgroundColor = .white()
         pickerView.showsSelectionIndicator = true
-        pickerView.backgroundColor = .whiteColor()
+        pickerView.backgroundColor = .white()
         pickerView.showsSelectionIndicator = true
         pickerView.dataSource = self
         pickerView.delegate = self
         let toolBar = UIToolbar()
-        toolBar.barStyle = UIBarStyle.Default
+        toolBar.barStyle = UIBarStyle.default
         toolBar.sizeToFit()
         
         
-        let doneButton = UIBarButtonItem(title: "OK".localized, style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(IdentificationViewController.donePicker))
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneButton.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+            doneButton.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
           }
 
         toolBar.setItems([spaceButton, doneButton], animated: false)
-        toolBar.userInteractionEnabled = true
+        toolBar.isUserInteractionEnabled = true
         
         textField.inputView = pickerView
         textField.inputAccessoryView = toolBar
@@ -76,7 +78,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
 
     
-    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
       
         if (string.characters.count < 1){
             return true
@@ -87,12 +89,12 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         return true
     }
 
-    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.numberDocLabel.resignFirstResponder()
         return true
     }
     
-    public func editingChanged(textField:UITextField) {
+    open func editingChanged(_ textField:UITextField) {
           hideErrorMessage()
        
          numberDocLabel.text = indentificationMask.textMasked(editTextMask.textUnmasked(textField.text))
@@ -105,35 +107,35 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func donePicker(){
+    open func donePicker(){
         textField.resignFirstResponder()
         numberTextField.becomeFirstResponder()
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         numberDocLabel.text = indentificationMask.textMasked("")
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
         self.view.backgroundColor = UIColor.complementaryColor()
-        numberTextField.autocorrectionType = UITextAutocorrectionType.No
-        numberTextField.keyboardType = UIKeyboardType.NumberPad
-        numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        numberTextField.autocorrectionType = UITextAutocorrectionType.no
+        numberTextField.keyboardType = UIKeyboardType.numberPad
+        numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
 
         self.setupInputAccessoryView()
         self.getIdentificationTypes()
-        typePicker.hidden = true;
+        typePicker.isHidden = true;
         
         
     }
-    public override func viewDidAppear(animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
         self.showLoading()
         super.viewDidAppear(animated)
-        self.navigationItem.leftBarButtonItem!.action = Selector("invokeCallbackCancel")
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
- public override func didReceiveMemoryWarning() {
+ open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
     }
@@ -141,12 +143,12 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
 
     
 
-    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int{
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int{
         return 1
     }
-   public  
+   open  
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         if(self.identificationTypes == nil){
             return 0
         }
@@ -154,77 +156,98 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         return self.identificationTypes!.count
     }
     
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.identificationTypes![row].name
     }
     
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         identificationType =  self.identificationTypes![row]
     //    typeButton.setTitle( self.identificationTypes![row].name, forState: .Normal)
         textField.text = self.identificationTypes![row].name
-        typePicker.hidden = true;
+        typePicker.isHidden = true;
        self.remask()
     }
     
-    @IBAction func setType(sender: AnyObject) {
+    @IBAction func setType(_ sender: AnyObject) {
         numberTextField.resignFirstResponder()
-        typePicker.hidden = false
+        typePicker.isHidden = false
         
     }
 
     var navItem : UINavigationItem?
     var doneNext : UIBarButtonItem?
     var donePrev : UIBarButtonItem?
+
     
     func setupInputAccessoryView() {
-        
-        inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
-        inputButtons!.barStyle = UIBarStyle.Default;
+
+        inputButtons = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
+        inputButtons!.barStyle = UIBarStyle.default;
+
         inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
         inputButtons!.alpha = 1;
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 2, height: 40)
+        
+        let buttonNext = UIButton(frame: frame)
+        buttonNext.setTitle("Continuar".localized, for: .normal)
+        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), for: .touchUpInside)
+        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        
+        let buttonPrev = UIButton(frame: frame)
+        buttonPrev.setTitle("Anterior".localized, for: .normal)
+        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), for: .touchUpInside)
+        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        
+        /*
+         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
+         }
+         */
         navItem = UINavigationItem()
+        doneNext = UIBarButtonItem(customView: buttonNext)
+        donePrev = UIBarButtonItem(customView: buttonPrev)
         
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
+
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        }
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
-        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         navItem!.rightBarButtonItem = doneNext
         navItem!.leftBarButtonItem = donePrev
-        inputButtons!.pushNavigationItem(navItem!, animated: false)
+        
+
+        inputButtons!.pushItem(navItem!, animated: false)
+        
         numberTextField.inputAccessoryView = inputButtons
-                
+        
+        
     }
 
     func rightArrowKeyTapped(){
-        let idnt = Identification(type: identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
+        let idnt = Identification(type: self.identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
         
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
 
-        if ((cardToken.validateIdentificationNumber(identificationType)) == nil){
+        if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
         }else{
-            showErrorMessage((cardToken.validateIdentificationNumber(identificationType)?.userInfo["identification"] as? String)!)
+            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType)?.userInfo["identification"] as? String)!)
         }
        
     }
     var inputButtons : UINavigationBar?
      var errorLabel : MPLabel?
-    func showErrorMessage(errorMessage:String){
+    func showErrorMessage(_ errorMessage:String){
         errorLabel = MPLabel(frame: inputButtons!.frame)
         self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
         self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
         self.errorLabel!.text = errorMessage
-        self.errorLabel!.textAlignment = .Center
-        self.errorLabel!.font = self.errorLabel!.font.fontWithSize(12)
-        numberTextField.borderInactiveColor = UIColor.redColor()
-        numberTextField.borderActiveColor = UIColor.redColor()
+        self.errorLabel!.textAlignment = .center
+        self.errorLabel!.font = self.errorLabel!.font.withSize(12)
+        numberTextField.borderInactiveColor = UIColor.red
+        numberTextField.borderActiveColor = UIColor.red
         numberTextField.inputAccessoryView = errorLabel
         numberTextField.setNeedsDisplay()
         numberTextField.resignFirstResponder()
@@ -244,15 +267,15 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
     
     func leftArrowKeyTapped(){
-        self.navigationController?.popViewControllerAnimated(false)
+        self.navigationController?.popViewController(animated: false)
         
     }
     
-    private func getIdentificationTypes(){
-        doneNext?.enabled = false
+    fileprivate func getIdentificationTypes(){
+        doneNext?.isEnabled = false
         MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
             self.hideLoading()
-            self.doneNext?.enabled = true
+            self.doneNext?.isEnabled = true
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
             self.identificationType =  self.identificationTypes![0]
@@ -261,7 +284,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
             self.remask()
             }, failure : { (error) -> Void in
                 self.requestFailure(error, callback: {
-                    self.dismissViewControllerAnimated(true, completion: {})
+                    self.dismiss(animated: true, completion: {})
                     self.getIdentificationTypes()
                     }, callbackCancel: {
                         if self.callbackCancel != nil {
@@ -272,7 +295,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
     }
     
     
-    private func remask(){
+    fileprivate func remask(){
         if (self.identificationType!.name == "CPF"){
             self.indentificationMask = TextMaskFormater(mask: "XXX.XXX.XXX-XX",completeEmptySpaces: true,leftToRight: true)
         }else if (self.identificationType!.name == "CNPJ"){

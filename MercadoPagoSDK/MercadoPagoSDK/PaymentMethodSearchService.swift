@@ -1,4 +1,4 @@
-//
+  //
 //  PaymentMethodSearchService.swift
 //  MercadoPagoSDK
 //
@@ -7,44 +7,74 @@
 //
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class PaymentMethodSearchService: MercadoPagoService {
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class PaymentMethodSearchService: MercadoPagoService {
     
-    public let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
+    open let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
+    //public let MP_SEARCH_PAYMENTS_URI = "/payment_methods/search/options"
     
     public init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    public func getPaymentMethods(amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: (paymentMethodSearch: PaymentMethodSearch) -> Void, failure: ((error: NSError) -> Void)) {
+    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
         
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
-            let excludedPaymentTypesParams = excludedPaymentTypeIds!.map({$0}).joinWithSeparator(",")
+            let excludedPaymentTypesParams = excludedPaymentTypeIds!.map({$0}).joined(separator: ",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }
         
         if excludedPaymentMethodIds != nil && excludedPaymentMethodIds!.count > 0 {
-            let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joinWithSeparator(",")
+            let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joined(separator: ",")
             params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
         }
-        self.request(MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
+        
+        if customerEmail != nil && customerEmail!.characters.count > 0 {
+            params = params + "&email=" + customerEmail!
+        }
+        
+        if customerId != nil && customerId!.characters.count > 0 {
+            params = params + "&customer_id=" + customerId!
+        }
+        
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
-                    failure(error: NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se han podido obtener los métodos de pago".localized]))
+                    failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                 } else {
                     if paymentSearchDic.allKeys.count > 0 {
                         let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
-                        success(paymentMethodSearch : paymentSearch)
+                        success(paymentSearch)
                     } else {
-                        failure(error: NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se han podido obtener los métodos de pago".localized]))
+                        failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                     }
                 }
             }
             
             },  failure: { (error) -> Void in
-                failure(error: NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a ineternet e intente nuevamente".localized]))
+                failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a ineternet e intente nuevamente".localized]))
         })
     }
     

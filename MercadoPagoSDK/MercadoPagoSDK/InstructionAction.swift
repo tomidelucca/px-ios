@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class InstructionAction : Equatable {
+open class InstructionAction : Equatable {
     
     var label: String!
     var url : String!
     var tag : String!
     
-    public class func fromJSON(json : NSDictionary) -> InstructionAction {
+    open class func fromJSON(_ json : NSDictionary) -> InstructionAction {
         let action = InstructionAction()
             if json["label"] != nil && !(json["label"]! is NSNull) {
             action.label = json["label"] as! String

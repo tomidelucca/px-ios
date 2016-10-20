@@ -8,11 +8,10 @@
 
 import Foundation
 
-public class SavedCardToken : NSObject {
-    public var cardId : String?
-    public var securityCode : String?
-    public var device : Device?
-    public var securityCodeRequired : Bool = true
+open class SavedCardToken : CardToken {
+    
+    open var cardId : String?
+    open var securityCodeRequired : Bool = true
     
     public init(cardId : String, securityCode : String) {
         super.init()
@@ -20,32 +19,36 @@ public class SavedCardToken : NSObject {
         self.securityCode = securityCode
     }
     
-    public init(card : Card, securityCode : String?, securityCodeRequired: Bool) {
+    public init(card : CardInformation, securityCode : String?, securityCodeRequired: Bool) {
         super.init()
-        self.cardId = card.idCard.stringValue
+        self.cardId = card.getCardId()
         self.securityCode = securityCode
         self.securityCodeRequired = securityCodeRequired
     }
     
-    public func validate() -> Bool {
-        return validateCardId() && (!securityCodeRequired || validateSecurityCode())
+    open override func validate() -> Bool {
+        return self.validateCardId() && (!securityCodeRequired || self.validateSecurityCodeNumbers())
     }
     
-    public func validateCardId() -> Bool {
+    open func validateCardId() -> Bool {
         return !String.isNullOrEmpty(cardId) && String.isDigitsOnly(cardId!)
     }
     
-    public func validateSecurityCode() -> Bool {
+    open func validateSecurityCodeNumbers() -> Bool {
         let isEmptySecurityCode : Bool = String.isNullOrEmpty(self.securityCode)
         return !isEmptySecurityCode && self.securityCode!.characters.count >= 3 && self.securityCode!.characters.count <= 4
     }
     
-    public func toJSONString() -> String {
-        let obj:[String:AnyObject] = [
-            "card_id": String.isNullOrEmpty(self.cardId) ? JSON.null : self.cardId!,
-            "security_code" : String.isNullOrEmpty(self.securityCode) ? JSON.null : self.securityCode!,
-            "device" : self.device == nil ? JSON.null : self.device!.toJSONString()
+    open override func isCustomerPaymentMethod() -> Bool {
+        return true
+    }
+    
+    open override func toJSONString() -> String {
+        let obj:[String:Any] = [
+            "card_id": String.isNullOrEmpty(self.cardId!) ? JSONHandler.null : self.cardId!,
+            "security_code" : String.isNullOrEmpty(self.securityCode!) ? JSONHandler.null : self.securityCode!,
+            "device" : self.device == nil ? JSONHandler.null : self.device!.toJSONString()
         ]
-        return JSON(obj).toString()
+        return JSONHandler.jsonCoding(obj)
     }
 }

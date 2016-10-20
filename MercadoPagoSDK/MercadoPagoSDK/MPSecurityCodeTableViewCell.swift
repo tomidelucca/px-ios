@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-public class MPSecurityCodeTableViewCell : ErrorTableViewCell {
-    @IBOutlet weak private var securityCodeLabel: MPLabel!
-    @IBOutlet weak private var securityCodeInfoLabel: MPLabel!
-    @IBOutlet weak public var securityCodeTextField: MPTextField!
-    @IBOutlet weak private var securityCodeImageView: UIImageView!
+open class MPSecurityCodeTableViewCell : ErrorTableViewCell {
+    @IBOutlet weak fileprivate var securityCodeLabel: MPLabel!
+    @IBOutlet weak fileprivate var securityCodeInfoLabel: MPLabel!
+    @IBOutlet weak open var securityCodeTextField: MPTextField!
+    @IBOutlet weak fileprivate var securityCodeImageView: UIImageView!
     
     override public init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 		self.securityCodeLabel.text = "security_code".localized
     }
@@ -28,11 +28,11 @@ public class MPSecurityCodeTableViewCell : ErrorTableViewCell {
         super.init(coder: aDecoder)
     }
     
-    public func getSecurityCode() -> String! {
+    open func getSecurityCode() -> String! {
         return self.securityCodeTextField.text
     }
     
-    public func fillWithPaymentMethod(pm : PaymentMethod) {
+    open func fillWithPaymentMethod(_ pm : PaymentMethod) {
         self.securityCodeImageView.image = MercadoPago.getImage("imgTc_" + pm._id)
         if pm._id == "amex" {
 			var amexCvvLength = 4
@@ -40,14 +40,14 @@ public class MPSecurityCodeTableViewCell : ErrorTableViewCell {
 				amexCvvLength = pm.settings[0].securityCode!.length
 			}
 			
-            self.securityCodeInfoLabel.text = ("cod_seg_desc_amex".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: "\(amexCvvLength)")
+            self.securityCodeInfoLabel.text = ("cod_seg_desc_amex".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(amexCvvLength)")
         } else {
 			var cvvLength = 3
 			if pm.settings != nil && pm.settings.count > 0 {
 				cvvLength = pm.settings[0].securityCode!.length
 			}
 			
-            self.securityCodeInfoLabel.text = ("cod_seg_desc".localized as NSString).stringByReplacingOccurrencesOfString("%1$s", withString: "\(cvvLength)")
+            self.securityCodeInfoLabel.text = ("cod_seg_desc".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
         }
         
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ErrorViewController: MercadoPagoUIViewController {
+open class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet weak var  errorTitle: MPLabel! 
     
@@ -20,17 +20,17 @@ public class ErrorViewController: MercadoPagoUIViewController {
     
     @IBOutlet weak var retryButton: MPButton!
     var error : MPError!
-    var callback : (Void -> Void)?
+    var callback : ((Void) -> Void)?
     
-    override public var screenName : String { get { return "ERROR" } }
+    override open var screenName : String { get { return "ERROR" } }
     
-    public var exitErrorCallback : (Void -> Void)!
+    open var exitErrorCallback : ((Void) -> Void)!
     
-    public init(error : MPError!, callback : (Void -> Void)?, callbackCancel : (Void -> Void)? = nil){
+    public init(error : MPError!, callback : ((Void) -> Void)?, callbackCancel : ((Void) -> Void)? = nil){
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
         self.exitErrorCallback = {
-            self.dismissViewControllerAnimated(true, completion: {})
+            self.dismiss(animated: true, completion: {})
             if self.callbackCancel != nil {
                 self.callbackCancel!()
             }
@@ -43,21 +43,21 @@ public class ErrorViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
         self.errorSubtitle.text = error.messageDetail
-        self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), forControlEvents: .TouchUpInside)
+        self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
         
         if self.error.retry! {
-            self.retryButton.addTarget(self, action: #selector(ErrorViewController.invokeCallback), forControlEvents: .TouchUpInside)
-            self.retryButton.hidden = false
+            self.retryButton.addTarget(self, action: #selector(ErrorViewController.invokeCallback), for: .touchUpInside)
+            self.retryButton.isHidden = false
         } else {
-            self.retryButton.hidden = true
+            self.retryButton.isHidden = true
         }
     }
     
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
@@ -66,9 +66,9 @@ public class ErrorViewController: MercadoPagoUIViewController {
             callback!()
         } else {
             if self.navigationController != nil {
-                self.navigationController!.dismissViewControllerAnimated(true, completion: {})
+                self.navigationController!.dismiss(animated: true, completion: {})
             } else {
-                self.dismissViewControllerAnimated(true, completion: {})
+                self.dismiss(animated: true, completion: {})
             }
         }
     }

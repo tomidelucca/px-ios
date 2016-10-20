@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PreferenceDescriptionTableViewCell: UITableViewCell {
+open class PreferenceDescriptionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var preferenceDescription: MPLabel!
     
@@ -19,28 +19,28 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
     
     
     
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        let tintedImage = self.shoppingCartIcon.image!.imageWithRenderingMode(.AlwaysTemplate)
+        let tintedImage = self.shoppingCartIcon.image!.withRenderingMode(.alwaysTemplate)
         
         self.shoppingCartIcon.image = tintedImage
         self.shoppingCartIcon.backgroundColor = UIColor.primaryColor()
         self.shoppingCartIcon.tintColor = UIColor.systemFontColor()
         self.backgroundColor = MercadoPagoContext.getComplementaryColor()
         self.shoppingCartIconContainer.layer.borderWidth = 1.0
-        self.shoppingCartIconContainer.layer.borderColor = UIColor.whiteColor().CGColor
+        self.shoppingCartIconContainer.layer.borderColor = UIColor.white().cgColor
         self.shoppingCartIconContainer.backgroundColor = UIColor.primaryColor()
     
     }
 
-    override public func setSelected(selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    internal func fillRowWithPreference(preference : CheckoutPreference){
+    internal func fillRowWithPreference(_ preference : CheckoutPreference){
         let currency = CurrenciesUtil.getCurrencyFor(preference.getCurrencyId())
         self.fillRowWithSettings(preference.getAmount(), purchaseTitle: preference.getTitle(), pictureUrl: preference.getPictureUrl(), currency : currency!)
         if (preference.choImage != nil){
@@ -48,7 +48,7 @@ public class PreferenceDescriptionTableViewCell: UITableViewCell {
         }
     }
     
-    internal func fillRowWithSettings(amount : Double, purchaseTitle: String? = "", pictureUrl : String? = "", currency : Currency){
+    internal func fillRowWithSettings(_ amount : Double, purchaseTitle: String? = "", pictureUrl : String? = "", currency : Currency){
         self.preferenceAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: String(currency.getThousandsSeparatorOrDefault()), decimalSeparator: String(currency.getDecimalSeparatorOrDefault()), currencySymbol: String(currency.getCurrencySymbolOrDefault()))
         self.preferenceDescription.text = purchaseTitle
         
