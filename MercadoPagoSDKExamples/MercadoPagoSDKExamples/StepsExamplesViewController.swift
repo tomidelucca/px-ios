@@ -107,7 +107,18 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     func startCardFlow(){
         var cf : UINavigationController!
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, callback: { (paymentMethod, token, issuer, payerCost) in
+        
+        let timeoutCallback : (Void) -> Void = {
+            let alert = UIAlertView(title: "Ups!",
+                                    message: "Se ha acabado el tiempo. Reinicie la compra",
+                                    delegate: nil,
+                                    cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
+        let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
+        
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -121,7 +132,19 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
     func startCardForm(){
         var cf : UINavigationController!
-        cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
+        
+        
+        let timeoutCallback : (Void) -> Void = {
+            let alert = UIAlertView(title: "Ups!",
+                                    message: "Se ha acabado el tiempo. Reinicie la compra",
+                                    delegate: nil,
+                                    cancelButtonTitle: "OK")
+            alert.show()
+        }
+        
+        let timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
+        
+        cf = MPStepBuilder.startCreditCardForm(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -129,6 +152,8 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             }, callbackCancel : {
                 cf!.dismiss(animated: true, completion: {})
         })
+        
+        
         
         self.present(cf, animated: true, completion: {})
     }
