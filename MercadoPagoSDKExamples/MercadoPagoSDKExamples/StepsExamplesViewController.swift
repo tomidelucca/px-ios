@@ -118,7 +118,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         
         let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : nil, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -127,14 +127,15 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             }, callbackCancel : {
                 cf!.dismiss(animated: true, completion: {})
         })
+        
         self.present(cf, animated: true, completion: {})
     }
     
     func startCardForm(){
-        var cf : UINavigationController!
+       weak var cf : UINavigationController!
         
         
-        let timeoutCallback : (Void) -> Void = {
+        var timeoutCallback : (Void) -> Void = {
             let alert = UIAlertView(title: "Ups!",
                                     message: "Se ha acabado el tiempo. Reinicie la compra",
                                     delegate: nil,
@@ -142,7 +143,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        let timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
+        weak var timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
         
         cf = MPStepBuilder.startCreditCardForm(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod

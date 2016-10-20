@@ -13,12 +13,14 @@ open class CountdownTimer: NSObject {
     var timer : Timer!
     var secondsLeft = 0
     var timeoutCallback : ((Void) -> Void?)!
-    weak var delegate : TimerDelegate!
+    var delegate : TimerDelegate!
     
     public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
         super.init()
         self.secondsLeft = seconds
         self.timeoutCallback = timeoutCallback
+        
+        
         self.timer = Timer.scheduledTimer(timeInterval: 1,
                                           target: self,
                                           selector: #selector(self.updateTimer),
@@ -27,11 +29,16 @@ open class CountdownTimer: NSObject {
     }
     
     open func updateTimer(){
-        secondsLeft -= 1
-        if self.delegate != nil {
-            self.delegate?.updateTimer()
-        }
         
+        print("timer retain count \(CFGetRetainCount(self))")
+        
+        guard let delegate = self.delegate  else {
+            self.timer.invalidate()
+            return
+        }
+        secondsLeft -= 1
+        delegate.updateTimer()
+    
         if secondsLeft == 0 {
             stopTimer()
             timeoutCallback()
@@ -69,7 +76,9 @@ open class CountdownTimer: NSObject {
         
         return (hoursStr.characters.count > 0) ? (hoursStr + " : " + minutesStr + " : " + secondsStr) : (minutesStr + " : " + secondsStr)
     }
-    
+    deinit {
+        print("Limpie el timer")
+    }
 
 }
 

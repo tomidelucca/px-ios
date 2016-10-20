@@ -276,6 +276,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.timerLabel!.text = self.timer!.getCurrentTiming()
         }
     }
+    
+    deinit {
+        print("\(String(describing: type(of: self))) dellocated" )
+    }
 
 }
 
