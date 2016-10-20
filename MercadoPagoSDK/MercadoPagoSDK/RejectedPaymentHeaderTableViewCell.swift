@@ -36,7 +36,7 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
             title = "Uy, no pudimos procesar el pago".localized
         }
         
-        let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
+        let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name!)")
         self.title.text = titleWithParams
         
         
