@@ -44,15 +44,6 @@ public enum GAKey : String {
 }
 */
 
-public protocol MPTrackerDelegate {
-    
-    func flavor() -> Flavor!
-    func framework() -> String!
-    func sdkVersion() -> String!
-    func publicKey() -> String!
-    func siteId() -> String!
-
-}
 
 public protocol MPPaymentTrackInformer {
 
