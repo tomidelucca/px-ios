@@ -148,7 +148,7 @@ int installmentsSelected = 1;
     
     [MPServicesBuilder getInstallments:@"503175" amount:200 issuer:is paymentMethodId:@"master" success:^(NSArray<Installment *> *installments) {
         
-        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:pm issuer:is token:nil amount:20 paymentPreference:nil installment:nil callback:^(NSObject * PayerCost) {
+        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:pm issuer:is token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(NSObject * PayerCost) {
             
         } callbackCancel:^{
             
@@ -172,7 +172,7 @@ int installmentsSelected = 1;
     
     [MPServicesBuilder getInstallments:@"503175" amount:200 issuer:is paymentMethodId:@"master" success:^(NSArray<Installment *> *installments) {
         
-        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:pm issuer:is token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(NSObject * issuer) {
+        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:pm issuer:nil token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(NSObject * issuer) {
             
         } callbackCancel:^{
             

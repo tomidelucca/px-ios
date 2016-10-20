@@ -21,12 +21,13 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none //sacar lineas
         loadMPStyles()
+
         
         //Vista azul de arriba
         var frame = self.tableView.bounds
         frame.origin.y = -frame.size.height;
         let view = UIView(frame: frame)
-        view.backgroundColor = UIColor(red: 0, green: 158, blue: 227)
+        view.backgroundColor = MercadoPagoContext.getPrimaryColor()
         tableView.addSubview(view)
         
         let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
@@ -44,10 +45,12 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideNavBar()
+        
         self.tableView.reloadData()
+
         //        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         if !self.viewModel.hasIssuer() {
             self.showLoading()
@@ -58,6 +61,17 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         } else {
             self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
         }
+        tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+    }
+    
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+
+
     }
     
     override func loadMPStyles(){
@@ -66,7 +80,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             
             self.navigationController!.interactivePopGestureRecognizer?.delegate = self
             self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
-            self.navigationController?.navigationBar.barTintColor = UIColor(red: 0, green: 158, blue: 227)
+            self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             
@@ -123,6 +137,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! PayerCostTitleTableViewCell
             titleCell.selectionStyle = .none // Sacar color cuando click
             titleCell.setTitle(string: self.viewModel.getTilte())
+            titleCell.backgroundColor = MercadoPagoContext.getPrimaryColor()
             
             return titleCell
             
@@ -131,6 +146,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             cardCell.selectionStyle = .none // Sacar color cuando click
             cardCell.loadCard()
             cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethod)
+            cardCell.backgroundColor = MercadoPagoContext.getPrimaryColor()
             
             return cardCell
             
@@ -139,6 +155,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                 let payerCost : PayerCost = self.viewModel.payerCosts![indexPath.row]
                 let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath as IndexPath) as! PayerCostRowTableViewCell
                 installmentCell.fillCell(payerCost: payerCost)
+                installmentCell.selectionStyle = .none // Sacar color cuando click
                 installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width))
                 
                 return installmentCell
@@ -146,6 +163,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                 let issuer : Issuer = self.viewModel.issuersList![indexPath.row]
                 let issuerCell = tableView.dequeueReusableCell(withIdentifier: "rowIssuerNib", for: indexPath as IndexPath) as! IssuerRowTableViewCell
                 issuerCell.fillCell(issuer: issuer, bundle: self.bundle!)
+                issuerCell.selectionStyle = .none // Sacar color cuando click
                 issuerCell.addSeparatorLineToTop(width: Double(issuerCell.contentView.frame.width))
 
                 return issuerCell
@@ -175,6 +193,13 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
     }
+    func hideNavBar(){
+        self.title = ""
+        navigationController?.navigationBar.titleTextAttributes = nil
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+    }
     
     var once = false
     var lastContentOffset: CGFloat = 0
@@ -187,12 +212,9 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         for index in visibleIndexPaths {
             if (index.section == 0){
                 if !once {
-                    self.title = ""
-                    navigationController?.navigationBar.titleTextAttributes = nil
+                    hideNavBar()
                     titleVisible = true
-                    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-                    self.navigationController?.navigationBar.shadowImage = UIImage()
-                    self.navigationController?.navigationBar.isTranslucent = true
+
                     let cellRect = tableView.rectForRow(at: index)
                     
                     if (cellRect.origin.y < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
@@ -202,7 +224,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                     }
                 } else {
                     let cellRect = tableView.rectForRow(at: index)
-                    if (cellRect.origin.y + 20>=(UIApplication.shared.statusBarFrame.size.height)){
+                    if (cellRect.origin.y + 20>=(UIApplication.shared.statusBarFrame.size.height) && scrollingDown){
                         once = false
                     }
                 }
@@ -223,9 +245,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         else if (self.lastContentOffset < scrollView.contentOffset.y) {
             scrollingDown = false
         }
-        
         self.lastContentOffset = scrollView.contentOffset.y
-        
     }
     
     fileprivate func getInstallments(){
@@ -283,9 +303,9 @@ class PayerCostViewModel : NSObject {
     }
     func getTilte() -> String{
         if hasIssuer() {
-            return "¿En cuántas cuotas?"
+            return "¿En cuántas cuotas?".localized
         } else {
-            return "¿Cuál es tu banco?"
+            return "¿Quién emitió tu tarjeta?".localized
         }
     }
     func hasIssuer()-> Bool{

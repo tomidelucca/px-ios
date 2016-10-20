@@ -10,10 +10,12 @@ import UIKit
 
 class PayerCostTitleTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cell: UIView!
     @IBOutlet weak var title: UILabel!
     func setTitle(string: String!){
         title.text = string
         title.textColor = UIColor.systemFontColor()
+        cell.backgroundColor = MercadoPagoContext.getPrimaryColor()
     }
     override func awakeFromNib() {
         super.awakeFromNib()

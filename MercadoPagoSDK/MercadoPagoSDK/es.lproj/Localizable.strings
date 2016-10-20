@@ -85,6 +85,8 @@
 //Installment Cell
 
 " Sin interés"=" Sin interés";//--
+"¿En cuántas cuotas?" = "¿En cuántas cuotas?";
+"¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
 
 //Instructions
 

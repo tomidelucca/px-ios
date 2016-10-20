@@ -10,6 +10,7 @@ import UIKit
 
 class PayerCostCardTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var cell: UIView!
     @IBOutlet weak var cardView: UIView!
     var cardFront : CardFrontView?
     
@@ -17,6 +18,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         cardView.addSubview(cardFront!)
+        cell.backgroundColor = MercadoPagoContext.getPrimaryColor()
     }
     func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
         

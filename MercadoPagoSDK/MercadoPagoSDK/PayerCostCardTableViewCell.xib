@@ -35,6 +35,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="cardView" destination="2Hg-5I-sVx" id="v6H-1Z-hbr"/>
+                <outlet property="cell" destination="lq0-Ae-mRN" id="0Sd-V8-9hF"/>
             </connections>
             <point key="canvasLocation" x="216" y="328.5"/>
         </tableViewCell>
