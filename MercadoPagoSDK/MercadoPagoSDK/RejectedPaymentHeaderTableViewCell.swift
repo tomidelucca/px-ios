@@ -36,8 +36,11 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
             title = "Uy, no pudimos procesar el pago".localized
         }
         
-        let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
-        self.title.text = titleWithParams
+        if let paymentMethodName = paymentMethod.name {
+            let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+            self.title.text = titleWithParams
+        }
+        
         
         
         
@@ -48,8 +51,10 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
             subtitle =  ("Algún dato de tu %1$s es incorrecto.".localized as NSString).replacingOccurrences(of: "%1$s", with: paymentMethod.name)
         }
         
-        let subtitleWithParams = (subtitle.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
-        self.subtitle.text = subtitleWithParams
+        if let paymentMethodName = paymentMethod.name {
+            let subtitleWithParams = (subtitle.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+            self.subtitle.text = subtitleWithParams
+        }
         return self
     }
  
@@ -61,10 +66,12 @@ class RejectedPaymentHeaderTableViewCell: UITableViewCell, CongratsFillmentDeleg
         
         let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)]
         
-        let subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethod.name)")
-
-        let frame = (subtitle as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        var subtitle : String = ""
+        if let paymentMethodName = paymentMethod.name {
+            subtitle = ((payment.statusDetail + "_subtitle_" + paymentMethod.paymentTypeId).localized  as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+        }
         
+        let frame = (subtitle as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         let stringSize = frame.size
         return 180 + stringSize.height
         
