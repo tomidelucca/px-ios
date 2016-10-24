@@ -27,7 +27,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         let view = UIView(frame: frame)
         view.backgroundColor = MercadoPagoContext.getPrimaryColor()
         tableView.addSubview(view)
-
+        
         let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "PayerCostCardTableViewCell", bundle: self.bundle)
@@ -36,6 +36,8 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         self.tableView.register(rowInstallmentNib, forCellReuseIdentifier: "rowInstallmentNib")
         let rowIssuerNib = UINib(nibName: "IssuerRowTableViewCell", bundle: self.bundle)
         self.tableView.register(rowIssuerNib, forCellReuseIdentifier: "rowIssuerNib")
+        let cardTypeNib = UINib(nibName: "CardTypeTableViewCell", bundle: self.bundle)
+        self.tableView.register(cardTypeNib, forCellReuseIdentifier: "cardTypeNib")
         
     }
     
@@ -48,24 +50,26 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         self.title = ""
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-
+        
         //        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         if !self.viewModel.hasIssuer() {
             self.showLoading()
             self.getIssuers()
-        } else if self.viewModel.installment == nil {
-            self.showLoading()
-            self.getInstallments()
-        } else {
-            self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
+        } else if self.viewModel.hasPaymentMethod(){
+            if self.viewModel.installment == nil {
+                self.showLoading()
+                self.getInstallments()
+            } else {
+                self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
+            }
         }
-        tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+        //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
-
+        
     }
     
     override func loadMPStyles(){
@@ -87,7 +91,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
+    public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
         self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
@@ -122,7 +126,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             return self.viewModel.numberofPayerCost()
         }
     }
-
+    
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -139,7 +143,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             let cardCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
             cardCell.selectionStyle = .none // Sacar color cuando click
             cardCell.loadCard()
-            cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethod)
+            cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethod[0])
             cardCell.backgroundColor = MercadoPagoContext.getPrimaryColor()
             
             return cardCell
@@ -150,17 +154,22 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                 let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath as IndexPath) as! PayerCostRowTableViewCell
                 installmentCell.fillCell(payerCost: payerCost)
                 installmentCell.selectionStyle = .none // Sacar color cuando click
-                installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width))
+                installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width), y:Float(installmentCell.contentView.bounds.maxY))
                 
                 return installmentCell
-            } else {
+            } else  if self.viewModel.hasPaymentMethod(){
                 let issuer : Issuer = self.viewModel.issuersList![indexPath.row]
                 let issuerCell = tableView.dequeueReusableCell(withIdentifier: "rowIssuerNib", for: indexPath as IndexPath) as! IssuerRowTableViewCell
                 issuerCell.fillCell(issuer: issuer, bundle: self.bundle!)
                 issuerCell.selectionStyle = .none // Sacar color cuando click
-                issuerCell.addSeparatorLineToTop(width: Double(issuerCell.contentView.frame.width))
-
+                issuerCell.addSeparatorLineToTop(width: Double(issuerCell.contentView.frame.width), y:Float(issuerCell.contentView.bounds.maxY))
+                
                 return issuerCell
+            } else{
+                let cardType = tableView.dequeueReusableCell(withIdentifier: "cardTypeNib", for: indexPath as IndexPath) as! CardTypeTableViewCell
+                cardType.setPaymentMethod(paymentMethod: self.viewModel.paymentMethod[indexPath.row])
+                cardType.addSeparatorLineToTop(width: Double(cardType.contentView.frame.width), y:Float(cardType.contentView.bounds.maxY))
+                return cardType
             }
         }
     }
@@ -170,9 +179,12 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             if self.viewModel.hasIssuer(){
                 let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row]
                 self.viewModel.callback!(payerCost)
-            } else{
+            } else if self.viewModel.hasPaymentMethod(){
                 let issuer : Issuer = self.viewModel.issuersList![(indexPath as NSIndexPath).row]
                 self.viewModel.callback!(issuer)
+            } else {
+                let paymentMethod : PaymentMethod = self.viewModel.paymentMethod[(indexPath as NSIndexPath).row]
+                self.viewModel.callback!(paymentMethod)
             }
         }
     }
@@ -208,7 +220,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                 if !once {
                     hideNavBar()
                     titleVisible = true
-
+                    
                     let cellRect = tableView.rectForRow(at: index)
                     
                     if (cellRect.origin.y < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
@@ -244,7 +256,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     
     fileprivate func getInstallments(){
         let bin = self.viewModel.token?.getCardBin() ?? ""
-        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethod!._id, success: { (installments) -> Void in
+        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethod[0]._id, success: { (installments) -> Void in
             self.viewModel.installment = installments?[0]
             self.viewModel.payerCosts = installments![0].payerCosts
             //TODO ISSUER
@@ -255,10 +267,10 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         }
     }
     fileprivate func getIssuers(){
-        MPServicesBuilder.getIssuers(self.viewModel.paymentMethod!, bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
+        MPServicesBuilder.getIssuers(self.viewModel.paymentMethod[0], bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
             self.viewModel.issuersList = issuers
-            self.hideLoading()
             self.tableView.reloadData()
+            self.hideLoading()
         }) { (error) -> Void in
             // HANDLE ERROR
         }
@@ -269,7 +281,7 @@ class PayerCostViewModel : NSObject {
     
     var payerCosts : [PayerCost]?
     var installment : Installment?
-    var paymentMethod : PaymentMethod?
+    var paymentMethod : [PaymentMethod]
     var token : CardInformationForm?
     var issuer: Issuer?
     var amount: Double!
@@ -277,7 +289,7 @@ class PayerCostViewModel : NSObject {
     var issuersList:[Issuer]?
     var callback : ((_ payerCost: NSObject?) -> Void)?
     
-    init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
+    init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
         self.paymentMethod = paymentMethod
         self.payerCosts = installment?.payerCosts
         self.installment = installment
@@ -291,15 +303,19 @@ class PayerCostViewModel : NSObject {
     func numberofPayerCost() -> Int{
         if hasIssuer(){
             return (self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments)) ?? 0
-        }else {
+        }else if hasPaymentMethod(){
             return (issuersList?.count) ?? 0
+        } else {
+            return paymentMethod.count ?? 0
         }
     }
     func getTilte() -> String{
         if hasIssuer() {
             return "¿En cuántas cuotas?".localized
-        } else {
+        } else if hasPaymentMethod(){
             return "¿Quién emitió tu tarjeta?".localized
+        } else {
+            return "¿Qué tipo de tarjeta es?".localized
         }
     }
     func hasIssuer()-> Bool{
@@ -308,6 +324,14 @@ class PayerCostViewModel : NSObject {
         } else {
             return true
         }
+    }
+    func hasPaymentMethod()->Bool{
+        if (paymentMethod.count)>1{
+            return false
+        } else {
+            return true
+        }
+        
     }
     
 }

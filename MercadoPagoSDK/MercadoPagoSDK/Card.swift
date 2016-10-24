@@ -78,6 +78,7 @@ open class Card : NSObject, CardInformation {
         let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
         let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSONString()
         let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
+        let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode
         let obj:[String:Any] = [
             "cardHolder" : cardHolder,
             "customer_id": customer_id,

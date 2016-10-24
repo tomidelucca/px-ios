@@ -144,11 +144,13 @@ int installmentsSelected = 1;
     is._id = [NSNumber numberWithInt: 3];
     
     PaymentMethod *pm = [[PaymentMethod alloc]init];
+    NSArray *myArray = @[pm];
+
     pm._id = @"master";
     
     [MPServicesBuilder getInstallments:@"503175" amount:200 issuer:is paymentMethodId:@"master" success:^(NSArray<Installment *> *installments) {
         
-        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:pm issuer:is token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(NSObject * PayerCost) {
+        UIViewController *installmentVC = [MPStepBuilder startPayerCostForm:nil issuer:is token:nil amount:20 paymentPreference:nil installment:installments[0] callback:^(NSObject * PayerCost) {
             
         } callbackCancel:^{
             
