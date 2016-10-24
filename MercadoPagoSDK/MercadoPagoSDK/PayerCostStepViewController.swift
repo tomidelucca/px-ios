@@ -17,11 +17,9 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.reloadData()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none //sacar lineas
         loadMPStyles()
-
         
         //Vista azul de arriba
         var frame = self.tableView.bounds
@@ -29,7 +27,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         let view = UIView(frame: frame)
         view.backgroundColor = MercadoPagoContext.getPrimaryColor()
         tableView.addSubview(view)
-        
+
         let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "PayerCostCardTableViewCell", bundle: self.bundle)
@@ -47,9 +45,9 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     }
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hideNavBar()
-        
-        self.tableView.reloadData()
+        self.title = ""
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
 
         //        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         if !self.viewModel.hasIssuer() {
@@ -67,10 +65,6 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
-        
-        let indexPath = IndexPath(row: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-
 
     }
     
@@ -95,7 +89,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     
     public init(paymentMethod : PaymentMethod ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
-        self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: nil, paymentPreference: paymentPreference, installment:installment, callback: callback)
+        self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
         super.init(nibName: "PayerCostStepViewController", bundle: self.bundle)
     }
@@ -296,7 +290,7 @@ class PayerCostViewModel : NSObject {
     }
     func numberofPayerCost() -> Int{
         if hasIssuer(){
-            return (self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments))!
+            return (self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments)) ?? 0
         }else {
             return (issuersList?.count) ?? 0
         }
