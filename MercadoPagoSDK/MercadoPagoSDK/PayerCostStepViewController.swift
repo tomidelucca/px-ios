@@ -19,6 +19,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none //sacar lineas
+        //tableView.bounces = false
         loadMPStyles()
         
         //Vista azul de arriba
@@ -47,6 +48,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     }
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.title = ""
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
@@ -63,11 +65,17 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                 self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
             }
         }
-        //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+        
+        DispatchQueue.main.async() {
+            self.tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+            
+        }
+        
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.title = ""
         //tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
         
     }
@@ -210,9 +218,34 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     var once = false
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
-    
+    func wholeTableVisible() -> Bool{
+        if tableView.numberOfRows(inSection: 2)>0 {
+            let cellRow = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: 2)-1, section: 2))
+            
+            let cellTitle = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+            if cellRow != nil && cellTitle != nil {
+                let overlapRow = (cellRow?.frame)!.intersection(tableView.bounds);
+                let overlapTitle = (cellTitle?.frame)!.intersection(tableView.bounds);
+                if overlapRow.height == cellRow?.frame.height && overlapTitle.height == cellTitle?.frame.height {
+                    return true
+                }
+            }
+        }
+        return false
+        
+    }
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
         var titleVisible = false
+        
+        print("tableView \(tableView.contentOffset.y)")
+        print("scrollingDown \(scrollView.contentOffset)")
+        var offset = scrollView.contentOffset;
+        
+        if (scrollView.contentOffset.y >= -30 && wholeTableVisible())
+        {
+            offset.y = -30;
+            scrollView.contentOffset = offset;
+        }
         
         let visibleIndexPaths = self.tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
@@ -221,27 +254,26 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
                     hideNavBar()
                     titleVisible = true
                     
-                    let cellRect = tableView.rectForRow(at: index)
-                    
-                    if (cellRect.origin.y < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
+                    if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
+                        
                         titleVisible = false
                         once = true
                         showNavBar()
                     }
                 } else {
-                    let cellRect = tableView.rectForRow(at: index)
-                    if (cellRect.origin.y + 20>=(UIApplication.shared.statusBarFrame.size.height) && scrollingDown){
+                    if scrollingDown {
                         once = false
                     }
                 }
             } else if index.section == 1  {
-                let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! PayerCostCardTableViewCell
+                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
                 if tableView.contentOffset.y > 0{
                     if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
                         card.fadeCard()
                     } else{
                         card.cardView.alpha = 44/tableView.contentOffset.y;
                     }
+                }
                 }
             }
         }

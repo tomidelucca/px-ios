@@ -159,7 +159,6 @@ open class MPStepBuilder : NSObject {
                     self.getIssuers(paymentMethod[0], cardToken: cardToken!, customerCard: cardInformation, ccf: ccf, callback: callback)
                 }
             }
-            
             },callbackCancel: callbackCancel)
 
         navigation = MPFlowController.createNavigationControllerWith(ccf)
