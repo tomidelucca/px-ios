@@ -90,33 +90,12 @@
 			remoteGlobalIDString = 0F9883091AD2A97A00F750F0;
 			remoteInfo = MercadoPagoSDK;
 		};
-		157FAE821D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AC14DD33BD6E02ADFCEED7E129B98614;
-			remoteInfo = MercadoPagoTracker;
-		};
-		157FAE841D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 407B83509C9710CB912718721904E816;
-			remoteInfo = MPGoogleAnalytics;
-		};
 		157FAE861D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B80DA2429DD86C4B17AA0EFCB718629A;
 			remoteInfo = "Pods-MercadoPagoSDK";
-		};
-		157FAE881D1B28EF00AB13B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D018857919DD57A0CB67AD359D297D5;
-			remoteInfo = "Pods-MercadoPagoSDKTests";
 		};
 		15FCA7881C84980B00D9E8CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -402,10 +381,7 @@
 		157FAE7A1D1B28EF00AB13B0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */,
-				157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */,
 				157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */,
-				157FAE891D1B28EF00AB13B0 /* Pods_MercadoPagoSDKTests.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -590,32 +566,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		157FAE831D1B28EF00AB13B0 /* MercadoPagoTracker.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MercadoPagoTracker.framework;
-			remoteRef = 157FAE821D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		157FAE851D1B28EF00AB13B0 /* MPGoogleAnalytics.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MPGoogleAnalytics.framework;
-			remoteRef = 157FAE841D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		157FAE871D1B28EF00AB13B0 /* Pods_MercadoPagoSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Pods_MercadoPagoSDK.framework;
 			remoteRef = 157FAE861D1B28EF00AB13B0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		157FAE891D1B28EF00AB13B0 /* Pods_MercadoPagoSDKTests.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Pods_MercadoPagoSDKTests.framework;
-			remoteRef = 157FAE881D1B28EF00AB13B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */ = {
@@ -866,7 +821,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -894,7 +849,7 @@
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
