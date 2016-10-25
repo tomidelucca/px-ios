@@ -241,6 +241,10 @@
 		150786A71CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */; };
 		151A94101DBF8DE300A5557B /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151A940F1DBF8DE300A5557B /* RevampImages.xcassets */; };
 		151A94111DBF8DE300A5557B /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 151A940F1DBF8DE300A5557B /* RevampImages.xcassets */; };
+		151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */; };
+		151A94191DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */; };
+		151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */; };
+		151A941B1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */; };
 		1529D9A51C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */; };
 		1529D9A61C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */; };
 		153AEB2D1D382983008A3338 /* PaymentVaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */; };
@@ -722,6 +726,8 @@
 		150786A21CD7CD1E0034C5B1 /* IdentificationCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentificationCardView.swift; sourceTree = "<group>"; };
 		150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IdentificationCardView.xib; sourceTree = "<group>"; };
 		151A940F1DBF8DE300A5557B /* RevampImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = RevampImages.xcassets; path = ../RevampImages.xcassets; sourceTree = "<group>"; };
+		151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentSearchCollectionViewCell.xib; sourceTree = "<group>"; };
 		1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutViewController.xib; sourceTree = "<group>"; };
 		1565B1301CBFD7F100181998 /* GuessingFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessingFormTest.swift; sourceTree = "<group>"; };
 		156DA6421CC55636006B892F /* PayerCostFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostFormTest.swift; sourceTree = "<group>"; };
@@ -1357,6 +1363,8 @@
 			children = (
 				76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */,
 				76062BD61C4D20C30067A14B /* PaymentVaultViewController.xib */,
+				151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */,
+				151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */,
 			);
 			name = Revamp;
 			sourceTree = "<group>";
@@ -2007,6 +2015,7 @@
 				0F98845D1AD2AF1500F750F0 /* VaultViewController.xib in Resources */,
 				7656C9F51C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib in Resources */,
 				76445AF41CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.xib in Resources */,
+				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				0F9883EA1AD2ADB000F750F0 /* PaymentMethodTableViewCell.xib in Resources */,
 				76B084E81CE0DB0200C157BF /* AuthorizePaymentHeaderTableViewCell.xib in Resources */,
 				0F9883F61AD2ADD300F750F0 /* PaymentMethodsViewController.xib in Resources */,
@@ -2058,6 +2067,7 @@
 				76FD247C1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 				76151B681C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				768927141D78BFC30056A71C /* AuthorizePaymentHeaderTableViewCell.xib in Resources */,
+				151A941B1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				0F9884521AD2AEEF00F750F0 /* MPPaymentMethodEmptyTableViewCell.xib in Resources */,
 				0F98844A1AD2AEC000F750F0 /* MPInstallmentsTableViewCell.xib in Resources */,
 				76B085321CE51C6200C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
@@ -2137,6 +2147,7 @@
 				0F9883D61AD2AD5500F750F0 /* PaymentIDTableViewCell.swift in Sources */,
 				15E08F661DA2A2BF0087041B /* JSONHandler.swift in Sources */,
 				76FD247D1C5BFEA1008C5DC0 /* CardFormViewController.swift in Sources */,
+				151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
 				76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
 				15D799F91CA1CE9A00623A84 /* PayerCostViewController.swift in Sources */,
 				76134AB81C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */,
@@ -2383,6 +2394,7 @@
 				0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */,
 				0FE3E38E1AE7174600C27B97 /* Serializable.swift in Sources */,
 				76B085001CE2167600C157BF /* AuthorizePaymentBodyTableViewCell.swift in Sources */,
+				151A94191DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
 				0F98839A1AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,
 				15ABAD581DB5489D00481E8E /* MPTracker.swift in Sources */,
 				76EC47DE1C85E9CC0086FA53 /* IssuerTest.swift in Sources */,
