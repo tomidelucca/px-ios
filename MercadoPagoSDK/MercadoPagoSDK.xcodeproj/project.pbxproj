@@ -297,6 +297,10 @@
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
+		4B9CFF6F1DBFD52300A2F3D6 /* CongratsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9CFF6D1DBFD52300A2F3D6 /* CongratsRevampViewController.swift */; };
+		4B9CFF701DBFD52300A2F3D6 /* CongratsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9CFF6E1DBFD52300A2F3D6 /* CongratsRevampViewController.xib */; };
+		4B9CFF731DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9CFF711DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.swift */; };
+		4B9CFF741DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9CFF721DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.xib */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -750,6 +754,10 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
 		15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
+		4B9CFF6D1DBFD52300A2F3D6 /* CongratsRevampViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsRevampViewController.swift; sourceTree = "<group>"; };
+		4B9CFF6E1DBFD52300A2F3D6 /* CongratsRevampViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratsRevampViewController.xib; sourceTree = "<group>"; };
+		4B9CFF711DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCongratsTableViewCell.swift; sourceTree = "<group>"; };
+		4B9CFF721DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderCongratsTableViewCell.xib; sourceTree = "<group>"; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchService.swift; sourceTree = "<group>"; };
@@ -1132,6 +1140,7 @@
 		0F9883E31AD2AD9500F750F0 /* Congrats */ = {
 			isa = PBXGroup;
 			children = (
+				4B9CFF651DBFCD0B00A2F3D6 /* Revamp */,
 				0F9883E21AD2AD8800F750F0 /* Cells */,
 				0F9883CC1AD2AD5500F750F0 /* CongratsViewController.swift */,
 				0F9883CD1AD2AD5500F750F0 /* CongratsViewController.xib */,
@@ -1435,6 +1444,25 @@
 				762B8C1E1D19752A00A86097 /* MPFlowController.swift */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		4B9CFF651DBFCD0B00A2F3D6 /* Revamp */ = {
+			isa = PBXGroup;
+			children = (
+				4B9CFF661DBFCD1300A2F3D6 /* Cells */,
+				4B9CFF6D1DBFD52300A2F3D6 /* CongratsRevampViewController.swift */,
+				4B9CFF6E1DBFD52300A2F3D6 /* CongratsRevampViewController.xib */,
+			);
+			name = Revamp;
+			sourceTree = "<group>";
+		};
+		4B9CFF661DBFCD1300A2F3D6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4B9CFF711DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.swift */,
+				4B9CFF721DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.xib */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		76062BCD1C4D20060067A14B /* PaymentVault */ = {
@@ -1985,6 +2013,7 @@
 				7656C9FB1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.xib in Resources */,
 				0F9883EE1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76B084FD1CE174FE00C157BF /* ApprovedPaymentBodyTableViewCell.xib in Resources */,
+				4B9CFF701DBFD52300A2F3D6 /* CongratsRevampViewController.xib in Resources */,
 				76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
@@ -2000,6 +2029,7 @@
 				157A4F8B1D805BE900C92D0B /* RecoverPaymentBodyTableViewCell.xib in Resources */,
 				0F9884211AD2AE2700F750F0 /* MPCardholderNameTableViewCell.xib in Resources */,
 				15C5279A1CDBC7E400D113F6 /* IssuerCardViewController.xib in Resources */,
+				4B9CFF741DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.xib in Resources */,
 				0F9884331AD2AE5900F750F0 /* InstallmentTableViewCell.xib in Resources */,
 				76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 			);
@@ -2157,6 +2187,7 @@
 				0F9883611AD2AB6000F750F0 /* CardIssuer.swift in Sources */,
 				0F9884191AD2AE2700F750F0 /* MPCardNumberTableViewCell.swift in Sources */,
 				0F9884011AD2ADEE00F750F0 /* IssuersViewController.swift in Sources */,
+				4B9CFF731DBFD87D00A2F3D6 /* HeaderCongratsTableViewCell.swift in Sources */,
 				0F9883751AD2AB6000F750F0 /* Identification.swift in Sources */,
 				76B084F41CE1701D00C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
 				76B085091CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */,
@@ -2247,6 +2278,7 @@
 				0F9883AF1AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
 				0F9883DE1AD2AD5500F750F0 /* CongratsViewController.swift in Sources */,
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
+				4B9CFF6F1DBFD52300A2F3D6 /* CongratsRevampViewController.swift in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
 				76062BDD1C4D24050067A14B /* PaymentSearchCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,

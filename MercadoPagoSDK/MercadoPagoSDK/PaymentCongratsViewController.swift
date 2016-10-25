@@ -31,7 +31,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymentTrackInformer, UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
-        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202), "screenName" : "CONGRATS"],
+        ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 59, green: 194, blue: 128), "screenName" : "CONGRATS"],
         "rejected" : ["header" : "rejectedPaymentHeader", "body" : "rejectedPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218), "screenName" : "REJECTION"],
         "recovery" : ["header" : "rejectedPaymentHeader", "body" : "recoveryPaymentBody", "headerColor" : UIColor(red: 248, green: 218, blue: 218), "screenName" : "REJECTION"],
         "authorize" : ["header" : "authorizePaymentHeader", "body" : "authorizePaymentBody", "headerColor" : UIColor(red: 190, green: 230, blue: 245), "screenName" : "CALL_FOR_AUTHORIZE"],
