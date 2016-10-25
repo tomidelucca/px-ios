@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoTracker
+
 
 public class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
 

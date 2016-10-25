@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoTracker
 
 public class MPServicesBuilder : NSObject {
    

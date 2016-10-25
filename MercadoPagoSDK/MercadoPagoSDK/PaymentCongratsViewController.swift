@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MercadoPagoTracker
+
 
 public class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymentTrackInformer, UITableViewDelegate, UITableViewDataSource {
 

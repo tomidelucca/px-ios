@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoTracker
 
 
 public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
