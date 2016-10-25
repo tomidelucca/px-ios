@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK"
-  s.version          = "2.0.3.1"
+  s.version          = "2.0.3.2"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     %w|pt es es-MX es-CO|.map {|localename|
       t.subspec localename do |u|
         u.ios.resources = "MercadoPagoSDK/MercadoPagoSDK/#{localename}.lproj"
-        u.ios.preserve_paths = "MercadoPagoSDK/MercadoPagoSDK/#{localename}.lproj" 
+        u.ios.preserve_paths = "MercadoPagoSDK/MercadoPagoSDK/#{localename}.lproj"
      end
     }
   end
