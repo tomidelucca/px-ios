@@ -65,7 +65,7 @@ public class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     public func sdkVersion() -> String!{
-        return "1.0.0"
+        return "2.0.3.1"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
