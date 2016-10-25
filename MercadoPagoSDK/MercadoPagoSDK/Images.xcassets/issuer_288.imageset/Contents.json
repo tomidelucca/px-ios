@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "issuer_288a.png",
+      "filename" : "issuer_288.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "issuer_288b.png",
+      "filename" : "issuer_288@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "issuer_288c.png",
+      "filename" : "issuer_288@3x.png",
       "scale" : "3x"
     }
   ],
