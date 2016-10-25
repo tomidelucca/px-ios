@@ -12,6 +12,8 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
+    let paymentStatus = "approved"
+    var color:UIColor!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         var frame = self.tableView.bounds
         frame.origin.y = -frame.size.height;
         let view = UIView(frame: frame)
-        view.backgroundColor = UIColor(red: 59, green: 194, blue: 128)
+        view.backgroundColor = self.color
         tableView.addSubview(view)
         
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
@@ -33,7 +35,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
-            ViewUtils.addStatusBar(self.view, color: UIColor(red: 59, green: 194, blue: 128))
+            ViewUtils.addStatusBar(self.view, color: self.color)
         }
         
     }
@@ -43,6 +45,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     }
     init(payment: Payment?, paymentMethod : PaymentMethod?, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
+        self.color = getColor(paymentStatus: paymentStatus)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -65,9 +68,21 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    func getColor(paymentStatus:String)->UIColor{
+        if paymentStatus == "approved" {
+            return UIColor(red: 59, green: 194, blue: 128)
+        } else if paymentStatus == "pending" {
+            return UIColor(red: 255, green: 161, blue: 90)
+        } else if paymentStatus == "rejected" {
+            return UIColor(red: 255, green: 89, blue: 89)
+        }
+        return UIColor()
+    }
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "headerNib", for: indexPath as IndexPath) as! HeaderCongratsTableViewCell
-        headerCell.fillCell(paymentStatus: "rejected")
+        
+        
+        headerCell.fillCell(paymentStatus: paymentStatus, color: color)
         return headerCell
         
     }

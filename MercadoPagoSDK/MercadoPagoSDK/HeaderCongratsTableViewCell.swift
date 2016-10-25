@@ -10,19 +10,23 @@ import UIKit
 
 class HeaderCongratsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var view: UIView!
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var title: UILabel!
     
-    func fillCell(paymentStatus: String){
+    func fillCell(paymentStatus: String, color: UIColor){
         if paymentStatus == "approved" {
             icon.image = MercadoPago.getImage("iconoAcreditado")
             title.text = "¡Listo, se acreditó tu pago!"
+            view.backgroundColor = color
         } else if paymentStatus == "pending" {
             icon.image = MercadoPago.getImage("congrats_iconPending")
             title.text = "Estamos procesando el pago"
+            view.backgroundColor = color
         } else if paymentStatus == "rejected" {
             icon.image = MercadoPago.getImage("congrats_iconoTCError")
             title.text = "Mastercard no procesó el pago"
+            view.backgroundColor = color
         }
     }
     override func awakeFromNib() {
