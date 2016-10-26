@@ -27,6 +27,8 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
         tableView.addSubview(upperView)
         
+        self.showNavBar()
+        
         let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "PayerCostCardTableViewCell", bundle: self.bundle)
@@ -47,10 +49,8 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.title = ""
         let indexPath = IndexPath(row: 0, section: 0)
         self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        
         if !self.viewModel.hasIssuer() {
             self.showLoading()
             self.getIssuers()
@@ -64,13 +64,16 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         }
         
         DispatchQueue.main.async() {
-            self.tableView.setContentOffset(CGPoint(x:0, y: -64.5), animated: false)
+            
+            self.tableView.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
+            
         }
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = ""
+        
     }
     
     override func loadMPStyles(){
@@ -90,11 +93,12 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
+    public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
         self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
         super.init(nibName: "PayerCostStepViewController", bundle: self.bundle)
+        self.timer=timer
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -235,6 +239,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
             offset.y = -30;
             scrollView.contentOffset = offset;
         }
+        print("tableView \(tableView.contentOffset)")
         
         let visibleIndexPaths = self.tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {

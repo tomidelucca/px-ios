@@ -70,8 +70,7 @@ open class MercadoPagoService : NSObject {
                 } else {
 
                     let response = String(describing: error)
-                    print(response)
-
+             
                     if failure != nil {
                         failure!(error! as NSError)
                     }

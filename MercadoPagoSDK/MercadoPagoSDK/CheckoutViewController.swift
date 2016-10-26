@@ -7,7 +7,7 @@
 //
 
 import UIKit
-// TODO TRACKER import MercadoPagoTracker
+
 
 open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
 
@@ -282,7 +282,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     internal func confirmPaymentOff(){
         MercadoPago.createMPPayment(self.preference!.payer.email, preferenceId: self.preference!._id, paymentMethod: self.viewModel!.paymentMethod!,success: { (payment) -> Void in
 
-     // TODO TRACKER        MPTracker.trackPaymentOffEvent(String(payment._id), mpDelegate: MercadoPagoContext.sharedInstance)
+            MPTracker.trackPaymentOffEvent(String(payment._id), mpDelegate: MercadoPagoContext.sharedInstance)
             
            self.displayPaymentResult(payment)
            }, failure : { (error) -> Void in

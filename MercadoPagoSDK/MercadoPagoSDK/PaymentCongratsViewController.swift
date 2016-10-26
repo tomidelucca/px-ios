@@ -27,9 +27,8 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-// TODO TRACKER import MercadoPagoTracker
-// TODO TRACKER
-open class PaymentCongratsViewController: MercadoPagoUIViewController /*, MPPaymentTrackInformer*/, UITableViewDelegate, UITableViewDataSource {
+
+open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymentTrackInformer, UITableViewDelegate, UITableViewDataSource {
 
     let congratsLayout =
         ["approved" : ["header" : "approvedPaymentHeader", "body" : "approvedPaymentBody", "headerColor" : UIColor(red: 210, green: 229, blue: 202), "screenName" : "CONGRATS"],
@@ -93,7 +92,7 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController /*, MPPaym
 
     override open func  viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-   // TODO TRACKER       MPTracker.trackPaymentEvent(payment.tokenId, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
+        MPTracker.trackPaymentEvent(payment.tokenId, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -119,7 +118,7 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController /*, MPPaym
                 if (body == "authorizePaymentBody"){
                     (cell as! AuthorizePaymentBodyTableViewCell).authCallback = {
                             let status = MPStepBuilder.CongratsState.call_FOR_AUTH
-       // TODO TRACKER                      MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_TOKEN", result: nil)
+                        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_TOKEN", result: nil)
                             self.invokeCallback(status)
                         
                     }
@@ -263,13 +262,13 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController /*, MPPaym
             var status = MPStepBuilder.CongratsState.ok
             if self.payment.status == PaymentStatus.REJECTED.rawValue {
                 if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
-      // TODO TRACKER               MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
+                    MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_SELECT_OTHER
                 }else if self.payment.statusDetail != nil && self.payment.statusDetail.contains("cc_rejected_bad_filled"){
-      // TODO TRACKER               MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_PAYMENT", result: nil)
+                    MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_PAYMENT", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_RECOVER
                 }else {
-      // TODO TRACKER                MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
+                    MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_SELECT_OTHER
                 }
             }
