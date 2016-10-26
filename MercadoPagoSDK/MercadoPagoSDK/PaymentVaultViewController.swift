@@ -28,8 +28,9 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-
-open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource {
+open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableViewDataSource, UITableViewDelegate*/, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    @IBOutlet weak var collectionSearch: UICollectionView!
     
     static let VIEW_CONTROLLER_NIB_NAME : String = "PaymentVaultViewController"
     
@@ -47,9 +48,10 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
     
     fileprivate var tintColor = true
     
-    @IBOutlet weak var paymentsTable: UITableView!
+   // @IBOutlet weak var paymentsTable: UITableView!
     
-
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    
     
     public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
@@ -118,7 +120,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
             self.title = "¿Cómo quieres pagar?".localized
         }
         
-        self.paymentsTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.paymentsTable.bounds.size.width, height: 0.01))
+     //   self.paymentsTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.paymentsTable.bounds.size.width, height: 0.01))
         self.registerAllCells()
     
         if callbackCancel == nil {
@@ -179,7 +181,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         }
         
     }
-
+/*
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath as NSIndexPath).section == 0 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0 {
             let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "customerPaymentMethodCell") as! CustomerPaymentMethodCell
@@ -233,7 +235,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
 
         }
     }
-    
+    */
     fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
         return { Void -> (Void) in
             if self.viewModel.currentPaymentMethodSearch.count > 1 {
@@ -246,6 +248,8 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
     }
     
     fileprivate func getCustomerCards(){
+        self.collectionSearch.reloadData()
+        return
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.viewModel.customerCards = customer.cards
@@ -287,14 +291,18 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
             if self.viewModel.currentPaymentMethodSearch.count == 1 {
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
-                self.paymentsTable.delegate = self
-                self.paymentsTable.dataSource = self
-                self.paymentsTable.reloadData()
+              //  self.paymentsTable.delegate = self
+              //  self.paymentsTable.dataSource = self
+              //  self.paymentsTable.reloadData()
+                
+                self.collectionSearch.delegate = self
+                self.collectionSearch.dataSource = self
+                self.collectionSearch.reloadData()
             }
         }
     }
     
-    
+    /*
     fileprivate func getCellFor(_ currentPaymentMethodItem : PaymentMethodSearchItem) -> UITableViewCell {
         if currentPaymentMethodItem.showIcon {
             let iconImage = MercadoPago.getImage(currentPaymentMethodItem.idPaymentMethodSearchItem)
@@ -329,8 +337,19 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         return paymentSearchCell
 
     }
-
+*/
     fileprivate func registerAllCells(){
+        
+        
+        
+        
+        let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
+        self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
+        //(collectionSearchCell, forCellReuseIdentifier: "searchCollectionCell")
+        
+        
+        
+       /*
         let paymentMethodSearchNib = UINib(nibName: "PaymentSearchCell", bundle: self.bundle)
         let paymentSearchTitleCell = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
         let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
@@ -348,7 +367,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         self.paymentsTable.register(offlinePaymentWithDescription, forCellReuseIdentifier: "offlinePaymentWithDescription")
         self.paymentsTable.register(customerPaymentMethodCell, forCellReuseIdentifier: "customerPaymentMethodCell")
         self.paymentsTable.register(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
-        
+        */
     }
     
     open override func didReceiveMemoryWarning() {
@@ -367,7 +386,59 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         return false
     }
 
-}
+    // extension PaymentVaultViewController {
+    //1
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 4
+    }
+    
+    //2
+    public func collectionView(_ collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    //3
+    public func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
+                                                      for: indexPath) as! PaymentSearchCollectionViewCell
+        // Configure the cell
+        
+
+        
+        return cell
+    }
+    fileprivate let itemsPerRow: CGFloat = 2
+    //1
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        //2
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    
+    //3
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+    
+    // 4
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
+    
+    
+ }
+
 
 
 class PaymentVaultViewModel : NSObject {
@@ -478,25 +549,3 @@ class PaymentVaultViewModel : NSObject {
 
 }
 
- extension PaymentVaultViewController {
-    //1
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return searches.count
-    }
-    
-    //2
-    override func collectionView(_ collectionView: UICollectionView,
-                                 numberOfItemsInSection section: Int) -> Int {
-        return searches[section].searchResults.count
-    }
-    
-    //3
-    override func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                      for: indexPath) as! FlickrPhotoCell
-        cell.backgroundColor = UIColor.black
-        // Configure the cell
-        return cell
-    }
- }

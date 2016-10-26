@@ -10,9 +10,19 @@ import UIKit
 
 class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var imageSearch: UIImageView!
+    @IBOutlet weak var titleSearch: UILabel!
+    @IBOutlet weak var subtitleSearch: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
+    public func fillCell(image: UIImage, title: String, subtitle: String = ""){
+        self.imageSearch.image = image
+        self.titleSearch.text = title
+        self.subtitleSearch.text = subtitle
+    }
 }
