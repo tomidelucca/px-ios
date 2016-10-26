@@ -171,18 +171,18 @@ open class MPStepBuilder : NSObject {
     
     open class func startCreditDebitForm(_ paymentMethod : [PaymentMethod] , issuer:Issuer?, token : CardToken? , amount: Double, paymentPreference: PaymentPreference? = nil, timer: CountdownTimer? = nil,
                                          callback : @escaping ((_ paymentMethod: NSObject?) -> Void),
-                                         callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
+                                         callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
         // TODO TRACKER    MercadoPagoContext.initFlavor2()
-        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, timer: timer, callback: callback )
+        return CardAdditionalStep(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, timer: timer, callback: callback )
     }
     
     open class func startPayerCostForm(_ paymentMethod : [PaymentMethod] , issuer:Issuer?, token : Token? , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, timer: CountdownTimer? = nil,
                                        callback : @escaping ((_ payerCost: NSObject?) -> Void),
-                                       callbackCancel : ((Void) -> Void)? = nil) -> PayerCostStepViewController {
+                                       callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return PayerCostStepViewController(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
+        return CardAdditionalStep(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
     }
     
     
@@ -201,10 +201,10 @@ open class MPStepBuilder : NSObject {
         return IssuersViewController(paymentMethod: paymentMethod, callback: callback)
     }
     open class func startIssuerForm(_ paymentMethod: PaymentMethod, cardToken: CardToken, issuerList: [Issuer]? = nil, timer : CountdownTimer? = nil,
-                                    callback : @escaping ((_ issuer: NSObject?) -> Void)) -> PayerCostStepViewController {
+                                    callback : @escaping ((_ issuer: NSObject?) -> Void)) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return PayerCostStepViewController(paymentMethod: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, timer: timer, callback: callback)
+        return CardAdditionalStep(paymentMethod: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, timer: timer, callback: callback)
         
     }
     

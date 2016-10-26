@@ -1,5 +1,5 @@
 //
-//  PayerCostStepViewController.swift
+//  CardAdditionalStep.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/13/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PayerCostStepViewController: MercadoPagoUIViewController, UITableViewDelegate,UITableViewDataSource {
+open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -97,7 +97,7 @@ open class PayerCostStepViewController: MercadoPagoUIViewController, UITableView
         
         self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
-        super.init(nibName: "PayerCostStepViewController", bundle: self.bundle)
+        super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
         self.timer=timer
     }
     
