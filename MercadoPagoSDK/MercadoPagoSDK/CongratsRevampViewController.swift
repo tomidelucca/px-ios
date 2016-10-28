@@ -12,7 +12,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
-    let paymentStatus = "approved"
+    let paymentStatus = "rejected"
     var color:UIColor!
     
     override open func viewDidLoad() {
@@ -29,6 +29,13 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
         self.tableView.register(headerNib, forCellReuseIdentifier: "headerNib")
+        let emailNib = UINib(nibName: "ConfirmEmailTableViewCell", bundle: self.bundle)
+        self.tableView.register(emailNib, forCellReuseIdentifier: "emailNib")
+        let approvedNib = UINib(nibName: "ApprovedTableViewCell", bundle: self.bundle)
+        self.tableView.register(approvedNib, forCellReuseIdentifier: "approvedNib")
+        let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
+        self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
+        
         
     }
     open override func viewWillAppear(_ animated: Bool) {
@@ -59,15 +66,35 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         self.navigationController?.navigationBar.isTranslucent = true
     }
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        if indexPath.section == 0{
+            if paymentStatus == "approved"{
+            return UIScreen.main.bounds.height*0.33
+            }
+            else {
+              return UIScreen.main.bounds.height*0.40
+            }
+        } else if indexPath.section == 1{
+            if indexPath.row == 0{
+                return 420
+            } else {
+                return 60
+            }
+        }
+        else {
+            return 80
+        }
     }
-    
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 1{
+            return 2
+        } else {
+            return 1
+        }
     }
+    
     func getColor(paymentStatus:String)->UIColor{
         if paymentStatus == "approved" {
             return UIColor(red: 59, green: 194, blue: 128)
@@ -78,13 +105,30 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         }
         return UIColor()
     }
+    
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "headerNib", for: indexPath as IndexPath) as! HeaderCongratsTableViewCell
-        
-        
-        headerCell.fillCell(paymentStatus: paymentStatus, color: color)
-        return headerCell
-        
+        if indexPath.section == 0{
+            let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
+            headerCell.fillCell(paymentStatus: paymentStatus, color: color)
+            headerCell.selectionStyle = .none
+            return headerCell
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0{
+                let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
+                approvedCell.selectionStyle = .none
+                return approvedCell
+            }
+            else {
+                let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
+                confirmEmailCell.fillCell(string: "Te enviaremos este comprobante a nombre.apellido@correo.com")
+                confirmEmailCell.selectionStyle = .none
+                return confirmEmailCell
+            }
+        } else {
+            let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
+            footerNib.selectionStyle = .none
+            return footerNib
+        }
     }
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
