@@ -250,7 +250,6 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
     
     fileprivate func getCustomerCards(){
         self.collectionSearch.reloadData()
-        return
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.viewModel.customerCards = customer.cards
@@ -388,7 +387,12 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
     }
 
     func defaultsPaymentMethodsSection() -> Int{
-        return 0
+        if (self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0){
+            return 1
+        }else{
+            return 0
+        }
+        
     }
     
     // extension PaymentVaultViewController {
@@ -444,16 +448,18 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
                                                       for: indexPath) as! PaymentSearchCollectionViewCell
-        // Configure the cell
-        //PaymentSearchCollectionViewCell()
-        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[(indexPath as NSIndexPath).row]
+
+        switch indexPath.section {
+        case defaultsPaymentMethodsSection():
+            let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexPath.row]
+            cell.fillCell(searchItem: currentPaymentMethod)
+        default:
+            let currentCustomPaymentMethod = self.viewModel.customerCards?[indexPath.row]
+            cell.fillCell(cardInformation: currentCustomPaymentMethod!)
+        }
         
-      //  let paymentMethodCell = getCellFor(currentPaymentMethod)
-       
-   //     DispatchQueue.main.async(){
-           cell.fillCell(searchItem: currentPaymentMethod)
-   //     }
         
+
         return cell
     }
     fileprivate let itemsPerRow: CGFloat = 2

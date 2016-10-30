@@ -68,6 +68,11 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         self.fillCell(image: image, title: searchItem.description, subtitle: searchItem.comment)
     }
     
+    public func fillCell(cardInformation : CardInformation){
+        let image = MercadoPago.getImageFor(cardInformation: cardInformation)
+        self.fillCell(image: image, title: cardInformation.getCardDescription(), subtitle: nil)
+    }
+    
     static func totalHeight(searchItem : PaymentMethodSearchItem ) -> CGFloat {
         return PaymentSearchCollectionViewCell.totalHeight(title: searchItem.description, subtitle: searchItem.comment)
     }
