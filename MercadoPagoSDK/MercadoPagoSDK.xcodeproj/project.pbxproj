@@ -576,6 +576,8 @@
 		76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */; };
 		76FD24891C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		76FD248A1C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
+		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
+		CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -927,6 +929,8 @@
 		76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
 		76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
+		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
+		CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -979,7 +983,6 @@
 				0F9883341AD2AB5000F750F0 /* Model */,
 				0F98832D1AD2AB0D00F750F0 /* Core */,
 				0F98832A1AD2AABE00F750F0 /* Images.xcassets */,
-				151A940F1DBF8DE300A5557B /* RevampImages.xcassets */,
 				0F98830F1AD2A97A00F750F0 /* MercadoPagoSDK.h */,
 				0F98830D1AD2A97A00F750F0 /* Supporting Files */,
 			);
@@ -1092,6 +1095,7 @@
 				0F9883B81AD2AD1600F750F0 /* UIDevice+Additions.swift */,
 				0F9883B91AD2AD1600F750F0 /* UIColor+Additions.swift */,
 				76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */,
+				CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -1361,10 +1365,12 @@
 		151A94121DBF934B00A5557B /* Revamp */ = {
 			isa = PBXGroup;
 			children = (
+				151A940F1DBF8DE300A5557B /* RevampImages.xcassets */,
 				76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */,
 				76062BD61C4D20C30067A14B /* PaymentVaultViewController.xib */,
 				151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */,
 				151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */,
+				CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */,
 			);
 			name = Revamp;
 			sourceTree = "<group>";
@@ -2014,6 +2020,7 @@
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				0F98845D1AD2AF1500F750F0 /* VaultViewController.xib in Resources */,
 				7656C9F51C7616C80043BDB2 /* InstructionsFooterWithSecondaryInfoViewCell.xib in Resources */,
+				CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */,
 				76445AF41CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.xib in Resources */,
 				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				0F9883EA1AD2ADB000F750F0 /* PaymentMethodTableViewCell.xib in Resources */,
@@ -2150,6 +2157,7 @@
 				151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
 				76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
 				15D799F91CA1CE9A00623A84 /* PayerCostViewController.swift in Sources */,
+				CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */,
 				76134AB81C5BED2300A1BAF1 /* OfflinePaymentMethodCell.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				0F9883CE1AD2AD5500F750F0 /* PaymentTotalTableViewCell.swift in Sources */,

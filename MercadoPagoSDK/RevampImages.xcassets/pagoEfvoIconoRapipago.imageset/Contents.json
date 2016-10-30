@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mediosIconoDineroEnCuenta.png"
+      "filename" : "pagoEfvoIconoRapipago.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mediosIconoDineroEnCuenta@2x.png"
+      "filename" : "pagoEfvoIconoRapipago@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "mediosIconoDineroEnCuenta@3x.png"
+      "filename" : "pagoEfvoIconoRapipago@3x.png"
     }
   ],
   "info" : {

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoTrasnferencia</string>
+	</dict>
+	<key>credit_card</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoTarjeta</string>
+	</dict>
+	<key>ticket</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoEfectivo</string>
+	</dict>
+	<key>bapropagos</key>
+	<dict>
+		<key>image_name</key>
+		<string>pagoEfvoIconoBAPro</string>
+	</dict>
+	<key>pagofacil</key>
+	<dict>
+		<key>image_name</key>
+		<string>pagoEfvoIconoPagofacil</string>
+	</dict>
+	<key>rapipago</key>
+	<dict>
+		<key>image_name</key>
+		<string>pagoEfvoIconoRapipago</string>
+	</dict>
+	<key>cargavirtual</key>
+	<dict/>
+	<key>redlink_atm</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoLink</string>
+	</dict>
+	<key>redlink_bank_transfer</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoLink</string>
+	</dict>
+</dict>
+</plist>
