@@ -238,6 +238,8 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         {
             offset.y = -30;
             scrollView.contentOffset = offset;
+            titleVisible = false
+            self.title = self.viewModel.getTilte()
         }
         print("tableView \(tableView.contentOffset)")
         
