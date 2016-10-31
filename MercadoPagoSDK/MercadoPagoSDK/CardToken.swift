@@ -94,7 +94,13 @@ open class CardToken : NSObject {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
-                    userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(setting?.cardNumber.length)"), forKey: "cardNumber")
+                    if let cardNumberLength = setting?.cardNumber.length {
+                        userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardNumberLength)"), forKey: "cardNumber")
+                        
+                    } else {
+                        userInfo?.updateValue("El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized, forKey: "cardNumber")
+                    }
+                    
                 }
                 
                 // Validate luhn
