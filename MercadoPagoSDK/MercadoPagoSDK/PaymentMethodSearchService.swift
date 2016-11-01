@@ -31,13 +31,12 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class PaymentMethodSearchService: MercadoPagoService {
     
     open let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
-    //public let MP_SEARCH_PAYMENTS_URI = "/payment_methods/search/options"
     
     public init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, payerAccessToken : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
         
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
@@ -58,7 +57,11 @@ open class PaymentMethodSearchService: MercadoPagoService {
             params = params + "&customer_id=" + customerId!
         }
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
+        
+        let groupsRequestBody = GroupsRequestBody(amount : amount, excludedPaymentMethodsIds : excludedPaymentMethodIds, excludedPaymentTypesIds : excludedPaymentTypeIds, payerAccessToken : payerAccessToken)
+        
+        
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsRequestBody.toJSONString() as AnyObject?, method: "POST", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {

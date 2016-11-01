@@ -12,13 +12,14 @@ open class Payer : NSObject {
     open var email : String!
     open var _id : NSNumber = 0
     open var identification : Identification!
+    open var accessToken : String?
     
     
-    
-    public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
+    public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil, accessToken : String? = nil){
         self._id = _id!
         self.email = email
         self.identification = identification
+        self.accessToken = accessToken
     }
     
     open class func fromJSON(_ json : NSDictionary) -> Payer {
@@ -33,20 +34,31 @@ open class Payer : NSObject {
         if let identificationDic = json["identification"] as? NSDictionary {
             payer.identification = Identification.fromJSON(identificationDic)
         }
+        
+        if let accessToken = JSONHandler.attemptParseToString(json["access_token"]) {
+            payer.accessToken = accessToken
+        }
+        
         return payer
     }
     
-    
-    open func toJSONString() -> String {
+    open func toJSON() -> [String:Any] {
         let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
-        let _id : Any = self._id as! Decimal == 0 ? JSONHandler.null : self._id
+        let _id : Any = self._id == 0 ? JSONHandler.null : self._id
         let identification : Any = self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
+        let accessToken : Any = self.accessToken == nil ? JSONHandler.null : (self.accessToken!)
         let obj:[String:Any] = [
             "email": email,
             "_id": _id,
-            "identification" : identification
+            "identification" : identification,
+            "access_token" : accessToken
         ]
-        return JSONHandler.jsonCoding(obj)
+        return obj
+    }
+    
+    open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+        
     }
 
 }
