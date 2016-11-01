@@ -3,7 +3,7 @@
 
 if [ $# -eq 0 ]
   then
-    echo "Need tag version! Ex: 2.0.5"
+    echo "Need tag version! Ex: 2.0.7"
     exit 0
 fi
 
@@ -53,10 +53,10 @@ fi
 
 
 echo "=========================================="
-echo "3) Create tag for version $VERSION from development branch"
+echo "3) Create tag for version $VERSION from master branch"
 echo "=========================================="
 
-git checkout development
+git checkout master
 git tag $VERSION
 git push origin $VERSION
 PUSH_STATUS=$?
