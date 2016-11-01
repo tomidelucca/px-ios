@@ -38,6 +38,10 @@ open class MPFlowBuilder : NSObject {
         MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
             paymentVault.viewModel.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
+                
+                print(paymentMethod.toJSONString())
+                
+            //    print(paymentMethod.to)
                                     paymentVault.dismiss(animated: true, completion: { () -> Void in
                                             callback(paymentMethod, token, issuer, payerCost)}
                                     )}
@@ -83,6 +87,7 @@ open class MPFlowBuilder : NSObject {
         
         cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, cardInformation : cardInformation, paymentMethods : paymentMethods, token: token, timer: timer, callback: { (paymentMethod, token, issuer) -> Void in
             
+            
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
                 let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
                     if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
@@ -99,7 +104,10 @@ open class MPFlowBuilder : NSObject {
 
                 
                 }, failure: { (error) -> Void in
-                     (ccf.navigationController as! MPNavigationController).hideLoading()
+                    if let nav = ccf.navigationController as? MPNavigationController{
+                        nav.hideLoading()
+                    }
+                    
             })
 
             

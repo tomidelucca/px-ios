@@ -95,7 +95,7 @@ open class Token : NSObject {
 	}
     
     open func toJSONString() -> String {
-        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
+        let _id : Any = self._id == nil ? JSONHandler.null : self._id!
         let cardId : Any = self.cardId == nil ? JSONHandler.null : self.cardId!
         let luhn : Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
         let lastFour : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
