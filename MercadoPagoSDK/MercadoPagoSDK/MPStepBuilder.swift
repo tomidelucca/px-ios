@@ -103,22 +103,27 @@ open class MPStepBuilder : NSObject {
         return PromoViewController(callback : callback)
     }
     
-    
+    fileprivate class func verifyPaymentMethods(paymentMethods: [PaymentMethod], cardToken: CardToken, amount: Double, timer: CountdownTimer?, cardInformation: CardInformation?, callback: @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), ccf: MercadoPagoUIViewController, callbackCancel: ((Void) -> Void)?) -> Bool{
+        if paymentMethods.count == 2 {
+            if paymentMethods[0].paymentTypeId == PaymentTypeId.CREDIT_CARD.rawValue || paymentMethods[1].paymentTypeId == PaymentTypeId.CREDIT_CARD.rawValue {
+                if paymentMethods[0].paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethods[1].paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue{
+                    let creditDebitForm = startCreditDebitForm(paymentMethods, issuer: nil, token: cardToken, amount: amount, timer: timer, callback: { (selectedPaymentMethod) in
+                        self.getIssuers(selectedPaymentMethod as! PaymentMethod, cardToken: cardToken, customerCard: cardInformation, ccf: ccf, callback: callback)
+                    })
+                    creditDebitForm.callbackCancel = callbackCancel
+                    ccf.navigationController!.pushViewController(creditDebitForm, animated: false)
+                    return true
+                }
+            }
+        }
+        return false
+    }
     open class func startCreditCardForm(_ paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), callbackCancel : ((Void) -> Void)?) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : MPNavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
-        func verifyPaymentMethods(paymentMethods: [PaymentMethod]) -> Bool{
-            if paymentMethods.count == 2 {
-                if paymentMethods[0].paymentTypeId == "credit_card" || paymentMethods[1].paymentTypeId == "credit_card" {
-                    if paymentMethods[0].paymentTypeId == "debit_card" || paymentMethods[1].paymentTypeId == "debit_card"{
-                        return true
-                    }
-                }
-            }
-            return false
-        }
+        
         
         ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, cardInformation: cardInformation, paymentMethods : paymentMethods, timer : timer, callback : { (paymentMethod, cardToken) -> Void in
             
@@ -135,15 +140,11 @@ open class MPStepBuilder : NSObject {
                 let identificationForm = MPStepBuilder.startIdentificationForm({ (identification) -> Void in
                     
                     cardToken?.cardholder?.identification = identification
-                    if verifyPaymentMethods(paymentMethods: paymentMethod){
-                        let creditDebitForm = startCreditDebitForm(paymentMethod, issuer: nil, token: cardToken, amount: amount, timer: timer, callback: { (selectedPaymentMethod) in
-                            self.getIssuers(selectedPaymentMethod as! PaymentMethod, cardToken: cardToken!, customerCard: cardInformation, ccf: ccf, callback: callback)
-                        })
-                        creditDebitForm.callbackCancel = callbackCancel
-                        ccf.navigationController!.pushViewController(creditDebitForm, animated: false)
-                    } else {
+                    
+                    if !verifyPaymentMethods(paymentMethods: paymentMethod, cardToken: cardToken!, amount: amount, timer: timer, cardInformation: cardInformation, callback: callback, ccf: ccf, callbackCancel: callbackCancel){
                         self.getIssuers(paymentMethod[0], cardToken: cardToken!, customerCard: cardInformation, timer: timer, ccf: ccf, callback: callback)
                     }
+                    
                     }, timer : timer)
                 
                 identificationForm.callbackCancel = callbackCancel
@@ -151,13 +152,8 @@ open class MPStepBuilder : NSObject {
                 ccf.navigationController!.pushViewController(identificationForm, animated: false)
                 
             }else{
-                if verifyPaymentMethods(paymentMethods: paymentMethod){
-                    let creditDebitForm = startCreditDebitForm(paymentMethod, issuer: nil, token: cardToken, amount: amount, timer:timer, callback: { (selectedPaymentMethod) in
-                        self.getIssuers(selectedPaymentMethod as! PaymentMethod, cardToken: cardToken!, customerCard: cardInformation, ccf: ccf, callback: callback)
-                    })
-                    creditDebitForm.callbackCancel = callbackCancel
-                    ccf.navigationController!.pushViewController(creditDebitForm, animated: false)
-                } else {
+                
+                if !verifyPaymentMethods(paymentMethods: paymentMethod, cardToken: cardToken!, amount: amount, timer: timer, cardInformation: cardInformation, callback: callback, ccf: ccf, callbackCancel: callbackCancel){
                     self.getIssuers(paymentMethod[0], cardToken: cardToken!, customerCard: cardInformation, timer: timer, ccf: ccf, callback: callback)
                 }
             }
@@ -173,7 +169,7 @@ open class MPStepBuilder : NSObject {
                                          callback : @escaping ((_ paymentMethod: NSObject?) -> Void),
                                          callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
-        // TODO TRACKER    MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         return CardAdditionalStep(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, timer: timer, callback: callback )
     }
     
@@ -291,7 +287,7 @@ open class MPStepBuilder : NSObject {
         MPServicesBuilder.getInstallments(token.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
             
             let pcvc = MPStepBuilder.startPayerCostForm([paymentMethod], issuer: issuer, token: token, amount:amount, paymentPreference: nil, callback: { (payerCost) -> Void in
-                callback(paymentMethod, token, issuer, payerCost as! PayerCost?)
+                callback(paymentMethod, token, issuer, payerCost as! PayerCost)
             })
             
             ccf.navigationController!.pushViewController(pcvc, animated: false)

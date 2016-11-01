@@ -135,7 +135,7 @@ open class Card : NSObject, CardInformation {
     }
 
     open func getCardLastForDigits() -> String? {
-        return self.lastFourDigits
+        return self.lastFourDigits!
     }
     
     open func setupPaymentMethodSettings(_ settings: [Setting]) {

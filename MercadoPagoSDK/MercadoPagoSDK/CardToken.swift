@@ -322,8 +322,8 @@ open class CardToken : NSObject, CardInformationForm {
     open func isCustomerPaymentMethod() -> Bool {
         return false
     }
-    open func getCardLastForDigits() -> String{
-        var index = cardNumber?.characters.count
+    open func getCardLastForDigits() -> String?{
+        let index = cardNumber?.characters.count
         return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
     }
     public func getCardBin() -> String? {

@@ -13,7 +13,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     @IBOutlet weak var tableView: UITableView!
     
     var bundle : Bundle? = MercadoPago.getBundle()
-    let viewModel : PayerCostViewModel!
+    let viewModel : CardAdditionalStepViewModel!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +95,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     
     public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
-        self.viewModel = PayerCostViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
+        self.viewModel = CardAdditionalStepViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         
         super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
         self.timer=timer
@@ -103,19 +103,18 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if (indexPath.section == 0){
+        switch indexPath.section {
+        case 0:
             return 40
-            
-        } else if (indexPath.section == 1){
-            return UIScreen.main.bounds.height*0.27
-            
-        } else {
-            if self.viewModel.hasIssuer(){
-                return 100
-            } else {
-                return 80
-            }
+        case 1:
+            return self.viewModel.getCardCellHeight()
+        case 2:
+            return self.viewModel.gerRowCellHeight()
+        
+        default:
+            return 60
         }
+        
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -241,7 +240,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
             titleVisible = false
             self.title = self.viewModel.getTilte()
         }
-        print("tableView \(tableView.contentOffset)")
+        ("tableView \(tableView.contentOffset)")
         
         let visibleIndexPaths = self.tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
@@ -304,7 +303,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     }
     
 }
-class PayerCostViewModel : NSObject {
+class CardAdditionalStepViewModel : NSObject {
     
     var payerCosts : [PayerCost]?
     var installment : Installment?
@@ -352,6 +351,16 @@ class PayerCostViewModel : NSObject {
             return false
         } else {
             return true
+        }
+    }
+    func getCardCellHeight() -> CGFloat {
+        return UIScreen.main.bounds.height*0.27
+    }
+    func gerRowCellHeight() -> CGFloat {
+        if hasIssuer() {
+            return 100
+        } else {
+            return 80
         }
     }
 }
