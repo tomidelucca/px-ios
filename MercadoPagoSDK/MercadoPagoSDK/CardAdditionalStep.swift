@@ -345,11 +345,7 @@ class PayerCostViewModel : NSObject {
         }
     }
     func hasIssuer()-> Bool{
-        if issuer == nil{
-            return false
-        } else {
-            return true
-        }
+        return issuer != nil
     }
     func hasPaymentMethod()->Bool{
         if (paymentMethod.count)>1{
