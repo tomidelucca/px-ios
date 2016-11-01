@@ -38,11 +38,7 @@ open class MPFlowBuilder : NSObject {
         MercadoPagoContext.initFlavor2()
         let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
             paymentVault.viewModel.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
-                
-                print(paymentMethod.toJSONString())
-                
-            //    print(paymentMethod.to)
-                                    paymentVault.dismiss(animated: true, completion: { () -> Void in
+                    paymentVault.dismiss(animated: true, completion: { () -> Void in
                                             callback(paymentMethod, token, issuer, payerCost)}
                                     )}
         paymentVault.modalTransitionStyle = .crossDissolve
