@@ -14,13 +14,15 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     
     var bundle : Bundle? = MercadoPago.getBundle()
     let viewModel : CardAdditionalStepViewModel!
+    var navBarHeight: CGFloat = 0
+    var startScrollPosition: CGFloat = 0
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
-        
+       
         var upperFrame = self.tableView.bounds
         upperFrame.origin.y = -upperFrame.size.height;
         let upperView = UIView(frame: upperFrame)
@@ -50,7 +52,10 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         super.viewWillAppear(animated)
         
         let indexPath = IndexPath(row: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        //self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        
+        self.hideNavBar()
+        
         if !self.viewModel.hasIssuer() {
             self.showLoading()
             self.getIssuers()
@@ -68,12 +73,14 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
             self.tableView.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
             
         }
+        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = ""
         
+        startScrollPosition = tableView.contentOffset.y
     }
     
     override func loadMPStyles(){
@@ -105,7 +112,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         
         switch indexPath.section {
         case 0:
-            return 40
+            return navBarHeight
         case 1:
             return self.viewModel.getCardCellHeight()
         case 2:
