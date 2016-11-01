@@ -220,31 +220,19 @@ open class MPStepBuilder : NSObject {
         
         if !cardToken.isCustomerPaymentMethod() {
             MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
-<<<<<<< HEAD
-                if(issuers!.count > 1){
-                    let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
-                        (ccf.navigationController as! MPNavigationController).showLoading()
-                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer as! Issuer, ccf : ccf, callback: callback)
-                    })
-                    issuerForm.callbackCancel = { Void -> Void in
-                        ccf.navigationController!.dismiss(animated: true, completion: {})
-=======
+
                     if(issuers!.count > 1){
                         let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
                             if let nav = ccf.navigationController {
                                 nav.showLoading()
                             }
                             
-                            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer!, ccf : ccf, callback: callback)
+                            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer as? Issuer, ccf : ccf, callback: callback)
                         })
                         issuerForm.callbackCancel = { Void -> Void in
                             ccf.navigationController!.dismiss(animated: true, completion: {})
                         }
-                        ccf.navigationController!.pushViewController(issuerForm, animated: false)
-                    } else {
-                        self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
->>>>>>> development
-                    }
+                        
                     ccf.navigationController!.pushViewController(issuerForm, animated: false)
                 } else {
                     self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
