@@ -102,7 +102,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
         })
-        self.present(pv, animated: true, completion: {})
+        
+        let myNav = UINavigationController(rootViewController: pv.viewControllers[0])
+        self.present(myNav, animated: true, completion: {})
     }
     
     func startCardFlow(){

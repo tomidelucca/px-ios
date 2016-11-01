@@ -9,21 +9,6 @@
 import UIKit
 
 
-open class MPNavigationController : UINavigationController {
-    
-    
-    internal func showLoading(){
-
-        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
-    }
-    
-    internal func hideLoading(){
-        LoadingOverlay.shared.hideOverlayView()
-    }
-    
-   
-    
-}
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
     internal var displayPreferenceDescription = false
@@ -307,4 +292,14 @@ extension UINavigationBar {
         }
     }
 
+}
+extension UINavigationController {
+    internal func showLoading(){
+        
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
+    }
 }
