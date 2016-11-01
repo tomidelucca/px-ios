@@ -9,44 +9,42 @@
 import UIKit
 
 
-open class MPNavigationController : UINavigationController {
-    
-    
-    internal func showLoading(){
-
-        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
-    }
-    
-    internal func hideLoading(){
-        LoadingOverlay.shared.hideOverlayView()
-    }
-    
-   
-    
-}
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
+open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
     internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
-    
-    
+    public var timer : CountdownTimer?
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
+    
     override open func viewDidLoad() {
-     
         super.viewDidLoad()
         MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
         self.loadMPStyles()
-
     }
 
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
-
+    var timerLabel : MPLabel?
     
-   
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.timer != nil {
+            self.timer!.delegate = self
+            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 86, height: 20))
+            self.timerLabel!.backgroundColor = MercadoPagoContext.getPrimaryColor()
+            self.timerLabel!.textColor = MercadoPagoContext.getTextColor()
+            self.timerLabel!.textAlignment = .right
+            let button = UIButton(type: UIButtonType.custom)
+            button.frame = CGRect(x: 0, y: 0, width: 86, height: 20)
+            button.addSubview(timerLabel!)
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        }
+    }
+    
     static func loadFont(_ fontName: String) -> Bool {
         
         if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf")
@@ -257,6 +255,16 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.present(errorVC, animated: true, completion: {})
         }
     }
+    
+    open func updateTimer() {
+        if self.timerLabel != nil {
+            self.timerLabel!.text = self.timer!.getCurrentTiming()
+        }
+    }
+    
+    deinit {
+        print("\(String(describing: type(of: self))) dellocated" )
+    }
 
 }
 
@@ -284,4 +292,14 @@ extension UINavigationBar {
         }
     }
 
+}
+extension UINavigationController {
+    internal func showLoading(){
+        
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
+    }
+    
+    internal func hideLoading(){
+        LoadingOverlay.shared.hideOverlayView()
+    }
 }

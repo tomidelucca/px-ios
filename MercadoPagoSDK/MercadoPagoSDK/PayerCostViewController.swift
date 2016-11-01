@@ -31,11 +31,12 @@ open class PayerCostViewController: MercadoPagoUIViewController {
     
     
     
-    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?,amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, callback : @escaping ((_ payerCost: PayerCost) -> Void),
+    public init(paymentMethod : PaymentMethod?,issuer : Issuer?,token : Token?, amount : Double?, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, timer: CountdownTimer? = nil,
+                callback : @escaping ((_ payerCost: PayerCost) -> Void),
                 callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: "PayerCostViewController", bundle: self.bundle)
-     self.edgesForExtendedLayout = UIRectEdge()
-         self.paymentMethod = paymentMethod
+        self.edgesForExtendedLayout = UIRectEdge()
+        self.paymentMethod = paymentMethod
         self.token = token!
         self.callback = callback
         self.callbackCancel = callbackCancel
@@ -51,9 +52,7 @@ open class PayerCostViewController: MercadoPagoUIViewController {
 
         self.amount = amount
         self.issuer = issuer
-        
-        
- 
+        self.timer = timer
 
     }
     
@@ -64,7 +63,6 @@ open class PayerCostViewController: MercadoPagoUIViewController {
     open override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         if self.installments == nil {
             self.showLoading()
@@ -96,6 +94,9 @@ open class PayerCostViewController: MercadoPagoUIViewController {
                 //Create navigation buttons
                 displayBackButton()
             }
+            
+
+
         }
         
     }
@@ -136,11 +137,6 @@ open class PayerCostViewController: MercadoPagoUIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.view addSubview:view];
-        */
         self.view.backgroundColor = UIColor.complementaryColor()
         tableView.tableFooterView = UIView()
         cardFront = CardFrontView(frame: self.cardView.bounds)
@@ -149,8 +145,6 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         self.tableView.register(installmentNib, forCellReuseIdentifier: "installmentCell")
         // Do any additional setup after loading the view.
         updateCardSkin()
-    
-        
     }
     
 
