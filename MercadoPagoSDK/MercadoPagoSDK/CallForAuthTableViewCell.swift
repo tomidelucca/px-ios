@@ -1,26 +1,18 @@
 //
-//  ConfirmEmailTableViewCell.swift
+//  CallFourAuthTableViewCell.swift
 //  MercadoPagoSDK
 //
-//  Created by Eden Torres on 10/26/16.
+//  Created by Eden Torres on 10/31/16.
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
 import UIKit
 
-class ConfirmEmailTableViewCell: UITableViewCell {
+class CallForAuthTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-    func fillCell(payment: Payment) -> Void {
-        if payment.status == "approved"{
-            label.text = "Te enviaremos este comprobante a " + payment.payer.email
-        } else {
-            label.text = "También enviamos el código a tu email"
-        }
     }
     func addSeparatorLineToTop(width: Double, y: Int){
         var lineFrame = CGRect(origin: CGPoint(x: 0,y :y), size: CGSize(width: width, height: 0.5))
@@ -29,6 +21,7 @@ class ConfirmEmailTableViewCell: UITableViewCell {
         line.backgroundColor = UIColor(red: 153, green: 153, blue: 153)
         addSubview(line)
     }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

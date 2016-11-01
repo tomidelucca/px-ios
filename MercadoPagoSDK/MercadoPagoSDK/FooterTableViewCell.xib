@@ -10,18 +10,21 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="FooterTableViewCell" customModule="MercadoPagoSDK" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <frame key="frameInset" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeH-Mj-zfL">
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeH-Mj-zfL">
+                        <frame key="frameInset" minX="85" minY="5" width="150" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <state key="normal" title="Seguir comprando"/>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="QeH-Mj-zfL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="02F-Ni-dZ9"/>
+                    <constraint firstAttribute="bottom" secondItem="QeH-Mj-zfL" secondAttribute="bottom" constant="30" id="1yr-tR-WJv"/>
                     <constraint firstItem="QeH-Mj-zfL" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Ls2-OL-Hba"/>
+                    <constraint firstItem="QeH-Mj-zfL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OLk-pJ-ajw"/>
+                    <constraint firstItem="QeH-Mj-zfL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="gcw-b7-CTs"/>
                 </constraints>
             </tableViewCellContentView>
         </tableViewCell>

@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="297" height="463"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="297" height="462"/>
+                <frame key="frameInset" width="297" height="463"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comprobante" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J82-CR-dXM">
@@ -21,9 +21,6 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nª 12344325" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Q0-cp-03V">
-                        <constraints>
-                            <constraint firstAttribute="width" constant="95" id="L2B-rI-TZt"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -34,10 +31,6 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sin Interés" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5PI-XD-cCr">
-                        <constraints>
-                            <constraint firstAttribute="height" constant="23" id="JF9-5w-oW5"/>
-                            <constraint firstAttribute="width" constant="92" id="uBf-6i-KPc"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.23137254901960785" green="0.76078431372549016" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -58,7 +51,7 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En tu estado de cuenta verás el cargo como MERCADOPAGO" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3V-ZN-8xJ">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En tu estado de cuenta verás el cargo como MERCADOPAGO" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3V-ZN-8xJ">
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -85,6 +78,15 @@
                     <constraint firstItem="J82-CR-dXM" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="l3A-EP-EUU"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="installmentRate" destination="5PI-XD-cCr" id="Spb-nO-qAs"/>
+                <outlet property="installments" destination="xxf-7z-iDK" id="gzy-aX-9pV"/>
+                <outlet property="lastFourDigits" destination="8av-aO-uxn" id="6JJ-yv-tXi"/>
+                <outlet property="paymentId" destination="5Q0-cp-03V" id="sPh-ss-6g4"/>
+                <outlet property="paymentMethod" destination="i8n-4l-cmC" id="TFl-Ht-hRa"/>
+                <outlet property="statement" destination="V3V-ZN-8xJ" id="0rX-c4-d5p"/>
+                <outlet property="total" destination="1vd-yi-RVw" id="w71-hX-J8J"/>
+            </connections>
             <point key="canvasLocation" x="72.5" y="85.5"/>
         </tableViewCell>
     </objects>
