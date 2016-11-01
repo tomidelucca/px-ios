@@ -95,7 +95,12 @@ open class Token : NSObject {
 	}
     
     open func toJSONString() -> String {
-        let _id : Any = self._id != nil ? JSONHandler.null : self._id!
+        return JSONHandler.jsonCoding(toJSON())
+    }
+    
+    
+    open func toJSON() -> [String:Any] {
+        let _id : Any = self._id == nil ? JSONHandler.null : self._id!
         let cardId : Any = self.cardId == nil ? JSONHandler.null : self.cardId!
         let luhn : Any =  self.luhnValidation == nil ? JSONHandler.null : self.luhnValidation!
         let lastFour : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
@@ -117,9 +122,11 @@ open class Token : NSObject {
             "lastModifiedDate" : Utils.getStringFromDate(self.lastModifiedDate),
             "dueDate" : Utils.getStringFromDate(self.dueDate)
         ]
-
-        return JSONHandler.jsonCoding(obj)
+        
+        return obj
     }
+    
+    
     
     open func getCardExpirationDateFormated() -> String {
         return (String(expirationMonth) + String(expirationYear))

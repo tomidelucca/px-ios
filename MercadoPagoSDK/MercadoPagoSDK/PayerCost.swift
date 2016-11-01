@@ -59,6 +59,10 @@ open class PayerCost : NSObject {
     }
     
     open func toJSONString() -> String {
+        return JSONHandler.jsonCoding(toJSON())
+    }
+    
+    open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [
             "installments": self.installments,
             "installmentRate" : self.installmentRate,
@@ -68,8 +72,10 @@ open class PayerCost : NSObject {
             "installmentAmount" : self.installmentAmount,
             "totalAmount" : self.totalAmount,
             ]
-        return JSONHandler.jsonCoding(obj)
+        return obj
     }
+
+    
 }
 
 
