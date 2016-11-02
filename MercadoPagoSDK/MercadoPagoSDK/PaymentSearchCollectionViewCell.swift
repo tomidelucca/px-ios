@@ -20,37 +20,16 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // Initialization code
+
     }
 
     public func fillCell(image: UIImage?, title: String? = "", subtitle: String? = ""){
         
         self.titleSearch.text = title
         self.subtitleSearch.text = subtitle
-       
-     //   self.removeConstraint(titleConstraints)
-     //   self.removeConstraint(subtitleConstraints)
+        self.imageSearch.image = image
 
-     //   titleConstraints = self.getConstraintFor(label: titleSearch)
-     //   subtitleConstraints = self.getConstraintFor(label: subtitleSearch)
-     //   self.addConstraint(titleConstraints)
-     //   self.addConstraint(subtitleConstraints)
-      
-        /*
-        if subtitle == nil || subtitle!.isEmpty {
-            self.addConstraint(NSLayoutConstraint(item: self.subtitleSearch, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-)
-        }
-        
-        if title == nil || title!.isEmpty {
-            self.addConstraint(NSLayoutConstraint(item: self.titleSearch, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0))
-        }
-         */
-        
-   //     if let image = image {
-            self.imageSearch.image = image
-   //     }
+        self.titleSearch.textColor = MercadoPagoContext.getTextColor()
         self.layoutIfNeeded()
     }
     

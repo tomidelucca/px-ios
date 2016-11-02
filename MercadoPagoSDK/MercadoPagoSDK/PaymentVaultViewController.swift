@@ -138,7 +138,9 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
             self.callbackCancel = callbackCancel
         }
 
-        
+        self.view.backgroundColor = MercadoPagoContext.getComplementaryColor()
+        self.collectionSearch.backgroundColor = MercadoPagoContext.getComplementaryColor()
+ 
         
         
     }
@@ -442,7 +444,12 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
                                  numberOfItemsInSection section: Int) -> Int {
         switch section {
         case defaultsPaymentMethodsSection():
-            return self.viewModel.currentPaymentMethodSearch.count
+            if let pms = self.viewModel.currentPaymentMethodSearch{
+              return pms.count
+            }else{
+               return 0
+            }
+            
         default:
             return self.viewModel.getCustomerPaymentMethodsToDisplayCount()
         }

@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mediosIconoTarjeta.png"
+      "filename" : "pagoEfvoIcono7Eleven.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mediosIconoTarjeta@2x.png"
+      "filename" : "pagoEfvoIcono7Eleven@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "mediosIconoTarjeta@3x.png"
+      "filename" : "pagoEfvoIcono7Eleven@3x.png"
     }
   ],
   "info" : {
