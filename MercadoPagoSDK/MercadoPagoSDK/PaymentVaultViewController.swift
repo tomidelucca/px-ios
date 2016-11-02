@@ -398,7 +398,12 @@ open class PaymentVaultViewController: MercadoPagoUIViewController /*, UITableVi
     // extension PaymentVaultViewController {
     //1
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        if (self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0){
+            return 2
+        }else{
+            return 1
+        }
+
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
