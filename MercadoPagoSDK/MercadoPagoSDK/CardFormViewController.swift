@@ -335,7 +335,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 return true
             }
             if(((textEditMaskFormater.textUnmasked(textField.text).characters.count) == 6) && (string.characters.count > 0)){
-                if (cardFormManager.guessedPM == nil){
+                if (!cardFormManager.hasGuessedPM()){
                     return false
                 }
             }else{
@@ -498,8 +498,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
         case cardNumberLabel! :
             if !validateCardNumber() {
-                if (cardFormManager.guessedPM != nil){
-                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.guessedPM![0])?.userInfo["cardNumber"] as? String)!)
+                if (cardFormManager.guessedPMS != nil){
+                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
                 }else{
                     if (cardNumberLabel?.text?.characters.count == 0){
                         showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
@@ -523,7 +523,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
         case expirationDateLabel! :
             
-            if (cardFormManager.guessedPM != nil){
+            if (cardFormManager.guessedPMS != nil){
                 let bin = self.cardFormManager.getBIN(self.cardNumberLabel!.text!)
                 //TODO : esto te estalla en la cara cris
                 if (!(cardFormManager.getGuessedPM()?.isSecurityCodeRequired((bin)!))!){
@@ -575,7 +575,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         textEditMaskFormater = textMaskFormaterAux
         textEditMaskFormater = textEditMaskFormaterAux
         cardFront?.cardCVV.alpha = 0
-        cardFormManager.guessedPM = nil
+        cardFormManager.guessedPMS = nil
         self.updateLabelsFontColors()
         
     }
@@ -584,11 +584,11 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
-            cardFormManager.guessedPM = pmMatched
+            cardFormManager.guessedPMS = pmMatched
             if(cardFormManager.getGuessedPM()  != nil){
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.guessedPM![0])
-                    self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.guessedPM![0])
+                    self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
+                    self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
                     self.cardFront?.cardLogo.alpha = 1
                 })
                 let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask() != nil) ? cardFormManager.getGuessedPM()?.getLabelMask() : "XXXX XXXX XXXX XXXX"
@@ -615,7 +615,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             self.clearCardSkin()
         }
         if self.cvvLabel == nil || self.cvvLabel!.text!.characters.count == 0 {
-            if((cardFormManager.guessedPM != nil)&&(!cardFormManager.guessedPM![0].secCodeInBack())){
+            if((cardFormManager.guessedPMS != nil)&&(!(cardFormManager.getGuessedPM()?.secCodeInBack())!)){
                 cvvLabel = cardFront?.cardCVV
                 cardBack?.cardCVV.text = ""
                 cardFront?.cardCVV.alpha = 1
@@ -672,7 +672,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         if (cardFormManager.token != nil){ // C4A
             let ct = CardToken()
             ct.securityCode = cvvLabel?.text
-            self.callback!(cardFormManager.guessedPM!, ct)
+            self.callback!(cardFormManager.guessedPMS!, ct)
             return
         }
         
@@ -684,13 +684,13 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         } else if (self.cardFormManager.token != nil){ // C4A
             let ct = CardToken()
             ct.securityCode = cvvLabel?.text
-            self.callback!(cardFormManager.guessedPM!, ct)
+            self.callback!(cardFormManager.guessedPMS!, ct)
             return
         } else {
             self.cardFormManager.tokenHidratate(cardNumberLabel!.text!, expirationDate: self.expirationDateLabel!.text!, cvv: self.cvvLabel!.text!, cardholderName : self.nameLabel!.text!)
             
-            if (cardFormManager.guessedPM != nil){
-                let errorMethod = cardFormManager.cardToken!.validateCardNumber(cardFormManager.guessedPM![0])
+            if (cardFormManager.guessedPMS != nil){
+                let errorMethod = cardFormManager.cardToken!.validateCardNumber(cardFormManager.getGuessedPM()!)
                 if((errorMethod) != nil){
                     markErrorLabel(cardNumberLabel!)
                     return
@@ -712,7 +712,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 return
             }
             let bin = self.cardFormManager.getBIN(self.cardNumberLabel!.text!)!
-            if(cardFormManager.guessedPM![0].isSecurityCodeRequired(bin)){
+            if(cardFormManager.getGuessedPM()!.isSecurityCodeRequired(bin)){
                 let errorCVV = cardFormManager.cardToken!.validateSecurityCode()
                 if((errorCVV) != nil){
                     markErrorLabel(cvvLabel!)
@@ -722,7 +722,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             }
         }
         
-        self.callback!(self.cardFormManager.guessedPM!, self.cardFormManager.cardToken!)
+        self.callback!(self.cardFormManager.guessedPMS!, self.cardFormManager.cardToken!)
     }
     
     func addCvvDot() -> Bool {

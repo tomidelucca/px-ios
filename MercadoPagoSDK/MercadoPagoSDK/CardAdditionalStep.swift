@@ -132,7 +132,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         if (section == 0 || section == 1){
             return 1
         } else {
-            return self.viewModel.numberofPayerCost()
+            return self.viewModel.numberOfPayerCost()
         }
     }
     
@@ -332,7 +332,7 @@ class CardAdditionalStepViewModel : NSObject {
         self.paymentPreference = paymentPreference
         self.callback = callback
     }
-    func numberofPayerCost() -> Int{
+    func numberOfPayerCost() -> Int{
         if hasIssuer(){
             return (self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments)) ?? 0
         }else if hasPaymentMethod(){
@@ -365,7 +365,7 @@ class CardAdditionalStepViewModel : NSObject {
     }
     func gerRowCellHeight() -> CGFloat {
         if hasIssuer() {
-            return 100
+            return 60
         } else {
             return 80
         }

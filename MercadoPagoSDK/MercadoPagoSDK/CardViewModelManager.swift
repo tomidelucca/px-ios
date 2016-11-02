@@ -23,7 +23,7 @@ class CardViewModelManager: NSObject {
 
     
     var paymentMethods : [PaymentMethod]?
-    var guessedPM : [PaymentMethod]?
+    var guessedPMS : [PaymentMethod]?
     var customerCard : CardInformation?
     var token : Token?
     var cardToken : CardToken?
@@ -39,11 +39,11 @@ class CardViewModelManager: NSObject {
     init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : [PaymentMethod]? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){
         self.amount = amount
         self.paymentMethods = paymentMethods
-        self.guessedPM = paymentMethod
+        self.guessedPMS = paymentMethod
         
         if customerCard != nil {
             self.customerCard = customerCard
-            self.guessedPM?[0] = (customerCard?.getPaymentMethod())!
+            self.guessedPMS?[0] = (customerCard?.getPaymentMethod())!
         }
         self.token = token
         self.paymentSettings = paymentSettings
@@ -56,21 +56,21 @@ class CardViewModelManager: NSObject {
         if self.customerCard != nil {
             lenght = (self.customerCard?.getCardSecurityCode().length)!
         } else {
-            if ((guessedPM?[0].settings == nil)||(guessedPM?[0].settings.count == 0)){
+            if ((getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0)){
                 lenght = 3 // Default
             }else{
-                lenght = (guessedPM?[0].settings[0].securityCode.length)!
+                lenght = (getGuessedPM()?.settings[0].securityCode.length)!
             }
         }
         return lenght
     }
  
     func getLabelTextColor() -> UIColor {
-        return (self.guessedPM == nil) ? MPLabel.defaultColorText : MercadoPago.getFontColorFor(self.guessedPM![0])!
+        return (self.guessedPMS == nil) ? MPLabel.defaultColorText : MercadoPago.getFontColorFor(self.getGuessedPM()!)!
     }
 
     func getEditingLabelColor() -> UIColor {
-        return (self.guessedPM == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(self.guessedPM![0])!
+        return (self.guessedPMS == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(getGuessedPM()!)!
     }
     
     func getExpirationMonthFromLabel(_ expirationDateLabel : MPLabel)->Int {
@@ -108,13 +108,13 @@ class CardViewModelManager: NSObject {
     
     func validateCardNumber(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
-        if(self.guessedPM == nil){
+        if(self.guessedPMS == nil){
             return false
         }
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
-        let errorMethod = self.cardToken!.validateCardNumber(self.guessedPM![0])
+        let errorMethod = self.cardToken!.validateCardNumber(getGuessedPM()!)
         if((errorMethod) != nil){
             return false
         }
@@ -135,7 +135,7 @@ class CardViewModelManager: NSObject {
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
-        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.guessedPM?[0].secCodeLenght()){
+        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.getGuessedPM()?.secCodeLenght()){
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()
@@ -160,15 +160,15 @@ class CardViewModelManager: NSObject {
         if(self.getBIN(cardNumber) == nil){
             return false
         }
-        if(self.guessedPM != nil){
-            return self.guessedPM![0].isAmex()
+        if(self.guessedPMS != nil){
+            return self.getGuessedPM()!.isAmex()
         }else{
             return false
         }
     }
     
     func matchedPaymentMethod (_ cardNumber : String) -> [PaymentMethod]? {
-        if self.guessedPM != nil {
+        if self.guessedPMS != nil {
             //return self.paymentMethod
             return nil
         }
@@ -215,9 +215,13 @@ class CardViewModelManager: NSObject {
         return self.cardToken!
     }
     func getGuessedPM() -> PaymentMethod? {
-        return guessedPM?[0]
+        return guessedPMS?[0]
     }
-
-    
-    
+    func hasGuessedPM() -> Bool{
+        if guessedPMS == nil || guessedPMS?.count == 0{
+            return false
+        } else {
+            return true
+        }
+    }
 }
