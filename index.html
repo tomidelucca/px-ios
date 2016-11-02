@@ -73,7 +73,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoSDK', '~> 2.0.5'
+pod 'MercadoPagoSDK', '2.0.7'
                      </code>
          <button class="copy-button" alt="Copiar código">
                         <img src="./img/clippy.svg" width="13">
@@ -160,7 +160,7 @@ class MainViewController: UIViewController {
                     </button>
                   </pre>
                   <p class="advanced-panel" style="font-weight: 300; font-size: 15px;">
-                        <em>*</em> A modo de prueba, estamos usando una preferencia cuyo producto es un Bajo de $100 con todos los medios de pago disponibles en MercadoPago.
+                        <em>*</em> A modo de prueba, estamos usando una preferencia que cuenta con todos los medios de pago disponibles en MercadoPago.
                   </p>
                </div>
             </div>
@@ -200,19 +200,18 @@ class MainViewController: UIViewController {
                   <pre class="snippet">
                      <code class="line-numbers language-swift">
 // 2 - Identificador de preferencia de pago
-let prefId = "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f" 
+let prefId = "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1" 
 
 // Método ejecutado al hacer clic en el botón
 func startCheckout(){
   
-  let checkout = MPFlowBuilder.startCheckoutViewController(prefId) 
-    { (payment : Payment) in
-      // Listo! El pago ya fue procesado por MP. 
-      // En el paso siguiente se describe el método displayPaymentInfo
-      self.displayPaymentInfo(payment)
-    }
-
-  self.presentViewController(checkout, animated: true, completion: {})
+ let choFlow = MPFlowBuilder.startCheckoutViewController( "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1", callback: { (payment: Payment) in
+                //Listo! El pago ya fue procesado por MP.
+                // En el paso siguiente se describe el método displayPaymentInfo
+                self.displayPaymentInfo(payment)
+            })
+            
+            self.present(choFlow, animated: true, completion: {})
 }
                      </code>
                      <button class="copy-button">
