@@ -10,9 +10,14 @@ import UIKit
 
 class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var paymentIcon: UIImageView!
+    @IBOutlet weak var paymentMethodIcon: UIImageView!
     
     @IBOutlet weak var paymentDescription: MPLabel!
+    
+    @IBOutlet weak var paymentMethodDescription: MPLabel!
+    
+    @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,9 +30,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethod, lastFourDigits : String) {
-        self.paymentIcon.image = MercadoPago.getImageFor(paymentMethod, forCell: true)
-        self.paymentDescription.text = "terminada en ".localized + lastFourDigits
-        //ViewUtils.drawBottomLine(y : 47, width: self.view.bounds.width, inView: self)
+       
     }
     
 }
