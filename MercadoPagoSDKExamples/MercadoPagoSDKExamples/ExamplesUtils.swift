@@ -10,27 +10,26 @@ import UIKit
 import MercadoPagoSDK
 
 class ExamplesUtils {
-    
+
     
     
     static var preferenceSelectedID : String = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
     
     
     class var MERCHANT_PUBLIC_KEY : String {
-        return //"444a9ef5-8a6b-429f-abdf-587639155d88"
-            //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
-            // "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
-            // "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
-            // "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
-            // "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
-            
-            //"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
-        //"TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b"
-        "APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"
+		return //"444a9ef5-8a6b-429f-abdf-587639155d88"
+		 //"444a9ef5-8a6b-429f-abdf-587639155d88" // AR
+		// "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3" // BR
+		// "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2" // MX
+		// "2b66598b-8b0f-4588-bd2f-c80ca21c6d18" // VZ
+		// "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
         
+       "444a9ef5-8a6b-429f-abdf-587639155d88"
+          //"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"
+ 
         // "TEST-d7ecb23b-8cbd-4292-96d5-eccfe39748b5"
-        // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
-        
+       // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
+
         //USUARIO AXEL - ARG
         // "TEST-c0e6ec4e-efb3-4fb9-bb73-169484533a63"
     }
@@ -44,10 +43,9 @@ class ExamplesUtils {
             // "aa371283-ad00-4d5d-af5d-ed9f58e139f1" // CO
             
             // "444a9ef5-8a6b-429f-abdf-587639155d88"
-            
-        //"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"
-        //"TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b" // MX
-        "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a" //ARG
+        
+        
+         "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
         // "TEST-2edbc541-4e19-43b9-8241-2cda72da6b6f"
         
         //USUARIO AXEL - ARG
@@ -68,15 +66,15 @@ class ExamplesUtils {
     class var MERCHANT_MOCK_GET_DISCOUNT_URI : String {
         return  "/checkout/examples/getDiscounts"
     }
-    
+
     class var MERCHANT_ACCESS_TOKEN : String {
         return "mla-cards-data"
-        // "mla-cards-data" // AR
-        // "mlb-cards-data" // BR
-        // "mlm-cards-data" // MX
-        // "mlv-cards-data" // VZ
-        // "mco-cards-data" // CO
-        // "mla-cards-data-tarshop" // NO CVV
+		// "mla-cards-data" // AR
+		// "mlb-cards-data" // BR
+		// "mlm-cards-data" // MX
+		// "mlv-cards-data" // VZ
+		// "mco-cards-data" // CO
+		// "mla-cards-data-tarshop" // NO CVV
         // return "mla-cards-data-tarshop" // No CVV
     }
     class var AMOUNT : Double {
@@ -98,8 +96,8 @@ class ExamplesUtils {
     class var ITEM_UNIT_PRICE : Double {
         return 1000.00
     }
-    
-    
+ 
+ 
     class var PREF_ID_NO_EXCLUSIONS : String {
         return "150216849-e131b785-10d3-48c0-a58b-2910935512e0"
     }
@@ -143,10 +141,10 @@ class ExamplesUtils {
     class func createPayment(_ token: String, installments: Int, cardIssuer: Issuer?, paymentMethod: PaymentMethod, callback: @escaping (_ payment: Payment) -> Void) {
         // Set item
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
-                               unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
-        
-        //let issuerId : NSNumber = cardIssuerId == nil ? 0 : cardIssuerId!
-        
+            unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
+
+		//let issuerId : NSNumber = cardIssuerId == nil ? 0 : cardIssuerId!
+		
         // Set merchant payment
         let payment : MerchantPayment = MerchantPayment(items: [item], installments: installments, cardIssuer: cardIssuer, tokenId: token, paymentMethod: paymentMethod, campaignId: 0)
         
@@ -160,7 +158,7 @@ class ExamplesUtils {
         
         // Create items
         let item_1 : Item = Item(_id: ExamplesUtils.ITEM_ID, title : ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
-                                 unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
+            unitPrice: ExamplesUtils.ITEM_UNIT_PRICE)
         item_1.currencyId = "MXN"
         var items = [Item]()
         items.append(item_1)
@@ -169,17 +167,17 @@ class ExamplesUtils {
         let payer = Payer()
         payer._id = 2
         payer.email = "thisis@nemail.com"
-        
+
         
         //Create CheckoutPreference
         let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
         preference._id = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
-        
+    
         return preference
     }
     
     class func createCheckoutPreference() -> CheckoutPreference {
-        
+    
         let preference = self.createCheckoutPreferenceWithNoExclusions()
         
         //Preference payment methods
@@ -193,5 +191,5 @@ class ExamplesUtils {
         
         return preference
     }
-    
+
 }

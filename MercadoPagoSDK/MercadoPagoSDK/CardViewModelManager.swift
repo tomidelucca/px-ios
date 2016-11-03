@@ -23,7 +23,7 @@ class CardViewModelManager: NSObject {
 
     
     var paymentMethods : [PaymentMethod]?
-    var guessedPMS : [PaymentMethod]?
+    var paymentMethod : PaymentMethod?
     var customerCard : CardInformation?
     var token : Token?
     var cardToken : CardToken?
@@ -36,14 +36,14 @@ class CardViewModelManager: NSObject {
     var cvvEmpty: Bool = true
     var cardholderNameEmpty: Bool = true
     
-    init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : [PaymentMethod]? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){
+    init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : PaymentMethod? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){
         self.amount = amount
         self.paymentMethods = paymentMethods
-        self.guessedPMS = paymentMethod
+        self.paymentMethod = paymentMethod
         
         if customerCard != nil {
             self.customerCard = customerCard
-            self.guessedPMS?[0] = (customerCard?.getPaymentMethod())!
+            self.paymentMethod = customerCard?.getPaymentMethod()
         }
         self.token = token
         self.paymentSettings = paymentSettings
@@ -56,21 +56,21 @@ class CardViewModelManager: NSObject {
         if self.customerCard != nil {
             lenght = (self.customerCard?.getCardSecurityCode().length)!
         } else {
-            if ((getGuessedPM()?.settings == nil)||(getGuessedPM()?.settings.count == 0)){
+            if ((paymentMethod?.settings == nil)||(paymentMethod?.settings.count == 0)){
                 lenght = 3 // Default
             }else{
-                lenght = (getGuessedPM()?.settings[0].securityCode.length)!
+                lenght = (paymentMethod?.settings[0].securityCode.length)!
             }
         }
         return lenght
     }
  
     func getLabelTextColor() -> UIColor {
-        return (self.guessedPMS == nil) ? MPLabel.defaultColorText : MercadoPago.getFontColorFor(self.getGuessedPM()!)!
+        return (self.paymentMethod == nil) ? MPLabel.defaultColorText : MercadoPago.getFontColorFor(self.paymentMethod!)!
     }
 
     func getEditingLabelColor() -> UIColor {
-        return (self.guessedPMS == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(getGuessedPM()!)!
+        return (self.paymentMethod == nil) ? MPLabel.highlightedColorText : MercadoPago.getEditingFontColorFor(self.paymentMethod!)!
     }
     
     func getExpirationMonthFromLabel(_ expirationDateLabel : MPLabel)->Int {
@@ -108,13 +108,13 @@ class CardViewModelManager: NSObject {
     
     func validateCardNumber(_ cardNumberLabel : UILabel, expirationDateLabel : MPLabel, cvvLabel : UILabel, cardholderNameLabel : MPLabel) -> Bool{
         
-        if(self.guessedPMS == nil){
+        if(self.paymentMethod == nil){
             return false
         }
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
-        let errorMethod = self.cardToken!.validateCardNumber(getGuessedPM()!)
+        let errorMethod = self.cardToken!.validateCardNumber(self.paymentMethod!)
         if((errorMethod) != nil){
             return false
         }
@@ -135,7 +135,7 @@ class CardViewModelManager: NSObject {
         
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
         
-        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.getGuessedPM()?.secCodeLenght()){
+        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.paymentMethod?.secCodeLenght()){
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()
@@ -160,17 +160,16 @@ class CardViewModelManager: NSObject {
         if(self.getBIN(cardNumber) == nil){
             return false
         }
-        if(self.guessedPMS != nil){
-            return self.getGuessedPM()!.isAmex()
+        if(self.paymentMethod != nil){
+            return self.paymentMethod!.isAmex()
         }else{
             return false
         }
     }
     
-    func matchedPaymentMethod (_ cardNumber : String) -> [PaymentMethod]? {
-        if self.guessedPMS != nil {
-            //return self.paymentMethod
-            return nil
+    func matchedPaymentMethod (_ cardNumber : String) -> PaymentMethod? {
+        if self.paymentMethod != nil {
+            return self.paymentMethod
         }
         if(self.paymentMethods == nil){
             return nil
@@ -179,23 +178,17 @@ class CardViewModelManager: NSObject {
             return nil
         }
         
-        var paymentMethods = [PaymentMethod]()
         
         for (_, value) in self.paymentMethods!.enumerated() {
             
             if (value.conformsPaymentPreferences(self.paymentSettings)){
                 if (value.conformsToBIN(getBIN(cardNumber)!)){
-                    paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
+                    return value.cloneWithBIN(getBIN(cardNumber)!)
                 }
             }
             
         }
-        if paymentMethods.isEmpty{
-            return nil
-        } else {
-            return paymentMethods
-        }
-        
+        return nil
     }
     
     
@@ -214,14 +207,7 @@ class CardViewModelManager: NSObject {
         self.cardToken = SavedCardToken(card: self.customerCard!, securityCode: securityCode, securityCodeRequired: self.customerCard!.isSecurityCodeRequired())
         return self.cardToken!
     }
-    func getGuessedPM() -> PaymentMethod? {
-        return guessedPMS?[0]
-    }
-    func hasGuessedPM() -> Bool{
-        if guessedPMS == nil || guessedPMS?.count == 0{
-            return false
-        } else {
-            return true
-        }
-    }
+
+    
+    
 }

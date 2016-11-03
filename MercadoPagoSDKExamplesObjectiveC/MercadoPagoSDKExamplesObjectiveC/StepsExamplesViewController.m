@@ -75,10 +75,7 @@ int installmentsSelected = 1;
 
 }
 
-
-
 - (void)startCardFlow {
-    /*
     UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
         currentToken = token;
         selectedIssuer = issuer;
@@ -89,12 +86,12 @@ int installmentsSelected = 1;
     }];
     
     [self presentViewController:cf animated:YES completion:^{}];
-*/
+
 }
 
 -(void)startCardForm {
     
-    /*
+    
     UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
         currentToken = token;
         selectedIssuer = issuer;
@@ -106,7 +103,7 @@ int installmentsSelected = 1;
    
     
     [self presentViewController:cf animated:YES completion:^{}];
-    */
+    
 }
 
 - (void)startPaymentMethods {

@@ -143,8 +143,11 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         let installmentNib = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
         self.tableView.register(installmentNib, forCellReuseIdentifier: "installmentCell")
+        // Do any additional setup after loading the view.
         updateCardSkin()
     }
+    
+
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -196,6 +199,8 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         return installmentCell
     }
     
+    
+    
     open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let payerCost : PayerCost = payerCosts![(indexPath as NSIndexPath).row]
         self.callback!(payerCost)
@@ -214,6 +219,8 @@ open class PayerCostViewController: MercadoPagoUIViewController {
         }
 
     }
+
+    
   
 }
     

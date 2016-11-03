@@ -70,16 +70,14 @@ open class Card : NSObject, CardInformation {
     }
     
     open func toJSON() -> [String:Any]  {
-        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSONString()
+        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
         let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
         let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
         let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
-        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSONString()
+        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
         let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
-        let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode
-
         let obj:[String:Any] = [
             "cardHolder" : cardHolder,
             "customer_id": customer_id,
@@ -92,8 +90,7 @@ open class Card : NSObject, CardInformation {
             "lastFourDigits" : lastFourDigits,
             "paymentMethod" : paymentMethod,
             "issuer" : issuer,
-            "securityCode" : securityCode
-        ]
+            "securityCode" : securityCode  ]
         return obj
     }
     
@@ -135,7 +132,7 @@ open class Card : NSObject, CardInformation {
     }
 
     open func getCardLastForDigits() -> String? {
-        return self.lastFourDigits!
+        return self.lastFourDigits
     }
     
     open func setupPaymentMethodSettings(_ settings: [Setting]) {

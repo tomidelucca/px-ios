@@ -23,7 +23,6 @@
 "master"="Mastercard";
 "amex"="Amex";
 
-"¿En cuántas cuotas?" = "¿En cuántas parcelas?";
 
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
