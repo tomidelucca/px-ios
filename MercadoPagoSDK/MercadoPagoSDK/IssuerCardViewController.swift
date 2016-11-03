@@ -79,7 +79,6 @@ open class IssuerCardViewController: MercadoPagoUIViewController {
         self.tableView.register(issuerNib, forCellReuseIdentifier: "issuerCell")
         cardFront = CardFrontView(frame: self.cardView.bounds)
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.updateCardSkin()
         // Do any additional setup after loading the view.
     }
     
@@ -139,28 +138,6 @@ open class IssuerCardViewController: MercadoPagoUIViewController {
     
     open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         callback!(self.issuerList![(indexPath as NSIndexPath).row])
-    }
-    open func updateCardSkin() {
-        
-        if(self.paymentMethod != nil){
-            
-            self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.paymentMethod!)
-            self.cardView.backgroundColor = MercadoPago.getColorFor(self.paymentMethod!)
-            self.cardFront?.cardLogo.alpha = 1
-             self.fontColor = MercadoPago.getFontColorFor(self.paymentMethod!)!
-            
-            cardFront?.cardNumber.text = "XXXX XXXX XXXX " + String(((self.cardToken?.cardNumber)! as String).characters.suffix(4))
-            
-            cardFront?.cardName.text = self.cardToken?.cardholder!.name
-            cardFront?.cardExpirationDate.text = self.cardToken?.getExpirationDateFormated() as? String
-            
-           
-            cardFront?.cardNumber.textColor =  fontColor
-            cardFront?.cardName.textColor =  fontColor
-            cardFront?.cardExpirationDate.textColor =  fontColor
-            
-        }
-        
     }
 
 }

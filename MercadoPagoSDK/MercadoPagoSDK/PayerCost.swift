@@ -41,10 +41,10 @@ open class PayerCost : NSObject {
             payerCost.installmentRate = installmentRate
         }
         if let minAllowedAmount = JSONHandler.attemptParseToDouble(json["min_allowed_amount"]) {
-            payerCost.installmentRate = minAllowedAmount
+            payerCost.minAllowedAmount = minAllowedAmount
         }
         if let maxAllowedAmount = JSONHandler.attemptParseToDouble(json["max_allowed_amount"]) {
-            payerCost.installmentRate = maxAllowedAmount
+            payerCost.maxAllowedAmount = maxAllowedAmount
         }
         if let installmentAmount = JSONHandler.attemptParseToDouble(json["installment_amount"]) {
             payerCost.installmentAmount = installmentAmount
