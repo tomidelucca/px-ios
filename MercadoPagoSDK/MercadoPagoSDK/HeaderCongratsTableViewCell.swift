@@ -18,12 +18,12 @@ class HeaderCongratsTableViewCell: UITableViewCell {
     func fillCell(payment: Payment, paymentMethod: PaymentMethod, color: UIColor){
         if payment.status == "approved" {
             icon.image = MercadoPago.getImage("iconoAcreditado")
-            title.text = "¡Listo, se acreditó tu pago!"
+            title.text = "¡Listo, se acreditó tu pago!".localized
             messageError.text = ""
             view.backgroundColor = color
         } else if payment.status == "in_process" {
             icon.image = MercadoPago.getImage("congrats_iconPending")
-            title.text = "Estamos procesando el pago"
+            title.text = "Estamos procesando el pago".localized
             messageError.text = ""
             view.backgroundColor = color
         } else if payment.statusDetail == "cc_rejected_call_for_authorize" {
@@ -53,7 +53,7 @@ class HeaderCongratsTableViewCell: UITableViewCell {
                 let titleWithParams = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
                 self.title.text = titleWithParams
             }
-            messageError.text = "Algo salió mal… "
+            messageError.text = "Algo salió mal… ".localized
             view.backgroundColor = color
         }
     }

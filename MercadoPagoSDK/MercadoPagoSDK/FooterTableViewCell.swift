@@ -8,11 +8,18 @@
 
 import UIKit
 
-class FooterTableViewCell: UITableViewCell {
+class FooterTableViewCell: CallbackCancelTableViewCell {
 
+    @IBOutlet weak var button: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+    }
+    func fillCell(payment: Payment){
+        if payment.statusDetail.contains("cc_rejected_bad_filled"){
+            self.button.setTitle("Cancelar pago y seguir comprando", for: UIControlState.normal)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

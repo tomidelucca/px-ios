@@ -8,23 +8,23 @@
 
 import UIKit
 
-class RejectedTableViewCell: UITableViewCell {
+class RejectedTableViewCell: CallbackCancelTableViewCell {
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitile: UILabel!
     @IBOutlet weak var button: UIButton!
-    var callback: ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void)? = nil
-    var payment: Payment? = nil
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         button.layer.cornerRadius = 3
+        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
     }
-    func setCallback(callback: @escaping ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void)){
-        self.callback = callback
-    }
+
     func fillCell (payment: Payment){
+        
         if payment.status == "rejected"{
+            
             if payment.statusDetail == "cc_rejected_call_for_authorize"{
                 var title = (payment.statusDetail + "_title")
                 self.title.text = title.localized
@@ -36,18 +36,15 @@ class RejectedTableViewCell: UITableViewCell {
                     title = ""
                 }
                 self.subtitile.text = title.localized
+                if payment.statusDetail.contains("cc_rejected_bad_filled"){
+                    status = MPStepBuilder.CongratsState.cancel_RECOVER
+                    self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
+                }
             }
+        } else if payment.statusDetail == "pending_contingency"{
+            self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
         } else {
-            self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado."
+            self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información."
         }
-        
-        
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        //callback!(self.payment!, MPStepBuilder.CongratsState.cancel_RETRY)
-        // Configure the view for the selected state
-    }
-    
 }

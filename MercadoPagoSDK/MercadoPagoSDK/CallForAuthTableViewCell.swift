@@ -8,11 +8,19 @@
 
 import UIKit
 
-class CallForAuthTableViewCell: UITableViewCell {
+class CallForAuthTableViewCell: CallbackCancelTableViewCell {
 
+    @IBOutlet weak var button: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
         // Initialization code
+    }
+    func fillCell(paymentMehtod: PaymentMethod){
+        if let paymentMethodName = paymentMehtod.name {
+            
+            self.button.setTitle("Ya hable con \(paymentMethodName) y me autorizó", for: UIControlState.normal)
+        }
     }
     func addSeparatorLineToTop(width: Double, y: Int){
         var lineFrame = CGRect(origin: CGPoint(x: 0,y :y), size: CGSize(width: width, height: 0.5))
