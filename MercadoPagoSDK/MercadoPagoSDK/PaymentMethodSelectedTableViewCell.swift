@@ -21,6 +21,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
+        self.contentView.layer.borderWidth = 1.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -29,8 +31,24 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethod, lastFourDigits : String) {
-       
+    func fillCell(_ paymentMethod : PaymentMethod, amount : Double, installments : String? = "1", installmentAmount :Double? = 0, lastFourDigits : String? = "") {
+        let currency = MercadoPagoContext.getCurrency()
+        if paymentMethod.isOnlinePaymentMethod() {
+            self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(installments!, installmentAmount: installmentAmount!, additionalString: NSAttributedString(string : ""))
+            let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
+            paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
+            self.paymentMethodDescription.attributedText = paymentMethodDescription
+        } else {
+            let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.black)
+            let paymentOffDescription = NSMutableAttributedString(string: "Pagarás ".localized)
+            paymentOffDescription.append(attributedAmount)
+            paymentOffDescription.append(NSAttributedString(string : "con " + paymentMethod.name))
+            self.paymentDescription.attributedText = paymentOffDescription
+            
+            self.paymentMethodDescription.text = ""
+        }
+        
+        
     }
     
 }

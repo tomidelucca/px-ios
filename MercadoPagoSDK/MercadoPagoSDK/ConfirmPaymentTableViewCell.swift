@@ -10,15 +10,16 @@ import UIKit
 
 class ConfirmPaymentTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var confirmPaymentButton: MPButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.confirmPaymentButton.layer.cornerRadius = 4
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+    
     
 }
