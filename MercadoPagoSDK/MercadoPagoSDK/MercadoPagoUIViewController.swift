@@ -33,12 +33,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         super.viewDidAppear(animated)
         if self.timer != nil {
             self.timer!.delegate = self
-            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 86, height: 20))
+            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
             self.timerLabel!.backgroundColor = MercadoPagoContext.getPrimaryColor()
             self.timerLabel!.textColor = MercadoPagoContext.getTextColor()
             self.timerLabel!.textAlignment = .right
             let button = UIButton(type: UIButtonType.custom)
-            button.frame = CGRect(x: 0, y: 0, width: 86, height: 20)
+            button.frame = CGRect(x: 0, y: 0, width: 56, height: 20)
             button.addSubview(timerLabel!)
             
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)

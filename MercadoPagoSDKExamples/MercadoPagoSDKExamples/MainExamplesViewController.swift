@@ -66,7 +66,6 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         case 0:
             //Checkout Example
             let choFlow = MPFlowBuilder.startCheckoutViewController( "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1", callback: { (payment: Payment) in
-            
             })
             
             self.present(choFlow, animated: true, completion: {})
