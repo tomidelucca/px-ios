@@ -105,7 +105,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
         })
-        self.present(pv, animated: true, completion: {})
+        
+        let myNav = UINavigationController(rootViewController: pv.viewControllers[0])
+        self.present(myNav, animated: true, completion: {})
     }
     
     func startCardFlow(){
@@ -121,7 +123,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         
         let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : nil, callback: { (paymentMethod, token, issuer, payerCost) in
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer

@@ -99,6 +99,11 @@
 //Installment Cell
 
 " Sin interés"=" Sin interés";//--
+"¿En cuántas cuotas?" = "¿En cuántas cuotas?";
+"¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+"¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
+"Crédito" = "Crédito";
+"Débito" = "Débito";
 
 //Instructions
 

@@ -9,7 +9,7 @@
 import UIKit
 
 @objc
-public protocol CardInformation : NSObjectProtocol {
+public protocol CardInformation : CardInformationForm {
     
     func isSecurityCodeRequired() -> Bool
     
@@ -19,13 +19,17 @@ public protocol CardInformation : NSObjectProtocol {
     
     func getCardDescription() -> String
     
+    func setupPaymentMethodSettings(_ settings : [Setting])
+    
     func getPaymentMethod() -> PaymentMethod
     
     func getPaymentMethodId() -> String
+}
+@objc
+public protocol CardInformationForm : NSObjectProtocol {
+    
     
     func getCardBin() -> String?
     
     func getCardLastForDigits() -> String?
-    
-    func setupPaymentMethodSettings(_ settings : [Setting])
 }
