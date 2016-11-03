@@ -22,8 +22,21 @@
 
 //Congrats
 
+"Cancelar pago y seguir comprando" = "Cancelar pago y seguir comprando";
+
+// -- CallForAuth
+
+"Debes autorizar ante %p el pago de %t a MercadoPago" = "Debes autorizar ante %p el pago de %t a MercadoPago";
+"Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
+
 // -- Approved
 "¡Listo, se acreditó tu pago!" = "¡Listo, se acreditó tu pago!";
+"También enviamos el código a tu email" = "También enviamos el código a tu email";
+"Te enviaremos este comprobante a %0" = "Te enviaremos este comprobante a %0";
+"Dinero en cuenta de MercadoPago" = "Dinero en cuenta de MercadoPago";
+"Terminada en " = "Terminada en ";
+"En tu estado de cuenta verás el cargo como %0" = "En tu estado de cuenta verás el cargo como %0";
+"Comprobante" = "Comprobante";
 
 // -- Pending
 "Estamos procesando el pago" = "Estamos procesando el pago";
@@ -31,7 +44,7 @@
 "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información." = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.";
 
 // -- Rejected
-
+"¿Que puedo hacer?" = "¿Que puedo hacer?";
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
 "cc_rejected_other_reason_title"="%0 no procesó el pago";

@@ -20,7 +20,7 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-nr-CA4">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-nr-CA4">
                         <string key="text">Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. 
 
 O si prefieres, puedes elegir otro medio de pago.</string>
@@ -46,7 +46,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
                     <constraint firstItem="j5E-cG-bps" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="SPu-Pj-kuk"/>
                     <constraint firstItem="DBX-U3-5lx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="50" id="Zui-s3-P0s"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="dMs-Rj-y9r"/>
-                    <constraint firstItem="j5E-cG-bps" firstAttribute="top" secondItem="G6G-nr-CA4" secondAttribute="bottom" constant="20" id="e5a-oq-l0g"/>
+                    <constraint firstItem="j5E-cG-bps" firstAttribute="top" secondItem="G6G-nr-CA4" secondAttribute="bottom" constant="50" id="e5a-oq-l0g" userLabel="Button.top = Subtitile.bottom + 200"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="top" secondItem="DBX-U3-5lx" secondAttribute="bottom" constant="20" id="eqD-a0-XaS"/>
                     <constraint firstItem="j5E-cG-bps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="hDu-fR-Oih"/>
                     <constraint firstAttribute="trailingMargin" secondItem="j5E-cG-bps" secondAttribute="trailing" constant="24" id="k6C-82-3rS"/>

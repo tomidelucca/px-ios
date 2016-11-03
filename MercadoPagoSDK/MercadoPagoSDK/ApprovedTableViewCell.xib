@@ -79,6 +79,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="comprobante" destination="J82-CR-dXM" id="fgG-XV-M3G"/>
                 <outlet property="installmentRate" destination="5PI-XD-cCr" id="Spb-nO-qAs"/>
                 <outlet property="installments" destination="xxf-7z-iDK" id="gzy-aX-9pV"/>
                 <outlet property="lastFourDigits" destination="8av-aO-uxn" id="6JJ-yv-tXi"/>

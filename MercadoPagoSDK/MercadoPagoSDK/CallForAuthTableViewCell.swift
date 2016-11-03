@@ -18,8 +18,8 @@ class CallForAuthTableViewCell: CallbackCancelTableViewCell {
     }
     func fillCell(paymentMehtod: PaymentMethod){
         if let paymentMethodName = paymentMehtod.name {
-            
-            self.button.setTitle("Ya hable con \(paymentMethodName) y me autorizó", for: UIControlState.normal)
+            let message = ("Ya hable con %0 y me autorizó".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+            self.button.setTitle(message, for: UIControlState.normal)
         }
     }
     func addSeparatorLineToTop(width: Double, y: Int){

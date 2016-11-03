@@ -17,9 +17,12 @@ class ApprovedTableViewCell: UITableViewCell {
     @IBOutlet weak var paymentMethod: UIImageView!
     @IBOutlet weak var lastFourDigits: UILabel!
     @IBOutlet weak var statement: UILabel!
+    @IBOutlet weak var comprobante: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        installmentRate.text = " Sin interés".localized
+        comprobante.text = "Comprobante".localized
     }
     func fillCell(payment: Payment){
         paymentId.text = "Nº \(payment._id)"
@@ -47,8 +50,8 @@ class ApprovedTableViewCell: UITableViewCell {
         
         paymentMethod.image = MercadoPago.getImage(payment.paymentMethodId)
         
-        lastFourDigits.text = payment.paymentMethodId == "account_money" ? "Dinero en cuenta de MercadoPago" : "Terminada en " + String(describing: payment.card.lastFourDigits!)
-        statement.text = "En tu estado de cuenta verás el cargo como " + payment.statementDescriptor
+        lastFourDigits.text = payment.paymentMethodId == "account_money" ? "Dinero en cuenta de MercadoPago".localized : "Terminada en ".localized + String(describing: payment.card.lastFourDigits!)
+        statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.statementDescriptor!)")
         
     }
     func addSeparatorLineToTop(width: Double, y: Int){

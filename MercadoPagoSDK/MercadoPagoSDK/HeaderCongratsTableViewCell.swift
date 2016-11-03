@@ -31,17 +31,15 @@ class HeaderCongratsTableViewCell: UITableViewCell {
             let currency = MercadoPagoContext.getCurrency()
             
             let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.totalPaidAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.white(), fontSize: 22, baselineOffset:11)
-            let title = NSMutableAttributedString(string: "Debes autorizar ", attributes: nil)
-            if let paymentMethodName = paymentMethod.name {
-                
-                title.append(NSMutableAttributedString(string: "\(paymentMethod.name!) ", attributes: nil))
-            }
-            title.append(NSMutableAttributedString(string: "el pago de ", attributes: nil))
-            title.append(totalAmount)
-            title.append(NSMutableAttributedString(string: " a MercadoPago", attributes: nil))
-            self.title.attributedText = title
+            
+            var titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethod.name!)")
+            
+            let amount = Utils.getAmountFormatted(String(payment.transactionDetails.totalPaidAmount), thousandSeparator : String(currency.thousandsSeparator), decimalSeparator: ".")
+            titleWithParams = (titleWithParams.replacingOccurrences(of: "%t", with: "\(currency.symbol!) \(amount)"))
+            self.title.text = titleWithParams
             messageError.text = ""
             view.backgroundColor = color
+            
         } else {
             icon.image = MercadoPago.getImage("congrats_iconoTcError")
             var title = (payment.statusDetail + "_title")

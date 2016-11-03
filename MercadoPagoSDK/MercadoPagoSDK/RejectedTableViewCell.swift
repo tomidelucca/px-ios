@@ -18,6 +18,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         super.awakeFromNib()
         // Initialization code
         button.layer.cornerRadius = 3
+        self.title.text = "¿Que puedo hacer?".localized
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
     }
 
@@ -44,7 +45,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         } else if payment.statusDetail == "pending_contingency"{
             self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
         } else {
-            self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información."
+            self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
         }
     }
 }

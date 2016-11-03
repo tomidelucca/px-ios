@@ -17,9 +17,9 @@ class ConfirmEmailTableViewCell: UITableViewCell {
     }
     func fillCell(payment: Payment) -> Void {
         if payment.status == "approved"{
-            label.text = "Te enviaremos este comprobante a " + payment.payer.email
+            label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.payer.email!)")
         } else {
-            label.text = "También enviamos el código a tu email"
+            label.text = "También enviamos el código a tu email".localized
         }
     }
     func addSeparatorLineToTop(width: Double, y: Int){
