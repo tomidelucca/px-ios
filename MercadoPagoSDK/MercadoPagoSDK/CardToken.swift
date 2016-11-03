@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class CardToken : NSObject {
+open class CardToken : NSObject, CardInformationForm {
     
     let MIN_LENGTH_NUMBER : Int = 10
     let MAX_LENGTH_NUMBER : Int = 19
@@ -94,7 +94,13 @@ open class CardToken : NSObject {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
-                    userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(setting?.cardNumber.length)"), forKey: "cardNumber")
+                    if let cardNumberLength = setting?.cardNumber.length {
+                        userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardNumberLength)"), forKey: "cardNumber")
+                        
+                    } else {
+                        userInfo?.updateValue("El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized, forKey: "cardNumber")
+                    }
+                    
                 }
                 
                 // Validate luhn
@@ -322,4 +328,12 @@ open class CardToken : NSObject {
     open func isCustomerPaymentMethod() -> Bool {
         return false
     }
+    open func getCardLastForDigits() -> String?{
+        let index = cardNumber?.characters.count
+        return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
+    }
+    public func getCardBin() -> String? {
+        return getBin()
+    }
+
 }
