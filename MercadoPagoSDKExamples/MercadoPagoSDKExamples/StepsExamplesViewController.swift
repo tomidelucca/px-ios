@@ -120,7 +120,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         
         let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : nil, callback: { (paymentMethod, token, issuer, payerCost) in
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
