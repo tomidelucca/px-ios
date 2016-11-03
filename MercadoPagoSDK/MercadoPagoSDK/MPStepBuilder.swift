@@ -83,12 +83,22 @@ open class MPStepBuilder : NSObject {
         
     }
     
+<<<<<<< HEAD
     open class func startPaymentCongratsStep(_ payment: Payment, paymentMethod : PaymentMethod,
+=======
+<<<<<<< HEAD
+    open class func startPaymentCongratsStep(_ payment: Payment?, paymentMethod : PaymentMethod?,
+>>>>>>> parent of 1a20eeb... Revert "Merge branch 'development' into Revamp-Congrats"
                          callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> CongratsRevampViewController {
         
       MercadoPagoContext.initFlavor2()
         return CongratsRevampViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
-
+=======
+    open class func startPaymentCongratsStep(_ payment: Payment, paymentMethod : PaymentMethod,
+                                             callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> PaymentCongratsViewController {
+        MercadoPagoContext.initFlavor2()
+        return PaymentCongratsViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
+>>>>>>> development
     }
     
     open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,
