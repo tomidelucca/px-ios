@@ -51,12 +51,11 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
             ViewUtils.addStatusBar(self.view, color: self.viewModel.color)
         }
     }
-    
     open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        MPTracker.trackPaymentEvent(self.viewModel.payment.tokenId, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(payment: Payment?, paymentMethod : PaymentMethod?, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
         self.viewModel = CongratsViewModel(payment: payment, paymentMethod: paymentMethod, callback: callback)
     }
@@ -103,7 +102,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
                 if indexPath.row == 0{
                     let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
                     approvedCell.selectionStyle = .none
-                    approvedCell.fillCell(payment: self.viewModel.payment! )
+                    approvedCell.fillCell(payment: self.viewModel.payment!)
                     approvedCell.addSeparatorLineToTop(width: Double(UIScreen.main.bounds.width), y: Int(390))
                     return approvedCell
                 }
@@ -117,7 +116,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
             } else if self.viewModel.callForAuth() {
                 if indexPath.row == 0{
                     let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
-                    callFAuthCell.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
+                    callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
                     callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentMethod!)
                     callFAuthCell.selectionStyle = .none
                     callFAuthCell.addSeparatorLineToTop(width: Double(UIScreen.main.bounds.width), y: Int(callFAuthCell.contentView.bounds.maxY))
@@ -125,7 +124,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
                 }
                 else {
                     let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-                    rejectedCell.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
+                    rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
                     rejectedCell.selectionStyle = .none
                     rejectedCell.fillCell(payment: self.viewModel.payment)
                     return rejectedCell
@@ -134,14 +133,14 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
             } else if self.viewModel.payment.status == PaymentStatus.IN_PROCESS.rawValue {
                 let pendingCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
                 pendingCell.callbackStatus = self.viewModel.callback
-                pendingCell.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
+                pendingCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
                 pendingCell.selectionStyle = .none
                 pendingCell.fillCell(payment: self.viewModel.payment)
                 return pendingCell
                 
             } else {
                 let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-                rejectedCell.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
+                rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
                 rejectedCell.selectionStyle = .none
                 rejectedCell.fillCell(payment: self.viewModel.payment!)
                 return rejectedCell
@@ -169,23 +168,38 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
      // Pass the selected object to the new view controller.
      }
      */
-    enum PaymentStatus : String {
-        case APPROVED = "approved"
-        case REJECTED = "rejected"
-        case RECOVERY = "recovery"
-        case IN_PROCESS = "in_process"
-    }
+
+    
 }
-class CongratsViewModel : NSObject {
+class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     var color: UIColor!
     var payment: Payment!
     var paymentMethod: PaymentMethod?
     var callback: (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
     
-    init(payment: Payment?, paymentMethod : PaymentMethod?, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+        
         self.payment = payment
         self.paymentMethod = paymentMethod
         self.callback = callback
+    }
+    open func methodId() -> String!{
+        return payment!.paymentMethodId
+    }
+    open func status() -> String!{
+        return payment!.status
+    }
+    open func statusDetail() -> String!{
+        return payment!.statusDetail
+    }
+    open func typeId() -> String!{
+        return payment!.paymentTypeId
+    }
+    open func installments() -> String!{
+        return String(payment!.installments)
+    }
+    open func issuerId() -> String!{
+        return String(payment!.issuerId)
     }
     
     func getColor()->UIColor{
@@ -213,6 +227,46 @@ class CongratsViewModel : NSObject {
         } else {
             return false
         }
+    }
+    internal func getLayoutName() -> String! {
+        
+        if payment.status == PaymentStatus.REJECTED.rawValue {
+            if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {
+                return "authorize" //C4A
+            }else if payment.statusDetail != nil && payment.statusDetail.contains("cc_rejected_bad_filled")  {
+                return "recovery" //bad fill something
+            }
+        }
+        
+        return payment.status
+    }
+    func setCallbackWithTracker(cellName: String) -> (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void{
+        let callbackWithTracker : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void = {(payment ,status) in
+            let paymentAction: PaymentActions
+            if self.payment.statusDetail.contains("cc_rejected_bad_filled"){
+                paymentAction = PaymentActions.RECOVER_PAYMENT
+            } else if payment.status == PaymentStatus.REJECTED.rawValue{
+                paymentAction = PaymentActions.SELECTED_OTHER_PM
+            } else if cellName == "rejected" {
+                paymentAction = PaymentActions.RECOVER_PAYMENT
+            } else {
+                paymentAction = PaymentActions.RECOVER_TOKEN
+            }
+            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: paymentAction.rawValue, result: nil)
+            self.callback(payment, status)
+        }
+        return callbackWithTracker as! (Payment, MPStepBuilder.CongratsState) -> Void
+    }
+    enum PaymentStatus : String {
+        case APPROVED = "approved"
+        case REJECTED = "rejected"
+        case RECOVERY = "recovery"
+        case IN_PROCESS = "in_process"
+    }
+    enum PaymentActions : String {
+        case RECOVER_PAYMENT = "RECOVER_PAYMENT"
+        case RECOVER_TOKEN = "RECOVER_TOKEN"
+        case SELECTED_OTHER_PM = "SELECT_OTHER_PAYMENT_METHOD"
     }
 }
 

@@ -19,7 +19,6 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
         "Crear Pago".localized,
-        "Congrats"
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
@@ -86,8 +85,6 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             startInstallmentsStep()
         case 6:
             createPayment()
-        case 7:
-            congrats()
         default:
             break
         }
@@ -209,12 +206,6 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             
         }
         
-    }
-    func congrats(){
-        let congrats = MPStepBuilder.startPaymentCongratsStep(nil, paymentMethod: nil) { (payment, state) in
-            
-        }
-         self.navigationController?.pushViewController(congrats, animated: true)
     }
 }
 

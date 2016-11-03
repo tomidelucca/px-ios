@@ -78,7 +78,7 @@ open class MPStepBuilder : NSObject {
 
     }
     
-    open class func startPaymentCongratsStep(_ payment: Payment?, paymentMethod : PaymentMethod?,
+    open class func startPaymentCongratsStep(_ payment: Payment, paymentMethod : PaymentMethod,
                          callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> CongratsRevampViewController {
         
       MercadoPagoContext.initFlavor2()

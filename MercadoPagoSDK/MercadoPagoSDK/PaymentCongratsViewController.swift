@@ -118,7 +118,7 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymen
                 if (body == "authorizePaymentBody"){
                     (cell as! AuthorizePaymentBodyTableViewCell).authCallback = {
                             let status = MPStepBuilder.CongratsState.call_FOR_AUTH
-                        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_TOKEN", result: nil)
+                        MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_TOKEN", result: nil) //completar cvv
                             self.invokeCallback(status)
                         
                     }
@@ -238,7 +238,6 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymen
         
         return payment.status
     }
-    
     
 
     fileprivate func getScreenName() -> String {
