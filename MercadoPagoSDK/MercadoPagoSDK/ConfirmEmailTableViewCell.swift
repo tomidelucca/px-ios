@@ -26,7 +26,7 @@ class ConfirmEmailTableViewCell: UITableViewCell {
         var lineFrame = CGRect(origin: CGPoint(x: 0,y :y), size: CGSize(width: width, height: 0.5))
         var line = UIView(frame: lineFrame)
         line.alpha = 0.6
-        line.backgroundColor = UIColor(red: 153, green: 153, blue: 153)
+        line.backgroundColor = UIColor.grayLight()
         addSubview(line)
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
