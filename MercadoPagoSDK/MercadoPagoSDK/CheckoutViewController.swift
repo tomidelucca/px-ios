@@ -129,7 +129,8 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return 4
+                // confirm title + numberOfRowsInMainSection() + confirmPaymentButton + TermsAndConditions
+                return 1 + self.viewModel!.numberOfRowsInMainSection() + 2
             case 1:
                 return self.preference!.items!.count
             default:
@@ -369,7 +370,7 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     
     fileprivate func startPayerCostStep(){
         let pcf = MPStepBuilder.startPayerCostForm([self.viewModel!.paymentMethod!], issuer: self.issuer, token: self.token!, amount: self.preference!.getAmount(), paymentPreference: self.preference!.paymentPreference, callback: { (payerCost) -> Void in
-            self.payerCost = payerCost as! PayerCost
+            self.payerCost = payerCost as? PayerCost
             self.navigationController?.popViewController(animated: true)
             self.checkoutTable.reloadData()
         })
@@ -447,22 +448,12 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
         return purchaseItemDetailCell
     }
     
-//    private func getPurchaseItemDescriptionCell(indexPath : IndexPath) -> UITableViewCell{
-//        let purchaseItemDescriptionCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDescriptionTableViewCell", for: indexPath) as! PurchaseItemDescriptionTableViewCell
-//        return purchaseItemDescriptionCell
-//    }
-//    
-//    
-//    private func getPurchaseItemAmountCell(indexPath : IndexPath) -> UITableViewCell{
-//        let purchaseItemAmountTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemAmountTableViewCell", for: indexPath) as! PurchaseItemAmountTableViewCell
-//        return purchaseItemAmountTableViewCell
-//    }
-    
     
     private func getPaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
         let paymentMethodSelectedTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "paymentMethodSelectedTableViewCell", for: indexPath) as! PaymentMethodSelectedTableViewCell
+        // deberia cuestionar card no payerCost
         if let payerCost = self.payerCost {
-            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : payerCost.totalAmount, installments: String(payerCost.installments), installmentAmount: self.payerCost!.installmentAmount)
+            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : payerCost.totalAmount, installments: String(payerCost.installments), installmentAmount: self.payerCost!.installmentAmount, lastFourDigits: self.token!.lastFourDigits)
         } else {
             paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : self.preference!.getAmount())
         }
@@ -498,6 +489,9 @@ open class CheckoutViewModel {
     
     var paymentMethod : PaymentMethod?
     var paymentMethodSearch : PaymentMethodSearch?
+    var shippingIncluded = false
+    var freeShippingIncluded = false
+    var discountIncluded = false
     
     func isPaymentMethodSelectedCard() -> Bool {
         return self.paymentMethod != nil && self.paymentMethod!.isCard()
@@ -509,15 +503,6 @@ open class CheckoutViewModel {
     
     func isPaymentMethodSelected() -> Bool {
         return paymentMethod != nil
-    }
-    
-    func numberOfRowsInMainSection() -> Int {
-        if (self.paymentMethod == nil) {
-            return 2
-        } else if !isPaymentMethodSelectedCard(){
-            return 3
-        }
-        return 4
     }
     
     func isUniquePaymentMethodAvailable() -> Bool {
@@ -538,6 +523,22 @@ open class CheckoutViewModel {
     
     func checkoutTableHeaderHeight(_ section : Int) -> CGFloat {
         return 0
+    }
+    
+    func numberOfRowsInMainSection() -> Int {
+        var numberOfRows = 1
+        if self.shippingIncluded || self.freeShippingIncluded{
+            numberOfRows += 1
+        }
+        if self.discountIncluded {
+            numberOfRows += 1
+        }
+        if numberOfRows > 1 {
+            // Subtotal cell
+            numberOfRows += 1
+        }
+        return numberOfRows
+        
     }
     
     func heightForRow(_ indexPath : IndexPath) -> CGFloat {

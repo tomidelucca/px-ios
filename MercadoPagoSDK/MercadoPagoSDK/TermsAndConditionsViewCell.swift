@@ -52,6 +52,21 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
     }
     
+    public func getCellHeight() -> Float {
+        var constraintSize = CGSize()
+        let screenSize: CGRect = UIScreen.main.bounds
+        constraintSize.width = screenSize.width - 46
+        
+        let text = self.termsAndConditionsText.text
+        
+        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12)]
+        
+        let frame = text?.boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        
+        let stringSize = frame?.size
+        return Float(128) + Float(stringSize!.height)
+    }
+    
 }
 
 protocol TermsAndConditionsDelegate {
