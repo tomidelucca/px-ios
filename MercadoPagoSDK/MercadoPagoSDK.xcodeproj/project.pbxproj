@@ -301,20 +301,6 @@
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
-		4B8D3CA51DC78C9C00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B8D3CA71DC7914B00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF6F1DBFD52300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF701DBFD52300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF731DBFD87D00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF741DBFD87D00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF901DC13A2300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF911DC13A2300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF941DC13DCF00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF951DC13DCF00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF9A1DC148ED00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF9B1DC148ED00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFFA21DC3BBC000A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFFA31DC3BBC000A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		4BAA55E71DB0012300501061 /* CardAdditionalStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* CardAdditionalStep.swift */; };
 		4BAA55E81DB0012300501061 /* CardAdditionalStep.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* CardAdditionalStep.xib */; };
 		4BAA55EB1DB0015800501061 /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
@@ -2097,8 +2083,6 @@
 				76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				76151B671C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				76151B911C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib in Resources */,
-				4B8D3CA71DC7914B00DD4476 /* (null) in Resources */,
-				4B8D3CA51DC78C9C00DD4476 /* (null) in Resources */,
 				76E2B07F1C6E5BF9002C50CB /* SelectPaymentMethodCell.xib in Resources */,
 				76E92F851C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib in Resources */,
 				76B64B1E1C75F91D00300F50 /* InstructionsWithButtonViewCell.xib in Resources */,
@@ -2129,12 +2113,10 @@
 				4BAA55EC1DB0015800501061 /* PayerCostCardTableViewCell.xib in Resources */,
 				0F9884511AD2AEEF00F750F0 /* MPPaymentMethodEmptyTableViewCell.xib in Resources */,
 				76882AD71C4FBAD900B440B1 /* PaymentTitleViewCell.xib in Resources */,
-				4B9CFF911DC13A2300A2F3D6 /* (null) in Resources */,
 				0F9884491AD2AEC000F750F0 /* MPInstallmentsTableViewCell.xib in Resources */,
 				76134ABA1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */,
 				0F9883D81AD2AD5500F750F0 /* PaymentIDTableViewCell.xib in Resources */,
 				76FD24831C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */,
-				4B9CFF951DC13DCF00A2F3D6 /* (null) in Resources */,
 				76151B751C738E14007DF0E3 /* InstructionsViewCell.xib in Resources */,
 				76151B971C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */,
 				0FC4FC411B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
@@ -2159,10 +2141,7 @@
 				0F9883EE1AD2ADB000F750F0 /* CustomerCardsViewController.xib in Resources */,
 				76B084FD1CE174FE00C157BF /* ApprovedPaymentBodyTableViewCell.xib in Resources */,
 				4BAE1D4B1DCBE8FF0000ED5C /* RejectedTableViewCell.xib in Resources */,
-				4B9CFFA31DC3BBC000A2F3D6 /* (null) in Resources */,
-				4B9CFF701DBFD52300A2F3D6 /* (null) in Resources */,
 				76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */,
-				4B9CFF9B1DC148ED00A2F3D6 /* (null) in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
 				15DA7E601CD92C670068896E /* IdentificationViewController.xib in Resources */,
@@ -2181,7 +2160,6 @@
 				157A4F8B1D805BE900C92D0B /* RecoverPaymentBodyTableViewCell.xib in Resources */,
 				0F9884211AD2AE2700F750F0 /* MPCardholderNameTableViewCell.xib in Resources */,
 				15C5279A1CDBC7E400D113F6 /* IssuerCardViewController.xib in Resources */,
-				4B9CFF741DBFD87D00A2F3D6 /* (null) in Resources */,
 				0F9884331AD2AE5900F750F0 /* InstallmentTableViewCell.xib in Resources */,
 				4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */,
 				4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */,
@@ -2292,7 +2270,6 @@
 				7656F5281C975EEF0076A14D /* PaymentDescriptionFooterTableViewCell.swift in Sources */,
 				7656F5271C975EE20076A14D /* TermsAndConditionsViewCell.swift in Sources */,
 				0F9883DA1AD2AD5500F750F0 /* PaymentDateTableViewCell.swift in Sources */,
-				4B9CFFA21DC3BBC000A2F3D6 /* (null) in Sources */,
 				761B89421C637DBD0015D0BE /* PreferenceDescriptionTableViewCell.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				76B64B1C1C75F91D00300F50 /* InstructionsWithButtonViewCell.swift in Sources */,
@@ -2321,7 +2298,6 @@
 				0F9883CE1AD2AD5500F750F0 /* PaymentTotalTableViewCell.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				76743C821C46A21C00120347 /* CheckoutViewController.swift in Sources */,
-				4B9CFF941DC13DCF00A2F3D6 /* (null) in Sources */,
 				76151B791C73ABEF007DF0E3 /* DefaultInstructionsFooterViewCell.swift in Sources */,
 				762B8C241D19752A00A86097 /* MPServicesBuilder.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
@@ -2352,7 +2328,6 @@
 				0F9884191AD2AE2700F750F0 /* MPCardNumberTableViewCell.swift in Sources */,
 				0F9884011AD2ADEE00F750F0 /* IssuersViewController.swift in Sources */,
 				4BAE1D541DCBE9340000ED5C /* CongratsRevampViewController.swift in Sources */,
-				4B9CFF731DBFD87D00A2F3D6 /* (null) in Sources */,
 				0F9883751AD2AB6000F750F0 /* Identification.swift in Sources */,
 				4BAE1D441DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift in Sources */,
 				76B084F41CE1701D00C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
@@ -2391,7 +2366,6 @@
 				766012E71CEBA19700897F9D /* ErrorViewController.swift in Sources */,
 				0F9883671AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
-				4B9CFF9A1DC148ED00A2F3D6 /* (null) in Sources */,
 				76151B651C737608007DF0E3 /* InstructionsViewController.swift in Sources */,
 				762B8C221D19752A00A86097 /* MPFlowBuilder.swift in Sources */,
 				15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */,
@@ -2417,7 +2391,6 @@
 				4BAA55FB1DB0241700501061 /* PayerCostTitleTableViewCell.swift in Sources */,
 				7671F1661D5A3B5A00B9481F /* CustomerPaymentMethodCell.swift in Sources */,
 				0F98841D1AD2AE2700F750F0 /* MPExpirationDateTableViewCell.swift in Sources */,
-				4B9CFF901DC13A2300A2F3D6 /* (null) in Sources */,
 				76B084E71CE0DB0200C157BF /* AuthorizePaymentHeaderTableViewCell.swift in Sources */,
 				0F9883891AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
 				76151B871C73C025007DF0E3 /* InstructionsService.swift in Sources */,
@@ -2451,7 +2424,6 @@
 				0F9883AF1AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
 				0F9883DE1AD2AD5500F750F0 /* CongratsViewController.swift in Sources */,
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
-				4B9CFF6F1DBFD52300A2F3D6 /* (null) in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
 				76062BDD1C4D24050067A14B /* PaymentSearchCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
