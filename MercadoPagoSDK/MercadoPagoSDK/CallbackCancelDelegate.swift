@@ -35,8 +35,8 @@ open class CallbackCancelTableViewCell : UITableViewCell {
         }
     }
     func invokeCallback(){
-        if self.callbackStatus != nil {
-            self.callbackStatus!(payment!, status!)
+        if let callbackStatus = self.callbackStatus , let payment = payment , let status = status  {
+            callbackStatus(payment, status)
         }
     }
 

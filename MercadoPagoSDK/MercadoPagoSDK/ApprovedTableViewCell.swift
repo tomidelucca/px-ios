@@ -30,7 +30,7 @@ class ApprovedTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         //let installmentNumber = "\(payment.installments) x "
         let installmentNumber = payment.installments==1 ? "" : "\(payment.installments) x "
-        let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 51, green: 51, blue: 51), fontSize: 24, baselineOffset:11)
+        let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, baselineOffset:11)
         let installmentLabel = NSMutableAttributedString(string: installmentNumber)
         installmentLabel.append(totalAmount)
         installments.attributedText =  installmentLabel
@@ -54,17 +54,4 @@ class ApprovedTableViewCell: UITableViewCell {
         statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(payment.statementDescriptor!)")
         
     }
-    func addSeparatorLineToTop(width: Double, y: Int){
-        var lineFrame = CGRect(origin: CGPoint(x: 0,y :y), size: CGSize(width: width, height: 0.5))
-        var line = UIView(frame: lineFrame)
-        line.alpha = 0.6
-        line.backgroundColor = UIColor.grayLight()
-        addSubview(line)
-    }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

@@ -21,11 +21,4 @@ class FooterTableViewCell: CallbackCancelTableViewCell {
             self.button.setTitle("Cancelar pago y seguir comprando".localized, for: UIControlState.normal)
         }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }
