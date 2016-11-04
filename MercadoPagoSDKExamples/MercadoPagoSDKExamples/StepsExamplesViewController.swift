@@ -18,7 +18,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de medio de pago simple".localized,
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
-        "Crear Pago".localized
+        "Crear Pago".localized,
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
