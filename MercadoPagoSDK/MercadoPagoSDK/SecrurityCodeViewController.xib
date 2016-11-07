@@ -166,7 +166,7 @@
                             </constraints>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" returnKeyType="next"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" returnKeyType="done"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
                                     <color key="value" red="0.2470588235" green="0.62352941179999999" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -192,9 +192,9 @@
                         <constraint firstItem="CLV-K5-LXP" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="37" id="Ycr-IF-Fkd"/>
                         <constraint firstAttribute="trailing" secondItem="h3x-Y7-b4M" secondAttribute="trailing" constant="37" id="ZwJ-mU-O7j"/>
                         <constraint firstItem="eRB-5n-7JU" firstAttribute="top" secondItem="h3x-Y7-b4M" secondAttribute="bottom" constant="7" id="fXD-LW-Qie"/>
-                        <constraint firstAttribute="height" constant="155" id="lSK-DC-awx"/>
+                        <constraint firstAttribute="height" constant="170" id="lSK-DC-awx"/>
                         <constraint firstAttribute="trailing" secondItem="CLV-K5-LXP" secondAttribute="trailing" constant="37" id="oHy-Fp-7Ak"/>
-                        <constraint firstAttribute="bottom" secondItem="eRB-5n-7JU" secondAttribute="bottom" constant="5" id="tXR-Ki-fGS"/>
+                        <constraint firstAttribute="bottom" secondItem="eRB-5n-7JU" secondAttribute="bottom" constant="20" id="tXR-Ki-fGS"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHx-T2-ahO">
@@ -228,10 +228,10 @@
                 <constraint firstItem="OdV-zR-Rb9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mFj-nG-jzS"/>
                 <constraint firstAttribute="trailing" secondItem="yob-kR-dQh" secondAttribute="trailing" id="tk7-Mp-qiN"/>
             </constraints>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <point key="canvasLocation" x="-353.5" y="-259.5"/>
+            <point key="canvasLocation" x="-651.5" y="-330.5"/>
         </view>
     </objects>
     <resources>
