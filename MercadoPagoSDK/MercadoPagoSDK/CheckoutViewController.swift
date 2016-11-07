@@ -9,7 +9,7 @@
 import UIKit
 
 
-open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
+open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
 
     var preferenceId : String!
     var preference : CheckoutPreference?
@@ -63,19 +63,32 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
         
         self.title = "¿Cómo quieres pagar?".localized
         
+        self.showNavBar()
+        
     }
     
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.hideNavBar()
+        
         self.navigationItem.rightBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
+        
+        DispatchQueue.main.async() {
+            
+            self.checkoutTable.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
+            
+        }
+        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showLoading()
+        self.startScrollPosition = checkoutTable.contentOffset.y
         if preference == nil {
             self.displayBackButton()
             self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
@@ -129,9 +142,11 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0:
-                // confirm title + numberOfRowsInMainSection() + confirmPaymentButton + TermsAndConditions
-                return 1 + self.viewModel!.numberOfRowsInMainSection() + 2
+                return 1
             case 1:
+                // numberOfRowsInMainSection() + confirmPaymentButton + TermsAndConditions
+                return self.viewModel!.numberOfRowsInMainSection() + 2
+            case 2:
                 return self.preference!.items!.count
             default:
                 return 3
@@ -139,11 +154,11 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.section == 0 {
+            return getMainTitleCell(indexPath : indexPath)
+        } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                //deberia ir el titlo, pero wait for it
                 return self.getPurchaseTitleCell(indexPath: indexPath, title : "Productos".localized, amount : self.preference!.getAmount())
             case 1:
                 return self.getPurchaseTitleCell(indexPath: indexPath, title : "Total".localized, amount : self.preference!.getAmount())
@@ -152,9 +167,9 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
             default :
                 return self.getTermsAndConditionsCell(indexPath : indexPath)
             }
-        } else if indexPath.section == 1 {
-                return self.getPurchaseItemDetailCell(indexPath: indexPath)
         } else if indexPath.section == 2 {
+                return self.getPurchaseItemDetailCell(indexPath: indexPath)
+        } else if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
                 return self.getPaymentMethodSelectedCell(indexPath: indexPath)
@@ -170,13 +185,13 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath as NSIndexPath).section == 0 {
+        if (indexPath as NSIndexPath).section == 1 {
             self.checkoutTable.deselectRow(at: indexPath, animated: true)
-        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 &&  !self.viewModel!.isUniquePaymentMethodAvailable() {
+        } else if (indexPath as NSIndexPath).section == 2 && (indexPath as NSIndexPath).row == 0 &&  !self.viewModel!.isUniquePaymentMethodAvailable() {
             self.checkoutTable.deselectRow(at: indexPath, animated: true)
             self.showLoading()
             self.loadGroupsAndStartPaymentVault()
-        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 1 && self.viewModel!.isPaymentMethodSelectedCard() {
+        } else if (indexPath as NSIndexPath).section == 2 && (indexPath as NSIndexPath).row == 1 && self.viewModel!.isPaymentMethodSelectedCard() {
             startPayerCostStep()
         }
     }
@@ -381,6 +396,10 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     fileprivate func registerAllCells(){
         
         // Purchase Detail Cells
+        
+        let payerCostTitleTableViewCell = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(payerCostTitleTableViewCell, forCellReuseIdentifier: "payerCostTitleTableViewCell")
+        
         let purchaseDetailTableViewCell = UINib(nibName: "PurchaseDetailTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseDetailTableViewCell, forCellReuseIdentifier: "purchaseDetailTableViewCell")
         
@@ -427,6 +446,15 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
         self.checkoutTable.separatorStyle = .none
     }
     
+    
+    private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
+        let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
+        payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra")
+        payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
+        payerCostTitleTableViewCell.backgroundColor = UIColor.white()
+        
+        return payerCostTitleTableViewCell
+    }
     
     private func getPurchaseTitleCell(indexPath : IndexPath, title : String, amount : Double) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
@@ -483,6 +511,10 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
     internal func exitCheckoutFlow(){
         self.callbackCancel!()
     }
+    
+    override func getNavigationBarTitle() -> String {
+        return "Confirma tu compra".localized
+    }
 }
 
 open class CheckoutViewModel {
@@ -498,7 +530,7 @@ open class CheckoutViewModel {
     }
     
     func numberOfSections() -> Int {
-        return 3
+        return 4
     }
     
     func isPaymentMethodSelected() -> Bool {
@@ -543,6 +575,8 @@ open class CheckoutViewModel {
     
     func heightForRow(_ indexPath : IndexPath) -> CGFloat {
         if indexPath.section == 0 {
+            return 40
+        } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
                 //deberia ir el titlo, pero wait for it
@@ -554,9 +588,9 @@ open class CheckoutViewModel {
             default:
                 return TermsAndConditionsViewCell.ROW_HEIGHT
             }
-        } else if indexPath.section == 1 {
-                return 324
         } else if indexPath.section == 2 {
+                return 324
+        } else if indexPath.section == 3 {
             if indexPath.row == 0 {
                 return 290
             } else if indexPath.row == 1 {
