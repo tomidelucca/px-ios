@@ -93,9 +93,9 @@ open class MPStepBuilder : NSObject {
     }
     
     open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,
-                                          callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsViewController {
+                                          callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsRevampViewController {
         MercadoPagoContext.initFlavor2()
-        return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : {(payment : Payment) -> Void in
+        return InstructionsRevampViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : {(payment : Payment) -> Void in
             callback(payment, CongratsState.ok)
         })
     }
