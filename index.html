@@ -87,7 +87,7 @@ pod 'MercadoPagoSDK', '2.0.7'
                   <div class="desc">
                      <h3>2.   Setea tu clave pública </h3>
                      <p>
-                        Setea la clave pública correspondiente a tu cuenta de MercadoPago en la clase AppDelegate. En este caso utilizaremos una clave de prueba. Más adelante veremos como puedes obtener tu propia clave pública. 
+                        Setea la clave pública correspondiente a tu cuenta de MercadoPago en la clase AppDelegate. En este caso utilizaremos una clave de prueba. Más adelante veremos como puedes obtener tu propia clave pública. También debes setear el siteId correspondiente al país en el cuál quieres operar. En este caso lo configuraremos como Argentina (MLA).
                      </p>
                      <p class="advanced-panel">
                       Si tu proyecto está escrito en <b>Objective-C</b> necesitas setear en "Build Settings" el parámetro <b>"Embedded Content Contains Swift Code"</b> en "Yes", ya que la SDK está escrita en Swift.
@@ -106,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, 
     didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { 
       MercadoPagoContext.setPublicKey(publicKey)
+      MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
       return true
   }
 }
@@ -200,18 +201,21 @@ class MainViewController: UIViewController {
                   <pre class="snippet">
                      <code class="line-numbers language-swift">
 // 2 - Identificador de preferencia de pago
-let prefId = "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1" 
+let prefId = "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f" 
 
 // Método ejecutado al hacer clic en el botón
 func startCheckout(){
-  
- let choFlow = MPFlowBuilder.startCheckoutViewController( "138275050-c19890b7-9e5e-47ff-b062-ca2a8ebb94d1", callback: { (payment: Payment) in
-                //Listo! El pago ya fue procesado por MP.
-                // En el paso siguiente se describe el método displayPaymentInfo
-                self.displayPaymentInfo(payment)
-            })
+    let checkout = MPFlowBuilder.startCheckoutViewController(prefId, 
+            callback: { (payment: Payment) in
+                  // Listo! El pago ya fue procesado por MP. 
+                  // En el paso siguiente se describe el método displayPaymentInfo
+                  self.displayPaymentInfo(payment)
             
-            self.present(choFlow, animated: true, completion: {})
+            }, callbackCancel: {
+                  // Acción a ejecutar en caso de que el usuario no efectue la compra
+    })
+
+    self.presentViewController(checkout, animated: true, completion: {})
 }
                      </code>
                      <button class="copy-button">
@@ -336,9 +340,9 @@ func displayPaymentInfo(payment : Payment){
                       </p>
                       <p><b>Desde tu aplicación:</b>
                         <br />
-                        Te ofrecemos una clase llamada <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> que se conecta con tu servidor. El método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia. 
+                        Te ofrecemos una clase llamada <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> que se conecta con tu servidor. El método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia. 
                         <br />
-                        <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de Mercado Pago) en un objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/CheckoutPreference.java" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
+                        <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de Mercado Pago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
                       </p>
                   </div>
                </div>
@@ -349,21 +353,24 @@ let preferenceBody = ["amount" : 12,
   "itemId" : 29334, "customerId": 207, 
   "payer_email" : "customermail@test.com"]
         
-// Seteo de URL y preferenceUri
-MercadoPagoContext.setBaseURL("https://api.tunombre.com")
-MercadoPagoContext.setPreferenceURI("/create_preference")
+  // Seteo de URL y preferenceUri
+  MercadoPagoContext.setBaseURL("https://api.tunombre.com")
+  MercadoPagoContext.setPreferenceURI("/create_preference")
 
-MerchantServer.createPreference(preferenceBody, 
-  success: { (checkoutPreference) in
-    // La preferencia se creó correctamente.
-    // Aquí puedes iniciar el Checkout de MercadoPago.
-    MPFlowBuilder.startCheckoutViewController(checkoutPreference._id, 
-      callback: { (payment : Payment) in
+  MerchantServer.createPreference(preferenceBody,
+      success: { (checkoutPreference) in
+          // La preferencia se creó correctamente.
+          // Aquí puedes iniciar el Checkout de MercadoPago.
+          let choFlow = MPFlowBuilder.startCheckoutViewController(checkoutPreference._id, callback: { (payment: Payment) in
+                                                    
+          }, callbackCancel: {
+              // Acción a ejecutar en caso de que el usuario no efectue la compra
+          })
 
-    })
- }, failure: { (error) in
-    // Ups, ocurrió un error
-})
+      }, failure: { (error) in
+          // Ups, ocurrió un error
+  })
+
                      </code>
                      <button class="copy-button">
                         <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">

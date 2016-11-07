@@ -121,7 +121,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoSDK', '~> 2.0.5'
+pod 'MercadoPagoSDK', '~> 2.0.7'
                         </code>
                         <button class="copy-button" alt="Copiar código">
                            <img src="./img/clippy.svg" width="13">
@@ -139,7 +139,7 @@ pod 'MercadoPagoSDK', '~> 2.0.5'
                      <p class="advanced-panel">
                         <em>*</em>Prueba un <a href="http://api.mercadopago.com/v1/payment_methods?public_key=444a9ef5-8a6b-429f-abdf-587639155d88" target="_blank">ejemplo de respuesta</a> de la API de medios de pago (/v1/payment_methods).
                      </p>
-                     El siguiente código hace el llamado a la API y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/PaymentMethod.java" target="_blank">PaymentMethod</a>.
+                     El siguiente código hace el llamado a la API y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a>.
                   </p>
                   <p>
                      <pre class="snippet">
@@ -165,7 +165,7 @@ MPServicesBuilder.getPaymentMethods(success: { (paymentMethods) -> Void in
                      <p class="advanced-panel">
                         <em>*</em>Prueba un <a href="https://api.mercadopago.com/v1/payment_methods/card_issuers?public_key=444a9ef5-8a6b-429f-abdf-587639155d88&payment_method_id=master" target="_blank">ejemplo de respuesta</a> de la API de bancos para un medio de pago seleccionado (/v1/payment_methods/card_issuers).
                      </p>
-                     En el siguiente código te mostramos cómo podes hacer el llamado al servicio de <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Issuer.java" target="_blank">Issuer</a> dado un medio de pago desde nuestra SDK.
+                     En el siguiente código te mostramos cómo podes hacer el llamado al servicio de <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a> dado un medio de pago desde nuestra SDK.
                   </p>
                   <p>
                      <pre class="snippet">
@@ -204,7 +204,7 @@ MPServicesBuilder.getIssuers(paymentMethod: paymentMethod, bin: bin,
                      </p>
                      Si lo tuvieras, dependiendo cómo pensaste tu experiencia de pagos, puedes enviarnos el BIN, que son los primeros seis dígitos de la tarjeta. Con el BIN podemos conocer el medio de pago de la tarjeta y, en algunos casos, el banco que emitió la tarjeta.
                      <br />
-                     El siguiente código hace el llamado a la API enviando los parámetros mecionados y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Installment.java" target="_blank">Installment</a>.
+                     El siguiente código hace el llamado a la API enviando los parámetros mecionados y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Installment.swift" target="_blank">Installment</a>.
                   </p>
                   <p>
                      <pre class="snippet">
@@ -244,7 +244,7 @@ MPServicesBuilder.getInstallments(bin, amount: amount, issuer: issuer,
                      <p class="advanced-panel">
                         <em>*</em>Probá un <a href="https://api.mercadopago.com/v1/identification_types?public_key=444a9ef5-8a6b-429f-abdf-587639155d88" target="_blank">ejemplo de respuesta</a> de la API de tipos de documento (/v1/identification_types).
                      </p>
-                     En el siguiente código te mostramos cómo podes hacer el llamado al servicio de <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/IdentificationType.java" target="_blank">IdentificationTypes</a>.
+                     En el siguiente código te mostramos cómo podes hacer el llamado al servicio de <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/IdentificationType.swift" target="_blank">IdentificationTypes</a>.
                   </p>
                   <p>
                      <pre class="snippet">
@@ -370,7 +370,7 @@ MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
                      <p class="advanced-panel">
                         <em>*</em>Prueba un <a href="https://api.mercadopago.com/v1/payment_methods/deals?public_key=444a9ef5-8a6b-429f-abdf-587639155d88" target="_blank">ejemplo de respuesta</a> de la API de promociones (/v1/payment_methods/deals).
                      </p>
-                     El siguiente código hace el llamado a la API y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/BankDeal.java" target="_blank">BankDeal</a>.
+                     El siguiente código hace el llamado a la API y convierte la respuesta en un listado de <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Promo.swift" target="_blank">BankDeal</a>.
                   </p>
                   <p>
                      <pre class="snippet">
@@ -422,7 +422,7 @@ MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId,
                   <p>
                      Es una clase que está disponible en nuestras SDK con el fin de ayudarte a enviar los datos a tus servidores y esperar la respuesta adecuada. Son solamente dos métodos que vamos a ver a continuación: la creación de pagos y la creación de preferencias.
                      </br>
-                     Lo que hacemos es pedirte que nos indiques cuál es tu url base (<b>http://api.tunombre.com</b>) y la URI en la cual esperas recibir nuestro llamado (<b>/uri</b>). Luego necesitamos que nos envíes un mapa para convertirlo a JSON y poder enviarlo a <b>http://api.tunombre.com/uri</b> donde procesarás esos datos y, usando <a href="https://www.mercadopago.com.ar/developers/es/tools/" target="_blank">nuestras SDK para servidores</a> junto a tu <b><a href="https://www.mercadopago.com/mla/account/credentials?type=personalized" target="_blank">clave privada</a></b>, te conectarás con nuestros servicios para poder efectuar la acción correspondiente. La respuesta de tu servicio, tiene que ser la misma que tuviste de MercadoPago, porque <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> se encargará de convertirla en el objeto esperado (<a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Payment.java" target="_blank">Payment</a> o <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/CheckoutPreference.java" target="_blank">CheckoutPreference</a>).
+                     Lo que hacemos es pedirte que nos indiques cuál es tu url base (<b>http://api.tunombre.com</b>) y la URI en la cual esperas recibir nuestro llamado (<b>/uri</b>). Luego necesitamos que nos envíes un mapa para convertirlo a JSON y poder enviarlo a <b>http://api.tunombre.com/uri</b> donde procesarás esos datos y, usando <a href="https://www.mercadopago.com.ar/developers/es/tools/" target="_blank">nuestras SDK para servidores</a> junto a tu <b><a href="https://www.mercadopago.com/mla/account/credentials?type=personalized" target="_blank">clave privada</a></b>, te conectarás con nuestros servicios para poder efectuar la acción correspondiente. La respuesta de tu servicio, tiene que ser la misma que tuviste de MercadoPago, porque <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> se encargará de convertirla en el objeto esperado (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Payment.swift" target="_blank">Payment</a> o <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift" target="_blank">CheckoutPreference</a>).
                   </p>
                </section>
                <section class="docs-section" id="f1_create_payment">
@@ -432,8 +432,8 @@ MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId,
                      <br />
                      Junto con el token creado necesitas enviar también el medio de pago, cuotas y banco seleccionados por el usuario, además de un identificador del artículo o servicio que se está pagando y del usuario que está presente en tu aplicación.
                      <br />
-                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantPayment.java">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago. 
-                     <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Payment.java" target="_blank">Payment</a>.
+                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantPayment.swift">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago. 
+                     <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Payment.swift" target="_blank">Payment</a>.
                   </p>
                   <p>
                      Una vez recibida la información en tus servidores, puedes crear el pago usando uno de los SDKs de MercadoPago. En <a href="https://github.com/mercadopago/code-examples/tree/master/customized-checkout/payment/basic" target="_blank">este link</a> podrás ver ejemplos de cómo utilizar nuestras SDK para realizar pagos. Los ejemplos están disponibles para PHP, cURL, ASP.NET, Java, Node.js, Phyton y Ruby.
@@ -496,7 +496,7 @@ func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?,
                   </p>
                   <p>
                      En este caso, el método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_preference) donde esperas los datos para crear la preferencia. 
-                     <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/CheckoutPreference.java" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
+                     <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
                   </p>
                   <p>
                      <a href="https://www.mercadopago.com.ar/developers/es/solutions/payments/basic-checkout/receive-payments/" target="_blank">Cómo crear preferencias desde tu servidor</a>.
