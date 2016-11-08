@@ -127,7 +127,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoSDK', '~> 2.0.5'
+pod 'MercadoPagoSDK', '~> 2.0.7'
                         </code>
                         <button class="copy-button" alt="Copiar código">
                            <img src="./img/clippy.svg" width="13">
@@ -141,7 +141,7 @@ pod 'MercadoPagoSDK', '~> 2.0.5'
                   <section class="docs-section" id="f2_payment_vault">
                   <h3 class="title">UI para la recolección de datos</h3>
                   <p>
-                     El más completo de nuestros componentes visuales es <b>PaymentVault</b> con el cual estarás en condiciones de enviar los datos a tu servidor. Con este componente tendrás a disposición el medio de pago seleccionado (<a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/PaymentMethod.java" target="_blank">PaymentMethod</a>) y si tu usuario paga con tarjeta, el banco (<a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Issuer.java" target="_blank">Issuer</a>), las cuotas (<a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/PayerCost.java" target="_blank">PayerCost</a>) y la información de la tarjeta encriptada (<a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Token.java" target="_blank">Token</a>). 
+                     El más completo de nuestros componentes visuales es <b>PaymentVault</b> con el cual estarás en condiciones de enviar los datos a tu servidor. Con este componente tendrás a disposición el medio de pago seleccionado (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a>) y si tu usuario paga con tarjeta, el banco (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a>), las cuotas (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PayerCost.swift" target="_blank">PayerCost</a>) y la información de la tarjeta encriptada (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a>). 
                      <br />
                      Para utilizarlo, agrega un botón:
                   </p>
@@ -152,17 +152,17 @@ import UIKit
 
 class MainViewController: UIViewController {
 
-  @IBOutlet weak var payButton: UIButton!
+   @IBOutlet weak var payButton: UIButton!
 
-  @IBOutlet weak var paymentResult: UITextField!
+   @IBOutlet weak var paymentResult: UITextField!
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    self.payButton.addTarget(self, 
-      action: #selector(MainViewController.startCheckout), 
-      forControlEvents: .TouchUpInside)
-  }
+   override func viewDidLoad() {
+      super.viewDidLoad()
+                                           
+      self.payButton.addTarget(self, 
+         action: #selector(MainViewController.startPaymentVault), 
+         forControlEvents: .TouchUpInside)
+   }
 }
                         </code>
          
@@ -177,11 +177,10 @@ class MainViewController: UIViewController {
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-java">
-MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "ARS", 
-  paymentPreference: nil, callback: { 
-    (paymentMethod, tokenId, issuer, installments) -> Void in
-        // Listo! Envía los datos a tu servidor para hacer el pago.
-  })
+MPFlowBuilder.startPaymentVaultViewController(amount : 1.00, 
+      callback: { (paymentMethod, token, issuer, payerCost) in
+         // Listo! Envía los datos a tu servidor para hacer el pago.
+})
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -195,7 +194,7 @@ MPFlowBuilder.startPaymentVaultViewController(1.00, currencyId : "ARS",
                <section class="docs-section" id="f2_card_form">
                   <h3 class="title">Cobra con tarjeta</h3>
                   <p>
-                     Para recolectar sólamente los datos de la tarjeta de tu usuario te brindamos un componente que resuelve esta necesidad de una forma intuitiva y segura. Sólo tienes que invocar el formulario de tarjeta y esperar el resultado: <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/PaymentMethod.java" target="_blank">PaymentMethod</a> (marca de la tarjeta), <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Issuer.java" target="_blank">Issuer</a> (banco de la tarjeta) y <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Token.java" target="_blank">Token</a> (información encriptada de la tarjeta). 
+                     Para recolectar sólamente los datos de la tarjeta de tu usuario te brindamos un componente que resuelve esta necesidad de una forma intuitiva y segura. Sólo tienes que invocar el formulario de tarjeta y esperar el resultado: <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a> (marca de la tarjeta), <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a> (banco de la tarjeta) y <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a> (información encriptada de la tarjeta). 
                      <br />
                      <b>Sigue navegando si quieres ver cómo cobrar en cuotas.</b>
                   </p>
@@ -226,12 +225,12 @@ MPStepBuilder.startCreditCardForm(amount: 1, callback: {
                <section class="docs-section" id="f2_card_form_installments">
                   <h3 class="title">Cobra con tarjeta en cuotas</h3>
                   <p>
-                     Si deseas cobrar en cuotas, ofrecemos un flujo que se encarga de la recolección de datos de la tarjeta y además, de la <b>selección de cuotas</b>. A los parámetros de respuesta del paso anterior también debes esperar por el <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/PayerCost.java" target="_blank">PayerCost</a> (las cuotas seleccionadas por el usuario).
+                     Si deseas cobrar en cuotas, ofrecemos un flujo que se encarga de la recolección de datos de la tarjeta y además, de la <b>selección de cuotas</b>. A los parámetros de respuesta del paso anterior también debes esperar por el <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PayerCost.swift" target="_blank">PayerCost</a> (las cuotas seleccionadas por el usuario).
                   </p>
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-java">
-MPFlowBuilder.startCardFlow(amount: 1, callback: { 
+MPFlowBuilder.startCardFlow(amount: 5.00, callback: { 
   (paymentMethod, cardToken, issuer, payerCost) -> Void in
     // Listo! Envía los datos a tu servidor para hacer el pago
 })
@@ -255,13 +254,11 @@ MPFlowBuilder.startCardFlow(amount: 1, callback: {
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-java">
-MPStepBuilder.startPaymentMethodsStep(PaymentType.allPaymentIDs, 
-  callback: { 
-    (paymentMethod) -> Void in
-      // Ahora puedes continuar con tu flujo.
-      // Recuerda verificar si el medio de pago es offline!
-  }
-)
+MPStepBuilder.startPaymentMethodsStep({ 
+      (paymentMethod) -> Void in
+         // Ahora puedes continuar con tu flujo.
+         // Recuerda verificar si el medio de pago es offline!
+})
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -335,7 +332,9 @@ MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer,
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-java">
-MPStepBuilder.startPromosStep()
+ MPStepBuilder.startPromosStep({ (Void) -> (Void) in
+   // Acción a ejecutar al salir de visualizar las promociones
+})
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -353,8 +352,8 @@ MPStepBuilder.startPromosStep()
                      <br />
                      Junto con el token creado necesitas enviar también el medio de pago, cuotas y banco seleccionados por el usuario, además de un identificador del artículo o servicio que se está pagando y del usuario que está presente en tu aplicación.
                      <br />
-                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantPayment.java">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago. 
-                     <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/Payment.java" target="_blank">Payment</a>.
+                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantPayment.swift">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago. 
+                     <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Payment.swift" target="_blank">Payment</a>.
                   </p>
                   <p>
                      Una vez recibida la información en tus servidores, puedes crear el pago usando uno de los SDKs de MercadoPago. En <a href="https://github.com/mercadopago/code-examples/tree/master/customized-checkout/payment/basic" target="_blank">este link</a> podrás ver ejemplos de cómo utilizar nuestras SDK para realizar pagos. Los ejemplos están disponibles para PHP, cURL, ASP.NET, Java, Node.js, Phyton y Ruby.
@@ -366,28 +365,25 @@ MPStepBuilder.startPromosStep()
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
 
-func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?, 
-  installments: Int?, tokenId: String) {
+func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?, installments: Int?, tokenId: String) {
 
-  MercadoPagoContext.setBaseURL("http://tunombre.com")
-  MercadoPagoContext.setPaymentURI("/checkout/create_payment")
+   MercadoPagoContext.setBaseURL("http://tunombre.com")
+   MercadoPagoContext.setPaymentURI("/checkout/create_payment")
 
-  let merchantPayment = MerchantPayment(items: items, installments: installments, 
-    cardIssuer: cardIssuer, tokenId: tokenId, paymentMethod: paymentMethod, 
-    campaignId: nil)
+   let merchantPayment = MerchantPayment(items: items, installments: installments, 
+      cardIssuer: cardIssuer, tokenId: tokenId, paymentMethod: paymentMethod, campaignId: nil)
 
-  MerchantServer.createPayment(payment: merchantPayment, 
-    success: {
-      (payment: Payment) -> Void in
+   MerchantServer.createPayment(payment: merchantPayment, 
+         success: {
+            (payment: Payment) -> Void in
 
-      // Dependiendo del paymentTypeId, muestra
-        // Congrats
-        // Instructions
+            // Dependiendo del paymentTypeId, muestra
+            // Congrats
+            // Instructions
 
-    }, failure: {
-      ((error: NSError) -> Void) in
-    }
-  )
+         }, failure: {
+            ((error: NSError) -> Void) in
+   })
 }
                         </code>
                         <button class="copy-button">
