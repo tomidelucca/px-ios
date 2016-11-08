@@ -65,6 +65,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.showNavBar()
         
+        
     }
     
 
@@ -82,6 +83,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             
         }
         navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+        
+//        self.checkoutTable.tableFooterView = UIView(frame: CGRect.zero)
+//        self.checkoutTable.tableFooterView?.isHidden = true
     }
 
     
@@ -92,7 +96,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navBarBackgroundColor = UIColor.white()
         self.navigationItem.backBarButtonItem?.tintColor = UIColor.blueMercadoPago()
         
-        self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.paymentsTable.bounds.size.width, height: 0.01))
+        self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
         if preference == nil {
             self.displayBackButton()
@@ -139,9 +143,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return nil
     }
     
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1.0
-    }
+//    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 1.0
+//    }
 
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -199,7 +203,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             startPayerCostStep()
         }
     }
-
 
     internal func loadGroupsAndStartPaymentVault(_ animated : Bool = true){
         
