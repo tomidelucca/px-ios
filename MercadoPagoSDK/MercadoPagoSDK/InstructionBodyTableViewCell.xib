@@ -15,6 +15,9 @@
                 <autoresizingMask key="autoresizingMask"/>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="view" destination="H2p-sc-9uM" id="eBv-yk-55K"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

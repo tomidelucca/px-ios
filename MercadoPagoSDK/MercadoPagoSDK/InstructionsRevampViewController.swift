@@ -75,6 +75,12 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     func getColor()->UIColor{
         return UIColor(red: 255, green: 161, blue: 90)
     }
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 1{
+            return UITableViewAutomaticDimension
+        }
+        return UITableViewAutomaticDimension
+    }
     
     
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -106,6 +112,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
+            bodyCell.fillCell(instruction: self.instruction)
             return bodyCell
         } else {
             if indexPath.row == 0{
