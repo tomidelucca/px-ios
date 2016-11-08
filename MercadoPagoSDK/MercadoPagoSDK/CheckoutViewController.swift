@@ -89,13 +89,17 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.viewDidAppear(animated)
         self.showLoading()
         self.startScrollPosition = checkoutTable.contentOffset.y
+        self.navBarBackgroundColor = UIColor.white()
+        self.navigationItem.backBarButtonItem?.tintColor = UIColor.blueMercadoPago()
+        
+        self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.paymentsTable.bounds.size.width, height: 0.01))
+        
         if preference == nil {
             self.displayBackButton()
             self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
             self.loadPreference()
         } else {
             if self.viewModel!.paymentMethod != nil {
-                self.title = "Revisa si está todo bien...".localized
                 self.checkoutTable.reloadData()
                 self.hideLoading()
                 if (recover){
@@ -451,7 +455,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra")
         payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
-        payerCostTitleTableViewCell.backgroundColor = UIColor.white()
+        payerCostTitleTableViewCell.cell.backgroundColor = UIColor.white()
         
         return payerCostTitleTableViewCell
     }
@@ -514,6 +518,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     override func getNavigationBarTitle() -> String {
         return "Confirma tu compra".localized
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView){
+        self.navBarTextColor = UIColor.blueMercadoPago()
+        self.didScrollInTable(scrollView, tableView: self.checkoutTable)
     }
 }
 

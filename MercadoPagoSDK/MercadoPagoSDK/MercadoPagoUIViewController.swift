@@ -30,6 +30,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var timerLabel : MPLabel?
     
     override open func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
         if self.timer != nil {
             self.timer!.delegate = self
@@ -70,8 +71,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         super.viewWillAppear(animated)
     
         UIApplication.shared.statusBarStyle = .lightContent
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        
         
         self.loadMPStyles()
      

@@ -15,32 +15,31 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     var scrollingDown = false
     
     var navBarHeight: CGFloat = 0
+    var navBarTextColor = UIColor.systemFontColor()
+    var navBarBackgroundColor : UIColor?
+    var isTraslucent = true
+    
     var startScrollPosition: CGFloat = 0
     
     func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
         
-        var titleVisible = false
         var offset = scrollView.contentOffset;
         
         if (scrollView.contentOffset.y >= -30 && isWholeTableVisible(tableView: tableView))
         {
             offset.y = -30;
             scrollView.contentOffset = offset;
-            titleVisible = false
             self.title = getNavigationBarTitle()
         }
-        ("tableView \(tableView.contentOffset)")
         
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if (index.section == 0){
                 if !once {
                     hideNavBar()
-                    titleVisible = true
                     
                     if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
                         
-                        titleVisible = false
                         once = true
                         showNavBar()
                     }
@@ -76,8 +75,14 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
         self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.tintColor = nil
         self.navigationController?.navigationBar.isTranslucent = false
+        
+        if navBarBackgroundColor != nil {
+            self.navigationController?.navigationBar.barTintColor = self.navBarBackgroundColor
+        }
+
+        
         let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
     }
     
