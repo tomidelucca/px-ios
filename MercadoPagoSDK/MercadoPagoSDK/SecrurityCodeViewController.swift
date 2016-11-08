@@ -9,12 +9,16 @@
 import UIKit
 
 open class SecrurityCodeViewController: MercadoPagoUIViewController {
-
+    
+    @IBOutlet weak var securityCodeLabel: UILabel!
+    @IBOutlet weak var securityCodeTextField: HoshiTextField!
+    @IBOutlet weak var errorLabel: UILabel!
+    
+    var viewModel : SecrurityCodeViewModel!
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         loadMPStyles()
-
-        // Do any additional setup after loading the view.
     }
 
     override open func didReceiveMemoryWarning() {
@@ -22,9 +26,12 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    public init() {
-        super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
-
+    public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
+        
+        self.viewModel = SecrurityCodeViewModel()
+        
+        super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
+        self.timer=timer
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -66,3 +73,33 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
     
     
 }
+
+open class SecrurityCodeViewModel: NSObject {
+    let paymentMethod : PaymentMethod! = nil
+    let token : Token! = nil
+    
+    
+    public init(paymentMethod : PaymentMethod! ,token : Token!, amount: Double?, callback: ((_ token: Token?)->Void)! ){
+        self.paymentMethod = paymentMethod
+        self.token = token
+        self.callback = callback
+    }
+        
+        
+    var callback : ((_ token: Token?) -> Void)!
+    
+    func secCodeInBack() -> Bool {
+        return paymentMethod.secCodeInBack()
+    }
+    func secCodeLenght() -> Int {
+        return paymentMethod.secCodeLenght()
+    }
+    func cloneTokenAndCallback(secCode : String!) {
+        MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
+            self.callback(token)
+            }, failure: { (error) in
+            self.callback(nil) // VER
+        })
+    }
+}
+

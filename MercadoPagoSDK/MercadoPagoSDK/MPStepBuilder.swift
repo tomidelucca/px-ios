@@ -126,7 +126,7 @@ open class MPStepBuilder : NSObject {
         var navigation : UINavigationController?
         var ccf : CardFormViewController = CardFormViewController()
         
-        
+        //C4A
         
         ccf = CardFormViewController(paymentSettings : paymentSettings , amount: amount, token: token, cardInformation: cardInformation, paymentMethods : paymentMethods, timer : timer, callback : { (paymentMethod, cardToken) -> Void in
             
