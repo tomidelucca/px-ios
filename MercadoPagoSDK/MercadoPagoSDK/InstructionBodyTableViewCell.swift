@@ -20,9 +20,9 @@ class InstructionBodyTableViewCell: UITableViewCell {
         if let instruction = instruction{
             var height = 40
             var previus = UIView()
-            for info in instruction.info {
+            var constrain = 0
+            for (index, info) in instruction.info.enumerated() {
                 var label = UILabel(frame: CGRect(x: 0, y: height, width: 200, height: 0))
-                if info != ""{
                     
                     label.textAlignment = .center
                     let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) ?? UIFont.systemFont(ofSize: 18),NSForegroundColorAttributeName: UIColor.gray]
@@ -38,18 +38,27 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(40)-[label]-(40)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                     let heightConstraints:[NSLayoutConstraint]
                     //let heightConstraints2:[NSLayoutConstraint]
-                    if info == instruction.info[0]{
+                    if index == 0{
                         
                         
                         heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(40)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                         //heightConstraints2 = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(40)-[label]-(40)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                     }
-                        
+                
+
                     else {
-                        heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 20)]
-                        if (info == instruction.info[6]){
-                            // let heightConstraints2 = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.bottom, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 200)]
-                            //NSLayoutConstraint.activate(heightConstraints2)
+                        
+                        if index+1 != instruction.info.count && instruction.info[index-1] != ""{
+                            heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)]
+                            constrain = 0
+                        } else if index == 6 {
+                            heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 60)]
+                                ViewUtils.drawBottomLine(y: CGFloat(height), width: UIScreen.main.bounds.width, inView: self.view)
+                            constrain = 60
+                        } else {
+                            heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 30)]
+                            constrain = 30
+                            
                         }
                         
                     }
@@ -58,8 +67,8 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     NSLayoutConstraint.activate(heightConstraints)
                     //NSLayoutConstraint.activate(heightConstraints2)
                     
-                }
-                height += Int(label.frame.height) + 20
+                
+                height += Int(label.frame.height) + constrain
                 
             }
             for refence in instruction.references {
@@ -135,7 +144,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 self.view.addSubview(label)
                 
                 
-                let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(60)-[label]-(50)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-70-[image]-[label]-70-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                 //let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 30)]
                 let heightConstraints:[NSLayoutConstraint]
 
@@ -146,9 +155,9 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
                 
                 let verticalConstraint = NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-                let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)]
+                //let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)]
                 view.addConstraint(verticalConstraint)
-                NSLayoutConstraint.activate(widthConstraints2)
+                //NSLayoutConstraint.activate(widthConstraints2)
 
                 previus = label
             }

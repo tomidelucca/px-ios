@@ -84,7 +84,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return (instruction != nil) ? 3 : 0
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,13 +138,13 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.instruction = instructionsInfo.instructions[0]
             self.tableView.reloadData()
             self.hideLoading()
-            }, failure: { (error) -> Void in
-                self.requestFailure(error, callback: {
-                    self.getInstructions()
-                    }, callbackCancel: {
-                        self.dismiss(animated: true, completion: {})
-                })
-                self.hideLoading()
+        }, failure: { (error) -> Void in
+            self.requestFailure(error, callback: {
+                self.getInstructions()
+            }, callbackCancel: {
+                self.dismiss(animated: true, completion: {})
+            })
+            self.hideLoading()
         })
     }
 }
