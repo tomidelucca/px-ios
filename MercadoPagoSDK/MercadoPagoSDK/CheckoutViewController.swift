@@ -238,6 +238,8 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
         
         let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel?.paymentMethod!, token: token) { (token) in
             print("VAMO LO PIBE")
+            self.token = token
+         //   self.paymentVaultCallback((self.viewModel?.paymentMethod!)!, token : token, issuer : self.issuer, payerCost : self.payerCost, animated : true)
             self.navigationController!.popToViewController(self, animated: true)
         }
         

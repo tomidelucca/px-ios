@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecrurityCodeViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="errorLabel" destination="h3x-Y7-b4M" id="ucc-T7-Pcr"/>
+                <outlet property="panelView" destination="yob-kR-dQh" id="kZV-OM-lKE"/>
                 <outlet property="securityCodeLabel" destination="nj2-6Z-I4e" id="vAE-7I-aOn"/>
                 <outlet property="securityCodeTextField" destination="CLV-K5-LXP" id="s6C-CM-zBJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -18,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OdV-zR-Rb9">
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OdV-zR-Rb9">
                     <subviews>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5na-L5-T6h">
                             <frame key="frameInset" minY="18" width="261" height="32"/>
@@ -237,7 +238,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <point key="canvasLocation" x="-651.5" y="-330.5"/>
+            <point key="canvasLocation" x="-1348" y="-333"/>
         </view>
     </objects>
     <resources>

@@ -14,12 +14,18 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
     
+    @IBOutlet weak var panelView: UIView!
     var viewModel : SecrurityCodeViewModel!
+    
+    var card : CardFrontView!
+    
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         loadMPStyles()
         self.errorLabel.alpha = 0
+        self.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        self.card = CardFrontView()
     }
 
     override open func didReceiveMemoryWarning() {
@@ -105,5 +111,11 @@ open class SecrurityCodeViewModel: NSObject {
             self.callback(nil) // VER
         })
     }
+    
+    func getCardCellHeight() -> CGFloat {
+        return UIScreen.main.bounds.height*0.27
+    }
+    
+    
 }
 
