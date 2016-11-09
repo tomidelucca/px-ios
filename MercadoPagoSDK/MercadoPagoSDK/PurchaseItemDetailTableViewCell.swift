@@ -31,8 +31,11 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
     }
     
     func fillCell(item : Item, currency : Currency){
-        //OJO
-        //self.itemImage.image = item.pictureUrl
+        self.layoutIfNeeded()
+        self.itemImage.image = ViewUtils.loadImageFromUrl(item.pictureUrl)
+        self.itemImage.layer.cornerRadius = self.itemImage.frame.height / 2
+        self.itemImage.clipsToBounds = true
+        
         self.itemTitle.attributedText = NSAttributedString(string: item.title)
         if item._description != nil && item._description!.characters.count > 0 {
           self.itemDescription.attributedText = NSAttributedString(string: item._description!)

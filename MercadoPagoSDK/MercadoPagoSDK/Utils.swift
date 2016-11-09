@@ -89,16 +89,16 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString, color : UIColor? = nil) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString, color : UIColor? = nil, fontSize : CGFloat = 22) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         
-        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22),NSForegroundColorAttributeName:color]
+        let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName:color]
         
         let stringToWrite = NSMutableAttributedString()
         
-        stringToWrite.append(NSMutableAttributedString(string: installments + " de ".localized, attributes: descriptionAttributes))
+        stringToWrite.append(NSMutableAttributedString(string: installments + " x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize))
         
         stringToWrite.append(additionalString)
         

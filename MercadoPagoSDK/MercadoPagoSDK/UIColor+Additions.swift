@@ -108,7 +108,6 @@ extension UIColor {
         return UIColorFromRGB(0x2BA2EC)
     }
     
-    
     class public func systemFontColor() -> UIColor{
         return MercadoPagoContext.getTextColor()
     }

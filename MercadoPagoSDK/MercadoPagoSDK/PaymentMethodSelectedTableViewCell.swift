@@ -37,7 +37,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         if paymentMethod.isCard() {
             self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
-            self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(installments!, installmentAmount: installmentAmount!, additionalString: NSAttributedString(string : ""), color: UIColor.black)
+            self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(installments!, installmentAmount: installmentAmount!, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24)
             let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
             paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
             self.paymentMethodDescription.attributedText = paymentMethodDescription

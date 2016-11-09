@@ -10,6 +10,8 @@ import UIKit
 
 class ConfirmPaymentTableViewCell: UITableViewCell {
 
+    public static let ROW_HEIGHT = CGFloat(110)
+    
     @IBOutlet weak var confirmPaymentButton: MPButton!
     
     override func awakeFromNib() {
