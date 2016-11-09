@@ -62,7 +62,7 @@ class ViewUtils {
                 let data = try? Data(contentsOf: url!)
                 if data != nil {
                         let image = UIImage(data: data!)
-                        return image!
+                        return image
                     }
                 else{
                     return nil

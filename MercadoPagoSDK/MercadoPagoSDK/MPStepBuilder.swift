@@ -121,6 +121,15 @@ open class MPStepBuilder : NSObject {
         }
         return false
     }
+    
+    
+    
+    
+    
+    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
+        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, token: token, callback: callback)
+        return secVC
+    }
     open class func startCreditCardForm(_ paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), callbackCancel : ((Void) -> Void)?) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : UINavigationController?

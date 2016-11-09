@@ -19,6 +19,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         loadMPStyles()
+        self.errorLabel.alpha = 0
     }
 
     override open func didReceiveMemoryWarning() {
@@ -26,12 +27,11 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
+    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
+    
+        super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
+        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, token: token, callback: callback)
         
-        self.viewModel = SecrurityCodeViewModel()
-        
-        super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
-        self.timer=timer
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -72,14 +72,18 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController {
     }
     
     
+    @IBAction func cloneToken(_ sender: AnyObject) {
+        self.viewModel.cloneTokenAndCallback(secCode: "123")
+    }
+    
 }
 
 open class SecrurityCodeViewModel: NSObject {
-    let paymentMethod : PaymentMethod! = nil
-    let token : Token! = nil
+    var paymentMethod : PaymentMethod!
+    var token : Token!
     
     
-    public init(paymentMethod : PaymentMethod! ,token : Token!, amount: Double?, callback: ((_ token: Token?)->Void)! ){
+    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
         self.paymentMethod = paymentMethod
         self.token = token
         self.callback = callback
