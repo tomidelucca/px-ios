@@ -126,35 +126,33 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.sizeToFit()
                 
-                let views = ["label": label]
+                let image = UIImageView(frame: CGRect(x: 0, y: height, width: 16, height: 16))
+                image.image = MercadoPago.getImage("iconTime")
+                image.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(image)
+                
+                let views = ["label": label, "image": image] as [String : Any]
                 self.view.addSubview(label)
                 
                 
-                let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(40)-[label]-(40)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(60)-[label]-(50)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                 //let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 30)]
                 let heightConstraints:[NSLayoutConstraint]
 
                 
                 heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 30)]
-                
-                
-                
-                
                 NSLayoutConstraint.activate(widthConstraints)
                 NSLayoutConstraint.activate(heightConstraints)
-                //NSLayoutConstraint.activate(heightConstraints2)
-                //NSLayoutConstraint.activate(widthConstraints2)
+                
+                
+                let verticalConstraint = NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
+                let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)]
+                view.addConstraint(verticalConstraint)
+                NSLayoutConstraint.activate(widthConstraints2)
+
                 previus = label
             }
-            let image = UIImageView(frame: CGRect(x: 0, y: height, width: 16, height: 16))
-            image.image = MercadoPago.getImage("iconTime")
-            image.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(image)
-            
-            let verticalConstraint = NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-            let widthConstraints2 = [NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 30)]
-            view.addConstraint(verticalConstraint)
-            NSLayoutConstraint.activate(widthConstraints2)
+
             let views = ["label": previus]
                 let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-30-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
             NSLayoutConstraint.activate(heightConstraints)
