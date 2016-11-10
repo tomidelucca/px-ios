@@ -112,7 +112,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
-            bodyCell.fillCell(instruction: self.instruction)
+            bodyCell.fillCell(instruction: self.instruction, payment: self.payment)
             return bodyCell
         } else {
             if indexPath.row == 0{

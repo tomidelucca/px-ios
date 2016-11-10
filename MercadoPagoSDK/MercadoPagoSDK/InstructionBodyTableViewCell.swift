@@ -16,12 +16,13 @@ class InstructionBodyTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    func fillCell(instruction: Instruction?){
+    func fillCell(instruction: Instruction?, payment: Payment){
         if let instruction = instruction{
             var height = 30
-            var previus = UIView()
+            var previus: UIView?
             var constrain = 0
             for (index, info) in instruction.info.enumerated() {
+                previus = UIView()
                 var label = UILabel(frame: CGRect(x: 0, y: height, width: 200, height: 0))
                 label.textAlignment = .center
                 let descriptionAttributes: [String:AnyObject]
@@ -80,6 +81,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
             }
             for refence in instruction.references {
+                var i = 0
                 if let labelText = refence.label{
                     var label = UILabel(frame: CGRect(x: 0, y: height, width: 200, height: 0))
                     label.textAlignment = .center
@@ -97,13 +99,18 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     let heightConstraints:[NSLayoutConstraint]
                     //let heightConstraints2:[NSLayoutConstraint]
                     
+                    if  previus != nil {
                     heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 30)]
+                    } else {
+                        heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                    }
                     
                     
                     previus = label
                     NSLayoutConstraint.activate(widthConstraints)
                     NSLayoutConstraint.activate(heightConstraints)
                     height += Int(label.frame.height) + 30
+                    i += 1
                 }
                 
                 var label = UILabel(frame: CGRect(x: 0, y: height, width: 200, height: 0))
@@ -117,8 +124,13 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
                 let views = ["label": label]
                 self.view.addSubview(label)
-                
-                let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(15)-[label]-(15)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                let widthConstraints:[NSLayoutConstraint]
+
+                if payment.paymentMethodId == "redlink"{
+                    widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(15)-[label]-(15)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                } else {
+                    widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(60)-[label]-(60)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                }
                 let heightConstraints:[NSLayoutConstraint]
                 //let heightConstraints2:[NSLayoutConstraint]
                 
@@ -171,19 +183,29 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
                 previus = label
             }
+            if instruction.actions != nil && (instruction.actions?.count)! > 0 {
+                if instruction.actions![0].tag == ActionTag.LINK.rawValue {
+                    let button = UIButton(frame: CGRect(x: 0, y: height, width: 160, height: 0))
+                    //button.actionLink = instruction.actions![0].url
+                    button.titleLabel?.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16) ?? UIFont.systemFont(ofSize: 16)
+                    button.setTitle("Ir a banca en línea", for: .normal)
+                    self.method = {
+                        UIApplication.shared.openURL(URL(string: instruction.actions![0].url)!)
+                    }
+                //    button.addTarget(self, action: #selector(self.openUrl(url:)), for: .touchUpInside)
+                    button.addTarget(self, action: #selector(getter: self.method), for: .touchUpInside)
+   
+                }
+            }
             
-            let views = ["label": previus]
+        let views = ["label": previus]
             let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-30-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
             NSLayoutConstraint.activate(heightConstraints)
             
         }
         
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
+
+    var method : ((Void)->Void)!
     
 }
