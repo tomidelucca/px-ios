@@ -39,13 +39,34 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         self.itemTitle.attributedText = NSAttributedString(string: item.title)
         if item._description != nil && item._description!.characters.count > 0 {
           self.itemDescription.attributedText = NSAttributedString(string: item._description!)
+        } else {
+            self.itemDescription.attributedText = NSAttributedString(string: "")
         }
         self.itemQuantity.attributedText = NSAttributedString(string: "Cantidad : " + String(item.quantity))
-        let unitPrice = Utils.getAttributedAmount(item.unitPrice, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark())
+        let unitPrice = Utils.getAttributedAmount(item.unitPrice, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, baselineOffset: 5)
         let unitPriceTitle = NSMutableAttributedString(string: "Precio Unitario : ")
         unitPriceTitle.append(unitPrice)
         self.itemUnitPrice.attributedText = unitPriceTitle
+    }
+    
+    static func getCellHeight(item : Item) -> CGFloat {
         
+        let description = item.description
+        if String.isNullOrEmpty(description) {
+            return CGFloat(270)
+        }
+        
+        return CGFloat(300);
+//        var constraintSize = CGSize()
+//        let screenSize: CGRect = UIScreen.main.bounds
+//        constraintSize.width = screenSize.width - 46
+//        
+//        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24) ?? UIFont.systemFont(ofSize: 24)]
+//        
+//        let frame = (title as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+//        
+//        let stringSize = frame.size
+//        return Float(128) + Float(stringSize.height)
     }
     
 }

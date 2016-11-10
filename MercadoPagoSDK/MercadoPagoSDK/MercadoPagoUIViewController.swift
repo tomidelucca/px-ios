@@ -11,7 +11,6 @@ import UIKit
 
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
-    internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
     public var timer : CountdownTimer?
     

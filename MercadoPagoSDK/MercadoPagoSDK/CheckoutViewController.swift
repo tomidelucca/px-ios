@@ -16,7 +16,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     var accessToken : String!
     var bundle : Bundle? = MercadoPago.getBundle()
     var callback : ((Payment) -> Void)!
-    var tycDelegate : TermsAndConditionsDelegate?
     var viewModel : CheckoutViewModel?
     
     var issuer : Issuer?
@@ -44,7 +43,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                   }
                 })
         }
-        self.tycDelegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -56,9 +54,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.viewDidLoad()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
-        
-        //Display preference description by default
-        self.displayPreferenceDescription = true
         
         self.title = "¿Cómo quieres pagar?".localized
         
@@ -74,7 +69,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideNavBar()
         
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = nil
         
         DispatchQueue.main.async() {
             
@@ -91,13 +85,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.showLoading()
         self.startScrollPosition = checkoutTable.contentOffset.y
         self.navBarBackgroundColor = UIColor.white()
-        self.navigationItem.backBarButtonItem?.tintColor = UIColor.blueMercadoPago()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
+        self.displayBackButton()
+        self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
+        self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
         if !self.viewModel!.isPreferenceLoaded() {
-            self.displayBackButton()
-            self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
+            //self.displayBackButton()
             self.loadPreference()
         } else {
             if self.viewModel!.paymentMethod != nil {
@@ -145,12 +140,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             case 0:
                 return 1
             case 1:
-                // numberOfRowsInMainSection() + confirmPaymentButton + TermsAndConditions
-                return self.viewModel!.numberOfRowsInMainSection() + 2
+                // numberOfRowsInMainSection() + confirmPaymentButton
+                return self.viewModel!.numberOfRowsInMainSection() + 1
             case 2:
                 return self.viewModel!.preference!.items!.count
+            case 3:
+                return 4
             default:
-                return 3
+                return 0
         }
     }
     
@@ -163,22 +160,18 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 return self.getPurchaseTitleCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel!.preference!.getAmount())
             case 1:
                 var title = "Total".localized
+
                 if self.viewModel!.payerCost != nil {
                     title = "Pagas".localized
                 }
                 return self.getPurchaseTitleCell(indexPath: indexPath, title : title, amount : self.viewModel!.preference!.getAmount(), payerCost : self.viewModel!.payerCost)
             case 2:
                 if self.viewModel!.isPaymentMethodSelectedCard() {
-                    return self.getPurchaseTitleCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel!.preference!.getAmount())
+                    return self.getPurchaseTitleCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel!.payerCost!.totalAmount)
                 }
                 return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-            case 3:
-                if self.viewModel!.isPaymentMethodSelectedCard() {
-                    return self.getConfirmPaymentButtonCell(indexPath: indexPath)
-                }
-                return self.getTermsAndConditionsCell(indexPath : indexPath)
-            default :
-                return self.getTermsAndConditionsCell(indexPath : indexPath)
+            default:
+                return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             }
         } else if indexPath.section == 2 {
                 return self.getPurchaseItemDetailCell(indexPath: indexPath)
@@ -187,6 +180,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             case 0:
                 return self.getPaymentMethodSelectedCell(indexPath: indexPath)
             case 1 :
+                return self.getTermsAndConditionsCell(indexPath: indexPath)
+            case 2 :
                 return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             default :
                 return self.getCancelPaymentButtonCell(indexPath: indexPath)
@@ -240,7 +235,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             }
         }
         self.hideLoading()
-        self.navigationItem.leftBarButtonItem = nil
+       // self.navigationItem.leftBarButtonItem = nil
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
@@ -464,8 +459,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let currency = MercadoPagoContext.getCurrency()
         let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
         purchaseDetailCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: 54, width: self.checkoutTable.frame.width - 42, height: 1)
-        purchaseDetailCell.addSubview(separatorLine)
         return purchaseDetailCell
     }
     
@@ -487,7 +480,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let paymentMethodSelectedTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "paymentMethodSelectedTableViewCell", for: indexPath) as! PaymentMethodSelectedTableViewCell
         // deberia cuestionar card no payerCost
         if let payerCost = self.viewModel!.payerCost {
-            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : payerCost.totalAmount, installments: String(payerCost.installments), installmentAmount: self.viewModel!.payerCost!.installmentAmount, lastFourDigits: self.token!.lastFourDigits)
+            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : payerCost.totalAmount, payerCost : payerCost, lastFourDigits: self.token!.lastFourDigits)
         } else {
             paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : self.viewModel!.preference!.getAmount())
         }
@@ -504,7 +497,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getTermsAndConditionsCell(indexPath : IndexPath) -> UITableViewCell {
-        return self.checkoutTable.dequeueReusableCell(withIdentifier: "termsAndConditionsViewCell", for: indexPath) as! TermsAndConditionsViewCell
+        let tycCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "termsAndConditionsViewCell", for: indexPath) as! TermsAndConditionsViewCell
+        tycCell.delegate = self
+        return tycCell
     }
     
     internal func openTermsAndConditions(_ title: String, url : URL){
@@ -599,25 +594,27 @@ open class CheckoutViewModel {
         } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                return 60
+                // Productos
+                return PurchaseDetailTableViewCell.getCellHeight()
             case 1:
-                return 60
+                return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.payerCost)
             case 2:
-                return (self.isPaymentMethodSelectedCard()) ? 60 : ConfirmPaymentTableViewCell.ROW_HEIGHT
-            case 3:
-                return (self.isPaymentMethodSelectedCard()) ? ConfirmPaymentTableViewCell.ROW_HEIGHT : TermsAndConditionsViewCell.ROW_HEIGHT
+                return (self.isPaymentMethodSelectedCard()) ? PurchaseDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
             default:
-                return TermsAndConditionsViewCell.ROW_HEIGHT
+                return ConfirmPaymentTableViewCell.ROW_HEIGHT
             }
         } else if indexPath.section == 2 {
-                return 324
+                return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items![indexPath.row])
         } else if indexPath.section == 3 {
-            if indexPath.row == 0 {
-                return 290
-            } else if indexPath.row == 1 {
-                return 118
-            } else {
-                return 64
+            switch indexPath.row {
+            case 0:
+                return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.payerCost)
+            case 1 :
+                return TermsAndConditionsViewCell.ROW_HEIGHT
+            case 2 :
+                return ConfirmPaymentTableViewCell.ROW_HEIGHT
+            default:
+                return ExitButtonTableViewCell.ROW_HEIGHT
             }
         }
         return 0

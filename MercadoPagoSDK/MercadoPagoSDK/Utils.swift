@@ -50,6 +50,10 @@ class Utils {
         return dateFormatter.string(from: date)
     }
 
+    class func getAttributedAmount(_ amount : Double, currency : Currency, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+        return self.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color, fontSize : fontSize, baselineOffset : baselineOffset)
+    }
+    
     class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(formattedString, thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
@@ -89,18 +93,20 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString, color : UIColor? = nil, fontSize : CGFloat = 22) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, baselineOffset : Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName:color]
         
         let stringToWrite = NSMutableAttributedString()
         
-        stringToWrite.append(NSMutableAttributedString(string: installments + " x ", attributes: descriptionAttributes))
+        stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, baselineOffset : baselineOffset))
         
-        stringToWrite.append(additionalString)
+        if additionalString != nil {
+            stringToWrite.append(additionalString!)
+        }
         
         return stringToWrite
     }
