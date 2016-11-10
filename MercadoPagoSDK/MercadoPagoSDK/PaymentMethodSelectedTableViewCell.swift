@@ -40,31 +40,21 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.noRateLabel.attributedText = NSAttributedString(string : "")
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
         let currency = MercadoPagoContext.getCurrency()
-        if paymentMethod.isCard() {
-            self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
-            self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, baselineOffset: 8)
-            let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
-            paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
-            self.paymentMethodDescription.attributedText = paymentMethodDescription
-            if !payerCost!.hasInstallmentsRate() {
-                self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-            }
-            //OJO
-             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText(), fontSize : 16, baselineOffset : 3)
-            let attributedAmountFinal = NSMutableAttributedString(string : "(")
-            attributedAmountFinal.append(attributedAmount)
-            attributedAmountFinal.append(NSAttributedString(string : ")"))
-            self.totalAmountLabel.attributedText = attributedAmountFinal
-        } else {
-            self.paymentMethodIcon.image = MercadoPago.getImage("iconCash")
-            let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.black)
-            let paymentOffDescription = NSMutableAttributedString(string: "Pagarás ".localized)
-            paymentOffDescription.append(attributedAmount)
-            paymentOffDescription.append(NSAttributedString(string : "con " + paymentMethod.name))
-            self.paymentDescription.attributedText = paymentOffDescription
-            
-            self.paymentMethodDescription.text = ""
+
+        self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
+        self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, baselineOffset: 8)
+        let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
+        paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
+        self.paymentMethodDescription.attributedText = paymentMethodDescription
+        if !payerCost!.hasInstallmentsRate() {
+            self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
+        //OJO
+        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText(), fontSize : 16, baselineOffset : 3)
+        let attributedAmountFinal = NSMutableAttributedString(string : "(")
+        attributedAmountFinal.append(attributedAmount)
+        attributedAmountFinal.append(NSAttributedString(string : ")"))
+        self.totalAmountLabel.attributedText = attributedAmountFinal
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {

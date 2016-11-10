@@ -32,12 +32,13 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(80)
     
-    @IBOutlet weak var iconImage: UIImageView!
-    
-    @IBOutlet weak var comment: MPLabel!
-    
-    @IBOutlet weak var paymentItemDescription: MPLabel!
+    @IBOutlet weak var paymentMethodDescription: MPLabel!
+   
+    @IBOutlet weak var acreditationTimeLabel: MPLabel!
 
+    @IBOutlet weak var changePaymentButton: MPButton!
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,21 +48,15 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethodSearchItem, image : UIImage, paymentItemDescription : String = "") {
-        self.iconImage.image = image
-        self.comment.text = (paymentMethod.comment!)
-        self.paymentItemDescription.text = paymentItemDescription
+    internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, currency : Currency) {
+        // Verificar
+        let paymentMethodDescription = NSMutableAttributedString(string: "Pagarás ")
+        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText())
+        paymentMethodDescription.append(attributedAmount)
+        paymentMethodDescription.append(NSAttributedString(string : " en un " + paymentMethodMethodSearchItem.idPaymentMethodSearchItem))
+        self.paymentMethodDescription.attributedText = paymentMethodDescription
+        
+        self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodMethodSearchItem.comment!)
     }
     
-    internal func fillRowWithPaymentMethod(_ paymentMethod : PaymentMethod, paymentMethodSearchItemSelected : PaymentMethodSearchItem) {
-        self.iconImage.image = MercadoPago.getImageFor(paymentMethod, forCell: true)
-        if paymentMethodSearchItemSelected.comment?.characters.count > 0 {
-            self.comment.text = paymentMethodSearchItemSelected.comment
-        } else {
-            self.comment.text = Utils.getAccreditationTitle(paymentMethod)
-        }
-        
-        self.paymentItemDescription.text = paymentMethodSearchItemSelected.description
-        
-    }
-}
+  }

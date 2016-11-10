@@ -178,7 +178,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
-                return self.getPaymentMethodSelectedCell(indexPath: indexPath)
+                if self.viewModel!.isPaymentMethodSelectedCard() {
+                    return self.getOnlinePaymentMethodSelectedCell(indexPath: indexPath)
+                }
+                return self.getOfflinePaymentMethodSelectedCell(indexPath: indexPath)
             case 1 :
                 return self.getTermsAndConditionsCell(indexPath: indexPath)
             case 2 :
@@ -423,22 +426,17 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         
         //Register rows
-        let offlinePaymentMethodNib = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
-        self.checkoutTable.register(offlinePaymentMethodNib, forCellReuseIdentifier: "offlinePaymentCell")
-        let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
-        let selectPaymentMethodCell = UINib(nibName: "SelectPaymentMethodCell", bundle: self.bundle)
-        self.checkoutTable.register(selectPaymentMethodCell, forCellReuseIdentifier: "selectPaymentMethodCell")
-        let paymentDescriptionFooter = UINib(nibName: "PaymentDescriptionFooterTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(paymentDescriptionFooter, forCellReuseIdentifier: "paymentDescriptionFooter")
+        let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
+        self.checkoutTable.register(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
+        
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         
         
         // Payment ON rows
-        
-        let installmentSelectionCell = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(installmentSelectionCell, forCellReuseIdentifier: "installmentSelectionCell")
+//        
+//        let installmentSelectionCell = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
+//        self.checkoutTable.register(installmentSelectionCell, forCellReuseIdentifier: "installmentSelectionCell")
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -476,19 +474,24 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     
-    private func getPaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
+    private func getOnlinePaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
         let paymentMethodSelectedTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "paymentMethodSelectedTableViewCell", for: indexPath) as! PaymentMethodSelectedTableViewCell
-        // deberia cuestionar card no payerCost
-        if let payerCost = self.viewModel!.payerCost {
-            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : payerCost.totalAmount, payerCost : payerCost, lastFourDigits: self.token!.lastFourDigits)
-        } else {
-            paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : self.viewModel!.preference!.getAmount())
-        }
         
+        paymentMethodSelectedTableViewCell.fillCell(self.viewModel!.paymentMethod!, amount : self.viewModel!.payerCost!.totalAmount, payerCost : self.viewModel!.payerCost, lastFourDigits: self.token!.lastFourDigits)
         
         paymentMethodSelectedTableViewCell.selectOtherPaymentMethodButton.addTarget(self, action: #selector(loadGroupsAndStartPaymentVault), for: .touchUpInside)
         return paymentMethodSelectedTableViewCell
     }
+    
+    private func getOfflinePaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
+        let offlinePaymentMethodCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "offlinePaymentMethodCell", for: indexPath) as! OfflinePaymentMethodCell
+        let paymentMethodSearchItem = self.viewModel!.paymentMethodSearchItemSelected()
+        offlinePaymentMethodCell.fillCell(paymentMethodSearchItem, amount: self.viewModel!.preference!.getAmount(), currency: MercadoPagoContext.getCurrency())
+        offlinePaymentMethodCell.changePaymentButton.addTarget(self, action: #selector(loadGroupsAndStartPaymentVault), for: .touchUpInside)
+        return offlinePaymentMethodCell
+    }
+    
+    
     
     private func getCancelPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell {
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
@@ -552,9 +555,9 @@ open class CheckoutViewModel {
     }
     
     func paymentMethodSearchItemSelected() -> PaymentMethodSearchItem {
-        let paymentTypeIdEnum = PaymentTypeId(rawValue :self.paymentMethod!.paymentTypeId)!
+        let paymentTypeIdEnum = PaymentTypeId(rawValue : self.paymentMethod!.paymentTypeId)
         let paymentMethodSearchItemSelected : PaymentMethodSearchItem
-        if paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
+        if paymentTypeIdEnum != nil && paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
             paymentMethodSearchItemSelected = PaymentMethodSearchItem()
             paymentMethodSearchItemSelected.description = "Dinero en cuenta"
         } else {

@@ -31,6 +31,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         //Deafult values for cells
         self.purchaseDetailTitle.attributedText = NSAttributedString(string: title)
         self.noRateLabel.attributedText = NSAttributedString(string : "")
+        self.removeFromSuperview()
         var separatorLineHeight = CGFloat(54)
         
         if payerCost != nil {
