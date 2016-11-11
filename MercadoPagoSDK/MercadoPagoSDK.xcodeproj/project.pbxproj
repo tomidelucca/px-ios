@@ -398,7 +398,6 @@
 		76445AF41CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76445AF21CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.xib */; };
 		76445AF61CCF9847008EE68E /* MPPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445AF51CCF9847008EE68E /* MPPayment.swift */; };
 		76445AF71CCF9B73008EE68E /* MPPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445AF51CCF9847008EE68E /* MPPayment.swift */; };
-		764D9CDE1DCB817C007D9E1A /* PurchaseItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E641DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift */; };
 		7652F43B1D78A2D4006022AF /* TextMaskFormater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DF3F821D6347BF0051C798 /* TextMaskFormater.swift */; };
 		7652F43E1D78ADEE006022AF /* MPStepBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7652F43C1D78ADEE006022AF /* MPStepBuilderTest.swift */; };
 		7652F43F1D78ADEE006022AF /* PaymentCongratsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7652F43D1D78ADEE006022AF /* PaymentCongratsViewControllerTest.swift */; };
@@ -427,10 +426,8 @@
 		765F8E5E1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765F8E5C1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib */; };
 		765F8E621DCA59C500943FAC /* PurchaseItemDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E601DCA59C500943FAC /* PurchaseItemDetailTableViewCell.swift */; };
 		765F8E631DCA59C500943FAC /* PurchaseItemDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765F8E611DCA59C500943FAC /* PurchaseItemDetailTableViewCell.xib */; };
-		765F8E661DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E641DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift */; };
-		765F8E671DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765F8E651DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.xib */; };
-		765F8E6A1DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E681DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.swift */; };
-		765F8E6B1DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765F8E691DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.xib */; };
+		765F8E6A1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E681DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift */; };
+		765F8E6B1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 765F8E691DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib */; };
 		766012D61CEB7DE600897F9D /* InstallmentSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B085291CE5045D00C157BF /* InstallmentSelectionTableViewCell.swift */; };
 		766012E21CEB963300897F9D /* MPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012E11CEB963300897F9D /* MPError.swift */; };
 		766012E31CEB963300897F9D /* MPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012E11CEB963300897F9D /* MPError.swift */; };
@@ -875,10 +872,8 @@
 		765F8E5C1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmPaymentTableViewCell.xib; sourceTree = "<group>"; };
 		765F8E601DCA59C500943FAC /* PurchaseItemDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseItemDetailTableViewCell.swift; sourceTree = "<group>"; };
 		765F8E611DCA59C500943FAC /* PurchaseItemDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseItemDetailTableViewCell.xib; sourceTree = "<group>"; };
-		765F8E641DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		765F8E651DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
-		765F8E681DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseItemAmountTableViewCell.swift; sourceTree = "<group>"; };
-		765F8E691DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseItemAmountTableViewCell.xib; sourceTree = "<group>"; };
+		765F8E681DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseSimpleDetailTableViewCell.swift; sourceTree = "<group>"; };
+		765F8E691DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseSimpleDetailTableViewCell.xib; sourceTree = "<group>"; };
 		766012E11CEB963300897F9D /* MPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPError.swift; sourceTree = "<group>"; };
 		766012E51CEBA19700897F9D /* ErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		766012E61CEBA19700897F9D /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
@@ -1744,10 +1739,8 @@
 			children = (
 				765F8E601DCA59C500943FAC /* PurchaseItemDetailTableViewCell.swift */,
 				765F8E611DCA59C500943FAC /* PurchaseItemDetailTableViewCell.xib */,
-				765F8E641DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift */,
-				765F8E651DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.xib */,
-				765F8E681DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.swift */,
-				765F8E691DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.xib */,
+				765F8E681DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift */,
+				765F8E691DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib */,
 			);
 			name = PurchaseItemCells;
 			sourceTree = "<group>";
@@ -2113,10 +2106,9 @@
 				0F9883E01AD2AD5500F750F0 /* CongratsViewController.xib in Resources */,
 				0F9883DC1AD2AD5500F750F0 /* PaymentDateTableViewCell.xib in Resources */,
 				76B084DB1CE0D47C00C157BF /* PaymentCongratsViewController.xib in Resources */,
-				765F8E671DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.xib in Resources */,
 				76DA646C1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib in Resources */,
 				0FC4FC2F1B0FB32400CF7148 /* PromoEmptyTableViewCell.xib in Resources */,
-				765F8E6B1DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.xib in Resources */,
+				765F8E6B1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib in Resources */,
 				76151B6F1C7376E1007DF0E3 /* InstructionsHeaderViewCell.xib in Resources */,
 				76445AE31CC9576B008EE68E /* InstructionsAtmViewCell.xib in Resources */,
 				76151B7B1C73ABEF007DF0E3 /* DefaultInstructionsFooterViewCell.xib in Resources */,
@@ -2283,7 +2275,7 @@
 				15ABAD521DB5489D00481E8E /* GATracker.swift in Sources */,
 				15ABAD571DB5489D00481E8E /* MPTracker.swift in Sources */,
 				15ABAD591DB5489D00481E8E /* PaymentTracker.swift in Sources */,
-				765F8E6A1DCA7C9600943FAC /* PurchaseItemAmountTableViewCell.swift in Sources */,
+				765F8E6A1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift in Sources */,
 				15ABAD5B1DB5489D00481E8E /* PaymentTrackInfo.swift in Sources */,
 				15BB335B1DB66294001474D8 /* MPTrackerDelegate.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
@@ -2366,7 +2358,6 @@
 				76445AF31CCAC981008EE68E /* OfflinePaymentMethodWithDescriptionCell.swift in Sources */,
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */,
-				765F8E661DCA666300943FAC /* PurchaseItemDescriptionTableViewCell.swift in Sources */,
 				76943ED91D51405E00358442 /* InstructionsInfo.swift in Sources */,
 				0F9884291AD2AE3100F750F0 /* NewCardViewController.swift in Sources */,
 				0F98835B1AD2AB6000F750F0 /* Bin.swift in Sources */,
@@ -2709,7 +2700,6 @@
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F9883681AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76B084FF1CE2166900C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
-				764D9CDE1DCB817C007D9E1A /* PurchaseItemDescriptionTableViewCell.swift in Sources */,
 				0F2071C31B1F4BF700CE11AB /* UILoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

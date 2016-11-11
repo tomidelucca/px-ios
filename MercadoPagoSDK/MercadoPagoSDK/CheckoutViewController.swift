@@ -158,17 +158,17 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                return self.getPurchaseTitleCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel!.preference!.getAmount())
+                return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel!.preference!.getAmount())
             case 1:
                 var title = "Total".localized
 
                 if self.viewModel!.payerCost != nil {
                     title = "Pagas".localized
                 }
-                return self.getPurchaseTitleCell(indexPath: indexPath, title : title, amount : self.viewModel!.preference!.getAmount(), payerCost : self.viewModel!.payerCost)
+                return self.getPurchaseDetailCell(indexPath: indexPath, title : title, amount : self.viewModel!.preference!.getAmount(), payerCost : self.viewModel!.payerCost)
             case 2:
                 if self.viewModel!.isPaymentMethodSelectedCard() {
-                    return self.getPurchaseTitleCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel!.payerCost!.totalAmount)
+                    return self.getPurchaseDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel!.payerCost!.totalAmount)
                 }
                 return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             default:
@@ -413,6 +413,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let purchaseItemDescriptionTableViewCell = UINib(nibName: "PurchaseItemDescriptionTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseItemDescriptionTableViewCell, forCellReuseIdentifier: "purchaseItemDescriptionTableViewCell")
         
+        let purchaseSimpleDetailTableViewCell = UINib(nibName: "PurchaseSimpleDetailTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(purchaseSimpleDetailTableViewCell, forCellReuseIdentifier: "purchaseSimpleDetailTableViewCell")
         
         let purchaseItemAmountTableViewCell = UINib(nibName: "PurchaseItemAmountTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseItemAmountTableViewCell, forCellReuseIdentifier: "purchaseItemAmountTableViewCell")
@@ -444,14 +446,24 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return payerCostTitleTableViewCell
     }
     
-    private func getPurchaseTitleCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
+    private func getPurchaseDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
-        let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
+        if payerCost != nil && !(payerCost!.hasInstallmentsRate()) && payerCost!.installments > 1 {
+            let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
+            purchaseDetailCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
+            return purchaseDetailCell
+        }
         
-        
-        purchaseDetailCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
-        return purchaseDetailCell
+        return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost)
     }
+    
+    private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
+        let currency = MercadoPagoContext.getCurrency()
+        let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
+        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
+        return purchaseSimpleDetailTableViewCell
+    }
+    
     
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
