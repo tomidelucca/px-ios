@@ -11,7 +11,7 @@ import UIKit
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     var payment : Payment!
-    var paymentTypeId : PaymentTypeId!
+    var paymentTypeId : String!
     var callback : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
@@ -61,7 +61,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.tableView.reloadData()
         }
     }
-    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(payment : Payment, paymentTypeId : String, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
         self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
         self.payment = payment
@@ -134,7 +134,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     fileprivate func getInstructions(){
-        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId!.rawValue.lowercased(), success: { (instructionsInfo : InstructionsInfo) -> Void in
+        MPServicesBuilder.getInstructions(payment._id, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
             self.instruction = instructionsInfo.instructions[0]
             self.tableView.reloadData()
             self.hideLoading()

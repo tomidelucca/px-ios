@@ -75,7 +75,7 @@ open class MPStepBuilder : NSObject {
     open class func startPaymentResultStep(_ payment: Payment, paymentMethod : PaymentMethod,
                                            callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
         MercadoPagoContext.initFlavor2()
-        if (paymentMethod.isOfflinePaymentMethod()){
+        if (!paymentMethod.isOnlinePaymentMethod()){
             return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
         } else {
             return self.startPaymentCongratsStep(payment, paymentMethod: paymentMethod, callback : callback)
@@ -95,7 +95,7 @@ open class MPStepBuilder : NSObject {
     open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,
                                           callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsRevampViewController {
         MercadoPagoContext.initFlavor2()
-        return InstructionsRevampViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : {(payment : Payment, status: CongratsState) -> Void in
+        return InstructionsRevampViewController(payment: payment, paymentTypeId : paymentTypeId, callback : {(payment : Payment, status: CongratsState) -> Void in
             callback(payment, CongratsState.ok)
         })
     }
