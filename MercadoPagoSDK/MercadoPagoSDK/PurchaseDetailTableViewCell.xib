@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="399" height="76"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="399" height="76"/>
+                <rect key="frame" x="0.0" y="0.0" width="399" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="q9l-s5-Umy" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
@@ -25,19 +25,6 @@
                                 <attributes>
                                     <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <font key="NSFont" size="20" name="HelveticaNeue-Light"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0Y-hG-NaU" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="32" y="14" width="80.5" height="21.5"/>
-                        <attributedString key="attributedText">
-                            <fragment content="Productos">
-                                <attributes>
-                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="18" name="HelveticaNeue-Light"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -55,14 +42,27 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0Y-hG-NaU" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
+                        <rect key="frame" x="32" y="27" width="80.5" height="21.5"/>
+                        <attributedString key="attributedText">
+                            <fragment content="Productos">
+                                <attributes>
+                                    <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="18" name="HelveticaNeue-Light"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="q9l-s5-Umy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="NSC-2q-EzL"/>
                     <constraint firstItem="KbT-gI-pdm" firstAttribute="top" secondItem="q9l-s5-Umy" secondAttribute="bottom" constant="3" id="PgY-rk-ppr"/>
                     <constraint firstAttribute="trailingMargin" secondItem="KbT-gI-pdm" secondAttribute="trailing" constant="24" id="Vos-uZ-cMc"/>
-                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="Wn0-vi-ihV"/>
                     <constraint firstItem="D0Y-hG-NaU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="khL-0S-tfO"/>
+                    <constraint firstItem="D0Y-hG-NaU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ora-ds-bSM"/>
                     <constraint firstAttribute="trailingMargin" secondItem="q9l-s5-Umy" secondAttribute="trailing" constant="24" id="pAQ-zK-Mb2"/>
                 </constraints>
             </tableViewCellContentView>

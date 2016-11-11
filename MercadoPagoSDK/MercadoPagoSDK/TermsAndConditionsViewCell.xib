@@ -15,11 +15,11 @@
             <rect key="frame" x="0.0" y="0.0" width="443" height="72"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="443" height="72"/>
+                <rect key="frame" x="0.0" y="0.0" width="443" height="71"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eka-ax-hIh" customClass="MPTextView" customModule="MercadoPagoSDK" customModuleProvider="target">
-                        <rect key="frame" x="32" y="8" width="379" height="45.5"/>
+                        <rect key="frame" x="32" y="13" width="379" height="45.5"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -39,7 +39,7 @@
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="Eka-ax-hIh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="2tw-Zh-JsD"/>
-                    <constraint firstItem="Eka-ax-hIh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="SQv-UU-KBK"/>
+                    <constraint firstItem="Eka-ax-hIh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="SfB-Bp-pwR"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Eka-ax-hIh" secondAttribute="trailing" constant="24" id="uvT-Li-VYg"/>
                 </constraints>
             </tableViewCellContentView>

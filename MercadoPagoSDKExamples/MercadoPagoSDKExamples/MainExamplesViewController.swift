@@ -65,7 +65,7 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         switch (indexPath as NSIndexPath).row {
         case 0:
             //Checkout Example
-            let choFlow = MPFlowBuilder.startCheckoutViewController( "232413514-11b4fbc2-b0a0-400f-9311-9a7bd927e129", callback: { (payment: Payment) in
+            let choFlow = MPFlowBuilder.startCheckoutViewController( "232413514-cbcfd4ae-4530-4255-85e5-4a1e4ef70285", callback: { (payment: Payment) in
             
             })
             

@@ -32,16 +32,22 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
     static let ROW_HEIGHT = CGFloat(80)
     
+    @IBOutlet weak var iconCash: UIImageView!
     @IBOutlet weak var paymentMethodDescription: MPLabel!
    
     @IBOutlet weak var acreditationTimeLabel: MPLabel!
 
     @IBOutlet weak var changePaymentButton: MPButton!
     
+    @IBOutlet weak var accreditationTimeIcon: UIImageView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        var image = MercadoPago.getImage("time")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        self.accreditationTimeIcon.tintColor = UIColor.grayLight()
+        self.accreditationTimeIcon.image = image
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

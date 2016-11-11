@@ -28,7 +28,6 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
         if (scrollView.contentOffset.y >= -30 && isWholeTableVisible(tableView: tableView))
         {
             offset.y = -30;
-            scrollView.contentOffset = offset;
             self.title = getNavigationBarTitle()
         }
         
@@ -88,9 +87,9 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     
     func hideNavBar(){
         self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+      //  navigationController?.navigationBar.titleTextAttributes = nil
+      //  self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        //self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
     }
     

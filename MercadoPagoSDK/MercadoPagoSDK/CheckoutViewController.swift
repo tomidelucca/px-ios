@@ -76,6 +76,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             
         }
         navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+        self.navigationController?.navigationBar.tintColor = UIColor.white()
         
     }
 
@@ -238,7 +239,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             }
         }
         self.hideLoading()
-       // self.navigationItem.leftBarButtonItem = nil
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
@@ -397,8 +397,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     fileprivate func registerAllCells(){
         
-        // Purchase Detail Cells
-        
+        //Register rows
         let payerCostTitleTableViewCell = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(payerCostTitleTableViewCell, forCellReuseIdentifier: "payerCostTitleTableViewCell")
         
@@ -424,19 +423,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
         
-        
-        //Register rows
         let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
         self.checkoutTable.register(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
         
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
-        
-        
-        // Payment ON rows
-//        
-//        let installmentSelectionCell = UINib(nibName: "InstallmentSelectionTableViewCell", bundle: self.bundle)
-//        self.checkoutTable.register(installmentSelectionCell, forCellReuseIdentifier: "installmentSelectionCell")
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -456,6 +447,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getPurchaseTitleCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
+        
+        
         purchaseDetailCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
         return purchaseDetailCell
     }
@@ -613,7 +606,7 @@ open class CheckoutViewModel {
             case 0:
                 return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.payerCost)
             case 1 :
-                return TermsAndConditionsViewCell.ROW_HEIGHT
+                return TermsAndConditionsViewCell.getCellHeight()
             case 2 :
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
             default:

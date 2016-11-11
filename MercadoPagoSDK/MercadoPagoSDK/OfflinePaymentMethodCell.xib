@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="258"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="258"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="257"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" image="iconCash" translatesAutoresizingMaskIntoConstraints="NO" id="N1r-JA-UCo">
@@ -54,6 +54,7 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="omM-He-gJw">
                         <rect key="frame" x="97.5" y="150" width="16" height="16"/>
+                        <color key="tintColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="OBS-re-oGv"/>
                             <constraint firstAttribute="width" constant="16" id="ayK-oU-ChG"/>
@@ -74,6 +75,7 @@
                         </state>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="1F9-NN-ufr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="5u3-6B-9GU"/>
                     <constraint firstItem="3YQ-q5-tZX" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="6cW-Rv-pbs"/>
@@ -92,8 +94,10 @@
             <edgeInsets key="layoutMargins" top="12" left="12" bottom="12" right="12"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="accreditationTimeIcon" destination="omM-He-gJw" id="A6R-Cb-4gJ"/>
                 <outlet property="acreditationTimeLabel" destination="d6G-5w-j6M" id="o1Q-BM-r0z"/>
                 <outlet property="changePaymentButton" destination="3YQ-q5-tZX" id="Xqd-Sw-PJ8"/>
+                <outlet property="iconCash" destination="N1r-JA-UCo" id="4EJ-Hk-FiZ"/>
                 <outlet property="paymentMethodDescription" destination="1F9-NN-ufr" id="fgj-bD-Fv2"/>
             </connections>
             <point key="canvasLocation" x="440" y="494"/>

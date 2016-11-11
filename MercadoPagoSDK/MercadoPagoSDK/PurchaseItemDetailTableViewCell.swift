@@ -57,16 +57,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         }
         
         return CGFloat(300);
-//        var constraintSize = CGSize()
-//        let screenSize: CGRect = UIScreen.main.bounds
-//        constraintSize.width = screenSize.width - 46
-//        
-//        let attributes = [NSFontAttributeName: UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24) ?? UIFont.systemFont(ofSize: 24)]
-//        
-//        let frame = (title as NSString).boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
-//        
-//        let stringSize = frame.size
-//        return Float(128) + Float(stringSize.height)
+
     }
     
 }

@@ -10,7 +10,9 @@ import UIKit
 
 open class PurchaseDetailTableViewCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(60)
+    static let ROW_HEIGHT = CGFloat(58)
+    
+    static var separatorLine : UIView?
     
     @IBOutlet weak var purchaseDetailTitle: MPLabel!
     
@@ -18,8 +20,10 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     
     @IBOutlet weak var noRateLabel: MPLabel!
     
+    
     override open func awakeFromNib() {
         super.awakeFromNib()
+        
     }
 
     override open func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,15 +41,23 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
         if payerCost != nil {
             let purchaseAmount = getInstallmentsAmount(payerCost: payerCost!)
             self.purchaseDetailAmount.attributedText = purchaseAmount
+            if PurchaseDetailTableViewCell.separatorLine != nil {
+                PurchaseDetailTableViewCell.separatorLine!.removeFromSuperview()
+            }
             if !payerCost!.hasInstallmentsRate() {
                 self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
                 separatorLineHeight += 23
             }
+            PurchaseDetailTableViewCell.separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
+            self.addSubview(PurchaseDetailTableViewCell.separatorLine!)
         } else {
             self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, baselineOffset : 5)
+            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
+            self.addSubview(separatorLine)
         }
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
-        self.addSubview(separatorLine)
+        
+        
+        
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
@@ -56,24 +68,6 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     }
     
     private func getInstallmentsAmount(payerCost : PayerCost) -> NSAttributedString {
-//        let mpLightGrayColor = UIColor.grayLight()
-//        let totalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 24) ?? UIFont.systemFont(ofSize: 23),NSForegroundColorAttributeName:mpLightGrayColor]
-//        let noRateAttributes = [NSForegroundColorAttributeName : UIColor(red: 67, green: 176,blue: 0), NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 13) ?? UIFont.systemFont(ofSize: 13)]
-//        
-//        let additionalText = NSMutableAttributedString(string : "")
-//        if payerCost.installmentRate > 0 && payerCost.installments > 1 {
-//            let totalAmountStr = NSMutableAttributedString(string:" ( ", attributes: totalAttributes)
-//            let currency = MercadoPagoContext.getCurrency()
-//            let totalAmount = Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:mpLightGrayColor)
-//            totalAmountStr.append(totalAmount)
-//            totalAmountStr.append(NSMutableAttributedString(string:" ) ", attributes: totalAttributes))
-//            additionalText.append(totalAmountStr)
-//        } else {
-//            if payerCost.installments > 1 {
-//                additionalText.append(NSAttributedString(string: " Sin interés".localized, attributes: noRateAttributes))
-//            }
-//        }
-        
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, installmentAmount: payerCost.installmentAmount, color: UIColor.grayBaseText(), fontSize : 24, baselineOffset : 8)
 
     }
