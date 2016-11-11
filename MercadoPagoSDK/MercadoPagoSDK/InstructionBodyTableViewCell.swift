@@ -185,16 +185,26 @@ class InstructionBodyTableViewCell: UITableViewCell {
             }
             if instruction.actions != nil && (instruction.actions?.count)! > 0 {
                 if instruction.actions![0].tag == ActionTag.LINK.rawValue {
-                    let button = UIButton(frame: CGRect(x: 0, y: height, width: 160, height: 0))
+                    let button = UIButton(frame: CGRect(x: 0, y: height, width: 160, height: 30))
                     //button.actionLink = instruction.actions![0].url
                     button.titleLabel?.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16) ?? UIFont.systemFont(ofSize: 16)
-                    button.setTitle("Ir a banca en línea", for: .normal)
+                    button.setTitle(instruction.actions![0].label, for: .normal)
+                    button.setTitleColor(UIColor(red: 0, green: 158, blue: 227), for: .normal)
+                    button.translatesAutoresizingMaskIntoConstraints = false
                     self.method = {
                         UIApplication.shared.openURL(URL(string: instruction.actions![0].url)!)
                     }
-                //    button.addTarget(self, action: #selector(self.openUrl(url:)), for: .touchUpInside)
-                    button.addTarget(self, action: #selector(getter: self.method), for: .touchUpInside)
-   
+                    button.addTarget(self, action: #selector(setter: method), for: .touchUpInside)
+                    self.view.addSubview(button)
+                    let views = ["button": button]
+                    let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(60)-[button]-(60)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                    let heightConstraints:[NSLayoutConstraint]
+                    
+                    
+                    heightConstraints = [NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 30)]
+                    NSLayoutConstraint.activate(widthConstraints)
+                    NSLayoutConstraint.activate(heightConstraints)
+                    previus = button
                 }
             }
             

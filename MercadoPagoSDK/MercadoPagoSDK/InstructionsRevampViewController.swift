@@ -12,7 +12,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     @IBOutlet weak var tableView: UITableView!
     var payment : Payment!
     var paymentTypeId : PaymentTypeId!
-    var callback : ((Payment) -> Void)!
+    var callback : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instruction: Instruction?
@@ -61,10 +61,10 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.tableView.reloadData()
         }
     }
-    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : @escaping (Payment) -> Void) {
+    public init(payment : Payment, paymentTypeId : PaymentTypeId, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
+        self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
         self.payment = payment
-        self.callback = callback
         self.paymentTypeId = paymentTypeId
         
     }
@@ -124,7 +124,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                //            footerNib.setCallbackStatus(callback: callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.ok)
+                footerNib.setCallbackStatus(callback: callback, payment: payment, status: MPStepBuilder.CongratsState.ok)
                 footerNib.fillCell(payment: payment)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib
