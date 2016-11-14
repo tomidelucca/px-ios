@@ -16,7 +16,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var public_key: String = ""
     
-    var private_key: String = ""
+    var payer_access_token: String = ""
     
     var base_url: String = ""
 
@@ -50,7 +50,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
 
     open class func isAuthenticatedUser() -> Bool{
-        return !sharedInstance.private_key.isEmpty
+        return !sharedInstance.payer_access_token.isEmpty
     }
 
     public func flavor() -> Flavor!{
@@ -181,10 +181,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         self.setSite(Site.MLA)
     }
     
-    open class func setPrivateKey(_ private_key : String){
+    open class func setPayerAccessToken(_ payerAccessToken : String){
         
         
-        sharedInstance.private_key = private_key
+        sharedInstance.payer_access_token = payerAccessToken
       _ = CardFrontView()
       _ = CardBackView()
         
@@ -262,9 +262,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
     
-    open class func privateKey() -> String {
+    open class func payerAccessToken() -> String {
         
-        return sharedInstance.private_key
+        return sharedInstance.payer_access_token
         
     }
     
@@ -319,7 +319,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             return MercadoPagoContext.publicKey()
         }
         if(MercadoPagoContext.isAuthenticatedUser()){
-            return MercadoPagoContext.privateKey()
+            return MercadoPagoContext.payerAccessToken()
         }else{
             return MercadoPagoContext.publicKey()
         }
