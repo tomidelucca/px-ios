@@ -8,18 +8,10 @@
 
 import Foundation
 open class IdentificationService : MercadoPagoService {
-    open func getIdentificationTypes(_ method: String = "GET", uri : String = "/identification_types", public_key : String?, privateKey: String?, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open func getIdentificationTypes(_ method: String = "GET", uri : String = "/identification_types", public_key : String?, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         var params : String? = nil
         if public_key != nil {
             params = "public_key=" + public_key!
-        }
-        if privateKey != nil {
-            if params != nil {
-                params = params! + "&"
-            } else {
-                params = ""
-            }
-            params = params! + "access_token=" + privateKey!
         }
         self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: failure)
     }

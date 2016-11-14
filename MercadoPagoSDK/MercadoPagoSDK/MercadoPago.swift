@@ -161,7 +161,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
         
         if self.publicKey() != nil {
             let service : IdentificationService = IdentificationService(baseURL: MercadoPago.MP_API_BASE_URL)
-            service.getIdentificationTypes(public_key: self.publicKey(), privateKey: self.privateKey, success: {(jsonResult: AnyObject?) -> Void in
+            service.getIdentificationTypes(public_key: self.publicKey(), success: {(jsonResult: AnyObject?) -> Void in
                 
                 if let error = jsonResult as? NSDictionary {
                     if (error["status"]! as? Int) == 404 {
