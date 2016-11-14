@@ -66,8 +66,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.hideNavBar()
-        
         self.navigationItem.rightBarButtonItem = nil
         
         DispatchQueue.main.async() {
@@ -93,7 +91,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
         if !self.viewModel!.isPreferenceLoaded() {
-            //self.displayBackButton()
             self.loadPreference()
         } else {
             if self.viewModel!.paymentMethod != nil {
@@ -371,9 +368,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                     self.displayFailure(mpError)
                 } else {
                     self.viewModel!.preference = preference
-                   // self.preference?.loadingImageWithCallback({ (void) in
-                        self.checkoutTable.reloadData()
-                    //})
+                    self.checkoutTable.reloadData()
                     self.loadGroupsAndStartPaymentVault(false)
                 }
             }, failure: { (error) in

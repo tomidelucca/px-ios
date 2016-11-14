@@ -22,11 +22,11 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         tableView.separatorStyle = .none
         loadMPStyles()
        
-//        var upperFrame = self.tableView.bounds
-//        upperFrame.origin.y = -upperFrame.size.height;
-//        let upperView = UIView(frame: upperFrame)
-//        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
-//        tableView.addSubview(upperView)
+        var upperFrame = self.tableView.bounds
+        upperFrame.origin.y = -upperFrame.size.height;
+        let upperView = UIView(frame: upperFrame)
+        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        tableView.addSubview(upperView)
         
         self.showNavBar()
         
@@ -69,7 +69,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             self.tableView.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
             
         }
-       // navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
     }
     
     override open func viewDidAppear(_ animated: Bool) {

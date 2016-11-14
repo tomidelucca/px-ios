@@ -49,7 +49,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
-        //OJO
+        
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText(), fontSize : 16, baselineOffset : 3)
         let attributedAmountFinal = NSMutableAttributedString(string : "(")
         attributedAmountFinal.append(attributedAmount)
