@@ -45,8 +45,8 @@ open class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
 
-    
-    open class func startPaymentVaultViewController(_ amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
+	
+    open class func startPaymentVaultViewController(_ amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
         var paymentVault : PaymentVaultViewController?
 		paymentVault = PaymentVaultViewController(amount: amount, payerAccessToken : payerAccessToken, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, callback: {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
