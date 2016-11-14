@@ -8,3 +8,4 @@ Fix #{issueNumber}
 [] Testeado en BETA con dispositivo
 [] Test unitarios OK
 [] Test funcionales OK
+[] Documentación actualizada

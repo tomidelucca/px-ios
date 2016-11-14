@@ -45,7 +45,7 @@ class JSONHandler: NSObject {
                     dict.setValue(value, forKey: key)
                 }
             }
-            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            let jsonData = try JSONSerialization.data(withJSONObject: dict)
           //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
             result = NSString(data: jsonData,
                                        encoding: String.Encoding.ascii.rawValue)  as! String
