@@ -262,7 +262,7 @@ open class MPStepBuilder : NSObject {
                     ccf.navigationController?.present(errorVC, animated: true, completion: {})
             })
         } else {
-            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: nil, customerCard: customerCard, ccf: ccf, callback: callback)
+            self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: customerCard?.getIssuer(), customerCard: customerCard, ccf: ccf, callback: callback)
         }
     }
     
