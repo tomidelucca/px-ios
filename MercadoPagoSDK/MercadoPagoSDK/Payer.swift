@@ -9,68 +9,56 @@
 import Foundation
 
 open class Payer : NSObject {
-    open var email : String!
-    open var _id : NSNumber = 0
-    open var identification : Identification!
-    open var accessToken : String?
-    
-    
-    public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil, accessToken : String? = nil){
-        self._id = _id!
-        self.email = email
-        self.identification = identification
-        self.accessToken = accessToken
-    }
-    
-    open class func fromJSON(_ json : NSDictionary) -> Payer {
-        let payer : Payer = Payer()
-        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue {
-             payer._id  = _id
-        }
-        if let email = JSONHandler.attemptParseToString(json["email"]) {
-            payer.email  = email
-        }
-        
-        if let identificationDic = json["identification"] as? NSDictionary {
-            payer.identification = Identification.fromJSON(identificationDic)
-        }
-        
-        if let accessToken = JSONHandler.attemptParseToString(json["access_token"]) {
-            payer.accessToken = accessToken
-        }
-        
-        return payer
-    }
-    
-    open func toJSON() -> [String:Any] {
-        let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
-        let _id : Any = self._id == 0 ? JSONHandler.null : self._id
-        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
-        let accessToken : Any = self.accessToken == nil ? JSONHandler.null : (self.accessToken!)
-        let obj:[String:Any] = [
-            "email": email,
-            "_id": _id,
-            "identification" : identification,
-            "access_token" : accessToken
-        ]
-        return obj
-    }
-    
-    open func toJSONString() -> String {
-        return JSONHandler.jsonCoding(self.toJSON())
-        
-    }
-
+	open var email : String!
+	open var _id : NSNumber = 0
+	open var identification : Identification!
+	
+	
+	
+	public init(_id : NSNumber? = 0, email: String? = nil, type : String? = nil, identification: Identification? = nil){
+		self._id = _id!
+		self.email = email
+		self.identification = identification
+	}
+	
+	open class func fromJSON(_ json : NSDictionary) -> Payer {
+		let payer : Payer = Payer()
+		if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue {
+			payer._id  = _id
+		}
+		if let email = JSONHandler.attemptParseToString(json["email"]) {
+			payer.email  = email
+		}
+		
+		if let identificationDic = json["identification"] as? NSDictionary {
+			payer.identification = Identification.fromJSON(identificationDic)
+		}
+		return payer
+	}
+	
+	
+	open func toJSONString() -> String {
+		let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
+		let _id : Any = self._id as! Decimal == 0 ? JSONHandler.null : self._id
+		let identification : Any = self.identification == nil ? JSONHandler.null : self.identification.toJSONString()
+		let obj:[String:Any] = [
+			"email": email,
+			"_id": _id,
+			"identification" : identification
+		]
+		return JSONHandler.jsonCoding(obj)
+	}
+	
 }
 
 
 public func ==(obj1: Payer, obj2: Payer) -> Bool {
-    
-    let areEqual =
-    obj1._id == obj2._id &&
-    obj1.email == obj2.email &&
-    obj1.identification == obj2.identification
-    
-    return areEqual
+	
+	let areEqual =
+		obj1._id == obj2._id &&
+			obj1.email == obj2.email &&
+			obj1.identification == obj2.identification
+	
+	return areEqual
 }
 
