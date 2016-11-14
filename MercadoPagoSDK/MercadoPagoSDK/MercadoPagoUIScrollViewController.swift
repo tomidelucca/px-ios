@@ -17,9 +17,6 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     var navBarHeight: CGFloat = 0
     var navBarTextColor = UIColor.systemFontColor()
     var navBarBackgroundColor : UIColor?
-    var isTraslucent = true
-    
-    var startScrollPosition: CGFloat = 0
     
     func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
         

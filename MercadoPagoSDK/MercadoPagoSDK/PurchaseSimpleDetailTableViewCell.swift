@@ -34,12 +34,9 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
             self.unitPrice.attributedText = purchaseAmount
         } else {
             self.unitPrice.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, baselineOffset : 5)
-            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: 54, width: self.frame.width - 42, height: 1)
-            self.addSubview(separatorLine)
         }
-        
-        
-        
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: 54, width: self.frame.width - 42, height: 1)
+        self.addSubview(separatorLine)
     }
     
     private func getInstallmentsAmount(payerCost : PayerCost) -> NSAttributedString {

@@ -46,7 +46,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
         paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
         self.paymentMethodDescription.attributedText = paymentMethodDescription
-        if !payerCost!.hasInstallmentsRate() {
+        if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
         //OJO
@@ -58,7 +58,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
-        if payerCost != nil && !payerCost!.hasInstallmentsRate() {
+        if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             return DEFAULT_ROW_HEIGHT + 20
         }
         return DEFAULT_ROW_HEIGHT

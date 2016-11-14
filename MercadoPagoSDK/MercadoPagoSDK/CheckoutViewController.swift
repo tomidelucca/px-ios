@@ -76,7 +76,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             
         }
         navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+        
         self.navigationController?.navigationBar.tintColor = UIColor.white()
+        self.navigationController?.navigationBar.barTintColor = UIColor.white()
         
     }
 
@@ -84,8 +86,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showLoading()
-        self.startScrollPosition = checkoutTable.contentOffset.y
-        self.navBarBackgroundColor = UIColor.white()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
@@ -116,6 +116,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
 
     }
+    
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -448,7 +449,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getPurchaseDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
-        if payerCost != nil && !(payerCost!.hasInstallmentsRate()) && payerCost!.installments > 1 {
+        if self.viewModel!.shouldDisplayNoRate() {
             let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
             purchaseDetailCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
             return purchaseDetailCell
@@ -605,7 +606,10 @@ open class CheckoutViewModel {
                 // Productos
                 return PurchaseDetailTableViewCell.getCellHeight()
             case 1:
-                return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.payerCost)
+                if  shouldDisplayNoRate() {
+                    return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.payerCost)
+                }
+                return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
             case 2:
                 return (self.isPaymentMethodSelectedCard()) ? PurchaseDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
             default:
@@ -630,5 +634,9 @@ open class CheckoutViewModel {
     
     func isPreferenceLoaded() -> Bool {
         return self.preference != nil
+    }
+    
+    func shouldDisplayNoRate() -> Bool {
+        return self.payerCost != nil && !self.payerCost!.hasInstallmentsRate() && self.payerCost!.installments != 1
     }
 }
