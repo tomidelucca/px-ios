@@ -54,15 +54,31 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, currency : Currency) {
+    internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
         // Verificar
-        let paymentMethodDescription = NSMutableAttributedString(string: "Pagarás ")
+        
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText())
-        paymentMethodDescription.append(attributedAmount)
-        paymentMethodDescription.append(NSAttributedString(string : " en un " + paymentMethodMethodSearchItem.idPaymentMethodSearchItem))
-        self.paymentMethodDescription.attributedText = paymentMethodDescription
+    
+        
+        var currentTitle = ""
+        let titleI18N = "ryc_title_" + paymentMethodMethodSearchItem.idPaymentMethodSearchItem
+        if (titleI18N.existsLocalized()) {
+            currentTitle = titleI18N.localized
+        } else {
+            currentTitle = "ryc_title_default".localized
+        }
+        
+        currentTitle = currentTitle.replacingOccurrences(of: "%0", with: paymentMethod.name)
+        let attributedTitle = NSMutableAttributedString(string : "Pagáras ")
+        attributedTitle.append(attributedAmount)
+        attributedTitle.append(NSAttributedString(string : currentTitle))
+
+        
+        self.paymentMethodDescription.attributedText = attributedTitle
         
         self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodMethodSearchItem.comment!)
     }
+    
+    
     
   }

@@ -491,7 +491,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getOfflinePaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
         let offlinePaymentMethodCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "offlinePaymentMethodCell", for: indexPath) as! OfflinePaymentMethodCell
         let paymentMethodSearchItem = self.viewModel!.paymentMethodSearchItemSelected()
-        offlinePaymentMethodCell.fillCell(paymentMethodSearchItem, amount: self.viewModel!.preference!.getAmount(), currency: MercadoPagoContext.getCurrency())
+        offlinePaymentMethodCell.fillCell(paymentMethodSearchItem, amount: self.viewModel!.preference!.getAmount(), paymentMethod : self.viewModel!.paymentMethod!, currency: MercadoPagoContext.getCurrency())
         offlinePaymentMethodCell.changePaymentButton.addTarget(self, action: #selector(loadGroupsAndStartPaymentVault), for: .touchUpInside)
         return offlinePaymentMethodCell
     }
