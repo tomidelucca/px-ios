@@ -84,9 +84,9 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     
     func hideNavBar(){
         self.title = ""
-      //  navigationController?.navigationBar.titleTextAttributes = nil
-      //  self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        //self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.titleTextAttributes = nil
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
     }
     
