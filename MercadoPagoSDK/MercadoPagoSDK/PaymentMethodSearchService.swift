@@ -31,7 +31,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class PaymentMethodSearchService: MercadoPagoService {
     
     open let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
-    //public let MP_SEARCH_PAYMENTS_URI = "/payment_methods/search/options"
     
     public init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
@@ -58,7 +57,13 @@ open class PaymentMethodSearchService: MercadoPagoService {
             params = params + "&customer_id=" + customerId!
         }
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: nil, method: "GET", success: { (jsonResult) -> Void in
+        var accessTokenBody = ""
+        let payerAccessToken = MercadoPagoContext.payerAccessToken()
+        if payerAccessToken.characters.count > 0 {
+            accessTokenBody = JSONHandler.jsonCoding(["accessToken": payerAccessToken])
+        }
+        
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: accessTokenBody as AnyObject, method: "POST", success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
