@@ -55,10 +55,10 @@ class OfflinePaymentMethodCell: UITableViewCell {
     }
     
     internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
-        // Verificar
         
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText())
-    
+        let attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized)
+        attributedTitle.append(attributedAmount)
         
         var currentTitle = ""
         let titleI18N = "ryc_title_" + paymentMethodMethodSearchItem.idPaymentMethodSearchItem
@@ -68,11 +68,13 @@ class OfflinePaymentMethodCell: UITableViewCell {
             currentTitle = "ryc_title_default".localized
         }
         
-        currentTitle = currentTitle.replacingOccurrences(of: "%0", with: paymentMethod.name)
-        let attributedTitle = NSMutableAttributedString(string : "Pagáras ")
-        attributedTitle.append(attributedAmount)
         attributedTitle.append(NSAttributedString(string : currentTitle))
-
+        
+        let complementaryTitle = "ryc_complementary_" + paymentMethodMethodSearchItem.idPaymentMethodSearchItem
+        if complementaryTitle.existsLocalized() {
+            attributedTitle.append(NSAttributedString(string : complementaryTitle.localized))
+        }
+        attributedTitle.append(NSAttributedString(string : paymentMethod.name))
         
         self.paymentMethodDescription.attributedText = attributedTitle
         
