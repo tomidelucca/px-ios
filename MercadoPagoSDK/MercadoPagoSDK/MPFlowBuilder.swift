@@ -31,12 +31,12 @@ open class MPFlowBuilder : NSObject {
     }
     
 
-    open class func startPaymentVaultViewController(_ amount: Double, paymentPreference : PaymentPreference? = nil,
+	open class func startPaymentVaultViewController(_ amount: Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference? = nil,
                                                       callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
                                                       callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
         
         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback)
+		let paymentVault = PaymentVaultViewController(amount: amount, payerAccessToken: payerAccessToken, paymentPreference : paymentPreference, callback: callback)
             paymentVault.viewModel.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
                                     paymentVault.dismiss(animated: true, completion: { () -> Void in
                                             callback(paymentMethod, token, issuer, payerCost)}
@@ -46,10 +46,10 @@ open class MPFlowBuilder : NSObject {
     }
 
     
-    open class func startPaymentVaultViewController(_ amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
+    open class func startPaymentVaultViewController(_ amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> MPNavigationController {
         MercadoPagoContext.initFlavor2()
         var paymentVault : PaymentVaultViewController?
-        paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, callback: {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
+		paymentVault = PaymentVaultViewController(amount: amount, payerAccessToken : payerAccessToken, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, callback: {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in
                 paymentVault!.dismiss(animated: true, completion: { () -> Void in
                 callback(paymentMethod, token, issuer, payerCost)}
             )}, callbackCancel: callbackCancel)

@@ -51,31 +51,31 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
     
 
     
-    public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void) {
+	public init(amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
-        self.initViewModel(amount, paymentPreference : paymentPreference, callback: callback)
+        self.initViewModel(amount, payerAccessToken : payerAccessToken, paymentPreference : paymentPreference, callback: callback)
         
        
         
     }
     
-    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch,
+    public init(amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch,
                 callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void,
                 callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
-        self.initViewModel(amount, paymentPreference: paymentPreference, customerPaymentMethods: paymentMethodSearch.customerPaymentMethods, paymentMethodSearchItem : paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, callback: callback)
+        self.initViewModel(amount, payerAccessToken : payerAccessToken, paymentPreference: paymentPreference, customerPaymentMethods: paymentMethodSearch.customerPaymentMethods, paymentMethodSearchItem : paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, callback: callback)
         
         self.callbackCancel = callbackCancel
         
     }
     
-    internal init(amount: Double, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
+    internal init(amount: Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
-        self.initViewModel(amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearchItem, paymentMethods: paymentMethods, callback : callback)
+        self.initViewModel(amount, payerAccessToken : payerAccessToken, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearchItem, paymentMethods: paymentMethods, callback : callback)
         
         //Installment > 0
         
@@ -97,12 +97,13 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         self.currency = MercadoPagoContext.getCurrency()
     }
     
-    fileprivate func initViewModel(_ amount : Double, paymentPreference : PaymentPreference?, customerPaymentMethods: [CardInformation]? = nil, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void){
+    fileprivate func initViewModel(_ amount : Double, payerAccessToken : String? = nil, paymentPreference : PaymentPreference?, customerPaymentMethods: [CardInformation]? = nil, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void){
         self.viewModel = PaymentVaultViewModel(amount: amount, paymentPrefence: paymentPreference)
         
         self.viewModel.currentPaymentMethodSearch = paymentMethodSearchItem
         self.viewModel.paymentMethods = paymentMethods
         self.viewModel.customerCards = customerPaymentMethods
+		self.viewModel.payerAccessToken = payerAccessToken
         self.viewModel.callback = callback
     }
 
@@ -263,7 +264,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewD
         
         if self.viewModel.currentPaymentMethodSearch == nil {
             self.showLoading()
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+			MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, payerAccessToken : self.viewModel.payerAccessToken, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 
                 self.viewModel.setPaymentMethodSearch(paymentMethodSearchResponse)
                 self.hideLoading()
@@ -374,7 +375,8 @@ class PaymentVaultViewModel : NSObject {
     
     var amount : Double
     var paymentPreference : PaymentPreference?
-    
+	var payerAccessToken : String?
+	
     var customerCards : [CardInformation]?
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
