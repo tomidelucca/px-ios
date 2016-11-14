@@ -36,7 +36,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, payerAccessToken : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
         
         if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
@@ -58,7 +58,8 @@ open class PaymentMethodSearchService: MercadoPagoService {
         }
         
         var accessTokenBody = ""
-        if let payerAccessToken = payerAccessToken {
+        let payerAccessToken = MercadoPagoContext.payerAccessToken()
+        if payerAccessToken.characters.count > 0 {
             accessTokenBody = JSONHandler.jsonCoding(["accessToken": payerAccessToken])
         }
         
