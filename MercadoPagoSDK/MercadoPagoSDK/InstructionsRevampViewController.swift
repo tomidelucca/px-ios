@@ -66,7 +66,6 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
         self.payment = payment
         self.paymentTypeId = paymentTypeId
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -82,7 +81,6 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         return UITableViewAutomaticDimension
     }
     
-    
     open func numberOfSections(in tableView: UITableView) -> Int {
         return (instruction != nil) ? 3 : 0
     }
@@ -96,7 +94,9 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        
+        switch indexPath.section {
+        case 0:
             if indexPath.row == 0 {
                 let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
                 headerCell.fillCell(payment: payment, paymentMethod: nil, color: color!, titleInstruction: instruction?.title)
@@ -106,18 +106,17 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
                 let subtitleCell = self.tableView.dequeueReusableCell(withIdentifier: "subtitleNib") as! InstructionsSubtitleTableViewCell
                 subtitleCell.selectionStyle = .none
                 return subtitleCell
-                
             }
-        }else if indexPath.section == 1{
+        case 1:
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
             bodyCell.fillCell(instruction: self.instruction, payment: self.payment)
             return bodyCell
-        } else {
+        default:
             if indexPath.row == 0{
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                confirmEmailCell.fillCell(payment: payment)
+                confirmEmailCell.fillCell(payment: payment, instruction: instruction)
                 confirmEmailCell.selectionStyle = .none
                 ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                 return confirmEmailCell
@@ -130,7 +129,6 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
                 return footerNib
             }
         }
-        
     }
     
     fileprivate func getInstructions(){
