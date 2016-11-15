@@ -101,6 +101,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
     fileprivate func initViewModel(_ amount : Double, paymentPreference : PaymentPreference?, customerPaymentMethods: [CardInformation]? = nil, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void){
         self.viewModel = PaymentVaultViewModel(amount: amount, paymentPrefence: paymentPreference)
         
+        self.viewModel.setPaymentMethodSearch(paymentMethods: paymentMethods, paymentMethodSearchItems: paymentMethodSearchItem, customerPaymentMethods : customerPaymentMethods)
         self.viewModel.currentPaymentMethodSearch = paymentMethodSearchItem
         self.viewModel.paymentMethods = paymentMethods
         self.viewModel.customerCards = customerPaymentMethods
@@ -189,7 +190,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
             self.showLoading()
             MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 
-                self.viewModel.setPaymentMethodSearch(paymentMethodSearchResponse)
+                self.viewModel.setPaymentMethodSearchResponse(paymentMethodSearchResponse)
                 self.hideLoading()
                 self.loadPaymentMethodSearch()
                 
@@ -460,21 +461,28 @@ class PaymentVaultViewModel : NSObject {
         return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
     }
     
-    func setPaymentMethodSearch(_ paymentMethodSearchResponse : PaymentMethodSearch){
-        self.paymentMethods = paymentMethodSearchResponse.paymentMethods
-        self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
-        
-        if paymentMethodSearchResponse.customerPaymentMethods != nil && paymentMethodSearchResponse.customerPaymentMethods!.count > 0 {
-            let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
-            if !accountMoneyAvailable {
-                paymentMethodSearchResponse.customerPaymentMethods = paymentMethodSearchResponse.customerPaymentMethods?.filter({ (element : CardInformation) -> Bool in
-                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
-                })
-            }
-            self.customerCards = paymentMethodSearchResponse.customerPaymentMethods! as [CardInformation]
-        }
+    func setPaymentMethodSearchResponse(_ paymentMethodSearchResponse : PaymentMethodSearch){
+        self.setPaymentMethodSearch(paymentMethods: paymentMethodSearchResponse.paymentMethods, paymentMethodSearchItems: paymentMethodSearchResponse.groups, customerPaymentMethods : paymentMethodSearchResponse.customerPaymentMethods)
     }
     
+    func setPaymentMethodSearch(paymentMethods : [PaymentMethod]? = nil, paymentMethodSearchItems : [PaymentMethodSearchItem]? = nil, customerPaymentMethods : [CardInformation]? = nil) {
+        self.paymentMethods = paymentMethods
+        self.currentPaymentMethodSearch = paymentMethodSearchItems
+        
+        let currentCustomerCards : [CardInformation]
+        if customerPaymentMethods != nil && customerPaymentMethods!.count > 0 {
+            let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
+            if !accountMoneyAvailable {
+                currentCustomerCards = customerPaymentMethods!.filter({ (element : CardInformation) -> Bool in
+                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                })
+                self.customerCards = currentCustomerCards as [CardInformation]
+            } else {
+                self.customerCards = customerPaymentMethods
+            }
+            
+        }
+    }
     
     internal func optionSelected(_ paymentSearchItemSelected : PaymentMethodSearchItem, navigationController : UINavigationController, cancelPaymentCallback : @escaping ((Void) -> (Void)),animated: Bool = true) {
         

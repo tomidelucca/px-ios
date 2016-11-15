@@ -40,7 +40,6 @@ open class PaymentMethod : NSObject  {
     }
     
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
-        
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
         if setting != nil && setting!.securityCode.length != 0 {
             return true

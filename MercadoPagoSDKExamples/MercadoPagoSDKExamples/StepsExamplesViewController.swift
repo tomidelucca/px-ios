@@ -184,6 +184,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.installmentsSelected = payerCost
             self.navigationController!.popViewController(animated: true)
         }
+        
         self.navigationController?.pushViewController(installmentsVC, animated: true)
         
     }
