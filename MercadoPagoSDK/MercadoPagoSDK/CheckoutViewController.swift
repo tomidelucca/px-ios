@@ -237,27 +237,12 @@ open class CheckoutViewController: MercadoPagoUIViewController, UITableViewDataS
        
         
         let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel?.paymentMethod!, token: token) { (token) in
-            print("VAMO LO PIBE")
             self.token = token
-         //   self.paymentVaultCallback((self.viewModel?.paymentMethod!)!, token : token, issuer : self.issuer, payerCost : self.payerCost, animated : true)
             self.navigationController!.popToViewController(self, animated: true)
         }
         
         self.navigationController?.pushViewController(vc, animated: true)
-        /*
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
-            let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.preference?.getAmount())!, cardInformation : nil, paymentMethods: paymentMethods, token: token, callback: { (paymentMethod, token, issuer, payerCost) in
-                self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
-                }, callbackCancel: {
-                    self.navigationController!.popToViewController(self, animated: true)
-            })
-             self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
-            }) { (error) in
-                
-        }
-         */
-       
-        
+            
     }
     
     

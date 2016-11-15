@@ -185,10 +185,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.navigationController!.popViewController(animated: true)
         }
         
-        let xxx = SecrurityCodeViewController()
-        
-        
-        self.navigationController?.pushViewController(xxx, animated: true)
+        self.navigationController?.pushViewController(installmentsVC, animated: true)
         
     }
     
