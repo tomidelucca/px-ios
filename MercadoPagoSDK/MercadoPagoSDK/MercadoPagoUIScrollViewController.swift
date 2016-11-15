@@ -15,79 +15,55 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     var scrollingDown = false
     
     var navBarHeight: CGFloat = 0
-    var navBarTextColor = UIColor.systemFontColor()
     var navBarBackgroundColor : UIColor?
     
     func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
         
-        var offset = scrollView.contentOffset;
+        if !(isWholeTableVisible(tableView: tableView)) {
+            
+            var offset = scrollView.contentOffset;
+            
+            
+            if (scrollView.contentOffset.y >= -30)
+            {
+                offset.y = -30;
+                self.title = getNavigationBarTitle()
+            }
         
-        if (scrollView.contentOffset.y >= -30 && isWholeTableVisible(tableView: tableView))
-        {
-            offset.y = -30;
-            self.title = getNavigationBarTitle()
-        }
-        
-        let visibleIndexPaths = tableView.indexPathsForVisibleRows!
-        for index in visibleIndexPaths {
-            if (index.section == 0){
-                if !once {
-                    hideNavBar()
-                    
-                    if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
-                        
-                        once = true
-                        showNavBar()
+            let visibleIndexPaths = tableView.indexPathsForVisibleRows!
+            for index in visibleIndexPaths {
+                if (index.section == 0){
+                    if !once {
+                        hideNavBar()
+                        if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
+                            once = true
+                            showNavBar()
+                        }
+                    } else {
+                        if scrollingDown {
+                            once = false
+                        }
                     }
-                } else {
-                    if scrollingDown {
-                        once = false
-                    }
-                }
-            } else if index.section == 1  {
-                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
-                    if tableView.contentOffset.y > 0{
-                        if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
-                            card.fadeCard()
-                        } else{
-                            card.cardView.alpha = 44/tableView.contentOffset.y;
+                } else if index.section == 1  {
+                    if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
+                        if tableView.contentOffset.y > 0{
+                            if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
+                                card.fadeCard()
+                            } else{
+                                card.cardView.alpha = 44/tableView.contentOffset.y;
+                            }
                         }
                     }
                 }
             }
+            if (self.lastContentOffset > scrollView.contentOffset.y) {
+                scrollingDown = true
+            }
+            else if (self.lastContentOffset < scrollView.contentOffset.y) {
+                scrollingDown = false
+            }
+            self.lastContentOffset = scrollView.contentOffset.y
         }
-        if (self.lastContentOffset > scrollView.contentOffset.y) {
-            scrollingDown = true
-        }
-        else if (self.lastContentOffset < scrollView.contentOffset.y) {
-            scrollingDown = false
-        }
-        self.lastContentOffset = scrollView.contentOffset.y
-    }
-    
-    func showNavBar() {
-        self.title = self.getNavigationBarTitle()
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.tintColor = nil
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-        if navBarBackgroundColor != nil {
-            self.navigationController?.navigationBar.barTintColor = self.navBarBackgroundColor
-        }
-
-        
-        let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-    }
-    
-    func hideNavBar(){
-        self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
     }
     
     func isWholeTableVisible(tableView : UITableView) -> Bool{
@@ -104,10 +80,6 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
             }
         }
         return false
-    }
-    
-    func getNavigationBarTitle() -> String {
-        return ""
     }
 
   
