@@ -62,7 +62,8 @@ open class MPFlowBuilder : NSObject {
                                                     callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         
         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true,
+        let paymentVault =
+            PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, tintColor: true,
                                                       callback: callback, callbackCancel : callbackCancel)
         paymentVault.modalTransitionStyle = .crossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)

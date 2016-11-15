@@ -62,7 +62,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         
     }
     
-    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch,
+    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, tintColor : Bool = false,
                 callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void,
                 callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
