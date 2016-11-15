@@ -257,19 +257,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
     }
     internal func startAuthCard(_ token:Token){
-       
-        MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
-            let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.viewModel!.preference?.getAmount())!, cardInformation : nil, paymentMethods: paymentMethods, token: token, callback: { (paymentMethod, token, issuer, payerCost) in
-                self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
-                }, callbackCancel: {
-                    self.navigationController!.popToViewController(self, animated: true)
-            })
-             self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
-            }) { (error) in
-                
-        }
-       
         
+        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel?.paymentMethod!, token: token) { (token) in
+            self.token = token
+            self.navigationController!.popToViewController(self, animated: true)
+        }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+            
     }
     
     
