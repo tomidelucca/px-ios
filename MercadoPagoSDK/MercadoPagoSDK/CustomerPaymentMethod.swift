@@ -12,8 +12,8 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     
     var _id : String!
     var _description : String!
-    var type : String!
-    var value : String!
+    var paymentMethodId : String!
+    var paymentMethodTypeId : String!
     
     var securityCode : SecurityCode = SecurityCode()
     
@@ -28,12 +28,12 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
             customerPaymentMethod._description = json["description"] as! String
         }
         
-        if json["type"] != nil && !(json["type"]! is NSNull) {
-            customerPaymentMethod.type = json["type"] as! String
+        if json["payment_method_id"] != nil && !(json["payment_method_id"]! is NSNull) {
+            customerPaymentMethod.paymentMethodId = json["payment_method_id"] as! String
         }
         
-        if json["value"] != nil && !(json["value"]! is NSNull) {
-            customerPaymentMethod.value = json["value"] as! String
+        if json["payment_method_type"] != nil && !(json["payment_method_type"]! is NSNull) {
+            customerPaymentMethod.paymentMethodTypeId = json["payment_method_type"] as! String
         }
         
         return customerPaymentMethod
@@ -44,8 +44,8 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         let obj:[String:Any] = [
             "_id": self._id,
             "_description": self._description == nil ? "" : self._description!,
-            "type" : self.type,
-            "value": self.value
+            "payment_method_id" : self.paymentMethodId,
+            "payment_method_type": self.paymentMethodTypeId
         ]
         
         return obj
@@ -61,7 +61,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     open func getCardId() -> String {
-        return self.value
+        return self._id
     }
     
     open func getCardSecurityCode() -> SecurityCode {
@@ -74,12 +74,12 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     
     open func getPaymentMethod() -> PaymentMethod {
         let pm = PaymentMethod()
-        pm._id = self._id
+        pm._id = self.paymentMethodId
         return pm
     }
     
     open func getPaymentMethodId() -> String {
-        return self._id
+        return self.paymentMethodId
     }
     
     open func getCardBin() -> String? {

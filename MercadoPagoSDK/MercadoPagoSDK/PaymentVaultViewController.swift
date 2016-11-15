@@ -177,7 +177,6 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                 
             }, failure: { (error: NSError?) -> Void in
                 self.hideLoading()
-                print(error)
             })
         } else {
             self.loadPaymentMethodSearch()
@@ -422,7 +421,7 @@ class PaymentVaultViewModel : NSObject {
     }
     
     func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot
+        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot && self.customerCards == nil
     }
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
@@ -466,9 +465,14 @@ class PaymentVaultViewModel : NSObject {
         self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
         
         if paymentMethodSearchResponse.customerPaymentMethods != nil && paymentMethodSearchResponse.customerPaymentMethods!.count > 0 {
+            let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
+            if !accountMoneyAvailable {
+                paymentMethodSearchResponse.customerPaymentMethods = paymentMethodSearchResponse.customerPaymentMethods?.filter({ (element : CardInformation) -> Bool in
+                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                })
+            }
             self.customerCards = paymentMethodSearchResponse.customerPaymentMethods! as [CardInformation]
         }
-        
     }
     
     
