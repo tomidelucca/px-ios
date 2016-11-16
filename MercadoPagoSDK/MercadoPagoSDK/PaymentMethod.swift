@@ -134,6 +134,10 @@ open class PaymentMethod : NSObject  {
         return self._id == "amex"
     }
     
+    open func isAccountMoney() -> Bool{
+        return self._id == PaymentTypeId.ACCOUNT_MONEY.rawValue
+    }
+    
     open func secCodeMandatory() -> Bool {
         if (self.settings.count == 0){
             return false // Si no tiene settings el codigo no es mandatorio

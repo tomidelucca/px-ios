@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setCustomerURI("/get_customer")
         MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
 
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
 

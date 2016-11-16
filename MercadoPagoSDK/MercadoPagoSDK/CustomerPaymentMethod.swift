@@ -9,7 +9,6 @@
 import UIKit
 
 open class CustomerPaymentMethod: NSObject, CardInformation {
-  
     
     var _id : String!
     var _description : String!
@@ -99,5 +98,10 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     open func setupPaymentMethodSettings(_ settings : [Setting]) {
         self.securityCode = settings[0].securityCode
     }
+    
+    public func isIssuerRequired() -> Bool {
+        return false
+    }
+
     
 }

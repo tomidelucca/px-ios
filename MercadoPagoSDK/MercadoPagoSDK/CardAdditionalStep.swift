@@ -351,7 +351,7 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func hasIssuer()-> Bool{
-        return issuer != nil
+        return issuer != nil || (token != nil && token!.isIssuerRequired())
     }
     func hasPaymentMethod()->Bool{
         if (paymentMethod.count)>1{

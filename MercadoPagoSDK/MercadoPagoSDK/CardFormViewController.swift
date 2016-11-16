@@ -525,7 +525,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
             if (cardFormManager.guessedPMS != nil){
                 let bin = self.cardFormManager.getBIN(self.cardNumberLabel!.text!)
-                //TODO : esto te estalla en la cara cris
                 if (!(cardFormManager.getGuessedPM()?.isSecurityCodeRequired((bin)!))!){
                     self.confirmPaymentMethod()
                     return

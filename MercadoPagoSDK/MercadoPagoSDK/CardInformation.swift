@@ -26,6 +26,7 @@ public protocol CardInformation : CardInformationForm {
     func getPaymentMethodId() -> String
     
     func getIssuer() -> Issuer?
+    
 }
 @objc
 public protocol CardInformationForm : NSObjectProtocol {
@@ -34,4 +35,6 @@ public protocol CardInformationForm : NSObjectProtocol {
     func getCardBin() -> String?
     
     func getCardLastForDigits() -> String?
+    
+    func isIssuerRequired() -> Bool
 }

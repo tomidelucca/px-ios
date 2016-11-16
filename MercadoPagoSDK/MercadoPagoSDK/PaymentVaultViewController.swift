@@ -102,9 +102,6 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         self.viewModel = PaymentVaultViewModel(amount: amount, paymentPrefence: paymentPreference)
         
         self.viewModel.setPaymentMethodSearch(paymentMethods: paymentMethods, paymentMethodSearchItems: paymentMethodSearchItem, customerPaymentMethods : customerPaymentMethods)
-        self.viewModel.currentPaymentMethodSearch = paymentMethodSearchItem
-        self.viewModel.paymentMethods = paymentMethods
-        self.viewModel.customerCards = customerPaymentMethods
         self.viewModel.callback = callback
     }
     
@@ -285,13 +282,17 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
             if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
                 let customerCardSelected = self.viewModel.customerCards![(indexPath as NSIndexPath).row] as CardInformation
                 let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
-                customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-                let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
-                    self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
-                    }, callbackCancel: {
-                        self.navigationController!.popToViewController(self, animated: true)
-                })
-                self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
+                if paymentMethodSelected.isAccountMoney() {
+                    self.viewModel.callback!(paymentMethodSelected, nil, nil, nil)
+                } else {
+                    customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
+                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+                        self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
+                        }, callbackCancel: {
+                            self.navigationController!.popToViewController(self, animated: true)
+                    })
+                    self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
+                }
             }
         }
     }
@@ -469,19 +470,17 @@ class PaymentVaultViewModel : NSObject {
         self.paymentMethods = paymentMethods
         self.currentPaymentMethodSearch = paymentMethodSearchItems
         
-        let currentCustomerCards : [CardInformation]
+        var currentCustomerCards = customerPaymentMethods
         if customerPaymentMethods != nil && customerPaymentMethods!.count > 0 {
             let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
             if !accountMoneyAvailable {
                 currentCustomerCards = customerPaymentMethods!.filter({ (element : CardInformation) -> Bool in
                     return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
                 })
-                self.customerCards = currentCustomerCards as [CardInformation]
-            } else {
-                self.customerCards = customerPaymentMethods
             }
-            
         }
+        self.customerCards = currentCustomerCards
+        
     }
     
     internal func optionSelected(_ paymentSearchItemSelected : PaymentMethodSearchItem, navigationController : UINavigationController, cancelPaymentCallback : @escaping ((Void) -> (Void)),animated: Bool = true) {
