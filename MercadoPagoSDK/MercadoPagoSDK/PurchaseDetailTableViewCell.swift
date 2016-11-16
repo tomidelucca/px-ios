@@ -33,7 +33,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil){
         
         //Deafult values for cells
-        self.purchaseDetailTitle.attributedText = NSAttributedString(string: title)
+        self.purchaseDetailTitle.attributedText = NSAttributedString(string: title.localized)
         self.noRateLabel.attributedText = NSAttributedString(string : "")
         self.removeFromSuperview()
         var separatorLineHeight = CGFloat(54)

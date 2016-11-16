@@ -101,7 +101,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         
         switch indexPath.section {
         case 0:
-            return navBarHeight
+            return (self.navigationController != nil) ? (self.navigationController!.navigationBar.frame.height) : 44
         case 1:
             return self.viewModel.getCardCellHeight()
         case 2:
