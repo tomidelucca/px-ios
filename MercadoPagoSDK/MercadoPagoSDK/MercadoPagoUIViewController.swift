@@ -183,7 +183,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func displayBackButton() {
         let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.image = MercadoPago.getImage("back")
         backButton.style = .plain
         backButton.target = self
         backButton.tintColor = UIColor.systemFontColor()
