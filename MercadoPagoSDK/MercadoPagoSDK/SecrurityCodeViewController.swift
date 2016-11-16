@@ -39,7 +39,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
              cardBack.cardCVV.textColor  = UIColor.red
         }
         self.view.bringSubview(toFront: panelView)
-        self.updateCardSkin(token: viewModel.token , paymentMethod: viewModel.paymentMethod)
+        self.updateCardSkin(cardInformation: viewModel.cardInfo , paymentMethod: viewModel.paymentMethod)
         
         securityCodeTextField.autocorrectionType = UITextAutocorrectionType.no
         securityCodeTextField.keyboardType = UIKeyboardType.numberPad
@@ -52,10 +52,10 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         // Dispose of any resources that can be recreated.
     }
     
-    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
+    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
     
         super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, token: token, callback: callback)
+        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
         
     }
     
@@ -119,14 +119,14 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         self.viewModel.cloneTokenAndCallback(secCode: securityCodeTextField.text)
     }
     
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
+    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
         if viewModel.showFrontCard() {
             if let paymentMethod = paymentMethod{
                 self.cardFront.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
                 self.cardFront.backgroundColor = MercadoPago.getColorFor(paymentMethod)
                 self.cardFront.cardLogo.alpha = 1
                 let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
-                if let token = token{
+                if let token = cardInformation{
                     self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
                     cardFront.cardNumber.text =  self.textMaskFormater.textMasked(token.getCardLastForDigits())
                 }
@@ -174,11 +174,11 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
 
 open class SecrurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
-    var token : Token!
+    var cardInfo : CardInformationForm!
 
-    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
+    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
         self.paymentMethod = paymentMethod
-        self.token = token
+        self.cardInfo = cardInfo
         self.callback = callback
     }
     
@@ -195,11 +195,15 @@ open class SecrurityCodeViewModel: NSObject {
         return paymentMethod.secCodeLenght()
     }
     func cloneTokenAndCallback(secCode : String!) {
-        MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
-            self.callback(token)
-            }, failure: { (error) in
-            self.callback(nil) // VER
-        })
+        
+        if let token = cardInfo as? Token {
+            MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
+                self.callback(token)
+                }, failure: { (error) in
+                    self.callback(nil) // VER
+            })
+        }
+       
     }
     
     func getCardHeight() -> CGFloat {
