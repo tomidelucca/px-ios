@@ -10,7 +10,7 @@ import UIKit
 
 open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate{
     
-    @IBOutlet weak var securityCodeLabel: UILabel!
+    var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
     
@@ -31,8 +31,12 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         self.cardBack = CardBackView.init(frame: viewModel.getCardBounds())
         if (viewModel.showFrontCard()){
             self.view.addSubview(cardFront)
+            self.securityCodeLabel = cardFront.cardCVV
+             cardFront.cardCVV.textColor  = UIColor.red
         }else{
              self.view.addSubview(cardBack)
+            self.securityCodeLabel = cardBack.cardCVV
+             cardBack.cardCVV.textColor  = UIColor.red
         }
         self.view.bringSubview(toFront: panelView)
         self.updateCardSkin(token: viewModel.token , paymentMethod: viewModel.paymentMethod)
@@ -155,8 +159,8 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     
     open func editingChanged(_ textField:UITextField){
         hideErrorMessage()
-        //securityCodeLabel.text = textField.text
-        
+       securityCodeLabel.text = textField.text
+        securityCodeLabel.textColor  = UIColor.darkGray
     }
     
     open func showErrorMessage(){
