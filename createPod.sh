@@ -10,7 +10,7 @@ fi
 VERSION=$1
 PROJECT="MercadoPagoSDK"
 PODSPEC_FILE="$PROJECT.podspec"
-GIT_BRANCH="masterWOdependencies"
+GIT_BRANCH="fixLoadFont2.3"
 
 if [ "$#" -eq 2 ]
   then
@@ -56,7 +56,7 @@ echo "=========================================="
 echo "3) Create tag for version $VERSION from development branch"
 echo "=========================================="
 
-git checkout masterWOdependencies
+git checkout $GIT_BRANCH
 git tag $VERSION
 git push origin $VERSION
 PUSH_STATUS=$?
