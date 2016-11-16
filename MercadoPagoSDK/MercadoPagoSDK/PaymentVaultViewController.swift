@@ -423,7 +423,7 @@ class PaymentVaultViewModel : NSObject {
     }
     
     func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot && self.customerCards == nil
+        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot && (self.customerCards == nil || self.customerCards?.count == 0)
     }
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
