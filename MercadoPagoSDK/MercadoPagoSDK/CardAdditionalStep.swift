@@ -63,13 +63,8 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
                 self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
             }
         }
-        
-        DispatchQueue.main.async() {
-            
-            self.tableView.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
-            
-        }
-        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+        self.extendedLayoutIncludesOpaqueBars = true
+
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -194,6 +189,21 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
        self.didScrollInTable(scrollView, tableView: self.tableView)
+        let visibleIndexPaths = tableView.indexPathsForVisibleRows!
+        for index in visibleIndexPaths {
+            if index.section == 1  {
+                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
+                    if tableView.contentOffset.y > 0{
+                        if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
+                            card.fadeCard()
+                        } else{
+                            card.cardView.alpha = 44/tableView.contentOffset.y;
+                        }
+                    }
+                }
+            }
+        }
+
     }
     
     fileprivate func getInstallments(){

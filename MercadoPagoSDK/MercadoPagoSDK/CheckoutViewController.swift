@@ -68,13 +68,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navigationItem.rightBarButtonItem = nil
         
-        DispatchQueue.main.async() {
-            
-            self.checkoutTable.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
-            
-        }
-        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
-        
         self.navigationController?.navigationBar.tintColor = UIColor.white()
         self.navigationController?.navigationBar.barTintColor = UIColor.white()
         

@@ -269,7 +269,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.navigationBar.shadowImage = nil
             self.navigationController?.navigationBar.tintColor = nil
             self.navigationController?.navigationBar.isTranslucent = false
-            
+ 
             let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -281,8 +281,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if navigationController != nil {
             self.title = ""
             navigationController?.navigationBar.titleTextAttributes = nil
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-            self.navigationController?.navigationBar.shadowImage = UIImage()
+           self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+           self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.isTranslucent = true
         }
     }

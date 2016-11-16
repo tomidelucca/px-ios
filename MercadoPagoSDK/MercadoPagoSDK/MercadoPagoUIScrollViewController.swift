@@ -14,21 +14,10 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
     
-    var navBarHeight: CGFloat = 0
     var navBarBackgroundColor : UIColor?
     
     func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
         
-        if !(isWholeTableVisible(tableView: tableView)) {
-            
-            var offset = scrollView.contentOffset;
-            
-            
-            if (scrollView.contentOffset.y >= -30)
-            {
-                offset.y = -30;
-                self.title = getNavigationBarTitle()
-            }
         
             let visibleIndexPaths = tableView.indexPathsForVisibleRows!
             for index in visibleIndexPaths {
@@ -44,16 +33,6 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
                             once = false
                         }
                     }
-                } else if index.section == 1  {
-                    if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
-                        if tableView.contentOffset.y > 0{
-                            if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
-                                card.fadeCard()
-                            } else{
-                                card.cardView.alpha = 44/tableView.contentOffset.y;
-                            }
-                        }
-                    }
                 }
             }
             if (self.lastContentOffset > scrollView.contentOffset.y) {
@@ -63,23 +42,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
                 scrollingDown = false
             }
             self.lastContentOffset = scrollView.contentOffset.y
-        }
-    }
-    
-    func isWholeTableVisible(tableView : UITableView) -> Bool{
-        if tableView.numberOfRows(inSection: 2)>0 {
-            let cellRow = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: 2)-1, section: 2))
-            
-            let cellTitle = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
-            if cellRow != nil && cellTitle != nil {
-                let overlapRow = (cellRow?.frame)!.intersection(tableView.bounds);
-                let overlapTitle = (cellTitle?.frame)!.intersection(tableView.bounds);
-                if overlapRow.height == cellRow?.frame.height && overlapTitle.height == cellTitle?.frame.height {
-                    return true
-                }
-            }
-        }
-        return false
+       
     }
 
   
