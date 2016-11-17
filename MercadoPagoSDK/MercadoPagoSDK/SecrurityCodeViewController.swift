@@ -32,11 +32,9 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         if (viewModel.showFrontCard()){
             self.view.addSubview(cardFront)
             self.securityCodeLabel = cardFront.cardCVV
-             cardFront.cardCVV.textColor  = UIColor.red
         }else{
              self.view.addSubview(cardBack)
             self.securityCodeLabel = cardBack.cardCVV
-             cardBack.cardCVV.textColor  = UIColor.red
         }
         self.view.bringSubview(toFront: panelView)
         self.updateCardSkin(cardInformation: viewModel.cardInfo , paymentMethod: viewModel.paymentMethod)
@@ -141,7 +139,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     open func editingChanged(_ textField:UITextField){
         hideErrorMessage()
        securityCodeLabel.text = textField.text
-        securityCodeLabel.textColor  = UIColor.darkGray
+        securityCodeLabel.textColor  = UIColor.black
     }
     
     open func showErrorMessage(){
