@@ -63,7 +63,7 @@ class Utils {
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
 
 
-        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
+        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
         let space = NSAttributedString(string: " ", attributes: smallAttributes)

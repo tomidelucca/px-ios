@@ -195,9 +195,6 @@ open class PaymentMethod : NSObject  {
     open func isMASTERCARD() -> Bool {
         return ((self._id == "master") && (self._id == "debmaster"))
     }
-    open func isAccountMoney() -> Bool {
-        return (self._id == "account_money")
-    }
 
     open func conformsPaymentPreferences(_ paymentPreference : PaymentPreference?) -> Bool{
         

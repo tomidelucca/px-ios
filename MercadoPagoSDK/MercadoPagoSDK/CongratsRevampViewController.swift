@@ -86,7 +86,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-            headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.color, titleInstruction: nil)
+            headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.color, instruction: nil)
             headerCell.selectionStyle = .none
             return headerCell
         } else if indexPath.section == 1 {

@@ -99,7 +99,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         case 0:
             if indexPath.row == 0 {
                 let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-                headerCell.fillCell(payment: payment, paymentMethod: nil, color: color!, titleInstruction: instruction?.title)
+                headerCell.fillCell(payment: payment, paymentMethod: nil, color: color!, instruction: instruction)
                 headerCell.selectionStyle = .none
                 return headerCell
             } else {
