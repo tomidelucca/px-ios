@@ -91,25 +91,6 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         }
     }
     
-    func showNavBar() {
-      //  self.title = self.viewModel.getTilte()
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.tintColor = nil
-        self.navigationController?.navigationBar.isTranslucent = false
-        let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-    }
-    
-    func hideNavBar(){
-        self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
-    
     
     @IBAction func cloneToken(_ sender: AnyObject) {
         guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
