@@ -9,12 +9,15 @@
 import UIKit
 
 open class CustomerPaymentMethod: NSObject, CardInformation {
+   
+
   
     
     var _id : String!
     var _description : String!
     var type : String!
     var value : String!
+    var firstSixDigits : String!
     
     var securityCode : SecurityCode = SecurityCode()
     
@@ -36,7 +39,9 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         if json["value"] != nil && !(json["value"]! is NSNull) {
             customerPaymentMethod.value = json["value"] as! String
         }
-        
+        if json["first_six_digits"] != nil && !(json["first_six_digits"]! is NSNull) {
+            customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
+        }
         return customerPaymentMethod
     }
     
@@ -55,6 +60,10 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         ]
         
         return obj
+    }
+    
+    public func getFirstSixDigits() -> String! {
+        return firstSixDigits
     }
     
     

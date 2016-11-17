@@ -55,7 +55,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
     
         super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
+        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, owner: self, callback: callback)
         
     }
     
@@ -97,7 +97,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
             showErrorMessage()
             return
         }
-        self.viewModel.cloneTokenAndCallback(secCode: securityCodeTextField.text)
+        self.viewModel.tokenAndCallback(secCode: securityCodeTextField.text)
     }
     
     func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
@@ -157,7 +157,10 @@ open class SecrurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
     var cardInfo : CardInformationForm!
 
-    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
+    unowned var vc : SecrurityCodeViewController
+    
+    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, owner: SecrurityCodeViewController,  callback: ((_ token: Token?)->Void)! ){
+        self.vc = owner
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
         self.callback = callback
@@ -175,17 +178,48 @@ open class SecrurityCodeViewModel: NSObject {
     func secCodeLenght() -> Int {
         return paymentMethod.secCodeLenght()
     }
+    
+    
+    func tokenAndCallback(secCode : String!){
+        if let token = cardInfo as? Token {
+            self.cloneTokenAndCallback(secCode: secCode)
+        }else{
+            self.createTokenAndCallback(secCode: secCode)
+        }
+    }
     func cloneTokenAndCallback(secCode : String!) {
         
+        self.vc.showLoading()
         if let token = cardInfo as? Token {
             MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
+                self.vc.hideLoading()
                 self.callback(token)
                 }, failure: { (error) in
-                    self.callback(nil) // VER
+                    self.vc.hideLoading()
+                    let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                    self.vc.displayFailure(mpError)
             })
         }
        
     }
+    
+    func createTokenAndCallback(secCode : String!) {
+        
+        self.vc.showLoading()
+        let saveCardToken = SavedCardToken(card: cardInfo as! CardInformation, securityCode: secCode, securityCodeRequired: true)
+    
+           MPServicesBuilder.createToken(saveCardToken, success: { (token) in
+            self.vc.hideLoading()
+              self.callback(token)
+            }, failure: { (error) in
+                self.vc.hideLoading()
+                 let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                self.vc.displayFailure(mpError)
+           })
+
+        
+    }
+    
     
     func getCardHeight() -> CGFloat {
         return (UIScreen.main.bounds.height*0.27 - 35)
