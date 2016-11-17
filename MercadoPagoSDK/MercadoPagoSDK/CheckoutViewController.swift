@@ -505,7 +505,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
         self.navBarTextColor = UIColor.blueMercadoPago()
-        self.didScrollInTable(scrollView, tableView: self.checkoutTable)
+        self.didScrollInTable(scrollView) //, tableView: self.checkoutTable)
     }
 }
 

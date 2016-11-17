@@ -188,7 +188,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-       self.didScrollInTable(scrollView, tableView: self.tableView)
+       self.didScrollInTable(scrollView) //, tableView: self.tableView)
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if index.section == 1  {

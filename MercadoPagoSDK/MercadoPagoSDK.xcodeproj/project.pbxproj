@@ -445,6 +445,12 @@
 		766012F01CF284A600897F9D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012ED1CF284A600897F9D /* WebViewController.swift */; };
 		766012F11CF284A600897F9D /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766012EE1CF284A600897F9D /* WebViewController.xib */; };
 		766012F21CF284A600897F9D /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766012EE1CF284A600897F9D /* WebViewController.xib */; };
+		766EE1B21DDDFD4500A4FBB3 /* MPLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		766EE1B31DDDFD4500A4FBB3 /* MPLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */; };
+		766EE1BE1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */; };
+		766EE1BF1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766EE1BD1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib */; };
+		766EE1C21DDE247400A4FBB3 /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */; };
+		766EE1C31DDE247400A4FBB3 /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */; };
 		7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */; };
 		7671F15D1D5A337000B9481F /* CustomerPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */; };
 		7671F1661D5A3B5A00B9481F /* CustomerPaymentMethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7671F1641D5A3B5A00B9481F /* CustomerPaymentMethodCell.swift */; };
@@ -885,6 +891,12 @@
 		766012E61CEBA19700897F9D /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
 		766012ED1CF284A600897F9D /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		766012EE1CF284A600897F9D /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLoadingView.h; sourceTree = "<group>"; };
+		766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLoadingView.m; sourceTree = "<group>"; };
+		766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		766EE1BD1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentVaultTitleCollectionViewCell.xib; sourceTree = "<group>"; };
+		766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
+		766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
 		7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerPaymentMethod.swift; sourceTree = "<group>"; };
 		7671F1641D5A3B5A00B9481F /* CustomerPaymentMethodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerPaymentMethodCell.swift; sourceTree = "<group>"; };
 		7671F1651D5A3B5A00B9481F /* CustomerPaymentMethodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerPaymentMethodCell.xib; sourceTree = "<group>"; };
@@ -1016,6 +1028,10 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
+				766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */,
+				766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */,
+				766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */,
+				766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */,
 				4BAA56071DB6861400501061 /* Images.xcassets */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
@@ -1434,6 +1450,8 @@
 				151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */,
 				151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */,
 				CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */,
+				766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */,
+				766EE1BD1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib */,
 			);
 			name = Revamp;
 			sourceTree = "<group>";
@@ -1999,7 +2017,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				766EE1C21DDE247400A4FBB3 /* UIView+RotateView.h in Headers */,
 				0F9883101AD2A97A00F750F0 /* MercadoPagoSDK.h in Headers */,
+				766EE1B21DDDFD4500A4FBB3 /* MPLoadingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2133,6 +2153,7 @@
 				0FC4FC3B1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				15D79A011CA1D3A100623A84 /* PayerCostTableViewCell.xib in Resources */,
 				4BAA55EC1DB0015800501061 /* PayerCostCardTableViewCell.xib in Resources */,
+				766EE1BF1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib in Resources */,
 				0F9884511AD2AEEF00F750F0 /* MPPaymentMethodEmptyTableViewCell.xib in Resources */,
 				76882AD71C4FBAD900B440B1 /* PaymentTitleViewCell.xib in Resources */,
 				0F9884491AD2AEC000F750F0 /* MPInstallmentsTableViewCell.xib in Resources */,
@@ -2291,7 +2312,6 @@
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
 				4BAE1D461DCBE8FF0000ED5C /* FooterTableViewCell.swift in Sources */,
 				15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */,
-				7656F5281C975EEF0076A14D /* PaymentDescriptionFooterTableViewCell.swift in Sources */,
 				7656F5271C975EE20076A14D /* TermsAndConditionsViewCell.swift in Sources */,
 				0F9883DA1AD2AD5500F750F0 /* PaymentDateTableViewCell.swift in Sources */,
 				761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
@@ -2384,6 +2404,7 @@
 				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
 				0F9886201AD39E7E00F750F0 /* ErrorTableViewCell.swift in Sources */,
+				766EE1B31DDDFD4500A4FBB3 /* MPLoadingView.m in Sources */,
 				0F9883571AD2AB6000F750F0 /* Address.swift in Sources */,
 				0F9884251AD2AE2700F750F0 /* MPUserIdTableViewCell.swift in Sources */,
 				76062BCA1C4D1F450067A14B /* PaymentMethodSearchService.swift in Sources */,
@@ -2440,6 +2461,7 @@
 				0F9883811AD2AB6000F750F0 /* Order.swift in Sources */,
 				0F98861D1AD3981A00F750F0 /* GenericErrorView.swift in Sources */,
 				76D936411CDA56A900238CB0 /* PreferenceService.swift in Sources */,
+				766EE1BE1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift in Sources */,
 				0F98841F1AD2AE2700F750F0 /* MPCardholderNameTableViewCell.swift in Sources */,
 				0F9884311AD2AE5900F750F0 /* InstallmentTableViewCell.swift in Sources */,
 				0F9883A91AD2AB8000F750F0 /* IdentificationService.swift in Sources */,
@@ -2472,6 +2494,7 @@
 				76062BD71C4D20C30067A14B /* PaymentVaultViewController.swift in Sources */,
 				0FDB3DAE1B1683610047A4D4 /* MPToolbar.swift in Sources */,
 				15C527991CDBC7E400D113F6 /* IssuerCardViewController.swift in Sources */,
+				766EE1C31DDE247400A4FBB3 /* UIView+RotateView.m in Sources */,
 				0F9883871AD2AB6000F750F0 /* Payment.swift in Sources */,
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
 				762B8C251D19752A00A86097 /* MPStepBuilder.swift in Sources */,

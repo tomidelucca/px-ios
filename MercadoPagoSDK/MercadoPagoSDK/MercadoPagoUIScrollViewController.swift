@@ -16,15 +16,17 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     
     var navBarBackgroundColor : UIColor?
     
-    func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
+    func didScrollInTable(_ scrollView: UIScrollView) { //, tableView: UIScrollView){
         
         
-            let visibleIndexPaths = tableView.indexPathsForVisibleRows!
-            for index in visibleIndexPaths {
-                if (index.section == 0){
+         //   let visibleIndexPaths = scrollView.indexPathsForVisibleRows!
+        
+      //      for index in visibleIndexPaths {
+        print(scrollView.contentOffset.y)
+        if (scrollView.contentOffset.y > -30) {
                     if !once {
                         hideNavBar()
-                        if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
+                        if (0 < scrollView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
                             once = true
                             showNavBar()
                         }
@@ -34,7 +36,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
                         }
                     }
                 }
-            }
+        //    }
             if (self.lastContentOffset > scrollView.contentOffset.y) {
                 scrollingDown = true
             }
@@ -44,6 +46,8 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
             self.lastContentOffset = scrollView.contentOffset.y
        
     }
+    
+
 
   
 }

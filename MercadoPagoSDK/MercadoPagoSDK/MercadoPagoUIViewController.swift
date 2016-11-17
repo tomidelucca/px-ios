@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
     open var callbackCancel : ((Void) -> Void)? 
@@ -196,7 +195,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
     
     internal func showLoading(){
-        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
+        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())        
     }
     
     var fistResponder : UITextField?
@@ -267,7 +266,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.title = self.getNavigationBarTitle()
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = nil
-            self.navigationController?.navigationBar.tintColor = nil
+            self.navigationController?.navigationBar.tintColor = UIColor.blueMercadoPago()
             self.navigationController?.navigationBar.isTranslucent = false
  
             let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
