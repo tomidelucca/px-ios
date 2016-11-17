@@ -3,7 +3,7 @@ language: objective-c
 cache: cocoapods
 osx_image: xcode8.1
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
-xcode_scheme: MercadoPagoSDKTests
+xcode_scheme: MercadoPagoSDK
 
 script:
 # tests not working yet
