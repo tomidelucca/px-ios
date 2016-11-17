@@ -33,7 +33,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 height += Int(label.frame.height)
                 let views = ["label": label]
                 
-                setContrainsHorizontal(views: views, constrain: 20)
+                Utils.setContrainsHorizontal(views: views, constrain: 20)
                 
                 let heightConstraints:[NSLayoutConstraint]
                 
@@ -42,20 +42,26 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     height += 30
                     NSLayoutConstraint.activate(heightConstraints)
                     
-                } else if index+1 != instruction.info.count && instruction.info[index-1] != "" && payment.paymentMethodId == "redlink" {
-                    setContrainsVertical(label: label, previus: previus, constrain: 0)
-                } else if index == 6 && payment.paymentMethodId == "redlink" {
-                    setContrainsVertical(label: label, previus: previus, constrain: 60)
-                    height += 60
+                } else if payment.paymentMethodId == "redlink"{
+                    
+                    if instruction.info[index-1] != ""{
+                        Utils.setContrainsVertical(label: label, previus: previus, constrain: 0)
+                    } else if index == 6{
+                        Utils.setContrainsVertical(label: label, previus: previus, constrain: 60)
+                        height += 60
+                    } else {
+                        Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
+                        height += 30
+                    }
+                    if index == 4{
+                        ViewUtils.drawBottomLine(y: CGFloat(height+30), width: UIScreen.main.bounds.width, inView: self.view)
+                    }
+                    
                 } else {
-                    setContrainsVertical(label: label, previus: previus, constrain: 30)
+                    Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
                     height += 30
                 }
                 previus = label
-                
-                if index == 4 && payment.paymentMethodId == "redlink"{
-                    ViewUtils.drawBottomLine(y: CGFloat(height+30), width: UIScreen.main.bounds.width, inView: self.view)
-                }
                 
             }
             for reference in instruction.references {
@@ -65,11 +71,11 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     
                     let views = ["label": label]
                     
-                    setContrainsHorizontal(views: views, constrain: 20)
+                    Utils.setContrainsHorizontal(views: views, constrain: 20)
                     let heightConstraints:[NSLayoutConstraint]
                     
                     if  previus != nil {
-                        setContrainsVertical(label: label, previus: previus, constrain: 30)
+                        Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
                     } else {
                         heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(30)-[label]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                         NSLayoutConstraint.activate(heightConstraints)
@@ -84,12 +90,12 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 let views = ["label": label]
                 
                 if payment.paymentMethodId == "redlink" {
-                    setContrainsHorizontal(views: views, constrain: 15)
+                    Utils.setContrainsHorizontal(views: views, constrain: 15)
                 } else {
-                    setContrainsHorizontal(views: views, constrain: 60)
+                    Utils.setContrainsHorizontal(views: views, constrain: 60)
                 }
                 
-                setContrainsVertical(label: label, previus: previus, constrain: 1)
+                Utils.setContrainsVertical(label: label, previus: previus, constrain: 1)
                 previus = label
                 
             }
@@ -108,7 +114,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
                 
                 let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[image]-[label]-\((UIScreen.main.bounds.width - label.frame.width - 16)/2)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
                 NSLayoutConstraint.activate(widthConstraints)
-                setContrainsVertical(label: label, previus: previus, constrain: 30)
+                Utils.setContrainsVertical(label: label, previus: previus, constrain: 30)
                 
                 let verticalConstraint = NSLayoutConstraint(item: image, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: label, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
                 view.addConstraint(verticalConstraint)
@@ -127,9 +133,9 @@ class InstructionBodyTableViewCell: UITableViewCell {
                     button.addTarget(self, action: #selector(self.goToURL), for: .touchUpInside)
                     self.view.addSubview(button)
                     let views = ["button": button]
-                    setContrainsHorizontal(views: views, constrain: 60)
+                    Utils.setContrainsHorizontal(views: views, constrain: 60)
                     
-                    setContrainsVertical(label: button, previus: previus, constrain: 30)
+                    Utils.setContrainsVertical(label: button, previus: previus, constrain: 30)
                     previus = button
                 }
             }
@@ -143,18 +149,6 @@ class InstructionBodyTableViewCell: UITableViewCell {
     }
     func getAttributes(fontSize:Int, color:UIColor)-> [String:AnyObject] {
         return [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: CGFloat(fontSize)) ?? UIFont.systemFont(ofSize: CGFloat(fontSize)),NSForegroundColorAttributeName: color]
-    }
-    
-    func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
-        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
-        NSLayoutConstraint.activate(widthConstraints)
-    }
-    
-    func setContrainsVertical(label: UIView, previus: UIView?, constrain:CGFloat) {
-        if let previus = previus {
-            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: constrain)]
-            NSLayoutConstraint.activate(heightConstraints)
-        }
     }
     
     func goToURL(sender:MPButton!)

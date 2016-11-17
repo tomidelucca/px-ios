@@ -30,6 +30,19 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 class Utils {
+    
+    class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
+        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        NSLayoutConstraint.activate(widthConstraints)
+    }
+    
+    class func setContrainsVertical(label: UIView, previus: UIView?, constrain:CGFloat) {
+        if let previus = previus {
+            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: constrain)]
+            NSLayoutConstraint.activate(heightConstraints)
+        }
+    }
+    
     class func getDateFromString(_ string: String!) -> Date! {
         if string == nil {
             return nil
@@ -283,5 +296,6 @@ class Utils {
         let mm : Int = Int(floor(floatMMYY))
         return mm
     }
+
 
 }
