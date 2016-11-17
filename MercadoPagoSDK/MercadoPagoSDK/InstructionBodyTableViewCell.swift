@@ -17,8 +17,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func fillCell(instruction: Instruction?, payment: Payment){
-        if let instruction = instruction{
+    func fillCell(instruction: Instruction, payment: Payment){
             var previus: UIView?
             var height = 0
             
@@ -143,9 +142,6 @@ class InstructionBodyTableViewCell: UITableViewCell {
             let views = ["label": previus]
             let heightConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-30-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
             NSLayoutConstraint.activate(heightConstraints)
-            
-        }
-        
     }
     func getAttributes(fontSize:Int, color:UIColor)-> [String:AnyObject] {
         return [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: CGFloat(fontSize)) ?? UIFont.systemFont(ofSize: CGFloat(fontSize)),NSForegroundColorAttributeName: color]
