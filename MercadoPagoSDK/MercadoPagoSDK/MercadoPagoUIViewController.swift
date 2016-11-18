@@ -99,8 +99,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
-                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
+                self.navigationController?.navigationBar.tintColor = navBarTextColor
+                self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
                 self.navigationController?.navigationBar.removeBottomLine()
                   self.navigationController?.navigationBar.isTranslucent = false
                 //Create navigation buttons
@@ -267,10 +267,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.title = self.getNavigationBarTitle()
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = nil
-            //self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
+            self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.backgroundColor = navBarBackgroundColor
             self.navigationController?.navigationBar.isTranslucent = false
  
+            
+            
             let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -282,10 +284,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if navigationController != nil {
             self.title = ""
             navigationController?.navigationBar.titleTextAttributes = nil
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            
+            let image = UIImage.imageFromColor(color: navBarBackgroundColor, frame: CGRect(x: 0, y: 0, width: 340, height: 64))
+            self.navigationController?.navigationBar.setBackgroundImage(image, for: UIBarMetrics.compactPrompt)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController!.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-            
+            self.navigationController!.navigationBar.backgroundColor?.withAlphaComponent(0.0)
             self.navigationController?.navigationBar.isTranslucent = true
         }
     }
@@ -332,5 +336,16 @@ extension UINavigationController {
     
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
+    }
+}
+
+extension UIImage {
+    public static func imageFromColor(color: UIColor, frame: CGRect) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        color.setFill()
+        UIRectFill(frame)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
     }
 }
