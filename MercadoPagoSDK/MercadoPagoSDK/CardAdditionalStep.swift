@@ -89,6 +89,15 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         fatalError("init(coder:) has not been implemented")
     }
     
+    public init(cardInformation : CardInformation, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
+        
+        self.viewModel = CardAdditionalStepViewModel(paymentMethod: [cardInformation.getPaymentMethod()], issuer: cardInformation.getIssuer(), token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
+        self.viewModel.cardInformation = cardInformation
+        
+        super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
+        self.timer=timer
+    }
+    
     public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
         
         self.viewModel = CardAdditionalStepViewModel(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
@@ -243,6 +252,7 @@ class CardAdditionalStepViewModel : NSObject {
     var amount: Double!
     var paymentPreference: PaymentPreference?
     var issuersList:[Issuer]?
+    var cardInformation : CardInformation?
     var callback : ((_ payerCost: NSObject?) -> Void)?
     
     init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
@@ -274,7 +284,7 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func hasIssuer()-> Bool{
-        return issuer != nil || (token != nil && token!.isIssuerRequired())
+        return (issuer != nil || (token != nil && token!.isIssuerRequired())) || (self.cardInformation != nil && !self.cardInformation!.isIssuerRequired())
     }
     func hasPaymentMethod()->Bool{
         if (paymentMethod.count)>1{
