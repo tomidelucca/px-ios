@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 
 open class Card : NSObject, CardInformation {
-  
-
     
     open var cardHolder : Cardholder?
     open var customerId : String?
@@ -149,6 +147,10 @@ open class Card : NSObject, CardInformation {
     
     open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
+    }
+    
+    public func isIssuerRequired() -> Bool {
+        return self.issuer == nil
     }
 }
 

@@ -72,7 +72,8 @@ open class MPFlowBuilder : NSObject {
                                                     callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         
         MercadoPagoContext.initFlavor2()
-        let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearch.groups, paymentMethods: paymentMethodSearch.paymentMethods, tintColor: true,
+        let paymentVault =
+            PaymentVaultViewController(amount: amount, paymentPreference: paymentPreference, paymentMethodSearch: paymentMethodSearch, tintColor: true,
                                                       callback: callback, callbackCancel : callbackCancel)
         paymentVault.modalTransitionStyle = .crossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
@@ -107,7 +108,6 @@ open class MPFlowBuilder : NSObject {
         }
         
         cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, cardInformation : cardInformation, paymentMethods : paymentMethods, token: token, timer: timer, callback: { (paymentMethod, token, issuer) -> Void in
-            
             
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
                 let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)

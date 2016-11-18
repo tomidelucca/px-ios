@@ -236,7 +236,7 @@ open class MPStepBuilder : NSObject {
         if !cardToken.isCustomerPaymentMethod() {
             MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
 
-                    if(issuers!.count > 1){
+                    if(issuers.count > 1){
                         let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
                             if let nav = ccf.navigationController {
                                 nav.showLoading()
@@ -250,7 +250,7 @@ open class MPStepBuilder : NSObject {
                         
                     ccf.navigationController!.pushViewController(issuerForm, animated: false)
                 } else {
-                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
+                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers[0], ccf: ccf, callback: callback)
                 }
                 }, failure: { (error) -> Void in
                     if let nav = ccf.navigationController {

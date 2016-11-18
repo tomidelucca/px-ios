@@ -38,10 +38,7 @@ open class PaymentMethod : NSObject  {
         let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
         return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
-    open func isAccountMoney() -> Bool {
-        return (self._id == "account_money")
-    }
-    
+
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
         if setting != nil && setting!.securityCode.length != 0 {
@@ -135,6 +132,10 @@ open class PaymentMethod : NSObject  {
     
     open func isAmex() -> Bool{
         return self._id == "amex"
+    }
+    
+    open func isAccountMoney() -> Bool{
+        return self._id == PaymentTypeId.ACCOUNT_MONEY.rawValue
     }
     
     open func secCodeMandatory() -> Bool {
