@@ -19,7 +19,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
 
     var securityCode : SecurityCode = SecurityCode()
     var paymentMethod : PaymentMethod!
-    var issuer : Issuer?
+    var card : Card?
     
     open class func fromJSON(_ json : NSDictionary) -> CustomerPaymentMethod {
         let  customerPaymentMethod = CustomerPaymentMethod()
@@ -42,16 +42,14 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         if json["first_six_digits"] != nil && !(json["first_six_digits"]! is NSNull) {
             customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
         }
-        if let issuerDic = json["issuer"] as? NSDictionary {
-               customerPaymentMethod.issuer = Issuer.fromJSON(issuerDic)
-        }
         
         return customerPaymentMethod
     }
     
     
     public func getIssuer() -> Issuer? {
-        return issuer
+     
+        return card?.issuer
     }
 
     
