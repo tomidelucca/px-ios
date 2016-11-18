@@ -27,6 +27,8 @@ public protocol CardInformation : CardInformationForm {
     
     func getIssuer() -> Issuer?
     
+    func getFirstSixDigits() -> String!
+
 }
 @objc
 public protocol CardInformationForm : NSObjectProtocol {

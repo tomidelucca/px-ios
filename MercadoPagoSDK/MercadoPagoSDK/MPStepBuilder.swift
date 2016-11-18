@@ -73,9 +73,10 @@ open class MPStepBuilder : NSObject {
     
     
     open class func startPaymentResultStep(_ payment: Payment, paymentMethod : PaymentMethod,
-                                           callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
-        MercadoPagoContext.initFlavor2()
-        if (paymentMethod.isOfflinePaymentMethod()){
+                                               callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
+        
+      MercadoPagoContext.initFlavor2()
+        if (!paymentMethod.isOnlinePaymentMethod()){
             return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
         } else {
             return self.startPaymentCongratsStep(payment, paymentMethod: paymentMethod, callback : callback)
@@ -126,13 +127,16 @@ open class MPStepBuilder : NSObject {
     
     
     
-    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
-        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, token: token, callback: callback)
+    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
+        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
         return secVC
     }
+    
+    
     open class func startCreditCardForm(_ paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), callbackCancel : ((Void) -> Void)?) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : UINavigationController?
+        
         var ccf : CardFormViewController = CardFormViewController()
         
         //C4A

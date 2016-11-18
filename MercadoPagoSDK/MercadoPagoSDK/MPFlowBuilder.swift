@@ -73,8 +73,21 @@ open class MPFlowBuilder : NSObject {
     open class func startCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
 
-        var cardVC : UINavigationController?
+        
+        if (cardInformation == nil){
+            return startDefaultCardFlow(paymentPreference, amount: amount, cardInformation: cardInformation, paymentMethods: paymentMethods, token: token, timer: timer, callback: callback, callbackCancel: callbackCancel)
+        }else{
+            return startCustomerCardFlow(paymentPreference, amount: amount, cardInformation: cardInformation, timer: timer, callback: callback, callbackCancel: callbackCancel)
 
+        }
+    }
+    
+    
+    open class func startDefaultCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
+        MercadoPagoContext.initFlavor2()
+        
+        var cardVC : UINavigationController?
+        
         var ccf : CardFormViewController = CardFormViewController()
         
         var currentCallbackCancel : ((Void) -> Void)
@@ -110,16 +123,16 @@ open class MPFlowBuilder : NSObject {
                 }
                 
                 
-            }, failure: { (error) -> Void in
-                if let nav = ccf.navigationController {
-                    nav.hideLoading()
-                }
-                
-                
+                }, failure: { (error) -> Void in
+                    if let nav = ccf.navigationController {
+                        nav.hideLoading()
+                    }
+                    
+                    
             })
             
             
-        }, callbackCancel : currentCallbackCancel)
+            }, callbackCancel : currentCallbackCancel)
         
         ccf = cardVC?.viewControllers[0] as! CardFormViewController
         
@@ -129,5 +142,59 @@ open class MPFlowBuilder : NSObject {
         
     }
     
+
     
+    
+    
+    open class func startCustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
+        let mpNav =  UINavigationController()
+        var pcvc : CardAdditionalStep!
+        pcvc = MPStepBuilder.startPayerCostForm([cardInformation.getPaymentMethod()], issuer: cardInformation.getIssuer(), token: nil, amount:amount, paymentPreference: paymentPreference, installment:nil, timer: timer, callback: { (payerCost) -> Void in
+                    // callback(paymentMethod, token!, cardInformation.getIssuer(), payerCost as! PayerCost?)
+                let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
+                    callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(),payerCost as? PayerCost)
+                }
+                pcvc.navigationController!.pushViewController(secCode, animated: true)
+            })
+        pcvc.callbackCancel = callbackCancel
+                    
+        mpNav.pushViewController(pcvc, animated: true)
+        
+        
+        return mpNav
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

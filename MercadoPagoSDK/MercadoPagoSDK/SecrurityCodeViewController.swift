@@ -10,7 +10,7 @@ import UIKit
 
 open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate{
     
-    @IBOutlet weak var securityCodeLabel: UILabel!
+    var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
     
@@ -31,11 +31,13 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         self.cardBack = CardBackView.init(frame: viewModel.getCardBounds())
         if (viewModel.showFrontCard()){
             self.view.addSubview(cardFront)
+            self.securityCodeLabel = cardFront.cardCVV
         }else{
              self.view.addSubview(cardBack)
+            self.securityCodeLabel = cardBack.cardCVV
         }
         self.view.bringSubview(toFront: panelView)
-        self.updateCardSkin(token: viewModel.token , paymentMethod: viewModel.paymentMethod)
+        self.updateCardSkin(cardInformation: viewModel.cardInfo , paymentMethod: viewModel.paymentMethod)
         
         securityCodeTextField.autocorrectionType = UITextAutocorrectionType.no
         securityCodeTextField.keyboardType = UIKeyboardType.numberPad
@@ -48,10 +50,10 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         // Dispose of any resources that can be recreated.
     }
     
-    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
+    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ){
     
         super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, token: token, callback: callback)
+        self.viewModel = SecrurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, owner: self, callback: callback)
         
     }
     
@@ -87,42 +89,23 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         }
     }
     
-    func showNavBar() {
-      //  self.title = self.viewModel.getTilte()
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.tintColor = nil
-        self.navigationController?.navigationBar.isTranslucent = false
-        let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-    }
-    
-    func hideNavBar(){
-        self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
-    
     
     @IBAction func cloneToken(_ sender: AnyObject) {
         guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
             showErrorMessage()
             return
         }
-        self.viewModel.cloneTokenAndCallback(secCode: securityCodeTextField.text)
+        self.viewModel.tokenAndCallback(secCode: securityCodeTextField.text)
     }
     
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
+    func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
         if viewModel.showFrontCard() {
             if let paymentMethod = paymentMethod{
                 self.cardFront.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
                 self.cardFront.backgroundColor = MercadoPago.getColorFor(paymentMethod)
                 self.cardFront.cardLogo.alpha = 1
                 let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
-                if let token = token{
+                if let token = cardInformation{
                     self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
                     cardFront.cardNumber.text =  self.textMaskFormater.textMasked(token.getCardLastForDigits())
                 }
@@ -155,8 +138,8 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     
     open func editingChanged(_ textField:UITextField){
         hideErrorMessage()
-        //securityCodeLabel.text = textField.text
-        
+       securityCodeLabel.text = textField.text
+        securityCodeLabel.textColor  = UIColor.black
     }
     
     open func showErrorMessage(){
@@ -170,11 +153,14 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
 
 open class SecrurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
-    var token : Token!
+    var cardInfo : CardInformationForm!
 
-    public init(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ){
+    unowned var vc : SecrurityCodeViewController
+    
+    public init(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, owner: SecrurityCodeViewController,  callback: ((_ token: Token?)->Void)! ){
+        self.vc = owner
         self.paymentMethod = paymentMethod
-        self.token = token
+        self.cardInfo = cardInfo
         self.callback = callback
     }
     
@@ -190,13 +176,48 @@ open class SecrurityCodeViewModel: NSObject {
     func secCodeLenght() -> Int {
         return paymentMethod.secCodeLenght()
     }
-    func cloneTokenAndCallback(secCode : String!) {
-        MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
-            self.callback(token)
-            }, failure: { (error) in
-            self.callback(nil) // VER
-        })
+    
+    
+    func tokenAndCallback(secCode : String!){
+        if let token = cardInfo as? Token {
+            self.cloneTokenAndCallback(secCode: secCode)
+        }else{
+            self.createTokenAndCallback(secCode: secCode)
+        }
     }
+    func cloneTokenAndCallback(secCode : String!) {
+        
+        self.vc.showLoading()
+        if let token = cardInfo as? Token {
+            MPServicesBuilder.cloneToken(token,securityCode:secCode, success: { (token) in
+                self.vc.hideLoading()
+                self.callback(token)
+                }, failure: { (error) in
+                    self.vc.hideLoading()
+                    let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                    self.vc.displayFailure(mpError)
+            })
+        }
+       
+    }
+    
+    func createTokenAndCallback(secCode : String!) {
+        
+        self.vc.showLoading()
+        let saveCardToken = SavedCardToken(card: cardInfo as! CardInformation, securityCode: secCode, securityCodeRequired: true)
+    
+           MPServicesBuilder.createToken(saveCardToken, success: { (token) in
+            self.vc.hideLoading()
+              self.callback(token)
+            }, failure: { (error) in
+                self.vc.hideLoading()
+                 let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                self.vc.displayFailure(mpError)
+           })
+
+        
+    }
+    
     
     func getCardHeight() -> CGFloat {
         return (UIScreen.main.bounds.height*0.27 - 35)

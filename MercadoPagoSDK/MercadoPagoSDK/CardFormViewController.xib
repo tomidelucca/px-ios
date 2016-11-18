@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -66,12 +66,6 @@
                         <constraint firstAttribute="height" constant="44" id="aFP-zn-PR6"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4wC-Ci-WCV">
-                    <constraints>
-                        <constraint firstAttribute="height" constant="129" id="HdT-BW-Kkz"/>
-                        <constraint firstAttribute="width" constant="139" id="Ol2-Hh-EPO"/>
-                    </constraints>
-                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-yC-PDa">
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duM-jG-gy1">
@@ -144,7 +138,6 @@
                 <constraint firstAttribute="bottom" secondItem="Olw-Lu-Sob" secondAttribute="bottom" id="0iJ-Cj-WeG"/>
                 <constraint firstAttribute="trailing" secondItem="ASx-GA-eOR" secondAttribute="trailing" id="2CN-iN-DjR"/>
                 <constraint firstItem="HQg-yC-PDa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4J2-ua-9z6"/>
-                <constraint firstItem="4wC-Ci-WCV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="72D-24-4s9"/>
                 <constraint firstAttribute="bottom" secondItem="ASx-GA-eOR" secondAttribute="bottom" constant="216" id="BKi-7C-qji"/>
                 <constraint firstItem="Olw-Lu-Sob" firstAttribute="top" secondItem="ASx-GA-eOR" secondAttribute="bottom" id="GXL-e4-4jJ"/>
                 <constraint firstItem="UFe-jt-dCn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Kps-70-0cP"/>
@@ -152,7 +145,6 @@
                 <constraint firstItem="Olw-Lu-Sob" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="PII-wH-txj"/>
                 <constraint firstItem="ASx-GA-eOR" firstAttribute="top" secondItem="UFe-jt-dCn" secondAttribute="bottom" constant="-1" id="ab4-Ci-iLk"/>
                 <constraint firstAttribute="trailing" secondItem="Olw-Lu-Sob" secondAttribute="trailing" id="bEG-Lc-JB2"/>
-                <constraint firstAttribute="bottom" secondItem="4wC-Ci-WCV" secondAttribute="bottom" constant="65" id="bc0-A1-he8"/>
                 <constraint firstAttribute="trailing" secondItem="HQg-yC-PDa" secondAttribute="trailing" id="kOB-62-EI1"/>
                 <constraint firstItem="HQg-yC-PDa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oLi-pd-ETQ"/>
                 <constraint firstAttribute="trailing" secondItem="UFe-jt-dCn" secondAttribute="trailing" id="y0q-es-6YA"/>
@@ -163,7 +155,4 @@
             <point key="canvasLocation" x="200" y="361"/>
         </view>
     </objects>
-    <resources>
-        <image name="mpLogo" width="281" height="261"/>
-    </resources>
 </document>
