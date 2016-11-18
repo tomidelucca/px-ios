@@ -9,14 +9,14 @@
 import UIKit
 
 open class CustomerPaymentMethod: NSObject, CardInformation {
-  
+
     
     var _id : String!
     var _description : String!
-    var type : String!
-    var value : String!
+    var paymentMethodId : String!
+    var paymentMethodTypeId : String!
     var firstSixDigits : String!
-    
+
     var securityCode : SecurityCode = SecurityCode()
     
     open class func fromJSON(_ json : NSDictionary) -> CustomerPaymentMethod {

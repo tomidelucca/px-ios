@@ -39,9 +39,6 @@ open class PaymentMethod : NSObject  {
         return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
     
-    open func isAccountMoney() -> Bool {
-        return (self._id == "account_money")
-    }
     
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
