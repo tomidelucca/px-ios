@@ -61,7 +61,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
     static let MP_PROD_ENV = "/v1"
-    static let API_VERSION = "1.3.0"
+    static let API_VERSION = "1.3.!"
 
     static let MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
     
@@ -313,7 +313,31 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-
+    open class func getImageFor(searchItem : PaymentMethodSearchItem) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: searchItem.idPaymentMethodSearchItem) as? NSDictionary else {
+            return nil
+        }
+        
+            return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
+    open class func getImageFor(cardInformation : CardInformation) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: cardInformation.getPaymentMethodId()) as? NSDictionary else {
+            return nil
+        }
+        
+        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
+    
     open class func getImageFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> UIImage?{
         if (forCell == true) {
             return MercadoPago.getImage(paymentMethod._id.lowercased())
