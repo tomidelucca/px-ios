@@ -64,7 +64,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             }
         }
         self.extendedLayoutIncludesOpaqueBars = true
-        
+        self.navBarHeight = -30
     }
     
     override open func viewDidAppear(_ animated: Bool) {

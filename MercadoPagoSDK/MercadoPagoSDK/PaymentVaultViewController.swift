@@ -133,8 +133,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-        self.view.backgroundColor = MercadoPagoContext.getComplementaryColor()
-        //self.collectionSearch.backgroundColor = MercadoPagoContext.getComplementaryColor()
+       self.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
+       self.collectionSearch.backgroundColor = MercadoPagoContext.getPrimaryColor()
  
     }
     
