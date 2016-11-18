@@ -39,7 +39,7 @@ open class MPFlowBuilder : NSObject {
         let paymentVault = PaymentVaultViewController(amount: amount, paymentPreference : paymentPreference, callback: callback, callbackCancel: callbackCancel)
         if let callbackCancel = callbackCancel{
             paymentVault.callbackCancel = {(Void) -> Void in
-                paymentVault.dismiss(animated: true, completion: { callbackCancel()}
+            paymentVault.dismiss(animated: true, completion: { callbackCancel()}
             )}
         }
         paymentVault.viewModel.callback = {(paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost : PayerCost?) -> Void in

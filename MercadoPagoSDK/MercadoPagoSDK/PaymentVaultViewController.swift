@@ -206,7 +206,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1 {
+            if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
                 self.collectionSearch.delegate = self
