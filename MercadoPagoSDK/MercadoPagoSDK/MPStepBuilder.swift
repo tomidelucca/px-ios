@@ -228,7 +228,8 @@ open class MPStepBuilder : NSObject {
     fileprivate class func getIssuers(_ paymentMethod : PaymentMethod, cardToken : CardToken, customerCard : CardInformation? = nil, timer : CountdownTimer? = nil, ccf : MercadoPagoUIViewController,
                                       callback : @escaping (_ paymentMethod: PaymentMethod, _ token: Token, _ issuer:Issuer?) -> Void){
         MercadoPagoContext.initFlavor2()
-        ccf.navigationController?.showLoading()
+      //  ccf.navigationController?.showLoading()
+        ccf.showLoading()
 
         
         if !cardToken.isCustomerPaymentMethod() {

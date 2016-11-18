@@ -93,7 +93,8 @@
 		                                                multiplier:1.0
 		                                                  constant:0.0]];
 
-		self.spinner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"loading_default"]];
+		self.spinner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mpui-loading_default"]];
+        [self.spinner setFrame: CGRectMake(50, 50, 100, 100)];
 		[self addSubview:self.spinner];
 		[self.spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
 
@@ -115,12 +116,12 @@
 		                                                multiplier:1.0f
 		                                                  constant:10]];
 
-		[self rotateSpinner];
+//		[self rotateSpinner];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self
-		                                         selector:@selector(rotateSpinner)
-		                                             name:UIApplicationWillEnterForegroundNotification
-		                                           object:nil];
+//		[[NSNotificationCenter defaultCenter] addObserver:self
+//		                                         selector:@selector(rotateSpinner)
+//		                                             name:UIApplicationWillEnterForegroundNotification
+//		                                           object:nil];
 	}
 
 	return self;

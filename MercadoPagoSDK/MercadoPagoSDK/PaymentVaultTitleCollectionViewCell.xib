@@ -17,20 +17,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="319" height="67"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Esto es un titulo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zH-1X-Amk">
-                        <rect key="frame" x="98" y="23" width="123" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zH-1X-Amk">
+                        <rect key="frame" x="50.5" y="20.5" width="220" height="26.5"/>
+                        <attributedString key="attributedText">
+                            <fragment content="¿Cómo quieres pagar?">
+                                <attributes>
+                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="22" name=".AppleSystemUIFont"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="1" green="0.0" blue="0.96301185344827589" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="2zH-1X-Amk" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="5LW-i2-ddU"/>
                 <constraint firstItem="2zH-1X-Amk" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="aDs-YC-6jM"/>
             </constraints>
             <size key="customSize" width="319" height="67"/>
+            <connections>
+                <outlet property="title" destination="2zH-1X-Amk" id="eeT-m7-Ilg"/>
+            </connections>
             <point key="canvasLocation" x="260.5" y="62.5"/>
         </collectionViewCell>
     </objects>

@@ -10,41 +10,50 @@ import UIKit
 
 open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
 
-    var once = false
+    var displayNavBar = false
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
+    var navBarHeight : CGFloat = -18
     
-    var navBarBackgroundColor : UIColor?
     
-    func didScrollInTable(_ scrollView: UIScrollView) { //, tableView: UIScrollView){
+    
+    func didScrollInTable(_ scrollView: UIScrollView) {
         
-        
-         //   let visibleIndexPaths = scrollView.indexPathsForVisibleRows!
-        
-      //      for index in visibleIndexPaths {
         print(scrollView.contentOffset.y)
-        if (scrollView.contentOffset.y > -30) {
-                    if !once {
-                        hideNavBar()
-                        if (0 < scrollView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
-                            once = true
-                            showNavBar()
-                        }
-                    } else {
-                        if scrollingDown {
-                            once = false
-                        }
-                    }
+        print("navBar : " + String(describing: navBarHeight))
+        if (scrollView.contentOffset.y > navBarHeight + UIApplication.shared.statusBarFrame.size.height) {
+            /*if !self.displayNavBar {
+                
+                if (0 < scrollView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
+                    self.displayNavBar = true
+                    showNavBar()
+                } else {
+                    hideNavBar()
                 }
-        //    }
-            if (self.lastContentOffset > scrollView.contentOffset.y) {
-                scrollingDown = true
-            }
-            else if (self.lastContentOffset < scrollView.contentOffset.y) {
-                scrollingDown = false
-            }
-            self.lastContentOffset = scrollView.contentOffset.y
-       
+            } else {
+                if self.scrollingDown {
+                    self.displayNavBar = false
+                }
+            }*/
+            showNavBar()
+            
+        } else {
+            hideNavBar()
+        }
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+            self.scrollingDown = true
+        } else {
+            self.scrollingDown = false
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
+        print("scrolling : " + String(scrollingDown))
+        
+    }
+    
+    
+    override func getNavigationBarTitle() -> String {
+        return ""
     }
     
 

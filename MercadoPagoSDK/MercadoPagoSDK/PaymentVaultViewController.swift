@@ -136,15 +136,15 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
 
         self.view.backgroundColor = MercadoPagoContext.getComplementaryColor()
-        self.collectionSearch.backgroundColor = MercadoPagoContext.getComplementaryColor()
+        //self.collectionSearch.backgroundColor = MercadoPagoContext.getComplementaryColor()
  
-
-        
-        
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.hideNavBar()
+        
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
     }
@@ -231,6 +231,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
         
+    }
+    
+    override func getNavigationBarTitle() -> String {
+        return "¿Cómo quierés pagar?".localized
     }
     
     open override func didReceiveMemoryWarning() {
@@ -360,7 +364,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let availableWidth = view.frame.width - paddingSpace
         
         if indexPath.section == 0 {
-            return CGSize(width : availableWidth, height : 30)
+            return CGSize(width : view.frame.width, height : 70)
         }
        
         
@@ -530,9 +534,6 @@ class PaymentVaultViewModel : NSObject {
         }
     }
     
-    func getNavigationBarTitle() -> String {
-        return "Seleccione medio de pago".localized
-    }
 
 
 }

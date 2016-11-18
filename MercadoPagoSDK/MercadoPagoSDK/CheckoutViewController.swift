@@ -55,7 +55,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
         
-        //self.title = "¿Cómo quieres pagar?".localized
         
         
     }
@@ -66,21 +65,22 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navigationItem.rightBarButtonItem = nil
         
-        self.navigationController?.navigationBar.tintColor = UIColor.white()
-        self.navigationController?.navigationBar.barTintColor = UIColor.white()
-        
+//        self.navigationController?.navigationBar.tintColor = UIColor.white()
+//        self.navigationController?.navigationBar.barTintColor = UIColor.white()
+//        
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLoading()
-        
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
-        
+        self.hideNavBar()
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
+        self.navBarBackgroundColor = UIColor.white()
+        self.showLoading()
+        
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
         } else {
@@ -103,6 +103,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             }
         }
 
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.navBarHeight -= 10
     }
     
     override open func didReceiveMemoryWarning() {
@@ -281,6 +283,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
 
         self.viewModel.payerCost = payerCost
+        self.hideLoading()
     }
     
     

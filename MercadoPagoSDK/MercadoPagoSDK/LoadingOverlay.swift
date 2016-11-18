@@ -49,8 +49,11 @@ open class LoadingOverlay {
         return self.screenContainer
     }
     
-    open func showOverlay(_ view: UIView, backgroundColor : UIColor, indicatorColor : UIColor) {
-        self.loadingContainer = MPLoadingView(frame: view.frame, backgroundColor: backgroundColor, loadingText: "Cargando".localized)!
+    open func showOverlay(_ view: UIView, backgroundColor : UIColor) {
+        let color =  UIColor.white()
+        
+        self.loadingContainer = MPLoadingView(backgroundColor: color, loadingText: "Cargando".localized)!
+        self.loadingContainer.backgroundColor = UIColor.redFailureColor()
        // let overlay = self.getLoadingOverlay(loadingView, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
         
         view.addSubview(self.loadingContainer)
