@@ -114,7 +114,9 @@ open class Card : NSObject, CardInformation {
         }
     }
 
-    
+    public func getFirstSixDigits() -> String! {
+        return firstSixDigits
+    }
     open func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
@@ -145,6 +147,10 @@ open class Card : NSObject, CardInformation {
     
     open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
+    }
+    
+    public func isIssuerRequired() -> Bool {
+        return self.issuer == nil
     }
 }
 

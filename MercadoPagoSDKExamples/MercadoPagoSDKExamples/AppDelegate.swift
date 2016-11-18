@@ -26,8 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
-        MercadoPagoContext.setBaseURL("https://www.mercadopago.com/checkout/examples")
-        MercadoPagoContext.setCustomerURI("/getCustomer")
+
+        MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
+        MercadoPagoContext.setCustomerURI("/get_customer")
+        MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
+
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
 

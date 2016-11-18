@@ -21,7 +21,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
-       
+        
         var upperFrame = self.tableView.bounds
         upperFrame.origin.y = -upperFrame.size.height;
         let upperView = UIView(frame: upperFrame)
@@ -64,7 +64,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             }
         }
         self.extendedLayoutIncludesOpaqueBars = true
-
+        
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -106,7 +106,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             return self.viewModel.getCardCellHeight()
         case 2:
             return self.viewModel.gerRowCellHeight()
-        
+            
         default:
             return 60
         }
@@ -188,7 +188,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-       self.didScrollInTable(scrollView) //, tableView: self.tableView)
+        self.didScrollInTable(scrollView)
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if index.section == 1  {
@@ -203,7 +203,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
                 }
             }
         }
-
+        
     }
     
     fileprivate func getInstallments(){
@@ -260,7 +260,7 @@ class CardAdditionalStepViewModel : NSObject {
         }else if hasPaymentMethod(){
             return (issuersList?.count) ?? 0
         } else {
-            return paymentMethod.count 
+            return paymentMethod.count
         }
     }
     func getTitle() -> String{
@@ -273,7 +273,7 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func hasIssuer()-> Bool{
-        return issuer != nil
+        return issuer != nil || (token != nil && token!.isIssuerRequired())
     }
     func hasPaymentMethod()->Bool{
         if (paymentMethod.count)>1{

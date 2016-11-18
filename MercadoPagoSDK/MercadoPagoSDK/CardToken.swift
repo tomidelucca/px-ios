@@ -336,4 +336,8 @@ open class CardToken : NSObject, CardInformationForm {
         return getBin()
     }
 
+    public func isIssuerRequired() -> Bool {
+        return true
+    }
+
 }

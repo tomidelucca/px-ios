@@ -165,7 +165,7 @@ open class MPServicesBuilder : NSObject {
         
     }
     
-    open class func getIssuers(_ paymentMethod : PaymentMethod, bin: String? = nil, success: @escaping (_ issuers: [Issuer]?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func getIssuers(_ paymentMethod : PaymentMethod, bin: String? = nil, success: @escaping (_ issuers: [Issuer]) -> Void, failure: ((_ error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_ISSUERS", result: nil)
         

@@ -73,9 +73,8 @@ open class MPStepBuilder : NSObject {
     
     
     open class func startPaymentResultStep(_ payment: Payment, paymentMethod : PaymentMethod,
-                                               callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
-        
-      MercadoPagoContext.initFlavor2()
+                                           callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
+        MercadoPagoContext.initFlavor2()
         if (!paymentMethod.isOnlinePaymentMethod()){
             return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
         } else {
@@ -94,9 +93,9 @@ open class MPStepBuilder : NSObject {
     }
     
     open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,
-                                          callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsViewController {
+                                          callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsRevampViewController {
         MercadoPagoContext.initFlavor2()
-        return InstructionsViewController(payment: payment, paymentTypeId : PaymentTypeId(rawValue: paymentTypeId)!, callback : {(payment : Payment) -> Void in
+        return InstructionsRevampViewController(payment: payment, paymentTypeId : paymentTypeId, callback : {(payment : Payment, status: CongratsState) -> Void in
             callback(payment, CongratsState.ok)
         })
     }
@@ -127,13 +126,16 @@ open class MPStepBuilder : NSObject {
     
     
     
-    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,token : Token!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
-        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, token: token, callback: callback)
+    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
+        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
         return secVC
     }
+    
+    
     open class func startCreditCardForm(_ paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), callbackCancel : ((Void) -> Void)?) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
         var navigation : UINavigationController?
+        
         var ccf : CardFormViewController = CardFormViewController()
         
         //C4A
@@ -235,7 +237,7 @@ open class MPStepBuilder : NSObject {
         if !cardToken.isCustomerPaymentMethod() {
             MPServicesBuilder.getIssuers(paymentMethod,bin: cardToken.getBin(), success: { (issuers) -> Void in
 
-                    if(issuers!.count > 1){
+                    if(issuers.count > 1){
                         let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
                             if let nav = ccf.navigationController {
                                 nav.showLoading()
@@ -249,7 +251,7 @@ open class MPStepBuilder : NSObject {
                         
                     ccf.navigationController!.pushViewController(issuerForm, animated: false)
                 } else {
-                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers![0], ccf: ccf, callback: callback)
+                    self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuers[0], ccf: ccf, callback: callback)
                 }
                 }, failure: { (error) -> Void in
                     if let nav = ccf.navigationController {

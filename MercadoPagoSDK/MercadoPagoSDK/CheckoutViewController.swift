@@ -59,6 +59,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
     }
     
+    var paymentEnabled = true
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -247,7 +248,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     internal func startAuthCard(_ token:Token){
         
-        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, token: token) { (token) in
+        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
             self.token = token
             self.navigationController!.popToViewController(self, animated: true)
         }
@@ -416,7 +417,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
     }
-    
     
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell

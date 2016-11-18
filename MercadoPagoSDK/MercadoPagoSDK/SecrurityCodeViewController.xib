@@ -79,19 +79,9 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHx-T2-ahO">
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mpLogo" translatesAutoresizingMaskIntoConstraints="NO" id="of2-TG-tk0">
-                            <constraints>
-                                <constraint firstAttribute="width" constant="139" id="88T-4N-OO1"/>
-                                <constraint firstAttribute="height" constant="129" id="bCp-WQ-OYS"/>
-                            </constraints>
-                        </imageView>
-                    </subviews>
                     <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="216" id="LgY-Gh-UiA"/>
-                        <constraint firstItem="of2-TG-tk0" firstAttribute="centerY" secondItem="mHx-T2-ahO" secondAttribute="centerY" id="v0c-Hp-Y1G"/>
-                        <constraint firstItem="of2-TG-tk0" firstAttribute="centerX" secondItem="mHx-T2-ahO" secondAttribute="centerX" id="vxy-tI-Wf2"/>
                     </constraints>
                 </view>
             </subviews>
@@ -113,7 +103,4 @@
             <point key="canvasLocation" x="-1348.5" y="-333.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="mpLogo" width="281" height="261"/>
-    </resources>
 </document>

@@ -156,6 +156,10 @@ open class Token : NSObject, CardInformationForm {
     public func getCardLastForDigits() -> String? {
         return lastFourDigits
     }
+    
+    public func isIssuerRequired() -> Bool {
+        return true
+    }
 }
 
 

@@ -38,6 +38,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var termsAndConditionsSite : String!
 
+    var account_money_available = false
     
     var currency : Currency!
     
@@ -248,6 +249,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+    open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
+        sharedInstance.account_money_available = accountMoneyAvailable
+    }
+    
     open class func merchantAccessToken() -> String {
         
         return sharedInstance.merchant_access_token
@@ -266,6 +271,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
         return sharedInstance.payer_access_token
         
+    }
+    
+    open class func accountMoneyAvailable() -> Bool {
+        return sharedInstance.account_money_available
     }
     
     open class func baseURL() -> String {
