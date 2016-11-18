@@ -285,6 +285,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                 if paymentMethodSelected.isAccountMoney() {
                     self.viewModel.callback!(paymentMethodSelected, nil, nil, nil)
                 } else {
+                    customerCardSelected.setupPaymentMethod(paymentMethodSelected)
                     customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
                     let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
                         self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
