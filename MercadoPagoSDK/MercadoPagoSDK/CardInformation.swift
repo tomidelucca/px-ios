@@ -21,6 +21,8 @@ public protocol CardInformation : CardInformationForm {
     
     func setupPaymentMethodSettings(_ settings : [Setting])
     
+    func setupPaymentMethod(_ paymentMethod : PaymentMethod)
+    
     func getPaymentMethod() -> PaymentMethod
     
     func getPaymentMethodId() -> String

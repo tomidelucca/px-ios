@@ -174,7 +174,7 @@ open class PaymentMethod : NSObject  {
     }
     
     open func secCodeInBack() -> Bool {
-        if (self.settings.count == 0){
+        if (self.settings == nil || self.settings.count == 0){
             return true //si no tiene settings, por defecto el codigo de seguridad ira atras
         }
         let filterList = self.settings.filter({ return $0.securityCode.cardLocation == self.settings[0].securityCode.cardLocation })
