@@ -111,8 +111,8 @@ open class MPFlowBuilder : NSObject {
                         
                         ccf.navigationController!.pushViewController(pcvc, animated: false)
                     }else {
-                        print(installments![0].payerCosts[0])
                         callback(paymentMethod, token!, issuer, installments![0].payerCosts[0])
+
                     }
                     
                 }else{

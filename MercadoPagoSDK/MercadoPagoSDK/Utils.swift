@@ -30,6 +30,19 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 class Utils {
+    
+    class func setContrainsHorizontal(views: [String: UIView], constrain: CGFloat) {
+        let widthConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(constrain))-[label]-(\(constrain))-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+        NSLayoutConstraint.activate(widthConstraints)
+    }
+    
+    class func setContrainsVertical(label: UIView, previus: UIView?, constrain:CGFloat) {
+        if let previus = previus {
+            let heightConstraints = [NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: previus, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: constrain)]
+            NSLayoutConstraint.activate(heightConstraints)
+        }
+    }
+    
     class func getDateFromString(_ string: String!) -> Date! {
         if string == nil {
             return nil
@@ -63,7 +76,7 @@ class Utils {
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
 
 
-        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: smallAttributes)
+        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
         let space = NSAttributedString(string: " ", attributes: smallAttributes)
@@ -179,7 +192,6 @@ class Utils {
     }
 
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
- 
         if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
@@ -284,5 +296,6 @@ class Utils {
         let mm : Int = Int(floor(floatMMYY))
         return mm
     }
+
 
 }

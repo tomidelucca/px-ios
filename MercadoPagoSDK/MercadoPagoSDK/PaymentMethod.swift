@@ -38,7 +38,6 @@ open class PaymentMethod : NSObject  {
         let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
         return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
-    
     open func isAccountMoney() -> Bool {
         return (self._id == "account_money")
     }
