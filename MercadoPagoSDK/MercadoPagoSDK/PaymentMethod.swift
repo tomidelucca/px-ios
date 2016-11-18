@@ -38,8 +38,7 @@ open class PaymentMethod : NSObject  {
         let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
         return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
-    
-    
+
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
         if setting != nil && setting!.securityCode.length != 0 {

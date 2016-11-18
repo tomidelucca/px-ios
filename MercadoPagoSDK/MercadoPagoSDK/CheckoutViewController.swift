@@ -60,6 +60,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
     }
     
+    var paymentEnabled = true
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -413,7 +414,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
     }
-    
     
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
