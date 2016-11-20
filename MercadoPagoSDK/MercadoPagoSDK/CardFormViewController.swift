@@ -148,7 +148,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.showNavBar()
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                 

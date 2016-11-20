@@ -11,11 +11,13 @@
 
 @interface MPLoadingView ()
 
-@property (nonatomic, strong) UIImageView *spinner;
+
 
 @end
 
 @implementation MPLoadingView
+
+
 
 #define LABEL_WIDTH 90
 #define LABEL_HEIGHT 20

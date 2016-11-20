@@ -144,6 +144,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.hideNavBar()
         
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+        self.navigationController!.navigationBar.shadowImage = nil
         self.extendedLayoutIncludesOpaqueBars = true
     }
     
@@ -424,7 +425,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-        self.didScrollInTable(scrollView) //, tableView: self.checkoutTable)
+        self.didScrollInTable(scrollView)
     }
     
  }

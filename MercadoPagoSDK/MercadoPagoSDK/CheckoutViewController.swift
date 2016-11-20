@@ -67,9 +67,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
         self.navBarTextColor = UIColor.blueMercadoPago()
-//        self.navigationController?.navigationBar.tintColor = UIColor.white()
-//        self.navigationController?.navigationBar.barTintColor = UIColor.white()
-//        
     }
 
     

@@ -14,6 +14,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     public var timer : CountdownTimer?
     var navBarTextColor = UIColor.systemFontColor()
     var navBarBackgroundColor = UIColor.primaryColor()
+    var shouldDisplayBackButton = false
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
@@ -185,7 +186,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         backButton.image = MercadoPago.getImage("back")
         backButton.style = .plain
         backButton.target = self
-        backButton.tintColor = UIColor.systemFontColor()
+        backButton.tintColor = navBarTextColor
         backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         backButton.action = #selector(MercadoPagoUIViewController.executeBack)
         self.navigationItem.leftBarButtonItem = backButton
@@ -270,9 +271,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.backgroundColor = navBarBackgroundColor
             self.navigationController?.navigationBar.isTranslucent = false
- 
             
-            
+            if self.shouldDisplayBackButton {
+                self.displayBackButton()
+            }
             let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -283,14 +285,18 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     func hideNavBar(){
         if navigationController != nil {
             self.title = ""
-            navigationController?.navigationBar.titleTextAttributes = nil
             
-            let image = UIImage.imageFromColor(color: navBarBackgroundColor, frame: CGRect(x: 0, y: 0, width: 340, height: 64))
-            self.navigationController?.navigationBar.setBackgroundImage(image, for: UIBarMetrics.compactPrompt)
+            navigationController?.navigationBar.titleTextAttributes = nil
+            self.navigationController?.navigationBar.removeBottomLine()
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController!.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-            self.navigationController!.navigationBar.backgroundColor?.withAlphaComponent(0.0)
             self.navigationController?.navigationBar.isTranslucent = true
+            
+            if self.shouldDisplayBackButton {
+                self.displayBackButton()
+            }
+            
         }
     }
     
@@ -319,13 +325,7 @@ extension UINavigationController {
 extension UINavigationBar {
     
     func removeBottomLine() {
-        for parent in self.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
+        self.setValue(true, forKey: "hidesShadow")
     }
 
 }

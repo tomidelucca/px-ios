@@ -18,9 +18,11 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     var firstSixDigits : String!
 
     var securityCode : SecurityCode = SecurityCode()
+    var paymentMethod : PaymentMethod!
+    var card : Card?
     
     open class func fromJSON(_ json : NSDictionary) -> CustomerPaymentMethod {
-        let customerPaymentMethod = CustomerPaymentMethod()
+        let  customerPaymentMethod = CustomerPaymentMethod()
         
         if json["id"] != nil && !(json["id"]! is NSNull) {
             customerPaymentMethod._id = json["id"] as! String
@@ -40,12 +42,14 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         if json["first_six_digits"] != nil && !(json["first_six_digits"]! is NSNull) {
             customerPaymentMethod.firstSixDigits = json["first_six_digits"] as! String
         }
+        
         return customerPaymentMethod
     }
     
     
     public func getIssuer() -> Issuer? {
-        return nil
+     
+        return card?.issuer
     }
 
     
@@ -86,9 +90,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     open func getPaymentMethod() -> PaymentMethod {
-        let pm = PaymentMethod()
-        pm._id = self.paymentMethodId
-        return pm
+        return paymentMethod
     }
     
     open func getPaymentMethodId() -> String {
@@ -101,6 +103,10 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     
     open func getCardLastForDigits() -> String? {
         return "XXXX"
+    }
+    
+    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+        self.paymentMethod = paymentMethod
     }
     
     open func setupPaymentMethodSettings(_ settings : [Setting]) {

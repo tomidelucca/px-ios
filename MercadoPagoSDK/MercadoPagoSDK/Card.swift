@@ -149,6 +149,10 @@ open class Card : NSObject, CardInformation {
         self.paymentMethod?.settings = settings
     }
     
+    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+        self.paymentMethod = paymentMethod
+    }
+    
     public func isIssuerRequired() -> Bool {
         return self.issuer == nil
     }
