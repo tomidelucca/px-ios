@@ -207,7 +207,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1 {
+            if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
                 self.collectionSearch.delegate = self
@@ -290,10 +290,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         default:
             if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
                 let customerCardSelected = self.viewModel.customerCards![(indexPath as NSIndexPath).row] as CardInformation
+
                 let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
                 if paymentMethodSelected.isAccountMoney() {
                     self.viewModel.callback!(paymentMethodSelected, nil, nil, nil)
                 } else {
+                    customerCardSelected.setupPaymentMethod(paymentMethodSelected)
                     customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
                     let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
                         self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
@@ -437,6 +439,7 @@ class PaymentVaultViewModel : NSObject {
     var customerCards : [CardInformation]?
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
+    var cards : [Card]?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
@@ -545,7 +548,5 @@ class PaymentVaultViewModel : NSObject {
         }
     }
     
-
-
 }
 
