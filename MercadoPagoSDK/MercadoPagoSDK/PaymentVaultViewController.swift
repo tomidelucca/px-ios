@@ -281,6 +281,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         default:
             if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
                 let customerCardSelected = self.viewModel.customerCards![(indexPath as NSIndexPath).row] as CardInformation
+
                 let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
                 if paymentMethodSelected.isAccountMoney() {
                     self.viewModel.callback!(paymentMethodSelected, nil, nil, nil)
@@ -413,6 +414,7 @@ class PaymentVaultViewModel : NSObject {
     var customerCards : [CardInformation]?
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
+    var cards : [Card]?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
@@ -519,6 +521,17 @@ class PaymentVaultViewModel : NSObject {
             //TODO : HANDLE ERROR
             break
         }
+    }
+    
+    func getCustomerCard(at indexPath : IndexPath) -> CardInformation {
+        let cardInformation = self.customerCards![indexPath.row] as! Card
+        if self.cards != nil && self.cards?.count > 0 {
+            let foundCard = self.cards?.filter({ (arg: Card) -> Bool in
+                return arg.getCardId() == cardInformation.getCardId()
+            })
+            cardInformation.issuer = foundCard?[0].getIssuer()
+        }
+        return cardInformation
     }
 
 
