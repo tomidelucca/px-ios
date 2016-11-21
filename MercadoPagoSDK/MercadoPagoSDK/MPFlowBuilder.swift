@@ -156,7 +156,7 @@ open class MPFlowBuilder : NSObject {
     open class func startCustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         let mpNav =  UINavigationController()
         var pcvc : CardAdditionalStep!
-        pcvc = MPStepBuilder.startPayerCostForm(cardInformation: cardInformation, token: nil, amount:amount, paymentPreference: paymentPreference, installment:nil, timer: timer, callback: { (payerCost) -> Void in
+        pcvc = MPStepBuilder.startPayerCostForm(cardInformation: cardInformation, amount:amount, paymentPreference: paymentPreference, installment:nil, timer: timer, callback: { (payerCost) -> Void in
                 let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
                     if String.isNullOrEmpty(token!.lastFourDigits) {
                         token!.lastFourDigits = cardInformation?.getCardLastForDigits()

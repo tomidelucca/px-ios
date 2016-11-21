@@ -10,40 +10,26 @@ import UIKit
 
 open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
 
-    var once = false
+    var displayNavBar = false
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
+    var navBarHeight : CGFloat = -18
     
-    var navBarBackgroundColor : UIColor?
-    
-    func didScrollInTable(_ scrollView: UIScrollView, tableView: UITableView){
+    func didScrollInTable(_ scrollView: UIScrollView) {
         
-        
-            let visibleIndexPaths = tableView.indexPathsForVisibleRows!
-            for index in visibleIndexPaths {
-                if (index.section == 0){
-                    if !once {
-                        hideNavBar()
-                        if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
-                            once = true
-                            showNavBar()
-                        }
-                    } else {
-                        if scrollingDown {
-                            once = false
-                        }
-                    }
-                }
-            }
-            if (self.lastContentOffset > scrollView.contentOffset.y) {
-                scrollingDown = true
-            }
-            else if (self.lastContentOffset < scrollView.contentOffset.y) {
-                scrollingDown = false
-            }
-            self.lastContentOffset = scrollView.contentOffset.y
-       
+        if (scrollView.contentOffset.y > navBarHeight + UIApplication.shared.statusBarFrame.size.height) {
+            showNavBar()
+        } else {
+            hideNavBar()
+        }
     }
+    
+    
+    override func getNavigationBarTitle() -> String {
+        return ""
+    }
+    
+
 
   
 }

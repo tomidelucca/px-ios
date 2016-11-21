@@ -33,7 +33,7 @@ class ViewUtils {
     }
 
     class func loadImageFromUrl(_ url : String, inView : UIView, loadingBackgroundColor : UIColor = UIColor.primaryColor(), loadingIndicatorColor : UIColor = UIColor.systemFontColor()){
-        LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
+  //      LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             let url = URL(string: url)
             if url != nil {

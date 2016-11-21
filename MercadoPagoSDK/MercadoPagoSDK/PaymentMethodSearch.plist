@@ -120,7 +120,7 @@
 	<key>account_money</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTuCuentaMp</string>
+		<string>mediosIconoDineroEnCuenta</string>
 	</dict>
 	<key>bancomer_7eleven</key>
 	<dict>
