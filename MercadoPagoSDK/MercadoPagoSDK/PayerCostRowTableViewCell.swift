@@ -24,7 +24,10 @@ class PayerCostRowTableViewCell: UITableViewCell {
         installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 51, green: 51, blue: 51))
         
-        let installmentLabel = NSMutableAttributedString(string: installmentNumber)
+        let atribute = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 20) ?? UIFont.systemFont(ofSize: 20),NSForegroundColorAttributeName: UIColor.black]
+        let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)
+                                                         
+            
         installmentLabel.append(totalAmount)
         installmentDescription.attributedText =  installmentLabel
     }

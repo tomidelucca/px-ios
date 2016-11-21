@@ -306,4 +306,5 @@ class CardAdditionalStepViewModel : NSObject {
             return 80
         }
     }
+
 }
