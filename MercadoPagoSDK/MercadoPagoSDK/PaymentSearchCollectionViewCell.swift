@@ -62,7 +62,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     static func totalHeight(title: String?, subtitle:String?) -> CGFloat {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        let availableWidth = screenWidth - (screenWidth * 0.2)
+        let availableWidth = screenWidth - (screenWidth * 0.3)
         let widthPerItem = availableWidth / 2
         
         let titleLabel = UILabel(frame: CGRect(x:0,y:0,width:widthPerItem,height:0))
