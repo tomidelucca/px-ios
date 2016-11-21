@@ -55,7 +55,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
         
-        
+        // Avoid account_money in F3
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: false)
         
     }
     
@@ -244,7 +245,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         
     }
-    internal func startAuthCard(_ token:Token){
+    internal func startAuthCard(_ token:Token ){
         
         let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
             self.token = token

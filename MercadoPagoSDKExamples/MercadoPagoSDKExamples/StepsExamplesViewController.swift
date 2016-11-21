@@ -97,7 +97,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
          
 */
         
-        let pv = MPFlowBuilder.startPaymentVaultViewController(1000, callback: { (paymentMethod, token, issuer, payerCost) in
+        let pp = PaymentPreference()
+        pp.excludedPaymentTypeIds = ["atm"]
+        let pv = MPFlowBuilder.startPaymentVaultViewController(1000, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
             print(paymentMethod._id)
             self.paymentMethod = paymentMethod
             self.createdToken = token
