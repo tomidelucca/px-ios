@@ -53,11 +53,11 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         self.hideNavBar()
         
         if !self.viewModel.hasIssuer() {
-            self.showLoading()
+            //self.showLoading()
             self.getIssuers()
         } else if self.viewModel.hasPaymentMethod(){
             if self.viewModel.installment == nil {
-                self.showLoading()
+                //self.showLoading()
                 self.getInstallments()
             } else {
                 self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
@@ -89,8 +89,8 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(cardInformation : CardInformation, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
-        
+    public init(token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
+        let cardInformation: CardInformation = token as! CardInformation
         self.viewModel = CardAdditionalStepViewModel(paymentMethod: [cardInformation.getPaymentMethod()], issuer: cardInformation.getIssuer(), token: token, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
         self.viewModel.cardInformation = cardInformation
         
@@ -218,6 +218,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     
     fileprivate func getInstallments(){
         let bin = self.viewModel.token?.getCardBin() ?? ""
+        self.showLoading()
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethod[0]._id, success: { (installments) -> Void in
             self.viewModel.installment = installments?[0]
             self.viewModel.payerCosts = installments![0].payerCosts
@@ -228,6 +229,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         }
     }
     fileprivate func getIssuers(){
+        self.showLoading()
         MPServicesBuilder.getIssuers(self.viewModel.paymentMethod[0], bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
             self.viewModel.issuersList = issuers
             self.tableView.reloadData()

@@ -27,9 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
-
-     //   MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
-     //   MercadoPagoContext.setCustomerURI("/get_customer")
+        //MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
+        //MercadoPagoContext.setCustomerURI("/get_customer")
 
         MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
 
