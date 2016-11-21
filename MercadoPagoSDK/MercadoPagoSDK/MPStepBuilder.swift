@@ -201,7 +201,7 @@ open class MPStepBuilder : NSObject {
                                        callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return CardAdditionalStep(token: cardInformation, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
+        return CardAdditionalStep(cardInformation: cardInformation, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
     }
     
     open class func startIdentificationForm(
