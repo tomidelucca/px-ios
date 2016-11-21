@@ -157,7 +157,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
         return { Void -> (Void) in
-            if self.viewModel.currentPaymentMethodSearch.count > 1 {
+            if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
                 self.navigationController!.popToViewController(self, animated: true)
@@ -208,7 +208,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
+            if  self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
                 self.collectionSearch.delegate = self
@@ -480,6 +480,10 @@ class PaymentVaultViewModel : NSObject {
         }
         return 0
         
+    }
+    
+    func getDisplayedPaymentMethodsCount() -> Int {
+        return self.getCustomerPaymentMethodsToDisplayCount() + self.currentPaymentMethodSearch.count
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
