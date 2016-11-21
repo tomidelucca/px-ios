@@ -311,20 +311,6 @@
 		4B762E971DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E951DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib */; };
 		4B762E9C1DCFAF4700694336 /* InstructionsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */; };
-		4B8D3CA51DC78C9C00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B8D3CA71DC7914B00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF6F1DBFD52300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF701DBFD52300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF731DBFD87D00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF741DBFD87D00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF901DC13A2300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF911DC13A2300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF941DC13DCF00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF951DC13DCF00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF9A1DC148ED00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF9B1DC148ED00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFFA21DC3BBC000A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFFA31DC3BBC000A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		4BAA55E71DB0012300501061 /* CardAdditionalStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* CardAdditionalStep.swift */; };
 		4BAA55E81DB0012300501061 /* CardAdditionalStep.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* CardAdditionalStep.xib */; };
 		4BAA55EB1DB0015800501061 /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
@@ -621,8 +607,6 @@
 		76FD24841C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24751C5BFEA1008C5DC0 /* CardFrontView.xib */; };
 		76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */; };
 		76FD24861C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */; };
-		76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */; };
-		76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */; };
 		76FD24891C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		76FD248A1C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -1014,7 +998,6 @@
 		76FD24741C5BFEA1008C5DC0 /* CardFrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFrontView.swift; sourceTree = "<group>"; };
 		76FD24751C5BFEA1008C5DC0 /* CardFrontView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFrontView.xib; sourceTree = "<group>"; };
 		76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
-		76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
 		CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
@@ -1491,7 +1474,6 @@
 			isa = PBXGroup;
 			children = (
 				76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */,
-				76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */,
 				76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */,
 			);
 			name = Utils;
@@ -2151,7 +2133,6 @@
 				765F8E5E1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib in Resources */,
 				0F9884571AD2AEF800F750F0 /* MPPaymentMethodTableViewCell.xib in Resources */,
 				4B762E971DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib in Resources */,
-				76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				76151B671C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				76151B911C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib in Resources */,
 				76E92F851C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib in Resources */,
@@ -2273,7 +2254,6 @@
 				766012EA1CEBA19700897F9D /* ErrorViewController.xib in Resources */,
 				150786A71CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */,
 				0F9884461AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.xib in Resources */,
-				76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				0FC4FC3C1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				76FD247C1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 				76151B681C737608007DF0E3 /* InstructionsViewController.xib in Resources */,

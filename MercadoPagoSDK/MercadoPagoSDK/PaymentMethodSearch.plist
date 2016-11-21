@@ -38,7 +38,10 @@
 		<string>pagoEfvoIconoRapipago</string>
 	</dict>
 	<key>cargavirtual</key>
-	<dict/>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoCargavirtual</string>
+	</dict>
 	<key>redlink_atm</key>
 	<dict>
 		<key>image_name</key>
@@ -67,7 +70,7 @@
 	<key>naranja</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoLink</string>
+		<string>mediosIconoNaranja</string>
 	</dict>
 	<key>nativa</key>
 	<dict>
