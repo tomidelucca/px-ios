@@ -404,7 +404,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         
         let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch![indexItem]
         return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
-g
+
     }
     
 
