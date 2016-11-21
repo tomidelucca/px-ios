@@ -67,6 +67,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
         self.navBarTextColor = UIColor.blueMercadoPago()
+        
     }
 
     
@@ -77,7 +78,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
-        
         self.showLoading()
         
         if !self.viewModel.isPreferenceLoaded() {

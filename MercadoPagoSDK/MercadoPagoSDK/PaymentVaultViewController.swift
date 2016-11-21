@@ -548,6 +548,6 @@ class PaymentVaultViewModel : NSObject {
             break
         }
     }
-    g
+    
 }
 

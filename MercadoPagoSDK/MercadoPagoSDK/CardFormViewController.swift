@@ -123,6 +123,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     open override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
+        self.showNavBar()
         cardFront?.frame = cardView.bounds
         cardBack?.frame = cardView.bounds
         textBox.placeholder = "Número de tarjeta".localized
@@ -148,7 +149,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showNavBar()
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                 
