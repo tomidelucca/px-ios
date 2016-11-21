@@ -73,7 +73,7 @@
                 <outlet property="subtitleSearch" destination="w3J-Nk-ngZ" id="Ahk-9Q-Ahu"/>
                 <outlet property="titleSearch" destination="fcv-Nd-t2y" id="GWG-dx-4hW"/>
             </connections>
-            <point key="canvasLocation" x="-262" y="-360.5"/>
+            <point key="canvasLocation" x="-362" y="-421"/>
         </collectionViewCell>
     </objects>
     <resources>
