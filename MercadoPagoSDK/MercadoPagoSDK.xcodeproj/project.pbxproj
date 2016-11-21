@@ -311,20 +311,6 @@
 		4B762E971DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E951DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib */; };
 		4B762E9C1DCFAF4700694336 /* InstructionsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */; };
-		4B8D3CA51DC78C9C00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B8D3CA71DC7914B00DD4476 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF6F1DBFD52300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF701DBFD52300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF731DBFD87D00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF741DBFD87D00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF901DC13A2300A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF911DC13A2300A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF941DC13DCF00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF951DC13DCF00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFF9A1DC148ED00A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFF9B1DC148ED00A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		4B9CFFA21DC3BBC000A2F3D6 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4B9CFFA31DC3BBC000A2F3D6 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		4BAA55E71DB0012300501061 /* CardAdditionalStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* CardAdditionalStep.swift */; };
 		4BAA55E81DB0012300501061 /* CardAdditionalStep.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* CardAdditionalStep.xib */; };
 		4BAA55EB1DB0015800501061 /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
@@ -917,12 +903,12 @@
 		766012E61CEBA19700897F9D /* ErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorViewController.xib; sourceTree = "<group>"; };
 		766012ED1CF284A600897F9D /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		766012EE1CF284A600897F9D /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
-		766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLoadingView.h; sourceTree = "<group>"; };
-		766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLoadingView.m; sourceTree = "<group>"; };
+		766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPLoadingView.h; path = ../MPLoadingView.h; sourceTree = "<group>"; };
+		766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPLoadingView.m; path = ../MPLoadingView.m; sourceTree = "<group>"; };
 		766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentVaultTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		766EE1BD1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentVaultTitleCollectionViewCell.xib; sourceTree = "<group>"; };
-		766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
-		766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
+		766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+RotateView.h"; path = "../UIView+RotateView.h"; sourceTree = "<group>"; };
+		766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+RotateView.m"; path = "../UIView+RotateView.m"; sourceTree = "<group>"; };
 		7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerPaymentMethod.swift; sourceTree = "<group>"; };
 		7671F1641D5A3B5A00B9481F /* CustomerPaymentMethodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerPaymentMethodCell.swift; sourceTree = "<group>"; };
 		7671F1651D5A3B5A00B9481F /* CustomerPaymentMethodCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerPaymentMethodCell.xib; sourceTree = "<group>"; };
@@ -1054,10 +1040,6 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
-				766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */,
-				766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */,
-				766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */,
-				766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */,
 				4BAA56071DB6861400501061 /* Images.xcassets */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
@@ -1763,6 +1745,10 @@
 		76445AD91CC8114F008EE68E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				766EE1B01DDDFD4500A4FBB3 /* MPLoadingView.h */,
+				766EE1B11DDDFD4500A4FBB3 /* MPLoadingView.m */,
+				766EE1C01DDE247400A4FBB3 /* UIView+RotateView.h */,
+				766EE1C11DDE247400A4FBB3 /* UIView+RotateView.m */,
 				763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */,
 				766012ED1CF284A600897F9D /* WebViewController.swift */,
 				766012EE1CF284A600897F9D /* WebViewController.xib */,
