@@ -206,7 +206,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1{
+            if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
                 self.collectionSearch.delegate = self
@@ -354,7 +354,20 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
     }
     
     private func maxHegithRow(indexPath: IndexPath) -> CGFloat{
-        let numberOfCells = self.viewModel.currentPaymentMethodSearch.count
+        
+        if indexPath.section == self.defaultsPaymentMethodsSection() {
+            return self.calculateHeight(indexPath: indexPath, numberOfCells: self.viewModel.currentPaymentMethodSearch.count)
+        } else {
+            return self.calculateHeight(indexPath: indexPath, numberOfCells: self.viewModel.getCustomerPaymentMethodsToDisplayCount(), customerPaymentMethods: true)
+        }
+        
+    }
+    
+    private func calculateHeight(indexPath : IndexPath, numberOfCells : Int, customerPaymentMethods : Bool = false) -> CGFloat {
+        if numberOfCells == 0 {
+            return 0
+        }
+        
         let section : Int
         let row = indexPath.row
         if row % 2 == 1{
@@ -364,28 +377,34 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         }
         let index1 = (section  * 2)
         let index2 = (section  * 2) + 1
-    
+        
         if index1 + 1 > numberOfCells {
             return 0
         }
         
-        let height1 = heightOfItem(indexItem: index1)
+        let height1 = heightOfItem(indexItem: index1, customerPaymentMethods: customerPaymentMethods)
         
         if index2 + 1 > numberOfCells {
             return height1
         }
         
-        let height2 = heightOfItem(indexItem: index2)
+        let height2 = heightOfItem(indexItem: index2, customerPaymentMethods: customerPaymentMethods)
         
         
         return height1 > height2 ? height1 : height2
 
     }
     
-    
-    func heightOfItem(indexItem : Int) -> CGFloat {
-        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexItem]
-         return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+    func heightOfItem(indexItem : Int, customerPaymentMethods : Bool) -> CGFloat {
+        
+        if customerPaymentMethods {
+            let currentPaymentMethod = self.viewModel.customerCards![indexItem]
+            return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+        }
+        
+        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch![indexItem]
+        return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+
     }
     
 
