@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-android)
 
-# MercadoPago iOS (Swift 2.0 & iOS 9.3) SDK
+# MercadoPago iOS (Swift 3.0 & iOS 9.3) SDK
 The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
 ![MercadoPagoSDK: Examples](https://raw.githubusercontent.com/mercadopago/sdk-ios/master/Screenshots/mercadopagosdk.png)
@@ -36,7 +36,7 @@ Copy and paste the following lines into the TextEdit window:
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
     platform :ios, '8.0'
-    pod 'MercadoPagoSDK', '~> WORKSHOP'
+    pod 'MercadoPagoSDK'
 
 > You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
 
