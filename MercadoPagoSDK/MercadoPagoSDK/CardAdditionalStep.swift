@@ -64,7 +64,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             }
         }
         self.extendedLayoutIncludesOpaqueBars = true
-        
+        self.navBarHeight = -30
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -80,7 +80,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             
-            self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
+            //self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
             displayBackButton()
         }
     }
@@ -197,8 +197,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-        
-        self.didScrollInTable(scrollView, tableView: self.tableView)
+        self.didScrollInTable(scrollView)
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if index.section == 1  {
