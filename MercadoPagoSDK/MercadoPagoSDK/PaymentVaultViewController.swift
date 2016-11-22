@@ -530,8 +530,9 @@ class PaymentVaultViewModel : NSObject {
                     return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
                 })
             }
+            self.customerCards = currentCustomerCards
         }
-        self.customerCards = currentCustomerCards
+        
         
     }
     
