@@ -16,9 +16,9 @@ class PayerCostRowTableViewCell: UITableViewCell {
     func fillCell(payerCost : PayerCost) {
         let currency = MercadoPagoContext.getCurrency()
         if (payerCost.hasInstallmentsRate() || payerCost.installments == 1){
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.grayLight(), fontSize: 15, baselineOffset:3))
-            attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
+            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
             interestDescription.attributedText = attributedTotal
         } else {
             interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
