@@ -16,13 +16,16 @@ class PayerCostRowTableViewCell: UITableViewCell {
     func fillCell(payerCost : PayerCost) {
         let currency = MercadoPagoContext.getCurrency()
         if (payerCost.hasInstallmentsRate() || payerCost.installments == 1){
-            interestDescription.attributedText = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.grayLight())
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
+            attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.grayLight(), fontSize: 15, baselineOffset:3))
+            attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor.grayLight()]))
+            interestDescription.attributedText = attributedTotal
         } else {
             interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
         var installmentNumber = String(format:"%i", payerCost.installments)
         installmentNumber = "\(installmentNumber) x "
-        let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor(red: 51, green: 51, blue: 51))
+        let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, centsFontSize: 14, baselineOffset:5)
         
         let atribute = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 20) ?? UIFont.systemFont(ofSize: 20),NSForegroundColorAttributeName: UIColor.black]
         let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)

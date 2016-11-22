@@ -28,11 +28,11 @@
                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1F9-NN-ufr">
-                        <rect key="frame" x="32" y="119" width="350.5" height="21"/>
+                        <rect key="frame" x="32" y="119" width="350.5" height="24"/>
                         <attributedString key="attributedText">
                             <fragment content="Pagarás $ 109 en PagoFacil">
                                 <attributes>
-                                    <font key="NSFont" metaFont="system" size="17"/>
+                                    <font key="NSFont" size="20" name=".AppleSystemUIFont"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6G-5w-j6M">
-                        <rect key="frame" x="120.5" y="150" width="173" height="14.5"/>
+                        <rect key="frame" x="120.5" y="153" width="173" height="14.5"/>
                         <attributedString key="attributedText">
                             <fragment content="Se acreditará en 7 días hábiles">
                                 <attributes>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="omM-He-gJw">
-                        <rect key="frame" x="97.5" y="150" width="16" height="16"/>
+                        <rect key="frame" x="97.5" y="153" width="16" height="16"/>
                         <color key="tintColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="OBS-re-oGv"/>
@@ -61,7 +61,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3YQ-q5-tZX">
-                        <rect key="frame" x="150" y="199.5" width="114" height="33.5"/>
+                        <rect key="frame" x="150" y="202.5" width="114" height="33.5"/>
                         <state key="normal">
                             <attributedString key="attributedTitle">
                                 <fragment content="Cambiar pago">

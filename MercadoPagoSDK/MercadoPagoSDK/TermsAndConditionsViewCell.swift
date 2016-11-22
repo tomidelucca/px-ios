@@ -10,7 +10,7 @@ import UIKit
 
 class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
-    private static let ROW_HEIGHT = CGFloat(40)
+    private static let ROW_HEIGHT = CGFloat(60)
     
     @IBOutlet weak var termsAndConditionsText: MPTextView!
     
