@@ -262,6 +262,7 @@
 		157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */; };
 		158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */; };
+		159152361DE36ED40082458C /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 159152351DE36ED40082458C /* PaymentMethod.plist */; };
 		15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18B1C88B2E4007D0C4E /* MockManager.swift */; };
 		15A7B18E1C88BFDF007D0C4E /* CardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18D1C88BFDF007D0C4E /* CardTest.swift */; };
 		15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */; };
@@ -613,8 +614,6 @@
 		76FD24841C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24751C5BFEA1008C5DC0 /* CardFrontView.xib */; };
 		76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */; };
 		76FD24861C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */; };
-		76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */; };
-		76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */; };
 		76FD24891C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		76FD248A1C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -777,6 +776,7 @@
 		157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecrurityCodeViewController.xib; sourceTree = "<group>"; };
 		157A4F871D805BE900C92D0B /* RecoverPaymentBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPaymentBodyTableViewCell.swift; sourceTree = "<group>"; };
 		157A4F881D805BE900C92D0B /* RecoverPaymentBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecoverPaymentBodyTableViewCell.xib; sourceTree = "<group>"; };
+		159152351DE36ED40082458C /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		15A7B18B1C88B2E4007D0C4E /* MockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockManager.swift; sourceTree = "<group>"; };
 		15A7B18D1C88BFDF007D0C4E /* CardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTest.swift; sourceTree = "<group>"; };
 		15ABAD491DB5489D00481E8E /* FlowTrackInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowTrackInfo.swift; sourceTree = "<group>"; };
@@ -1012,7 +1012,6 @@
 		76FD24741C5BFEA1008C5DC0 /* CardFrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFrontView.swift; sourceTree = "<group>"; };
 		76FD24751C5BFEA1008C5DC0 /* CardFrontView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardFrontView.xib; sourceTree = "<group>"; };
 		76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
-		76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
 		CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Additions.swift"; sourceTree = "<group>"; };
 		CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethodSearch.plist; sourceTree = "<group>"; };
@@ -1040,6 +1039,7 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
+				159152351DE36ED40082458C /* PaymentMethod.plist */,
 				4BAA56071DB6861400501061 /* Images.xcassets */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
 				0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */,
@@ -1491,7 +1491,6 @@
 			isa = PBXGroup;
 			children = (
 				76FD24761C5BFEA1008C5DC0 /* HoshiTextField.swift */,
-				76FD24771C5BFEA1008C5DC0 /* PaymentMethod.plist */,
 				76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */,
 			);
 			name = Utils;
@@ -2150,6 +2149,7 @@
 				4BAE1D551DCBE9340000ED5C /* CongratsRevampViewController.xib in Resources */,
 				0F9883FF1AD2ADEE00F750F0 /* IssuerTableViewCell.xib in Resources */,
 				76B084F91CE1727900C157BF /* AuthorizePaymentBodyTableViewCell.xib in Resources */,
+				159152361DE36ED40082458C /* PaymentMethod.plist in Resources */,
 				76B0851F1CE4DE6C00C157BF /* PendingPaymentHeaderTableViewCell.xib in Resources */,
 				150786A61CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */,
 				76B085301CE519DF00C157BF /* InstallmentSelectionTableViewCell.xib in Resources */,
@@ -2158,7 +2158,6 @@
 				765F8E5E1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib in Resources */,
 				0F9884571AD2AEF800F750F0 /* MPPaymentMethodTableViewCell.xib in Resources */,
 				4B762E971DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib in Resources */,
-				76FD24871C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				76151B671C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
 				76151B911C74C8DA007DF0E3 /* SimpleInstructionsViewCell.xib in Resources */,
 				76E92F851C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib in Resources */,
@@ -2281,7 +2280,6 @@
 				766012EA1CEBA19700897F9D /* ErrorViewController.xib in Resources */,
 				150786A71CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */,
 				0F9884461AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.xib in Resources */,
-				76FD24881C5BFEA1008C5DC0 /* PaymentMethod.plist in Resources */,
 				0FC4FC3C1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				76FD247C1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
 				76151B681C737608007DF0E3 /* InstructionsViewController.xib in Resources */,
