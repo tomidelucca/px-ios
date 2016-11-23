@@ -30,6 +30,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     @IBOutlet weak var checkoutTable: UITableView!
     
     init(preferenceId : String, callback : @escaping ((Payment) -> Void),  callbackCancel : ((Void) -> Void)? = nil){
+        MercadoPagoContext.clearPaymentKey()
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
@@ -46,6 +47,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        MercadoPagoContext.clearPaymentKey()
         fatalError("init(coder:) has not been implemented")
     }
     
