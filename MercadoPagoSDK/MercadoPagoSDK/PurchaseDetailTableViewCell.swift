@@ -10,7 +10,7 @@ import UIKit
 
 open class PurchaseDetailTableViewCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(58)
+    static let ROW_HEIGHT = CGFloat(52)
     
     static var separatorLine : UIView?
     
@@ -46,7 +46,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             }
             if !payerCost!.hasInstallmentsRate() {
                 self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-                separatorLineHeight += 28
+                separatorLineHeight += 26
             }
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
@@ -62,7 +62,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() {
-            return ROW_HEIGHT + 23
+            return ROW_HEIGHT + 30
         }
         return ROW_HEIGHT
     }
