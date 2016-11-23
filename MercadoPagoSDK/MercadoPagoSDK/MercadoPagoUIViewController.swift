@@ -187,7 +187,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         backButton.style = .plain
         backButton.target = self
         backButton.tintColor = navBarTextColor
-        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
         backButton.action = #selector(MercadoPagoUIViewController.executeBack)
         self.navigationItem.leftBarButtonItem = backButton
     }
