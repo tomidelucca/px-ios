@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-android)
 
-# MercadoPago iOS (Swift 2.0 & iOS 9.3) SDK
+# MercadoPago iOS (Swift 3.0) SDK
 The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
 ![MercadoPagoSDK: Examples](https://raw.githubusercontent.com/mercadopago/sdk-ios/master/Screenshots/mercadopagosdk.png)
@@ -22,6 +22,8 @@ CocoaPods is distributed as a ruby gem, and is installed by running the followin
 
 > Depending on your Ruby installation, you may not have to run as `sudo` to install the cocoapods gem.
 
+> :warning: MercadoPagoSDK requires cocoapods 1.0.0 or higher. With pod --version you can verify the current version you have installed. This framework was built with Swift 3.0 so you will need Xcode 8.0 or higer in order to use it. In case you need support for older Xcode versions just contact the development team creating an issue.
+
 #### Step 2: Create a Podfile
 
 Project dependencies to be managed by CocoaPods are specified in a file called `Podfile`. Create this file in the same directory as your Xcode project (`.xcodeproj`) file:
@@ -36,7 +38,7 @@ Copy and paste the following lines into the TextEdit window:
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
     platform :ios, '8.0'
-    pod 'MercadoPagoSDK', '~> WORKSHOP'
+    pod 'MercadoPagoSDK'
 
 > You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
 
@@ -59,9 +61,12 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 - Expand the "Target Dependencies" group, and add MercadoPagoSDK.framework.
 - Click on the + button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add MercadoPagoSDK.framework.
 
+## Examples
+
+This project includes two Xcode Projects with examples using MercadoPagoSDK: MercadoPagoSDKExamples written in swift and MercadoPagoSDKExamplesObjectiveC. In case you need support contact the development team.
 ## Documentation
 
-+ [Read more about this 6 steps integration.](https://github.com/mercadopago/px-ios)
++ [Read more about this 6 steps integration.](https://mercadopago.github.io/px-ios)
 + [Check out MercadoPago Developers Site!](http://www.mercadopago.com.ar/developers)
 
 ## Feedback
