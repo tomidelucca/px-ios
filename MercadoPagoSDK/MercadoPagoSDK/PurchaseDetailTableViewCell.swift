@@ -46,10 +46,10 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             }
             if !payerCost!.hasInstallmentsRate() {
                 self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-                separatorLineHeight += 23
+                separatorLineHeight += 28
             }
-            PurchaseDetailTableViewCell.separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
-            self.addSubview(PurchaseDetailTableViewCell.separatorLine!)
+            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
+            self.addSubview(separatorLine)
         } else {
             self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, centsFontSize: 11, baselineOffset : 5)
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
