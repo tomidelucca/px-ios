@@ -15,17 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="446"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="358" height="446"/>
+                <rect key="frame" x="0.0" y="0.0" width="358" height="445"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="¿Qué puedo hacer?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBX-U3-5lx">
-                        <rect key="frame" x="83.5" y="58" width="191.5" height="130.5"/>
+                        <rect key="frame" x="83.5" y="48" width="191.5" height="158.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-nr-CA4">
-                        <rect key="frame" x="20" y="208.5" width="318" height="129"/>
+                        <rect key="frame" x="20" y="226.5" width="318" height="129"/>
                         <string key="text">Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. 
 
 O si prefieres, puedes elegir otro medio de pago.</string>
@@ -34,7 +34,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j5E-cG-bps">
-                        <rect key="frame" x="32" y="387.5" width="294" height="50"/>
+                        <rect key="frame" x="32" y="395.5" width="294" height="50"/>
                         <color key="backgroundColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="2cD-3e-VzU"/>
@@ -50,13 +50,14 @@ O si prefieres, puedes elegir otro medio de pago.</string>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="B9X-gg-6qB"/>
                     <constraint firstItem="DBX-U3-5lx" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KbH-eO-SjD"/>
                     <constraint firstItem="j5E-cG-bps" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="SPu-Pj-kuk"/>
-                    <constraint firstItem="DBX-U3-5lx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="50" id="Zui-s3-P0s"/>
+                    <constraint firstItem="DBX-U3-5lx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="40" id="Zui-s3-P0s"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="dMs-Rj-y9r"/>
-                    <constraint firstItem="j5E-cG-bps" firstAttribute="top" secondItem="G6G-nr-CA4" secondAttribute="bottom" constant="50" id="e5a-oq-l0g" userLabel="Button.top = Subtitile.bottom + 200"/>
+                    <constraint firstItem="j5E-cG-bps" firstAttribute="top" secondItem="G6G-nr-CA4" secondAttribute="bottom" constant="40" id="e5a-oq-l0g" userLabel="Button.top = Subtitile.bottom + 200"/>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="top" secondItem="DBX-U3-5lx" secondAttribute="bottom" constant="20" id="eqD-a0-XaS"/>
                     <constraint firstItem="j5E-cG-bps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="hDu-fR-Oih"/>
                     <constraint firstAttribute="trailingMargin" secondItem="j5E-cG-bps" secondAttribute="trailing" constant="24" id="k6C-82-3rS"/>
                     <constraint firstAttribute="bottomMargin" secondItem="j5E-cG-bps" secondAttribute="bottom" id="tSk-ba-3uP"/>
+                    <constraint firstAttribute="bottom" secondItem="j5E-cG-bps" secondAttribute="bottom" id="zMz-C5-ZIm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

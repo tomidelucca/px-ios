@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecrurityCodeViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
-                <outlet property="button" destination="eRB-5n-7JU" id="s6d-JH-iPg"/>
                 <outlet property="errorLabel" destination="h3x-Y7-b4M" id="ucc-T7-Pcr"/>
                 <outlet property="panelView" destination="yob-kR-dQh" id="kZV-OM-lKE"/>
                 <outlet property="securityCodeTextField" destination="CLV-K5-LXP" id="s6C-CM-zBJ"/>
@@ -26,7 +25,7 @@
                     <rect key="frame" x="0.0" y="292" width="375" height="159"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Revisa este dato" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3x-Y7-b4M">
-                            <rect key="frame" x="37" y="68" width="301" height="21"/>
+                            <rect key="frame" x="30" y="72" width="315" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="ewM-lU-q2n"/>
                             </constraints>
@@ -43,12 +42,17 @@
                             <state key="normal" title="Continuar">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="6"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="cloneToken:" destination="-1" eventType="touchUpInside" id="1qB-7e-hW4"/>
                             </connections>
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Código de seguridad" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="CLV-K5-LXP" customClass="HoshiTextField" customModule="MercadoPagoSDK" customModuleProvider="target">
-                            <rect key="frame" x="37" y="9" width="301" height="50"/>
+                            <rect key="frame" x="30" y="13" width="315" height="50"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="3l1-NG-CAP"/>
@@ -75,14 +79,14 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="eRB-5n-7JU" secondAttribute="trailing" constant="25" id="0rz-JD-SlW"/>
-                        <constraint firstItem="h3x-Y7-b4M" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="37" id="CiF-1w-qqh"/>
+                        <constraint firstItem="h3x-Y7-b4M" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="30" id="CiF-1w-qqh"/>
                         <constraint firstItem="h3x-Y7-b4M" firstAttribute="top" secondItem="CLV-K5-LXP" secondAttribute="bottom" constant="9" id="Ird-of-R5E"/>
                         <constraint firstItem="eRB-5n-7JU" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="25" id="MOo-g0-EDa"/>
-                        <constraint firstItem="CLV-K5-LXP" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="37" id="Ycr-IF-Fkd"/>
-                        <constraint firstAttribute="trailing" secondItem="h3x-Y7-b4M" secondAttribute="trailing" constant="37" id="ZwJ-mU-O7j"/>
-                        <constraint firstItem="eRB-5n-7JU" firstAttribute="top" secondItem="h3x-Y7-b4M" secondAttribute="bottom" constant="9" id="fXD-LW-Qie"/>
+                        <constraint firstItem="CLV-K5-LXP" firstAttribute="leading" secondItem="yob-kR-dQh" secondAttribute="leading" constant="30" id="Ycr-IF-Fkd"/>
+                        <constraint firstAttribute="trailing" secondItem="h3x-Y7-b4M" secondAttribute="trailing" constant="30" id="ZwJ-mU-O7j"/>
+                        <constraint firstItem="eRB-5n-7JU" firstAttribute="top" secondItem="h3x-Y7-b4M" secondAttribute="bottom" constant="5" id="fXD-LW-Qie"/>
                         <constraint firstAttribute="height" constant="159" id="lSK-DC-awx"/>
-                        <constraint firstAttribute="trailing" secondItem="CLV-K5-LXP" secondAttribute="trailing" constant="37" id="oHy-Fp-7Ak"/>
+                        <constraint firstAttribute="trailing" secondItem="CLV-K5-LXP" secondAttribute="trailing" constant="30" id="oHy-Fp-7Ak"/>
                         <constraint firstAttribute="bottom" secondItem="eRB-5n-7JU" secondAttribute="bottom" constant="9" id="tXR-Ki-fGS"/>
                     </constraints>
                 </view>
