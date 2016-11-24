@@ -21,6 +21,9 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     var cardBack : CardBackView!
     var ccvLabelEmpty : Bool = true
     
+     override open var screenName : String { get{ return "SECURITY_CODE" } }
+    
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
          self.hideNavBar()
