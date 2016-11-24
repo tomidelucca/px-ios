@@ -14,6 +14,7 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        title.attributedText = NSAttributedString(string: "¿Cómo quiéres pagar?".localized)
         self.backgroundColor = MercadoPagoContext.getPrimaryColor()
     }
     
