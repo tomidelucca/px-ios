@@ -459,7 +459,6 @@ class PaymentVaultViewModel : NSObject {
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
     var cards : [Card]?
-    var customerMaxPaymentMethodsCount : Int = MercadoPagoContext.maxCustomerPaymentMethods()
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     

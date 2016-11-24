@@ -42,8 +42,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
 
     var account_money_available = false
     
-    var max_customer_payment_methods = 3
-    
     var currency : Currency!
     
     open class var PUBLIC_KEY : String {
@@ -144,10 +142,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open func publicKey() -> String!{
         return self.public_key
-    }
-    
-    open static func maxCustomerPaymentMethods() -> Int {
-        return sharedInstance.max_customer_payment_methods;
     }
     
     fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
@@ -266,10 +260,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
-    }
-    
-    open class func setMaxCustomerPaymentMethods(count : Int){
-        sharedInstance.max_customer_payment_methods = count
     }
     
     open class func merchantAccessToken() -> String {
