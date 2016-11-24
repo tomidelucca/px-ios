@@ -16,6 +16,16 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     let viewModel : CardAdditionalStepViewModel!
     
     
+     override open var screenName : String { get{
+        if viewModel.hasIssuer() {
+            return "PAYER_COST"
+        } else if viewModel.hasPaymentMethod(){
+            return "ISSUER"
+        } else {
+            return "CARD_TYPE"
+        }
+        } }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()

@@ -43,7 +43,10 @@ public enum GAKey : String {
     }
 }
 */
-
+public protocol MPTrackListener {
+    func trackScreen(screenName : String)
+    func trackEvent(screenName : String?, action: String!, result: String?)
+}
 
 public protocol MPPaymentTrackInformer {
 
@@ -77,6 +80,9 @@ open class MPTracker {
         if (!initialized){
             self.initialize(mpDelegate)
         }
+        if let listener = MercadoPagoContext.getTrackListener() {
+            listener.trackEvent(screenName: screen, action: action, result: result)
+        }
     //    GATracker.sharedInstance.trackEvent(flavorText() + "/" + screen, action:action , label:result)
     }
     
@@ -84,6 +90,9 @@ open class MPTracker {
     open class func trackPaymentEvent(_ token: String!, mpDelegate: MPTrackerDelegate!, paymentInformer: MPPaymentTrackInformer, flavor: Flavor!, screen: String! = "NO_SCREEN", action: String!, result: String?){
         if (!initialized){
             self.initialize(mpDelegate)
+        }
+        if let listener = MercadoPagoContext.getTrackListener() {
+            listener.trackEvent(screenName: screen, action: action, result: result)
         }
     //    GATracker.sharedInstance.trackPaymentEvent(flavorText() + "/" + screen, action: action, label: result, paymentInformer: paymentInformer)
        // PaymentTracker.trackToken(token, delegate: mpDelegate)
@@ -109,14 +118,14 @@ open class MPTracker {
         if (!initialized){
             self.initialize(mpDelegate)
         }
+        if let listener = MercadoPagoContext.getTrackListener() {
+            listener.trackScreen(screenName: screenName)
+        }
    //     GATracker.sharedInstance.trackScreen(flavorText() + "/" + screenName)
     }
     
     open class func trackCreateToken(_ mpDelegate: MPTrackerDelegate!,token: String!){
-        
-        
         PaymentTracker.trackToken(token: token, delegate: mpDelegate)
-        
     }
     
     fileprivate class func flavorText() -> String{
