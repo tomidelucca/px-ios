@@ -578,8 +578,15 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func updateCardSkin(){
-        
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
+        guard let _ = cardFormManager.getBIN(textBox.text!) else{
+            cardFormManager.guessedPMS = nil
+            cardFormManager.cardToken = nil
+            self.clearCardSkin()
+            return
+        }
+        if ((cardFormManager.getBIN(textBox.text!)) == nil){
+
+        } else if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             if(cardFormManager.getGuessedPM()  != nil){
@@ -608,8 +615,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 return
             }
             
-        }else if (textBox.text?.characters.count<7){
-            self.clearCardSkin()
         }
         if self.cvvLabel == nil || self.cvvLabel!.text!.characters.count == 0 {
             if((cardFormManager.guessedPMS != nil)&&(!(cardFormManager.getGuessedPM()?.secCodeInBack())!)){
