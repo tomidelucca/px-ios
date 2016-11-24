@@ -56,7 +56,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
     
     internal func fillCell(_ paymentMethodMethodSearchItem : PaymentMethodSearchItem, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
         
-        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText())
+        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
         let attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized)
         attributedTitle.append(attributedAmount)
         

@@ -28,7 +28,7 @@
     [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     [MercadoPagoContext setSiteID:@"MLM"];
 
-    [MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
+    //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
     
     return YES;
 }
