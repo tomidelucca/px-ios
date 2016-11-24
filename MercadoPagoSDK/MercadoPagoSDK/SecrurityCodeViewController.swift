@@ -19,6 +19,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     var textMaskFormater : TextMaskFormater!
     var cardFront : CardFrontView!
     var cardBack : CardBackView!
+    var ccvLabelEmpty : Bool = true
     
      override open var screenName : String { get{ return "SECURITY_CODE" } }
     
@@ -47,6 +48,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         securityCodeTextField.keyboardType = UIKeyboardType.numberPad
         securityCodeTextField.addTarget(self, action: #selector(SecrurityCodeViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         securityCodeTextField.delegate = self
+        completeCvvLabel()
     }
 
     override open func didReceiveMemoryWarning() {
@@ -73,6 +75,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         securityCodeTextField.becomeFirstResponder()
+        
        
     }
     open override func viewDidDisappear(_ animated: Bool) {
@@ -116,6 +119,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
                 cardFront.cardName.text = ""
                 cardFront.cardExpirationDate.text = ""
                 cardFront.cardNumber.alpha = 0.8
+                cardFront.cardCVV.alpha = 0.8
                 cardFront.cardNumber.textColor =  fontColor
                 cardFront.layer.cornerRadius = 11
             }
@@ -142,8 +146,11 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     
     open func editingChanged(_ textField:UITextField){
         hideErrorMessage()
-       securityCodeLabel.text = textField.text
+        securityCodeLabel.text = textField.text
+        self.ccvLabelEmpty = (textField.text != nil && textField.text!.characters.count == 0)
         securityCodeLabel.textColor  = UIColor.black
+        completeCvvLabel()
+        
     }
     
     open func showErrorMessage(){
@@ -151,6 +158,30 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     }
     open func hideErrorMessage(){
         self.errorLabel.alpha = 0
+    }
+
+    func completeCvvLabel(){
+        if (self.ccvLabelEmpty) {
+            securityCodeLabel!.text = ""
+        }
+        
+        while (addCvvDot() != false){
+            
+        }
+        securityCodeLabel.textColor = UIColor.black
+    }
+    
+    func addCvvDot() -> Bool {
+        
+        let label = self.securityCodeLabel
+        //Check for max length including the spacers we added
+        if label?.text?.characters.count == self.viewModel.secCodeLenght() {
+            return false
+        }
+        
+        label?.text?.append("•")
+        return true
+        
     }
 
 }
@@ -224,11 +255,13 @@ open class SecrurityCodeViewModel: NSObject {
     
     
     func getCardHeight() -> CGFloat {
-        return (UIScreen.main.bounds.height*0.27 - 35)
+        return getCardWidth()/12*7
+        return (UIScreen.main.bounds.height*0.27 )
     }
     
     func getCardWidth() -> CGFloat {
-        return (UIScreen.main.bounds.width - 144)
+        
+        return (UIScreen.main.bounds.width - 100)
     }
     func getCardX() -> CGFloat {
         return ((UIScreen.main.bounds.width - getCardWidth())/2)

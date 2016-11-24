@@ -10,6 +10,8 @@ import Foundation
 
 extension String {
 	
+    static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
+    
 	var localized: String {
 		var bundle : Bundle? = MercadoPago.getBundle()
 		if bundle == nil {
@@ -68,3 +70,4 @@ extension String {
         return stringTrimmed
     }
 }
+

@@ -31,13 +31,12 @@ class HeaderCongratsTableViewCell: UITableViewCell {
                 titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
             }
             let currency = MercadoPagoContext.getCurrency()
-            let currencySymbol = currency.getCurrencySymbolOrDefault() ?? "$"
+            let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
             let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
             
             let amountFromDouble = String(payment.transactionAmount).replacingOccurrences(of: ".", with: decimalSeparator)
-            let amountStr = Utils.getAmountFormatted(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
-            let centsStr = Utils.getCentsFormatted(String(payment.transactionAmount), decimalSeparator: decimalSeparator)
+            
             let amountRange = titleWithParams.range(of: "%t")
             
             if amountRange != nil {
@@ -51,10 +50,9 @@ class HeaderCongratsTableViewCell: UITableViewCell {
             
         } else if payment.status == "pending"{
             icon.image = MercadoPago.getImage("iconoPagoOffline")
-            //title.text = instruction?.title
             
             let currency = MercadoPagoContext.getCurrency()
-            let currencySymbol = currency.getCurrencySymbolOrDefault() ?? "$"
+            let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
             let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
             
