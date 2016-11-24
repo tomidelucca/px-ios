@@ -51,8 +51,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
-
-    
     public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
@@ -460,6 +458,7 @@ class PaymentVaultViewModel : NSObject {
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
     var cards : [Card]?
+    var customerMaxPaymentMethodsCount : Int = MercadoPagoContext.maxCustomerPaymentMethods()
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
@@ -476,7 +475,7 @@ class PaymentVaultViewModel : NSObject {
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if (self.customerCards != nil && self.customerCards?.count > 0) {
-            return (self.customerCards!.count <= 3 ? self.customerCards!.count : 3)
+            return (self.customerCards!.count <= customerMaxPaymentMethodsCount ? self.customerCards!.count : customerMaxPaymentMethodsCount)
         }
         return 0
         
@@ -535,6 +534,7 @@ class PaymentVaultViewModel : NSObject {
         
         
     }
+    
     
     internal func optionSelected(_ paymentSearchItemSelected : PaymentMethodSearchItem, navigationController : UINavigationController, cancelPaymentCallback : @escaping ((Void) -> (Void)),animated: Bool = true) {
         
