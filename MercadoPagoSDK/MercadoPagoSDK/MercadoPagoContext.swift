@@ -144,7 +144,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return self.public_key
     }
     
-    
     fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
@@ -264,9 +263,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
     open class func merchantAccessToken() -> String {
-        
         return sharedInstance.merchant_access_token
-        
     }
     
 
