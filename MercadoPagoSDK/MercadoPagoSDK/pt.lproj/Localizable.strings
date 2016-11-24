@@ -14,10 +14,17 @@
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
 
+//Installment Cell
+
 "Cuotas" = "Parcelas";
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
+" Sin interés"=" Sin interés";//--
+"¿En cuántas cuotas?" = "Em quantas parcelas?";
+"¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
+
 
 "Medios de pago" = "Meios de pagamento";
 "terminada en" = "terminado em";
@@ -78,7 +85,7 @@
 
 //---Identification
 "OK"="OK";
-"DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DO TITULAR DO CARTÃO";
+"DOCUMENTO DEL TITULAR DE LA TARJETA"="DOCUMENTO DO TITULAR";
 "Número"="Número";
 "Tipo"="Tipo";
 
@@ -88,7 +95,7 @@
 "Comprobante"="Comprovante";
 
 "terminada en "="terminado em ";
-"Sin interés"="Sem juros";
+
 "Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
 "El teléfono está al dorso de tu tarjeta"="O telefone do banco está no verso do seu cartão.";

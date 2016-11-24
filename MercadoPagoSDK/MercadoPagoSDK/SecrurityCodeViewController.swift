@@ -25,6 +25,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
          self.hideNavBar()
         loadMPStyles()
         self.errorLabel.alpha = 0
+        self.securityCodeTextField.placeholder = "security_code".localized
         self.errorLabel.text = "Revisa este dato".localized
         self.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
