@@ -220,11 +220,13 @@ open class SecrurityCodeViewModel: NSObject {
     
     
     func getCardHeight() -> CGFloat {
-        return (UIScreen.main.bounds.height*0.27 - 35)
+        return getCardWidth()/12*7
+        return (UIScreen.main.bounds.height*0.27 )
     }
     
     func getCardWidth() -> CGFloat {
-        return (UIScreen.main.bounds.width - 144)
+        
+        return (UIScreen.main.bounds.width - 100)
     }
     func getCardX() -> CGFloat {
         return ((UIScreen.main.bounds.width - getCardWidth())/2)
