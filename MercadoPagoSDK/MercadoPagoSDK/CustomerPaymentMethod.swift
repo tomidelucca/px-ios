@@ -64,8 +64,8 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
         return obj
     }
     
-    public func getFirstSixDigits() -> String! {
-        return firstSixDigits
+    public func getFirstSixDigits() -> String? {
+        return card?.getCardBin()
     }
     
     
@@ -98,11 +98,11 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     }
     
     open func getCardBin() -> String? {
-        return "XXXX"
+        return card?.getCardBin()
     }
     
     open func getCardLastForDigits() -> String? {
-        return "XXXX"
+        return card?.getCardLastForDigits()
     }
     
     open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {

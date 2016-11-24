@@ -53,6 +53,10 @@ class InstructionBodyTableViewCell: UITableViewCell {
                         height += 30
                     }
                     if index == 4{
+                        if UIScreen.main.bounds.width <= 320{
+                            height+=21
+                        }
+
                         ViewUtils.drawBottomLine(y: CGFloat(height+30), width: UIScreen.main.bounds.width, inView: self.view)
                     }
                     

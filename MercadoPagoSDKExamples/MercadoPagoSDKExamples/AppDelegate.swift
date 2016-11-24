@@ -22,14 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
       
-        //MercadoPagoContext.setPublicKey("TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b")
+       // MercadoPagoContext.setPublicKey("APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d")
         MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
-
-     //   MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
-     //   MercadoPagoContext.setCustomerURI("/get_customer")
+        let tracker = TrackerExample()
+        
+        MercadoPagoContext.setTrack(listener: tracker)
+        //MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
+        //MercadoPagoContext.setCustomerURI("/get_customer")
 
         MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
 
@@ -37,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Pinto de rojo el color primerio
 
-        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
+//        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
 
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
@@ -157,5 +159,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+
+class TrackerExample : MPTrackListener {
+    func trackScreen(screenName : String){
+        print("***** Trackeada \(screenName)")
+    }
+    func trackEvent(screenName : String?, action: String!, result: String?){
+        print("***** Trackeado Evento en \(screenName) accion \(action) y result \(result)")
+    }
 }
 

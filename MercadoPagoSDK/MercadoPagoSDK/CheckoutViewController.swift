@@ -30,6 +30,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     @IBOutlet weak var checkoutTable: UITableView!
     
     init(preferenceId : String, callback : @escaping ((Payment) -> Void),  callbackCancel : ((Void) -> Void)? = nil){
+        MercadoPagoContext.clearPaymentKey()
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
@@ -46,6 +47,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        MercadoPagoContext.clearPaymentKey()
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -55,8 +57,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
         
-        //self.title = "¿Cómo quieres pagar?".localized
-        
+        // Avoid account_money in F3
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: false)
         
     }
     
@@ -66,22 +68,21 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.viewWillAppear(animated)
         
         self.navigationItem.rightBarButtonItem = nil
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.white()
-        self.navigationController?.navigationBar.barTintColor = UIColor.white()
+        self.navBarBackgroundColor = UIColor.white()
+        self.navBarTextColor = UIColor.blueMercadoPago()
         
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLoading()
-        
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
-        
+        self.hideNavBar()
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
+        self.showLoading()
+        
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
         } else {
@@ -104,6 +105,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             }
         }
 
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.navBarHeight -= 10
     }
     
     override open func didReceiveMemoryWarning() {
@@ -147,14 +150,15 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
             case 1:
                 var title = "Total".localized
-
+                var addSeparatorLine = false
                 if self.viewModel.payerCost != nil {
                     title = "Pagas".localized
+                    addSeparatorLine = true
                 }
-                return self.getPurchaseDetailCell(indexPath: indexPath, title : title, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.payerCost)
+                return self.getPurchaseDetailCell(indexPath: indexPath, title : title, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.payerCost, addSeparatorLine: addSeparatorLine)
             case 2:
                 if self.viewModel.isPaymentMethodSelectedCard() {
-                    return self.getPurchaseDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.payerCost!.totalAmount)
+                    return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.payerCost!.totalAmount, addSeparatorLine: false)
                 }
                 return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             default:
@@ -244,7 +248,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         
     }
-    internal func startAuthCard(_ token:Token){
+    internal func startAuthCard(_ token:Token ){
         
         let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
             self.token = token
@@ -282,6 +286,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
 
         self.viewModel.payerCost = payerCost
+        self.hideLoading()
     }
     
     
@@ -424,7 +429,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return payerCostTitleTableViewCell
     }
     
-    private func getPurchaseDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
+    private func getPurchaseDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         if self.viewModel.shouldDisplayNoRate() {
             let purchaseDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseDetailTableViewCell", for: indexPath) as! PurchaseDetailTableViewCell
@@ -432,13 +437,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return purchaseDetailCell
         }
         
-        return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost)
+        return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost, addSeparatorLine: addSeparatorLine)
     }
     
-    private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil) -> UITableViewCell{
+    private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
-        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost)
+        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost, addSeparatorLine : addSeparatorLine)
         return purchaseSimpleDetailTableViewCell
     }
     
@@ -504,8 +509,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-        self.navBarTextColor = UIColor.blueMercadoPago()
-        self.didScrollInTable(scrollView, tableView: self.checkoutTable)
+        self.didScrollInTable(scrollView)
     }
 }
 
@@ -581,14 +585,14 @@ open class CheckoutViewModel {
             switch indexPath.row {
             case 0:
                 // Productos
-                return PurchaseDetailTableViewCell.getCellHeight()
+                return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
             case 1:
                 if  shouldDisplayNoRate() {
                     return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.payerCost)
                 }
                 return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
             case 2:
-                return (self.isPaymentMethodSelectedCard()) ? PurchaseDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
+                return (self.isPaymentMethodSelectedCard()) ? PurchaseSimpleDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
             default:
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
             }

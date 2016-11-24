@@ -28,7 +28,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-open class PaymentVaultViewController: MercadoPagoUIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -114,7 +114,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         super.viewDidLoad()
         
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quieres pagar?".localized
+            self.title = "¿Cómo quiéres pagar?".localized
         }
         
         self.registerAllCells()
@@ -133,17 +133,19 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
             self.callbackCancel = callbackCancel
         }
 
-        self.view.backgroundColor = MercadoPagoContext.getComplementaryColor()
-        self.collectionSearch.backgroundColor = MercadoPagoContext.getComplementaryColor()
+       self.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
+       self.collectionSearch.backgroundColor = MercadoPagoContext.getPrimaryColor()
  
-
-        
-        
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.hideNavBar()
+        
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+        self.navigationController!.navigationBar.shadowImage = nil
+        self.extendedLayoutIncludesOpaqueBars = true
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -155,7 +157,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
 
     fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
         return { Void -> (Void) in
-            if self.viewModel.currentPaymentMethodSearch.count > 1 {
+            if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
                 self.navigationController!.popToViewController(self, animated: true)
@@ -206,7 +208,7 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1 {
+            if  self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else {
                 self.collectionSearch.delegate = self
@@ -223,6 +225,14 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
    
         let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
+        
+        let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
+        self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
+        
+    }
+    
+    override func getNavigationBarTitle() -> String {
+        return "¿Cómo quierés pagar?".localized
     }
     
     open override func didReceiveMemoryWarning() {
@@ -244,9 +254,9 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
 
     func defaultsPaymentMethodsSection() -> Int{
         if (self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0){
+            return 2
+        } else{
             return 1
-        }else{
-            return 0
         }
         
     }
@@ -255,9 +265,9 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         if (self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0){
-            return 2
+            return 3
         }else{
-            return 1
+            return 2
         }
 
     }
@@ -307,6 +317,8 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
             return 0
         }
         switch section {
+        case 0 :
+            return 1
         case defaultsPaymentMethodsSection():
             if let pms = self.viewModel.currentPaymentMethodSearch{
               return pms.count
@@ -323,9 +335,15 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
     public func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
+                 
                                                       for: indexPath) as! PaymentSearchCollectionViewCell
 
         switch indexPath.section {
+        case 0 :
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
+                                                          
+                                                          for: indexPath) as! PaymentVaultTitleCollectionViewCell
+            return cell
         case defaultsPaymentMethodsSection():
             let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexPath.row]
             cell.fillCell(searchItem: currentPaymentMethod)
@@ -346,15 +364,33 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-       
         let paddingSpace = CGFloat(32.0)
         let availableWidth = view.frame.width - paddingSpace
+        
+        if indexPath.section == 0 {
+            return CGSize(width : view.frame.width, height : 70)
+        }
+       
+        
         let widthPerItem = availableWidth / itemsPerRow
         return CGSize(width: widthPerItem, height: maxHegithRow(indexPath:indexPath)  )
     }
     
     private func maxHegithRow(indexPath: IndexPath) -> CGFloat{
-        let numberOfCells = self.viewModel.currentPaymentMethodSearch.count
+        
+        if indexPath.section == self.defaultsPaymentMethodsSection() {
+            return self.calculateHeight(indexPath: indexPath, numberOfCells: self.viewModel.currentPaymentMethodSearch.count)
+        } else {
+            return self.calculateHeight(indexPath: indexPath, numberOfCells: self.viewModel.getCustomerPaymentMethodsToDisplayCount(), customerPaymentMethods: true)
+        }
+        
+    }
+    
+    private func calculateHeight(indexPath : IndexPath, numberOfCells : Int, customerPaymentMethods : Bool = false) -> CGFloat {
+        if numberOfCells == 0 {
+            return 0
+        }
+        
         let section : Int
         let row = indexPath.row
         if row % 2 == 1{
@@ -364,28 +400,34 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         }
         let index1 = (section  * 2)
         let index2 = (section  * 2) + 1
-    
+        
         if index1 + 1 > numberOfCells {
             return 0
         }
         
-        let height1 = heightOfItem(indexItem: index1)
+        let height1 = heightOfItem(indexItem: index1, customerPaymentMethods: customerPaymentMethods)
         
         if index2 + 1 > numberOfCells {
             return height1
         }
         
-        let height2 = heightOfItem(indexItem: index2)
+        let height2 = heightOfItem(indexItem: index2, customerPaymentMethods: customerPaymentMethods)
         
         
         return height1 > height2 ? height1 : height2
 
     }
     
-    
-    func heightOfItem(indexItem : Int) -> CGFloat {
-        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexItem]
-         return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+    func heightOfItem(indexItem : Int, customerPaymentMethods : Bool) -> CGFloat {
+        
+        if customerPaymentMethods {
+            let currentPaymentMethod = self.viewModel.customerCards![indexItem]
+            return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+        }
+        
+        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch![indexItem]
+        return PaymentSearchCollectionViewCell.totalHeight(searchItem: currentPaymentMethod)
+
     }
     
 
@@ -401,6 +443,9 @@ open class PaymentVaultViewController: MercadoPagoUIViewController, UICollection
         return 8
     }
     
+    public func scrollViewDidScroll(_ scrollView: UIScrollView){
+        self.didScrollInTable(scrollView)
+    }
     
  }
 
@@ -435,6 +480,10 @@ class PaymentVaultViewModel : NSObject {
         }
         return 0
         
+    }
+    
+    func getDisplayedPaymentMethodsCount() -> Int {
+        return self.getCustomerPaymentMethodsToDisplayCount() + self.currentPaymentMethodSearch.count
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
@@ -481,8 +530,9 @@ class PaymentVaultViewModel : NSObject {
                     return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
                 })
             }
+            self.customerCards = currentCustomerCards
         }
-        self.customerCards = currentCustomerCards
+        
         
     }
     
@@ -523,17 +573,5 @@ class PaymentVaultViewModel : NSObject {
         }
     }
     
-    func getCustomerCard(at indexPath : IndexPath) -> CardInformation {
-        let cardInformation = self.customerCards![indexPath.row] as! Card
-        if self.cards != nil && self.cards?.count > 0 {
-            let foundCard = self.cards?.filter({ (arg: Card) -> Bool in
-                return arg.getCardId() == cardInformation.getCardId()
-            })
-            cardInformation.issuer = foundCard?[0].getIssuer()
-        }
-        return cardInformation
-    }
-
-
 }
 

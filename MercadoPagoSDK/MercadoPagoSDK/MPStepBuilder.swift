@@ -196,12 +196,12 @@ open class MPStepBuilder : NSObject {
         return CardAdditionalStep(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
     }
     
-    public class func startPayerCostForm(cardInformation : CardInformation, token : Token? , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, timer: CountdownTimer? = nil,
+    public class func startPayerCostForm(cardInformation : CardInformation, amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil, timer: CountdownTimer? = nil,
                                        callback : @escaping ((_ payerCost: NSObject?) -> Void),
                                        callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return CardAdditionalStep(cardInformation: cardInformation, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
+        return CardAdditionalStep(cardInformation: cardInformation, amount: amount, paymentPreference: paymentPreference, installment: installment, timer: timer, callback: callback)
     }
     
     open class func startIdentificationForm(
@@ -237,7 +237,8 @@ open class MPStepBuilder : NSObject {
     fileprivate class func getIssuers(_ paymentMethod : PaymentMethod, cardToken : CardToken, customerCard : CardInformation? = nil, timer : CountdownTimer? = nil, ccf : MercadoPagoUIViewController,
                                       callback : @escaping (_ paymentMethod: PaymentMethod, _ token: Token, _ issuer:Issuer?) -> Void){
         MercadoPagoContext.initFlavor2()
-        ccf.navigationController?.showLoading()
+      //  ccf.navigationController?.showLoading()
+        ccf.showLoading()
 
         
         if !cardToken.isCustomerPaymentMethod() {

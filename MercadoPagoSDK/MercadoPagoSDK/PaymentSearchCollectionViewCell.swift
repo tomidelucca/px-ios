@@ -51,6 +51,10 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         let image = MercadoPago.getImageFor(cardInformation: cardInformation)
         self.fillCell(image: image, title: cardInformation.getCardDescription(), subtitle: nil)
     }
+
+    static func totalHeight(searchItem : CardInformation ) -> CGFloat {
+        return PaymentSearchCollectionViewCell.totalHeight(title: searchItem.getCardDescription(), subtitle: "")
+    }
     
     static func totalHeight(searchItem : PaymentMethodSearchItem ) -> CGFloat {
         return PaymentSearchCollectionViewCell.totalHeight(title: searchItem.description, subtitle: searchItem.comment)
@@ -58,7 +62,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     static func totalHeight(title: String?, subtitle:String?) -> CGFloat {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
-        let availableWidth = screenWidth - 32
+        let availableWidth = screenWidth - (screenWidth * 0.3)
         let widthPerItem = availableWidth / 2
         
         let titleLabel = UILabel(frame: CGRect(x:0,y:0,width:widthPerItem,height:0))

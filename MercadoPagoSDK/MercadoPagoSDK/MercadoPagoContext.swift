@@ -14,6 +14,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     static let sharedInstance = MercadoPagoContext()
     
+    var trackListener : MPTrackListener?
+    
     var public_key: String = ""
     
     var payer_access_token: String = ""
@@ -67,14 +69,14 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.0.5"
+        return "3.0.0"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
         "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
         "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
         "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
-        "MLM" : ["language" : "es", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
+        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
      ]
 
     public enum Site : String {
@@ -116,6 +118,14 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         if site != nil {
             MercadoPagoContext.setSite(site!)
         }
+    }
+    
+    open class func setTrack(listener : MPTrackListener) {
+        MercadoPagoContext.sharedInstance.trackListener = listener
+    }
+    
+    open static func getTrackListener() -> MPTrackListener? {
+        return sharedInstance.trackListener
     }
     
     open static func getLanguage() -> String {
@@ -299,6 +309,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return sharedInstance.payment_uri
         
     }
+    
+
+    
+    
     
     open class func isCustomerInfoAvailable() -> Bool {
         return (self.sharedInstance.base_url.characters.count > 0 && self.sharedInstance.customer_uri.characters.count > 0 && self.sharedInstance.merchant_access_token.characters.count > 0)

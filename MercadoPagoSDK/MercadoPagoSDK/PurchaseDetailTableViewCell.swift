@@ -10,7 +10,7 @@ import UIKit
 
 open class PurchaseDetailTableViewCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(58)
+    static let ROW_HEIGHT = CGFloat(52)
     
     static var separatorLine : UIView?
     
@@ -46,12 +46,12 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
             }
             if !payerCost!.hasInstallmentsRate() {
                 self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-                separatorLineHeight += 23
+                separatorLineHeight += 26
             }
-            PurchaseDetailTableViewCell.separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
-            self.addSubview(PurchaseDetailTableViewCell.separatorLine!)
+            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
+            self.addSubview(separatorLine)
         } else {
-            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, baselineOffset : 5)
+            self.purchaseDetailAmount.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.grayDark(), fontSize : 18, centsFontSize: 11, baselineOffset : 5)
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
@@ -62,7 +62,7 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() {
-            return ROW_HEIGHT + 23
+            return ROW_HEIGHT + 30
         }
         return ROW_HEIGHT
     }
