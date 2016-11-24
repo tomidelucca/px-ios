@@ -106,6 +106,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
 
         self.extendedLayoutIncludesOpaqueBars = true
+        self.showNavBar()
         self.navBarHeight -= 10
     }
     

@@ -11,11 +11,15 @@ import UIKit
 class PaymentVaultTitleCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var title: MPLabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = MercadoPagoContext.getPrimaryColor()
+    }
+    
+    func fillCell(){
         title.attributedText = NSAttributedString(string: "¿Cómo quiéres pagar?".localized)
         title.textColor = UIColor.systemFontColor()
-        self.backgroundColor = MercadoPagoContext.getPrimaryColor()
         
     }
 
