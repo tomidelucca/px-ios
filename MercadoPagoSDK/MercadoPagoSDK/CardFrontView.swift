@@ -33,16 +33,8 @@ import UIKit
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
- //       view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+
         self.addSubview(view);
-        /*
-        cardNumber.adjustsFontSizeToFitWidth = true
-        cardNumber.numberOfLines = 0
-        cardName.adjustsFontSizeToFitWidth = true
-        cardName.numberOfLines = 0
-        cardExpirationDate.adjustsFontSizeToFitWidth = true
-        cardExpirationDate.numberOfLines = 0
-        */
         
         cardNumber.numberOfLines = 0
         cardName.numberOfLines = 0
