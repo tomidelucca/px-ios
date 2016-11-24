@@ -284,8 +284,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     func hideNavBar(){
         if navigationController != nil {
             self.title = ""
-            
+        
             navigationController?.navigationBar.titleTextAttributes = nil
+            
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()

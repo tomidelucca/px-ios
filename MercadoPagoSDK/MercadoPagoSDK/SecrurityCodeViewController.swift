@@ -98,6 +98,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     
     
     @IBAction func cloneToken(_ sender: AnyObject) {
+        securityCodeTextField.resignFirstResponder()
         guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
             showErrorMessage()
             return
