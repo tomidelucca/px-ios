@@ -14,6 +14,8 @@ class CallForAuthTableViewCell: CallbackCancelTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.titleLabel?.numberOfLines = 0
+        self.button.titleLabel?.textAlignment = NSTextAlignment.center
         // Initialization code
     }
     func fillCell(paymentMehtod: PaymentMethod){

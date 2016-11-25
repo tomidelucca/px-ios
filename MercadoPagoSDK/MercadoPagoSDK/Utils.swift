@@ -107,7 +107,7 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName:color]
@@ -116,7 +116,7 @@ class Utils {
         
         stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, baselineOffset : baselineOffset))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
         
         if additionalString != nil {
             stringToWrite.append(additionalString!)

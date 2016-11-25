@@ -168,7 +168,7 @@ class CardViewModelManager: NSObject {
         }
     }
     
-    func matchedPaymentMethod (_ cardNumber : String) -> [PaymentMethod]? {
+    func matchedPaymentMethod (_ cardNumber : String) -> [PaymentMethod]?{ 
         if self.guessedPMS != nil {
             return self.guessedPMS
 
