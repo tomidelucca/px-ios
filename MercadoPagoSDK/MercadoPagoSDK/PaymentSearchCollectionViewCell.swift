@@ -29,6 +29,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         self.subtitleSearch.text = subtitle
         self.imageSearch.image = image
 
+        self.backgroundColor = MercadoPagoContext.getPrimaryColor()
         self.titleSearch.textColor = MercadoPagoContext.getTextColor()
         self.layoutIfNeeded()
     }

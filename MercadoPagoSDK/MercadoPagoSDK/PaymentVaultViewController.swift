@@ -48,6 +48,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     var bundle = MercadoPago.getBundle()
     
+    var titleSectionReference : PaymentVaultTitleCollectionViewCell!
+    
     fileprivate var tintColor = true
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
@@ -132,7 +134,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
        self.collectionSearch.backgroundColor = MercadoPagoContext.getPrimaryColor()
  
     }
@@ -150,6 +151,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.getCustomerCards()
+        self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
     }
 
 
@@ -181,6 +183,15 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.loadPaymentMethodSearch()
         }
     }
+    
+    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+        return { Void -> (Void) in
+            if self.titleSectionReference != nil {
+                self.titleSectionReference.fillCell()
+            }
+        }
+    }
+
     
     fileprivate func loadPaymentMethodSearch(){
         
@@ -231,7 +242,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     override func getNavigationBarTitle() -> String {
-        return "¿Cómo quierés pagar?".localized
+        if self.titleSectionReference != nil {
+            self.titleSectionReference.title.text = ""
+        }
+        return "¿Cómo quiéres pagar?".localized
     }
     
     open override func didReceiveMemoryWarning() {
@@ -342,6 +356,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
                                                           
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
+            self.titleSectionReference = cell
             return cell
         case defaultsPaymentMethodsSection():
             let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexPath.row]
