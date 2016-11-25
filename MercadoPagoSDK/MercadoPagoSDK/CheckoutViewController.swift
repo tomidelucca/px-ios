@@ -77,7 +77,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
-        //self.hideNavBar()
+        
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
