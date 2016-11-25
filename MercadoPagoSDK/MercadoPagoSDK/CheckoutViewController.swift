@@ -65,7 +65,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        self.showLoading()
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
         self.navBarTextColor = UIColor.blueMercadoPago()
@@ -76,7 +76,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLoading()
+        
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         

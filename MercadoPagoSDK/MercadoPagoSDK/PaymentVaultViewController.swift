@@ -297,6 +297,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 paymentVault.viewModel!.isRoot = false
                 self.navigationController!.pushViewController(paymentVault, animated: true)
             } else {
+                self.showLoading()
                 self.viewModel.optionSelected(paymentSearchItemSelected, navigationController: self.navigationController!, cancelPaymentCallback: cardFormCallbackCancel())
             }
         default:
