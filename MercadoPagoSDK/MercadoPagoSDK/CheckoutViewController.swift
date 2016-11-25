@@ -55,8 +55,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         super.viewDidLoad()
         
-        self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 0.01))
-        
         // Avoid account_money in F3
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: false)
         
@@ -67,28 +65,31 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        
         self.navigationItem.rightBarButtonItem = nil
         self.navBarBackgroundColor = UIColor.white()
         self.navBarTextColor = UIColor.blueMercadoPago()
+        
         
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.showLoading()
+        
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         self.hideNavBar()
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
-        self.showLoading()
         
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
         } else {
             if self.viewModel.paymentMethod != nil {
-                self.checkoutTable.reloadData()
                 self.hideLoading()
+                self.checkoutTable.reloadData()
                 if (recover){
                     recover = false
                     self.startRecoverCard()
@@ -228,7 +229,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                self.navigationController!.popViewController(animated: true)
             }
         }
-        self.hideLoading()
+        //self.hideLoading()
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
@@ -277,7 +278,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.add(transition, forKey: nil)
         self.navigationController!.popToRootViewController(animated: animated)
-        self.showLoading()
+        //self.showLoading()
         
         self.viewModel.paymentMethod = paymentMethod
         self.token = token
@@ -510,6 +511,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
         self.didScrollInTable(scrollView)
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
     }
 }
 

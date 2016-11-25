@@ -62,24 +62,26 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         
         self.hideNavBar()
         
-        if !self.viewModel.hasIssuer() {
-            //self.showLoading()
-            self.getIssuers()
-        } else if self.viewModel.hasPaymentMethod(){
-            if self.viewModel.installment == nil {
-                //self.showLoading()
-                self.getInstallments()
-            } else {
-                self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
-            }
-        }
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.navBarHeight = -30
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = ""
+        self.showLoading()
+        
+        if !self.viewModel.hasIssuer() {
+            self.getIssuers()
+        } else if self.viewModel.hasPaymentMethod(){
+            if self.viewModel.installment == nil {
+                self.getInstallments()
+            } else {
+                self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
+                self.hideLoading()
+            }
+        }
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.navBarHeight = -30
+
     }
     
     override func loadMPStyles(){
@@ -90,7 +92,6 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             
-            //self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
             displayBackButton()
         }
     }
@@ -226,7 +227,6 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     
     fileprivate func getInstallments(){
         let bin = self.viewModel.token?.getCardBin() ?? ""
-        self.showLoading()
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethod[0]._id, success: { (installments) -> Void in
             self.viewModel.installment = installments?[0]
             self.viewModel.payerCosts = installments![0].payerCosts
@@ -237,7 +237,6 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         }
     }
     fileprivate func getIssuers(){
-        self.showLoading()
         MPServicesBuilder.getIssuers(self.viewModel.paymentMethod[0], bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
             self.viewModel.issuersList = issuers
             self.tableView.reloadData()
@@ -249,6 +248,11 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     
     override func getNavigationBarTitle() -> String {
         return self.viewModel.getTitle()
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
     }
     
 }
