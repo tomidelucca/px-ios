@@ -79,7 +79,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.showLoading()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
-        self.hideNavBar()
+        
         self.displayBackButton()
         self.navigationItem.leftBarButtonItem!.tintColor = UIColor.blueMercadoPago()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
@@ -107,6 +107,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
 
         self.extendedLayoutIncludesOpaqueBars = true
+        self.showNavBar()
         self.navBarHeight -= 10
     }
     
@@ -506,6 +507,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override func getNavigationBarTitle() -> String {
+        if (self.checkoutTable.contentOffset.y == -64) {
+            return ""
+        }
         return "Confirma tu compra".localized
     }
     

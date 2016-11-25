@@ -16,6 +16,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
     
+    var hideNavBarCallback : ((Void) -> Void)?
+    
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
     var loadingInstance : UIView?
@@ -104,7 +106,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 self.navigationController?.navigationBar.tintColor = navBarTextColor
                 self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
                 self.navigationController?.navigationBar.removeBottomLine()
-                  self.navigationController?.navigationBar.isTranslucent = false
+                self.navigationController?.navigationBar.isTranslucent = false
+                self.navigationController?.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
+                
                 //Create navigation buttons
                 displayBackButton()
             }
@@ -298,6 +302,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 self.displayBackButton()
             }
             
+            if self.hideNavBarCallback != nil {
+                hideNavBarCallback!()
+            }
         }
     }
     

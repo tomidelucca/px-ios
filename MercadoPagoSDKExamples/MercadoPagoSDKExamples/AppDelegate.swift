@@ -165,7 +165,7 @@ class TrackerExample : MPTrackListener {
     func trackScreen(screenName : String){
         print("***** Trackeada \(screenName)")
     }
-    func trackEvent(screenName : String?, action: String!, result: String?){
+    func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String : String]?){
         print("***** Trackeado Evento en \(screenName) accion \(action) y result \(result)")
     }
 }
