@@ -560,10 +560,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
             self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
-            }, completion: { (finish) -> Void in
-                self.cardFront?.cardLogo.image =  nil
-                
-        })
+            })
+        self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
         
@@ -580,13 +578,18 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func updateCardSkin(){
-        
+        guard let _ = cardFormManager.getBIN(textBox.text!) else{
+            cardFormManager.guessedPMS = nil
+            cardFormManager.cardToken = nil
+            self.clearCardSkin()
+            return
+        }
         if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             if(cardFormManager.getGuessedPM()  != nil){
+                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
                     self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
                     self.cardFront?.cardLogo.alpha = 1
                 })
@@ -610,8 +613,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 return
             }
             
-        }else if (textBox.text?.characters.count<7){
-            self.clearCardSkin()
         }
         if self.cvvLabel == nil || self.cvvLabel!.text!.characters.count == 0 {
             if((cardFormManager.guessedPMS != nil)&&(!(cardFormManager.getGuessedPM()?.secCodeInBack())!)){
