@@ -30,7 +30,7 @@ class ApprovedTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         //let installmentNumber = "\(payment.installments) x "
         let installmentNumber = "\(payment.installments) x "
-        let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, baselineOffset:11)
+        let totalAmount = Utils.getAttributedAmount(payment.transactionDetails.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
         let installmentLabel = NSMutableAttributedString(string: installmentNumber)
         installmentLabel.append(totalAmount)
         installments.attributedText =  installmentLabel
