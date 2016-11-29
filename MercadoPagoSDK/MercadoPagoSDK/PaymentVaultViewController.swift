@@ -310,7 +310,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 } else {
                     customerCardSelected.setupPaymentMethod(paymentMethodSelected)
                     customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+                    let cardFlow = MPFlowBuilder.startCardFlow(self.viewModel.paymentPreference, amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
                         self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
                         }, callbackCancel: {
                             self.navigationController!.popToViewController(self, animated: true)
