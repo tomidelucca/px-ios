@@ -109,6 +109,7 @@ open class MPFlowBuilder : NSObject {
         
         cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, cardInformation : cardInformation, paymentMethods : paymentMethods, token: token, timer: timer, callback: { (paymentMethod, token, issuer) -> Void in
             
+            
             MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
                 let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
                 if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
@@ -117,6 +118,7 @@ open class MPFlowBuilder : NSObject {
                         let pcvc = MPStepBuilder.startPayerCostForm([paymentMethod], issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0], timer: timer, callback: { (payerCost) -> Void in
                             callback(paymentMethod, token!, issuer, payerCost as! PayerCost?)
                         })
+                        
                         pcvc.callbackCancel = currentCallbackCancel
                         
                         ccf.navigationController!.pushViewController(pcvc, animated: false)
