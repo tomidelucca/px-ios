@@ -12,8 +12,7 @@ import UIKit
 
 
 
-open class MercadoPago : NSObject, UIAlertViewDelegate {
-    
+@objc open class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     open static let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
@@ -61,7 +60,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
     static let MP_PROD_ENV = "/v1"
-    static let API_VERSION = "1.3.2"
+    static let API_VERSION = "1.3.X"
 
     static let MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
     

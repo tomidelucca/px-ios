@@ -42,7 +42,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
 
         self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
-        self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, baselineOffset: 8)
+        self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
         let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
         paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
         self.paymentMethodDescription.attributedText = paymentMethodDescription
@@ -50,7 +50,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
         
-        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText(), fontSize : 16, baselineOffset : 3)
+        let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.grayBaseText(), fontSize : 16, baselineOffset : 4)
         let attributedAmountFinal = NSMutableAttributedString(string : "(")
         attributedAmountFinal.append(attributedAmount)
         attributedAmountFinal.append(NSAttributedString(string : ")"))

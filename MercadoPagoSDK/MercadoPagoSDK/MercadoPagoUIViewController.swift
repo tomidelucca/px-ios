@@ -20,6 +20,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
+    var loadingInstance : UIView?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -200,7 +201,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
     
     internal func showLoading(){
-        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
+        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
+        self.view.bringSubview(toFront: self.loadingInstance!)
+        
     }
     
     var fistResponder : UITextField?

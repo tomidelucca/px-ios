@@ -170,7 +170,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func getCustomerCards(){
        
         if self.viewModel!.shouldGetCustomerCardsInfo() {
-            self.showLoading()
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.hideLoading()
                 self.viewModel.customerCards = customer.cards
@@ -196,7 +195,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func loadPaymentMethodSearch(){
         
         if self.viewModel.currentPaymentMethodSearch == nil {
-            self.showLoading()
             MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 
                 self.viewModel.setPaymentMethodSearchResponse(paymentMethodSearchResponse)
@@ -299,6 +297,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 paymentVault.viewModel!.isRoot = false
                 self.navigationController!.pushViewController(paymentVault, animated: true)
             } else {
+                self.showLoading()
                 self.viewModel.optionSelected(paymentSearchItemSelected, navigationController: self.navigationController!, cancelPaymentCallback: cardFormCallbackCancel())
             }
         default:
@@ -459,6 +458,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
         self.didScrollInTable(scrollView)
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
     }
     
  }
