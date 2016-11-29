@@ -30,7 +30,6 @@ open class MPFlowBuilder : NSObject {
         return MPFlowController.createNavigationControllerWith(checkoutVC)
     }
     
-    
     open class func startPaymentVaultViewController(_ amount: Double, paymentPreference : PaymentPreference? = nil,
                                                     callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
                                                     callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
