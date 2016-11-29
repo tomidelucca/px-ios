@@ -113,6 +113,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        var upperFrame = self.collectionSearch.bounds
+        upperFrame.origin.y = -upperFrame.size.height + 10;
+        upperFrame.size.width = UIScreen.main.bounds.width
+        let upperView = UIView(frame: upperFrame)
+        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
             self.title = "¿Cómo quiéres pagar?".localized
@@ -134,8 +140,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.collectionSearch.backgroundColor = MercadoPagoContext.getPrimaryColor()
- 
+       self.collectionSearch.backgroundColor = UIColor.white()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
