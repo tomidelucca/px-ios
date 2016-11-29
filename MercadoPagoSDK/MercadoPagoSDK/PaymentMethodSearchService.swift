@@ -62,7 +62,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         let groupsPayerBody = MercadoPagoContext.payerAccessToken().characters.count > 0 ? GroupsPayer().toJSONString() as AnyObject? : nil
 
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", success: { (jsonResult) -> Void in
+        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", cache: false , success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
