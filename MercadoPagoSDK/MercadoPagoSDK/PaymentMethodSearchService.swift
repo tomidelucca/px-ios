@@ -68,13 +68,11 @@ open class PaymentMethodSearchService: MercadoPagoService {
                 if paymentSearchDic["error"] != nil {
                     failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                 } else {
-                    if paymentSearchDic.allKeys.count > 0 {
-                        if (paymentSearchDic["groups"] as? NSArray)?.count == 0{
-                            failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_KEY_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago con esta preferencia".localized]))
-                        } else {
-                            let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
+                    if (paymentSearchDic["groups"] as? NSArray)?.count == 0 && (paymentSearchDic["custom_options"] as? NSArray)?.count == 0{
+                        failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_KEY_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago con esta preferencia".localized]))
+                    } else if paymentSearchDic.allKeys.count > 0  {
+                        let paymentSearch = PaymentMethodSearch.fromJSON(jsonResult as! NSDictionary)
                             success(paymentSearch)
-                        }
                     } else{
                         failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "Ha ocurrido un error".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido obtener los métodos de pago".localized]))
                     }
