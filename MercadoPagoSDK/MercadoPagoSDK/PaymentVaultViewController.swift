@@ -386,7 +386,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let availableWidth = view.frame.width - paddingSpace
         
         if indexPath.section == 0 {
-            return CGSize(width : view.frame.width, height : 70)
+            return CGSize(width : view.frame.width, height : 100)
         }
        
         

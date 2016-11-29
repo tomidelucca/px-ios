@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zH-1X-Amk">
-                        <rect key="frame" x="49.5" y="20.5" width="220" height="27"/>
+                        <rect key="frame" x="49.5" y="0.0" width="220" height="26.5"/>
                         <attributedString key="attributedText">
                             <fragment content="¿Cómo quiéres pagar?">
                                 <attributes>
@@ -34,8 +34,8 @@
             </view>
             <color key="backgroundColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="2zH-1X-Amk" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="5LW-i2-ddU"/>
                 <constraint firstItem="2zH-1X-Amk" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="aDs-YC-6jM"/>
+                <constraint firstItem="2zH-1X-Amk" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mvA-AU-akT"/>
             </constraints>
             <size key="customSize" width="319" height="67"/>
             <connections>
