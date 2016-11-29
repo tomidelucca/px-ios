@@ -338,9 +338,9 @@ extension UINavigationBar {
 
 }
 extension UINavigationController {
-//    internal func showLoading(){
-//        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
-//    }
+    internal func showLoading(){
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
+    }
     
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
