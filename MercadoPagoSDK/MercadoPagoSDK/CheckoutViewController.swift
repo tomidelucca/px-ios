@@ -279,7 +279,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         transition.subtype = kCATransitionFromRight
         self.navigationController!.view.layer.add(transition, forKey: nil)
         self.navigationController!.popToRootViewController(animated: animated)
-        //self.showLoading()
+        
         
         self.viewModel.paymentMethod = paymentMethod
         self.token = token
@@ -507,7 +507,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override func getNavigationBarTitle() -> String {
-        if (self.checkoutTable.contentOffset.y == -64) {
+        if (self.checkoutTable.contentOffset.y == -64 || self.checkoutTable.contentOffset.y == 0) {
             return ""
         }
         return "Confirma tu compra".localized

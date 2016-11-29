@@ -202,6 +202,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func showLoading(){
         self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
+        self.view.bringSubview(toFront: self.loadingInstance!)
+        
     }
     
     var fistResponder : UITextField?

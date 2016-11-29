@@ -30,6 +30,7 @@
 
     [MercadoPagoContext setPayerAccessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
+    [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
     
     return YES;
 }

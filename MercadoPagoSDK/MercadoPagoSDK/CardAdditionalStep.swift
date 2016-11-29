@@ -61,7 +61,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         super.viewWillAppear(animated)
         
         self.hideNavBar()
-        
+
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -192,6 +192,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.showLoading()
         if (indexPath.section == 2){
             if self.viewModel.hasIssuer(){
                 let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row]
