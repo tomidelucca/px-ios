@@ -243,10 +243,17 @@ class Utils {
             let paymentMethodIdRange = paymentMethodId.range(of: paymentMethod._id)
             if paymentMethodIdRange != nil {
                 paymentTypeSelected = paymentMethodId.substring(from: paymentMethodIdRange!.upperBound)
+                
                 if paymentTypeSelected.characters.count > 0 {
                     paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                 }
-                return true
+                let selectedPM = paymentMethodId.characters.split(separator: "_").map(String.init)
+                if paymentMethod._id == selectedPM[0]{
+                    return true
+                } else {
+                    return false
+                }
+                
             }
             return false
         })
