@@ -99,7 +99,7 @@
         
         UIImage *image = [MercadoPago getImage:@"mpui-loading_default"];
 		self.spinner = [[UIImageView alloc] initWithImage:image];
-        //[self.spinner setFrame: CGRectMake(20, 20, 50, 50)];
+        
 		[self addSubview:self.spinner];
 		[self.spinner setTranslatesAutoresizingMaskIntoConstraints:NO];
 

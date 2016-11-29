@@ -244,7 +244,7 @@ open class MPStepBuilder : NSObject {
                     if(issuers.count > 1){
                         let issuerForm = MPStepBuilder.startIssuerForm(paymentMethod, cardToken: cardToken, issuerList: issuers, timer : timer, callback: { (issuer) -> Void in
                             if let nav = ccf.navigationController {
-                                //nav.showLoading()
+                                
                             }
                             
                             self.createNewCardToken(cardToken, paymentMethod: paymentMethod, issuer: issuer as? Issuer, ccf : ccf, callback: callback)

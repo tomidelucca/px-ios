@@ -11,6 +11,9 @@ import UIKit
 
 open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
 
+    static let kNavBarOffset = CGFloat(-64.0);
+    static let kDefaultNavBarOffset = CGFloat(0.0);
+    
     var preferenceId : String!
     var publicKey : String!
     var accessToken : String!
@@ -230,7 +233,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                self.navigationController!.popViewController(animated: true)
             }
         }
-        //self.hideLoading()
+        
         (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
         self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
         
@@ -264,6 +267,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     @objc fileprivate func confirmPayment(){
         
+        self.hideNavBar()
         self.showLoading()
         if self.viewModel.isPaymentMethodSelectedCard(){
             self.confirmPaymentOn()
@@ -507,7 +511,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override func getNavigationBarTitle() -> String {
-        if (self.checkoutTable.contentOffset.y == -64 || self.checkoutTable.contentOffset.y == 0) {
+        if (self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset) {
             return ""
         }
         return "Confirma tu compra".localized
