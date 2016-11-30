@@ -361,6 +361,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                                                           
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
             self.titleSectionReference = cell
+            titleCell = cell
             return cell
         case defaultsPaymentMethodsSection():
             let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexPath.row]
@@ -389,7 +390,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let paddingSpace = CGFloat(32.0)
         let availableWidth = view.frame.width - paddingSpace
         
-        titleCellHeight = 90
+        titleCellHeight = 82
         if indexPath.section == 0 {
             return CGSize(width : view.frame.width, height : titleCellHeight)
         }

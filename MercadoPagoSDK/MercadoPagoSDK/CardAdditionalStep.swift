@@ -153,6 +153,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             titleCell.selectionStyle = .none
             titleCell.setTitle(string: self.getNavigationBarTitle())
             titleCell.backgroundColor = MercadoPagoContext.getPrimaryColor()
+            self.titleCell = titleCell
             
             return titleCell
             

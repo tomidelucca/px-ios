@@ -431,7 +431,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
         payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.white()
-        
+        titleCell = payerCostTitleTableViewCell
         return payerCostTitleTableViewCell
     }
     
