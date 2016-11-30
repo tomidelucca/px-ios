@@ -377,7 +377,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate let itemsPerRow: CGFloat = 2
     
     var sectionHeight : CGSize?
-
+    
+    override func scrollPositionToShowNavBar () -> CGFloat {
+        return titleCellHeight - navBarHeigth - statusBarHeigth
+    }
+    
     public func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -385,9 +389,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let paddingSpace = CGFloat(32.0)
         let availableWidth = view.frame.width - paddingSpace
         
+        titleCellHeight = 90
         if indexPath.section == 0 {
-            return CGSize(width : view.frame.width, height : 80) //ponerlo relativo al heigth de la pantalla
+            return CGSize(width : view.frame.width, height : titleCellHeight)
         }
+        
        
         
         let widthPerItem = availableWidth / itemsPerRow

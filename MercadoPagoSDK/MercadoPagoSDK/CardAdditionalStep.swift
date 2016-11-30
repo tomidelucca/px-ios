@@ -80,7 +80,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
             }
         }
         self.extendedLayoutIncludesOpaqueBars = true
-        self.navBarHeight = -30
+        self.titleCellHeight = 44
 
     }
     
@@ -120,7 +120,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         
         switch indexPath.section {
         case 0:
-            return (self.navigationController != nil) ? (self.navigationController!.navigationBar.frame.height) : 44
+            return self.titleCellHeight
         case 1:
             return self.viewModel.getCardCellHeight()
         case 2:

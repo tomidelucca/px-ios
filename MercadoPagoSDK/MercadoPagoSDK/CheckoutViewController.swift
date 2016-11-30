@@ -111,9 +111,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         self.showNavBar()
-        self.navBarHeight -= 10
+        self.titleCellHeight = 44
     }
-    
+
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

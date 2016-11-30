@@ -13,11 +13,17 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     var displayNavBar = false
     var lastContentOffset: CGFloat = 0
     var scrollingDown = false
-    var navBarHeight : CGFloat = -18
+    let navBarHeigth: CGFloat = 44
+    let statusBarHeigth: CGFloat = 20
+    var titleCellHeight: CGFloat = 70
+
+    func scrollPositionToShowNavBar () -> CGFloat {
+        return titleCellHeight - statusBarHeigth
+    }
     
     func didScrollInTable(_ scrollView: UIScrollView) {
-        
-        if (scrollView.contentOffset.y > navBarHeight + UIApplication.shared.statusBarFrame.size.height) {
+        print(scrollView.contentOffset.y)
+        if (scrollView.contentOffset.y > -scrollPositionToShowNavBar() ) {
             showNavBar()
         } else {
             hideNavBar()
