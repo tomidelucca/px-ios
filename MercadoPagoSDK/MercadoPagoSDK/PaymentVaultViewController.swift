@@ -113,6 +113,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        var upperFrame = self.collectionSearch.bounds
+        upperFrame.origin.y = -upperFrame.size.height + 10;
+        upperFrame.size.width = UIScreen.main.bounds.width
+        let upperView = UIView(frame: upperFrame)
+        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
             self.title = "¿Cómo quiéres pagar?".localized
@@ -134,8 +140,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.collectionSearch.backgroundColor = MercadoPagoContext.getPrimaryColor()
- 
+       self.collectionSearch.backgroundColor = UIColor.white()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -356,6 +361,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                                                           
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
             self.titleSectionReference = cell
+            titleCell = cell
             return cell
         case defaultsPaymentMethodsSection():
             let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[indexPath.row]
@@ -372,7 +378,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate let itemsPerRow: CGFloat = 2
     
     var sectionHeight : CGSize?
-
+    
+    override func scrollPositionToShowNavBar () -> CGFloat {
+        return titleCellHeight - navBarHeigth - statusBarHeigth
+    }
+    
     public func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -380,9 +390,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let paddingSpace = CGFloat(32.0)
         let availableWidth = view.frame.width - paddingSpace
         
+        titleCellHeight = 82
         if indexPath.section == 0 {
-            return CGSize(width : view.frame.width, height : 70)
+            return CGSize(width : view.frame.width, height : titleCellHeight)
         }
+        
        
         
         let widthPerItem = availableWidth / itemsPerRow

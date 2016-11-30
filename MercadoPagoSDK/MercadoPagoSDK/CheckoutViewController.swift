@@ -111,9 +111,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         self.showNavBar()
-        self.navBarHeight -= 10
+        self.titleCellHeight = 44
     }
-    
+
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -431,7 +431,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
         payerCostTitleTableViewCell.title.textColor = UIColor.blueMercadoPago()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.white()
-        
+        titleCell = payerCostTitleTableViewCell
         return payerCostTitleTableViewCell
     }
     
