@@ -242,7 +242,7 @@ class Utils {
     internal static func getExpirationYearFromLabelText(_ mmyy : String) -> Int {
         let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
         let validInt = Int(stringMMYY)
-        if(validInt == nil){
+        if(validInt == nil || stringMMYY.characters.count < 4){
             return 0
         }
         let floatMMYY = Float( validInt! / 100 )

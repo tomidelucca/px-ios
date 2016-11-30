@@ -69,7 +69,6 @@ int installmentsSelected = 1;
         selectedIssuer = issuer;
         paymentMethod = pm;
     } callbackCancel:nil];
-    
    
     [self presentViewController:paymentVaultVC animated:YES completion:^{}];
 
