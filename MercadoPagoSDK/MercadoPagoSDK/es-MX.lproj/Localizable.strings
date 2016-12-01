@@ -15,6 +15,7 @@
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron mensualidades disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
+"No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
 
 "visa"="Visa";
 "master"="Mastercard";

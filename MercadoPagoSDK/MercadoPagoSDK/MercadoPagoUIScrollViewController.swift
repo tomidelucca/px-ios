@@ -30,7 +30,7 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
             if fontSize<24 {
                 titleCell.updateTitleFontSize(toSize: fontSize)
             } else {
-                titleCell.updateTitleFontSize(toSize: 25)
+                titleCell.updateTitleFontSize(toSize: 24)
             }
             
         }
