@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>prepaid_card</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoTarjeta</string>
+	</dict>
+	<key>debit_card</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosIconoTarjeta</string>
+	</dict>
 	<key>bank_transfer</key>
 	<dict>
 		<key>image_name</key>
