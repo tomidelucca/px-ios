@@ -147,7 +147,7 @@
 		<key>image_name</key>
 		<string>pagoEfvoIconoBancomer</string>
 	</dict>
-	<key>serfin_telecomm</key>
+	<key>banamex_telecomm</key>
 	<dict>
 		<key>image_name</key>
 		<string>pagoEfvoIconoTelecomm</string>

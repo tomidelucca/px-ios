@@ -54,6 +54,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
+    fileprivate var defaultOptionSelected = false;
+    
     public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
@@ -204,7 +206,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func loadPaymentMethodSearch(){
         
         if self.viewModel.currentPaymentMethodSearch == nil {
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0{
                     
                     let error = MPError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
@@ -229,7 +231,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
+            if (self.viewModel.defaultPaymentOption != nil && !defaultOptionSelected) {
+                self.viewModel.optionSelected(self.viewModel.defaultPaymentOption!,navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
+                defaultOptionSelected = true
+            } else if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
             } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
                 let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
@@ -487,6 +492,7 @@ class PaymentVaultViewModel : NSObject {
     var customerCards : [CardInformation]?
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
+    var defaultPaymentOption : PaymentMethodSearchItem?
     var cards : [Card]?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
@@ -542,13 +548,21 @@ class PaymentVaultViewModel : NSObject {
         return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
     }
     
-    func setPaymentMethodSearchResponse(_ paymentMethodSearchResponse : PaymentMethodSearch){
-        self.setPaymentMethodSearch(paymentMethods: paymentMethodSearchResponse.paymentMethods, paymentMethodSearchItems: paymentMethodSearchResponse.groups, customerPaymentMethods : paymentMethodSearchResponse.customerPaymentMethods)
+    func getPaymentPreferenceDefaultPaymentMethodId() -> String?{
+        return (self.paymentPreference != nil) ? self.paymentPreference!.defaultPaymentMethodId : nil
     }
     
-    func setPaymentMethodSearch(paymentMethods : [PaymentMethod]? = nil, paymentMethodSearchItems : [PaymentMethodSearchItem]? = nil, customerPaymentMethods : [CardInformation]? = nil) {
+    func setPaymentMethodSearchResponse(_ paymentMethodSearchResponse : PaymentMethodSearch){
+        self.setPaymentMethodSearch(paymentMethods: paymentMethodSearchResponse.paymentMethods, paymentMethodSearchItems: paymentMethodSearchResponse.groups, customerPaymentMethods : paymentMethodSearchResponse.customerPaymentMethods, defaultPaymentOption: paymentMethodSearchResponse.defaultOption)
+    }
+    
+    func setPaymentMethodSearch(paymentMethods : [PaymentMethod]? = nil, paymentMethodSearchItems : [PaymentMethodSearchItem]? = nil, customerPaymentMethods : [CardInformation]? = nil, defaultPaymentOption : PaymentMethodSearchItem? = nil) {
         self.paymentMethods = paymentMethods
         self.currentPaymentMethodSearch = paymentMethodSearchItems
+        
+        if let defaultPaymentOption = defaultPaymentOption {
+            self.defaultPaymentOption = defaultPaymentOption
+        }
         
         var currentCustomerCards = customerPaymentMethods
         if customerPaymentMethods != nil && customerPaymentMethods!.count > 0 {
@@ -565,7 +579,7 @@ class PaymentVaultViewModel : NSObject {
     }
     
     func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
-        return self.currentPaymentMethodSearch != nil && self.currentPaymentMethodSearch.count == 1 && Array.isNullOrEmpty(self.customerCards)
+        return (self.currentPaymentMethodSearch != nil && self.currentPaymentMethodSearch.count == 1 && Array.isNullOrEmpty(self.customerCards))
     }
     
     func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
