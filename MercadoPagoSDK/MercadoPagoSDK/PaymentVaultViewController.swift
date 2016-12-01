@@ -157,6 +157,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewDidAppear(animated)
         self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
+        if self.loadingGroups {
+            self.showLoading()
+        }
+        
     }
 
 

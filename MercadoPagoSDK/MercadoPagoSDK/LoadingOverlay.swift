@@ -74,7 +74,10 @@ open class LoadingOverlay {
             activityIndicator.stopAnimating()
             screenContainer.removeFromSuperview()
         } else {
-            self.loadingContainer.removeFromSuperview()
+            if self.loadingContainer != nil {
+                self.loadingContainer.removeFromSuperview()
+            }
+            
         }
     }
 }
