@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
         
+        CardFormViewController.showBankDeals = true
+        
         
         // Initialize window
         self.window = UIWindow(frame: UIScreen.main.bounds)
