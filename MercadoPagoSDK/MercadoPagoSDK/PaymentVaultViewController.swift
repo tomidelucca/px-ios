@@ -225,8 +225,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if  self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() == 0{
+            if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
+            } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
+                let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
+                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
             } else {
                 self.collectionSearch.delegate = self
                 self.collectionSearch.dataSource = self
@@ -312,20 +315,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         default:
             if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
                 let customerCardSelected = self.viewModel.customerCards![(indexPath as NSIndexPath).row] as CardInformation
-
-                let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
-                if paymentMethodSelected.isAccountMoney() {
-                    self.viewModel.callback!(paymentMethodSelected, nil, nil, nil)
-                } else {
-                    customerCardSelected.setupPaymentMethod(paymentMethodSelected)
-                    customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-                    let cardFlow = MPFlowBuilder.startCardFlow(self.viewModel.paymentPreference, amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
-                        self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
-                        }, callbackCancel: {
-                            self.navigationController!.popToViewController(self, animated: true)
-                    })
-                    self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
-                }
+                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
             }
         }
     }
@@ -570,6 +560,13 @@ class PaymentVaultViewModel : NSObject {
         
     }
     
+    func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
+        return self.currentPaymentMethodSearch != nil && self.currentPaymentMethodSearch.count == 1 && Array.isNullOrEmpty(self.customerCards)
+    }
+    
+    func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
+        return Array.isNullOrEmpty(self.currentPaymentMethodSearch) && !Array.isNullOrEmpty(self.customerCards) && self.customerCards?.count == 1
+    }
     
     internal func optionSelected(_ paymentSearchItemSelected : PaymentMethodSearchItem, navigationController : UINavigationController, cancelPaymentCallback : @escaping ((Void) -> (Void)),animated: Bool = true) {
         
@@ -606,6 +603,23 @@ class PaymentVaultViewModel : NSObject {
             //TODO : HANDLE ERROR
             break
         }
+    }
+    
+    internal func customerOptionSelected(customerCardSelected : CardInformation, navigationController : UINavigationController, visibleViewController : UIViewController){
+        let paymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
+        if paymentMethodSelected.isAccountMoney() {
+            self.callback!(paymentMethodSelected, nil, nil, nil)
+        } else {
+            customerCardSelected.setupPaymentMethod(paymentMethodSelected)
+            customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
+            let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+                self.callback!(paymentMethod, token, issuer, payerCost)
+            }, callbackCancel: {
+                navigationController.popToViewController(visibleViewController, animated: true)
+            })
+            navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
+        }
+
     }
     
 }
