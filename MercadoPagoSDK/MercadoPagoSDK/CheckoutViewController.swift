@@ -268,6 +268,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     @objc fileprivate func confirmPayment(){
         
         self.hideNavBar()
+        self.hideBackButton()
         self.showLoading()
         if self.viewModel.isPaymentMethodSelectedCard(){
             self.confirmPaymentOn()
