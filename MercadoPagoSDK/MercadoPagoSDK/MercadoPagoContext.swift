@@ -114,6 +114,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
     }
+    open class func getSite() -> String{
+        return MercadoPagoContext.sharedInstance.site.rawValue
+    }
     
     open class func setSiteID(_ siteId : String) {
         let site = Site(rawValue: siteId)
