@@ -561,7 +561,7 @@ open class CheckoutViewModel {
         let paymentMethodSearchItemSelected : PaymentMethodSearchItem
         if paymentTypeIdEnum != nil && paymentTypeIdEnum == PaymentTypeId.ACCOUNT_MONEY {
             paymentMethodSearchItemSelected = PaymentMethodSearchItem()
-            paymentMethodSearchItemSelected.description = "Dinero en cuenta"
+            paymentMethodSearchItemSelected._description = "Dinero en cuenta"
         } else {
             paymentMethodSearchItemSelected = Utils.findPaymentMethodSearchItemInGroups(self.paymentMethodSearch!, paymentMethodId: self.paymentMethod!._id, paymentTypeId: paymentTypeIdEnum)!
         }
