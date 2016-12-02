@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
+        MercadoPagoContext.setDisplayDefaultLoading(flag: false)
+        
         let tracker = TrackerExample()
         
         MercadoPagoContext.setTrack(listener: tracker)
@@ -35,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
 
-        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
 
@@ -43,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+        
+        CardFormViewController.showBankDeals = true
         
         
         // Initialize window

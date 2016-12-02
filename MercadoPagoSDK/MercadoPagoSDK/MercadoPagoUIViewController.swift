@@ -196,6 +196,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationItem.leftBarButtonItem = backButton
     }
     
+    internal func hideBackButton() {
+        self.navigationItem.leftBarButtonItem = nil
+    }
+    
+    
     internal func executeBack(){
         self.navigationController!.popViewController(animated: true)
     }

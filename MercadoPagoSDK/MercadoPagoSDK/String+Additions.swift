@@ -42,6 +42,9 @@ extension String {
     }
     
     public func startsWith(_ prefix : String) -> Bool {
+        if prefix == self {
+            return true
+        }
         let startIndex = self.range(of: prefix)
         if startIndex == nil  || self.startIndex != startIndex?.lowerBound {
             return false
@@ -56,6 +59,13 @@ extension String {
         }
         
         return ""
+    }
+    
+    
+    public func lastCharacters(number: Int) -> String {
+        print("El string es \(self)")
+        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number,0))
+        return trimmedString
     }
     
     public func indexAt(_ theInt:Int)->String.Index {
