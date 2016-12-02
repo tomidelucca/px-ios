@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
       
-        //MercadoPagoContext.setPublicKey("TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b")
-        MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
+        MercadoPagoContext.setPublicKey("TEST-9eb0be69-329a-417f-9dd5-aad772a4d50b")
+        //MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
         
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 

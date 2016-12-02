@@ -579,6 +579,7 @@ class PaymentVaultViewModel : NSObject {
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
+                self.paymentPreference?.defaultPaymentTypeId = paymentTypeId.map { $0.rawValue }
                 let cardFlow = MPFlowBuilder.startCardFlow(self.paymentPreference, amount: self.amount, paymentMethods : self.paymentMethods, callback: { (paymentMethod, token, issuer, payerCost) in
                     self.callback!(paymentMethod, token, issuer, payerCost)
                 }, callbackCancel: {
