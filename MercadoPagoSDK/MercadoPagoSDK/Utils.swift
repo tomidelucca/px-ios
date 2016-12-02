@@ -160,7 +160,10 @@ class Utils {
         if length <= 3 {
             return amount
         }
+
         
+        return  getAmountFormatted(String( Int(Double(formattedString)!/1000)), thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(formattedString.lastCharacters(number: 3))
+        /*
         var finalAmountStr = ""
         
         var cantSeparators = length % 3 + (Int(length / 3))
@@ -177,6 +180,7 @@ class Utils {
         }
 
         return finalAmountStr.substring(to: finalAmountStr.characters.index(finalAmountStr.startIndex, offsetBy: finalAmountStr.characters.count-1))
+ */
     }
     
     /**

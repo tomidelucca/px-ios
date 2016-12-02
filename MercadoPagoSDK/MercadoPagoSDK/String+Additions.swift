@@ -61,6 +61,12 @@ extension String {
         return ""
     }
     
+    
+    public func lastCharacters(number: Int) -> String {
+        print(self.substring(from:self.index(self.endIndex, offsetBy: (number * -1))))
+        return self.substring(from:self.index(self.endIndex, offsetBy: (number * -1)))
+    }
+    
     public func indexAt(_ theInt:Int)->String.Index {
         
         return self.characters.index(self.characters.startIndex, offsetBy: theInt)
