@@ -96,10 +96,6 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
          
 */
-        MPStepBuilder.startPromosStep({ (Void) -> (Void) in
-            // Acción a ejecutar al salir de visualizar las promociones
-        })
-        
         let pp = PaymentPreference()
         pp.excludedPaymentTypeIds = ["ticket", "bank_transfer", "atm"]
         //pp.excludedPaymentMethodIds = ["master"]
