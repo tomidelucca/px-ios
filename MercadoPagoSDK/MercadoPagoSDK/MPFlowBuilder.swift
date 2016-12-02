@@ -175,62 +175,7 @@ open class MPFlowBuilder : NSObject {
     }
     
     
-    
-   
-    open class func start2CustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, timer : CountdownTimer? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
-        let mpNav =  UINavigationController()
-        var pcvc : CardAdditionalStep!
-        
-        
-        MPServicesBuilder.getInstallments(cardInformation.getFirstSixDigits(),amount: amount, issuer: cardInformation.getIssuer(), paymentMethodId: cardInformation.getPaymentMethodId(), success: { (installments) -> Void in
-            let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
-            if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
-            
-            if installments![0].payerCosts.count>1{
-                let pcvc = MPStepBuilder.startPayerCostForm([cardInformation.getPaymentMethod()], issuer: cardInformation.getIssuer(), token: nil, amount:amount, paymentPreference: paymentPreference, installment:installments![0], timer: timer, callback: { (payerCost) -> Void in
-                    let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
-                        if String.isNullOrEmpty(token!.lastFourDigits) {
-                            token!.lastFourDigits = cardInformation?.getCardLastForDigits()
-                        }
-                        callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(),payerCost as? PayerCost)
-                    }
-                    pcvc.navigationController!.pushViewController(secCode, animated: true)
-                })
-            
-                pcvc.callbackCancel = callbackCancel
-            
-                mpNav.pushViewController(pcvc, animated: false)
-            }else {
-                let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
-                    if String.isNullOrEmpty(token!.lastFourDigits) {
-                        token!.lastFourDigits = cardInformation?.getCardLastForDigits()
-                    }
-                    callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(),installments![0].payerCosts[0] as? PayerCost)
-                }
-                mpNav.pushViewController(secCode, animated: false)
-            }
-            
-            }else{
-                let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
-                    if String.isNullOrEmpty(token!.lastFourDigits) {
-                        token!.lastFourDigits = cardInformation?.getCardLastForDigits()
-                    }
-                    callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(), payerCostSelected)
-                }
-                mpNav.pushViewController(secCode, animated: false)
-            }
-            
-            
-            }, failure: { (error) -> Void in
-                    mpNav.hideLoading()
-        })
-        
-        
-        
-        return mpNav
-    }
-    
-    
+
 }
 
 
