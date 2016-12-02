@@ -181,7 +181,8 @@ open class MPFlowBuilder : NSObject {
         let mpNav =  UINavigationController()
         var pcvc : CardAdditionalStep!
         
-        MPServicesBuilder.getInstallments(amount: amount, issuer: cardInformation.getIssuer(), paymentMethodId: cardInformation.getPaymentMethodId(), success: { (installments) -> Void in
+        
+        MPServicesBuilder.getInstallments(cardInformation.getFirstSixDigits(),amount: amount, issuer: cardInformation.getIssuer(), paymentMethodId: cardInformation.getPaymentMethodId(), success: { (installments) -> Void in
             let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
             if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
             
