@@ -253,11 +253,11 @@ open class MPServicesBuilder : NSObject {
     }
     
     
-    open class func searchPaymentMethods(_ amount : Double, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func searchPaymentMethods(_ amount : Double, defaultPaymenMethodId : String?, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHOD_SEARCH", result: nil)
         let paymentMethodSearchService = PaymentMethodSearchService()
-        paymentMethodSearchService.getPaymentMethods(amount, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure!)
+        paymentMethodSearchService.getPaymentMethods(amount, defaultPaymenMethodId : defaultPaymenMethodId, excludedPaymentTypeIds: excludedPaymentTypeIds, excludedPaymentMethodIds: excludedPaymentMethodIds, success: success, failure: failure!)
         
     }
     
