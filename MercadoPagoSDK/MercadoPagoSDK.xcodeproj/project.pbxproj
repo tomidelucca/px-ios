@@ -386,6 +386,8 @@
 		76151B971C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */; };
 		76151B981C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */; };
 		7619E93B1DF05E2900CEFAC1 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E93A1DF05E2900CEFAC1 /* Array+Extension.swift */; };
+		7619E9451DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E9441DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift */; };
+		7619E9461DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E9441DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift */; };
 		761B893A1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
 		761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */; };
 		761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */; };
@@ -863,6 +865,7 @@
 		76151B931C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsTwoLabelsViewCell.swift; sourceTree = "<group>"; };
 		76151B941C74CD8C007DF0E3 /* InstructionsTwoLabelsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsTwoLabelsViewCell.xib; sourceTree = "<group>"; };
 		7619E93A1DF05E2900CEFAC1 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		7619E9441DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentOptionDrawable.swift; sourceTree = "<group>"; };
 		761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUIViewController.swift; sourceTree = "<group>"; };
 		761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseDetailTableViewCell.swift; sourceTree = "<group>"; };
 		761B89411C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -1133,6 +1136,7 @@
 				0F98834F1AD2AB6000F750F0 /* PaymentMethodRow.swift */,
 				766012E11CEB963300897F9D /* MPError.swift */,
 				4BAA56211DB6B13B00501061 /* CardInfo.swift */,
+				7619E9441DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2484,6 +2488,7 @@
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				0F98838B1AD2AB6000F750F0 /* PaymentMethodRow.swift in Sources */,
+				7619E9451DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
 				0F98836F1AD2AB6000F750F0 /* Discount.swift in Sources */,
 				76EEF75D1D674BA80095D5A5 /* CardInformation.swift in Sources */,
 				0F9883321AD2AB3C00F750F0 /* MerchantServer.swift in Sources */,
@@ -2664,6 +2669,7 @@
 				0F9883721AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				76F41E281D3D4A9700B25E5B /* MercadoPagoContext.swift in Sources */,
 				76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */,
+				7619E9461DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
 				76B0850A1CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */,
 				7656F5301C98A2E50076A14D /* InstructionsViewControllerTest.swift in Sources */,
 				76EC47DA1C85E8D20086FA53 /* IdentificationTest.swift in Sources */,

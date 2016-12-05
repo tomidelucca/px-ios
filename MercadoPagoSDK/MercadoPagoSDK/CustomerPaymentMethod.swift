@@ -116,6 +116,20 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     public func isIssuerRequired() -> Bool {
         return false
     }
+    
+    /** PaymentOptionDrawable implementation */
+    
+    public func getTitle() -> String {
+        return getCardDescription()
+    }
+    
+    public func getSubtitle() -> String? {
+        return nil
+    }
+    
+    public func getImageDescription() -> String {
+        return self.getPaymentMethodId()
+    }
 
     
 }

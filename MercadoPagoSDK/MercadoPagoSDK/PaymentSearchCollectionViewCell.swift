@@ -43,23 +43,16 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     func totalHeight() -> CGFloat {
         return titleSearch.requiredHeight() + subtitleSearch.requiredHeight() + 112
     }
-    public func fillCell(searchItem : PaymentMethodSearchItem){
-        let image = MercadoPago.getImageFor(searchItem: searchItem)
-        self.fillCell(image: image, title: searchItem.description, subtitle: searchItem.comment)
+    
+    func fillCell(drawablePaymentOption : PaymentOptionDrawable) {
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: drawablePaymentOption.getImageDescription())
+        self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
     
-    public func fillCell(cardInformation : CardInformation){
-        let image = MercadoPago.getImageFor(cardInformation: cardInformation)
-        self.fillCell(image: image, title: cardInformation.getCardDescription(), subtitle: nil)
-    }
-
-    static func totalHeight(searchItem : CardInformation ) -> CGFloat {
-        return PaymentSearchCollectionViewCell.totalHeight(title: searchItem.getCardDescription(), subtitle: "")
+    static func totalHeight(drawablePaymentOption : PaymentOptionDrawable) -> CGFloat {
+        return PaymentSearchCollectionViewCell.totalHeight(title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
     
-    static func totalHeight(searchItem : PaymentMethodSearchItem ) -> CGFloat {
-        return PaymentSearchCollectionViewCell.totalHeight(title: searchItem.description, subtitle: searchItem.comment)
-    }
     static func totalHeight(title: String?, subtitle:String?) -> CGFloat {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
@@ -74,7 +67,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         subtitleLabel.text = subtitle
         let altura1 = titleLabel.requiredHeight()
         let altura2 = subtitleLabel.requiredHeight()
-    return altura1 + altura2 + 112
+        return altura1 + altura2 + 112
     }
 }
 
