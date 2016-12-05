@@ -8,11 +8,11 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem : Equatable {
+open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
     
     open var idPaymentMethodSearchItem : String!
     open var type : PaymentMethodSearchItemType!
-    open var description : String!
+    open var _description : String!
     open var comment : String?
     open var childrenHeader : String?
     open var children : [PaymentMethodSearchItem] = []
@@ -28,7 +28,7 @@ open class PaymentMethodSearchItem : Equatable {
             pmSearchItem.type = PaymentMethodSearchItemType(rawValue:type)
         }
         if let description = JSONHandler.attemptParseToString(json["description"]){
-            pmSearchItem.description = description
+            pmSearchItem._description = description
         }
         if let comment = JSONHandler.attemptParseToString(json["comment"]){
             pmSearchItem.comment = comment
@@ -69,6 +69,21 @@ open class PaymentMethodSearchItem : Equatable {
         return self.type == PaymentMethodSearchItemType.PAYMENT_TYPE
     }
     
+    /*
+     * PaymentOptionDrawable implementation
+     */
+    
+    public func getTitle() -> String {
+        return self._description
+    }
+    
+    public func getSubtitle() -> String? {
+        return self.comment
+    }
+    
+    public func getImageDescription() -> String{
+        return self.idPaymentMethodSearchItem
+    }
 }
 
 public enum PaymentMethodSearchItemType : String {
@@ -81,7 +96,7 @@ public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> 
     let areEqual =
     obj1.idPaymentMethodSearchItem == obj2.idPaymentMethodSearchItem &&
     obj1.type == obj2.type &&
-    obj1.description == obj2.description &&
+    obj1._description == obj2._description &&
     obj1.comment == obj2.comment &&
     obj1.childrenHeader == obj2.childrenHeader &&
     obj1.children == obj2.children &&

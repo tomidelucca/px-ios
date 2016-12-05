@@ -43,11 +43,12 @@ public enum GAKey : String {
     }
 }
 */
-public protocol MPTrackListener {
+@objc
+public protocol MPTrackListener  : NSObjectProtocol {
     func trackScreen(screenName : String)
     func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String:String]?)
 }
-
+@objc
 public protocol MPPaymentTrackInformer {
 
     
@@ -60,7 +61,7 @@ public protocol MPPaymentTrackInformer {
     
     
 }
-open class MPTracker {
+open class MPTracker : NSObject {
 
 
     static var initialized : Bool = false
