@@ -62,7 +62,7 @@ class Utils {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
     }
-
+    
     class func getAttributedAmount(_ amount : Double, currency : Currency, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         return self.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color, fontSize : fontSize, baselineOffset : baselineOffset)
     }
@@ -70,12 +70,13 @@ class Utils {
     class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
-
-
+        
+        
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
-
-
+        
+    
+        
         let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
@@ -92,15 +93,16 @@ class Utils {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
-
+        
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
-
         
-        let attributedSymbol = NSMutableAttributedString(string: currencySymbol + " ", attributes: normalAttributes)
+        
+        let attributedSymbol = NSMutableAttributedString(string: currencySymbol, attributes: normalAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
-        let space = NSAttributedString(string: " ", attributes: smallAttributes)
+        let space = NSAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
+        attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
         attributedSymbol.append(space)
         attributedSymbol.append(attributedCents)
@@ -137,7 +139,7 @@ class Utils {
             let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)
             cents = formattedString.substring(from: centsIndex)
         }
-
+        
         if cents.isEmpty || cents.characters.count < 2 {
             var missingZeros = 2 - cents.characters.count
             while missingZeros > 0 {
@@ -154,25 +156,27 @@ class Utils {
      returns 10,200.90
      **/
     class func getAmountFormatted(_ formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
- 
+        
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
         let length = amount.characters.count
         if length <= 3 {
             return amount
         }
-
-        let numberWithoutLastThreeDigits = String( Int(Double(formattedString)!/1000))
+        var numberWithoutLastThreeDigits: String = ""
+        if let amountString = Double(formattedString){
+            numberWithoutLastThreeDigits = String( Int(amountString/1000))
+        }
         let lastThreeDigits = formattedString.lastCharacters(number: 3)
         
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
-
+        
     }
     
     /**
      Extract only amount digits
      Ex: formattedString = "1000.00" with decimalSeparator = "."
      returns 1000
-    **/
+     **/
     class func getAmountDigits(_ formattedString : String, decimalSeparator : String) -> String {
         let range = formattedString.range(of: decimalSeparator)
         if range != nil {
@@ -180,7 +184,7 @@ class Utils {
         }
         return formattedString
     }
-
+    
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
@@ -290,6 +294,5 @@ class Utils {
         let mm : Int = Int(floor(floatMMYY))
         return mm
     }
-
-
+    
 }
