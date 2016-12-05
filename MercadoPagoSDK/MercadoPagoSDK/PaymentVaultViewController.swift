@@ -101,7 +101,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate func initViewModel(_ amount : Double, paymentPreference : PaymentPreference?, customerPaymentMethods: [CardInformation]? = nil, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void){
         self.viewModel = PaymentVaultViewModel(amount: amount, paymentPrefence: paymentPreference)
-        
+        self.viewModel.controller = self
         self.viewModel.setPaymentMethodSearch(paymentMethods: paymentMethods, paymentMethodSearchItems: paymentMethodSearchItem, customerPaymentMethods : customerPaymentMethods)
         self.viewModel.callback = callback
     }
@@ -487,6 +487,7 @@ class PaymentVaultViewModel : NSObject {
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
     var cards : [Card]?
+    weak var controller : PaymentVaultViewController?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
@@ -578,6 +579,7 @@ class PaymentVaultViewModel : NSObject {
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
+                self.paymentPreference?.defaultPaymentTypeId = paymentTypeId.map { $0.rawValue }
                 let cardFlow = MPFlowBuilder.startCardFlow(self.paymentPreference, amount: self.amount, paymentMethods : self.paymentMethods, callback: { (paymentMethod, token, issuer, payerCost) in
                     self.callback!(paymentMethod, token, issuer, payerCost)
                 }, callbackCancel: {
@@ -615,12 +617,33 @@ class PaymentVaultViewModel : NSObject {
         } else {
             customerCardSelected.setupPaymentMethod(paymentMethodSelected)
             customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-            let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
-                self.callback!(paymentMethod, token, issuer, payerCost)
-            }, callbackCancel: {
-                navigationController.popToViewController(visibleViewController, animated: true)
+            if let controller = controller {
+                controller.showLoading()
+            }
+            MPServicesBuilder.getInstallments(customerCardSelected.getFirstSixDigits(), amount: amount, issuer: customerCardSelected.getIssuer(), paymentMethodId: customerCardSelected.getPaymentMethodId(), success: { (installments) in
+                self.controller?.hideLoading()
+                let payerCostSelected = self.paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
+                if(payerCostSelected == nil){
+                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+                        self.callback!(paymentMethod, token, issuer, payerCost)
+                        }, callbackCancel: {
+                            navigationController.popToViewController(visibleViewController, animated: true)
+                    })
+                    navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
+                }else{
+                    let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: customerCardSelected.getPaymentMethod(), cardInfo: customerCardSelected) { (token) in
+                        if String.isNullOrEmpty(token!.lastFourDigits) {
+                            token!.lastFourDigits = customerCardSelected.getCardLastForDigits()
+                        }
+                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as? PayerCost)
+                    }
+                    navigationController.pushViewController(secCode, animated: false)
+                }
+                
+                }, failure: { (error) in
+                    self.controller?.hideLoading()
             })
-            navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
+
         }
 
     }

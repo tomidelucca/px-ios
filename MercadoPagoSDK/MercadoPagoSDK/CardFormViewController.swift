@@ -723,7 +723,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             }
         }
         
-        self.callback!([self.cardFormManager.getGuessedPM()!], self.cardFormManager.cardToken!)
+        self.callback!(cardFormManager.guessedPMS!, self.cardFormManager.cardToken!)
     }
     
     func addCvvDot() -> Bool {
