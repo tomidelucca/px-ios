@@ -33,6 +33,7 @@ public protocol CardInformation : CardInformationForm {
 
 }
 @objc
+
 public protocol CardInformationForm : NSObjectProtocol {
     
     
