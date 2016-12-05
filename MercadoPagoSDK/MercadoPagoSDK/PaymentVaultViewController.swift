@@ -34,6 +34,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     static public var maxCustomerPaymentMethdos = 3
     
+    
+    override open var screenName : String { get { return "PAYMENT_METHOD_SEARCH" } }
+    
+    
     static let VIEW_CONTROLLER_NIB_NAME : String = "PaymentVaultViewController"
     
     var merchantBaseUrl : String!

@@ -6,7 +6,7 @@
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
-public protocol MPTrackerDelegate {
+public protocol MPTrackerDelegate  {
     
     func flavor() -> Flavor!
     func framework() -> String!
