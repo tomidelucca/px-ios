@@ -18,8 +18,9 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         super.awakeFromNib()
         // Initialization code
         button.layer.cornerRadius = 3
-        self.title.text = "¿Que puedo hacer?".localized
+        self.title.text = "¿Qué puedo hacer?".localized
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
     }
 
     func fillCell (payment: Payment){

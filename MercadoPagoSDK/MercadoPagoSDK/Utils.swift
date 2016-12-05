@@ -160,8 +160,10 @@ class Utils {
         if length <= 3 {
             return amount
         }
-
-        let numberWithoutLastThreeDigits = String( Int(Double(formattedString)!/1000))
+        var numberWithoutLastThreeDigits: String = ""
+        if let amountString = Double(formattedString){
+            numberWithoutLastThreeDigits = String( Int(amountString/1000))
+        }
         let lastThreeDigits = formattedString.lastCharacters(number: 3)
         
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)

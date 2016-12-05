@@ -20,9 +20,10 @@
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
-" Sin interés"=" Sin interés";//--
+" Sin interés" = " Sem juros";//--
+"Sin interés" = "Sem juros";
 "¿En cuántas cuotas?" = "Em quantas parcelas?";
-"¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
 "¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
 
 
@@ -76,7 +77,7 @@
 "Continuar"="Continuar";
 "Anterior"="Anterior";
 "Ingresa el número de la tarjeta de crédito"="Digite todos os números do cartão";
-"Revisa este dato"="Verifique este dado";
+"Revisa este dato"="Revise este dado";
 "Ingresa el nombre y apellido impreso en la tarjeta"="Digite o nome e sobrenome impresso no cartão";
 "Ingresa los %1$s números del código de seguridad"="Digite os %1$s números do código de segurança";
 "Método de pago no soportado"="Você não pode pagar com este método de pagamento";
@@ -91,10 +92,47 @@
 
 
 //CONGRATS
+"¿Qué puedo hacer?" = "Que posso fazer?";
 
+//--Aproved
 "Comprobante"="Comprovante";
 
 "terminada en "="terminado em ";
+"Terminada en " = "Terminado em ";
+"¡Listo, se acreditó tu pago!" = "Pronto! O seu pagamento foi aprovado!";
+"En tu estado de cuenta verás el cargo como %0" = "Você verá o pagamento na fatura do seu cartão de crédito como %0";
+"Te enviaremos este comprobante a %0" = "Enviaremos os dados para %0";
+
+// --Call for Auth
+
+"Ya hable con %0 y me autorizó" = "Já falei com %0 e autorizei";
+"Debes autorizar ante %p el pago de %t a MercadoPago" = "Você deve autorizar com %p o pagamento de %t ao Mercado Pago";
+"El teléfono está al dorso de tu tarjeta." = "O telefone do banco está no verso do seu cartão.";
+"cc_rejected_call_for_authorize_title" = "Não conseguiu autorizá-lo?";
+"Pagar con otro medio" = "Escolha outro meio de pagamento";
+
+// --Rejected
+
+"Ingresalo nuevamente" = "Digite novamente";
+"Algo salió mal… " = "Algo deu errado… ";
+"Cancelar pago" = "Cancelar pagamento";
+"rejected_high_risk_title"="Por segurança, foi necessário recusar o seu pagamento";
+"cc_rejected_insufficient_amount_title" = "O seu %0 não possui saldo suficiente";
+"cc_rejected_other_reason_title"="%0 não processou o pagamento";
+"cc_rejected_max_attempts_title"= "Você chegou ao limite de tentativas permitidas com este cartão";
+"cc_rejected_duplicated_payment_title"="%0 não processou o pagamento";
+"cc_rejected_card_disabled_title"="Ligue para %0 e desbloqueie o seu cartão";
+"cc_rejected_bad_filled_other_title"="Qualquer dado de seu %0 é incorreto";
+"cc_rejected_bad_filled_card_number_title"="Qualquer dado de seu %0 é incorreto";
+"cc_rejected_bad_filled_security_code_title"="Qualquer dado de seu %0 é incorreto";
+"cc_rejected_bad_filled_date_title"="Qualquer dado de seu %0 é incorreto";
+
+"rejected_high_risk_subtitle_credit_card"="SSe você quiser pagar com o dinheiro da sua conta, entre em contato com Atenção ao Cliente do Mercado Pago. \n \nOu, se preferir, escolha outro meio de pagamento.";
+"cc_rejected_insufficient_amount_subtitle_credit_card" = "Não se preocupe! Você pode escolher outros meios de pagamento.";
+"cc_rejected_other_reason_subtitle_credit_card"="Use outro cartão ou outro meio de pagamento";
+"cc_rejected_max_attempts_subtitle_credit_card"= "Use outro cartão ou outro meio de pagamento.";
+"cc_rejected_duplicated_payment_subtitle_credit_card"="Se você precisar pagar novamente, use outro cartão ou outro meio de pagamento.";
+"cc_rejected_card_disabled_subtitle_credit_card"="O telefone do banco está no verso do seu cartão.";
 
 "Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
@@ -107,7 +145,14 @@
 
 "En menos de 1 hora te enviaremos por e-mail el resultado."="Em menos de 1 hora, nós enviaremos o resultado por e-mail.";
 "En poquitas horas te diremos por e-mail si se acreditó o si necesitamos más información."="Em menos de 1 hora, nós enviaremos o resultado por e-mail.";
-"Total"="Total";
+//-- Revisa y confirma
+" terminada en " = " terminado em ";
+"Confirma tu compra" = "Confirme a sua compra";
+"Total" = "Total";
+"Cantidad : " = "Quantidade: ";
+"Precio Unitario : " = "Preço unitário: ";
+"Pagas" = "Você paga";
+"Cambiar pago" = "Alterar pagamento";
 
 "Medio de pago" = "Meio de pagamento";
 "Operación" = "Operação";
@@ -118,7 +163,7 @@
 "Total a pagar " = "Total a pagar ";
 "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Ao pagar, afirmo que eu sou maior de idade e concordar com os Termos e Condições do Mercado Pago";
 
-"¿Cómo quierés pagar?"="Como você prefere pagar?";
+"¿Cómo quiéres pagar?"="Como você prefere pagar?";
 "Cancelar Pago"="Cancelar pagamento";
 
 "Términos y Condiciones"="Termos e Condições";
