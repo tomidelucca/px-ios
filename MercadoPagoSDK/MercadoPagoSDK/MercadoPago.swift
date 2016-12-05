@@ -324,6 +324,18 @@ import UIKit
         
     }
     
+    open class func getImageForPaymentMethod(withDescription : String) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: withDescription) as? NSDictionary else {
+            return nil
+        }
+        
+        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
     open class func getImageFor(cardInformation : CardInformation) -> UIImage?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)

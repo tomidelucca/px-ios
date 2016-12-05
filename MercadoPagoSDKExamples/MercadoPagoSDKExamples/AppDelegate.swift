@@ -29,15 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         MercadoPagoContext.setDisplayDefaultLoading(flag: false)
         
-        let tracker = TrackerExample()
-        
-        MercadoPagoContext.setTrack(listener: tracker)
+//        let tracker = TrackerExample()
+//        
+//        MercadoPagoContext.setTrack(listener: tracker)
         //MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
         //MercadoPagoContext.setCustomerURI("/get_customer")
 
         MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
 
-        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
 
@@ -165,12 +165,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-class TrackerExample : MPTrackListener {
-    func trackScreen(screenName : String){
-        print("***** Trackeada \(screenName)")
-    }
-    func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String : String]?){
-        print("***** Trackeado Evento en \(screenName) accion \(action) y result \(result)")
-    }
-}
+//class TrackerExample :  MPTrackListener {
+//    func trackScreen(screenName : String){
+//        print("***** Trackeada \(screenName)")
+//    }
+//    func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String:String]?){
+//        print("***** Trackeado Evento en \(screenName) accion \(action) y result \(result)")
+//    }
+//}
 

@@ -36,17 +36,28 @@ open class PaymentMethodSearchService: MercadoPagoService {
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func getPaymentMethods(_ amount : Double, customerEmail : String? = nil, customerId : String? = nil, defaultPaymenMethodId : String?, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params = "public_key=" + MercadoPagoContext.publicKey() + "&amount=" + String(amount)
         
-        if excludedPaymentTypeIds != nil && excludedPaymentTypeIds?.count > 0 {
-            let excludedPaymentTypesParams = excludedPaymentTypeIds!.map({$0}).joined(separator: ",")
+        var newExcludedPaymentTypesIds = excludedPaymentTypeIds
+        
+        if !MercadoPagoContext.accountMoneyAvailable(){
+            newExcludedPaymentTypesIds?.insert("account_money")
+        }
+        
+        
+        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds?.count > 0 {
+            let excludedPaymentTypesParams = newExcludedPaymentTypesIds!.map({$0}).joined(separator: ",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }
         
         if excludedPaymentMethodIds != nil && excludedPaymentMethodIds!.count > 0 {
             let excludedPaymentMethodsParams = excludedPaymentMethodIds!.joined(separator: ",")
             params = params + "&excluded_payment_methods=" + excludedPaymentMethodsParams.trimSpaces()
+        }
+        
+        if let defaultPaymenMethodId = defaultPaymenMethodId {
+            params = params + "&default_payment_method=" + defaultPaymenMethodId.trimSpaces()
         }
         
         if customerEmail != nil && customerEmail!.characters.count > 0 {
@@ -79,7 +90,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
             }
             
             },  failure: { (error) -> Void in
-                failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a ineternet e intente nuevamente".localized]))
+                failure(NSError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
         })
     }
     

@@ -27,7 +27,7 @@ class OfflinePaymentMethodWithDescriptionCell: UITableViewCell {
     
     
     func fillRowWith(_ paymentMethodSearchItem : PaymentMethodSearchItem) -> UITableViewCell {
-        self.paymentDescription.text = paymentMethodSearchItem.description
+        self.paymentDescription.text = paymentMethodSearchItem._description
         self.paymentIcon.image = MercadoPago.getImage(paymentMethodSearchItem.idPaymentMethodSearchItem)
         return self
     }

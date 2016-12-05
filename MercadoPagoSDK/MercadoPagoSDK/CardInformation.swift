@@ -9,7 +9,7 @@
 import UIKit
 
 @objc
-public protocol CardInformation : CardInformationForm {
+public protocol CardInformation : CardInformationForm, PaymentOptionDrawable {
     
     func isSecurityCodeRequired() -> Bool
     
@@ -33,6 +33,7 @@ public protocol CardInformation : CardInformationForm {
 
 }
 @objc
+
 public protocol CardInformationForm : NSObjectProtocol {
     
     
