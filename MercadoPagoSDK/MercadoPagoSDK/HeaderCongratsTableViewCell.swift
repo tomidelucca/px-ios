@@ -35,13 +35,11 @@ class HeaderCongratsTableViewCell: UITableViewCell {
             let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
             let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
             
-            let amountFromDouble = String(payment.transactionAmount).replacingOccurrences(of: ".", with: decimalSeparator)
-            
             let amountRange = titleWithParams.range(of: "%t")
             
             if amountRange != nil {
                 let attributedTitle = NSMutableAttributedString(string: (titleWithParams.substring(to: (amountRange?.lowerBound)!)))
-                let attributedAmount = Utils.getAttributedAmount(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.white())
+                let attributedAmount = Utils.getAttributedAmount(payment.transactionAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.white())
                 attributedTitle.append(attributedAmount)
                 let endingTitle = NSAttributedString(string: (titleWithParams.substring(from: (amountRange?.upperBound)!)))
                 attributedTitle.append(endingTitle)
@@ -56,14 +54,14 @@ class HeaderCongratsTableViewCell: UITableViewCell {
             let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
             let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
             
-            let amountFromDouble = String(payment.transactionAmount).replacingOccurrences(of: ".", with: decimalSeparator)
-            let amountStr = Utils.getAmountFormatted(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+            let arr = String(payment.transactionAmount).characters.split(separator: ".").map(String.init)
+            let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
             let centsStr = Utils.getCentsFormatted(String(payment.transactionAmount), decimalSeparator: decimalSeparator)
             let amountRange = instruction?.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
             
             if amountRange != nil {
                 let attributedTitle = NSMutableAttributedString(string: (instruction?.title.substring(to: (amountRange?.lowerBound)!))!)
-                let attributedAmount = Utils.getAttributedAmount(amountFromDouble, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.white())
+                let attributedAmount = Utils.getAttributedAmount(payment.transactionAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.white())
                 attributedTitle.append(attributedAmount)
                 let endingTitle = NSAttributedString(string: (instruction?.title.substring(from: (amountRange?.upperBound)!))!)
                 attributedTitle.append(endingTitle)
