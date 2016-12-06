@@ -17,7 +17,7 @@ open class PaymentMethod : NSObject  {
     open var paymentTypeId : String!
     open var settings : [Setting]!
     open var additionalInfoNeeded : [String]!
-    open var accreditationTime : Int?
+    open var accreditationTime : Int? // [ms]
     
     public override init(){
         super.init()

@@ -152,8 +152,8 @@ class Utils {
     
     /**
      Returns amount string formatted according to separators
-     Ex: formattedString = "10200.90", decimalSeparator = ".", thousandSeparator: ","
-     returns 10,200.90
+     Ex: formattedString = "10200", decimalSeparator = ".", thousandSeparator: ","
+     returns 10,200
      **/
     class func getAmountFormatted(_ formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
         
@@ -232,14 +232,13 @@ class Utils {
     internal static func findPaymentMethod(_ paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
-        
         let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
             if (paymentMethodId.startsWith(paymentMethod._id)){
                 let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod._id)
-                
+                // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
                     paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)
-                    if paymentTypeSelected.characters.count > 0 {
+                    if !String.isNullOrEmpty(paymentTypeSelected) {
                         paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                     }
                 }
@@ -254,21 +253,6 @@ class Utils {
         }
         
         return paymentMethod[0]
-    }
-    
-    internal static func getAccreditationTitle(_ paymentMethod : PaymentMethod) -> String{
-        if paymentMethod.accreditationTime == nil || !(paymentMethod.accreditationTime > 0) {
-            return ""
-        }
-        
-        var title = "Se acreditará en ".localized
-        let hours = paymentMethod.accreditationTime!/(1000*60*60)
-        if hours > 24 {
-            title = title + String(hours/24) + " dias".localized
-        } else {
-            title = title + String(hours) + " horas".localized
-        }
-        return title
     }
     
     internal static func getExpirationYearFromLabelText(_ mmyy : String) -> Int {
@@ -296,3 +280,4 @@ class Utils {
     }
     
 }
+
