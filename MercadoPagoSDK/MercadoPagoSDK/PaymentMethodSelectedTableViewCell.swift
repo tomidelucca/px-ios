@@ -44,7 +44,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
         self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost!.installments), installmentAmount: payerCost!.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
         let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized)
-        paymentMethodDescription.append(NSAttributedString(string : " terminada en " + lastFourDigits!))
+        paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + lastFourDigits!))
         self.paymentMethodDescription.attributedText = paymentMethodDescription
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
@@ -55,6 +55,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         attributedAmountFinal.append(attributedAmount)
         attributedAmountFinal.append(NSAttributedString(string : ")"))
         self.totalAmountLabel.attributedText = attributedAmountFinal
+        self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
