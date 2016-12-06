@@ -13,6 +13,7 @@ open class PaymentMethodSearch: Equatable {
     var paymentMethods : [PaymentMethod]!
     var customerPaymentMethods : [CardInformation]?
     var cards : [Card]?
+    var defaultOption : PaymentMethodSearchItem?
     
     open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
@@ -69,7 +70,10 @@ open class PaymentMethodSearch: Equatable {
             pmSearch.customerPaymentMethods = customerPaymentMethods
         }
 
-
+        if let defaultPaymentMethodIdJson = json["default_option"] as? NSDictionary {
+            let defaultPaymentMethodOption = PaymentMethodSearchItem.fromJSON(defaultPaymentMethodIdJson)
+            pmSearch.defaultOption = defaultPaymentMethodOption
+        }
         
         return pmSearch
     }

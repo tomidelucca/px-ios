@@ -45,7 +45,7 @@ public enum GAKey : String {
 }
 */
 @objc
-public protocol MPTrackListener  : NSObjectProtocol {
+public protocol MPTrackListener   {
     func trackScreen(screenName : String)
     func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String:String]?)
 }
