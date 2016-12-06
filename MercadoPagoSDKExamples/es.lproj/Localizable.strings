@@ -5,7 +5,6 @@
   Created by Matias Gualino on 30/4/15.
   Copyright (c) 2015 MercadoPago. All rights reserved.
 */
-
 "security_code" = "Código de seguridad";
 
 "step1_description" = "Flujo de pagos que valida los datos ingresados contra las reglas del medio de pago.";
