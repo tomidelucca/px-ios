@@ -262,32 +262,6 @@ class UtilsTest: BaseTest {
     
     }
     
-    /**
-     *
-     * getAmountFormatted
-     *
-     **/
-    func testGetAmountFormatted() {
-        var output = Utils.getAmountFormatted("123.99", thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual("123", output)
-        
-        output = Utils.getAmountFormatted("12345.99", thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual("12,345", output)
-        
-        output = Utils.getAmountFormatted("12345678901.99", thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual("12,345,678,901", output)
-        
-        output = Utils.getAmountFormatted("1", thousandSeparator: ".", decimalSeparator: ",")
-        XCTAssertEqual("1", output)
-        
-        output = Utils.getAmountFormatted("12345678912345.33", thousandSeparator: "x", decimalSeparator: ".")
-        XCTAssertEqual("12x345x678x912x345", output)
-        
-        output = Utils.getAmountFormatted("25.77777", thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual("25", output)
-        
-    
-    }
     
     
     /**
