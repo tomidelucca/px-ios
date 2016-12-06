@@ -46,6 +46,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     var currency : Currency!
     
     
+    
+    
     var defaultInstallments : Int?
     var installments : Int?
     var viewModel : PaymentVaultViewModel!
@@ -165,7 +167,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
         if self.loadingGroups {
-            self.showLoading()
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            temporalView.backgroundColor?.withAlphaComponent(0)
+            temporalView.isUserInteractionEnabled = false
+            self.view.addSubview(temporalView)
+            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: MercadoPagoContext.getPrimaryColor())
+            self.view.bringSubview(toFront: self.loadingInstance!)
         }
         
     }
