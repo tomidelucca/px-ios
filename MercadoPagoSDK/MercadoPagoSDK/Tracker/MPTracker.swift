@@ -6,6 +6,7 @@
 //  Copyright © 2016 Demian Tejo. All rights reserved.
 //
 
+import Foundation
 
 public enum Flavor : String {
     case Flavor_1 = "1"
@@ -44,7 +45,7 @@ public enum GAKey : String {
 }
 */
 @objc
-public protocol MPTrackListener  : NSObjectProtocol {
+public protocol MPTrackListener   {
     func trackScreen(screenName : String)
     func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String:String]?)
 }
