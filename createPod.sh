@@ -3,14 +3,14 @@
 
 if [ $# -eq 0 ]
   then
-    echo "Need tag version! Ex: 2.0.5"
+    echo "Need tag version! Ex: 2.2.1"
     exit 0
 fi
 
 VERSION=$1
 PROJECT="MercadoPagoSDK"
 PODSPEC_FILE="$PROJECT.podspec"
-GIT_BRANCH="development"
+GIT_BRANCH="Revamp"
 
 if [ "$#" -eq 2 ]
   then
@@ -53,10 +53,10 @@ fi
 
 
 echo "=========================================="
-echo "3) Create tag for version $VERSION from development branch"
+echo "3) Create tag for version $VERSION from $GIT_BRANCH branch"
 echo "=========================================="
 
-git checkout development
+git checkout $GIT_BRANCH
 git tag $VERSION
 git push origin $VERSION
 PUSH_STATUS=$?
