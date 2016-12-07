@@ -66,7 +66,7 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 This project includes two Xcode Projects with examples using MercadoPagoSDK: MercadoPagoSDKExamples written in swift and MercadoPagoSDKExamplesObjectiveC. In case you need support contact the development team.
 
 ## Documentation
-+ [See the GitHub Proyect](https://github.com/mercadopago/px-ios)
++ [See the GitHub Project](https://github.com/mercadopago/px-ios)
 + [Read more about this 6 steps integration.](https://mercadopago.github.io/px-ios)
 + [Check out MercadoPago Developers Site!](http://www.mercadopago.com.ar/developers)
 
