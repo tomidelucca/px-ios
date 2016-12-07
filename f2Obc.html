@@ -65,8 +65,8 @@
          </div>
          <div class ="row">
             <ul class="nav nav-tabs">
-               <li role="presentation" class="active"><a href="f2.html">Swift</a></li>
-               <li role="presentation"><a href="f2Obc.html">Objective-C</a></li>
+               <li role="presentation"><a href="f2.html">Swift</a></li>
+               <li role="presentation" class="active"><a href="f2Obc.html">Objective-C</a></li>
             </ul>
          </div>
 <br>
@@ -89,20 +89,20 @@
                            <li><a href="checkout_custom.html#your_credentials">Usa tus credenciales</a></li>
                            <li><a href="checkout_custom.html#notifications">Recibe notificaciones de pagos</a></li>
                            <li>
-                              <a href="f2.html">Componentes de UI</a>
+                              <a href="f2Obc.html">Componentes de UI</a>
                               <ul>
-                                 <li><a href="f2.html#f2_payment_vault">Componente completo</a></li>
-                                 <li><a href="f2.html#f2_card_form">Cobra con tarjeta</a></li>
-                                 <li><a href="f2.html#f2_card_form_installments">Cobra con tarjeta en cuotas</a></li>
-                                 <li><a href="f2.html#f2_customer_cards">Tarjetas guardadas</a></li>
-                                 <li><a href="f2.html#f2_payment_methods">Medios de pago</a></li>
-                                 <li><a href="f2.html#f2_card_issuers">Bancos</a></li>
-                                 <li><a href="f2.html#f2_payer_costs">Cuotas</a></li>
-                                 <li><a href="f2.html#f2_bank_deals">Promociones</a></li>
-                                 <li><a href="f2.html#f2_create_payment">Creación de pago</a></li>
-                                 <li><a href="f2.html#f2_payment_result">Resultado de pagos</a></li>
-                                 <li><a href="f2.html#f2_payment_recovery">Recupero de pagos</a></li>
-                                 <li><a href="f2.html#f2_component_customization">Customiza los componentes</a></li>
+                                 <li><a href="f2Obc.html#f2_payment_vault">Componente completo</a></li>
+                                 <li><a href="f2Obc.html#f2_card_form">Cobra con tarjeta</a></li>
+                                 <li><a href="f2Obc.html#f2_card_form_installments">Cobra con tarjeta en cuotas</a></li>
+                                 <li><a href="f2Obc.html#f2_customer_cards">Tarjetas guardadas</a></li>
+                                 <li><a href="f2Obc.html#f2_payment_methods">Medios de pago</a></li>
+                                 <li><a href="f2Obc.html#f2_card_issuers">Bancos</a></li>
+                                 <li><a href="f2Obc.html#f2_payer_costs">Cuotas</a></li>
+                                 <li><a href="f2Obc.html#f2_bank_deals">Promociones</a></li>
+                                 <li><a href="f2Obc.html#f2_create_payment">Creación de pago</a></li>
+                                 <li><a href="f2Obc.html#f2_payment_result">Resultado de pagos</a></li>
+                                 <li><a href="f2Obc.html#f2_payment_recovery">Recupero de pagos</a></li>
+                                 <li><a href="f2Obc.html#f2_component_customization">Customiza los componentes</a></li>
                               </ul>
                            </li>
                            <li>
@@ -145,7 +145,7 @@
                   <p>Si no utilizas CocoaPods, descargá la SDK de MercadoPago en <a href="https://github.com/mercadopago/px-ios/releases" target="_blank">este link</a> y agregala a tu proyecto.</p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
+                        <code class="line-numbers language-objectivec">
 source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
@@ -173,22 +173,17 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
             <div class="container">
                                  <pre class="snippet">
-                                    <code id="flavor_2_step_0_swift" class="line-numbers language-swift">
-                                       import UIKit
+                                    <code id="flavor_2_step_0_swift" class="line-numbers language-objectivec">
+                                       #import "ViewController.h"
+                                       @import MercadoPagoSDK;
 
-                                       class MainViewController: UIViewController {
+                                       @interface ViewController ()
+                                       @end
 
-                                         @IBOutlet weak var payButton: UIButton!
+                                       @implementation ViewController
 
-                                         @IBOutlet weak var paymentResult: UITextField!
-
-                                         override func viewDidLoad() {
-                                           super.viewDidLoad()
-                                           
-                                           self.payButton.addTarget(self, 
-                                             action: #selector(MainViewController.startPaymentVault), 
-                                             forControlEvents: .TouchUpInside)
-                                         }
+                                       - (IBAction)payButton:(id)sender {
+                                          [self startPaymentVault];
                                        }
                                     </code>
                      
@@ -208,14 +203,15 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
                   <div class="container">
                               <pre class="snippet">
-                                 <code class="line-numbers language-swift">
-                              let pv = MPFlowBuilder.startPaymentVaultViewController(1.00, 
-                                    paymentPreference: nil, callback: 
-                                    { (paymentMethod, token, issuer, payerCost) in
-                                    // Listo! Envía los datos a tu servidor para hacer el pago.
-                                })
-                              let myNav = UINavigationController(rootViewController: pv.viewControllers[0])
-                              self.present(myNav, animated: true, completion: {})
+                                 <code class="line-numbers language-objectivec">
+                                    UIViewController *paymentVaultVC = 
+                                       [MPFlowBuilder startPaymentVaultViewController:1.00
+                                       paymentPreference:nil callback:^(PaymentMethod *paymentMethod,
+                                       Token *token, Issuer *issuer, PayerCost *payerCost) {
+                                          // Listo! Envía los datos a tu servidor para hacer el pago.
+                                    }];
+                                    [self presentViewController:paymentVaultVC animated:YES
+                                        completion:^{}];
                                  </code>
                                  <button class="copy-button">
                                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -237,19 +233,19 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 <div class="container">
                   
                               <pre class="snippet">
-                                 <code class="line-numbers language-swift">
-                                    var cf : UINavigationController!
-
-                                    cf = MPStepBuilder.startCreditCardForm(amount: 1.00, callback: { 
-                                      (paymentMethod, token, issuer) -> Void in
-                                        // Listo! Envía los datos a tu servidor para hacer el 
-                                        // pago en una cuota.
-                                        cf!.dismiss(animated: true, completion: {})
-                                      }, callbackCancel: { () -> Void in
-                                        // El usuario canceló el flujo
-                                        cf!.dismiss(animated: true, completion: {})
-                                      })
-                                      self.present(cf, animated: true, completion: {})
+                                 <code class="line-numbers language-objectivec">
+                                    UINavigationController *cf = 
+                                       [MPStepBuilder startCreditCardForm:nil amount:1.00
+                                       paymentMethods:nil token:nil
+                                       callback:^( PaymentMethod *pm, Token *token, Issuer *issuer) {
+                                            // Listo! Envía los datos a tu servidor para hacer el
+                                            // pago en una cuota.
+                                            [self dismissViewControllerAnimated:YES completion:^{}];
+                                       } callbackCancel:^{
+                                             // El usuario canceló el flujo
+                                             [self dismissViewControllerAnimated:YES completion:^{}];
+                                    }];
+                                    [self presentViewController:cf animated:YES completion:^{}];
                                  </code>
                                  <button class="copy-button">
                                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -277,18 +273,18 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
                   <div class="container">
                                     <pre class="snippet">
-                                       <code class="line-numbers language-swift">
-                                       var cf : UINavigationController!
-                                       
-                                       cf =  MPFlowBuilder.startCardFlow(amount: 1.00, callback: { 
-                                            (paymentMethod, cardToken, issuer, payerCost) -> Void in
-                                              // Listo! Envía los datos a tu servidor para hacer el pago
-                                               cf!.dismiss(animated: true, completion: {})
-                                          }, callbackCancel : {
+                                       <code class="line-numbers language-objectivec">
+                                       UINavigationController *cf = 
+                                          [MPFlowBuilder startCardFlow:nil amount:1.00 paymentMethods:nil
+                                          callback:^(PaymentMethod   *pm, Token *token, Issuer *issuer,
+                                          PayerCost *payerCost) {
+                                             // Listo! Envía los datos a tu servidor para hacer el pago
+                                             [self dismissViewControllerAnimated:YES completion:^{}];
+                                       } callbackCancel:^{
                                              // El usuario canceló el flujo
-                                              cf!.dismiss(animated: true, completion: {})
-                                          })
-                                       self.present(cf, animated: true, completion: {})
+                                             [self dismissViewControllerAnimated:YES completion:^{}];
+                                       }];
+                                       [self presentViewController:cf animated:YES completion:^{}];
                                        </code>
                                        <button class="copy-button">
                                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -313,16 +309,16 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                <p>
                   <pre class="snippet">
                      <code class="line-numbers language-java">
-                           
-                         [MercadoPagoContext setBaseURL:@"https://api.tunombre.com"];
-                         [MercadoPagoContext setCustomerURI:@"/customer_uri"];
-                         [MercadoPagoContext setMerchantAccessToken:@"merchantAccessToken"];
+                           // Seteo de URL y customerUri
+                            MercadoPagoContext.setBaseURL("https://api.tunombre.com")
+                            MercadoPagoContext.setCustomerUri("/customer_uri")
+                            MercadoPagoContext.setMerchantAccessToken("merchantAccessToken")
 
-                           MPFlowBuilder.startPaymentVaultViewController(1.00, 
-                              paymentPreference: nil, callback: 
-                               {(paymentMethod, token, issuer, payerCost) in
-                              // Listo! Envía los datos a tu servidor para hacer el pago.
-                           })
+                           [MPFlowBuilder startPaymentVaultViewController:1.00
+                           paymentPreference:nil callback:^(PaymentMethod *paymentMethod,
+                           Token *token, Issuer *issuer, PayerCost *payerCost) {
+                                 // Listo! Envía los datos a tu servidor para hacer el pago.
+                           }];
 
                      </code>
                      <button class="copy-button">
@@ -348,14 +344,12 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
   <div class="container">
                      
                                     <pre class="snippet">
-                                       <code class="line-numbers language-swift">
-                                             MPStepBuilder.startPaymentMethodsStep(nil, 
-                                               callback: { 
-                                                 (paymentMethod) -> Void in
-                                                   // Ahora puedes continuar con tu flujo.
-                                                   // Recuerda verificar si el medio de pago es offline!
-                                               }
-                                             )
+                                       <code class="line-numbers language-objectivec">
+                                       [MPStepBuilder startPaymentMethodsStep:nil
+                                       callback:^(PaymentMethod *pm) {
+                                           // Ahora puedes continuar con tu flujo.
+                                           // Recuerda verificar si el medio de pago es offline!
+                                        }];
                                        </code>
                                        <button class="copy-button">
                                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -379,15 +373,12 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                   </p>
                   <div class="container">
                                     <pre class="snippet">
-                                       <code class="line-numbers language-swift">
+                                       <code class="line-numbers language-objectivec">
                                           // Medio de pago seleccionado por el usuario.
-                                          let paymentMethod : PaymentMethod!
-
-                                          MPStepBuilder.startIssuersStep(paymentMethod, 
-                                            callback: { (issuer) -> Void in
-                                              // Ahora puedes continuar con tu flujo.
-                                            }
-                                          )
+                                          [MPStepBuilder startIssuersStep:paymentMethod
+                                             callback:^(Issuer *issuer) {
+                                                // Ahora puedes continuar con tu flujo.
+                                          }];
                                        </code>
                                        <button class="copy-button">
                                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -413,13 +404,12 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
                   <div class="container">
                                     <pre class="snippet">
-                                       <code class="line-numbers language-swift">
-                                             MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, 
-                                               token: token, amount: 10000, callback: { 
-                                                 (payerCost) -> Void in
-                                                   // Ahora puedes continuar con tu flujo.
-                                               }
-                                             )
+                                       <code class="line-numbers language-objectivec">
+                                       [MPStepBuilder startPayerCostForm:paymentMethod issuer:issuer
+                                       token:token amount:10000 paymentPreference:nil
+                                       installment:nil callback:^(PayerCost *payerCost) {
+                                          // Ahora puedes continuar con tu flujo.
+                                       }];
                                        </code>
                                        <button class="copy-button">
                                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -441,10 +431,10 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
                     <div class="container">
                                     <pre class="snippet">
-                                       <code class="line-numbers language-swift">
-                                          MPStepBuilder.startPromosStep({ (Void) -> (Void) in
-                                                // Acción a ejecutar al salir de visualizar las promociones
-                                          })
+                                       <code class="line-numbers language-objectivec">
+                                       [MPStepBuilder startPromosStep:^{
+                                          // Acción a ejecutar al salir de visualizar las promociones
+                                        }];
                                        </code>
                                        <button class="copy-button">
                                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -477,32 +467,32 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
 
                    <div class="container">
                                        <pre class="snippet">
-                                          <code class="line-numbers language-swift">
+                                          <code class="line-numbers language-objectivec">
 
-                                                func createPayment(paymentMethod: PaymentMethod, 
-                                                   cardIssuer: Issuer?, installments: Int?, tokenId: String){
+                                       - (void)createPayment:(PaymentMethod *)paymentMethod
+                                        cardIssuer:(Issuer *)issuer
+                                        installments:(NSInteger)instalments
+                                        tokenId:(NSString *)tokenId {
 
-                                                  MercadoPagoContext.setBaseURL("http://tunombre.com")
-                                                  MercadoPagoContext.setPaymentURI("/checkout/create_payment")
+                                          [MercadoPagoContext setBaseURL:@"http://tunombre.com"];
+                                          [MercadoPagoContext setPaymentURI:@"/checkout/create_payment"];
 
-                                                  let merchantPayment = MerchantPayment(items: items,
-                                                      installments: installments, cardIssuer: cardIssuer,
-                                                      tokenId: tokenId, paymentMethod: paymentMethod, 
-                                                    campaignId: nil)
+                                          MerchantPayment *merchantPayment = [[MerchantPayment alloc]
+                                          initWithItems:items installments:installmentsSelected
+                                          cardIssuer:selectedIssuer tokenId:[currentToken _id]
+                                          paymentMethod:paymentMethod campaignId:0];
 
-                                                  MerchantServer.createPayment(payment: merchantPayment, 
-                                                    success: {
-                                                      (payment: Payment) -> Void in
 
-                                                      // Dependiendo del paymentTypeId, muestra
-                                                        // Congrats
-                                                        // Instructions
+                                          [MerchantServer createPayment:merchantPayment
+                                              success:^(Payment *payment) {
+                                               // Dependiendo del paymentTypeId, muestra
+                                               // Congrats
+                                               // Instructions
+                                          } failure:^(NSError *error) {
 
-                                                    }, failure: {
-                                                      ((error: NSError) -> Void) in
-                                                    }
-                                                  )
-                                                }
+                                          }];
+
+                                        }
                                           </code>
                                           <button class="copy-button">
                                              <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -534,23 +524,19 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                     </p>
                     <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-         //Pago ya realizado               
-        let payment = Payment()
-        let paymentMethod = PaymentMethod()
-
-
-      let paymentResutlStep = MPStepBuilder.startPaymentResultStep(payment, 
-         paymentMethod: paymentMethod, 
-         callback: {(payment, congratsState) in
-               
-               // congratsState informa si el usario quiere realizar 
-               // otro pago en caso de ser rechazado
-                self.navigationController!.popViewController(animated: true)
-
-            })
-      self.navigationController?.pushViewController(paymentResutlStep, 
-         animated: true)
+                        <code class="line-numbers language-objectivec">
+    //Pago ya realizado
+    UINavigationController *navPaymentResult = [MPStepBuilder 
+      startPaymentResultStep:payment paymentMethod:paymentMethod 
+      callback:^(Payment * _Nonnull payment, enum CongratsState status){
+         // CongratsState informa si el usario quiere realizar
+         // otro pago en caso de ser rechazado
+      [rootViewController dismissViewControllerAnimated:YES 
+         completion:^{}];
+    }];
+    
+   [rootViewController presentViewController:navPaymentResult animated:YES 
+      completion:^{}];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -563,7 +549,7 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                </section>
 
                
-<!--                <section class="docs-section" id="f2_payment_recovery">
+               <!-- <section class="docs-section" id="f2_payment_recovery">
                   <h3 class="title">Recupero de pagos</h3>
                   <p>
                   Este componente es el que utilizamos para realizar cobros con tarjeta de crédito, que además, nos permite recuperar pagos que fueron rechazados porque el usuario ingresó mal los datos de su tarjeta o porque el usuario debe realizar un llamado al emisor de la tarjeta para habilitar el pago.
@@ -579,10 +565,10 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
+                        <code class="line-numbers language-objectivec">
 public void startCardVaultActivity(PaymentRecovery paymentRecovery) {
   PaymentRecovery paymentRecovery = new PaymentRecovery(token, 
-      payment, paymentMethod, payerCost, issuer);
+   payment, paymentMethod, payerCost, issuer);
 
   new MercadoPago.StartActivityBuilder()
     .setActivity(this)
@@ -639,35 +625,24 @@ protected void onActivityResult(int resultCode, Intent data){
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-PaymentPreference paymentPreference = new PaymentPreference();
+                        <code class="line-numbers language-objectivec">
+PaymentPreference *paymentPreference = 
+   [[PaymentPreference alloc]init];
+    
+    NSArray *exPaymentMethods = [@"master"];
+    paymentPreference.excludedPaymentMethodIds = exPaymentMethods;
+    NSArray *exPaymentTypes = [@"atm"];
+    paymentPreference.excludedPaymentTypeIds = exPaymentTypes;
+    paymentPreference.maxAcceptedInstallments = 6;
+    paymentPreference.defaultInstallments = 2;
 
-//Agrega una lista de exclusiones
-// de tipos de medios de pago si lo deseas
-paymentPreference.excludedPaymentTypeIds = ["atm"]
-
-//Agrega una lista de exclusiones
-// de tipos de medio de pago si lo deseas
-paymentPreference.excludedPaymentMethodIds = ["master"]
-
-//Agrega una cantidad máxima de cuotas aceptadas si lo deseas
-paymentPreference.maxAcceptedInstallments = 3
-
-//Agrega una cantidad de cuotas por default si lo deseas
-paymentPreference.defaultInstallments = 3
-
-Ahora puede llamar a nuestro componente
-let pv = MPFlowBuilder.startPaymentVaultViewController(amount, 
-   paymentPreference : paymentPreference, 
-      callback: { (paymentMethod, token, issuer, payerCost) in
-            print(paymentMethod._id)
-            self.paymentMethod = paymentMethod
-            self.createdToken = token
-            self.selectedIssuer = issuer
-            self.installmentsSelected = payerCost
-        })
-
-    //Inicia el componente
+ //Ahora puede llamar a nuestro componente
+[MPFlowBuilder startPaymentVaultViewController:1.00
+paymentPreference:paymentPreference callback:^(
+   PaymentMethod *paymentMethod,
+   Token *token, Issuer *issuer, PayerCost *payerCost) {
+      // Listo! Envía los datos a tu servidor para hacer el pago.
+}];
 
                         </code>
                         <button class="copy-button">
@@ -681,17 +656,18 @@ let pv = MPFlowBuilder.startPaymentVaultViewController(amount,
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
+                        <code class="line-numbers language-objectivec">
 
 //Puedes obtener el color de un UIColor
-MercadoPagoContext.setupPrimaryColor(UIColor.black, 
-   complementaryColor: UIColor.black)
+[MercadoPagoContext setupPrimaryColor:UIColor.black 
+   complementaryColor:nil];
 
 //También puedes habilitar la fuente clara
-MercadoPagoContext.setLightTextColor()
+[MercadoPagoContext setLightTextColor];
 
 //O también puedes habilitar la fuente oscura
-MercadoPagoContext.setDarkTextColor()
+[MercadoPagoContext setDarkTextColor];
+
 
 //Esto lo puedes setear antes de llamar a cada componente
                         </code>

@@ -7,18 +7,18 @@
       <meta name="description" content="Sitio para desarrolladores de MercadoPago.">
       <meta name="keywords" content="mercadopago,sdk,payment,pagos,braintree,paypal,html5,javascript,mobile,drifty,ionic,hybrid,phonegap,cordova,native,ios,android,angularjs">
       <title>Soluciones de pago para el negocio que quieras - MercadoPago</title>
-      <link href="./css/site.css" rel="stylesheet">
-      <link href="./css/prism.css" rel="stylesheet" />
-      <script src="./js/jquery.min.js"></script>
-      <script src="./js/bootstrap.min.js"></script>
-      <script src="./js/site.js"></script>
-      <script src="./js/cookies.min.js"></script>
-      <script src="./js/prism.js"></script>
-      <script src="./js/clipboard.js"></script>
-      <script src="./js/version.js"></script>
+      <link href="./../css/site.css" rel="stylesheet">
+      <link href="./../css/prism.css" rel="stylesheet" />
+      <script src="./../js/jquery.min.js"></script>
+      <script src="./../js/bootstrap.min.js"></script>
+      <script src="./../js/site.js"></script>
+      <script src="./../js/cookies.min.js"></script>
+      <script src="./../js/prism.js"></script>
+      <script src="./../js/clipboard.js"></script>
+      <script src="./../js/version.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.4/gist-embed.min.js"></script>
 
-      <link rel="stylesheet" type="text/css" href="./css/lato.css" />
+      <link rel="stylesheet" type="text/css" href="./../css/lato.css" />
 
    </head>
    <body class="getting-started-page">
@@ -29,13 +29,13 @@
                <i class="icon ion-navicon"></i>
                </button>
                <a class="navbar-brand" href="http://mercadopago.com/">
-               <img src="img/iso-mercadopago.png" width="60" height="41" alt="MercadoPago SDK">
+               <img src="../img/iso-mercadopago.png" width="60" height="41" alt="MercadoPago SDK">
                </a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right" style="color: white;">
-                  <li><a class="getting-started-nav nav-link" href="index.html">Nuestro checkout</a></li>
-                  <li><a class="docs-nav nav-link" href="checkout_custom.html">Tu checkout</a></li>
+                  <li><a class="getting-started-nav nav-link" href="../index.html">Nuestro checkout</a></li>
+                  <li><a class="docs-nav nav-link" href="../checkout_custom.html">Tu checkout</a></li>
                   <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Foro de desarrolladores</a></li>
                </ul>
             </div>
@@ -48,7 +48,7 @@
          </div>
          
       </div>
-      <div id="mati_header" style="height: 450px; margin: 0 auto; padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing.jpg');background-size: cover;">
+      <div id="mati_header" style="height: 450px; margin: 0 auto; padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./../img/landing.jpg');background-size: cover;">
          <div style="background: rgba(0,0,0,0.5); height: 500px;" ></div>
       </div>
       <div class="container content-container" style="margin-top: -300px;">
@@ -73,17 +73,17 @@
   <div id="versiones" class="collapse" style ="overflow: hidden;">
     <br>
       <div class="btn-group" role="group">
-      <button type="button" data-toggle="dropdown" value="1" class="btn btn-default btn-sm dropdown-toggle">
-        <text id="dropdownTitle">Pod 2.2.0</text> <span class="caret"></span>
+      <button type="button" data-toggle="dropdown" value="1" class="btn btn-default btn-sm dropdown-toggle" id="workshop">
+        <text id="dropdownTitle">Pod Workshop</text> <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" id="version">
-        <li id ="2.2.0"><a href="#2.2.0" >Pod 2.2.0</a></li>
-        <li id ="2.0.3.2"><a href="#2.0.3.2">Pod 2.0.3.2</a></li>
-        <li id ="workshop"><a href="./workshop/index.html#workshop">Pod Workshop</a></li>
+        <li id ="2.2.0"><a href="../index.html#2.2.0" >Pod 2.2.0</a></li>
+        <li id ="2.0.3.2"><a href="../index.html#2.0.3.2">Pod 2.0.3.2</a></li>
+        <li id ="workshop"><a a href="#workshop">Pod Workshop</a></li>
       </ul>
     </div> 
 
-    <div style="text-align:center;" id="content" value="2.0.3.2">
+    <div class="text-center" id="content" value="2.0.3.2">
       <h3>¿Que hay de nuevo?</h3>
     </div>
     <hr>
@@ -101,7 +101,7 @@
   </div>
 </div>
   <!-- Swift/Objective-C -->
-<div class ="row" >
+<div class ="row">
   <ul class="nav nav-tabs">
     <li role="presentation" class="active"><a href="index.html">Swift</a></li>
     <li role="presentation"><a href="indexObc.html">Objective-C</a></li>
@@ -127,10 +127,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoSDK', '2.2.0'
+pod 'MercadoPagoSDK', '2.0.8'
                      </code>
                     <button class="copy-button" alt="Copiar código">
-                        <img src="./img/clippy.svg" width="13">
+                        <img src="./../img/clippy.svg" width="13">
                     </button>
                   </pre>
                   
@@ -160,18 +160,15 @@ pod 'MercadoPagoSDK', '2.2.0'
                     // 1 - Clave pública
                     let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 
-                    func application(_ application: UIApplication,
-                      didFinishLaunchingWithOptions launchOptions: 
-                        [UIApplicationLaunchOptionsKey: Any]?) 
-                            MercadoPagoContext.setPublicKey(publicKey)
-                            // Setea tu pais
-                            MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
-                            return true
+                    func application(application: UIApplication, 
+                      didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { 
+                        MercadoPagoContext.setPublicKey(publicKey)
+                        return true
                     }
                   }
                </code>
                <button class="copy-button">
-                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                  <img src="./../img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
             </pre>
           </div>
@@ -214,13 +211,13 @@ pod 'MercadoPagoSDK', '2.2.0'
                         
                         self.payButton.addTarget(self, 
                           action: #selector(MainViewController.startCheckout), 
-                          for: .touchUpInside)
+                          forControlEvents: .TouchUpInside)
                       }
                     }
                </code>
    
                <button class="copy-button">
-                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                  <img src="./../img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
             </pre>
           </div>
@@ -238,7 +235,7 @@ pod 'MercadoPagoSDK', '2.2.0'
                   <b>Pruébalo con nuestros datos: </b>
                   <br />
                   Usa este código con nuestros datos, así podrás probar rápido la experiencia completa. 
-                  <br /> 
+                  <br />
                   Cuando quieras ir a <a href="#step-six">producción</a>, sólo necesitarás usar tus propios datos. 
                 </p>
                 <p>
@@ -257,7 +254,6 @@ pod 'MercadoPagoSDK', '2.2.0'
                        <li>Información del comprador (Por seguridad, el <b>e-mail es obligatorio</b>).</li>
                       </ul>
                     </li>
-                    <li><b>Opcional: </b> Podes cambiar el color de la aplicacion <a href="./f2.html#f2_component_customization">de esta manera</a></li>
                   </ul>
               </p>
             </div>
@@ -265,7 +261,7 @@ pod 'MercadoPagoSDK', '2.2.0'
           <div class="container col-md-6 code">
             <pre class="snippet">
                <code id="flavor_3_step_4" class="line-numbers language-swift">
-                        // Identificador de preferencia de pago
+                        // 2 - Identificador de preferencia de pago
                         let prefId = "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f" 
 
                         // Método ejecutado al hacer clic en el botón
@@ -273,21 +269,19 @@ pod 'MercadoPagoSDK', '2.2.0'
                           let checkout = MPFlowBuilder.startCheckoutViewController(prefId, 
                           callback: { (payment: Payment) in
                               // Listo! El pago ya fue procesado por MP. 
-                              // En el paso siguiente esta el metodo displayPaymentInfo
+                              // En el paso siguiente se describe el método displayPaymentInfo
                               self.displayPaymentInfo(payment)
 
                           }, callbackCancel: {
-                              // Acción a ejecutar en caso de que el usuario
-                              // no efectue la compra
+                              // Acción a ejecutar en caso de que el usuario no efectue la compra
                           })
 
-                          self.presentViewController(checkout, animated: true, 
-                            completion: {})
+                          self.presentViewController(checkout, animated: true, completion: {})
                         }
                </code>
    
                <button class="copy-button">
-                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                  <img src="./../img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
             </pre>
           </div>
@@ -327,15 +321,16 @@ pod 'MercadoPagoSDK', '2.2.0'
             <pre class="snippet">
                <code id="flavor_3_step_5" class="line-numbers language-swift">
                   func displayPaymentInfo(payment : Payment){
-                      let paymentInfo = "id : " + String(payment._id) + ",
-                        status : " + payment.status + ",
+                    let paymentInfo : String
+                    paymentInfo = "id : " + String(payment._id) + ", 
+                        status : " + payment.status + ", 
                         status detail : " + payment.statusDetail
-                      self.paymentResult.text = paymentInfo
+                    self.paymentResult.text = paymentInfo
                   }
                </code>
    
                <button class="copy-button">
-                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                  <img src="./../img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
             </pre>
           </div>
@@ -420,43 +415,40 @@ pod 'MercadoPagoSDK', '2.2.0'
                 </p>
                 <p><b>Desde tu aplicación:</b>
                   <br />
-                  Te ofrecemos una clase llamada <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> que se conecta con tu servidor. El método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia. 
+                  Te ofrecemos una clase llamada <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> que se conecta con tu servidor. El método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia. 
                   <br />
-                  <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de Mercado Pago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
+                  <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> se encargará de transformar la respuesta de tu servicio (la misma que los servicios de Mercado Pago) en un objeto <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/CheckoutPreference.java" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
                       </p>
             </div>
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
                <code id="flavor_3_step_7" class="line-numbers language-swift">
-                  let preferenceBody : [String : Any] = ["amount" : 12,
-                                        "itemId" : 29334, "customerId": 207,
-                                        "payer_email" : "customermail@test.com"]
-                  
-                  // Seteo de URL y preferenceUri
-                  MercadoPagoContext.setBaseURL("https://api.tunombre.com")
-                  MercadoPagoContext.setPreferenceURI("/create_preference")
-                  
-                  MerchantServer.createPreference(preferenceBody as NSDictionary,
-                    success: { (checkoutPreference) in
-                        // La preferencia se creó correctamente.
-                        // Aquí puedes iniciar el Checkout de MercadoPago.
-                        let choFlow = MPFlowBuilder.startCheckoutViewController
-                          (ExamplesUtils.preferenceSelectedID, callback: 
-                          { (payment: Payment) in
-                            
-                        }, callbackCancel: {
-                            // Acción a ejecutar en caso de que el
-                            // usuario no efectue la compra
-                        })
-                                                      
-                  }, failure: { (error) in
-                      // Ups, ocurrió un error
+                 let preferenceBody = ["amount" : 12, 
+                    "itemId" : 29334, "customerId": 207, 
+                    "payer_email" : "customermail@test.com"]
+
+                    // Seteo de URL y preferenceUri
+                    MercadoPagoContext.setBaseURL("https://api.tunombre.com")
+                    MercadoPagoContext.setPreferenceURI("/create_preference")
+
+                    MerchantServer.createPreference(preferenceBody,
+                      success: { (checkoutPreference) in
+                      // La preferencia se creó correctamente.
+                      // Aquí puedes iniciar el Checkout de MercadoPago.
+                      let choFlow = MPFlowBuilder.startCheckoutViewController( ExamplesUtils.preferenceSelectedID, callback: { (payment: Payment) in
+                          
+                          }, callbackCancel: {
+                              // Acción a ejecutar en caso de que el usuario no efectue la compra
+                      })
+
+                    }, failure: { (error) in
+                        // Ups, ocurrió un error
                   })
 
                </code>
                 <button class="copy-button">
-                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                  <img src="./../img/clippy.svg" width="13" alt="Copy to clipboard">
                 </button>
             </pre>
           </div>
@@ -470,9 +462,9 @@ pod 'MercadoPagoSDK', '2.2.0'
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><a >Español</a></li>
+    <li><a href="#">Español</a></li>
     <li><a href="#">Portugues</a></li>
-    <li><a href="en_index.html">Inlgés</a></li>
+    <li><a href="#">Inlges</a></li>
   </ul>
 </div>
 

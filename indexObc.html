@@ -83,7 +83,7 @@
       </ul>
     </div> 
 
-    <div style="text-align:center;" id="content" value="2.0.3.2">
+    <div class="text-center" id="content" value="2.0.3.2">
       <h3>¿Que hay de nuevo?</h3>
     </div>
     <hr>
@@ -101,10 +101,10 @@
   </div>
 </div>
   <!-- Swift/Objective-C -->
-<div class ="row" >
+<div class ="row">
   <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="index.html">Swift</a></li>
-    <li role="presentation"><a href="indexObc.html">Objective-C</a></li>
+    <li role="presentation" ><a href="index.html">Swift</a></li>
+    <li role="presentation" class="active"><a href="indexObc.html">Objective-C</a></li>
   </ul>
 </div>
 
@@ -153,22 +153,28 @@ pod 'MercadoPagoSDK', '2.2.0'
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_2" class="line-numbers language-swift">
-                  class AppDelegate: UIResponder, UIApplicationDelegate {
+               <code id="flavor_3_step_2" class="line-numbers language-objectivec">
+                  #import "AppDelegate.h"
+                  
+                @import MercadoPagoSDK;
 
-                    var window: UIWindow?
-                    // 1 - Clave pública
-                    let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
+                @interface AppDelegate ()
 
-                    func application(_ application: UIApplication,
-                      didFinishLaunchingWithOptions launchOptions: 
-                        [UIApplicationLaunchOptionsKey: Any]?) 
-                            MercadoPagoContext.setPublicKey(publicKey)
-                            // Setea tu pais
-                            MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
-                            return true
-                    }
-                  }
+                @end
+
+                @implementation AppDelegate
+                // Setea tu public key
+                NSString *publicKey = @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a";
+
+                - (BOOL)application:(UIApplication *)application 
+                    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+                      [MercadoPagoContext setPublicKey: publicKey];
+                      // Setea tu pais
+                      [MercadoPagoContext setSiteID:@"MLA"];
+                      return YES;
+                }
+
+                @end
                </code>
                <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -200,23 +206,25 @@ pod 'MercadoPagoSDK', '2.2.0'
 
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_3" class="line-numbers language-swift">
-                 import UIKit
+               <code id="flavor_3_step_3" class="line-numbers language-objectivec">
+               @import MercadoPagoSDK;
 
-                    class MainViewController: UIViewController {
+                @interface MainExamplesViewController()
+                @property (weak, nonatomic) IBOutlet UIButton *button;
+                @property (weak, nonatomic) IBOutlet UILabel *label;
 
-                      @IBOutlet weak var payButton: UIButton!
+                @end
+                @implementation MainExamplesViewController
 
-                      @IBOutlet weak var paymentResult: UITextField!
 
-                      override func viewDidLoad() {
-                        super.viewDidLoad()
-                        
-                        self.payButton.addTarget(self, 
-                          action: #selector(MainViewController.startCheckout), 
-                          for: .touchUpInside)
-                      }
-                    }
+                  - (void)viewDidLoad {
+                      [super viewDidLoad];
+
+                      [_button addTarget:self action:@selector(startCheckout:)
+                          forControlEvents:UIControlEventTouchUpInside];
+                  }
+                @end
+
                </code>
    
                <button class="copy-button">
@@ -238,7 +246,7 @@ pod 'MercadoPagoSDK', '2.2.0'
                   <b>Pruébalo con nuestros datos: </b>
                   <br />
                   Usa este código con nuestros datos, así podrás probar rápido la experiencia completa. 
-                  <br /> 
+                  <br />
                   Cuando quieras ir a <a href="#step-six">producción</a>, sólo necesitarás usar tus propios datos. 
                 </p>
                 <p>
@@ -257,33 +265,32 @@ pod 'MercadoPagoSDK', '2.2.0'
                        <li>Información del comprador (Por seguridad, el <b>e-mail es obligatorio</b>).</li>
                       </ul>
                     </li>
-                    <li><b>Opcional: </b> Podes cambiar el color de la aplicacion <a href="./f2.html#f2_component_customization">de esta manera</a></li>
+                    <li><b>Opcional: </b> Podes cambiar el color de la aplicacion <a href="./f2Obc.html#f2_component_customization">de esta manera</a></li>
                   </ul>
               </p>
             </div>
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_4" class="line-numbers language-swift">
-                        // Identificador de preferencia de pago
-                        let prefId = "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f" 
+               <code id="flavor_3_step_4" class="line-numbers language-objectivec">
+               -(void)startCheckout {
+                    // Identificador de preferencia de pago
+                    NSString *prefId =  @"150216849-e131b785-10d3-48c0-a58b-2910935512e0";
 
-                        // Método ejecutado al hacer clic en el botón
-                        func startCheckout(){
-                          let checkout = MPFlowBuilder.startCheckoutViewController(prefId, 
-                          callback: { (payment: Payment) in
-                              // Listo! El pago ya fue procesado por MP. 
-                              // En el paso siguiente esta el metodo displayPaymentInfo
-                              self.displayPaymentInfo(payment)
-
-                          }, callbackCancel: {
-                              // Acción a ejecutar en caso de que el usuario
-                              // no efectue la compra
-                          })
-
-                          self.presentViewController(checkout, animated: true, 
-                            completion: {})
-                        }
+                    // Método ejecutado al hacer clic en el botón
+                    UINavigationController *checkoutFlow = [MPFlowBuilder 
+                      startCheckoutViewController:prefId callback:^(Payment *payment) {
+                      
+                      // Listo! El pago ya fue procesado por MP.
+                      // En el paso siguiente se describe el método 
+                      // displayPaymentInfo
+                      
+                      [self displayPaymentInfo:payment];
+                    } callbackCancel:nil];
+                    
+                    [self presentViewController:checkoutFlow animated:YES 
+                      completion:^{}];
+                    }
                </code>
    
                <button class="copy-button">
@@ -325,13 +332,11 @@ pod 'MercadoPagoSDK', '2.2.0'
 
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_5" class="line-numbers language-swift">
-                  func displayPaymentInfo(payment : Payment){
-                      let paymentInfo = "id : " + String(payment._id) + ",
-                        status : " + payment.status + ",
-                        status detail : " + payment.statusDetail
-                      self.paymentResult.text = paymentInfo
-                  }
+               <code id="flavor_3_step_5" class="line-numbers language-objectivec">
+                -(void)displayPaymentInfo:(Payment *)payment{
+                    _label.text = [NSString stringWithFormat:@"%ld",
+                      (long)payment._id];
+                }
                </code>
    
                <button class="copy-button">
@@ -428,32 +433,31 @@ pod 'MercadoPagoSDK', '2.2.0'
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_7" class="line-numbers language-swift">
-                  let preferenceBody : [String : Any] = ["amount" : 12,
-                                        "itemId" : 29334, "customerId": 207,
-                                        "payer_email" : "customermail@test.com"]
-                  
-                  // Seteo de URL y preferenceUri
-                  MercadoPagoContext.setBaseURL("https://api.tunombre.com")
-                  MercadoPagoContext.setPreferenceURI("/create_preference")
-                  
-                  MerchantServer.createPreference(preferenceBody as NSDictionary,
-                    success: { (checkoutPreference) in
-                        // La preferencia se creó correctamente.
-                        // Aquí puedes iniciar el Checkout de MercadoPago.
-                        let choFlow = MPFlowBuilder.startCheckoutViewController
-                          (ExamplesUtils.preferenceSelectedID, callback: 
-                          { (payment: Payment) in
-                            
-                        }, callbackCancel: {
-                            // Acción a ejecutar en caso de que el
-                            // usuario no efectue la compra
-                        })
-                                                      
-                  }, failure: { (error) in
-                      // Ups, ocurrió un error
-                  })
+               <code id="flavor_3_step_7" class="line-numbers language-objectivec">
+- (void)createPayment:(PaymentMethod *)paymentMethod
+ cardIssuer:(Issuer *)issuer
+ installments:(NSInteger)instalments
+ tokenId:(NSString *)tokenId {
 
+    [MercadoPagoContext setBaseURL:@"http://tunombre.com"];
+    [MercadoPagoContext setPaymentURI:@"/checkout/create_payment"];
+
+    MerchantPayment *merchantPayment = [[MerchantPayment alloc]
+    initWithItems:items installments:installmentsSelected
+    cardIssuer:selectedIssuer tokenId:[currentToken _id]
+    paymentMethod:paymentMethod campaignId:0];
+
+
+    [MerchantServer createPayment:merchantPayment
+       success:^(Payment *payment) {
+        // Dependiendo del paymentTypeId, muestra
+        // Congrats
+        // Instructions
+    } failure:^(NSError *error) {
+
+    }];
+
+ }
                </code>
                 <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -470,9 +474,9 @@ pod 'MercadoPagoSDK', '2.2.0'
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><a >Español</a></li>
+    <li><a>Español</a></li>
     <li><a href="#">Portugues</a></li>
-    <li><a href="en_index.html">Inlgés</a></li>
+    <li><a href="en_index.html">Inlges</a></li>
   </ul>
 </div>
 

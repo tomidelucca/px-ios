@@ -67,8 +67,8 @@
 
          <div class ="row">
             <ul class="nav nav-tabs">
-               <li role="presentation" class="active"><a href="f1.html">Swift</a></li>
-               <li role="presentation"><a href="f1Obc.html">Objective-C</a></li>
+               <li role="presentation" ><a href="f1.html">Swift</a></li>
+               <li role="presentation" class="active"><a href="f1Obc.html">Objective-C</a></li>
             </ul>
          </div>
 <br>
@@ -110,20 +110,20 @@
                               </ul>
                            </li>
                            <li>
-                              <a href="f1.html">Personaliza tu experiencia</a>
+                              <a href="f1Obc.html">Personaliza tu experiencia</a>
                               <ul>
-                                 <li><a href="f1.html#f1_payment_methods">Medios de pago</a></li>
-                                 <li><a href="f1.html#f1_card_issuers">Bancos</a></li>
-                                 <li><a href="f1.html#f1_payer_costs">Cuotas</a></li>
-                                 <li><a href="f1.html#f1_identification_types">Tipos de documento</a></li>
-                                 <li><a href="f1.html#f1_card_tokens">Tokenización de datos</a></li>
-                                 <li><a href="f1.html#f1_bank_deals">Promociones</a></li>
-                                 <li><a href="f1.html#f1_instructions">Instrucciones</a></li>
+                                 <li><a href="f1Obc.html#f1_payment_methods">Medios de pago</a></li>
+                                 <li><a href="f1Obc.html#f1_card_issuers">Bancos</a></li>
+                                 <li><a href="f1Obc.html#f1_payer_costs">Cuotas</a></li>
+                                 <li><a href="f1Obc.html#f1_identification_types">Tipos de documento</a></li>
+                                 <li><a href="f1Obc.html#f1_card_tokens">Tokenización de datos</a></li>
+                                 <li><a href="f1Obc.html#f1_bank_deals">Promociones</a></li>
+                                 <li><a href="f1Obc.html#f1_instructions">Instrucciones</a></li>
                                  <li>
-                                    <a href="f1.html#f1_merchant_server">MerchantServer</a>
+                                    <a href="f1Obc.html#f1_merchant_server">MerchantServer</a>
                                     <ul>
-                                       <li><a href="f1.html#f1_create_payment">Pagos</a></li>
-                                       <li><a href="f1.html#f1_create_preference">Preferencias</a></li>
+                                       <li><a href="f1Obc.html#f1_create_payment">Pagos</a></li>
+                                       <li><a href="f1Obc.html#f1_create_preference">Preferencias</a></li>
                                        <li><a href="f1.html#f1_get_customer">Clientes</a></li>
                                     </ul>
                                  </li>
@@ -168,14 +168,13 @@ pod 'MercadoPagoSDK', '~> 2.2.0'
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
-
-MPServicesBuilder.getPaymentMethods(success: { (paymentMethods) -> Void in
+                        <code class="line-numbers language-objectivec">
+[MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
+[MPServicesBuilder getPaymentMethods:^(NSArray *paymentMethods) {
       // Listo, arma tu UI para el listado de medios de pago
-}) { (error) -> Void in      
+} failure:^(NSError *error) {
       // UPS! Algo salió mal.
-}
+}];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -194,21 +193,21 @@ MPServicesBuilder.getPaymentMethods(success: { (paymentMethods) -> Void in
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
+                        <code class="line-numbers language-objectivec">
+[MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
 
-// Medio de pago seleccionado por el usuario. 
-let paymentMethod : PaymentMethod!
+// Medio de pago seleccionado por el usuario.
+PaymentMethod *paymentMethod;
 
 // Primeros seis digitos de la tarjeta si los tuvieras
-let bin = nil
+NSString *bin = nil;
 
-MPServicesBuilder.getIssuers(paymentMethod: paymentMethod, bin: bin, 
-   success: { (issuers) -> Void in   
-      // Listo, arma tu UI para el listado de cuotas
-}) { (error) -> Void in
-      // UPS! Algo salió mal.
-}
+[MPServicesBuilder getIssuers:paymentMethod bin:bin
+   success:^(NSArray *issuers) {
+    // Listo, arma tu UI para el listado de cuotas
+ } failure:^(NSError *error) {
+    // UPS! Algo salió mal.
+}];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -233,28 +232,28 @@ MPServicesBuilder.getIssuers(paymentMethod: paymentMethod, bin: bin,
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
+                        <code class="line-numbers language-objectivec">
+[MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
 
-// Medio de pago seleccionado por el usuario.
-let paymentMethod : PaymentMethod!
+ // Medio de pago seleccionado por el usuario.
+ PaymentMethod *paymentMethod;
 
-// Banco seleccionado por el usuario.
-let issuer : Issuer!
+ // Banco seleccionado por el usuario.
+ Issuer *issuer;
 
-// Primeros seis digitos de la tarjeta si los tuvieras
-let bin = nil
+ // Primeros seis digitos de la tarjeta si los tuvieras
+ NSString *bin = nil;
 
-let amount = 10000
+ double amount = 10000;
 
-let paymentMethodId = "master"
+ NSString *paymentMethodId = @"master";
 
-MPServicesBuilder.getInstallments(bin, amount: amount, issuer: issuer, 
-   paymentMethod: paymentMethod, success: { (installments) -> Void in
-      // Listo, arma tu UI para el listado de cuotas
-}) { (error) -> Void in
-      // UPS! Algo salió mal.
-}
+ [MPServicesBuilder getInstallments:bin amount:amount issuer:issuer
+ paymentMethodId:paymentMethodId success:^(NSArray *installments) {
+    // Listo, arma tu UI para el listado de cuotas
+ } failure:^(NSError *error) {
+    // UPS! Algo salió mal.
+ }];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -273,7 +272,7 @@ MPServicesBuilder.getInstallments(bin, amount: amount, issuer: issuer,
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
+                        <code class="line-numbers language-objectivec">
 MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
 
 MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
@@ -297,21 +296,27 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-/* Medio de pago seleccionado por el usuario. 
-*  Va a serte útil para las validaciones de datos. */
-let paymentMethod : PaymentMethod!
+                        <code class="line-numbers language-objectivec">
+/* Medio de pago seleccionado por el usuario.
+ *  Va a serte útil para las validaciones de datos. */
+ PaymentMethod *paymentMethod;
 
-/* Crea un CardToken con los datos ingresados por tu usuario.
-*  Este es un ejemplo con datos de prueba */
-let cardToken = CardToken(cardNumber: "5031755734530604", expirationMonth: "11", 
-   expirationYear: "19", securityCode: "123", cardholderName: "APROJuan Perez", 
-   docType: "DNI", docNumber: "12.123.234")
+   /* Crea un CardToken con los datos ingresados por tu usuario.
+    *  Este es un ejemplo con datos de prueba */
+   CardToken *cardToken = [[CardToken alloc] init];
+   cardToken.cardNumber = @"5031755734530604";
+   cardToken.expirationMonth = 11;
+   cardToken.expirationYear = 19;
+   cardToken.securityCode = @"123";
+   cardToken.cardholder = [[Cardholder alloc] init];
+   cardToken.cardholder.name = @"APROJuan Perez";
+   cardToken.cardholder.identification = [[Identification alloc] init];
+   cardToken.cardholder.identification.type = @"DNI";
+   cardToken.cardholder.identification.number = @"12.123.234";
 
-// Valida los datos ingresados por tu usuario
-if validateCardToken(cardToken, paymentMethod: paymentMethod) {
-   // Obtén un token de uso único para la tarjeta
-}
+   if ([ self validateCardToken:cardToken paymentMethod:paymentMethod]) {
+       // Obtén un token de uso único para la tarjeta
+   }
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -323,43 +328,43 @@ if validateCardToken(cardToken, paymentMethod: paymentMethod) {
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-func validateCardToken(cardToken: CardToken, paymentMethod: PaymentMethod) -> Bool {
-        
-        /* En esta función puedes setear el error para cada campo
-         *  Es recomendable que hagas requestFocus en el primer campo
-         *  en el que detectes un error. */
-        
-        var result = true
-        
-        /* Los dos siguientes métodos validan que el número
-         *  de tarjeta y el código de seguridad cumplan con las
-         *  particularidades del medio de pago. */
-        
-        if let error = cardToken.validateCardNumber(paymentMethod) {
-            result = false
-        }
-        
-        if let error = cardToken.validateSecurityCodeWithPaymentMethod(paymentMethod) {
-            result = false
-        }
-        
-        // Valiamos que la fecha sea mayor a la de hoy
-        if let error = cardToken.validateExpiryDate() {
-            result = false
-        }
-        
-        // Validamos que el nombre no sea vacío
-        if let error = cardToken.validateCardholderName() {
-            result = false
-        }
-        
-        /* Si se seleccionó un tipo de documento,
-         *  validamos que cumpla con sus configuraciones */
-        if let error = cardToken.validateIdentification(){
-            result = false
-        }
-        return result
+                        <code class="line-numbers language-objectivec">
+-(bool) validateCardToken:(CardToken *)cardToken paymentMethod:(PaymentMethod *)paymentMethod{
+    /* En esta función puedes setear el error para cada campo
+     *  Es recomendable que hagas requestFocus en el primer campo
+     *  en el que detectes un error. */
+    bool result = YES;
+
+    /* Los dos siguientes métodos validan que el número
+     *  de tarjeta y el código de seguridad cumplan con las
+     *  particularidades del medio de pago. */
+    NSError *error = [cardToken validateCardNumber:paymentMethod];
+    if (error != nil) {
+        result = NO;
+    }
+
+    if ([cardToken validateSecurityCode] != nil) {
+        result = NO;
+    }
+
+    // Valiamos que la fecha sea mayor a la de hoy
+    if ([cardToken validateExpiryDate] != nil) {
+        result = NO;
+    }
+
+    // Validamos que el nombre no sea vacío
+    if ([cardToken validateCardholderName] != nil) {
+        result = NO;
+    }
+
+    /* Si se seleccionó un tipo de documento,
+     *  validamos que cumpla con sus configuraciones */
+
+    if ([cardToken validateIdentification] != nil){
+        result = NO;
+    };
+
+    return result;
 }
                         </code>
                         <button class="copy-button">
@@ -372,14 +377,14 @@ func validateCardToken(cardToken: CardToken, paymentMethod: PaymentMethod) -> Bo
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
+                        <code class="line-numbers language-objectivec">
+[MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
 
-MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
-   // ¡Listo! ¡Ya puedes enviar la información a tus servidores! 
-}) { (error) -> Void in
+[MPServicesBuilder createNewCardToken:cardToken success:^(Token *token){
+   // ¡Listo! ¡Ya puedes enviar la información a tus servidores!
+} failure:^(NSError *error) {
    // Ups, ha ocurrido un error.
-}
+}];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -398,14 +403,14 @@ MPServicesBuilder.createNewCardToken(cardToken, success: { (token) -> Void in
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
-
-MPServicesBuilder.getPromos(success: { (promos) -> Void in
-   // Listo, arma tu UI para el listado de promociones
-}) { (error) -> Void in
-   // Ups, ha ocurrido un error.
-}
+                        <code class="line-numbers language-objectivec">
+   [MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
+    
+    [MPServicesBuilder getPromos:^(NSArray<Promo *> * promo) {
+      // Listo, arma tu UI para el listado de promociones
+    } failure:^(NSError * error) {
+        // Ups, ha ocurrido un error.
+    }];
          </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -420,20 +425,16 @@ MPServicesBuilder.getPromos(success: { (promos) -> Void in
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
-
-let paymentId = 123456
-let paymentMethodId = "pagofacil"
-let paymentTypeId = "ticket"
-
-MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId, 
-   paymentTypeId : paymentTypeId, success: { (instruction) -> Void in
+                        <code class="line-numbers language-objectivec">
+    [MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
+    int paymentID = 123456;
+    
+    [MPServicesBuilder getInstructions:payment paymentTypeId:@"ticket" success:^(InstructionsInfo * instruction) {
       // Listo, aquí ya tienes las instrucciones para
       // contarle a tu usuario cómo finalizar el pago.
-}, failure: { (error) -> Void in
+    } failure:^(NSError * error) {
       // Ups, ha ocurrido un error.
-})
+    }];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -466,29 +467,25 @@ MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId,
                   </p>
                   <p>
                      <pre class="snippet">
-                        <code class="line-numbers language-swift">
-func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?, 
-  installments: Int?, tokenId: String) {
+                        <code class="line-numbers language-objectivec">
+- (void)createPayment {
 
-  MercadoPagoContext.setBaseURL("http://tunombre.com")
-  MercadoPagoContext.setPaymentURI("/checkout/create_payment")
+      [MercadoPagoContext setBaseURL:@"http://tunombre.com"];
+      [MercadoPagoContext setPaymentURI:@"/checkout/create_payment"];
 
-  let merchantPayment = MerchantPayment(items: items, installments: installments, 
-    cardIssuer: cardIssuer, tokenId: tokenId, paymentMethod: paymentMethod, 
-    campaignId: nil)
+      MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:items
+         installments:installmentsSelected cardIssuer:selectedIssuer
+         tokenId:tokenId paymentMethod:paymentMethod campaignId:0];
 
-  MerchantServer.createPayment(payment: merchantPayment, 
-    success: {
-      (payment: Payment) -> Void in
 
-      // Dependiendo del paymentTypeId, muestra
-        // Congrats
-        // Instructions
+      [MerchantServer createPayment:merchantPayment
+         success:^(Payment *payment) {
+            // Dependiendo del paymentTypeId, muestra
+            // Congrats
+            // Instructions
+      } failure:^(NSError *error) {
 
-    }, failure: {
-      ((error: NSError) -> Void) in
-    }
-  )
+      }];
 }
                         </code>
                         <button class="copy-button">
@@ -568,21 +565,14 @@ MerchantServer.createPreference(preferenceBody,
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
-                            public func getCustomer(){
-                                
-                                // Seteo de URL y customerUri
-                                MercadoPagoContext.setBaseURL("https://api.tunombre.com")
-                                MercadoPagoContext.setCustomerUri("/customer_uri")
-                                MercadoPagoContext.setMerchantAccessToken("merchantAccessToken")
-                                
-                                MerchantServer.getCustomer({ (customer: Customer) -> Void in
-                                    //Aquí ya tienen la información del customer
-                                    let customerCards = customer.cards
-                                    
-                                    }, failure: { (error: NSError?) -> Void in
-                                       // Ups, ocurrió un error
-                                })
-                            }
+    [MercadoPagoContext setBaseURL:@"https://api.tunombre.com"];
+    [MercadoPagoContext setCustomerURI:@"/customer_uri"];
+    [MercadoPagoContext setMerchantAccessToken:@"merchantAccessToken"];
+    [MerchantServer getCustomer:^(Customer * customer) {
+        //Aquí ya tienen la información del customer
+    } failure:^(NSError * error) {
+        
+    }];
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -590,7 +580,6 @@ MerchantServer.createPreference(preferenceBody,
                      </pre>
                   </p>
                </section>
-            </div>
             <div class ="row">
 <div class="dropup col-md-1">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

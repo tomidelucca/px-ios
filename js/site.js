@@ -21,6 +21,7 @@ var site = (function(){
       e.preventDefault();
       $(this).toggleClass("active");
   });
+  $( "#flavor_3_step_1" ).append( "Test" );
 
   // smooth scroll
   $('a[href*=#]:not([href=#])').click(function() {
