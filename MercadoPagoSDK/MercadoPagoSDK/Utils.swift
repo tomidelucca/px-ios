@@ -146,7 +146,11 @@ class Utils {
                 cents.append("0")
                 missingZeros = missingZeros - 1
             }
+        } else if cents.characters.count > 2 {
+            let index1 = cents.index(cents.startIndex, offsetBy: 2)
+            cents = cents.substring(to: index1)
         }
+        
         return cents
     }
     
@@ -166,7 +170,7 @@ class Utils {
         if let amountString = Double(formattedString){
             numberWithoutLastThreeDigits = String( Int(amountString/1000))
         }
-        let lastThreeDigits = formattedString.lastCharacters(number: 3)
+        let lastThreeDigits = amount.lastCharacters(number: 3)
         
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
         
@@ -182,7 +186,10 @@ class Utils {
         if range != nil {
             return formattedString.substring(to: range!.lowerBound)
         }
-        return formattedString
+        if let _ = Double(formattedString) {
+            return formattedString
+        }
+        return ""
     }
     
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {

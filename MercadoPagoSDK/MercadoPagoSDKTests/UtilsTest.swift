@@ -219,7 +219,7 @@ class UtilsTest: BaseTest {
         XCTAssertEqual("debit_card", debvisa.paymentTypeId)
         
         
-        //XCTAssertThrowsError(Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "thisisnotavalidinput"), "", file: (Error) -> Void)
+        //XCTAssertThrowsError(Utils.findPaymentMethod(mlmPaymentMethods, paymentMethodId: "thisisnotavalidinput"), x"", file: (Error) -> Void)
         
         //XCTAssertNil(invalidOutput)
         
@@ -251,17 +251,35 @@ class UtilsTest: BaseTest {
         output = Utils.getAmountDigits("1221231435435345435435345345.3456789", decimalSeparator: ".")
         XCTAssertEqual("1221231435435345435435345345", output)
         
-        //output = Utils.getAmountDigits("ThisIsNotAValidString", decimalSeparator: ".")
-        //XCTAssertEqual("", output)
+        output = Utils.getAmountDigits("ThisIsNotAValidString", decimalSeparator: ".")
+        XCTAssertEqual("", output)
         
-        //output = Utils.getAmountDigits("12.000", decimalSeparator: "thisIsNotAValidSeparator")
-        //XCTAssertEqual("", output)
+        output = Utils.getAmountDigits("12.000", decimalSeparator: "thisIsNotAValidSeparator")
+        XCTAssertEqual("12.000", output)
         
-        //output = Utils.getAmountDigits("NothingHere", decimalSeparator: "isValidAtAll")
-        //XCTAssertEqual("", output)
+        output = Utils.getAmountDigits("NothingHere", decimalSeparator: "isValidAtAll")
+        XCTAssertEqual("", output)
     
     }
     
+    /**
+     *
+     * getCentsFormatted
+     *
+     **/
+    func testGetCentsFormatted(){
+        var centsFormatted = Utils.getCentsFormatted("100.2", decimalSeparator: ".")
+        XCTAssertEqual("20", centsFormatted)
+        
+        centsFormatted = Utils.getCentsFormatted("25", decimalSeparator: ".")
+        XCTAssertEqual("00", centsFormatted)
+        
+        centsFormatted = Utils.getCentsFormatted("45.06", decimalSeparator: ".")
+        XCTAssertEqual("06", centsFormatted)
+        
+        centsFormatted = Utils.getCentsFormatted("4.693458", decimalSeparator: ".")
+        XCTAssertEqual("69", centsFormatted)
+    }
     
     
     /**
@@ -269,6 +287,29 @@ class UtilsTest: BaseTest {
      * getAmountFormatted
      *
      **/
+     func testGetAmountFormatted() {
+        var amountFormatted = Utils.getAmountFormatted(MockBuilder.TEN, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "10")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.HUNDRED, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "100")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.THOUSAND, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "1,000")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.TEN_THOUSAND, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "10,000")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.MILLON, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "1,000,000")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.OVER_MILLON, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "10,000,000,000")
+     
+        amountFormatted = Utils.getAmountFormatted(MockBuilder.MILLIONS, thousandSeparator: ",", decimalSeparator: ".")
+        XCTAssertEqual(amountFormatted, "10,000,000,000,000,000")
+     }
+    
     
     func testGetAttributedAmount(){
         
@@ -276,28 +317,7 @@ class UtilsTest: BaseTest {
         let attributedAmount = Utils.getAttributedAmount(1.00, currency: arsCurrency!)
     }
     
-  /*  func testGetAmountFormatted() {
-        var amountFormatted = Utils.getAmountFormatted(TEN, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "10")
-
-        amountFormatted = Utils.getAmountFormatted(HUNDRED, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "100")
-
-        amountFormatted = Utils.getAmountFormatted(THOUSAND, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "1,000")
-
-        amountFormatted = Utils.getAmountFormatted(TEN_THOUSAND, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "10,000")
-
-        amountFormatted = Utils.getAmountFormatted(MILLON, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "1,000,000")
-
-        amountFormatted = Utils.getAmountFormatted(OVER_MILLON, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "10,000,000,000")
-
-        amountFormatted = Utils.getAmountFormatted(MILLIONS, thousandSeparator: ",", decimalSeparator: ".")
-        XCTAssertEqual(amountFormatted, "10,000,000,000,000,000")
-    }*/
+  
     
     
 }
