@@ -3,7 +3,7 @@
 # MercadoPago iOS (Swift 3.0) SDK
 The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
 
-![MercadoPagoSDK: Examples](https://raw.githubusercontent.com/mercadopago/sdk-ios/master/Screenshots/mercadopagosdk.png)
+![Screenshot iOS](https://cloud.githubusercontent.com/assets/9399970/20975888/96dd46e4-bc7f-11e6-9aab-436cf8ff97f5.png)
 
 ## Installation
 
@@ -38,7 +38,7 @@ Copy and paste the following lines into the TextEdit window:
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
     platform :ios, '8.0'
-    pod 'MercadoPagoSDK'
+    pod 'MercadoPagoSDK', '2.2.0'
 
 > You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
 
@@ -64,8 +64,9 @@ From now on, be sure to always open the generated Xcode workspace (`.xcworkspace
 ## Examples
 
 This project includes two Xcode Projects with examples using MercadoPagoSDK: MercadoPagoSDKExamples written in swift and MercadoPagoSDKExamplesObjectiveC. In case you need support contact the development team.
-## Documentation
 
+## Documentation
++ [See the GitHub Proyect](https://github.com/mercadopago/px-ios)
 + [Read more about this 6 steps integration.](https://mercadopago.github.io/px-ios)
 + [Check out MercadoPago Developers Site!](http://www.mercadopago.com.ar/developers)
 
