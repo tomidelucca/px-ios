@@ -146,14 +146,18 @@ class Utils {
                 cents.append("0")
                 missingZeros = missingZeros - 1
             }
+        } else if cents.characters.count > 2 {
+            let index1 = cents.index(cents.startIndex, offsetBy: 2)
+            cents = cents.substring(to: index1)
         }
+        
         return cents
     }
     
     /**
      Returns amount string formatted according to separators
-     Ex: formattedString = "10200.90", decimalSeparator = ".", thousandSeparator: ","
-     returns 10,200.90
+     Ex: formattedString = "10200", decimalSeparator = ".", thousandSeparator: ","
+     returns 10,200
      **/
     class func getAmountFormatted(_ formattedString : String, thousandSeparator: String, decimalSeparator: String) -> String {
         
@@ -166,7 +170,7 @@ class Utils {
         if let amountString = Double(formattedString){
             numberWithoutLastThreeDigits = String( Int(amountString/1000))
         }
-        let lastThreeDigits = formattedString.lastCharacters(number: 3)
+        let lastThreeDigits = amount.lastCharacters(number: 3)
         
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
         
@@ -182,7 +186,10 @@ class Utils {
         if range != nil {
             return formattedString.substring(to: range!.lowerBound)
         }
-        return formattedString
+        if let _ = Double(formattedString) {
+            return formattedString
+        }
+        return ""
     }
     
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
@@ -232,14 +239,13 @@ class Utils {
     internal static func findPaymentMethod(_ paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
-        
         let paymentMethod = paymentMethods.filter({ (paymentMethod : PaymentMethod) -> Bool in
             if (paymentMethodId.startsWith(paymentMethod._id)){
                 let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod._id)
-                
+                // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
                     paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)
-                    if paymentTypeSelected.characters.count > 0 {
+                    if !String.isNullOrEmpty(paymentTypeSelected) {
                         paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                     }
                 }
@@ -254,21 +260,6 @@ class Utils {
         }
         
         return paymentMethod[0]
-    }
-    
-    internal static func getAccreditationTitle(_ paymentMethod : PaymentMethod) -> String{
-        if paymentMethod.accreditationTime == nil || !(paymentMethod.accreditationTime > 0) {
-            return ""
-        }
-        
-        var title = "Se acreditará en ".localized
-        let hours = paymentMethod.accreditationTime!/(1000*60*60)
-        if hours > 24 {
-            title = title + String(hours/24) + " dias".localized
-        } else {
-            title = title + String(hours) + " horas".localized
-        }
-        return title
     }
     
     internal static func getExpirationYearFromLabelText(_ mmyy : String) -> Int {
@@ -296,3 +287,4 @@ class Utils {
     }
     
 }
+

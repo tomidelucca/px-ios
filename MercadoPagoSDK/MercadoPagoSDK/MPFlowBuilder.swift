@@ -114,8 +114,8 @@ open class MPFlowBuilder : NSObject {
                 if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
                     
                     if installments![0].payerCosts.count>1{
-                        let pcvc = MPStepBuilder.startPayerCostForm([paymentMethod], issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0], timer: timer, callback: { (payerCost) -> Void in
-                            callback(paymentMethod, token!, issuer, payerCost as! PayerCost?)
+                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0], timer: timer, callback: { (payerCost) -> Void in
+                            callback(paymentMethod, token!, issuer, payerCost)
                         })
                         
                         pcvc.callbackCancel = currentCallbackCancel
