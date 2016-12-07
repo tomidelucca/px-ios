@@ -353,7 +353,6 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK10CardNumber")
 @end
 
 @class Device;
-@class NSError;
 @class IdentificationType;
 @class NSString;
 
@@ -372,19 +371,19 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK9CardToken")
 - (BOOL)validate:(BOOL)includeSecurityCode;
 - (NSString * _Nullable)validateCardNumber;
 - (NSString * _Nullable)validateCardNumber:(PaymentMethod * _Nonnull)paymentMethod;
-- (NSError * _Nullable)validateSecurityCode;
-- (NSError * _Nullable)validateSecurityCode:(NSString * _Nullable)securityCode;
-- (NSError * _Nullable)validateSecurityCodeWithPaymentMethod:(PaymentMethod * _Nonnull)paymentMethod;
-- (NSError * _Nullable)validateSecurityCodeWithPaymentMethod:(NSString * _Nonnull)securityCode paymentMethod:(PaymentMethod * _Nonnull)paymentMethod bin:(NSString * _Nonnull)bin;
+- (NSString * _Nullable)validateSecurityCode;
+- (NSString * _Nullable)validateSecurityCode:(NSString * _Nullable)securityCode;
+- (NSString * _Nullable)validateSecurityCodeWithPaymentMethod:(PaymentMethod * _Nonnull)paymentMethod;
+- (NSString * _Nullable)validateSecurityCodeWithPaymentMethod:(NSString * _Nonnull)securityCode paymentMethod:(PaymentMethod * _Nonnull)paymentMethod bin:(NSString * _Nonnull)bin;
 - (NSString * _Nullable)validateExpiryDate;
 - (NSString * _Nullable)validateExpiryDate:(NSInteger)month year:(NSInteger)year;
 - (BOOL)validateExpMonth:(NSInteger)month;
 - (BOOL)validateExpYear:(NSInteger)year;
-- (NSError * _Nullable)validateIdentification;
-- (NSError * _Nullable)validateIdentificationType;
-- (NSError * _Nullable)validateIdentificationNumber;
-- (NSError * _Nullable)validateIdentificationNumber:(IdentificationType * _Nullable)identificationType;
-- (NSError * _Nullable)validateCardholderName;
+- (NSString * _Nullable)validateIdentification;
+- (NSString * _Nullable)validateIdentificationType;
+- (NSString * _Nullable)validateIdentificationNumber;
+- (NSString * _Nullable)validateIdentificationNumber:(IdentificationType * _Nullable)identificationType;
+- (NSString * _Nullable)validateCardholderName;
 - (BOOL)hasYearPassed:(NSInteger)year;
 - (BOOL)hasMonthPassed:(NSInteger)year month:(NSInteger)month;
 - (NSInteger)normalizeYear:(NSInteger)year;
@@ -687,6 +686,7 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK13FlowTrackInfo")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
+@class NSError;
 
 SWIFT_CLASS("_TtC14MercadoPagoSDK18MercadoPagoService")
 @interface MercadoPagoService : NSObject
@@ -1234,7 +1234,7 @@ SWIFT_CLASS("_TtC14MercadoPagoSDK13MPStepBuilder")
 + (SecrurityCodeViewController * _Nonnull)startSecurityCodeFormWithPaymentMethod:(PaymentMethod * _Null_unspecified)paymentMethod cardInfo:(id <CardInformationForm> _Null_unspecified)cardInfo callback:(void (^ _Null_unspecified)(Token * _Nullable))callback;
 + (UINavigationController * _Nonnull)startCreditCardForm:(PaymentPreference * _Nullable)paymentSettings amount:(double)amount cardInformation:(id <CardInformation> _Nullable)cardInformation paymentMethods:(NSArray<PaymentMethod *> * _Nullable)paymentMethods token:(Token * _Nullable)token timer:(CountdownTimer * _Nullable)timer callback:(void (^ _Nonnull)(PaymentMethod * _Nonnull, Token * _Nullable, Issuer * _Nullable))callback callbackCancel:(void (^ _Nullable)(void))callbackCancel;
 + (CardAdditionalStep * _Nonnull)startCreditDebitForm:(NSArray<PaymentMethod *> * _Nonnull)paymentMethod issuer:(Issuer * _Nullable)issuer token:(CardToken * _Nullable)token amount:(double)amount paymentPreference:(PaymentPreference * _Nullable)paymentPreference timer:(CountdownTimer * _Nullable)timer callback:(void (^ _Nonnull)(NSObject * _Nullable))callback callbackCancel:(void (^ _Nullable)(void))callbackCancel;
-+ (CardAdditionalStep * _Nonnull)startPayerCostForm:(NSArray<PaymentMethod *> * _Nonnull)paymentMethod issuer:(Issuer * _Nullable)issuer token:(Token * _Nullable)token amount:(double)amount paymentPreference:(PaymentPreference * _Nullable)paymentPreference installment:(Installment * _Nullable)installment timer:(CountdownTimer * _Nullable)timer callback:(void (^ _Nonnull)(NSObject * _Nullable))callback callbackCancel:(void (^ _Nullable)(void))callbackCancel;
++ (CardAdditionalStep * _Nonnull)startPayerCostForm:(PaymentMethod * _Nonnull)paymentMethod issuer:(Issuer * _Nullable)issuer token:(Token * _Nullable)token amount:(double)amount paymentPreference:(PaymentPreference * _Nullable)paymentPreference installment:(Installment * _Nullable)installment timer:(CountdownTimer * _Nullable)timer callback:(void (^ _Nonnull)(PayerCost * _Nullable))callback callbackCancel:(void (^ _Nullable)(void))callbackCancel;
 + (CardAdditionalStep * _Nonnull)startPayerCostFormWithCardInformation:(id <CardInformation> _Nonnull)cardInformation amount:(double)amount paymentPreference:(PaymentPreference * _Nullable)paymentPreference installment:(Installment * _Nullable)installment timer:(CountdownTimer * _Nullable)timer callback:(void (^ _Nonnull)(NSObject * _Nullable))callback callbackCancel:(void (^ _Nullable)(void))callbackCancel;
 + (IdentificationViewController * _Nonnull)startIdentificationForm:(void (^ _Nonnull)(Identification * _Nullable))callback timer:(CountdownTimer * _Nullable)timer;
 + (IssuersViewController * _Nonnull)startIssuersStep:(PaymentMethod * _Nonnull)paymentMethod callback:(void (^ _Nonnull)(Issuer * _Nonnull))callback;
