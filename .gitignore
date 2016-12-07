@@ -17,7 +17,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 .DS_Store
-MercadoPagoSDK.framework
+MercadoPagoSDK/MercadoPagoSDK.framework
 
 # CocoaPods
 #
