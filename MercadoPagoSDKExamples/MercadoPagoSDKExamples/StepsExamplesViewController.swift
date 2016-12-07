@@ -97,7 +97,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
          
 */
         let pp = PaymentPreference()
-     //   pp.excludedPaymentTypeIds = ["ticket", "bank_transfer", "atm"]
+        pp.excludedPaymentTypeIds = ["ticket", "bank_transfer", "atm"]
         //pp.excludedPaymentMethodIds = ["master"]
         pp.maxAcceptedInstallments = 3
 
