@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#version li').click( function(){
-    	if ($(this).attr('id') == "2.2.0"){
+    	if ($(this).attr('id') == "2.2.1"){
     		setPod220();
     	}
     	if ($(this).attr('id') == "2.0.3.2"){
@@ -14,7 +14,7 @@ $(document).ready(function() {
       	setPod2032();
     } else if (window.location.hash == "#workshop"){
       	setPodWorkshop();
-    } else if (window.location.hash == "" || window.location.hash =="2.2.0"){
+    } else if (window.location.hash == "" || window.location.hash =="2.2.1"){
       	setPod220();
     }
 
@@ -30,7 +30,7 @@ $(document).ready(function() {
     	$('#versionSwift').text("3.0.1");
     	$('#changes').html("<li>Nuevo rediseño visual</li>");
 
-    	$("#dropdownTitle").text("Pod 2.2.0");
+    	$("#dropdownTitle").text("Pod 2.2.1");
     }
     function setPodWorkshop(){
     	$('#versionXcode').text("7.0");
