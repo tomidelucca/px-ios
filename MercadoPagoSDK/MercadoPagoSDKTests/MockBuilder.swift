@@ -67,6 +67,22 @@ open class MockBuilder: NSObject {
         return "4170068810108020"
     }
     
+    static let TEN = "10.00"
+    static let HUNDRED = "100.00"
+    static let THOUSAND = "1000.00"
+    static let TEN_THOUSAND = "10000.00"
+    static let MILLON = "1000000.00"
+    static let OVER_MILLON = "10000000000.00"
+    static let MILLIONS = "10000000000000000.00"
+    
+    static let HALF_HOUR_IN_MINS = 30 * 1000
+    static let ONE_HOUR_IN_MINS = 60 * 1000
+    static let TWENTY_HOURS_AND_FIFTEEN_MINS_IN_MINS = 1395 * 1000
+    static let ONE_DAY_IN_MINS = 1440 * 1000
+    static let TWO_DAY_IN_MINS = 2880 * 1000
+    static let SEVEN_DAY_IN_MINS = 10080 * 1000
+    static let HUNDRED_DAYS_IN_MINS = 144000 * 1000
+    
     class func buildCheckoutPreference() -> CheckoutPreference {
         let preference = CheckoutPreference()
         preference._id = PREF_ID_NO_EXCLUSIONS
