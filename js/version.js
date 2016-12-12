@@ -1,43 +1,91 @@
 $(document).ready(function() {
+    var pods =[
+        {
+            podVersion: "2.2.1",
+            xcodeVersion: "8.0+",
+            swiftVersion: "3.0.1",
+            location: false,
+            changes: [
+                "Nuevo rediseño visual"
+            ]
+        },
+        {
+            podVersion: "2.0.3.2",
+            xcodeVersion: "8.0",
+            swiftVersion: "2.3",
+            location: false,
+            changes: [
+                "Compatible con Xcode 7",
+                "Sin dependecias de Google Analitics"
+            ]
+        },
+        {
+            podVersion: "workshop",
+            xcodeVersion: "7.0",
+            swiftVersion: "2.0",
+            location: "workshop/",
+            changes: [
+                "Version Beta"
+            ]
+        }
+    ]
+    var hash = window.location.hash 
+    var id = findWithAttr(pods, "podVersion", hash.substring(hash.lastIndexOf('#')+1))
+    if (window.location.hash == ""){
+        id = 0
+    } 
+    if (id != -1){
+        setPod(id)
+    }
+    $('#version').html(loadVersions());
     $('#version li').click( function(){
-    	if ($(this).attr('id') == "2.2.1"){
-    		setPod220();
-    	}
-    	if ($(this).attr('id') == "2.0.3.2"){
-			setPod2032();
-    	}
-    	if ($(this).attr('id') == "workshop"){
-			setPodWorkshop();
-    	}
+        setPod($(this).attr('id'))
     });
-    if (window.location.hash == "#2.0.3.2"){
-      	setPod2032();
-    } else if (window.location.hash == "#workshop"){
-      	setPodWorkshop();
-    } else if (window.location.hash == "" || window.location.hash =="2.2.1"){
-      	setPod220();
-    }
 
-    function setPod2032(){
-    	$('#versionXcode').text("8.0");
-    	$('#versionSwift').text("2.3");
-    	$('#changes').html("<li>Compatible con Xcode 7</li><li>Sin dependecias de Google Analitics</li>");
-    	
-    	$("#dropdownTitle").text("Pod 2.0.3.2");
-    }
-    function setPod220(){
-    	$('#versionXcode').text("8.0+");
-    	$('#versionSwift').text("3.0.1");
-    	$('#changes').html("<li>Nuevo rediseño visual</li>");
 
-    	$("#dropdownTitle").text("Pod 2.2.1");
+    function setPod(id){
+        $('.podVersion').html(pods[id].podVersion);
+    	$('#versionXcode').text(pods[id].xcodeVersion);
+    	$('#versionSwift').text(pods[id].swiftVersion);
+    	$('#changes').html(listChanges(id));
+    	$("#dropdownTitle").text("Pod " + pods[id].podVersion);   
     }
-    function setPodWorkshop(){
-    	$('#versionXcode').text("7.0");
-    	$('#versionSwift').text("2.0");
-    	$('#changes').html("<li>Version Beta</li>");
+    function listChanges(id){
 
-    	$("#dropdownTitle").text("Pod Workshop");
+        var length = pods[id].changes.length
+        var html = ""
+        while (length>0){
+            html += "<li>"+ pods[id].changes[length-1]+ "</li>"
+            length --
+        }
+        return html
     }
+    function loadVersions(){
+        var url = window.location.pathname;
+        var filename = url.substring(url.lastIndexOf('/')+1);
+        var html = ""
+        var upperRoute = ""
+        if (pods[id].location == false){
+            upperRoute = ""
+        } else {
+            upperRoute = "../"
+        }
+        for (var i = 0; i < pods.length; i++) {
+            if (pods[i].location != false){
+                upperRoute += pods[i].location;
+            }
+
+            html += "<li id =\"" + i + "\"><a href=\"" + upperRoute+filename + "#" + pods[i].podVersion + "\" > Pod " + pods[i].podVersion + "</a></li>"
+        }
+        return html
+    }
+    function findWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 });

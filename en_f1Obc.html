@@ -142,7 +142,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.0'
-pod 'MercadoPagoSDK', '~> 2.2.1'
+pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                         </code>
                         <button class="copy-button" alt="Copiar código">
                            <img src="./img/clippy.svg" width="13">
@@ -579,32 +579,30 @@ MerchantServer.createPreference(preferenceBody,
                      </pre>
                   </p>
                </section>
-            </div>
-            <div class ="row">
-<div class="dropup col-md-1">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Language
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <li><a href="f1.html">Spanish</a></li>
-    <li><a href="#">Portugues</a></li>
-    <li><a >English</a></li>
-  </ul>
-</div>
-</div>
+      </div>
          </div>
       </div>
       
-      <footer class="footer">
-         <div class="copy">
+            <div class="row pre-footer">
+            <div class="dropup col-md-10">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               Language
+               <span class="caret"></span>
+            </button>
+           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+             <li><a href="f1.html">Spanish</a></li>
+             <li><a href="#">Portugues</a></li>
+             <li><a >English</a></li>
+           </ul>
+           </div>
+         <div class="copy" style="float:right;">
             <div class="copy-container">
                <p class="authors">
                   © 2016 MercadoLibre S.R.L.
                </p>
             </div>
          </div>
-      </footer>
+      </div>
       <script src="./js/bootstrap.min.js"></script>
       <script src="./js/site.js"></script>
       <script src="./js/cookies.min.js"></script>
