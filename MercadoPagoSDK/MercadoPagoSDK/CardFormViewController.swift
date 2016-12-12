@@ -48,8 +48,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     var errorLabel : MPLabel?
     
     var navItem : UINavigationItem?
-    var doneNext : UIBarButtonItem?
-    var donePrev : UIBarButtonItem?
     
     var cardFormManager : CardViewModelManager!
     
@@ -424,12 +422,10 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         
-        doneNext = buttonNext
-        donePrev = buttonPrev
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
         
-        toolbar.items = [flexibleSpace, donePrev!, flexibleSpace, doneNext!, flexibleSpace]
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
         if self.cardFormManager.customerCard != nil || self.cardFormManager.token != nil{
             navItem!.leftBarButtonItem?.isEnabled = false
         }
@@ -576,7 +572,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func updateCardSkin(){
-        guard let _ = cardFormManager.getBIN(textBox.text!) else{
+        guard let _ = cardFormManager.getBIN(self.cardNumberLabel!.text!) else {
             cardFormManager.guessedPMS = nil
             cardFormManager.cardToken = nil
             self.clearCardSkin()

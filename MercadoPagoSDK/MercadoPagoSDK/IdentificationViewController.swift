@@ -204,18 +204,13 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
             buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
             buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         }
-        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        
-        doneNext = buttonNext
-        donePrev = buttonPrev
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
         
-        toolbar.items = [flexibleSpace, donePrev!, flexibleSpace, doneNext!, flexibleSpace]
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
         
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         
 
         numberTextField.delegate = self
