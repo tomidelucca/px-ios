@@ -578,7 +578,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             self.clearCardSkin()
             return
         }
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             if(cardFormManager.getGuessedPM()  != nil){
