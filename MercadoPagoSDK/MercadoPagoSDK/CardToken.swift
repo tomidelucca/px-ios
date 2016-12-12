@@ -266,7 +266,7 @@ open class CardToken : NSObject, CardInformationForm {
     }
     
     open func hasMonthPassed(_ year: Int, month: Int) -> Bool {
-        return hasYearPassed(year) || normalizeYear(year) == now.year! && month < (now.month! + 1)
+        return hasYearPassed(year) || normalizeYear(year) == now.year! && month < (now.month!)
     }
     
     open func normalizeYear(_ year: Int) -> Int {
