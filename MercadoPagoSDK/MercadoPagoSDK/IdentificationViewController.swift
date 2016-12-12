@@ -199,11 +199,10 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
+        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        }
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
         

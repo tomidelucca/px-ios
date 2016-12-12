@@ -415,10 +415,10 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        }
+        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         
