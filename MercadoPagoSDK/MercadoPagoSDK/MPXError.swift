@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class MPError: NSObject {
+open class MPXError: NSObject {
 
     open var message : String = ""
     open var messageDetail : String = ""
@@ -25,8 +25,8 @@ open class MPError: NSObject {
         self.retry = retry
     }
     
-    open class func convertFrom(_ error : NSError) -> MPError {
-        let mpError = MPError()
+    open class func convertFrom(_ error : NSError) -> MPXError {
+        let mpError = MPXError()
         if error.userInfo.count > 0 {
             mpError.message = error.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
             mpError.messageDetail = error.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
