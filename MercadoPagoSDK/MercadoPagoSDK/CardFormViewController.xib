@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFormViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
                 <outlet property="cardBackground" destination="HQg-yC-PDa" id="0O0-1b-hau"/>
-                <outlet property="cardView" destination="1e7-Cv-GMx" id="xhN-uC-Dfj"/>
                 <outlet property="textBox" destination="cn0-aq-63o" id="zao-Py-yva"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,14 +18,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Olw-Lu-Sob">
-                    <rect key="frame" x="0.0" y="330" width="320" height="216"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFe-jt-dCn">
-                    <rect key="frame" x="0.0" y="227" width="320" height="60"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-aq-63o" customClass="HoshiTextField" customModule="MercadoPagoSDK" customModuleProvider="target">
-                            <rect key="frame" x="20" y="7.5" width="280" height="45"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.63" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="dKW-Vj-OY6"/>
@@ -67,46 +59,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ASx-GA-eOR">
-                    <rect key="frame" x="0.0" y="286" width="320" height="44"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="aFP-zn-PR6"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-yC-PDa">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duM-jG-gy1">
-                            <rect key="frame" x="0.0" y="192" width="320" height="35"/>
-                            <color key="backgroundColor" red="0.90196078431372551" green="0.0" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFe-CW-SrB">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
-                            <color key="backgroundColor" red="0.90196078431372551" green="0.0" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1e7-Cv-GMx">
-                            <rect key="frame" x="34" y="35" width="252" height="157"/>
-                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="1e7-Cv-GMx" secondAttribute="height" multiplier="252:157" id="pfr-Ir-i7t"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="11"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KY-tj-034">
-                            <rect key="frame" x="311" y="0.0" width="9" height="227"/>
-                            <color key="backgroundColor" red="0.90196078431372551" green="0.0" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6O-69-9IX">
-                            <rect key="frame" x="0.0" y="0.0" width="9" height="227"/>
-                            <color key="backgroundColor" red="0.90196078431372551" green="0.0" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7pi-6h-zuI">
-                            <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="7" id="4h3-fp-Tnt"/>
@@ -115,29 +75,8 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="duM-jG-gy1" secondAttribute="bottom" id="3TX-cs-cC9"/>
-                        <constraint firstItem="X6O-69-9IX" firstAttribute="width" secondItem="4KY-tj-034" secondAttribute="width" id="Be0-jk-UPc"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="top" secondItem="XFe-CW-SrB" secondAttribute="bottom" id="CG3-iN-3eh"/>
-                        <constraint firstItem="duM-jG-gy1" firstAttribute="height" secondItem="XFe-CW-SrB" secondAttribute="height" id="Cow-3n-9mI"/>
-                        <constraint firstItem="duM-jG-gy1" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="FLO-JI-7TK"/>
-                        <constraint firstItem="XFe-CW-SrB" firstAttribute="top" secondItem="HQg-yC-PDa" secondAttribute="top" id="NhO-MM-7dl"/>
-                        <constraint firstItem="duM-jG-gy1" firstAttribute="top" secondItem="1e7-Cv-GMx" secondAttribute="bottom" id="P0j-Zb-GNm"/>
-                        <constraint firstAttribute="trailing" secondItem="XFe-CW-SrB" secondAttribute="trailing" id="RvY-8K-nGk"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="width" secondItem="7pi-6h-zuI" secondAttribute="height" multiplier="256:7" id="SOK-KC-ask"/>
-                        <constraint firstItem="4KY-tj-034" firstAttribute="leading" secondItem="1e7-Cv-GMx" secondAttribute="trailing" constant="25" id="SjU-vU-E3T"/>
                         <constraint firstItem="7pi-6h-zuI" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="Sl0-ue-nEg"/>
-                        <constraint firstItem="XFe-CW-SrB" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="UH4-lq-Xhj"/>
-                        <constraint firstItem="X6O-69-9IX" firstAttribute="leading" secondItem="HQg-yC-PDa" secondAttribute="leading" id="UMd-e5-opk"/>
-                        <constraint firstItem="4KY-tj-034" firstAttribute="top" secondItem="HQg-yC-PDa" secondAttribute="top" id="X6U-F7-bFH"/>
                         <constraint firstAttribute="trailing" secondItem="7pi-6h-zuI" secondAttribute="trailing" id="bNe-1y-3gI"/>
-                        <constraint firstAttribute="trailing" secondItem="4KY-tj-034" secondAttribute="trailing" id="bbw-hC-xCu"/>
-                        <constraint firstAttribute="bottom" secondItem="X6O-69-9IX" secondAttribute="bottom" id="jmB-la-QA9"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="centerX" secondItem="HQg-yC-PDa" secondAttribute="centerX" id="kwt-Tl-bVy"/>
-                        <constraint firstItem="X6O-69-9IX" firstAttribute="top" secondItem="HQg-yC-PDa" secondAttribute="top" id="lW8-tc-ZPG"/>
-                        <constraint firstAttribute="bottom" secondItem="4KY-tj-034" secondAttribute="bottom" id="m7a-Jp-Ega"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="leading" secondItem="X6O-69-9IX" secondAttribute="trailing" constant="25" id="m8l-eV-MuX"/>
-                        <constraint firstAttribute="trailing" secondItem="duM-jG-gy1" secondAttribute="trailing" id="qkN-C6-sQm"/>
-                        <constraint firstItem="1e7-Cv-GMx" firstAttribute="width" secondItem="HQg-yC-PDa" secondAttribute="height" multiplier="252:227" id="syC-K7-V2q"/>
                         <constraint firstAttribute="bottom" secondItem="7pi-6h-zuI" secondAttribute="bottom" constant="24" id="tEs-L2-Rss"/>
                     </constraints>
                     <variation key="default">
