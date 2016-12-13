@@ -176,14 +176,19 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         self.cardView = UIView()
         
-        let cardHeight = 157
-        let cardWidht = 252
-        let rectBackground = CGRect(x: 10, y: 50, width: cardWidht, height: cardHeight)
-         let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        let cardHeight = getCardHeight()
+        let cardWidht = getCardWidth()
+        let xMargin = (UIScreen.main.bounds.size.width  - cardWidht) / 2
+        let yMargin = (UIScreen.main.bounds.size.height - 384 - cardHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
+        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
         self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.layer.cornerRadius = 11
+        self.cardView.layer.masksToBounds = true
         self.cardBackground.addSubview(self.cardView)
         
         cardBack!.backgroundColor = UIColor.clear
@@ -203,6 +208,26 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardView.addSubview(cardFront!)
         
     }
+    
+    func getCardWidth() -> CGFloat {
+        let widthTotal = UIScreen.main.bounds.size.width * 0.70
+        if widthTotal < 512 {
+            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394)){
+                return widthTotal
+            }else{
+                return (UIScreen.main.bounds.size.height - 394) / 0.63
+            }
+            
+        }else{
+            return 512
+        }
+        
+    }
+    
+    func getCardHeight() -> CGFloat {
+        return ( getCardWidth() * 0.63 )
+    }
+    
     
     
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
