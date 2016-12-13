@@ -21,7 +21,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var cardBackground: UIView!
-    @IBOutlet weak var cardView: UIView!
+    var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
     
     var cardViewBack:UIView?
@@ -61,6 +61,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override func loadMPStyles(){
         
         if self.navigationController != nil {
+            
+            
             
             
             //Navigation bar colors
@@ -123,8 +125,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         super.viewDidAppear(animated)
         self.showNavBar()
-        cardFront?.frame = cardView.bounds
-        cardBack?.frame = cardView.bounds
+        
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
         
@@ -148,9 +149,12 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                 
+
                 self.cardFormManager.paymentMethods = paymentMethods
                 
                 self.updateCardSkin()
@@ -169,6 +173,18 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         textBox.delegate = self
         cardFront = CardFrontView()
         cardBack = CardBackView()
+        
+        self.cardView = UIView()
+        
+        let cardHeight = 157
+        let cardWidht = 252
+        let rectBackground = CGRect(x: 10, y: 50, width: cardWidht, height: cardHeight)
+         let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        self.cardView.frame = rectBackground
+        cardFront?.frame = rect
+        cardBack?.frame = rect
+        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardBackground.addSubview(self.cardView)
         
         cardBack!.backgroundColor = UIColor.clear
         
