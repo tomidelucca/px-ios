@@ -320,7 +320,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
     
     deinit {
-        print("\(String(describing: type(of: self))) dellocated" )
+        //print("\(String(describing: type(of: self))) dellocated" )
     }
 
 }
