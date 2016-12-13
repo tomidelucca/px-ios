@@ -29,8 +29,10 @@ open class MPSDKError: NSObject {
         let mpError = MPSDKError()
         let currentError = error as NSError
         if currentError.userInfo.count > 0 {
-            mpError.message = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
-            mpError.messageDetail = currentError.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
+            let errorMessage = currentError.userInfo[NSLocalizedDescriptionKey] as? String ?? ""
+            mpError.message = errorMessage.localized
+            let messageDetail = currentError.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? ""
+            mpError.messageDetail = messageDetail.localized
         }
         mpError.retry = (currentError.code == MercadoPago.ERROR_API_CODE || currentError.code == NSURLErrorCannotDecodeContentData || currentError.code == NSURLErrorNotConnectedToInternet || currentError.code == NSURLErrorTimedOut)
         return mpError

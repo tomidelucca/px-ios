@@ -30,7 +30,7 @@ open class CountdownTimer: NSObject {
     
     open func updateTimer(){
         
-        print("timer retain count \(CFGetRetainCount(self))")
+        //print("timer retain count \(CFGetRetainCount(self))")
         
         guard let delegate = self.delegate  else {
             self.timer.invalidate()
@@ -77,7 +77,7 @@ open class CountdownTimer: NSObject {
         return (hoursStr.characters.count > 0) ? (hoursStr + " : " + minutesStr + " : " + secondsStr) : (minutesStr + " : " + secondsStr)
     }
     deinit {
-        print("Limpie el timer")
+        //print("Limpie el timer")
     }
 
 }
