@@ -30,10 +30,11 @@ open class ErrorViewController: MercadoPagoUIViewController {
         super.init(nibName: "ErrorViewController", bundle: MercadoPago.getBundle())
         self.error = error
         self.exitErrorCallback = {
-            self.dismiss(animated: true, completion: {})
-            if self.callbackCancel != nil {
-                self.callbackCancel!()
-            }
+            self.dismiss(animated: true, completion: {
+                if self.callbackCancel != nil {
+                    self.callbackCancel!()
+                }
+            })
         }
         self.callbackCancel = callbackCancel
         self.callback = callback
