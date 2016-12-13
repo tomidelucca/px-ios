@@ -196,7 +196,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QU9-jc-Fqj">
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jlb-bH-PAK">
                     <frame key="frameInset" minX="117" minY="97" width="240" height="128"/>
@@ -204,7 +204,7 @@
                     <color key="backgroundColor" red="0.94117647059999998" green="0.2666666667" blue="0.28627450980000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oax-FR-ID3">
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.35294117650000001" green="0.74509803919999995" blue="0.90588235289999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -215,7 +215,7 @@
                 <constraint firstAttribute="trailing" secondItem="QU9-jc-Fqj" secondAttribute="trailing" id="R4T-ZD-x4u"/>
                 <constraint firstItem="ux3-pV-d6L" firstAttribute="top" secondItem="Oax-FR-ID3" secondAttribute="bottom" id="SyK-Gy-th9"/>
                 <constraint firstItem="QU9-jc-Fqj" firstAttribute="top" secondItem="ux3-pV-d6L" secondAttribute="bottom" id="Tna-6f-0C3"/>
-                <constraint firstItem="jwv-KW-920" firstAttribute="top" secondItem="QU9-jc-Fqj" secondAttribute="bottom" id="VXb-PS-zAv"/>
+                <constraint firstItem="jwv-KW-920" firstAttribute="top" secondItem="QU9-jc-Fqj" secondAttribute="bottom" constant="4" id="VXb-PS-zAv"/>
                 <constraint firstAttribute="bottom" secondItem="jwv-KW-920" secondAttribute="bottom" id="Zzj-Lm-SZe"/>
                 <constraint firstItem="ux3-pV-d6L" firstAttribute="top" secondItem="Oax-FR-ID3" secondAttribute="bottom" id="f2B-kj-2Ve"/>
                 <constraint firstItem="Oax-FR-ID3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fZb-2l-6iS"/>
@@ -238,7 +238,7 @@
                     <exclude reference="56l-vk-hNN"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-969" y="-259"/>
+            <point key="canvasLocation" x="-998" y="-331"/>
         </view>
         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DO7-EH-EiF">
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
