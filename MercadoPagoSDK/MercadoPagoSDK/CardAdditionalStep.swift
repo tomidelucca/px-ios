@@ -313,7 +313,6 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func getCardCellHeight() -> CGFloat {
-        print (UIScreen.main.bounds)
         return UIScreen.main.bounds.width*0.50
     }
     func gerRowCellHeight() -> CGFloat {
