@@ -21,7 +21,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var cardBackground: UIView!
-    @IBOutlet weak var cardView: UIView!
+    var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
     
     var cardViewBack:UIView?
@@ -61,6 +61,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override func loadMPStyles(){
         
         if self.navigationController != nil {
+            
+            
             
             
             //Navigation bar colors
@@ -123,8 +125,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         super.viewDidAppear(animated)
         self.showNavBar()
-        cardFront?.frame = cardView.bounds
-        cardBack?.frame = cardView.bounds
+        
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
         
@@ -148,9 +149,12 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                 
+
                 self.cardFormManager.paymentMethods = paymentMethods
                 
                 self.updateCardSkin()
@@ -170,6 +174,23 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardFront = CardFrontView()
         cardBack = CardBackView()
         
+        self.cardView = UIView()
+        
+        let cardHeight = getCardHeight()
+        let cardWidht = getCardWidth()
+        let xMargin = (UIScreen.main.bounds.size.width  - cardWidht) / 2
+        let yMargin = (UIScreen.main.bounds.size.height - 384 - cardHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
+        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        self.cardView.frame = rectBackground
+        cardFront?.frame = rect
+        cardBack?.frame = rect
+        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.layer.cornerRadius = 11
+        self.cardView.layer.masksToBounds = true
+        self.cardBackground.addSubview(self.cardView)
+        
         cardBack!.backgroundColor = UIColor.clear
         
         cardNumberLabel = cardFront?.cardNumber
@@ -187,6 +208,26 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardView.addSubview(cardFront!)
         
     }
+    
+    func getCardWidth() -> CGFloat {
+        let widthTotal = UIScreen.main.bounds.size.width * 0.70
+        if widthTotal < 512 {
+            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394)){
+                return widthTotal
+            }else{
+                return (UIScreen.main.bounds.size.height - 394) / 0.63
+            }
+            
+        }else{
+            return 512
+        }
+        
+    }
+    
+    func getCardHeight() -> CGFloat {
+        return ( getCardWidth() * 0.63 )
+    }
+    
     
     
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

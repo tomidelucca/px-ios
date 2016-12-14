@@ -199,7 +199,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.loadPaymentMethodSearch()
                 
             }, failure: { (error: NSError?) -> Void in
-                self.hideLoading()
+                // It a Grupos igual
+                self.loadPaymentMethodSearch()
             })
         } else {
             self.loadPaymentMethodSearch()
@@ -220,7 +221,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.viewModel.currentPaymentMethodSearch == nil {
             MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0{
-                    let error = MPError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
+                    let error = MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
                     self.displayFailure(error)
                 }
                 self.viewModel.setPaymentMethodSearchResponse(paymentMethodSearchResponse)

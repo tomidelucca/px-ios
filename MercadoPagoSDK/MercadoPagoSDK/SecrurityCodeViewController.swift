@@ -232,7 +232,7 @@ open class SecrurityCodeViewModel: NSObject {
                 self.callback(token)
                 }, failure: { (error) in
                     self.vc.hideLoading()
-                    let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
                     self.vc.displayFailure(mpError)
             })
         }
@@ -249,7 +249,7 @@ open class SecrurityCodeViewModel: NSObject {
             self.callback(token)
             }, failure: { (error) in
                 self.vc.hideLoading()
-                 let mpError =  MPError(message: "Hubo un error".localized, messageDetail: error.description, retry: false)
+                 let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
                 self.vc.displayFailure(mpError)
            })
 
