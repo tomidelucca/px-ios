@@ -199,7 +199,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.loadPaymentMethodSearch()
                 
             }, failure: { (error: NSError?) -> Void in
-                self.hideLoading()
+                // It a Grupos igual
+                self.loadPaymentMethodSearch()
             })
         } else {
             self.loadPaymentMethodSearch()
