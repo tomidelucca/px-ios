@@ -32,7 +32,7 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         tableView.separatorStyle = .none
         loadMPStyles()
         
-        var upperFrame = self.tableView.bounds
+        var upperFrame = UIScreen.main.bounds
         upperFrame.origin.y = -upperFrame.size.height;
         let upperView = UIView(frame: upperFrame)
         upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
@@ -313,7 +313,8 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func getCardCellHeight() -> CGFloat {
-        return UIScreen.main.bounds.height*0.27
+        print (UIScreen.main.bounds)
+        return UIScreen.main.bounds.width*0.50
     }
     func gerRowCellHeight() -> CGFloat {
         if hasIssuer() {

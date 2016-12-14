@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,29 +16,10 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZFx-ci-IUg" id="lq0-Ae-mRN">
                 <rect key="frame" x="0.0" y="0.0" width="327" height="224"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Hg-5I-sVx">
-                        <rect key="frame" x="80" y="14" width="160" height="189.5"/>
-                        <color key="backgroundColor" red="0.2666666667" green="0.35686274509999999" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="8"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                </subviews>
                 <color key="backgroundColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                <constraints>
-                    <constraint firstItem="2Hg-5I-sVx" firstAttribute="top" secondItem="lq0-Ae-mRN" secondAttribute="topMargin" constant="5" id="0hJ-Dh-o3x"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="2Hg-5I-sVx" secondAttribute="bottom" constant="25" id="8G7-Zy-SzN"/>
-                    <constraint firstItem="2Hg-5I-sVx" firstAttribute="centerX" secondItem="lq0-Ae-mRN" secondAttribute="centerX" id="KGr-Fc-EQv"/>
-                    <constraint firstItem="2Hg-5I-sVx" firstAttribute="leading" secondItem="lq0-Ae-mRN" secondAttribute="leadingMargin" constant="68" id="VW0-yp-6Ap"/>
-                </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="cardView" destination="2Hg-5I-sVx" id="v6H-1Z-hbr"/>
-                <outlet property="cell" destination="lq0-Ae-mRN" id="0Sd-V8-9hF"/>
+                <outlet property="cell" destination="lq0-Ae-mRN" id="t0t-Ih-Zva"/>
             </connections>
             <point key="canvasLocation" x="94.5" y="181"/>
         </tableViewCell>
