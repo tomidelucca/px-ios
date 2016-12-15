@@ -43,7 +43,7 @@ open class IdentificationType : NSObject {
         let name : Any = self.name == nil ? JSONHandler.null : self.name!
         let type : Any = self.type == nil ? JSONHandler.null : self.type!
         let obj:[String:Any] = [
-            "_id": _id,
+            "id": _id,
             "name" : name,
             "type" : type,
             "min_length" : self.minLength,
