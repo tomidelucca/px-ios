@@ -18,7 +18,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de medio de pago simple".localized,
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
-        "Crear Pago".localized
+        "Crear Pago".localized,
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
@@ -94,9 +94,16 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         /*MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
         MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setCustomerURI(ExamplesUtils.MERCHANT_MOCK_GET_CUSTOMER_URI)
+         
 */
-        let pv = MPFlowBuilder.startPaymentVaultViewController(1000, callback: { (paymentMethod, token, issuer, payerCost) in
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        let pp = PaymentPreference()
+        pp.excludedPaymentTypeIds = ["ticket",  "atm"]
+        //pp.excludedPaymentMethodIds = ["master"]
+        pp.maxAcceptedInstallments = 3
 
+        let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
+            print(paymentMethod._id)
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -120,7 +127,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         
         let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : nil, callback: { (paymentMethod, token, issuer, payerCost) in
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -134,10 +141,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func startCardForm(){
-       weak var cf : UINavigationController!
+       var cf : UINavigationController!
         
         
-        var timeoutCallback : (Void) -> Void = {
+        let timeoutCallback : (Void) -> Void = {
             let alert = UIAlertView(title: "Ups!",
                                     message: "Se ha acabado el tiempo. Reinicie la compra",
                                     delegate: nil,
@@ -145,7 +152,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        weak var timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
+        let timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
         
         cf = MPStepBuilder.startCreditCardForm(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod
@@ -184,6 +191,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.installmentsSelected = payerCost
             self.navigationController!.popViewController(animated: true)
         }
+        
         self.navigationController?.pushViewController(installmentsVC, animated: true)
         
     }

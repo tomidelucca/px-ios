@@ -24,6 +24,11 @@ open class Card : NSObject, CardInformation {
     open var issuer : Issuer?
     open var securityCode : SecurityCode?
     
+    
+    public func getIssuer() -> Issuer? {
+        return self.issuer
+    }
+    
 
    open class func fromJSON(_ json : NSDictionary) -> Card {
         let card : Card = Card()
@@ -70,16 +75,16 @@ open class Card : NSObject, CardInformation {
     }
     
     open func toJSON() -> [String:Any]  {
-        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSON()
+        let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSONString()
         let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
         let dateLastUpdated : Any = self.dateLastUpdated == nil ? JSONHandler.null : String(describing: self.dateLastUpdated!)
         let firstSixDigits : Any = self.firstSixDigits == nil ? JSONHandler.null : self.firstSixDigits!
         let lastFourDigits : Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits!
-        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSON()
+        let paymentMethod : Any = self.paymentMethod == nil ? JSONHandler.null : self.paymentMethod!.toJSONString()
         let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
         let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode
-        
+
         let obj:[String:Any] = [
             "cardHolder" : cardHolder,
             "customer_id": customer_id,
@@ -109,7 +114,9 @@ open class Card : NSObject, CardInformation {
         }
     }
 
-    
+    public func getFirstSixDigits() -> String! {
+        return firstSixDigits
+    }
     open func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
@@ -135,12 +142,35 @@ open class Card : NSObject, CardInformation {
     }
 
     open func getCardLastForDigits() -> String? {
-        return self.lastFourDigits
+        return self.lastFourDigits!
     }
     
     open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
     }
+    
+    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+        self.paymentMethod = paymentMethod
+    }
+    
+    public func isIssuerRequired() -> Bool {
+        return self.issuer == nil
+    }
+    
+    /** PaymentOptionDrawable implementation */
+    
+    public func getTitle() -> String {
+        return getCardDescription()
+    }
+    
+    public func getSubtitle() -> String? {
+        return nil
+    }
+    
+    public func getImageDescription() -> String {
+        return self.getPaymentMethodId()
+    }
+
 }
 
 

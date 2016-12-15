@@ -17,7 +17,7 @@ open class PaymentMethod : NSObject  {
     open var paymentTypeId : String!
     open var settings : [Setting]!
     open var additionalInfoNeeded : [String]!
-    open var accreditationTime : Int?
+    open var accreditationTime : Int? // [ms]
     
     public override init(){
         super.init()
@@ -35,12 +35,11 @@ open class PaymentMethod : NSObject  {
     }
     
     open func isCard() -> Bool {
-        let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)!
-        return paymentTypeId.isCard()
+        let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId)
+        return paymentTypeId != nil && (paymentTypeId?.isCard())!
     }
-    
+
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
-        
         let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
         if setting != nil && setting!.securityCode.length != 0 {
             return true
@@ -135,6 +134,10 @@ open class PaymentMethod : NSObject  {
         return self._id == "amex"
     }
     
+    open func isAccountMoney() -> Bool{
+        return self._id == PaymentTypeId.ACCOUNT_MONEY.rawValue
+    }
+    
     open func secCodeMandatory() -> Bool {
         if (self.settings.count == 0){
             return false // Si no tiene settings el codigo no es mandatorio
@@ -171,7 +174,7 @@ open class PaymentMethod : NSObject  {
     }
     
     open func secCodeInBack() -> Bool {
-        if (self.settings.count == 0){
+        if (self.settings == nil || self.settings.count == 0){
             return true //si no tiene settings, por defecto el codigo de seguridad ira atras
         }
         let filterList = self.settings.filter({ return $0.securityCode.cardLocation == self.settings[0].securityCode.cardLocation })
@@ -183,10 +186,9 @@ open class PaymentMethod : NSObject  {
     }
     
     
-    open func isOfflinePaymentMethod() -> Bool {
-        return self.paymentTypeId != nil && PaymentTypeId(rawValue : self.paymentTypeId)!.isOfflinePayment()
+    open func isOnlinePaymentMethod() -> Bool {
+        return self.isCard() || self.isAccountMoney()
     }
-    
     
     open func isVISA() -> Bool {
         return ((self._id == "visa") && (self._id == "debvisa"))

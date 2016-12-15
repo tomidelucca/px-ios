@@ -12,6 +12,8 @@ open class PaymentMethodSearch: Equatable {
     var groups : [PaymentMethodSearchItem]!
     var paymentMethods : [PaymentMethod]!
     var customerPaymentMethods : [CardInformation]?
+    var cards : [Card]?
+    var defaultOption : PaymentMethodSearchItem?
     
     open class func fromJSON(_ json : NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
@@ -38,18 +40,41 @@ open class PaymentMethodSearch: Equatable {
             pmSearch.paymentMethods = paymentMethods
         }
         
+        let customerCards = NSMutableDictionary()
+        if let customerCardJson = json["cards"] as? NSArray {
+            for i in 0..<customerCardJson.count {
+                if let customerCardJsonDic = customerCardJson[i] as? NSDictionary {
+                    let customerCardObject = Card.fromJSON(customerCardJsonDic)
+                    customerCards.setValue(customerCardObject, forKey: String(describing: customerCardObject.idCard))
+                }
+                
+            }
+                pmSearch.cards = customerCards.allValues as! [Card]
+            
+        }
+        
         var customerPaymentMethods = [CustomerPaymentMethod]()
         if let customerPaymentMethodsJson = json["custom_options"] as? NSArray {
             for i in 0..<customerPaymentMethodsJson.count {
                 if let customerPaymentMethodDic = customerPaymentMethodsJson[i] as? NSDictionary {
                     let currentCustomerPaymentMethod = CustomerPaymentMethod.fromJSON(customerPaymentMethodDic)
                     customerPaymentMethods.append(currentCustomerPaymentMethod)
+                    if let card = customerCards.value(forKey: currentCustomerPaymentMethod.getCardId()) as? Card{
+                        currentCustomerPaymentMethod.card = card
+                    }
+
+
                 }
                 
             }
             pmSearch.customerPaymentMethods = customerPaymentMethods
         }
 
+        if let defaultPaymentMethodIdJson = json["default_option"] as? NSDictionary {
+            let defaultPaymentMethodOption = PaymentMethodSearchItem.fromJSON(defaultPaymentMethodIdJson)
+            pmSearch.defaultOption = defaultPaymentMethodOption
+        }
+        
         return pmSearch
     }
     

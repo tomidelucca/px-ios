@@ -27,8 +27,6 @@
 - (IBAction)checkoutFlow:(id)sender {
     
     UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
-                NSString *mppayment = [payment toJSONString];
-                printf("%s", mppayment);
     } callbackCancel:nil];
     [self presentViewController:choFlow animated:YES completion:^{}];
 }

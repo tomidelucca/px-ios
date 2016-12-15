@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Token : NSObject {
+open class Token : NSObject, CardInformationForm {
 	open var _id : String!
 	open var publicKey : String!
 	open var cardId : String!
@@ -150,6 +150,16 @@ open class Token : NSObject {
         }
         return ""
     }
+    public func getCardBin() -> String? {
+        return firstSixDigit
+    }
+    public func getCardLastForDigits() -> String? {
+        return lastFourDigits
+    }
+    
+    public func isIssuerRequired() -> Bool {
+        return true
+    }
 }
 
 
@@ -159,6 +169,8 @@ extension NSDictionary {
 		return (dictValue == nil || dictValue is NSNull) ? false : true
 	}
 }
+
+
 
 
 

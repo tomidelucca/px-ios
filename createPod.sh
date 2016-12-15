@@ -3,18 +3,20 @@
 
 if [ $# -eq 0 ]
   then
-    echo "Need tag version! Ex: 2.0.7"
+    echo "Need tag version! Ex: 2.2.1."
+    echo "TIP : Specify branch with second argument (by default the branch is master)"
     exit 0
 fi
 
 VERSION=$1
 PROJECT="MercadoPagoSDK"
 PODSPEC_FILE="$PROJECT.podspec"
+## Default branch is master
 GIT_BRANCH="master"
 
 if [ "$#" -eq 2 ]
   then
-  	PROJECT=$2
+  	GIT_BRANCH=$2
 
 fi
 
@@ -53,13 +55,14 @@ fi
 
 
 echo "=========================================="
-echo "3) Create tag for version $VERSION from master branch"
+echo "3) Create tag for version $VERSION from $GIT_BRANCH branch"
 echo "=========================================="
 
-git checkout master
+git checkout $GIT_BRANCH
 git tag $VERSION
 git push origin $VERSION
 PUSH_STATUS=$?
+
 if [ $PUSH_STATUS -ne 0 ]
 	then
 		echo "Error ocurred pushing tag."

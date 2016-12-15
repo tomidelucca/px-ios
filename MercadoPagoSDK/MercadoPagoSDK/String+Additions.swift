@@ -10,6 +10,8 @@ import Foundation
 
 extension String {
 	
+    static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
+    
 	var localized: String {
 		var bundle : Bundle? = MercadoPago.getBundle()
 		if bundle == nil {
@@ -40,6 +42,9 @@ extension String {
     }
     
     public func startsWith(_ prefix : String) -> Bool {
+        if prefix == self {
+            return true
+        }
         let startIndex = self.range(of: prefix)
         if startIndex == nil  || self.startIndex != startIndex?.lowerBound {
             return false
@@ -56,6 +61,12 @@ extension String {
         return ""
     }
     
+    
+    public func lastCharacters(number: Int) -> String {
+        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number,0))
+        return trimmedString
+    }
+    
     public func indexAt(_ theInt:Int)->String.Index {
         
         return self.characters.index(self.characters.startIndex, offsetBy: theInt)
@@ -68,3 +79,4 @@ extension String {
         return stringTrimmed
     }
 }
+

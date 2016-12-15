@@ -8,23 +8,23 @@
 
 import Foundation
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
 }
 
 
@@ -38,12 +38,12 @@ open class Installment : NSObject {
         let installment : Installment = Installment()
         
         if let paymentMethodId = JSONHandler.attemptParseToString(json["payment_method_id"]){
-               installment.paymentMethodId = paymentMethodId
+            installment.paymentMethodId = paymentMethodId
         }
         if let paymentTypeId = JSONHandler.attemptParseToString(json["payment_type_id"]){
             installment.paymentTypeId = paymentTypeId
         }
-
+        
         if let issuerDic = json["issuer"] as? NSDictionary {
             installment.issuer = Issuer.fromJSON(issuerDic)
         }
@@ -68,7 +68,7 @@ open class Installment : NSObject {
             "issuer": issuer,
             "paymentMethodId" : self.paymentMethodId,
             "paymentTypeId" : self.paymentTypeId
-            ]
+        ]
         
         var payerCostsJson = ""
         for pc in payerCosts! {
@@ -81,11 +81,11 @@ open class Installment : NSObject {
     
     open func numberOfPayerCostToShow(_ maxNumberOfInstallments : Int? = 0) -> Int{
         var count = 0
-        if (maxNumberOfInstallments == 0 || maxNumberOfInstallments == nil){
+        if maxNumberOfInstallments == 0 || maxNumberOfInstallments == nil{
             return self.payerCosts!.count
         }
         for pc in payerCosts! {
-            if (pc.installments > maxNumberOfInstallments){
+            if pc.installments > maxNumberOfInstallments{
                 return count
             }
             count += 1
@@ -96,23 +96,23 @@ open class Installment : NSObject {
     
     open func containsInstallment(_ installment : Int) -> PayerCost? {
         
-         for pc in payerCosts! {
+        for pc in payerCosts! {
             if (pc.installments == installment){
                 return pc
             }
         }
         return nil
     }
-
+    
 }
 
 public func ==(obj1: Installment, obj2: Installment) -> Bool {
     
     let areEqual =
-    obj1.issuer == obj2.issuer &&
-    obj1.payerCosts == obj2.payerCosts &&
-    obj1.paymentMethodId == obj2.paymentMethodId &&
-    obj1.paymentTypeId == obj2.paymentTypeId
+        obj1.issuer == obj2.issuer &&
+            obj1.payerCosts == obj2.payerCosts &&
+            obj1.paymentMethodId == obj2.paymentMethodId &&
+            obj1.paymentTypeId == obj2.paymentTypeId
     
     return areEqual
 }

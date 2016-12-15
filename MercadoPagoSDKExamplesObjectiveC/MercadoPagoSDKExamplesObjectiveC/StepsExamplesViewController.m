@@ -69,7 +69,6 @@ int installmentsSelected = 1;
         selectedIssuer = issuer;
         paymentMethod = pm;
     } callbackCancel:nil];
-    
    
     [self presentViewController:paymentVaultVC animated:YES completion:^{}];
 
@@ -78,8 +77,8 @@ int installmentsSelected = 1;
 
 
 - (void)startCardFlow {
-    /*
-    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
+    
+    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil timer:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
@@ -89,13 +88,12 @@ int installmentsSelected = 1;
     }];
     
     [self presentViewController:cf animated:YES completion:^{}];
-*/
+
 }
 
 -(void)startCardForm {
-    
-    /*
-    UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
+
+    UINavigationController *cf = [MPStepBuilder startCreditCardForm:nil amount:1000 cardInformation:nil paymentMethods:nil token:nil timer:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer) {
         currentToken = token;
         selectedIssuer = issuer;
         paymentMethod = pm;
@@ -106,12 +104,12 @@ int installmentsSelected = 1;
    
     
     [self presentViewController:cf animated:YES completion:^{}];
-    */
+    
 }
 
 - (void)startPaymentMethods {
     
-    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStep:nil callback:^(PaymentMethod *pm) {
+    UIViewController *paymentsStep = [MPStepBuilder startPaymentMethodsStepWithPreference:nil callback:^(PaymentMethod * pm) {
         paymentMethod = pm;
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -142,7 +140,7 @@ int installmentsSelected = 1;
     [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
     
-    Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE];
+    Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE description:nil];
 
     MerchantPayment *merchantPayment = [[MerchantPayment alloc] initWithItems:[NSArray arrayWithObject:item] installments:installmentsSelected cardIssuer:selectedIssuer tokenId:[currentToken _id] paymentMethod:paymentMethod campaignId:0];
     
