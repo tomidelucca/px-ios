@@ -35,7 +35,7 @@ class PaymentSearchCell: UITableViewCell {
     }
     
     func fillRowWithPayment(_ paymentSearchItem : PaymentMethodSearchItem, iconImage: UIImage, tintColor : Bool){
-        self.paymentTitle.text = paymentSearchItem.description
+        self.paymentTitle.text = paymentSearchItem._description
         if tintColor {
             let tintedImage = iconImage.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
             self.paymentIcon.image = tintedImage

@@ -1,35 +1,42 @@
  //
- //  PaymentVaultViewController.swift
- //  MercadoPagoSDK
- //
- //  Created by Maria cristina rodriguez on 15/1/16.
- //  Copyright © 2016 MercadoPago. All rights reserved.
- //
- 
- import UIKit
- fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-    switch (lhs, rhs) {
-    case let (l?, r?):
-        return l < r
-    case (nil, _?):
-        return true
-    default:
-        return false
-    }
- }
- 
- fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-    switch (lhs, rhs) {
-    case let (l?, r?):
-        return l > r
-    default:
-        return rhs < lhs
-    }
- }
- 
- 
- 
- open class PaymentVaultViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
+//  PaymentVaultViewController.swift
+//  MercadoPagoSDK
+//
+//  Created by Maria cristina rodriguez on 15/1/16.
+//  Copyright © 2016 MercadoPago. All rights reserved.
+//
+
+import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    @IBOutlet weak var collectionSearch: UICollectionView!
+
+    static public var maxCustomerPaymentMethdos = 3
+    
+    
+    override open var screenName : String { get { return "PAYMENT_METHOD_SEARCH" } }
+    
     
     static let VIEW_CONTROLLER_NIB_NAME : String = "PaymentVaultViewController"
     
@@ -39,17 +46,22 @@
     var currency : Currency!
     
     
+    
+    
     var defaultInstallments : Int?
     var installments : Int?
     var viewModel : PaymentVaultViewModel!
     
     var bundle = MercadoPago.getBundle()
     
+    var titleSectionReference : PaymentVaultTitleCollectionViewCell!
+    
     fileprivate var tintColor = true
+    fileprivate var loadingGroups = true
     
-    @IBOutlet weak var paymentsTable: UITableView!
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
-    
+    fileprivate var defaultOptionSelected = false;
     
     public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
@@ -60,7 +72,7 @@
         
     }
     
-    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch,
+    public init(amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, tintColor : Bool = false,
                 callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void,
                 callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
@@ -74,12 +86,9 @@
     internal init(amount: Double, paymentPreference : PaymentPreference?, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod], title: String? = "", tintColor : Bool = false, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
+        
         self.initCommon()
         self.initViewModel(amount, paymentPreference: paymentPreference, paymentMethodSearchItem: paymentMethodSearchItem, paymentMethods: paymentMethods, callback : callback)
-        
-        //Installment > 0
-        
-        //Vaidar que no excluyo todos los payment method
         
         self.title = title
         self.tintColor = tintColor
@@ -97,12 +106,12 @@
         self.currency = MercadoPagoContext.getCurrency()
     }
     
+
+    
     fileprivate func initViewModel(_ amount : Double, paymentPreference : PaymentPreference?, customerPaymentMethods: [CardInformation]? = nil, paymentMethodSearchItem : [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void){
         self.viewModel = PaymentVaultViewModel(amount: amount, paymentPrefence: paymentPreference)
-        
-        self.viewModel.currentPaymentMethodSearch = paymentMethodSearchItem
-        self.viewModel.paymentMethods = paymentMethods
-        self.viewModel.customerCards = customerPaymentMethods
+        self.viewModel.controller = self
+        self.viewModel.setPaymentMethodSearch(paymentMethods: paymentMethods, paymentMethodSearchItems: paymentMethodSearchItem, customerPaymentMethods : customerPaymentMethods)
         self.viewModel.callback = callback
     }
     
@@ -113,12 +122,17 @@
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        var upperFrame = self.collectionSearch.bounds
+        upperFrame.origin.y = -upperFrame.size.height + 10;
+        upperFrame.size.width = UIScreen.main.bounds.width
+        let upperView = UIView(frame: upperFrame)
+        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quieres pagar?".localized
+            self.title = "¿Cómo quiéres pagar?".localized
         }
         
-        self.paymentsTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.paymentsTable.bounds.size.width, height: 0.01))
         self.registerAllCells()
         
         if callbackCancel == nil {
@@ -134,139 +148,84 @@
         } else {
             self.callbackCancel = callbackCancel
         }
-        
-        
-        
-        
+
+       self.collectionSearch.backgroundColor = UIColor.white()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.hideNavBar()
+        
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+        self.navigationController!.navigationBar.shadowImage = nil
+        self.extendedLayoutIncludesOpaqueBars = true
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.getCustomerCards()
-    }
-    
-    open func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return self.viewModel.getCustomerPaymentMethodsToDisplayCount()
-        default:
-            return self.viewModel.currentPaymentMethodSearch.count
-        }
-    }
-    
-    
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0 ? 16 : 0
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch (indexPath as NSIndexPath).section {
-        case 0:
-            return self.viewModel.getCustomerCardRowHeight()
-        case 1:
-            return self.viewModel.getPaymentMethodRowHeight((indexPath as NSIndexPath).row)
-        default:
-            return 100
+        self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
+        if self.loadingGroups {
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            temporalView.backgroundColor?.withAlphaComponent(0)
+            temporalView.isUserInteractionEnabled = false
+            self.view.addSubview(temporalView)
+            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: MercadoPagoContext.getPrimaryColor())
+            self.view.bringSubview(toFront: self.loadingInstance!)
         }
         
     }
-    
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath as NSIndexPath).section == 0 && self.viewModel.getCustomerPaymentMethodsToDisplayCount() > 0 {
-            let customerPaymentMethodCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "customerPaymentMethodCell") as! CustomerPaymentMethodCell
-            customerPaymentMethodCell.fillRowWithCustomerPayment(self.viewModel.customerCards![(indexPath as NSIndexPath).row])
-            return customerPaymentMethodCell
-        }
-        
-        
-        let currentPaymentMethod = self.viewModel.currentPaymentMethodSearch[(indexPath as NSIndexPath).row]
-        
-        let paymentMethodCell = getCellFor(currentPaymentMethod)
-        // Add shadow effect to last cell in table
-        if ((indexPath as NSIndexPath).row == self.viewModel.currentPaymentMethodSearch.count - 1) {
-            paymentMethodCell.clipsToBounds = false
-            paymentMethodCell.layer.masksToBounds = false
-            paymentMethodCell.layer.shadowOffset = CGSize(width: 0, height: 1)
-            paymentMethodCell.layer.shadowColor = UIColor(red: 153, green: 153, blue: 153).cgColor
-            paymentMethodCell.layer.shadowRadius = 1
-            paymentMethodCell.layer.shadowOpacity = 0.6
-        }
-        return paymentMethodCell
-    }
-    
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        switch (indexPath as NSIndexPath).section {
-        case 0:
-            if self.viewModel!.getCustomerPaymentMethodsToDisplayCount() > 0 {
-                let customerCardSelected = self.viewModel.customerCards![(indexPath as NSIndexPath).row] as CardInformation
-                let paymentMethodSelected = Utils.findPaymentMethod(self.viewModel.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
-                customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-                let cardFlow = MPFlowBuilder.startCardFlow(amount: self.viewModel.amount, cardInformation : customerCardSelected, callback: { (paymentMethod, token, issuer, payerCost) in
-                    self.viewModel!.callback!(paymentMethod, token, issuer, payerCost)
-                }, callbackCancel: {
-                    self.navigationController!.popToViewController(self, animated: true)
-                })
-                self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
-            }
-        default:
-            let paymentSearchItemSelected = self.viewModel.currentPaymentMethodSearch[(indexPath as NSIndexPath).row]
-            self.paymentsTable.deselectRow(at: indexPath, animated: true)
-            if (paymentSearchItemSelected.children.count > 0) {
-                let paymentVault = PaymentVaultViewController(amount: self.viewModel.amount, paymentPreference: self.viewModel.paymentPreference, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.viewModel.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
-                    self.viewModel.callback!(paymentMethod, token, issuer, payerCost)
-                })
-                paymentVault.viewModel!.isRoot = false
-                self.navigationController!.pushViewController(paymentVault, animated: true)
-            } else {
-                self.viewModel.optionSelected(paymentSearchItemSelected, navigationController: self.navigationController!, cancelPaymentCallback: cardFormCallbackCancel())
-            }
-            
-        }
-    }
-    
+
+
+
     fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
         return { Void -> (Void) in
-            if self.viewModel.currentPaymentMethodSearch.count > 1 {
+            if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
-                self.navigationController!.popToViewController(self, animated: true)
+                self.loadingGroups = false
+              //  self.navigationController!.popToViewController(self, animated: true)
                 self.callbackCancel!()
             }
         }
     }
     
     fileprivate func getCustomerCards(){
+       
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
                 self.viewModel.customerCards = customer.cards
                 self.loadPaymentMethodSearch()
                 
             }, failure: { (error: NSError?) -> Void in
-                print(error)
+                // It a Grupos igual
+                self.loadPaymentMethodSearch()
             })
         } else {
             self.loadPaymentMethodSearch()
         }
     }
     
+    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+        return { Void -> (Void) in
+            if self.titleSectionReference != nil {
+                self.titleSectionReference.fillCell()
+            }
+        }
+    }
+
+    
     fileprivate func loadPaymentMethodSearch(){
         
         if self.viewModel.currentPaymentMethodSearch == nil {
-            self.showLoading()
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+                if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0{
+                    let error = MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
+                    self.displayFailure(error)
+                }
+                self.viewModel.setPaymentMethodSearchResponse(paymentMethodSearchResponse)
                 
-                self.viewModel.setPaymentMethodSearch(paymentMethodSearchResponse)
-                self.hideLoading()
                 self.loadPaymentMethodSearch()
                 
             }, failure: { (error) -> Void in
@@ -279,76 +238,43 @@
             })
             
         } else {
-            
+            self.hideLoading()
             if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.currentPaymentMethodSearch[0].children.count > 0 {
                 self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
             }
             
-            if self.viewModel.currentPaymentMethodSearch.count == 1 {
+            if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
                 self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
+            } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
+                let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
+                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
             } else {
-                self.paymentsTable.delegate = self
-                self.paymentsTable.dataSource = self
-                self.paymentsTable.reloadData()
+                self.collectionSearch.delegate = self
+                self.collectionSearch.dataSource = self
+                
+                self.collectionSearch.reloadData()
+                self.loadingGroups = false
             }
         }
     }
     
-    
-    fileprivate func getCellFor(_ currentPaymentMethodItem : PaymentMethodSearchItem) -> UITableViewCell {
-        if currentPaymentMethodItem.showIcon {
-            let iconImage = MercadoPago.getImage(currentPaymentMethodItem.idPaymentMethodSearchItem)
-            let tintColor = self.tintColor && (!currentPaymentMethodItem.isPaymentMethod() || currentPaymentMethodItem.isBitcoin())
-            
-            if iconImage != nil {
-                if currentPaymentMethodItem.isPaymentMethod() && !currentPaymentMethodItem.isBitcoin() {
-                    if currentPaymentMethodItem.comment != nil && currentPaymentMethodItem.comment!.characters.count > 0 {
-                        let offlinePaymentCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "offlinePaymentMethodCell") as! OfflinePaymentMethodCell
-                        let description = currentPaymentMethodItem.description ?? ""
-                        offlinePaymentCell.fillRowWithPaymentMethod(currentPaymentMethodItem, image: iconImage!, paymentItemDescription: description)
-                        return offlinePaymentCell
-                    } else {
-                        let offlinePaymentCellWithDescription = self.paymentsTable.dequeueReusableCell(withIdentifier: "offlinePaymentWithDescription") as! OfflinePaymentMethodWithDescriptionCell
-                        return offlinePaymentCellWithDescription.fillRowWith(currentPaymentMethodItem)
-                    }
-                }
-                let paymentSearchCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "paymentSearchCell") as! PaymentSearchCell
-                paymentSearchCell.fillRowWithPayment(currentPaymentMethodItem, iconImage : iconImage!, tintColor: tintColor)
-                return paymentSearchCell
-            }
-        }
-        
-        if currentPaymentMethodItem.comment != nil && currentPaymentMethodItem.comment?.characters.count > 0 {
-            let paymentSearchTitleAndCommentCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "paymentTitleAndCommentCell") as! PaymentTitleAndCommentViewCell
-            paymentSearchTitleAndCommentCell.fillRowWith(currentPaymentMethodItem.description, paymentComment: currentPaymentMethodItem.comment!)
-            return paymentSearchTitleAndCommentCell
-        }
-        
-        let paymentSearchCell = self.paymentsTable.dequeueReusableCell(withIdentifier: "paymentSearchTitleCell") as! PaymentTitleViewCell
-        paymentSearchCell.paymentTitle.text = currentPaymentMethodItem.description
-        return paymentSearchCell
-        
-    }
-    
+
+
     fileprivate func registerAllCells(){
-        let paymentMethodSearchNib = UINib(nibName: "PaymentSearchCell", bundle: self.bundle)
-        let paymentSearchTitleCell = UINib(nibName: "PaymentTitleViewCell", bundle: self.bundle)
-        let offlinePaymentMethodCell = UINib(nibName: "OfflinePaymentMethodCell", bundle: self.bundle)
-        let preferenceDescriptionCell = UINib(nibName: "PreferenceDescriptionTableViewCell", bundle: self.bundle)
-        let paymentTitleAndCommentCell = UINib(nibName: "PaymentTitleAndCommentViewCell", bundle: self.bundle)
-        let offlinePaymentWithDescription = UINib(nibName: "OfflinePaymentMethodWithDescriptionCell", bundle: self.bundle)
-        let exitButtonCell = UINib(nibName: "ExitButtonTableViewCell", bundle: self.bundle)
-        let customerPaymentMethodCell = UINib(nibName: "CustomerPaymentMethodCell", bundle: self.bundle)
+   
+        let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
+        self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
         
-        self.paymentsTable.register(paymentTitleAndCommentCell, forCellReuseIdentifier: "paymentTitleAndCommentCell")
-        self.paymentsTable.register(paymentMethodSearchNib, forCellReuseIdentifier: "paymentSearchCell")
-        self.paymentsTable.register(paymentSearchTitleCell, forCellReuseIdentifier: "paymentSearchTitleCell")
-        self.paymentsTable.register(offlinePaymentMethodCell, forCellReuseIdentifier: "offlinePaymentMethodCell")
-        self.paymentsTable.register(preferenceDescriptionCell, forCellReuseIdentifier: "preferenceDescriptionCell")
-        self.paymentsTable.register(offlinePaymentWithDescription, forCellReuseIdentifier: "offlinePaymentWithDescription")
-        self.paymentsTable.register(customerPaymentMethodCell, forCellReuseIdentifier: "customerPaymentMethodCell")
-        self.paymentsTable.register(exitButtonCell, forCellReuseIdentifier: "exitButtonCell")
+        let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
+        self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
         
+    }
+    
+    override func getNavigationBarTitle() -> String {
+        if self.titleSectionReference != nil {
+            self.titleSectionReference.title.text = ""
+        }
+        return "¿Cómo quiéres pagar?".localized
     }
     
     open override func didReceiveMemoryWarning() {
@@ -366,18 +292,181 @@
         }
         return false
     }
+   
+
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if self.loadingGroups {
+            return 0
+        }
+        return 2
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.section == 1 {
+         
+            if self.viewModel.isCustomerPaymentMethodOptionSelected(indexPath.row) {
+                let customerCardSelected = self.viewModel.customerCards![indexPath.row] as CardInformation
+                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
+            } else {
+                let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodSearchItem
+                collectionView.deselectItem(at: indexPath, animated: true)
+                if (paymentSearchItemSelected.children.count > 0) {
+                    let paymentVault = PaymentVaultViewController(amount: self.viewModel.amount, paymentPreference: self.viewModel.paymentPreference, paymentMethodSearchItem: paymentSearchItemSelected.children, paymentMethods : self.viewModel.paymentMethods, title:paymentSearchItemSelected.childrenHeader, callback: { (paymentMethod: PaymentMethod, token: Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+                        self.viewModel.callback!(paymentMethod, token, issuer, payerCost)
+                    })
+                    paymentVault.viewModel!.isRoot = false
+                    self.navigationController!.pushViewController(paymentVault, animated: true)
+                } else {
+                    self.showLoading()
+                    self.viewModel.optionSelected(paymentSearchItemSelected, navigationController: self.navigationController!, cancelPaymentCallback: cardFormCallbackCancel())
+                }
+            }
+        }
+    
+    }
+    
+
+    public func collectionView(_ collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
+        
+        if (loadingGroups) {
+            return 0
+        }
+        
+        if (section == 0){
+            return 1
+        }
+        
+        return self.viewModel.getDisplayedPaymentMethodsCount()
+        
+    }
+    
+
+    public func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
+                 
+                                                      for: indexPath) as! PaymentSearchCollectionViewCell
+
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
+                                                          
+                                                          for: indexPath) as! PaymentVaultTitleCollectionViewCell
+            self.titleSectionReference = cell
+            titleCell = cell
+            return cell
+        } else {
+            let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row)
+            cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+        }
+        return cell
+
+    }
+    
+    fileprivate let itemsPerRow: CGFloat = 2
+    
+    var sectionHeight : CGSize?
+    
+    override func scrollPositionToShowNavBar () -> CGFloat {
+        return titleCellHeight - navBarHeigth - statusBarHeigth
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let paddingSpace = CGFloat(32.0)
+        let availableWidth = view.frame.width - paddingSpace
+        
+        titleCellHeight = 82
+        if indexPath.section == 0 {
+            return CGSize(width : view.frame.width, height : titleCellHeight)
+        }
+        
+       
+        
+        let widthPerItem = availableWidth / itemsPerRow
+        return CGSize(width: widthPerItem, height: maxHegithRow(indexPath:indexPath)  )
+    }
+    
+    private func maxHegithRow(indexPath: IndexPath) -> CGFloat{
+        return self.calculateHeight(indexPath: indexPath, numberOfCells: self.viewModel.getDisplayedPaymentMethodsCount())
+    }
+    
+    private func calculateHeight(indexPath : IndexPath, numberOfCells : Int) -> CGFloat {
+        if numberOfCells == 0 {
+            return 0
+        }
+        
+        let section : Int
+        let row = indexPath.row
+        if row % 2 == 1{
+            section = (row - 1) / 2
+        }else{
+            section = row / 2
+        }
+        let index1 = (section  * 2)
+        let index2 = (section  * 2) + 1
+        
+        if index1 + 1 > numberOfCells {
+            return 0
+        }
+        
+        let height1 = heightOfItem(indexItem: index1)
+        
+        if index2 + 1 > numberOfCells {
+            return height1
+        }
+        
+        let height2 = heightOfItem(indexItem: index2)
+        
+        
+        return height1 > height2 ? height1 : height2
+
+    }
+    
+    func heightOfItem(indexItem : Int) -> CGFloat {
+        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : self.viewModel.getPaymentMethodOption(row: indexItem))
+    }
+    
+
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(8, 8, 8, 8)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView){
+        self.didScrollInTable(scrollView)
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
+    }
     
  }
- 
- 
- class PaymentVaultViewModel : NSObject {
-    
+
+
+
+class PaymentVaultViewModel : NSObject {
+
     var amount : Double
     var paymentPreference : PaymentPreference?
     
     var customerCards : [CardInformation]?
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
+    var defaultPaymentOption : PaymentMethodSearchItem?
+    var cards : [Card]?
+    weak var controller : PaymentVaultViewController?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
@@ -389,15 +478,28 @@
     }
     
     func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot
+        return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot && (self.customerCards == nil || self.customerCards?.count == 0)
     }
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if (self.customerCards != nil && self.customerCards?.count > 0) {
-            return (self.customerCards!.count <= 3 ? self.customerCards!.count : 3)
+            return (self.customerCards!.count <= PaymentVaultViewController.maxCustomerPaymentMethdos ? self.customerCards!.count : PaymentVaultViewController.maxCustomerPaymentMethdos)
         }
         return 0
         
+    }
+    
+    func getPaymentMethodOption(row : Int) -> PaymentOptionDrawable {
+        
+        if (self.getCustomerPaymentMethodsToDisplayCount() > row) {
+            return self.customerCards![row]
+        }
+        let indexInPaymentMethods = Array.isNullOrEmpty(self.customerCards) ? row : (row - self.getCustomerPaymentMethodsToDisplayCount())
+        return self.currentPaymentMethodSearch[indexInPaymentMethods]
+    }
+ 
+    func getDisplayedPaymentMethodsCount() -> Int {
+        return self.getCustomerPaymentMethodsToDisplayCount() + self.currentPaymentMethodSearch.count
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
@@ -428,16 +530,52 @@
         return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
     }
     
-    func setPaymentMethodSearch(_ paymentMethodSearchResponse : PaymentMethodSearch){
-        self.paymentMethods = paymentMethodSearchResponse.paymentMethods
-        self.currentPaymentMethodSearch = paymentMethodSearchResponse.groups
-        
-        if paymentMethodSearchResponse.customerPaymentMethods != nil && paymentMethodSearchResponse.customerPaymentMethods!.count > 0 {
-            self.customerCards = paymentMethodSearchResponse.customerPaymentMethods! as [CardInformation]
+    func getPaymentPreferenceDefaultPaymentMethodId() -> String?{
+        return (self.paymentPreference != nil) ? self.paymentPreference!.defaultPaymentMethodId : nil
+    }
+    
+    func setPaymentMethodSearchResponse(_ paymentMethodSearchResponse : PaymentMethodSearch){
+        self.setPaymentMethodSearch(paymentMethods: paymentMethodSearchResponse.paymentMethods, paymentMethodSearchItems: paymentMethodSearchResponse.groups, customerPaymentMethods : paymentMethodSearchResponse.customerPaymentMethods, defaultPaymentOption: paymentMethodSearchResponse.defaultOption)
+    }
+    
+
+    func isCustomerPaymentMethodOptionSelected(_ row : Int) -> Bool {
+        if (Array.isNullOrEmpty(self.customerCards)) {
+            return false;
         }
+        return (row < self.getCustomerPaymentMethodsToDisplayCount())
+    }
+    
+    func setPaymentMethodSearch(paymentMethods : [PaymentMethod]? = nil, paymentMethodSearchItems : [PaymentMethodSearchItem]? = nil, customerPaymentMethods : [CardInformation]? = nil, defaultPaymentOption : PaymentMethodSearchItem? = nil) {
+
+        self.paymentMethods = paymentMethods
+        self.currentPaymentMethodSearch = paymentMethodSearchItems
+        
+        if let defaultPaymentOption = defaultPaymentOption {
+            self.defaultPaymentOption = defaultPaymentOption
+        }
+        
+        var currentCustomerCards = customerPaymentMethods
+        if customerPaymentMethods != nil && customerPaymentMethods!.count > 0 {
+            let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
+            if !accountMoneyAvailable {
+                currentCustomerCards = customerPaymentMethods!.filter({ (element : CardInformation) -> Bool in
+                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
+                })
+            }
+            self.customerCards = currentCustomerCards
+        }
+        
         
     }
     
+    func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
+        return (self.currentPaymentMethodSearch != nil && self.currentPaymentMethodSearch.count == 1 && Array.isNullOrEmpty(self.customerCards))
+    }
+    
+    func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
+        return Array.isNullOrEmpty(self.currentPaymentMethodSearch) && !Array.isNullOrEmpty(self.customerCards) && self.customerCards?.count == 1
+    }
     
     internal func optionSelected(_ paymentSearchItemSelected : PaymentMethodSearchItem, navigationController : UINavigationController, cancelPaymentCallback : @escaping ((Void) -> (Void)),animated: Bool = true) {
         
@@ -446,13 +584,14 @@
             let paymentTypeId = PaymentTypeId(rawValue: paymentSearchItemSelected.idPaymentMethodSearchItem)
             
             if paymentTypeId!.isCard() {
+                self.paymentPreference?.defaultPaymentTypeId = paymentTypeId.map { $0.rawValue }
                 let cardFlow = MPFlowBuilder.startCardFlow(self.paymentPreference, amount: self.amount, paymentMethods : self.paymentMethods, callback: { (paymentMethod, token, issuer, payerCost) in
                     self.callback!(paymentMethod, token, issuer, payerCost)
                 }, callbackCancel: {
                     cancelPaymentCallback()
                 })
                 
-                navigationController.pushViewController(cardFlow.viewControllers[0], animated: animated)
+                navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
             } else {
                 navigationController.pushViewController(MPStepBuilder.startPaymentMethodsStep(callback: {    (paymentMethod : PaymentMethod) -> Void in
                     self.callback!(paymentMethod, nil, nil, nil)
@@ -476,4 +615,43 @@
         }
     }
     
- }
+    internal func customerOptionSelected(customerCardSelected : CardInformation, navigationController : UINavigationController, visibleViewController : UIViewController){
+        let paymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
+        if paymentMethodSelected.isAccountMoney() {
+            self.callback!(paymentMethodSelected, nil, nil, nil)
+        } else {
+            customerCardSelected.setupPaymentMethod(paymentMethodSelected)
+            customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
+            if let controller = controller {
+                controller.showLoading()
+            }
+            MPServicesBuilder.getInstallments(customerCardSelected.getFirstSixDigits(), amount: amount, issuer: customerCardSelected.getIssuer(), paymentMethodId: customerCardSelected.getPaymentMethodId(), success: { (installments) in
+                self.controller?.hideLoading()
+                let payerCostSelected = self.paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
+                if(payerCostSelected == nil){
+                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+                        self.callback!(paymentMethod, token, issuer, payerCost)
+                        }, callbackCancel: {
+                            navigationController.popToViewController(visibleViewController, animated: true)
+                    })
+                    navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
+                }else{
+                    let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: customerCardSelected.getPaymentMethod(), cardInfo: customerCardSelected) { (token) in
+                        if String.isNullOrEmpty(token!.lastFourDigits) {
+                            token!.lastFourDigits = customerCardSelected.getCardLastForDigits()
+                        }
+                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as? PayerCost)
+                    }
+                    navigationController.pushViewController(secCode, animated: false)
+                }
+                
+                }, failure: { (error) in
+                    self.controller?.hideLoading()
+            })
+
+        }
+
+    }
+    
+}
+

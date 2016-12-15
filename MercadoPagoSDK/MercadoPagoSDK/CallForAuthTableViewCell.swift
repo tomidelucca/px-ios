@@ -11,9 +11,13 @@ import UIKit
 class CallForAuthTableViewCell: CallbackCancelTableViewCell {
 
     @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var subtitle: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.titleLabel?.numberOfLines = 0
+        self.button.titleLabel?.textAlignment = NSTextAlignment.center
         // Initialization code
     }
     func fillCell(paymentMehtod: PaymentMethod){
@@ -21,5 +25,7 @@ class CallForAuthTableViewCell: CallbackCancelTableViewCell {
             let message = ("Ya hable con %0 y me autorizó".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
             self.button.setTitle(message, for: UIControlState.normal)
         }
+        title.text = "¿Qué puedo hacer?".localized
+        subtitle.text = "El teléfono está al dorso de tu tarjeta.".localized
     }
 }

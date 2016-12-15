@@ -8,22 +8,31 @@
 
 import UIKit
 
-open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,UITableViewDataSource {
+open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
     var bundle : Bundle? = MercadoPago.getBundle()
     let viewModel : CardAdditionalStepViewModel!
-    var navBarHeight: CGFloat = 0
-    var startScrollPosition: CGFloat = 0
+    
+    
+     override open var screenName : String { get{
+        if viewModel.hasIssuer() {
+            return "PAYER_COST"
+        } else if viewModel.hasPaymentMethod(){
+            return "ISSUER"
+        } else {
+            return "CARD_TYPE"
+        }
+        } }
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
-       
-        var upperFrame = self.tableView.bounds
+        
+        var upperFrame = UIScreen.main.bounds
         upperFrame.origin.y = -upperFrame.size.height;
         let upperView = UIView(frame: upperFrame)
         upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
@@ -51,36 +60,28 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let indexPath = IndexPath(row: 0, section: 0)
-        //self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        
         self.hideNavBar()
-        
-        if !self.viewModel.hasIssuer() {
-            self.showLoading()
-            self.getIssuers()
-        } else if self.viewModel.hasPaymentMethod(){
-            if self.viewModel.installment == nil {
-                self.showLoading()
-                self.getInstallments()
-            } else {
-                self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
-            }
-        }
-        
-        DispatchQueue.main.async() {
-            
-            self.tableView.setContentOffset(CGPoint(x:0, y: -64.0), animated: false)
-            
-        }
-        navBarHeight = (self.navigationController?.navigationBar.frame.height)!
+
     }
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = ""
+        self.showLoading()
         
-        startScrollPosition = tableView.contentOffset.y
+        if !self.viewModel.hasIssuer() {
+            self.getIssuers()
+        } else if self.viewModel.hasPaymentMethod(){
+            if self.viewModel.installment == nil {
+                self.getInstallments()
+            } else {
+                self.viewModel.payerCosts = self.viewModel.installment!.payerCosts
+                self.hideLoading()
+            }
+        }
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.titleCellHeight = 44
+
     }
     
     override func loadMPStyles(){
@@ -91,13 +92,20 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             
-            self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
             displayBackButton()
         }
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public init(cardInformation : CardInformation, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
+        self.viewModel = CardAdditionalStepViewModel(paymentMethod: [cardInformation.getPaymentMethod()], issuer: cardInformation.getIssuer(), token: cardInformation, amount: amount, paymentPreference: paymentPreference, installment:installment, callback: callback)
+        self.viewModel.cardInformation = cardInformation
+        
+        super.init(nibName: "CardAdditionalStep", bundle: self.bundle)
+        self.timer=timer
     }
     
     public init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, timer: CountdownTimer?, callback: ((_ payerCost: NSObject?)->Void)? ){
@@ -112,12 +120,12 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         
         switch indexPath.section {
         case 0:
-            return navBarHeight
+            return self.titleCellHeight
         case 1:
             return self.viewModel.getCardCellHeight()
         case 2:
             return self.viewModel.gerRowCellHeight()
-        
+            
         default:
             return 60
         }
@@ -143,8 +151,9 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
             
             let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! PayerCostTitleTableViewCell
             titleCell.selectionStyle = .none
-            titleCell.setTitle(string: self.viewModel.getTilte())
+            titleCell.setTitle(string: self.getNavigationBarTitle())
             titleCell.backgroundColor = MercadoPagoContext.getPrimaryColor()
+            self.titleCell = titleCell
             
             return titleCell
             
@@ -184,6 +193,7 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.showLoading()
         if (indexPath.section == 2){
             if self.viewModel.hasIssuer(){
                 let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row]
@@ -198,94 +208,23 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         }
     }
     
-    func showNavBar() {
-        self.title = self.viewModel.getTilte()
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.tintColor = nil
-        self.navigationController?.navigationBar.isTranslucent = false
-        let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 22) ?? UIFont.systemFont(ofSize: 22)
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
-        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
-    }
-    func hideNavBar(){
-        self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
-    
-    var once = false
-    var lastContentOffset: CGFloat = 0
-    var scrollingDown = false
-    
-    func wholeTableVisible() -> Bool{
-        if tableView.numberOfRows(inSection: 2)>0 {
-            let cellRow = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: 2)-1, section: 2))
-            
-            let cellTitle = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
-            if cellRow != nil && cellTitle != nil {
-                let overlapRow = (cellRow?.frame)!.intersection(tableView.bounds);
-                let overlapTitle = (cellTitle?.frame)!.intersection(tableView.bounds);
-                if overlapRow.height == cellRow?.frame.height && overlapTitle.height == cellTitle?.frame.height {
-                    return true
-                }
-            }
-        }
-        return false
-        
-    }
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-        var titleVisible = false
-        var offset = scrollView.contentOffset;
-        
-        if (scrollView.contentOffset.y >= -30 && wholeTableVisible())
-        {
-            offset.y = -30;
-            scrollView.contentOffset = offset;
-            titleVisible = false
-            self.title = self.viewModel.getTilte()
-        }
-        ("tableView \(tableView.contentOffset)")
-        
-        let visibleIndexPaths = self.tableView.indexPathsForVisibleRows!
+        self.didScrollInTable(scrollView)
+        let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
-            if (index.section == 0){
-                if !once {
-                    hideNavBar()
-                    titleVisible = true
-                    
-                    if (0 < tableView.contentOffset.y + (UIApplication.shared.statusBarFrame.size.height)){
-                        
-                        titleVisible = false
-                        once = true
-                        showNavBar()
-                    }
-                } else {
-                    if scrollingDown {
-                        once = false
-                    }
-                }
-            } else if index.section == 1  {
+            if index.section == 1  {
                 if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
-                if tableView.contentOffset.y > 0{
-                    if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
-                        card.fadeCard()
-                    } else{
-                        card.cardView.alpha = 44/tableView.contentOffset.y;
+                    if tableView.contentOffset.y > 0{
+                        if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
+                            card.fadeCard()
+                        } else{
+                            card.cardView.alpha = 44/tableView.contentOffset.y;
+                        }
                     }
-                }
                 }
             }
         }
-        if (self.lastContentOffset > scrollView.contentOffset.y) {
-            scrollingDown = true
-        }
-        else if (self.lastContentOffset < scrollView.contentOffset.y) {
-            scrollingDown = false
-        }
-        self.lastContentOffset = scrollView.contentOffset.y
+        
     }
     
     fileprivate func getInstallments(){
@@ -309,6 +248,15 @@ open class CardAdditionalStep: MercadoPagoUIViewController, UITableViewDelegate,
         }
     }
     
+    override func getNavigationBarTitle() -> String {
+        return self.viewModel.getTitle()
+    }
+    
+    override open func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
+    }
+    
 }
 class CardAdditionalStepViewModel : NSObject {
     
@@ -320,6 +268,7 @@ class CardAdditionalStepViewModel : NSObject {
     var amount: Double!
     var paymentPreference: PaymentPreference?
     var issuersList:[Issuer]?
+    var cardInformation : CardInformation?
     var callback : ((_ payerCost: NSObject?) -> Void)?
     
     init(paymentMethod : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, callback: ((_ payerCost: NSObject?)->Void)? ){
@@ -338,10 +287,10 @@ class CardAdditionalStepViewModel : NSObject {
         }else if hasPaymentMethod(){
             return (issuersList?.count) ?? 0
         } else {
-            return paymentMethod.count 
+            return paymentMethod.count
         }
     }
-    func getTilte() -> String{
+    func getTitle() -> String{
         if hasIssuer() {
             return "¿En cuántas cuotas?".localized
         } else if hasPaymentMethod(){
@@ -351,7 +300,10 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func hasIssuer()-> Bool{
-        return issuer != nil
+        if (self.cardInformation != nil) {
+            return !self.cardInformation!.isIssuerRequired()
+        }
+        return (issuer != nil || (token != nil && !token!.isIssuerRequired()))
     }
     func hasPaymentMethod()->Bool{
         if (paymentMethod.count)>1{
@@ -361,7 +313,7 @@ class CardAdditionalStepViewModel : NSObject {
         }
     }
     func getCardCellHeight() -> CGFloat {
-        return UIScreen.main.bounds.height*0.27
+        return UIScreen.main.bounds.width*0.50
     }
     func gerRowCellHeight() -> CGFloat {
         if hasIssuer() {
@@ -370,4 +322,5 @@ class CardAdditionalStepViewModel : NSObject {
             return 80
         }
     }
+
 }

@@ -5,7 +5,7 @@
   Created by Matias Gualino on 26/4/15.
   Copyright (c) 2015 MercadoPago. All rights reserved.
 */
-
+"Cargando..." = "Cargando...";
 
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Revisa este dato";
@@ -15,19 +15,26 @@
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
+"No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
 
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
 
-//Congrats
+//INSTRUCCIONES
 
-"Cancelar pago y seguir comprando" = "Cancelar pago y seguir comprando";
+
+//CONGRATS
+
+"Cancelar pago" = "Cancelar pago";
+"¿Qué puedo hacer?" = "¿Qué puedo hacer?";
 
 // -- CallForAuth
 
 "Debes autorizar ante %p el pago de %t a MercadoPago" = "Debes autorizar ante %p el pago de %t a MercadoPago";
 "Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
+"El teléfono está al dorso de tu tarjeta." = "El teléfono está al dorso de tu tarjeta.";
+"Pagar con otro medio" = "Pagar con otro medio";
 
 // -- Approved
 "¡Listo, se acreditó tu pago!" = "¡Listo, se acreditó tu pago!";
@@ -44,7 +51,7 @@
 "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información." = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.";
 
 // -- Rejected
-"¿Que puedo hacer?" = "¿Que puedo hacer?";
+"¿Qué puedo hacer?" = "¿Qué puedo hacer?";
 "rejected_high_risk_title"="Por seguridad, tuvimos que rechazar tu pago";
 "cc_rejected_insufficient_amount_title" = "Tu %0 no tiene fondos suficientes";
 "cc_rejected_other_reason_title"="%0 no procesó el pago";
@@ -56,6 +63,9 @@
 "cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_bad_filled_date_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
+"Ingresalo nuevamente" = "Ingresalo nuevamente";
+"Cancelar pago" = "Cancelar pago";
+"Algo salió mal… " = "Algo salió mal… ";
 
 
 "rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";
@@ -84,7 +94,7 @@
 
 
 
-//----
+//---- Formulario de tarjeta
 "Ver promociones"="Ver promociones";
 "Número de tarjeta"="Número de tarjeta";
 "NOMBRE APELLIDO"="NOMBRE APELLIDO";
@@ -120,7 +130,7 @@
 
 //Instructions
 
-"Seguir comprando"= "Seguir comprando";//--
+"Continuar"= "Continuar";//--
 
 
 //--
@@ -156,11 +166,26 @@
 "Operación"="Operación";
 "Fecha"="Fecha";
 
-
+// RyC
 "Revisa si está todo bien..." = "Revisa si está todo bien...";
 "Total a pagar " = "Total a pagar ";
 "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago";
 
-"¿Cómo quieres pagar?"="¿Cómo quieres pagar?";
+"¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+
+// PaymentTypes para RyC
+"ryc_title_default"=" en un ";
+"ryc_title_cargavirtual"=" en ";
+"ryc_title_redlink_bank_transfer"=" en tu";
+"ryc_title_bancomer_bank_transfer"=" en tu ";
+"ryc_title_serfin_bank_transfer"=" en tu ";
+"ryc_title_banamex_bank_transfer"=" en tu ";
+
+"ryc_complementary_bancomer_bank_transfer"="Home Banking de ";
+"ryc_complementary_serfin_bank_transfer"="Home Banking de ";
+"ryc_complementary_redlink_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_bank_transfer"="Home Banking de ";
+"ryc_complementary_banamex_atm"="cajero automático de ";
+"ryc_complementary_redlink_atm"="cajero automático de ";

@@ -63,14 +63,6 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         fatalError("init(coder:) has not been implemented")
     }
     
-    func hideNavBar(){
-        self.title = ""
-        navigationController?.navigationBar.titleTextAttributes = nil
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-    }
-    
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -94,7 +86,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-            headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.color)
+            headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.color, instruction: nil)
             headerCell.selectionStyle = .none
             return headerCell
         } else if indexPath.section == 1 {
@@ -106,7 +98,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
                     return approvedCell
                 } else {
                     let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                    confirmEmailCell.fillCell(payment: self.viewModel.payment!)
+                    confirmEmailCell.fillCell(payment: self.viewModel.payment!, instruction:nil)
                     confirmEmailCell.selectionStyle = .none
                     ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                     return confirmEmailCell

@@ -18,8 +18,9 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         super.awakeFromNib()
         // Initialization code
         button.layer.cornerRadius = 3
-        self.title.text = "¿Que puedo hacer?".localized
+        self.title.text = "¿Qué puedo hacer?".localized
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
     }
 
     func fillCell (payment: Payment){
@@ -27,7 +28,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         if payment.status == "rejected"{
             
             if payment.statusDetail == "cc_rejected_call_for_authorize"{
-                var title = (payment.statusDetail + "_title")
+                let title = (payment.statusDetail + "_title")
                 self.title.text = title.localized
                 self.subtitile.text = ""
             } else {

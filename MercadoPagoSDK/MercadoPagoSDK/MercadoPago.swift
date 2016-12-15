@@ -12,8 +12,7 @@ import UIKit
 
 
 
-open class MercadoPago : NSObject, UIAlertViewDelegate {
-    
+@objc open class MercadoPago : NSObject, UIAlertViewDelegate {
     
     
     open static let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
@@ -61,8 +60,9 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
     static let MP_PROD_ENV = "/v1"
+    static let API_VERSION = "1.3.X"
 
-    static let MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
+    static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
     
     static let MP_OP_ENVIROMENT = "/v1"
     
@@ -82,8 +82,6 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
     
     public init (publicKey: String) {
         self.pk = publicKey
-        
-        
     }
     
     static var temporalNav : UINavigationController?
@@ -119,7 +117,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
                         success(token)
                     } else {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.createNewCardToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 }
@@ -145,7 +143,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
                         success(token)
                     } else {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.createToken", code: MercadoPago.ERROR_API_CODE, userInfo: tokenDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 }
@@ -166,7 +164,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let error = jsonResult as? NSDictionary {
                     if (error["status"]! as? Int) == 404 {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIdentificationTypes", code: MercadoPago.ERROR_API_CODE, userInfo: error as! [AnyHashable: AnyObject]))
                         }
                     }
                 } else {
@@ -207,7 +205,7 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
                 if let errorDic = jsonResult as? NSDictionary {
                     if errorDic["error"] != nil {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: Any]))
+                            failure!(NSError(domain: "mercadopago.sdk.getIssuers", code: MercadoPago.ERROR_API_CODE, userInfo: errorDic as! [AnyHashable: AnyObject]))
                         }
                     }
                 } else {
@@ -312,7 +310,43 @@ open class MercadoPago : NSObject, UIAlertViewDelegate {
         }
     }
     
-
+    open class func getImageFor(searchItem : PaymentMethodSearchItem) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: searchItem.idPaymentMethodSearchItem) as? NSDictionary else {
+            return nil
+        }
+        
+            return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
+    open class func getImageForPaymentMethod(withDescription : String) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: withDescription) as? NSDictionary else {
+            return nil
+        }
+        
+        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
+    open class func getImageFor(cardInformation : CardInformation) -> UIImage?{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        guard let itemSelected = dictPM?.value(forKey: cardInformation.getPaymentMethodId()) as? NSDictionary else {
+            return nil
+        }
+        
+        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        
+    }
+    
+    
     open class func getImageFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> UIImage?{
         if (forCell == true) {
             return MercadoPago.getImage(paymentMethod._id.lowercased())

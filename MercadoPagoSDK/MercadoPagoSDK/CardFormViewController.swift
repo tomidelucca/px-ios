@@ -21,7 +21,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
     
     @IBOutlet weak var cardBackground: UIView!
-    @IBOutlet weak var cardView: UIView!
+    var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
     
     var cardViewBack:UIView?
@@ -42,13 +42,12 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
     
+    static public var showBankDeals = true
     
-    var inputButtons : UINavigationBar?
+    var toolbar : UIToolbar?
     var errorLabel : MPLabel?
     
     var navItem : UINavigationItem?
-    var doneNext : UIBarButtonItem?
-    var donePrev : UIBarButtonItem?
     
     var cardFormManager : CardViewModelManager!
     
@@ -62,6 +61,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override func loadMPStyles(){
         
         if self.navigationController != nil {
+            
+            
             
             
             //Navigation bar colors
@@ -80,7 +81,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.navigationController?.navigationBar.isTranslucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
                 
-                if self.timer == nil {
+                if self.timer == nil && cardFormManager.showBankDeals(){
                     let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                     promocionesButton.tintColor = UIColor.systemFontColor()
                     self.navigationItem.rightBarButtonItem = promocionesButton
@@ -123,8 +124,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     open override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        cardFront?.frame = cardView.bounds
-        cardBack?.frame = cardView.bounds
+        self.showNavBar()
+        
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
         
@@ -149,9 +150,11 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         super.viewDidLoad()
         
         
+        
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
                 
+
                 self.cardFormManager.paymentMethods = paymentMethods
                 
                 self.updateCardSkin()
@@ -171,6 +174,23 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardFront = CardFrontView()
         cardBack = CardBackView()
         
+        self.cardView = UIView()
+        
+        let cardHeight = getCardHeight()
+        let cardWidht = getCardWidth()
+        let xMargin = (UIScreen.main.bounds.size.width  - cardWidht) / 2
+        let yMargin = (UIScreen.main.bounds.size.height - 384 - cardHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
+        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        self.cardView.frame = rectBackground
+        cardFront?.frame = rect
+        cardBack?.frame = rect
+        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.layer.cornerRadius = 11
+        self.cardView.layer.masksToBounds = true
+        self.cardBackground.addSubview(self.cardView)
+        
         cardBack!.backgroundColor = UIColor.clear
         
         cardNumberLabel = cardFront?.cardNumber
@@ -188,6 +208,26 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardView.addSubview(cardFront!)
         
     }
+    
+    func getCardWidth() -> CGFloat {
+        let widthTotal = UIScreen.main.bounds.size.width * 0.70
+        if widthTotal < 512 {
+            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394)){
+                return widthTotal
+            }else{
+                return (UIScreen.main.bounds.size.height - 394) / 0.63
+            }
+            
+        }else{
+            return 512
+        }
+        
+    }
+    
+    func getCardHeight() -> CGFloat {
+        return ( getCardWidth() * 0.63 )
+    }
+    
     
     
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -404,50 +444,44 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func setupInputAccessoryView() {
-        inputButtons = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-        inputButtons!.barStyle = UIBarStyle.default;
-        inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
-        inputButtons!.alpha = 1;
-        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 2, height: 40)
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+        let toolbar = UIToolbar(frame: frame)
         
-        let buttonNext = UIButton(frame: frame)
-        buttonNext.setTitle("Continuar".localized, for: .normal)
-        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), for: .touchUpInside)
-        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        toolbar.barStyle = UIBarStyle.default;
+        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.alpha = 1;
+        toolbar.isUserInteractionEnabled = true
         
-        let buttonPrev = UIButton(frame: frame)
-        buttonPrev.setTitle("Anterior".localized, for: .normal)
-        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), for: .touchUpInside)
-        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
-        
-        /*
-         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-         }
-         */
-        navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(customView: buttonNext)
-        donePrev = UIBarButtonItem(customView: buttonPrev)
+        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
         
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        navItem!.rightBarButtonItem = doneNext
-        navItem!.leftBarButtonItem = donePrev
+        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        
+        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         
         
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
+        
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
         if self.cardFormManager.customerCard != nil || self.cardFormManager.token != nil{
             navItem!.leftBarButtonItem?.isEnabled = false
         }
-        inputButtons!.pushItem(navItem!, animated: false)
-        textBox.inputAccessoryView = inputButtons
+        
+        textBox.delegate = self
+        self.toolbar = toolbar
+        textBox.inputAccessoryView = toolbar
+        
         
         
     }
     
     func showErrorMessage(_ errorMessage:String){
-        errorLabel = MPLabel(frame: inputButtons!.frame)
+        
+        errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
         self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
         self.errorLabel!.text = errorMessage
@@ -464,7 +498,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     func hideErrorMessage(){
         self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
         self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
-        self.textBox.inputAccessoryView = self.inputButtons
+        self.textBox.inputAccessoryView = self.toolbar
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()
         self.textBox.becomeFirstResponder()
@@ -499,7 +533,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         case cardNumberLabel! :
             if !validateCardNumber() {
                 if (cardFormManager.guessedPMS != nil){
-                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
+                    //showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!)?.userInfo["cardNumber"] as? String)!)
+                    showErrorMessage((cardFormManager.cardToken?.validateCardNumber(cardFormManager.getGuessedPM()!))!)
                 }else{
                     if (cardNumberLabel?.text?.characters.count == 0){
                         showErrorMessage("Ingresa el número de la tarjeta de crédito".localized)
@@ -525,14 +560,13 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
             if (cardFormManager.guessedPMS != nil){
                 let bin = self.cardFormManager.getBIN(self.cardNumberLabel!.text!)
-                //TODO : esto te estalla en la cara cris
                 if (!(cardFormManager.getGuessedPM()?.isSecurityCodeRequired((bin)!))!){
                     self.confirmPaymentMethod()
                     return
                 }
             }
             if (!self.validateExpirationDate()){
-                showErrorMessage((cardFormManager.cardToken?.validateExpiryDate()?.userInfo["expiryDate"] as? String)!)
+                showErrorMessage((cardFormManager.cardToken?.validateExpiryDate())!)
                 
                 return
             }
@@ -561,10 +595,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
             self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
-            }, completion: { (finish) -> Void in
-                self.cardFront?.cardLogo.image =  nil
-                
-        })
+            })
+        self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
         
@@ -581,13 +613,18 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func updateCardSkin(){
-        
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
+        guard let _ = cardFormManager.getBIN(self.cardNumberLabel!.text!) else {
+            cardFormManager.guessedPMS = nil
+            cardFormManager.cardToken = nil
+            self.clearCardSkin()
+            return
+        }
+        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             if(cardFormManager.getGuessedPM()  != nil){
+                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
                     self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
                     self.cardFront?.cardLogo.alpha = 1
                 })
@@ -611,8 +648,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 return
             }
             
-        }else if (textBox.text?.characters.count<7){
-            self.clearCardSkin()
         }
         if self.cvvLabel == nil || self.cvvLabel!.text!.characters.count == 0 {
             if((cardFormManager.guessedPMS != nil)&&(!(cardFormManager.getGuessedPM()?.secCodeInBack())!)){
@@ -722,7 +757,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             }
         }
         
-        self.callback!(self.cardFormManager.guessedPMS!, self.cardFormManager.cardToken!)
+        self.callback!(cardFormManager.guessedPMS!, self.cardFormManager.cardToken!)
     }
     
     func addCvvDot() -> Bool {

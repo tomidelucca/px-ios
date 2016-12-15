@@ -21,8 +21,9 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     var identificationType : IdentificationType?
     var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
     var indentificationMask = TextMaskFormater(mask: "XXX.XXX.XXX",completeEmptySpaces: true,leftToRight: false)
-     var editTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXX",completeEmptySpaces: false,leftToRight: false)
-
+    var editTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXX",completeEmptySpaces: false,leftToRight: false)
+    var toolbar : UIToolbar?
+    
     @IBOutlet var typePicker: UIPickerView! = UIPickerView()
     
     
@@ -131,16 +132,20 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         
     }
     open override func viewDidAppear(_ animated: Bool) {
-        self.showLoading()
         super.viewDidAppear(animated)
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
     }
 
- open override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
     }
     
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.hideLoading()
+    }
 
     
 
@@ -183,44 +188,33 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     
     func setupInputAccessoryView() {
 
-        inputButtons = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
-        inputButtons!.barStyle = UIBarStyle.default;
-
-        inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
-        inputButtons!.alpha = 1;
-        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width / 2, height: 40)
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
+        let toolbar = UIToolbar(frame: frame)
         
-        let buttonNext = UIButton(frame: frame)
-        buttonNext.setTitle("Continuar".localized, for: .normal)
-        buttonNext.addTarget(self, action: #selector(CardFormViewController.rightArrowKeyTapped), for: .touchUpInside)
-        buttonNext.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        toolbar.barStyle = UIBarStyle.default;
+        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.alpha = 1;
+        toolbar.isUserInteractionEnabled = true
         
-        let buttonPrev = UIButton(frame: frame)
-        buttonPrev.setTitle("Anterior".localized, for: .normal)
-        buttonPrev.addTarget(self, action: #selector(CardFormViewController.leftArrowKeyTapped), for: .touchUpInside)
-        buttonPrev.setTitleColor(UIColor(netHex:0x007AFF), for: .normal)
+        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
-        /*
-         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-         }
-         */
-        navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(customView: buttonNext)
-        donePrev = UIBarButtonItem(customView: buttonPrev)
+        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
+        
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+        
+        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
+        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         
 
-        
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        navItem!.rightBarButtonItem = doneNext
-        navItem!.leftBarButtonItem = donePrev
-        
-
-        inputButtons!.pushItem(navItem!, animated: false)
-        
-        numberTextField.inputAccessoryView = inputButtons
+        numberTextField.delegate = self
+        self.toolbar = toolbar
+        numberTextField.inputAccessoryView = toolbar
         
         
     }
@@ -233,15 +227,17 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
+            self.showLoading()
+            self.view.bringSubview(toFront: self.loadingInstance!)
         }else{
-            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType)?.userInfo["identification"] as? String)!)
+            showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType))!)
         }
        
     }
-    var inputButtons : UINavigationBar?
+    
      var errorLabel : MPLabel?
     func showErrorMessage(_ errorMessage:String){
-        errorLabel = MPLabel(frame: inputButtons!.frame)
+        errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
         self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
         self.errorLabel!.text = errorMessage
@@ -261,7 +257,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     func hideErrorMessage(){
         self.numberTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
         self.numberTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
-        self.numberTextField.inputAccessoryView = self.inputButtons
+        self.numberTextField.inputAccessoryView = self.toolbar
         self.numberTextField.setNeedsDisplay()
         self.numberTextField.resignFirstResponder()
         self.numberTextField.becomeFirstResponder()

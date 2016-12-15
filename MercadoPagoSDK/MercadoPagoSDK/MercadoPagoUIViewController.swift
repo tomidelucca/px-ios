@@ -8,15 +8,19 @@
 
 import UIKit
 
-
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
-    internal var displayPreferenceDescription = false
     open var callbackCancel : ((Void) -> Void)? 
     public var timer : CountdownTimer?
+    var navBarTextColor = UIColor.systemFontColor()
+    var navBarBackgroundColor = UIColor.primaryColor()
+    var shouldDisplayBackButton = false
+    
+    var hideNavBarCallback : ((Void) -> Void)?
     
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
+    var loadingInstance : UIView?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +34,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var timerLabel : MPLabel?
     
     override open func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
         if self.timer != nil {
             self.timer!.delegate = self
@@ -70,8 +75,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         super.viewWillAppear(animated)
     
         UIApplication.shared.statusBarStyle = .lightContent
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
-        
         
         self.loadMPStyles()
      
@@ -100,10 +103,12 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.systemFontColor()
-                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
+                self.navigationController?.navigationBar.tintColor = navBarTextColor
+                self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
                 self.navigationController?.navigationBar.removeBottomLine()
-                  self.navigationController?.navigationBar.isTranslucent = false
+                self.navigationController?.navigationBar.isTranslucent = false
+                self.navigationController?.view.backgroundColor = MercadoPagoContext.getPrimaryColor()
+                
                 //Create navigation buttons
                 displayBackButton()
             }
@@ -183,21 +188,27 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func displayBackButton() {
         let backButton = UIBarButtonItem()
-        backButton.image = MercadoPago.getImage("left_arrow")
+        backButton.image = MercadoPago.getImage("back")
         backButton.style = .plain
         backButton.target = self
-        backButton.tintColor = UIColor.systemFontColor()
-        backButton.imageInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        backButton.tintColor = navBarTextColor
         backButton.action = #selector(MercadoPagoUIViewController.executeBack)
         self.navigationItem.leftBarButtonItem = backButton
     }
+    
+    internal func hideBackButton() {
+        self.navigationItem.leftBarButtonItem = nil
+    }
+    
     
     internal func executeBack(){
         self.navigationController!.popViewController(animated: true)
     }
     
     internal func showLoading(){
-        LoadingOverlay.shared.showOverlay(self.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
+        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
+        self.view.bringSubview(toFront: self.loadingInstance!)
+        
     }
     
     var fistResponder : UITextField?
@@ -239,7 +250,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
     
     internal func requestFailure(_ error : NSError, callback : ((Void) -> Void)? = nil, callbackCancel : ((Void) -> Void)? = nil) {
-        let errorVC = MPStepBuilder.startErrorViewController(MPError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
+        let errorVC = MPStepBuilder.startErrorViewController(MPSDKError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
         } else {
@@ -247,7 +258,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
     }
     
-    internal func displayFailure(_ mpError : MPError){
+    internal func displayFailure(_ mpError : MPSDKError){
         let errorVC = MPStepBuilder.startErrorViewController(mpError, callback: nil, callbackCancel: self.callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
@@ -261,9 +272,55 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.timerLabel!.text = self.timer!.getCurrentTiming()
         }
     }
+    var navBarFontSize: CGFloat = 18
+    func showNavBar() {
+        
+        if navigationController != nil {
+            self.title = self.getNavigationBarTitle()
+            self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
+            self.navigationController?.navigationBar.shadowImage = nil
+            self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
+            self.navigationController?.navigationBar.backgroundColor = navBarBackgroundColor
+            self.navigationController?.navigationBar.isTranslucent = false
+            
+            if self.shouldDisplayBackButton {
+                self.displayBackButton()
+            }
+            let font : UIFont = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: navBarFontSize) ?? UIFont.systemFont(ofSize: navBarFontSize)
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+        }
+        
+    }
+    
+    func hideNavBar(){
+        if navigationController != nil {
+            self.title = ""
+        
+            navigationController?.navigationBar.titleTextAttributes = nil
+            
+            self.navigationController?.navigationBar.removeBottomLine()
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController!.navigationBar.backgroundColor =  UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+            self.navigationController?.navigationBar.isTranslucent = true
+            
+            if self.shouldDisplayBackButton {
+                self.displayBackButton()
+            }
+            
+            if self.hideNavBarCallback != nil {
+                hideNavBarCallback!()
+            }
+        }
+    }
+    
+    func getNavigationBarTitle() -> String {
+        return ""
+    }
     
     deinit {
-        print("\(String(describing: type(of: self))) dellocated" )
+        //print("\(String(describing: type(of: self))) dellocated" )
     }
 
 }
@@ -283,23 +340,27 @@ extension UINavigationController {
 extension UINavigationBar {
     
     func removeBottomLine() {
-        for parent in self.subviews {
-            for childView in parent.subviews {
-                if(childView is UIImageView) {
-                    childView.removeFromSuperview()
-                }
-            }
-        }
+        self.setValue(true, forKey: "hidesShadow")
     }
 
 }
 extension UINavigationController {
     internal func showLoading(){
-        
-        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: UIColor(red: 217, green: 217, blue: 217), indicatorColor: UIColor.white())
+        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: MercadoPagoContext.getPrimaryColor())
     }
     
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
+    }
+}
+
+extension UIImage {
+    public static func imageFromColor(color: UIColor, frame: CGRect) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        color.setFill()
+        UIRectFill(frame)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
     }
 }

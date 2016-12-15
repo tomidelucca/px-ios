@@ -14,6 +14,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     static let sharedInstance = MercadoPagoContext()
     
+    var trackListener : MPTrackListener?
+    
     var public_key: String = ""
     
     var payer_access_token: String = ""
@@ -38,8 +40,11 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var termsAndConditionsSite : String!
 
+    var account_money_available = false
     
     var currency : Currency!
+    
+    var display_default_loading = true
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -66,14 +71,14 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.0.5"
+        return "2.2.3"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
         "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
         "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
         "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
-        "MLM" : ["language" : "es", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
+        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
      ]
 
     public enum Site : String {
@@ -109,12 +114,23 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
     }
+    open class func getSite() -> String{
+        return MercadoPagoContext.sharedInstance.site.rawValue
+    }
     
     open class func setSiteID(_ siteId : String) {
         let site = Site(rawValue: siteId)
         if site != nil {
             MercadoPagoContext.setSite(site!)
         }
+    }
+    
+    open class func setTrack(listener : MPTrackListener) {
+        MercadoPagoContext.sharedInstance.trackListener = listener
+    }
+    
+    open static func getTrackListener() -> MPTrackListener? {
+        return sharedInstance.trackListener
     }
     
     open static func getLanguage() -> String {
@@ -132,7 +148,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open func publicKey() -> String!{
         return self.public_key
     }
-    
     
     fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
@@ -248,10 +263,17 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
     }
     
+    open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
+        sharedInstance.account_money_available = accountMoneyAvailable
+    }
+    
+    
+    open class func setDisplayDefaultLoading(flag : Bool){
+        sharedInstance.display_default_loading = flag
+    }
+    
     open class func merchantAccessToken() -> String {
-        
         return sharedInstance.merchant_access_token
-        
     }
     
 
@@ -266,6 +288,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         
         return sharedInstance.payer_access_token
         
+    }
+    
+    open class func accountMoneyAvailable() -> Bool {
+        return sharedInstance.account_money_available
     }
     
     open class func baseURL() -> String {
@@ -290,6 +316,14 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return sharedInstance.payment_uri
         
     }
+    
+    open class func shouldDisplayDefaultLoading() -> Bool {
+        return sharedInstance.display_default_loading
+    }
+    
+
+    
+    
     
     open class func isCustomerInfoAvailable() -> Bool {
         return (self.sharedInstance.base_url.characters.count > 0 && self.sharedInstance.customer_uri.characters.count > 0 && self.sharedInstance.merchant_access_token.characters.count > 0)

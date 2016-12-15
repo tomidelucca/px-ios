@@ -24,6 +24,11 @@ open class Card : NSObject, CardInformation {
     open var issuer : Issuer?
     open var securityCode : SecurityCode?
     
+    
+    public func getIssuer() -> Issuer? {
+        return self.issuer
+    }
+    
 
    open class func fromJSON(_ json : NSDictionary) -> Card {
         let card : Card = Card()
@@ -109,7 +114,9 @@ open class Card : NSObject, CardInformation {
         }
     }
 
-    
+    public func getFirstSixDigits() -> String! {
+        return firstSixDigits
+    }
     open func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
@@ -141,6 +148,29 @@ open class Card : NSObject, CardInformation {
     open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
     }
+    
+    open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
+        self.paymentMethod = paymentMethod
+    }
+    
+    public func isIssuerRequired() -> Bool {
+        return self.issuer == nil
+    }
+    
+    /** PaymentOptionDrawable implementation */
+    
+    public func getTitle() -> String {
+        return getCardDescription()
+    }
+    
+    public func getSubtitle() -> String? {
+        return nil
+    }
+    
+    public func getImageDescription() -> String {
+        return self.getPaymentMethodId()
+    }
+
 }
 
 

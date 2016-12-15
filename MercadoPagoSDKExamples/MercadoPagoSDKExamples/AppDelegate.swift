@@ -21,16 +21,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
             didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-      
-        MercadoPagoContext.setPublicKey(ExamplesUtils.MERCHANT_PUBLIC_KEY_TEST)
+    
+        MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
+        //MercadoPagoContext.setPublicKey("APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d")
+
+    MercadoPagoContext.setPayerAccessToken("APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489")
+        
         MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
-   //     MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
-        MercadoPagoContext.setCustomerURI("/get_customer")
+
+        MercadoPagoContext.setDisplayDefaultLoading(flag: false)
+        
+//        let tracker = TrackerExample()
+//        
+//        MercadoPagoContext.setTrack(listener: tracker)
+        //MercadoPagoContext.setBaseURL("http://private-4d9654-mercadopagoexamples.apiary-mock.com")
+        //MercadoPagoContext.setCustomerURI("/get_customer")
+
+        
+
+        //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
 
         //Pinto de rojo el color primerio
-        MercadoPagoContext.setupPrimaryColor(UIColor.red, complementaryColor: UIColor.red)
+
+//        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
+
         MercadoPagoContext.setLightTextColor()
         MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+        
+        CardFormViewController.showBankDeals = true
         
         
         // Initialize window
@@ -148,4 +166,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
+//class TrackerExample :  MPTrackListener {
+//    func trackScreen(screenName : String){
+//        print("***** Trackeada \(screenName)")
+//    }
+//    func trackEvent(screenName : String?, action: String!, result: String?, extraParams: [String:String]?){
+//        print("***** Trackeado Evento en \(screenName) accion \(action) y result \(result)")
+//    }
+//}
 

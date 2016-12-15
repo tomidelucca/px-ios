@@ -11,14 +11,29 @@ import UIKit
 class PayerCostCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cell: UIView!
-    @IBOutlet weak var cardView: UIView!
-    var cardFront : CardFrontView?
+    var cardView: UIView!
+    var cardFront : CardFrontView!
     
     func loadCard(){
-        cardFront = CardFrontView(frame: self.cardView.bounds)
+        self.cardView = UIView()
+        
+        let cardHeight = getCardHeight()
+        let cardWidht = getCardWidth()
+        let xMargin = (UIScreen.main.bounds.size.width  - cardWidht) / 2
+        let yMargin = (UIScreen.main.bounds.size.width*0.5 - cardHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
+        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        self.cardView.frame = rectBackground
+        
+        self.cardView.layer.cornerRadius = 8
+        self.cardView.layer.masksToBounds = true
+        self.addSubview(self.cardView)
+
+        cardFront = CardFrontView(frame: rect)
         cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         cardView.addSubview(cardFront!)
-        cell.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        self.cell.backgroundColor = MercadoPagoContext.getPrimaryColor()
     }
     func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
         
@@ -29,7 +44,9 @@ class PayerCostCardTableViewCell: UITableViewCell {
             self.cardFront?.cardLogo.alpha = 1
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
-            cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
+          //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
+                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
+                cardFront?.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
             }
             
             cardFront?.cardName.text = ""
@@ -60,5 +77,22 @@ class PayerCostCardTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    func getCardWidth() -> CGFloat {
+        let widthTotal = UIScreen.main.bounds.size.width * 0.70
+        if widthTotal < 512 {
+            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.width*0.50 - 10)){
+                return widthTotal * 0.8
+            }else{
+                return (UIScreen.main.bounds.size.width*0.50 - 10) / 0.63 * 0.8
+            }
+            
+        }else{
+            return 512 * 0.8
+        }
+        
+    }
     
+    func getCardHeight() -> CGFloat {
+        return ( getCardWidth() * 0.63 )
+    }
 }
