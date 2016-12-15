@@ -193,6 +193,9 @@ class Utils {
     }
     
     static internal func findPaymentMethodSearchItemInGroups(_ paymentMethodSearch : PaymentMethodSearch, paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
+        guard let _ = paymentMethodSearch.groups
+            else {return nil}
+    
         if let result = Utils.findPaymentMethodSearchItemById(paymentMethodSearch.groups, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
             return result
         }
@@ -283,7 +286,10 @@ class Utils {
         }
         let floatMMYY = Float( validInt! / 100 )
         let mm : Int = Int(floor(floatMMYY))
-        return mm
+        if (mm >= 1 && mm <= 12) {
+            return mm
+        }
+        return 0
     }
     
 }

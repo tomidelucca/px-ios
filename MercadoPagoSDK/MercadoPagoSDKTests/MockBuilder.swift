@@ -194,7 +194,7 @@ open class MockBuilder: NSObject {
         return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
     
-    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
+    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem {
         let paymentMethodSearchItem = PaymentMethodSearchItem()
         paymentMethodSearchItem.idPaymentMethodSearchItem = paymentMethodId
         if type != nil {
@@ -202,6 +202,7 @@ open class MockBuilder: NSObject {
         }
         return paymentMethodSearchItem
     }
+    
     
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
