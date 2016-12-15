@@ -246,14 +246,13 @@
 		153AEB2D1D382983008A3338 /* PaymentVaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */; };
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
 		155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PaymentPreference.swift */; };
-		155A2E0D1DF88D2700C35C89 /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F01DF8816C0041171E /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1565B1311CBFD7F100181998 /* GuessingFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565B1301CBFD7F100181998 /* GuessingFormTest.swift */; };
 		156DA6431CC55636006B892F /* PayerCostFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156DA6421CC55636006B892F /* PayerCostFormTest.swift */; };
 		15714BAA1C85CC800019945E /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
+		157420F21DF8816C0041171E /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F01DF8816C0041171E /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		157420F31DF8816C0041171E /* MPSDKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F11DF8816C0041171E /* MPSDKLoadingView.m */; };
+		157420F61DF881770041171E /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
 		157420F71DF881770041171E /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
-		157420F81DF881F40041171E /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		157420F91DF881F70041171E /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F01DF8816C0041171E /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		157704B51DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */; };
 		157704B61DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */; };
 		157704B71DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */; };
@@ -429,7 +428,6 @@
 		762B8C241D19752A00A86097 /* MPServicesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C1F1D19752A00A86097 /* MPServicesBuilder.swift */; };
 		762B8C251D19752A00A86097 /* MPStepBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C201D19752A00A86097 /* MPStepBuilder.swift */; };
 		763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */; };
-		763AD8091CD3FFB40039E09B /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */; };
 		76445AD41CC6BDDD008EE68E /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */; };
 		76445ADB1CC921B5008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
 		76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
@@ -571,6 +569,11 @@
 		76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B211C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib */; };
 		76B64B251C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B211C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib */; };
 		76C834411D510CD4003C4717 /* AmountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C834401D510CD4003C4717 /* AmountInfo.swift */; };
+		76CA7C6F1E01E9BE009080B3 /* MPSDKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F11DF8816C0041171E /* MPSDKLoadingView.m */; };
+		76CA7C701E01EA71009080B3 /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F01DF8816C0041171E /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		76CA7C711E01EA73009080B3 /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
+		76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
+		76CA7C741E02CDBB009080B3 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA7C731E02CDBB009080B3 /* LoadingOverlay.swift */; };
 		76CD12081D6F304D0052350D /* CardInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EEF75C1D674BA80095D5A5 /* CardInformation.swift */; };
 		76CD12091D6F308C0052350D /* InstructionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76943ED81D51405E00358442 /* InstructionsInfo.swift */; };
 		76CD120A1D6F308E0052350D /* AmountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C834401D510CD4003C4717 /* AmountInfo.swift */; };
@@ -991,6 +994,7 @@
 		76B64B201C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleInstructionsWithButtonViewCell.swift; sourceTree = "<group>"; };
 		76B64B211C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleInstructionsWithButtonViewCell.xib; sourceTree = "<group>"; };
 		76C834401D510CD4003C4717 /* AmountInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmountInfo.swift; sourceTree = "<group>"; };
+		76CA7C731E02CDBB009080B3 /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		76D00A001CA2CA3E00F52BC6 /* UtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsTest.swift; sourceTree = "<group>"; };
 		76D00A0D1CB5917600F52BC6 /* MPCellValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCellValidator.swift; sourceTree = "<group>"; };
 		76D936401CDA56A900238CB0 /* PreferenceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceService.swift; sourceTree = "<group>"; };
@@ -1924,6 +1928,7 @@
 			children = (
 				767254671C7CB2AB00EB5EBA /* CheckoutViewControllerTest.swift */,
 				7656F52B1C988C510076A14D /* MercadoPagoUIViewControllerTest.swift */,
+				76CA7C731E02CDBB009080B3 /* LoadingOverlay.swift */,
 			);
 			name = Checkout;
 			sourceTree = "<group>";
@@ -2084,9 +2089,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157420F21DF8816C0041171E /* MPSDKLoadingView.h in Headers */,
+				157420F61DF881770041171E /* UIView+RotateView.h in Headers */,
 				0F9883101AD2A97A00F750F0 /* MercadoPagoSDK.h in Headers */,
-				157420F81DF881F40041171E /* UIView+RotateView.h in Headers */,
-				157420F91DF881F70041171E /* MPSDKLoadingView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2094,8 +2099,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				155A2E0D1DF88D2700C35C89 /* MPSDKLoadingView.h in Headers */,
+				76CA7C701E01EA71009080B3 /* MPSDKLoadingView.h in Headers */,
 				7622E3411DF5F64000490C4E /* MercadoPagoSDK.h in Headers */,
+				76CA7C711E01EA73009080B3 /* UIView+RotateView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2723,6 +2729,7 @@
 				7619E9461DF1B5D300CEFAC1 /* PaymentOptionDrawable.swift in Sources */,
 				76B0850A1CE258BA00C157BF /* CongratsFillmentDelegate.swift in Sources */,
 				7656F5301C98A2E50076A14D /* InstructionsViewControllerTest.swift in Sources */,
+				76CA7C741E02CDBB009080B3 /* LoadingOverlay.swift in Sources */,
 				76EC47DA1C85E8D20086FA53 /* IdentificationTest.swift in Sources */,
 				76EC47FE1C862A600086FA53 /* TransactionDetailsTest.swift in Sources */,
 				0F9883641AD2AB6000F750F0 /* CardNumber.swift in Sources */,
@@ -2819,7 +2826,6 @@
 				76D00A011CA2CA3E00F52BC6 /* UtilsTest.swift in Sources */,
 				0F9883581AD2AB6000F750F0 /* Address.swift in Sources */,
 				76D936421CDA5BE000238CB0 /* PreferenceService.swift in Sources */,
-				763AD8091CD3FFB40039E09B /* LoadingOverlay.swift in Sources */,
 				0F9883BF1AD2AD1600F750F0 /* UIColor+Additions.swift in Sources */,
 				0F9883AA1AD2AB8000F750F0 /* IdentificationService.swift in Sources */,
 				0F98835A1AD2AB6000F750F0 /* ApiException.swift in Sources */,
@@ -2845,7 +2851,9 @@
 				0F9884441AD2AEB600F750F0 /* MPSecurityCodeTableViewCell.swift in Sources */,
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F9883681AD2AB6000F750F0 /* Cause.swift in Sources */,
+				76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */,
 				76B084FF1CE2166900C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
+				76CA7C6F1E01E9BE009080B3 /* MPSDKLoadingView.m in Sources */,
 				7622E3351DF5F05700490C4E /* FooterTableViewCell.swift in Sources */,
 				0F2071C31B1F4BF700CE11AB /* UILoadingView.swift in Sources */,
 			);
@@ -2984,9 +2992,11 @@
 		0F9883211AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -3017,9 +3027,11 @@
 		0F9883221AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_HEADERS_RUN_UNIFDEF = NO;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -3050,7 +3062,11 @@
 		0F9883241AD2A97A00F750F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_HEADERS_RUN_UNIFDEF = YES;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -3072,7 +3088,11 @@
 		0F9883251AD2A97A00F750F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				COPY_HEADERS_RUN_UNIFDEF = NO;
+				DEFINES_MODULE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
