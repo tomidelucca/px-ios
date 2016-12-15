@@ -62,7 +62,7 @@
 		if (text != nil) {
 			attributedString = [[NSMutableAttributedString alloc] initWithString:text];
 		} else {
-            NSString *bundlePath = [MercadoPagoContext getLocalicedPath];
+            NSString *bundlePath = [MercadoPagoContext getLocalizedPath];
             
             NSBundle *spanishBundle = [[NSBundle alloc] initWithPath:[bundlePath stringByDeletingLastPathComponent]];
             NSString *defaultText = NSLocalizedStringFromTableInBundle(@"Cargando...", nil, spanishBundle, nil);

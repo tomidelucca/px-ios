@@ -138,18 +138,16 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getLanguage() -> String {
         return sharedInstance.language
     }
-    open static func getLocalicedPath() -> String {
-        var bundle : Bundle? = MercadoPago.getBundle()
-        if bundle == nil {
-            bundle = Bundle.main
-        }
+    open static func getLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        
         let currentLanguage = MercadoPagoContext.getLanguage()
-        if let path = bundle!.path(forResource: currentLanguage, ofType : "lproj"){
+        if let path = bundle.path(forResource: currentLanguage, ofType : "lproj"){
             return path
-        } else if let path = bundle!.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj"){
+        } else if let path = bundle.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj"){
             return path
         } else {
-            let path = bundle!.path(forResource: "es", ofType : "lproj")
+            let path = bundle.path(forResource: "es", ofType : "lproj")
             return path!
         }
     }
