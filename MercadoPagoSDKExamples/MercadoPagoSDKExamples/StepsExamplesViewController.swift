@@ -108,6 +108,8 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.createdToken = token
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
+        } , callbackCancel: {
+            print("Hola Error")
         })
         
         let myNav = UINavigationController(rootViewController: pv.viewControllers[0])
