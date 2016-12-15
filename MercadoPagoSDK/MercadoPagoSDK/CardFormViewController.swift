@@ -44,17 +44,15 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
    
     
-    var inputButtons : UINavigationBar?
+    var toolbar : UIToolbar?
     var errorLabel : MPLabel?
     
     var navItem : UINavigationItem?
-    var doneNext : UIBarButtonItem?
-    var donePrev : UIBarButtonItem?
     
     
     override public var screenName : String { get { return "CARD_NUMBER" } }
     
-    
+    static public var showBankDeals = true
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -76,12 +74,14 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
                 self.navigationController?.navigationBar.translucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
  
-                let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                promocionesButton.tintColor = UIColor.systemFontColor()
-
+                if CardFormViewController.showBankDeals {
+                    let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.Plain, target: self, action: #selector(CardFormViewController.verPromociones))
+                    promocionesButton.tintColor = UIColor.systemFontColor()
+                    self.navigationItem.rightBarButtonItem = promocionesButton
+                } else {
+                    self.navigationItem.rightBarButtonItem = nil
+                }
                 
-                self.navigationItem.rightBarButtonItem = promocionesButton
-       
 
                 displayBackButton()
             }
@@ -409,29 +409,40 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
 
     func setupInputAccessoryView() {
-        inputButtons = UINavigationBar(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, 44))
-        inputButtons!.barStyle = UIBarStyle.Default;
-        inputButtons!.backgroundColor = UIColor(netHex: 0xEEEEEE);
-        inputButtons!.alpha = 1;
-        navItem = UINavigationItem()
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
-        donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
-            doneNext!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-            donePrev!.setTitleTextAttributes([NSFontAttributeName: font], forState: UIControlState.Normal)
-        }
-        donePrev?.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
-        doneNext?.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
-        navItem!.rightBarButtonItem = doneNext
-        navItem!.leftBarButtonItem = donePrev
-        inputButtons!.pushNavigationItem(navItem!, animated: false)
-        textBox.inputAccessoryView = inputButtons
-       
+        let frame =  CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 44)
+        let toolbar = UIToolbar(frame: frame)
+        
+        toolbar.barStyle = UIBarStyle.Default
+        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        toolbar.alpha = 1;
+        toolbar.userInteractionEnabled = true
+        
+        let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+        let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
+        
+        
+        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFontOfSize(14)
+        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], forState: .Normal)
+        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], forState: .Normal)
+        
+        buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+        buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.mainScreen().bounds.size.width / 8, vertical: 0), forBarMetrics: UIBarMetrics.Default)
+        
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil);
+        
+        toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
+     
+        
+        textBox.delegate = self
+        self.toolbar = toolbar
+        textBox.inputAccessoryView = toolbar
         
     }
-    
+        
     func showErrorMessage(errorMessage:String){
-        errorLabel = MPLabel(frame: inputButtons!.frame)
+        
+        errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
         self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
         self.errorLabel!.text = errorMessage
@@ -443,12 +454,13 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         textBox.setNeedsDisplay()
         textBox.resignFirstResponder()
         textBox.becomeFirstResponder()
+
     }
-    
+        
     func hideErrorMessage(){
                 self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
                 self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
-                self.textBox.inputAccessoryView = self.inputButtons
+                self.textBox.inputAccessoryView = self.toolbar
                 self.textBox.setNeedsDisplay()
                 self.textBox.resignFirstResponder()
                 self.textBox.becomeFirstResponder()
@@ -606,7 +618,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     
     func updateCardSkin(){
        
-        if (textEditMaskFormater.textUnmasked(textBox.text).characters.count==6){
+        if (textEditMaskFormater.textUnmasked(self.cardNumberLabel!.text!).characters.count==6){
             let pmMatched = self.matchedPaymentMethod()
             
                paymentMethod = pmMatched
