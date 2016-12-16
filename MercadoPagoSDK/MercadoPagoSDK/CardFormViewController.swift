@@ -13,7 +13,7 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
 
     
     @IBOutlet weak var cardBackground: UIView!
-    @IBOutlet weak var cardView: UIView!
+    var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
     
     var cardViewBack:UIView?
@@ -123,8 +123,8 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
     public override func viewDidAppear(animated: Bool) {
         
         
-        cardFront?.frame = cardView.bounds
-        cardBack?.frame = cardView.bounds
+  //      cardFront?.frame = cardView.bounds
+  //      cardBack?.frame = cardView.bounds
         textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
 
@@ -156,6 +156,23 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         cardFront = CardFrontView()
         cardBack = CardBackView()
 
+        self.cardView = UIView()
+        
+        let cardHeight = getCardHeight()
+        let cardWidht = getCardWidth()
+        let xMargin = (UIScreen.mainScreen().bounds.size.width  - cardWidht) / 2
+        let yMargin = (UIScreen.mainScreen().bounds.size.height - 384 - cardHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
+        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
+        self.cardView.frame = rectBackground
+        cardFront?.frame = rect
+        cardBack?.frame = rect
+        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.layer.cornerRadius = 11
+        self.cardView.layer.masksToBounds = true
+        self.cardBackground.addSubview(self.cardView)
+        
         cardBack!.backgroundColor = UIColor.clearColor()
         
         cardNumberLabel = cardFront?.cardNumber
@@ -173,6 +190,25 @@ public class CardFormViewController: MercadoPagoUIViewController , UITextFieldDe
         hidratateWithToken()
         cardView.addSubview(cardFront!)
 
+    }
+
+    func getCardWidth() -> CGFloat {
+        let widthTotal = UIScreen.mainScreen().bounds.size.width * 0.70
+        if widthTotal < 512 {
+            if ((0.63 * widthTotal) < (UIScreen.mainScreen().bounds.size.height - 394)){
+                return widthTotal
+            }else{
+                return (UIScreen.mainScreen().bounds.size.height - 394) / 0.63
+            }
+            
+        }else{
+            return 512
+        }
+        
+    }
+    
+    func getCardHeight() -> CGFloat {
+        return ( getCardWidth() * 0.63 )
     }
 
 
