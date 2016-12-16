@@ -12,7 +12,7 @@ PROJECT="MercadoPagoSDK"
 PODSPEC_FILE="$PROJECT.podspec"
 GIT_BRANCH="particularIntegration"
 
-iif [ "$#" -eq 2 ]
+if [ "$#" -eq 2 ]
   then
   	GIT_BRANCH=$2
 
