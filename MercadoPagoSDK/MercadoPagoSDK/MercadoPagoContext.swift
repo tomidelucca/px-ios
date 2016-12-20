@@ -102,7 +102,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
-            //self.language = siteConfig!["language"] as! String
             self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
