@@ -107,7 +107,7 @@ open class Token : NSObject, CardInformationForm {
         let firstSix : Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
         
         let obj:[String:Any] = [
-            "_id": _id,
+            "id": _id,
             "cardId" : cardId,
             "luhnValidation" : luhn,
             "status" : self.status,
