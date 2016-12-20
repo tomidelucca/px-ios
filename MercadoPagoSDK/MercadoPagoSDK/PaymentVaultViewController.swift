@@ -119,15 +119,15 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     required  public init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    var upperView : UIView!
     open override func viewDidLoad() {
         super.viewDidLoad()
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10;
         upperFrame.size.width = UIScreen.main.bounds.width
-        let upperView = UIView(frame: upperFrame)
+        upperView = UIView(frame: upperFrame)
         upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
-        collectionSearch.addSubview(upperView)
+     
         
         if self.title == nil || self.title!.isEmpty {
             self.title = "¿Cómo quiéres pagar?".localized
@@ -167,7 +167,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
         if self.loadingGroups {
-            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
             temporalView.backgroundColor?.withAlphaComponent(0)
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
@@ -251,7 +251,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             } else {
                 self.collectionSearch.delegate = self
                 self.collectionSearch.dataSource = self
-                
+                self.collectionSearch.addSubview(upperView)
                 self.collectionSearch.reloadData()
                 self.loadingGroups = false
             }
