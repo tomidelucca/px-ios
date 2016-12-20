@@ -341,6 +341,7 @@
 		4BAE1D531DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */; };
 		4BAE1D541DCBE9340000ED5C /* CongratsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */; };
 		4BAE1D551DCBE9340000ED5C /* CongratsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* CongratsRevampViewController.xib */; };
+		4BC4EA031E007ABB0066D6F9 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BC4EA021E007ABB0066D6F9 /* PaymentMethod.plist */; };
 		76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */; };
 		76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */; };
@@ -838,6 +839,7 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
 		15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
+		4B241A991E01A7E00059640C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B62AC261DD005B500D668DA /* InstructionBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionBodyTableViewCell.swift; sourceTree = "<group>"; };
 		4B62AC271DD005B500D668DA /* InstructionBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionBodyTableViewCell.xib; sourceTree = "<group>"; };
 		4B762E941DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -872,6 +874,7 @@
 		4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmEmailTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsRevampViewController.swift; sourceTree = "<group>"; };
 		4BAE1D511DCBE9340000ED5C /* CongratsRevampViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratsRevampViewController.xib; sourceTree = "<group>"; };
+		4BC4EA021E007ABB0066D6F9 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PaymentMethod.plist; path = MercadoPagoSDK/PaymentMethod.plist; sourceTree = "<group>"; };
 		76062BC31C4D1EFD0067A14B /* PaymentMethodSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearch.swift; sourceTree = "<group>"; };
 		76062BC61C4D1F220067A14B /* PaymentMethodSearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchItem.swift; sourceTree = "<group>"; };
 		76062BC91C4D1F450067A14B /* PaymentMethodSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodSearchService.swift; sourceTree = "<group>"; };
@@ -1074,6 +1077,7 @@
 		0F9883001AD2A97A00F750F0 = {
 			isa = PBXGroup;
 			children = (
+
 				762B57381E008DEB00EF3EE4 /* PaymentMethod.plist */,
 				4BAA56071DB6861400501061 /* Images.xcassets */,
 				0F0749081AED5BAE003DD39D /* Localizable.strings */,
@@ -2877,6 +2881,7 @@
 				0F07490A1AED5BBB003DD39D /* es */,
 				0F07490B1AED5BC0003DD39D /* es-MX */,
 				0F07490C1AED5BD3003DD39D /* es-CO */,
+				4B241A991E01A7E00059640C /* en */,
 			);
 			name = Localizable.strings;
 			path = MercadoPagoSDK;
