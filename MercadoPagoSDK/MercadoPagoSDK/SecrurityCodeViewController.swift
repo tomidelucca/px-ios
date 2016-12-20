@@ -14,7 +14,6 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
     
-    @IBOutlet weak var button: UIButton!
     @IBOutlet weak var panelView: UIView!
     var viewModel : SecrurityCodeViewModel!
     var textMaskFormater : TextMaskFormater!
@@ -29,7 +28,6 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         super.viewDidLoad()
          self.hideNavBar()
         loadMPStyles()
-        self.button.setTitle("Continuar".localized,for: .normal)
         self.errorLabel.alpha = 0
         self.securityCodeTextField.placeholder = "security_code".localized
         self.errorLabel.text = "Revisa este dato".localized
