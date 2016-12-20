@@ -13,7 +13,7 @@ open class LoadingOverlay {
 
     var container = UIView()
     var activityIndicator = UIActivityIndicatorView()
-    var loadingContainer : MPSDKLoadingView!
+    var loadingContainer : MPLoadingView!
     var screenContainer = UIView()
     
     
@@ -59,9 +59,9 @@ open class LoadingOverlay {
         } else {
             let color =  UIColor.white()
             
-            self.loadingContainer = MPSDKLoadingView(backgroundColor: color)!
+            self.loadingContainer = MPLoadingView(backgroundColor: color)!
             let loadingImage = MercadoPago.getImage("mpui-loading_default")
-            self.loadingContainer.spinner = UIImageView(image: loadingImage)
+     //       self.loadingContainer.spinner = UIImageView(image: loadingImage)
             
             view.addSubview(self.loadingContainer)
             view.bringSubview(toFront: self.loadingContainer)
