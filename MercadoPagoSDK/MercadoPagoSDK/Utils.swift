@@ -168,7 +168,7 @@ class Utils {
         }
         var numberWithoutLastThreeDigits: String = ""
         if let amountString = Double(formattedString){
-            numberWithoutLastThreeDigits = String( Int(amountString/1000))
+            numberWithoutLastThreeDigits = String( CUnsignedLongLong(amountString/1000))
         }
         let lastThreeDigits = amount.lastCharacters(number: 3)
         
