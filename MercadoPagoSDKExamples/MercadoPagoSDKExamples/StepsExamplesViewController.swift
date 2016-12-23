@@ -109,8 +109,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             self.selectedIssuer = issuer
             self.installmentsSelected = payerCost
         } , callbackCancel: {
+            print("Callback Cancel Normal")
         })
         
+       // ErrorViewController.defaultErrorCancel = { print("Default Callback Cancel")}
         let myNav = UINavigationController(rootViewController: pv.viewControllers[0])
         self.present(myNav, animated: true, completion: {})
     }
