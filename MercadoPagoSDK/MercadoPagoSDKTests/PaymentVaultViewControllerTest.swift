@@ -664,7 +664,43 @@ class PaymentVaultViewModelTest: BaseTest {
         XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
     }
     
+    func testGetPaymentMethodOption(){
+     
+        
+    }
+    
     func testGetDisplayedPaymentMethodsCount(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
+        // Payment methods not loaded
+        var paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(0, paymentMethodCount)
+        
+        // Payment methods not loaded
+        let mockPaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("paymentMethodId")
+        instance!.currentPaymentMethodSearch = [mockPaymentMethodSearchItem]
+        paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(1, paymentMethodCount)
+        
+        // Payment methods not loaded
+        instance!.currentPaymentMethodSearch = [mockPaymentMethodSearchItem, mockPaymentMethodSearchItem,  mockPaymentMethodSearchItem]
+        paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(3, paymentMethodCount)
+        
+        // Display 3 payment methods from search and two cards
+        let cardMock = MockBuilder.buildCard()
+        instance!.customerCards = [cardMock, cardMock]
+        paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(5, paymentMethodCount)
+        
+        // Display 3 payment methods from search and 3 cards (max available)
+        instance!.customerCards = [cardMock, cardMock, cardMock, cardMock]
+        paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(6, paymentMethodCount)
+        
+        PaymentVaultViewController.maxCustomerPaymentMethdos = 4
+        paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
+        XCTAssertEqual(7, paymentMethodCount)
         
     }
 }

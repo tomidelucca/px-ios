@@ -499,7 +499,8 @@ class PaymentVaultViewModel : NSObject {
     }
  
     func getDisplayedPaymentMethodsCount() -> Int {
-        return self.getCustomerPaymentMethodsToDisplayCount() + self.currentPaymentMethodSearch.count
+        let currentPaymentMethodSearchConunt = self.currentPaymentMethodSearch != nil ? self.currentPaymentMethodSearch.count : 0
+        return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchConunt
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
