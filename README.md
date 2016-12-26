@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-android)
+[![Coverage Status](https://coveralls.io/repos/github/mercadopago/px-ios/badge.svg?branch=development)](https://coveralls.io/github/mercadopago/px-ios?branch=development)
 
 # MercadoPago iOS (Swift 3.0) SDK
 The MercadoPago iOS SDK make it easy to collect your users' credit card details inside your iOS app. By creating tokens, MercadoPago handles the bulk of PCI compliance by preventing sensitive card data from hitting your server.
