@@ -600,7 +600,73 @@ class PaymentVaultViewModelTest: BaseTest {
     
 */
     
+}
+
+class PaymentVaultViewModelTest: BaseTest {
+
+    var instance : PaymentVaultViewModel?
     
+    func testShouldGetCustomerCardsInfo(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+        
+        MercadoPagoContext.setBaseURL("baseUrl")
+        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+        
+        MercadoPagoContext.setCustomerURI("customerUri")
+        MercadoPagoContext.setMerchantAccessToken("merchantAT")
+        XCTAssertTrue(instance!.shouldGetCustomerCardsInfo())
+        
+        // CustomerUri invalid
+        MercadoPagoContext.setCustomerURI("")
+        MercadoPagoContext.setMerchantAccessToken("merchantAT")
+        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+        
+        //Valid input but no root viewController
+        MercadoPagoContext.setCustomerURI("customeruri")
+        instance!.isRoot = false
+        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+        
+        //Root vc, valid input but customerCards loaded already
+        instance!.isRoot = true
+        instance!.customerCards = [MockBuilder.buildCard()]
+        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+
+        
+    }
+    
+    func testGetCustomerPaymentMethodsToDisplayCount(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
+        //No customerCards loaded
+        var customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
+        XCTAssertEqual(0, customerCardsToDisplay)
+        
+        let cardMock = MockBuilder.buildCard()
+        instance?.customerCards = [cardMock]
+        customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
+        XCTAssertEqual(1, customerCardsToDisplay)
+        
+        instance!.customerCards = [cardMock, cardMock]
+        customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
+        XCTAssertEqual(2, customerCardsToDisplay)
+        
+        // Max customerCards value should be 3
+        XCTAssertEqual(3, PaymentVaultViewController.maxCustomerPaymentMethdos)
+        
+        instance!.customerCards = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
+        customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
+        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
+        
+        // Verify custom maxCustomerPaymentMethdos
+        PaymentVaultViewController.maxCustomerPaymentMethdos = 5
+        customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
+        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
+    }
+    
+    func testGetDisplayedPaymentMethodsCount(){
+        
+    }
 }
 
 
