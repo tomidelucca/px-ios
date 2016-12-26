@@ -10,8 +10,8 @@ import Foundation
 
 open class MockBuilder: NSObject {
     
-    internal class var MOCK_PAYMENT_ID : Int {
-        return 1826290155
+    internal class var MOCK_PAYMENT_ID : String {
+        return "1826290155"
     }
     
     class var PREF_ID_NO_EXCLUSIONS : String {

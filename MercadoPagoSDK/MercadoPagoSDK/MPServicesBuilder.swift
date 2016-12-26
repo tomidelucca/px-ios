@@ -261,7 +261,7 @@ open class MPServicesBuilder : NSObject {
         
     }
     
-    open class func getInstructions(_ paymentId : Int, paymentTypeId: String? = "",
+    open class func getInstructions(_ paymentId : String, paymentTypeId: String? = "",
                                     success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void,
                                     failure: ((_ error: NSError) -> Void)?) {
         
