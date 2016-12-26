@@ -17,5 +17,6 @@ install:
 script:
 # tests not working yet
 - gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && exit ${PIPESTATUS[0]}
-- cd scripts | ./run_tests_on_devices.sh
+- cd scripts 
+- ./run_tests_on_devices.sh
 
