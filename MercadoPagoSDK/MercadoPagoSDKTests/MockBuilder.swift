@@ -95,7 +95,7 @@ open class MockBuilder: NSObject {
         return Item(_id: id, title : "item title", quantity: quantity, unitPrice: unitPrice)
     }
     
-    class func buildPayer(_ id : NSNumber) -> Payer {
+    class func buildPayer(_ id : String) -> Payer {
         let payer =  Payer()
         payer._id = id
         payer.email = "thisisanem@il.com"
@@ -168,7 +168,7 @@ open class MockBuilder: NSObject {
             let amount = MockBuilder.INSTALLMENT_AMOUNT * Double(installments!)
             payment.transactionDetails.totalPaidAmount =  amount + (amount * 0.20)
         }
-        payment.payer = buildPayer(1)
+        payment.payer = buildPayer("1")
         payment.card = buildCard()
         return payment
     }
