@@ -664,10 +664,6 @@ class PaymentVaultViewModelTest: BaseTest {
         XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
     }
     
-    func testGetPaymentMethodOption(){
-     
-        
-    }
     
     func testGetDisplayedPaymentMethodsCount(){
         instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
@@ -702,6 +698,89 @@ class PaymentVaultViewModelTest: BaseTest {
         paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
         XCTAssertEqual(7, paymentMethodCount)
         
+    }
+    
+    func testGetCustomerCardRowHeight() {
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        var result = instance!.getCustomerCardRowHeight()
+        XCTAssertEqual(0, result)
+        
+        let cardMock = MockBuilder.buildCard()
+        instance!.customerCards = [cardMock]
+        result = instance!.getCustomerCardRowHeight()
+        XCTAssertEqual(CustomerPaymentMethodCell.ROW_HEIGHT, result)
+    }
+    
+    func testGetExcludedPaymentTypeIds(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        var paymentTypeIdsExcluded = instance?.getExcludedPaymentTypeIds()
+        XCTAssertNil(paymentTypeIdsExcluded)
+        
+        let pp = PaymentPreference()
+        pp.excludedPaymentTypeIds = ["pm1", "pm2", "pm3"]
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp)
+        paymentTypeIdsExcluded = instance?.getExcludedPaymentTypeIds()
+        XCTAssertEqual(pp.excludedPaymentTypeIds, paymentTypeIdsExcluded)
+        
+    }
+    
+    func testGetExcludedPaymentMethodIds(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        var paymentMethodIdsExcluded = instance!.getExcludedPaymentMethodIds()
+        XCTAssertNil(paymentMethodIdsExcluded)
+        
+        let pp = PaymentPreference()
+        pp.excludedPaymentMethodIds = ["pmA", "pmB", "pmC"]
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp)
+        paymentMethodIdsExcluded = instance!.getExcludedPaymentMethodIds()
+        XCTAssertEqual(pp.excludedPaymentMethodIds, paymentMethodIdsExcluded)
+        
+    }
+    
+    func testGetPaymentPreferenceDefaultPaymentMethodId(){
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        var defaultPaymentMethodId = instance!.getPaymentPreferenceDefaultPaymentMethodId()
+        XCTAssertNil(defaultPaymentMethodId)
+   
+        let pp = PaymentPreference()
+        pp.defaultPaymentMethodId = "defaultPaymentMethodId"
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp)
+        defaultPaymentMethodId = instance!.getPaymentPreferenceDefaultPaymentMethodId()
+        XCTAssertEqual("defaultPaymentMethodId", defaultPaymentMethodId)
+    }
+    
+    func testIsCustomerPaymentMethodOptionSelected(){
+        // No customer cards available
+        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        var wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(2)
+        XCTAssertFalse(wasCustomerCardSelected)
+        
+        let cardMock = MockBuilder.buildCard()
+        instance!.customerCards = [cardMock, cardMock, cardMock, cardMock, cardMock]
+        wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(0)
+        XCTAssertTrue(wasCustomerCardSelected)
+        
+        // Max customer payment methods is 3
+        wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(3)
+        XCTAssertFalse(wasCustomerCardSelected)
+        
+        PaymentVaultViewController.maxCustomerPaymentMethdos = 5
+        wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(3)
+        XCTAssertTrue(wasCustomerCardSelected)
+        
+        wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(6)
+        XCTAssertFalse(wasCustomerCardSelected)
+        
+        
+    }
+    
+    func testHasOnlyGroupsPaymentMethodAvailable(){
+        
+    }
+    
+    override func tearDown() {
+        // Restore default value
+        PaymentVaultViewController.maxCustomerPaymentMethdos = 3
     }
 }
 
