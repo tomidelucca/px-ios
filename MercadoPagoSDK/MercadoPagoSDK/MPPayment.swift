@@ -38,13 +38,13 @@ open class MPPayment: NSObject {
     open var tokenId : String?
 
     init(email : String, preferenceId : String, publicKey : String, paymentMethodId : String, installments : Int = 0, issuerId : String = "", tokenId : String = "") {
-        self.email = email
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
         self.installments = installments
         self.issuerId = issuerId
         self.tokenId = tokenId
+        self.email = email
     }
     
     open func toJSONString() -> String {
@@ -54,7 +54,6 @@ open class MPPayment: NSObject {
     open func toJSON() -> [String:Any] {
         var obj:[String:Any] = [
             "public_key": self.publicKey,
-            "email": self.email,
             "payment_method_id": self.paymentMethodId,
             "pref_id" : self.preferenceId,
             ]
