@@ -13,9 +13,6 @@ before_script:
   - gem install coveralls
   - gem install slather
 
-after_success:
- - slather coverage
-
 install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
@@ -25,3 +22,5 @@ script:
 - cd ../scripts 
 - ./run_tests_on_devices.sh
 
+after_success:
+ - slather coverage
