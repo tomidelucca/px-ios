@@ -251,7 +251,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             } else {
                 self.collectionSearch.delegate = self
                 self.collectionSearch.dataSource = self
-                
                 self.collectionSearch.reloadData()
                 self.loadingGroups = false
             }
