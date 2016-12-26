@@ -3,6 +3,7 @@ coverage_access_token: fRh2kJhSDuRgYlEHPJdf79WxljjV9DygB
 coverage_service: coveralls
 scheme: MercadoPagoSDK
 xcodeproj: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
+workspace: MercadoPagoSDK/MercadoPagoSDK.xcworkspace
 build_directory: /Users/travis/Library/Developer/Xcode/DerivedData
 source_directory:
    -LibraryComponents
