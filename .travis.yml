@@ -4,11 +4,12 @@ cache: cocoapods
 osx_image: xcode8.1
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcodeproj
 xcode_scheme: MercadoPagoSDK
+xcode_sdk: iphonesimulator
 
 before_script:
   - cd MercadoPagoSDK
   - xcrun simctl list
-  - brew update; brew update
+  - brew update
 
 install:
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
@@ -16,6 +17,5 @@ install:
 script:
 # tests not working yet
 - gstdbuf -o 0 xcodebuild build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty -c && exit ${PIPESTATUS[0]}
- #gstdbuf -o 0 xcodebuild build test -scheme MercadoPagoSDK 
-#- runTests.sh
+- cd scripts | ./run_tests_on_devices.sh
 
