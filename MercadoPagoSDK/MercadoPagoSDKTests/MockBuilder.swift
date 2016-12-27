@@ -149,6 +149,15 @@ open class MockBuilder: NSObject {
         card.securityCode?.length = 3
         return card
     }
+    
+    class func buildCustomerPaymentMethod(paymentMethodId : String, paymentTypeId : String) -> CustomerPaymentMethod {
+        let customerPm = CustomerPaymentMethod()
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
+        customerPm.paymentMethod = pm
+        customerPm.paymentMethodId = paymentMethodId
+        customerPm.paymentMethodTypeId = paymentTypeId
+        return customerPm
+    }
         
     class func buildPayment(_ paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
         let payment = Payment()
@@ -200,6 +209,7 @@ open class MockBuilder: NSObject {
         if type != nil {
             paymentMethodSearchItem.type = type
         }
+        paymentMethodSearchItem.showIcon = true
         return paymentMethodSearchItem
     }
     

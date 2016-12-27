@@ -606,8 +606,12 @@ class PaymentVaultViewModelTest: BaseTest {
 
     var instance : PaymentVaultViewModel?
     
+    override func setUp() {
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+    }
+    
     func testShouldGetCustomerCardsInfo(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
         XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
         
         MercadoPagoContext.setBaseURL("baseUrl")
@@ -636,7 +640,6 @@ class PaymentVaultViewModelTest: BaseTest {
     }
     
     func testGetCustomerPaymentMethodsToDisplayCount(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
         
         //No customerCards loaded
         var customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
@@ -652,21 +655,20 @@ class PaymentVaultViewModelTest: BaseTest {
         XCTAssertEqual(2, customerCardsToDisplay)
         
         // Max customerCards value should be 3
-        XCTAssertEqual(3, PaymentVaultViewController.maxCustomerPaymentMethdos)
+        XCTAssertEqual(3, PaymentVaultViewController.maxCustomerPaymentMethods)
         
         instance!.customerCards = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
+        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethods, customerCardsToDisplay)
         
         // Verify custom maxCustomerPaymentMethdos
-        PaymentVaultViewController.maxCustomerPaymentMethdos = 5
+        PaymentVaultViewController.maxCustomerPaymentMethods = 5
         customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethdos, customerCardsToDisplay)
+        XCTAssertEqual(PaymentVaultViewController.maxCustomerPaymentMethods, customerCardsToDisplay)
     }
     
     
     func testGetDisplayedPaymentMethodsCount(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
         
         // Payment methods not loaded
         var paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
@@ -694,14 +696,14 @@ class PaymentVaultViewModelTest: BaseTest {
         paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
         XCTAssertEqual(6, paymentMethodCount)
         
-        PaymentVaultViewController.maxCustomerPaymentMethdos = 4
+        PaymentVaultViewController.maxCustomerPaymentMethods = 4
         paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
         XCTAssertEqual(7, paymentMethodCount)
         
     }
     
     func testGetCustomerCardRowHeight() {
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
         var result = instance!.getCustomerCardRowHeight()
         XCTAssertEqual(0, result)
         
@@ -712,7 +714,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
     
     func testGetExcludedPaymentTypeIds(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
         var paymentTypeIdsExcluded = instance?.getExcludedPaymentTypeIds()
         XCTAssertNil(paymentTypeIdsExcluded)
         
@@ -725,7 +727,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
     
     func testGetExcludedPaymentMethodIds(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
         var paymentMethodIdsExcluded = instance!.getExcludedPaymentMethodIds()
         XCTAssertNil(paymentMethodIdsExcluded)
         
@@ -738,7 +740,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
     
     func testGetPaymentPreferenceDefaultPaymentMethodId(){
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
+        
         var defaultPaymentMethodId = instance!.getPaymentPreferenceDefaultPaymentMethodId()
         XCTAssertNil(defaultPaymentMethodId)
    
@@ -751,7 +753,6 @@ class PaymentVaultViewModelTest: BaseTest {
     
     func testIsCustomerPaymentMethodOptionSelected(){
         // No customer cards available
-        instance  = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil)
         var wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(2)
         XCTAssertFalse(wasCustomerCardSelected)
         
@@ -764,7 +765,7 @@ class PaymentVaultViewModelTest: BaseTest {
         wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(3)
         XCTAssertFalse(wasCustomerCardSelected)
         
-        PaymentVaultViewController.maxCustomerPaymentMethdos = 5
+        PaymentVaultViewController.maxCustomerPaymentMethods = 5
         wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(3)
         XCTAssertTrue(wasCustomerCardSelected)
         
@@ -776,11 +777,297 @@ class PaymentVaultViewModelTest: BaseTest {
     
     func testHasOnlyGroupsPaymentMethodAvailable(){
         
+        var result = instance!.hasOnlyGroupsPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem]
+        result = instance!.hasOnlyGroupsPaymentMethodAvailable()
+        XCTAssertTrue(result)
+        
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmIdAnother")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem, mockAnotherPmSearchitem]
+        result = instance!.hasOnlyGroupsPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem]
+        let mockCard = MockBuilder.buildCard()
+        instance!.customerCards = [mockCard]
+        result = instance!.hasOnlyGroupsPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+    }
+    
+    func testHasOnlyCustomerPaymentMethodAvailable(){
+        var result = instance!.hasOnlyCustomerPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem]
+        result = instance!.hasOnlyCustomerPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+        instance!.currentPaymentMethodSearch = []
+        let mockCard = MockBuilder.buildCard()
+        instance!.customerCards = [mockCard]
+        result = instance!.hasOnlyCustomerPaymentMethodAvailable()
+        XCTAssertTrue(result)
+        
+        instance!.customerCards = [mockCard, mockCard]
+        result = instance!.hasOnlyCustomerPaymentMethodAvailable()
+        XCTAssertFalse(result)
+        
+    }
+    
+    func testSetPaymentMethodSearch(){
+        
+        let pm = MockBuilder.buildPaymentMethod("id")
+        let anotherPm = MockBuilder.buildPaymentMethod("anotherId")
+        let pms = [pm, anotherPm]
+        instance!.setPaymentMethodSearch(paymentMethods: pms)
+        XCTAssertEqual(pms, instance!.paymentMethods)
+        XCTAssertNil(instance!.currentPaymentMethodSearch)
+        XCTAssertNil(instance!.customerCards)
+        XCTAssertNil(instance!.defaultPaymentOption)
+        
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("anotherPmId")
+        let mockOneMorePmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneMorePmId")
+        let paymentMethodSearchitems = [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem]
+        instance!.setPaymentMethodSearch(paymentMethods: pms, paymentMethodSearchItems: paymentMethodSearchitems)
+        XCTAssertEqual(pms, instance!.paymentMethods)
+        XCTAssertEqual(paymentMethodSearchitems, instance!.currentPaymentMethodSearch)
+        XCTAssertNil(instance!.customerCards)
+        XCTAssertNil(instance!.defaultPaymentOption)
+        
+        let mockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "visa", paymentTypeId: "credit_card")
+        let mockAnotherCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "amex", paymentTypeId: "credit_card")
+        let mockOneAnotherCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "master", paymentTypeId: "credit_card")
+        let cards : [CardInformation] = [mockCard, mockAnotherCard, mockOneAnotherCard]
+        instance!.setPaymentMethodSearch(paymentMethods: pms, paymentMethodSearchItems: paymentMethodSearchitems, customerPaymentMethods: cards)
+        XCTAssertEqual(paymentMethodSearchitems, instance!.currentPaymentMethodSearch)
+        XCTAssertEqual(pms, instance!.paymentMethods)
+        XCTAssertNotNil(instance!.customerCards)
+        XCTAssertEqual(3, instance!.customerCards!.count)
+        XCTAssertNil(instance!.defaultPaymentOption)
+        
+        let mockAccountMoney = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "account_money", paymentTypeId: "account_money")
+        let customerCards : [CardInformation] = [mockAccountMoney, mockCard]
+        instance!.setPaymentMethodSearch(paymentMethods: pms, paymentMethodSearchItems: paymentMethodSearchitems, customerPaymentMethods: customerCards)
+        XCTAssertEqual(paymentMethodSearchitems, instance!.currentPaymentMethodSearch)
+        XCTAssertEqual(pms, instance!.paymentMethods)
+        XCTAssertNotNil(instance!.customerCards)
+        XCTAssertEqual(1, instance!.customerCards!.count)
+        XCTAssertEqual(instance!.customerCards![0].getPaymentMethodId(), "visa")
+        
+    }
+    
+    func testSetPaymentMethodSearchResponse(){
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("anotherPmId")
+        let mockOneMorePmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneMorePmId")
+        
+        let paymentMethodSearchResponse = PaymentMethodSearch()
+        paymentMethodSearchResponse.groups = [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem]
+        instance!.setPaymentMethodSearchResponse(paymentMethodSearchResponse)
+        //FALTA
+    }
+    
+    /**
+     *  getPaymentMethodOption() for groups payment methods
+     */
+    func testGetPaymentMethodOptionNoCustomerCard(){
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("anotherPmId")
+        let mockOneMorePmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneMorePmId")
+        let mockOneLastPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneLastPmId")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem]
+        var result = instance!.getPaymentMethodOption(row : 0)
+        XCTAssertEqual("pmId", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 2)
+        XCTAssertEqual("oneMorePmId", result.getImageDescription())
+
+        result = instance!.getPaymentMethodOption(row : 3)
+        XCTAssertEqual("oneLastPmId", result.getImageDescription())
+    }
+    
+    /**
+     *  getPaymentMethodOption() with customer cards
+     */
+    func testGetPaymentMethodOptionWithCustomerCards(){
+        
+        let mockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "amex", paymentTypeId: "credit_card")
+        let anotherMockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "visa", paymentTypeId: "credit_card")
+        instance!.customerCards = [mockCard, anotherMockCard]
+        
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("anotherPmId")
+        let mockOneMorePmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneMorePmId")
+        let mockOneLastPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneLastPmId")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem]
+        
+        var result = instance!.getPaymentMethodOption(row : 3)
+        XCTAssertEqual("anotherPmId", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 1)
+        XCTAssertEqual("visa", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 5)
+        XCTAssertEqual("oneLastPmId", result.getImageDescription())
+    }
+    
+    /**
+     *  getPaymentMethodOption() with more customer cards than max of customer cards set
+     */
+    func testGetPaymentMethodOptionWithCustomerCardsAndMaxCustomerCardChanged(){
+        
+        let mockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "amex", paymentTypeId: "credit_card")
+        let anotherMockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "visa", paymentTypeId: "credit_card")
+        let oneMoreMockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "master", paymentTypeId: "credit_card")
+        let oneLastMockCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "elo", paymentTypeId: "credit_card")
+        let thisIsTheLastMockCardIPromise = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "hipercard", paymentTypeId: "credit_card")
+        instance!.customerCards = [mockCard, anotherMockCard, oneMoreMockCard, oneLastMockCard, thisIsTheLastMockCardIPromise]
+        
+        let mockPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("pmId")
+        let mockAnotherPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("anotherPmId")
+        let mockOneMorePmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneMorePmId")
+        let mockOneLastPmSearchitem = MockBuilder.buildPaymentMethodSearchItem("oneLastPmId")
+        instance!.currentPaymentMethodSearch = [mockPmSearchitem, mockAnotherPmSearchitem, mockOneMorePmSearchitem, mockOneLastPmSearchitem]
+        
+        var result = instance!.getPaymentMethodOption(row : 3)
+        XCTAssertEqual("pmId", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 1)
+        XCTAssertEqual("visa", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 2)
+        XCTAssertEqual("master", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 6)
+        XCTAssertEqual("oneLastPmId", result.getImageDescription())
+        
+        //Change maxCustomerPaymentMethdos
+        PaymentVaultViewController.maxCustomerPaymentMethods = 5
+        
+        result = instance!.getPaymentMethodOption(row : 3)
+        XCTAssertEqual("elo", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 0)
+        XCTAssertEqual("amex", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 4)
+        XCTAssertEqual("hipercard", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 5)
+        XCTAssertEqual("pmId", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 8)
+        XCTAssertEqual("oneLastPmId", result.getImageDescription())
+        
+        PaymentVaultViewController.maxCustomerPaymentMethods = 2
+        
+        result = instance!.getPaymentMethodOption(row : 2)
+        XCTAssertEqual("pmId", result.getImageDescription())
+        
+        result = instance!.getPaymentMethodOption(row : 1)
+        XCTAssertEqual("visa", result.getImageDescription())
+    }
+    
+    /**
+     *  optionSelected() for credit_card
+     */
+    func testOptionSelectedNewCard(){
+        
+        let currentNavigationController = UINavigationController()
+        let cardPaymentMethodSearchitem = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
+        instance!.optionSelected(cardPaymentMethodSearchitem, navigationController: currentNavigationController, cancelPaymentCallback: {})
+        
+        XCTAssertNotNil(currentNavigationController.viewControllers)
+        XCTAssertTrue(currentNavigationController.viewControllers.count > 0)
+        XCTAssertTrue(currentNavigationController.viewControllers[0] is CardFormViewController)
+        
+      
+    }
+    
+    /**
+     *  optionSelected() for offline payment method
+     */
+    func testOptionSelectedOfflinePaymentmethod(){
+        let currentNavigationController = UINavigationController()
+        
+        let offlinePayment = MockBuilder.buildPaymentMethod("rapipago")
+        instance!.paymentMethods = [offlinePayment]
+        let offlinePaymentMethodSelected = MockBuilder.buildPaymentMethodSearchItem("rapipago", type: PaymentMethodSearchItemType.PAYMENT_METHOD)
+        self.instance!.callback = {
+            (paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+            XCTAssertEqual("rapipago", paymentMethod._id)
+            XCTAssertNil(token)
+            XCTAssertNil(issuer)
+            XCTAssertNil(payerCost)
+            
+        }
+        
+        instance!.optionSelected(offlinePaymentMethodSelected, navigationController: currentNavigationController, cancelPaymentCallback: {})
+        XCTAssertEqual(0, currentNavigationController.viewControllers.count)
+    }
+    
+    /**
+     *  customerOptionSelected() for amex credit card
+     */
+    func testCustomerOptionSelected(){
+        let currentNavigationController = UINavigationController()
+        let visibleViewController = UIViewController()
+        let amexPaymentMethod = MockBuilder.buildPaymentMethod("amex")
+        let setting = Setting()
+        let securityCode = SecurityCode()
+        securityCode.length = 4
+        setting.securityCode = securityCode
+        amexPaymentMethod.settings = [setting]
+        let banamexPaymentMethod = MockBuilder.buildPaymentMethod("banamex")
+        instance!.paymentMethods = [banamexPaymentMethod, amexPaymentMethod]
+        
+        let customerCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "amex", paymentTypeId: "credit_card")
+        
+        instance!.customerOptionSelected(customerCardSelected: customerCard, navigationController: currentNavigationController, visibleViewController: visibleViewController)
+        
+        
+    }
+    
+    /**
+     *  customerOptionSelected() for account_money
+     */
+    func testCustomerOptionSelectedAccountMoney(){
+        let currentNavigationController = UINavigationController()
+        let visibleViewController = UIViewController()
+        let amexPaymentMethod = MockBuilder.buildPaymentMethod("amex")
+        let setting = Setting()
+        let securityCode = SecurityCode()
+        securityCode.length = 4
+        setting.securityCode = securityCode
+        amexPaymentMethod.settings = [setting]
+        let accountMoney = MockBuilder.buildPaymentMethod("account_money")
+        instance!.paymentMethods = [accountMoney, amexPaymentMethod]
+        
+        let customerCard = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "account_money", paymentTypeId: "account_money")
+        
+        instance!.callback = {
+            (paymentMethod: PaymentMethod, token:Token?, issuer: Issuer?, payerCost: PayerCost?) -> Void in
+            XCTAssertEqual("account_money", paymentMethod._id)
+            XCTAssertNil(token)
+            XCTAssertNil(issuer)
+            XCTAssertNil(payerCost)
+        }
+
+        instance!.customerOptionSelected(customerCardSelected: customerCard, navigationController: currentNavigationController, visibleViewController: visibleViewController)
+        
+        
     }
     
     override func tearDown() {
+        
         // Restore default value
-        PaymentVaultViewController.maxCustomerPaymentMethdos = 3
+        PaymentVaultViewController.maxCustomerPaymentMethods = 3
     }
 }
 

@@ -32,7 +32,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    static public var maxCustomerPaymentMethdos = 3
+    static public var maxCustomerPaymentMethods = 3
     
     
     override open var screenName : String { get { return "PAYMENT_METHOD_SEARCH" } }
@@ -482,7 +482,7 @@ class PaymentVaultViewModel : NSObject {
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if (self.customerCards != nil && self.customerCards?.count > 0) {
-            return (self.customerCards!.count <= PaymentVaultViewController.maxCustomerPaymentMethdos ? self.customerCards!.count : PaymentVaultViewController.maxCustomerPaymentMethdos)
+            return (self.customerCards!.count <= PaymentVaultViewController.maxCustomerPaymentMethods ? self.customerCards!.count : PaymentVaultViewController.maxCustomerPaymentMethods)
         }
         return 0
         
@@ -504,22 +504,6 @@ class PaymentVaultViewModel : NSObject {
     
     func getCustomerCardRowHeight() -> CGFloat {
         return self.getCustomerPaymentMethodsToDisplayCount() > 0 ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
-    }
-    
-    func getPaymentMethodRowHeight(_ rowIndex : Int) -> CGFloat {
-        
-        let currentPaymentMethodSearchItem = self.currentPaymentMethodSearch[rowIndex]
-        if currentPaymentMethodSearchItem.showIcon {
-            if currentPaymentMethodSearchItem.isPaymentMethod() && !currentPaymentMethodSearchItem.isBitcoin() {
-                if currentPaymentMethodSearchItem.comment != nil && currentPaymentMethodSearchItem.comment!.characters.count > 0 {
-                    return OfflinePaymentMethodCell.ROW_HEIGHT
-                } else {
-                    return OfflinePaymentMethodWithDescriptionCell.ROW_HEIGHT
-                }
-            }
-            return PaymentSearchCell.ROW_HEIGHT
-        }
-        return PaymentTitleViewCell.ROW_HEIGHT
     }
     
     func getExcludedPaymentTypeIds() -> Set<String>? {
@@ -599,9 +583,7 @@ class PaymentVaultViewModel : NSObject {
             }
             break
         case PaymentMethodSearchItemType.PAYMENT_METHOD.rawValue:
-            if paymentSearchItemSelected.idPaymentMethodSearchItem == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-                //MP wallet
-            } else if paymentSearchItemSelected.idPaymentMethodSearchItem == PaymentTypeId.BITCOIN.rawValue {
+            if paymentSearchItemSelected.idPaymentMethodSearchItem == PaymentTypeId.BITCOIN.rawValue {
                 
             } else {
                 // Offline Payment Method
@@ -640,7 +622,7 @@ class PaymentVaultViewModel : NSObject {
                         if String.isNullOrEmpty(token!.lastFourDigits) {
                             token!.lastFourDigits = customerCardSelected.getCardLastForDigits()
                         }
-                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as? PayerCost)
+                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as PayerCost)
                     }
                     navigationController.pushViewController(secCode, animated: false)
                 }
