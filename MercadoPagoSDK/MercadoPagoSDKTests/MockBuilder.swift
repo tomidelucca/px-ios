@@ -213,6 +213,13 @@ open class MockBuilder: NSObject {
         return paymentMethodSearchItem
     }
     
+    class func buildPaymentMethodSearch(groups : [PaymentMethodSearchItem]? = nil, paymentMethods : [PaymentMethod]? = nil) -> PaymentMethodSearch {
+        let paymentMethodSearch = PaymentMethodSearch()
+        paymentMethodSearch.groups = groups
+        paymentMethodSearch.paymentMethods = paymentMethods
+        return paymentMethodSearch
+    }
+    
     
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
