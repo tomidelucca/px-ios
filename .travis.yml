@@ -23,4 +23,5 @@ script:
 - ./run_tests_on_devices.sh
 
 after_success:
+ - cd ..
  - slather coverage
