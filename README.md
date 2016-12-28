@@ -1,4 +1,4 @@
-![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-ios)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/mercadopago/px-ios)
 ![build](https://travis-ci.org/mercadopago/px-ios.svg?branch=development)
 
 # MercadoPago iOS (Swift 3.0) SDK
