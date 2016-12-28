@@ -36,7 +36,13 @@ open class InstructionsService: MercadoPagoService {
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
-    open func getInstructions(_ paymentId : String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?){
+    @available(*, deprecated: 2.2.4, message: "Use getInstructions(_ paymentId : String, ...) instead. PaymentId can be greater than Int and might fail")
+    open func getInstructions(_ paymentId : Int, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?){
+        let paymentId = String(paymentId)
+        self.getInstructions(for: paymentId, paymentTypeId: paymentTypeId, success: success, failure: failure)
+    }
+    
+    open func getInstructions(for paymentId : String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo : InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?){
         var params =  "public_key=" + MercadoPagoContext.publicKey()
         if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
             params = params + "&payment_type=" + paymentTypeId!
