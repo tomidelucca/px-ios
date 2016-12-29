@@ -47,7 +47,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     
     
-    
     var defaultInstallments : Int?
     var installments : Int?
     var viewModel : PaymentVaultViewModel!
@@ -62,6 +61,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
     fileprivate var defaultOptionSelected = false;
+    
     
     public init(amount : Double, paymentPreference : PaymentPreference?, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
@@ -195,6 +195,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
        
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             MerchantServer.getCustomer({ (customer: Customer) -> Void in
+                self.viewModel.customerId = customer._id
                 self.viewModel.customerCards = customer.cards
                 self.loadPaymentMethodSearch()
                 
@@ -306,6 +307,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
          
             if self.viewModel.isCustomerPaymentMethodOptionSelected(indexPath.row) {
                 let customerCardSelected = self.viewModel.customerCards![indexPath.row] as CardInformation
+                CheckoutViewModel.CUSTOMER_ID = self.viewModel!.customerId ?? ""
                 self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
             } else {
                 let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodSearchItem
@@ -466,6 +468,8 @@ class PaymentVaultViewModel : NSObject {
     var defaultPaymentOption : PaymentMethodSearchItem?
     var cards : [Card]?
     weak var controller : PaymentVaultViewController?
+    
+    var customerId : String?
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     
