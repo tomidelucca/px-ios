@@ -54,7 +54,7 @@ extension UIColor {
     }
     
     //should say red at the begining?
-    class public func errorValidationTextColor() -> UIColor
+    class public func px_errorValidationTextColor() -> UIColor
     {
     return UIColorFromRGB(0xB34C42)
     }
@@ -64,29 +64,29 @@ extension UIColor {
     return UIColorFromRGB(0xF5CC00)
     }
     
-    class public func blueMercadoPago() -> UIColor
+    class public func px_blueMercadoPago() -> UIColor
     {
     return UIColorFromRGB(0x5ABEE7)
     }
     class public func lightBlue() -> UIColor {
         return UIColorFromRGB(0x3F9FDA)
     }
-    class public func grayBaseText() -> UIColor
+    class public func px_grayBaseText() -> UIColor
     {
     return UIColorFromRGB(0x333333)
     }
     
-    class public func grayDark() -> UIColor
+    class public func px_grayDark() -> UIColor
     {
     return UIColorFromRGB(0x666666)
     }
     
-    class public func grayLight() -> UIColor
+    class public func px_grayLight() -> UIColor
     {
     return UIColorFromRGB(0x999999)
     }
     
-    class public func grayLines() -> UIColor
+    class public func px_grayLines() -> UIColor
     {
     return UIColorFromRGB(0xCCCCCC)
     }
@@ -94,12 +94,12 @@ extension UIColor {
     class public func grayTableSeparator() -> UIColor{
     return UIColorFromRGB(0xEFEFF4)
     }
-    class public func backgroundColor() -> UIColor
+    class public func px_backgroundColor() -> UIColor
     {
     return UIColorFromRGB(0xEBEBF0)
     }
 
-    class public func white() -> UIColor
+    class public func px_white() -> UIColor
     {
     return UIColorFromRGB(0xFFFFFF)
     }
