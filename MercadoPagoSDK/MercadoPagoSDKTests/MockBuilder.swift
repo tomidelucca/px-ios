@@ -135,7 +135,7 @@ open class MockBuilder: NSObject {
         return identification
     }
     
-    class func buildCard() -> Card {
+    class func buildCard(paymentMethodId : String? = "paymentMethodId") -> Card {
         let card = Card()
         card.idCard = 1234567890
         card.firstSixDigits = "123456"
@@ -147,6 +147,7 @@ open class MockBuilder: NSObject {
         card.securityCode?.cardLocation = "cardLocation"
         card.securityCode?.mode = "mandatory"
         card.securityCode?.length = 3
+        card.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId!)
         return card
     }
     
