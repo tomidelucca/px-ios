@@ -135,7 +135,7 @@ open class MockBuilder: NSObject {
         return identification
     }
     
-    class func buildCard() -> Card {
+    class func buildCard(paymentMethodId : String? = "paymentMethodId") -> Card {
         let card = Card()
         card.idCard = 1234567890
         card.firstSixDigits = "123456"
@@ -147,7 +147,17 @@ open class MockBuilder: NSObject {
         card.securityCode?.cardLocation = "cardLocation"
         card.securityCode?.mode = "mandatory"
         card.securityCode?.length = 3
+        card.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId!)
         return card
+    }
+    
+    class func buildCustomerPaymentMethod(paymentMethodId : String, paymentTypeId : String) -> CustomerPaymentMethod {
+        let customerPm = CustomerPaymentMethod()
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
+        customerPm.paymentMethod = pm
+        customerPm.paymentMethodId = paymentMethodId
+        customerPm.paymentMethodTypeId = paymentTypeId
+        return customerPm
     }
         
     class func buildPayment(_ paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
@@ -194,14 +204,23 @@ open class MockBuilder: NSObject {
         return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
     
-    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
+    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem {
         let paymentMethodSearchItem = PaymentMethodSearchItem()
         paymentMethodSearchItem.idPaymentMethodSearchItem = paymentMethodId
         if type != nil {
             paymentMethodSearchItem.type = type
         }
+        paymentMethodSearchItem.showIcon = true
         return paymentMethodSearchItem
     }
+    
+    class func buildPaymentMethodSearch(groups : [PaymentMethodSearchItem]? = nil, paymentMethods : [PaymentMethod]? = nil) -> PaymentMethodSearch {
+        let paymentMethodSearch = PaymentMethodSearch()
+        paymentMethodSearch.groups = groups
+        paymentMethodSearch.paymentMethods = paymentMethods
+        return paymentMethodSearch
+    }
+    
     
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
