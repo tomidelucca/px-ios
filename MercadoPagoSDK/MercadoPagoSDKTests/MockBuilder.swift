@@ -128,6 +128,14 @@ open class MockBuilder: NSObject {
         return securityCode
     }
     
+    class func buildSetting() -> Setting {
+        let setting = Setting()
+        setting.binMask = MockBuilder.buildBinMask()
+        setting.securityCode = MockBuilder.buildSecurityCode()
+        setting.cardNumber = MockBuilder.buildCardNumber()
+        return setting
+    }
+    
     class func buildIdentification() -> Identification {
         let identification = Identification()
         identification.type = "type"
@@ -246,6 +254,21 @@ open class MockBuilder: NSObject {
         let cardHolder = Cardholder()
         cardHolder.name = "name"
         return cardHolder
+    }
+    
+    class func buildCardNumber() -> CardNumber {
+        let cardNumber = CardNumber()
+        cardNumber.length = 4
+        cardNumber.validation = "luhn"
+        return cardNumber
+    }
+    
+    class func buildBinMask() -> BinMask {
+        let bin = BinMask()
+        bin.pattern = "pattern"
+        bin.exclusionPattern = "exclusion_pattern"
+        bin.installmentsPattern = "installments_pattern"
+        return bin
     }
     
     class func buildPayerCost() -> PayerCost {
