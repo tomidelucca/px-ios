@@ -32,9 +32,6 @@
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
     //[MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
     
-    
-
-    
     return YES;
 }
 
