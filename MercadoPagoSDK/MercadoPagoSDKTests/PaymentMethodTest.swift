@@ -32,7 +32,7 @@ class PaymentMethodTest: BaseTest {
     }
 
     func testToJSON(){
-        var paymentMethod = MockBuilder.buildPaymentMethod("paymentMethodId", name: "name")
+        let paymentMethod = MockBuilder.buildPaymentMethod("paymentMethodId", name: "name")
         paymentMethod.status = "active"
         paymentMethod.secureThumbnail = "secureThumbnail"
         paymentMethod.thumbnail = "thumbnail"
