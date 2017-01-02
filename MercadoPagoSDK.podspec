@@ -24,8 +24,4 @@ Pod::Spec.new do |s|
     }
   end
 
-  s.pod_target_xcconfig = {
-    'SWIFT_VERSION' => '3.0.1'
-  }
-
 end

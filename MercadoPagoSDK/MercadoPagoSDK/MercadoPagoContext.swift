@@ -152,8 +152,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
-    fileprivate static var complementaryColor : UIColor = UIColor.px_blueMercadoPago()
-    fileprivate static var textColor : UIColor = UIColor.px_white()
+    fileprivate static var complementaryColor : UIColor = UIColor.blueMercadoPago()
+    fileprivate static var textColor : UIColor = UIColor.white()
     
     open static func setupPrimaryColor(_ color: UIColor, complementaryColor: UIColor? = nil){
         MercadoPagoContext.primaryColor = color
@@ -161,7 +161,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             MercadoPagoContext.setupComplementaryColor(complementaryColor!)
         }else{
             if (color == UIColor.mpDefaultColor()){
-                MercadoPagoContext.setupComplementaryColor(UIColor.px_blueMercadoPago())
+                MercadoPagoContext.setupComplementaryColor(UIColor.blueMercadoPago())
             }else{
                 MercadoPagoContext.setupComplementaryColor(color.lighter())
             }
@@ -186,7 +186,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         textColor = UIColor.black
     }
     open static func setLightTextColor(){
-        textColor = UIColor.px_white()
+        textColor = UIColor.white()
     }
     
     
