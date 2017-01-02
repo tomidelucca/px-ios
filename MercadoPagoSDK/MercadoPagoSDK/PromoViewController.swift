@@ -25,12 +25,13 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		super.init(coder: aDecoder)
 	}
 	
-	public init(callback : ((Void) -> (Void))? = nil) {
+	public init(promos : [Promo]? = nil,callback : ((Void) -> (Void))? = nil) {
 		super.init(nibName: "PromoViewController", bundle: self.bundle)
 		self.publicKey = MercadoPagoContext.publicKey()
         self.callback = callback
+        self.promos = promos
 	}
-	
+    
 	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
@@ -38,9 +39,6 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
     override open func viewDidLoad() {
         super.viewDidLoad()
 		self.title = "Promociones".localized
-	//	self.navigationItem.hidesBackButton = true
-
-	//	self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cerrar", style: UIBarButtonItemStyle.Plain, target: self, action: Selector(PromoViewController.back))
 		
 		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
 		self.tableView.register(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
@@ -51,27 +49,31 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		
-		self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
+	/*	self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
         
 		self.view.addSubview(self.loadingView)
-		
+	*/
         if self.callback == nil {
             self.callback = {
                 self.dismiss(animated: true, completion: {})
             }
         }
-		var mercadoPago : MercadoPago
-		mercadoPago = MercadoPago(keyType: MercadoPago.PUBLIC_KEY, key: self.publicKey)
-		mercadoPago.getPromos({ (promos) -> Void in
-			self.promos = promos
-			self.tableView.reloadData()
-			self.loadingView.removeFromSuperview()
-		}, failure: { (error) -> Void in
-			if error.code == MercadoPago.ERROR_API_CODE {
-				self.tableView.reloadData()
-				self.loadingView.removeFromSuperview()
-			}
-		})
+        
+        if Array.isNullOrEmpty(self.promos) {
+            MPServicesBuilder.getPromos({(promos : [Promo]?) in
+                self.promos = promos
+                self.tableView.reloadData()
+                self.loadingView.removeFromSuperview()
+            }, failure: { (error: NSError) in
+                if error.code == MercadoPago.ERROR_API_CODE {
+                    self.tableView.reloadData()
+                    self.loadingView.removeFromSuperview()
+                }
+            })
+        } else {
+            self.tableView.reloadData()
+            //self.loadingView.removeFromSuperview()
+        }
 		
     }
 	

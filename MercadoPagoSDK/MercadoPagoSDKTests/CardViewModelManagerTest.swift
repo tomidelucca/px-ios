@@ -84,6 +84,12 @@ class CardViewModelManagerTest: BaseTest {
         XCTAssertEqual(MercadoPago.getFontColorFor(expectedPaymentMethod), self.cardFormManager!.getLabelTextColor())
     }
     
+    func testShowBankDeals(){
+        self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentSettings: nil)
+        let result = self.cardFormManager!.showBankDeals()
+        XCTAssertTrue(result)
+    }
+    
     func testGetEditingLabelColorDefaultColor() {
         self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: nil, customerCard: nil, token: nil, paymentSettings: nil)
         
