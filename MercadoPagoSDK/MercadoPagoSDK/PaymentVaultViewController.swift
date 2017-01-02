@@ -149,7 +149,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.collectionSearch.backgroundColor = UIColor.white()
+       self.collectionSearch.backgroundColor = UIColor.px_white()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
