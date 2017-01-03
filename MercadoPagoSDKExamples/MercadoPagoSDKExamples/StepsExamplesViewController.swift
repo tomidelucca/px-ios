@@ -19,6 +19,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
         "Crear Pago".localized,
+        "Ver Promociones".localized
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
@@ -86,7 +87,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         case 6:
             createPayment()
         default:
-            break
+            showBankDeals()
         }
     }
     
@@ -219,6 +220,11 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             
         }
         
+    }
+    
+    func showBankDeals(){
+        let promosVC = MPStepBuilder.startPromosStep()
+        self.navigationController!.present(promosVC, animated: true, completion: {})
     }
 }
 

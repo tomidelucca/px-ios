@@ -14,7 +14,6 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	var publicKey : String?
 	override open var screenName : String { get { return "BANK_DEALS" } }
 	@IBOutlet weak fileprivate var tableView : UITableView!
-	var loadingView : UILoadingView!
 	
 	var promos : [Promo]!
 	
@@ -38,8 +37,12 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 	
     override open func viewDidLoad() {
         super.viewDidLoad()
-		self.title = "Promociones".localized
-		
+        self.title = "Promociones".localized
+        if self.navigationController != nil {
+            self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.px_white()]
+        }
+        
+        
 		self.tableView.register(UINib(nibName: "PromoTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoTableViewCell")
 		self.tableView.register(UINib(nibName: "PromosTyCTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromosTyCTableViewCell")
 		self.tableView.register(UINib(nibName: "PromoEmptyTableViewCell", bundle: self.bundle), forCellReuseIdentifier: "PromoEmptyTableViewCell")
@@ -49,10 +52,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		
-	/*	self.loadingView = UILoadingView(frame: MercadoPago.screenBoundsFixedToPortraitOrientation(), text: ("Cargando...".localized as NSString) as String)
-        
-		self.view.addSubview(self.loadingView)
-	*/
+        self.showLoading()
         if self.callback == nil {
             self.callback = {
                 self.dismiss(animated: true, completion: {})
@@ -63,16 +63,16 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
             MPServicesBuilder.getPromos({(promos : [Promo]?) in
                 self.promos = promos
                 self.tableView.reloadData()
-                self.loadingView.removeFromSuperview()
+                self.hideLoading()
             }, failure: { (error: NSError) in
                 if error.code == MercadoPago.ERROR_API_CODE {
                     self.tableView.reloadData()
-                    self.loadingView.removeFromSuperview()
+                    self.hideLoading()
                 }
             })
         } else {
             self.tableView.reloadData()
-            //self.loadingView.removeFromSuperview()
+            self.hideLoading()
         }
 		
     }
