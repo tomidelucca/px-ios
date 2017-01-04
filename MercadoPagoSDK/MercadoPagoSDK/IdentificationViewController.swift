@@ -185,7 +185,7 @@ public class IdentificationViewController: MercadoPagoUIViewController , UITextF
         inputButtons!.alpha = 1;
         navItem = UINavigationItem()
         
-        doneNext = UIBarButtonItem(title: "Continuar".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
+        doneNext = UIBarButtonItem(title: "Concluir".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.rightArrowKeyTapped))
         donePrev =  UIBarButtonItem(title: "Anterior".localized, style: .Plain, target: self, action: #selector(IdentificationViewController.leftArrowKeyTapped))
         
         if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
