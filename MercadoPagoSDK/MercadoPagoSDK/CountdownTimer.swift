@@ -10,25 +10,36 @@ import UIKit
 
 open class CountdownTimer: NSObject {
     
-    private static var timer : Timer!
+    private static let instance = CountdownTimer()
+    
+    private var timer : Timer?
     var secondsLeft = 0
     var timeoutCallback : ((Void) -> Void?)!
     weak var delegate : TimerDelegate!
     
-    public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
-        super.init()
+    //public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
+    open func setup(seconds : Int, timeoutCallback : @escaping (Void) -> Void) {
         self.secondsLeft = seconds
         self.timeoutCallback = timeoutCallback
         
-        if CountdownTimer.timer != nil {
-            CountdownTimer.timer.invalidate()
+        // Timer already created in older purchase trial
+        if self.timer != nil {
+            self.timer!.invalidate()
         }
         
-        CountdownTimer.timer = Timer.scheduledTimer(timeInterval: 1,
+        self.timer = Timer.scheduledTimer(timeInterval: 1,
                                                     target: self,
                                                     selector: #selector(self.updateTimer),
                                                     userInfo: nil,
                                                     repeats: true)
+    }
+    
+    open static func getInstance() -> CountdownTimer {
+        return CountdownTimer.instance
+    }
+    
+    open func hasTimer() -> Bool {
+        return self.timer != nil
     }
     
     open func updateTimer(){
@@ -36,7 +47,7 @@ open class CountdownTimer: NSObject {
         //print("timer retain count \(CFGetRetainCount(self))")
         
         guard let delegate = self.delegate  else {
-            CountdownTimer.timer.invalidate()
+            self.timer!.invalidate()
             return
         }
         secondsLeft -= 1
@@ -49,7 +60,7 @@ open class CountdownTimer: NSObject {
     }
     
     open func stopTimer() {
-        CountdownTimer.timer.invalidate()
+        self.timer!.invalidate()
     }
     
     open func getCurrentTiming() -> String {

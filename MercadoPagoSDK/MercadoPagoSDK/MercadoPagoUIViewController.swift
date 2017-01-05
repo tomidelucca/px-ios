@@ -36,7 +36,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        if self.timer != nil {
+        if CountdownTimer.getInstance().hasTimer() {
+            self.timer = CountdownTimer.getInstance()
             self.timer!.delegate = self
             self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
             self.timerLabel!.backgroundColor = MercadoPagoContext.getPrimaryColor()
