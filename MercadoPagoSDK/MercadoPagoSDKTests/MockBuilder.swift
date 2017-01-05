@@ -263,6 +263,14 @@ open class MockBuilder: NSObject {
         return cardNumber
     }
     
+    class func buildPromo() -> Promo {
+        let promo = Promo()
+        promo.promoId = "promoId"
+        promo.legals = "legals"
+        promo.paymentMethods = [MockBuilder.buildPaymentMethod("idPaymentMethod")]
+        return promo
+    }
+    
     class func buildBinMask() -> BinMask {
         let bin = BinMask()
         bin.pattern = "pattern"

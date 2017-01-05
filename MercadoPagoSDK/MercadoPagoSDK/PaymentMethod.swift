@@ -93,17 +93,17 @@ open class PaymentMethod : NSObject  {
             "accreditation_time" : accreditationTime
         ]
         
-        var additionalInfoJson = " "
+       var additionalInfoJson = ""
         for info in self.additionalInfoNeeded {
             additionalInfoJson.append(info + ",")
         }
-        obj["additional_info_needed"] = additionalInfoJson.remove(at: additionalInfoJson.index(before: additionalInfoJson.endIndex))
-        
+        obj["additional_info_needed"] = String(additionalInfoJson.characters.dropLast())
+      
         var settingsJson = " "
         for setting in self.settings {
             settingsJson.append(setting.toJSONString() + ",")
         }
-        obj["settings"] = settingsJson.remove(at: settingsJson.index(before: settingsJson.endIndex))
+        obj["settings"] = String(settingsJson.characters.dropLast())
 
         
         return obj
