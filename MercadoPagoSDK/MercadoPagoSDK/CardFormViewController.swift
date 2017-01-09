@@ -81,7 +81,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.navigationController?.navigationBar.isTranslucent = false
                 self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
                 
-                if self.timer == nil && cardFormManager.showBankDeals(){
+                if cardFormManager.showBankDeals(){
                     let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                     promocionesButton.tintColor = UIColor.systemFontColor()
                     self.navigationItem.rightBarButtonItem = promocionesButton

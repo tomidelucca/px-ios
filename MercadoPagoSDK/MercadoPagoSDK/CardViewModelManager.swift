@@ -230,7 +230,8 @@ class CardViewModelManager: NSObject {
         }
     }
     func showBankDeals() -> Bool{
-        if MercadoPagoContext.getSite() == MercadoPagoContext.Site.MLA.rawValue{
+        
+        if MercadoPagoContext.getSite() == MercadoPagoContext.Site.MLA.rawValue && !CountdownTimer.getInstance().hasTimer() {
             return CardFormViewController.showBankDeals
         } else {
             return false
