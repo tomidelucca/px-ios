@@ -59,7 +59,7 @@ open class CountdownTimer: NSObject {
     }
     
     open func stopTimer() {
-        self.timer!.invalidate()
+        self.timer?.invalidate()
     }
     
     open func getCurrentTiming() -> String {
