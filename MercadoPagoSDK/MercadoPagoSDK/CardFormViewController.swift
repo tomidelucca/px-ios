@@ -94,12 +94,11 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
     }
     
-    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil,  timer : CountdownTimer? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
+    public init(paymentSettings : PaymentPreference?, amount:Double!, token: Token? = nil, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = CardViewModelManager(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, paymentSettings: paymentSettings)
         self.callbackCancel = callbackCancel
         self.callback = callback
-        self.timer = timer
     }
     
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

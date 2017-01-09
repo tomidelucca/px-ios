@@ -17,7 +17,6 @@ open class CountdownTimer: NSObject {
     var timeoutCallback : ((Void) -> Void?)!
     weak var delegate : TimerDelegate!
     
-    //public init(_ seconds : Int, timeoutCallback : @escaping (Void) -> Void){
     open func setup(seconds : Int, timeoutCallback : @escaping (Void) -> Void) {
         self.secondsLeft = seconds
         self.timeoutCallback = timeoutCallback
