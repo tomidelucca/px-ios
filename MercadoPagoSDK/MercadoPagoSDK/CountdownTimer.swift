@@ -9,8 +9,8 @@
 import UIKit
 
 open class CountdownTimer: NSObject {
-
-    var timer : Timer!
+    
+    private static var timer : Timer!
     var secondsLeft = 0
     var timeoutCallback : ((Void) -> Void?)!
     weak var delegate : TimerDelegate!
@@ -20,12 +20,15 @@ open class CountdownTimer: NSObject {
         self.secondsLeft = seconds
         self.timeoutCallback = timeoutCallback
         
+        if CountdownTimer.timer != nil {
+            CountdownTimer.timer.invalidate()
+        }
         
-        self.timer = Timer.scheduledTimer(timeInterval: 1,
-                                          target: self,
-                                          selector: #selector(self.updateTimer),
-                                          userInfo: nil,
-                                          repeats: true)
+        CountdownTimer.timer = Timer.scheduledTimer(timeInterval: 1,
+                                                    target: self,
+                                                    selector: #selector(self.updateTimer),
+                                                    userInfo: nil,
+                                                    repeats: true)
     }
     
     open func updateTimer(){
@@ -33,12 +36,12 @@ open class CountdownTimer: NSObject {
         //print("timer retain count \(CFGetRetainCount(self))")
         
         guard let delegate = self.delegate  else {
-            self.timer.invalidate()
+            CountdownTimer.timer.invalidate()
             return
         }
         secondsLeft -= 1
         delegate.updateTimer()
-    
+        
         if secondsLeft == 0 {
             stopTimer()
             timeoutCallback()
@@ -46,7 +49,7 @@ open class CountdownTimer: NSObject {
     }
     
     open func stopTimer() {
-        self.timer.invalidate()
+        CountdownTimer.timer.invalidate()
     }
     
     open func getCurrentTiming() -> String {
@@ -79,11 +82,11 @@ open class CountdownTimer: NSObject {
     deinit {
         //print("Limpie el timer")
     }
-
+    
 }
 
 @objc public protocol TimerDelegate {
-
+    
     @objc func updateTimer()
-
+    
 }
