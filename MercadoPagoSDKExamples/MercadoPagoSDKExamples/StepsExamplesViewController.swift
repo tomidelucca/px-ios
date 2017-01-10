@@ -19,6 +19,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
         "Crear Pago".localized,
+        "Ver Promociones".localized
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
@@ -86,7 +87,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         case 6:
             createPayment()
         default:
-            break
+            showBankDeals()
         }
     }
     
@@ -98,8 +99,8 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
 */
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         let pp = PaymentPreference()
-        pp.excludedPaymentTypeIds = ["ticket",  "atm"]
-        //pp.excludedPaymentMethodIds = ["master"]
+        pp.excludedPaymentTypeIds = ["ticket",  "atm", "bank_transfer"]
+        pp.excludedPaymentMethodIds = ["master"]
         pp.maxAcceptedInstallments = 3
 
         let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
@@ -219,6 +220,11 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             
         }
         
+    }
+    
+    func showBankDeals(){
+        let promosVC = MPStepBuilder.startPromosStep()
+        self.navigationController!.present(promosVC, animated: true, completion: {})
     }
 }
 
