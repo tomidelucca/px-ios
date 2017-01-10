@@ -40,8 +40,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.timer = CountdownTimer.getInstance()
             self.timer!.delegate = self
             self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
-            self.timerLabel!.backgroundColor = self.navBarBackgroundColor ?? MercadoPagoContext.getPrimaryColor()
-            self.timerLabel!.textColor = self.navBarTextColor ?? MercadoPagoContext.getTextColor()
+            self.timerLabel!.backgroundColor = self.navBarBackgroundColor
+            self.timerLabel!.textColor = self.navBarTextColor
             self.timerLabel!.textAlignment = .right
             self.timerLabel!.isHidden = self.loadingInstance != nil
             let button = UIButton(type: UIButtonType.custom)
