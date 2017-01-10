@@ -12,7 +12,7 @@ open class CountdownTimer: NSObject {
     
     private static let instance = CountdownTimer()
     
-    private var timer : Timer?
+    var timer : Timer?
     var secondsLeft = 0
     var timeoutCallback : ((Void) -> Void?)!
     weak var delegate : TimerDelegate!
@@ -60,13 +60,14 @@ open class CountdownTimer: NSObject {
     
     open func stopTimer() {
         self.timer?.invalidate()
+        self.timer = nil
     }
     
     open func getCurrentTiming() -> String {
         var hoursStr = "", minutesStr = "", secondsStr = ""
         
         var minutes = secondsLeft / 60
-        if minutes > 60 {
+        if minutes >= 60 {
             let hours = minutes / 60
             if hours < 10 {
                 hoursStr = "0"
