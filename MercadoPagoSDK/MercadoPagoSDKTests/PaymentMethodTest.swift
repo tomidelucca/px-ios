@@ -43,6 +43,8 @@ class PaymentMethodTest: BaseTest {
         
         let paymentMethodJson = paymentMethod.toJSON()
         
+        XCTAssertNotNil(paymentMethod.toJSONString())
+        
         XCTAssertEqual(paymentMethodJson["id"] as! String, "paymentMethodId")
         XCTAssertEqual(paymentMethodJson["name"] as! String, "name")
         XCTAssertEqual(paymentMethodJson["payment_type_id"] as! String, "credit_card")
