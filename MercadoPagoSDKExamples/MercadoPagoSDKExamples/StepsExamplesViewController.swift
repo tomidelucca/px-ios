@@ -129,9 +129,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
+        CountdownTimer.getInstance().setup(seconds: 180, timeoutCallback: timeoutCallback)
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -156,9 +156,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        let timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
+        CountdownTimer.getInstance().setup(seconds: 30, timeoutCallback: timeoutCallback)
         
-        cf = MPStepBuilder.startCreditCardForm(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer) in
+        
+        cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer

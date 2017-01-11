@@ -36,17 +36,19 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     override open func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        if self.timer != nil {
+        if CountdownTimer.getInstance().hasTimer() {
+            self.timer = CountdownTimer.getInstance()
             self.timer!.delegate = self
             self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
-            self.timerLabel!.backgroundColor = MercadoPagoContext.getPrimaryColor()
-            self.timerLabel!.textColor = MercadoPagoContext.getTextColor()
+            self.timerLabel!.backgroundColor = self.navBarBackgroundColor
+            self.timerLabel!.textColor = self.navBarTextColor
             self.timerLabel!.textAlignment = .right
+            self.timerLabel!.isHidden = self.loadingInstance != nil
             let button = UIButton(type: UIButtonType.custom)
             button.frame = CGRect(x: 0, y: 0, width: 56, height: 20)
             button.addSubview(timerLabel!)
-            
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+           
         }
     }
     
@@ -77,7 +79,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         UIApplication.shared.statusBarStyle = .lightContent
         
         self.loadMPStyles()
-     
+        hideTimer()
         
     }
     
@@ -213,6 +215,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         
     }
     
+    internal func hideTimer(){
+        self.timerLabel?.isHidden = true
+    }
+    
     var fistResponder : UITextField?
     
     internal func hideKeyboard(_ view: UIView) -> Bool{
@@ -240,6 +246,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func hideLoading(){
         LoadingOverlay.shared.hideOverlayView()
+        self.loadingInstance = nil
     }
     
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -272,6 +279,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open func updateTimer() {
         if self.timerLabel != nil {
             self.timerLabel!.text = self.timer!.getCurrentTiming()
+            self.timerLabel!.isHidden = self.loadingInstance != nil
+            
         }
     }
     var navBarFontSize: CGFloat = 18
