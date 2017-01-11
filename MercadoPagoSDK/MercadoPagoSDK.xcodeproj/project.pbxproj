@@ -599,6 +599,7 @@
 		76D936421CDA5BE000238CB0 /* PreferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D936401CDA56A900238CB0 /* PreferenceService.swift */; };
 		76DA64601C8F50C2004F9A7C /* MPServicesBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA645F1C8F50C2004F9A7C /* MPServicesBuilderTest.swift */; };
 		76DA646C1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
+		76E43C7E1E1BE80300E7ADBA /* PromoViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E43C7D1E1BE80300E7ADBA /* PromoViewControllerTest.swift */; };
 		76E92F831C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E92F811C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift */; };
 		76E92F841C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E92F811C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift */; };
 		76E92F851C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76E92F821C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib */; };
@@ -1021,6 +1022,7 @@
 		76DA64611C8F5D8B004F9A7C /* MercadoPagoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoService.swift; sourceTree = "<group>"; };
 		76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndConditionsViewCell.swift; sourceTree = "<group>"; };
 		76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TermsAndConditionsViewCell.xib; sourceTree = "<group>"; };
+		76E43C7D1E1BE80300E7ADBA /* PromoViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromoViewControllerTest.swift; sourceTree = "<group>"; };
 		76E92F811C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTitleAndCommentViewCell.swift; sourceTree = "<group>"; };
 		76E92F821C6D1F69000D0393 /* PaymentTitleAndCommentViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentTitleAndCommentViewCell.xib; sourceTree = "<group>"; };
 		76EA639F1C9B3B9700808E11 /* InstructionsServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsServiceTest.swift; sourceTree = "<group>"; };
@@ -2075,6 +2077,14 @@
 			name = Util;
 			sourceTree = "<group>";
 		};
+		76E43C7C1E1BE7EB00E7ADBA /* Promos */ = {
+			isa = PBXGroup;
+			children = (
+				76E43C7D1E1BE80300E7ADBA /* PromoViewControllerTest.swift */,
+			);
+			name = Promos;
+			sourceTree = "<group>";
+		};
 		76FD246F1C5BFE45008C5DC0 /* GuessingForm */ = {
 			isa = PBXGroup;
 			children = (
@@ -2777,6 +2787,7 @@
 				0F98838A1AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
 				156DA6431CC55636006B892F /* PayerCostFormTest.swift in Sources */,
 				0F9883721AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
+				76E43C7E1E1BE80300E7ADBA /* PromoViewControllerTest.swift in Sources */,
 				76F41E281D3D4A9700B25E5B /* MercadoPagoContext.swift in Sources */,
 				7622E3361DF5F0A300490C4E /* InstructionsSubtitleTableViewCell.swift in Sources */,
 				76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */,

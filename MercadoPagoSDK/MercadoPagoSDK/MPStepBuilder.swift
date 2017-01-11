@@ -100,10 +100,10 @@ open class MPStepBuilder : NSObject {
         })
     }
     
-    open class func startPromosStep(
+    open class func startPromosStep(promos : [Promo]? = nil,
         _ callback : ((Void) -> (Void))? = nil) -> PromoViewController {
         MercadoPagoContext.initFlavor2()
-        return PromoViewController(callback : callback)
+        return PromoViewController(promos : promos, callback : callback)
     }
     
     fileprivate class func verifyPaymentMethods(paymentMethods: [PaymentMethod], cardToken: CardToken, amount: Double, cardInformation: CardInformation?, callback: @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), ccf: MercadoPagoUIViewController, callbackCancel: ((Void) -> Void)?) -> Bool{
