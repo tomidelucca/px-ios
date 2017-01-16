@@ -108,7 +108,7 @@ extension UIColor {
     }
     
     class public func systemFontColor() -> UIColor{
-        return MercadoPagoContext.getTextColor()
+        return MercadoPagoContext.getDecorationPreference().getTextColor()
     }
     
     class public func redCongrats() -> UIColor {
@@ -116,7 +116,7 @@ extension UIColor {
     }
     
     class public func primaryColor() -> UIColor {
-        return MercadoPagoContext.getPrimaryColor()
+        return MercadoPagoContext.getDecorationPreference().getBaseColor()
     }
     
     class public func complementaryColor() -> UIColor {

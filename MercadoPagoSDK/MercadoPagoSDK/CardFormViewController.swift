@@ -69,17 +69,17 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
             if let fontChosed = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) {
-                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getTextColor(), NSFontAttributeName:fontChosed]
+                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getDecorationPreference().getTextColor(), NSFontAttributeName:fontChosed]
             }
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.barTintColor = MercadoPagoContext.getPrimaryColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
-                self.cardBackground.backgroundColor =  MercadoPagoContext.getComplementaryColor()
+                self.cardBackground.backgroundColor = UIColor.primaryColor()
                 
                 if cardFormManager.showBankDeals(){
                     let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))

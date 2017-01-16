@@ -46,6 +46,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var display_default_loading = true
     
+    var decorationPreference = DecorationPreference()
+    
     open class var PUBLIC_KEY : String {
         return "public_key"
     }
@@ -144,7 +146,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
-    
+    open static func getDecorationPreference() -> DecorationPreference{
+        return sharedInstance.decorationPreference
+    }
     open func publicKey() -> String!{
         return self.public_key
     }
@@ -182,6 +186,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     internal static func getTextColor() -> UIColor {
         return textColor
     }
+    
     open static func setDarkTextColor(){
         textColor = UIColor.black
     }
@@ -270,6 +275,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func setDisplayDefaultLoading(flag : Bool){
         sharedInstance.display_default_loading = flag
+    }
+    
+    open class func setDecorationPreference(decorationPreference: DecorationPreference){
+        sharedInstance.decorationPreference = decorationPreference
     }
     
     open class func merchantAccessToken() -> String {
