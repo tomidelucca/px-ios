@@ -69,7 +69,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
             if let fontChosed = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18) {
-                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getDecorationPreference().getTextColor(), NSFontAttributeName:fontChosed]
+                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getDecorationPreference().getFontColor(), NSFontAttributeName:fontChosed]
             }
             
             if self.navigationController != nil {
