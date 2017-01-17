@@ -318,6 +318,7 @@
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
+		4B2823941E2E4536004C02E9 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */; };
 		4B62AC281DD005B500D668DA /* InstructionBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62AC261DD005B500D668DA /* InstructionBodyTableViewCell.swift */; };
 		4B62AC291DD005B500D668DA /* InstructionBodyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B62AC271DD005B500D668DA /* InstructionBodyTableViewCell.xib */; };
 		4B762E961DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E941DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.swift */; };
@@ -858,6 +859,7 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
 		15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
+		4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Additions.swift"; sourceTree = "<group>"; };
 		4B62AC261DD005B500D668DA /* InstructionBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionBodyTableViewCell.swift; sourceTree = "<group>"; };
 		4B62AC271DD005B500D668DA /* InstructionBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionBodyTableViewCell.xib; sourceTree = "<group>"; };
 		4B762E941DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -1244,6 +1246,7 @@
 				0F9883B91AD2AD1600F750F0 /* UIColor+Additions.swift */,
 				76445AD31CC6BDDD008EE68E /* CALayer+Additions.swift */,
 				CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */,
+				4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -2571,6 +2574,7 @@
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
 				0F98837F1AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,
 				0FC4FC3F1B0FB83700CF7148 /* PromosTyCViewController.swift in Sources */,
+				4B2823941E2E4536004C02E9 /* UIImage+Additions.swift in Sources */,
 				76B085141CE366D600C157BF /* ApprovedPaymentHeaderTableViewCell.swift in Sources */,
 				76445AEE1CCA7334008EE68E /* MockBuilder.swift in Sources */,
 				0FC4FC181B0FAA6400CF7148 /* Promo.swift in Sources */,
