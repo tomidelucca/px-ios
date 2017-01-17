@@ -11,7 +11,7 @@ import Foundation
 open class DecorationPreference : NSObject{
     var baseColor: UIColor = UIColor.purple
     var textColor: UIColor = UIColor.black
-    var fontName: String?
+    var fontName: String = ".SFUIDisplay-Regular"
     
     public func setBaseColor(color: UIColor){
         baseColor = color
@@ -23,12 +23,15 @@ open class DecorationPreference : NSObject{
         textColor = UIColor.white
     }
     public func setFontName(fontName: String){
-        
+        self.fontName = fontName
     }
     public func getBaseColor() -> UIColor {
         return baseColor
     }
     public func getTextColor() -> UIColor {
         return textColor
+    }
+    public func getFontName() -> String {
+        return fontName
     }
 }
