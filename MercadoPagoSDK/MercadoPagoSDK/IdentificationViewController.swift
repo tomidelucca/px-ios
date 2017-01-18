@@ -198,7 +198,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
-        let font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         

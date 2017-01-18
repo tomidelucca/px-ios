@@ -297,7 +297,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             if self.shouldDisplayBackButton {
                 self.displayBackButton()
             }
-            let font : UIFont = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: navBarFontSize) ?? UIFont.systemFont(ofSize: navBarFontSize)
+            let font : UIFont = Utils.getFont(size: navBarFontSize)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
         }

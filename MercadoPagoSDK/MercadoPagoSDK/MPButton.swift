@@ -25,7 +25,7 @@ open class MPButton: UIButton {
         super.init(frame: frame)
         if (self.titleLabel != nil){
             if (self.titleLabel!.font != nil){
-                self.titleLabel!.font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: (self.titleLabel!.font.pointSize))
+                self.titleLabel!.font = Utils.getFont(size: self.titleLabel!.font.pointSize)
             }
         }
     }
@@ -35,7 +35,7 @@ open class MPButton: UIButton {
         MercadoPagoUIViewController.loadFont(MercadoPagoContext.getDecorationPreference().getFontName())
         if (self.titleLabel != nil){
             if (self.titleLabel!.font != nil){
-                                self.titleLabel!.font = UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: (self.titleLabel!.font.pointSize))
+                self.titleLabel!.font = Utils.getFont(size: self.titleLabel!.font.pointSize)
             }
         }
     }
