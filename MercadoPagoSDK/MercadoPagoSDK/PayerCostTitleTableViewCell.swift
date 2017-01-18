@@ -11,7 +11,7 @@ import UIKit
 class PayerCostTitleTableViewCell: UITableViewCell, TitleCellScrollable {
     
     internal func updateTitleFontSize(toSize: CGFloat) {
-        self.title.font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: toSize) ?? UIFont.systemFont(ofSize: toSize)
+        self.title.font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: toSize) ?? UIFont.systemFont(ofSize: toSize)
     }
 
     @IBOutlet weak var cell: UIView!

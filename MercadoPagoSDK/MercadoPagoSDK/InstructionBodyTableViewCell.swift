@@ -127,7 +127,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
             if instruction.actions != nil && (instruction.actions?.count)! > 0 {
                 if instruction.actions![0].tag == ActionTag.LINK.rawValue {
                     let button = MPButton(frame: CGRect(x: 0, y: 0, width: 160, height: 30))
-                    button.titleLabel?.font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 16) ?? UIFont.systemFont(ofSize: 16)
+                    button.titleLabel?.font = UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: 16) ?? UIFont.systemFont(ofSize: 16)
                     button.setTitle(instruction.actions![0].label, for: .normal)
                     button.setTitleColor(UIColor.px_blueMercadoPago(), for: .normal)
                     button.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +148,7 @@ class InstructionBodyTableViewCell: UITableViewCell {
             NSLayoutConstraint.activate(heightConstraints)
     }
     func getAttributes(fontSize:Int, color:UIColor)-> [String:AnyObject] {
-        return [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: CGFloat(fontSize)) ?? UIFont.systemFont(ofSize: CGFloat(fontSize)),NSForegroundColorAttributeName: color]
+        return [NSFontAttributeName : UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: CGFloat(fontSize)) ?? UIFont.systemFont(ofSize: CGFloat(fontSize)),NSForegroundColorAttributeName: color]
     }
     
     func goToURL(sender:MPButton!)
