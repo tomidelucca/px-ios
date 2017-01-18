@@ -159,6 +159,7 @@
 		157FAE791D1B28EF00AB13B0 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../MercadoPagoSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoUITest.swift; sourceTree = "<group>"; };
 		15FCA7831C84980A00D9E8CE /* MercadoPagoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MercadoPagoSDK.xcodeproj; path = ../MercadoPagoSDK/MercadoPagoSDK.xcodeproj; sourceTree = "<group>"; };
+		4B6BCF7C1E2FDCF3003E50DD /* Fipps-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fipps-Regular.otf"; sourceTree = "<group>"; };
 		762713681D343424008DC3AB /* CardFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlowTest.swift; sourceTree = "<group>"; };
 		7627136B1D343580008DC3AB /* CardFormActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFormActions.swift; sourceTree = "<group>"; };
 		7627136D1D343769008DC3AB /* CheckoutFlowTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutFlowTest.swift; sourceTree = "<group>"; };
@@ -227,6 +228,7 @@
 		0F9884F81AD2BCB900F750F0 /* MercadoPagoSDKExamples */ = {
 			isa = PBXGroup;
 			children = (
+				4B6BCF7C1E2FDCF3003E50DD /* Fipps-Regular.otf */,
 				766CDFE71D240E9D00F9FAD4 /* Component Examples */,
 				0F98854A1AD2BDDD00F750F0 /* LaunchScreen.xib */,
 				0F98851E1AD2BCD800F750F0 /* Example */,
