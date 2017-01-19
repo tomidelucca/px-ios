@@ -84,6 +84,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 if cardFormManager.showBankDeals(){
                     let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                     promocionesButton.tintColor = UIColor.systemFontColor()
+                    promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
                     self.navigationItem.rightBarButtonItem = promocionesButton
                 }
                 
@@ -128,6 +129,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             if self.timer == nil && cardFormManager.showBankDeals(){
                 let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = UIColor.systemFontColor()
+                promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
                 self.navigationItem.rightBarButtonItem = promocionesButton
             }
         }

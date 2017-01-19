@@ -18,7 +18,9 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
     
     func fillCell(payment: Payment, paymentMethod: PaymentMethod?, color: UIColor, instruction: Instruction?){
         messageError.text = ""
+        messageError.font = Utils.getFont(size: messageError.font.pointSize)
         view.backgroundColor = color
+        title.font = Utils.getFont(size: title.font.pointSize)
         if payment.status == "approved" {
             icon.image = MercadoPago.getImage("iconoAcreditado")
             title.text = "¡Listo, se acreditó tu pago!".localized
