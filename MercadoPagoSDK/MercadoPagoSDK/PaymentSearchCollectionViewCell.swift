@@ -45,15 +45,8 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     }
     
     func fillCell(drawablePaymentOption : PaymentOptionDrawable) {
-        var image: UIImage?
-        var description = drawablePaymentOption.getImageDescription()
-        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" {
-            description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
-            image = MercadoPago.getImageForPaymentMethod(withDescription: description)
-            image = image?.imageWithOverlayTint(tintColor: UIColor.primaryColor())
-        } else {
-            image = MercadoPago.getImageForPaymentMethod(withDescription: description)
-        }
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: drawablePaymentOption.getImageDescription())
+  
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
     
