@@ -45,7 +45,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.px_white()
-                self.navigationController?.navigationBar.barTintColor =  UIColor.primaryColor()
+                self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
                 displayBackButton()
@@ -119,7 +119,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
-        self.view.backgroundColor = UIColor.complementaryColor()
+        self.view.backgroundColor = UIColor.primaryColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.no
         numberTextField.keyboardType = UIKeyboardType.numberPad
         numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)

@@ -10,11 +10,11 @@ import Foundation
 
 open class DecorationPreference : NSObject{
     var baseColor: UIColor = UIColor.px_blueMercadoPago()
-    var textColor: UIColor = UIColor.black
-    var fontName: String?
+    var textColor: UIColor = UIColor.white
+    var fontName: String = ".SFUIDisplay-Regular"
     
     public func setBaseColor(color: UIColor){
-        baseColor = color
+            baseColor = color
     }
     public func enableDarkFont(){
         textColor = UIColor.black
@@ -23,12 +23,18 @@ open class DecorationPreference : NSObject{
         textColor = UIColor.white
     }
     public func setFontName(fontName: String){
-        
+        self.fontName = fontName
+    }
+    public func setMercadoPagoBaseColor(){
+        baseColor = UIColor.px_blueMercadoPago()
     }
     public func getBaseColor() -> UIColor {
         return baseColor
     }
-    public func getTextColor() -> UIColor {
+    public func getFontColor() -> UIColor {
         return textColor
+    }
+    public func getFontName() -> String {
+        return fontName
     }
 }
