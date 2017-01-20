@@ -19,7 +19,7 @@ class PayerCostTitleTableViewCell: UITableViewCell, TitleCellScrollable {
     func setTitle(string: String!){
         title.text = string
         title.textColor = UIColor.systemFontColor()
-        cell.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        cell.backgroundColor = UIColor.primaryColor()
     }
     override func awakeFromNib() {
         super.awakeFromNib()
