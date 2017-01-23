@@ -17,6 +17,7 @@ class ConfirmPaymentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.confirmPaymentButton.layer.cornerRadius = 4
+        self.confirmPaymentButton.titleLabel?.font = Utils.getFont(size: 16)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
