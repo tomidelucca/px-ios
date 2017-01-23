@@ -46,6 +46,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     
     func fillCell(drawablePaymentOption : PaymentOptionDrawable) {
         let image = MercadoPago.getImageForPaymentMethod(withDescription: drawablePaymentOption.getImageDescription())
+  
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
     
