@@ -126,7 +126,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         upperFrame.origin.y = -upperFrame.size.height + 10;
         upperFrame.size.width = UIScreen.main.bounds.width
         let upperView = UIView(frame: upperFrame)
-        upperView.backgroundColor = MercadoPagoContext.getPrimaryColor()
+        upperView.backgroundColor = UIColor.primaryColor()
         collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
@@ -171,7 +171,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.backgroundColor?.withAlphaComponent(0)
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
-            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: MercadoPagoContext.getPrimaryColor())
+            self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: UIColor.primaryColor())
             self.view.bringSubview(toFront: self.loadingInstance!)
         }
         
@@ -435,7 +435,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     public func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(8, 8, 8, 8)
+        if section == 0 {
+           return UIEdgeInsetsMake(8, 8, 0, 8)
+        } else {
+            return UIEdgeInsetsMake(0, 8, 8, 8)
+        }
     }
 
     public func collectionView(_ collectionView: UICollectionView,

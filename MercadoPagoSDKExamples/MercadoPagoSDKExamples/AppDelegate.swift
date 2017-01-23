@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //MercadoPagoContext.setPayerAccessToken("APP_USR-6105282339975037-110310-7994b404127b8d755adff11a60052b01__LC_LA__-233395668")
         
-        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
+     //   MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
         MercadoPagoContext.setDisplayDefaultLoading(flag: false)
         
@@ -43,10 +43,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Pinto de rojo el color primerio
 
-//        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
 
-        MercadoPagoContext.setLightTextColor()
-        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+        //MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
+        let decorationPreference = DecorationPreference()
+        decorationPreference.setBaseColor(color: UIColor.red)
+        
+        MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
+        
+
+        let decorationPreference = DecorationPreference()
+        decorationPreference.setBaseColor(color: UIColor.green)
+        MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
         
         CardFormViewController.showBankDeals = true
         

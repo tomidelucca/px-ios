@@ -19,6 +19,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         "Selección de Banco".localized,
         "Selección de Cuotas".localized,
         "Crear Pago".localized,
+        "Ver Promociones".localized
     ]
     
     @IBOutlet weak var stepsExamplesTable: UITableView!
@@ -86,7 +87,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
         case 6:
             createPayment()
         default:
-            break
+            showBankDeals()
         }
     }
     
@@ -98,8 +99,8 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
 */
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
         let pp = PaymentPreference()
-        pp.excludedPaymentTypeIds = ["ticket",  "atm"]
-        //pp.excludedPaymentMethodIds = ["master"]
+        pp.excludedPaymentTypeIds = ["ticket",  "atm", "bank_transfer"]
+        pp.excludedPaymentMethodIds = ["master"]
         pp.maxAcceptedInstallments = 3
 
         let pv = MPFlowBuilder.startPaymentVaultViewController(5, paymentPreference : pp, callback: { (paymentMethod, token, issuer, payerCost) in
@@ -128,9 +129,9 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        let timer = CountdownTimer(180, timeoutCallback : timeoutCallback)
         
-        cf = MPFlowBuilder.startCardFlow(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer, payerCost) in
+        CountdownTimer.getInstance().setup(seconds: 180, timeoutCallback: timeoutCallback)
+        cf = MPFlowBuilder.startCardFlow(amount: 1000, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -155,9 +156,10 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             alert.show()
         }
         
-        let timer = CountdownTimer(30,  timeoutCallback : timeoutCallback)
+        CountdownTimer.getInstance().setup(seconds: 30, timeoutCallback: timeoutCallback)
         
-        cf = MPStepBuilder.startCreditCardForm(amount: 1000, timer : timer, callback: { (paymentMethod, token, issuer) in
+        
+        cf = MPStepBuilder.startCreditCardForm(amount: 1000, callback: { (paymentMethod, token, issuer) in
             self.paymentMethod = paymentMethod
             self.createdToken = token
             self.selectedIssuer = issuer
@@ -219,6 +221,11 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             
         }
         
+    }
+    
+    func showBankDeals(){
+        let promosVC = MPStepBuilder.startPromosStep()
+        self.navigationController!.present(promosVC, animated: true, completion: {})
     }
 }
 

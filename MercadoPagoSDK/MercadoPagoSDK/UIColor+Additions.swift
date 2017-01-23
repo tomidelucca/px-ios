@@ -108,16 +108,22 @@ extension UIColor {
     }
     
     class public func systemFontColor() -> UIColor{
-        return MercadoPagoContext.getTextColor()
+        return MercadoPagoContext.getDecorationPreference().getFontColor()
+    }
+    
+    class public func redCongrats() -> UIColor {
+        return UIColorFromRGB(0xFF5959)
     }
     
     class public func primaryColor() -> UIColor {
-        return MercadoPagoContext.getPrimaryColor()
+        return MercadoPagoContext.getDecorationPreference().getBaseColor()
     }
     
     class public func complementaryColor() -> UIColor {
         return MercadoPagoContext.getComplementaryColor()
     }
+    
+   
     
     func lighter() -> UIColor {
             return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
