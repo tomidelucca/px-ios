@@ -26,7 +26,9 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
     public func fillCell(image: UIImage?, title: String? = "", subtitle: String? = ""){
         
         self.titleSearch.text = title
+        self.titleSearch.font = Utils.getFont(size: titleSearch.font.pointSize)
         self.subtitleSearch.text = subtitle
+        self.subtitleSearch.font = Utils.getFont(size: subtitleSearch.font.pointSize)
         self.imageSearch.image = image
 
         self.backgroundColor = UIColor.px_white()
