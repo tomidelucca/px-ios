@@ -14,7 +14,7 @@ open class DecorationPreference : NSObject{
     var fontName: String = ".SFUIDisplay-Regular"
     
     public func setBaseColor(color: UIColor){
-            baseColor = color
+        baseColor = color
     }
     public func enableDarkFont(){
         textColor = UIColor.black
