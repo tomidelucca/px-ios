@@ -39,11 +39,17 @@ class DecorationPreferenceTest: BaseTest {
         decoration.setMercadoPagoBaseColor()
         XCTAssertEqual(decoration.getBaseColor(), UIColor.px_blueMercadoPago())
     }
+    func testSetMercadoPagoFont(){
+        let decoration = DecorationPreference()
+        decoration.setFontWithName(fontName: "sarasa")
+        decoration.setMercadoPagoFont()
+        XCTAssertEqual(decoration.getFontName(), ".SFUIDisplay-Regular")
+    }
     
     func testSetFontName(){
         let decoration = DecorationPreference()
         XCTAssertEqual(decoration.getFontName(), ".SFUIDisplay-Regular")
-        decoration.setFontName(fontName: "Comic")
+        decoration.setFontWithName(fontName: "Comic")
         XCTAssertEqual(decoration.getFontName(), "Comic")
     }
     
