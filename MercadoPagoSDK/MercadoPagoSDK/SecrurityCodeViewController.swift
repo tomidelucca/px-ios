@@ -10,6 +10,7 @@ import UIKit
 
 open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate{
     
+    @IBOutlet weak var button: UIButton!
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
@@ -75,6 +76,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         securityCodeTextField.becomeFirstResponder()
+        self.button.titleLabel?.font = Utils.getFont(size: 16)
         
        
     }

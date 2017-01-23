@@ -22,11 +22,14 @@ open class DecorationPreference : NSObject{
     public func enableLightFont(){
         textColor = UIColor.white
     }
-    public func setFontName(fontName: String){
+    public func setFontWithName(fontName: String){
         self.fontName = fontName
     }
     public func setMercadoPagoBaseColor(){
         baseColor = UIColor.px_blueMercadoPago()
+    }
+    public func setMercadoPagoFont(){
+        fontName = ".SFUIDisplay-Regular"
     }
     public func getBaseColor() -> UIColor {
         return baseColor
