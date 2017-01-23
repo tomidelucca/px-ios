@@ -10,8 +10,8 @@ import Foundation
 
 open class MockBuilder: NSObject {
     
-    internal class var MOCK_PAYMENT_ID : Int {
-        return 1826290155
+    internal class var MOCK_PAYMENT_ID : String {
+        return "1826290155"
     }
     
     class var PREF_ID_NO_EXCLUSIONS : String {
@@ -95,7 +95,7 @@ open class MockBuilder: NSObject {
         return Item(_id: id, title : "item title", quantity: quantity, unitPrice: unitPrice)
     }
     
-    class func buildPayer(_ id : NSNumber) -> Payer {
+    class func buildPayer(_ id : String) -> Payer {
         let payer =  Payer()
         payer._id = id
         payer.email = "thisisanem@il.com"
@@ -128,6 +128,14 @@ open class MockBuilder: NSObject {
         return securityCode
     }
     
+    class func buildSetting() -> Setting {
+        let setting = Setting()
+        setting.binMask = MockBuilder.buildBinMask()
+        setting.securityCode = MockBuilder.buildSecurityCode()
+        setting.cardNumber = MockBuilder.buildCardNumber()
+        return setting
+    }
+    
     class func buildIdentification() -> Identification {
         let identification = Identification()
         identification.type = "type"
@@ -135,7 +143,7 @@ open class MockBuilder: NSObject {
         return identification
     }
     
-    class func buildCard() -> Card {
+    class func buildCard(paymentMethodId : String? = "paymentMethodId") -> Card {
         let card = Card()
         card.idCard = 1234567890
         card.firstSixDigits = "123456"
@@ -147,7 +155,17 @@ open class MockBuilder: NSObject {
         card.securityCode?.cardLocation = "cardLocation"
         card.securityCode?.mode = "mandatory"
         card.securityCode?.length = 3
+        card.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId!)
         return card
+    }
+    
+    class func buildCustomerPaymentMethod(paymentMethodId : String, paymentTypeId : String) -> CustomerPaymentMethod {
+        let customerPm = CustomerPaymentMethod()
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
+        customerPm.paymentMethod = pm
+        customerPm.paymentMethodId = paymentMethodId
+        customerPm.paymentMethodTypeId = paymentTypeId
+        return customerPm
     }
         
     class func buildPayment(_ paymentMethodId : String, installments : Int? = 1, includeFinancingFee : Bool? = false,status : String? = "approved", statusDetail : String? = "approved") -> Payment {
@@ -168,7 +186,7 @@ open class MockBuilder: NSObject {
             let amount = MockBuilder.INSTALLMENT_AMOUNT * Double(installments!)
             payment.transactionDetails.totalPaidAmount =  amount + (amount * 0.20)
         }
-        payment.payer = buildPayer(1)
+        payment.payer = buildPayer("1")
         payment.card = buildCard()
         return payment
     }
@@ -194,14 +212,23 @@ open class MockBuilder: NSObject {
         return MockBuilder.buildPayment("visa", installments: installments, includeFinancingFee: includeFinancingFee, status: status, statusDetail: statusDetail)
     }
     
-    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem{
+    class func buildPaymentMethodSearchItem(_ paymentMethodId : String, type : PaymentMethodSearchItemType? = nil) -> PaymentMethodSearchItem {
         let paymentMethodSearchItem = PaymentMethodSearchItem()
         paymentMethodSearchItem.idPaymentMethodSearchItem = paymentMethodId
         if type != nil {
             paymentMethodSearchItem.type = type
         }
+        paymentMethodSearchItem.showIcon = true
         return paymentMethodSearchItem
     }
+    
+    class func buildPaymentMethodSearch(groups : [PaymentMethodSearchItem]? = nil, paymentMethods : [PaymentMethod]? = nil) -> PaymentMethodSearch {
+        let paymentMethodSearch = PaymentMethodSearch()
+        paymentMethodSearch.groups = groups
+        paymentMethodSearch.paymentMethods = paymentMethods
+        return paymentMethodSearch
+    }
+    
     
     class func getMockPaymentMethods() -> [PaymentMethod] {
         return [self.buildPaymentMethod("amex"), self.buildPaymentMethod("oxxo")]
@@ -227,6 +254,29 @@ open class MockBuilder: NSObject {
         let cardHolder = Cardholder()
         cardHolder.name = "name"
         return cardHolder
+    }
+    
+    class func buildCardNumber() -> CardNumber {
+        let cardNumber = CardNumber()
+        cardNumber.length = 4
+        cardNumber.validation = "luhn"
+        return cardNumber
+    }
+    
+    class func buildPromo() -> Promo {
+        let promo = Promo()
+        promo.promoId = "promoId"
+        promo.legals = "legals"
+        promo.paymentMethods = [MockBuilder.buildPaymentMethod("idPaymentMethod")]
+        return promo
+    }
+    
+    class func buildBinMask() -> BinMask {
+        let bin = BinMask()
+        bin.pattern = "pattern"
+        bin.exclusionPattern = "exclusion_pattern"
+        bin.installmentsPattern = "installments_pattern"
+        return bin
     }
     
     class func buildPayerCost() -> PayerCost {

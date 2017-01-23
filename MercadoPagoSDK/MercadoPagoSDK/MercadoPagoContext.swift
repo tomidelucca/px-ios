@@ -36,6 +36,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var site : Site!
     
+    var language : String!
+    
     var termsAndConditionsSite : String!
 
     var account_money_available = false
@@ -44,7 +46,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var display_default_loading = true
     
-    var language: String = NSLocale.preferredLanguages[0]
+    var decorationPreference = DecorationPreference()
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -71,7 +73,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.2.4"
+        return "2.2.7"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
@@ -102,6 +104,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
+            self.language = siteConfig!["language"] as! String
             self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
@@ -131,24 +134,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getTrackListener() -> MPTrackListener? {
         return sharedInstance.trackListener
     }
-    open static func setLanguage(language: String) -> Void {
-        sharedInstance.language = language
-    }
+    
     open static func getLanguage() -> String {
         return sharedInstance.language
-    }
-    open static func getLocalizedPath() -> String {
-        let bundle = MercadoPago.getBundle() ?? Bundle.main
-        
-        let currentLanguage = MercadoPagoContext.getLanguage()
-        if let path = bundle.path(forResource: currentLanguage, ofType : "lproj"){
-            return path
-        } else if let path = bundle.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj"){
-            return path
-        } else {
-            let path = bundle.path(forResource: "es", ofType : "lproj")
-            return path!
-        }
     }
     
     open static func getTermsAndConditionsSite() -> String {
@@ -158,7 +146,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
-    
+    open static func getDecorationPreference() -> DecorationPreference{
+        return sharedInstance.decorationPreference
+    }
     open func publicKey() -> String!{
         return self.public_key
     }
@@ -166,8 +156,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
 
     
-    fileprivate static var complementaryColor : UIColor = UIColor.blueMercadoPago()
-    fileprivate static var textColor : UIColor = UIColor.white()
+    fileprivate static var complementaryColor : UIColor = UIColor.px_blueMercadoPago()
+    fileprivate static var textColor : UIColor = UIColor.px_white()
     
     open static func setupPrimaryColor(_ color: UIColor, complementaryColor: UIColor? = nil){
         MercadoPagoContext.primaryColor = color
@@ -175,7 +165,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             MercadoPagoContext.setupComplementaryColor(complementaryColor!)
         }else{
             if (color == UIColor.mpDefaultColor()){
-                MercadoPagoContext.setupComplementaryColor(UIColor.blueMercadoPago())
+                MercadoPagoContext.setupComplementaryColor(UIColor.px_blueMercadoPago())
             }else{
                 MercadoPagoContext.setupComplementaryColor(color.lighter())
             }
@@ -196,11 +186,12 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     internal static func getTextColor() -> UIColor {
         return textColor
     }
+    
     open static func setDarkTextColor(){
         textColor = UIColor.black
     }
     open static func setLightTextColor(){
-        textColor = UIColor.white()
+        textColor = UIColor.px_white()
     }
     
     
@@ -221,7 +212,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func setPublicKey(_ public_key : String){
         
-       sharedInstance.public_key = public_key
+       sharedInstance.public_key = public_key.trimSpaces()
        _ = CardFrontView()
        _ = CardBackView()
         
@@ -284,6 +275,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func setDisplayDefaultLoading(flag : Bool){
         sharedInstance.display_default_loading = flag
+    }
+    
+    open class func setDecorationPreference(decorationPreference: DecorationPreference){
+        sharedInstance.decorationPreference = decorationPreference
     }
     
     open class func merchantAccessToken() -> String {
