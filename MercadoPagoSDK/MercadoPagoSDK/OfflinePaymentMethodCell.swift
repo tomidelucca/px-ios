@@ -74,7 +74,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         if complementaryTitle.existsLocalized() {
             attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
         }
-        attributedTitle.append(NSAttributedString(string : paymentMethod.name, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
+        attributedTitle.append(NSAttributedString(string : paymentMethodMethodSearchItem._description, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
         
         self.paymentMethodDescription.attributedText = attributedTitle
         
