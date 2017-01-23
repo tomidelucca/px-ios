@@ -14,6 +14,7 @@ open class FlowPreference : NSObject{
     var showPaymentApprovedScreen = true
     var showPaymentRejectedScreen = true
     var showPaymentPendingScreen = true
+    var showPaymentSearchScreen = true
     
     public func disableReviewAndConfirmScreen(){
         showReviewAndConfirmScreen = false
@@ -77,5 +78,8 @@ open class FlowPreference : NSObject{
     
     public func isPaymentPendingScreenEnable() -> Bool{
         return showPaymentPendingScreen
+    }
+    public func isPaymentSearchScreenEnable() -> Bool{
+        return showPaymentSearchScreen
     }
 }
