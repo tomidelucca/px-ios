@@ -37,7 +37,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     override func loadMPStyles(){
         var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
-            if let font = UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 18){
+            if let font = UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: 18){
                 titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
             }
             if self.navigationController != nil {
@@ -66,7 +66,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(IdentificationViewController.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         
-        if let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) {
+        if let font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: 14) {
             doneButton.setTitleTextAttributes([NSFontAttributeName: font], for: UIControlState())
           }
 
@@ -198,7 +198,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
-        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
@@ -219,9 +219,9 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     }
 
     func rightArrowKeyTapped(){
-        let idnt = Identification(type: self.identificationType?.name , number: indentificationMask.textUnmasked(numberDocLabel.text))
+        let idnt = Identification(type: self.identificationType?.name , number: indentificationMask.textUnmasked(numberTextField.text))
         
-        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberDocLabel.text))
+        let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  indentificationMask.textUnmasked(numberTextField.text))
 
         if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
