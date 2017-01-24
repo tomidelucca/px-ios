@@ -1,9 +1,0 @@
-codecov:
-  branch: development
-comment:
-  layout: "header, diff"
-  behavior: default
-  require_changes: false  # if true: only post the comment if coverage changes
-  branches: null
-  flags: null
-  paths: null
