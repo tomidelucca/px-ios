@@ -143,8 +143,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getTrackListener() -> MPTrackListener? {
         return sharedInstance.trackListener
     }
-    open static func setLanguage(language: String) -> Void {
-        sharedInstance.language = language
+    open static func setLanguage(language: languages) -> Void {
+        sharedInstance.language = language.rawValue
     }
     open static func getLanguage() -> String {
         return sharedInstance.language
