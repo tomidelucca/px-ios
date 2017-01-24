@@ -49,9 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         decorationPreference.setBaseColor(color: UIColor.red)
         
         MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
-        
-
-        let decorationPreference = DecorationPreference()
         decorationPreference.setBaseColor(color: UIColor.green)
         MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
         

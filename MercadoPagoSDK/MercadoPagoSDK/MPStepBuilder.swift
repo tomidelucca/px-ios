@@ -184,7 +184,7 @@ open class MPStepBuilder : NSObject {
                                          callbackCancel : ((Void) -> Void)? = nil) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return CardAdditionalStep(paymentMethod: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, callback: callback )
+        return CardAdditionalStep(paymentMethods: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, callback: callback)
     }
     
     open class func startPayerCostForm(_ paymentMethod : PaymentMethod , issuer:Issuer?, token : Token? , amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
@@ -195,7 +195,7 @@ open class MPStepBuilder : NSObject {
         let call : (_ payerCost: NSObject?) -> Void = {(payerCost: NSObject?) in
             callback(payerCost as? PayerCost)
         }
-        return CardAdditionalStep(paymentMethod: [paymentMethod], issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: call)
+        return CardAdditionalStep(paymentMethods: [paymentMethod], issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: call)
     }
 
     public class func startPayerCostForm(cardInformation : CardInformation, amount: Double, paymentPreference: PaymentPreference? = nil, installment : Installment? = nil,
@@ -226,7 +226,7 @@ open class MPStepBuilder : NSObject {
                                     callback : @escaping ((_ issuer: NSObject?) -> Void)) -> CardAdditionalStep {
         
         MercadoPagoContext.initFlavor2()
-        return CardAdditionalStep(paymentMethod: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, callback: callback)
+        return CardAdditionalStep(paymentMethods: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, callback: callback)
         
     }
     

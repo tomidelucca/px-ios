@@ -33,8 +33,7 @@ open class MercadoPagoCheckout: NSObject {
         default:
              self.collectCreditCard()
         }
-       
-        
+
     }
     
     func collectCreditCard(){
@@ -45,4 +44,11 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(cardForm, animated: true)
     }
     
+    func collectCreditDebit(){
+        let crediDebit = CardAdditionalStep(viewModel: self.viewModel.payerCostViewModel(), callback: { (payerCost) in
+            self.viewModel.updateCheckoutModel(payerCost: payerCost)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(crediDebit, animated: true)
+    }
 }
