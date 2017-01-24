@@ -12,19 +12,13 @@ coverage:
   status:
     project:
       default:
-        target: auto
+        target: 20
         threshold: null
         if_not_found: success
         branches: development
 
-    patch:
-      default:
-        target: auto
-        branches: development
-
-    changes:
-      default:
-        branches: development
+    patch: off
+    changes: off
 
  parsers:
   gcov:
