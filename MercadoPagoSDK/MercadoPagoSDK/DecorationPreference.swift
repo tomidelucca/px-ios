@@ -13,8 +13,12 @@ open class DecorationPreference : NSObject{
     var textColor: UIColor = UIColor.white
     var fontName: String = ".SFUIDisplay-Regular"
     
+
     public func setBaseColor(color: UIColor){
         baseColor = color
+    }
+    public func setBaseColor(hexColor: String){
+        baseColor = UIColor.fromHex(hexColor)
     }
     public func enableDarkFont(){
         textColor = UIColor.black
@@ -22,7 +26,7 @@ open class DecorationPreference : NSObject{
     public func enableLightFont(){
         textColor = UIColor.white
     }
-    public func setFontWithName(fontName: String){
+    public func setCustomFontWithName(fontName: String){
         self.fontName = fontName
     }
     public func setMercadoPagoBaseColor(){
