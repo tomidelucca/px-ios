@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
         decorationPreference.setBaseColor(color: UIColor.green)
         MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
+
         
         CardFormViewController.showBankDeals = true
         
