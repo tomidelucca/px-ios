@@ -1,9 +1,39 @@
 codecov:
-  branch: development
-comment:
+  notify:
+    require_ci_to_pass: yes
+    branch: development
+    strict_yaml_branch: development
+
+coverage:
+  precision: 2
+  round: down
+  range: "0...40"
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: null
+        branches: development
+
+    patch:
+      default:
+        target: auto
+        branches: development
+
+    changes:
+      default:
+        branches: development
+
+ parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+ comment:
   layout: "header, diff"
   behavior: default
-  require_changes: false  # if true: only post the comment if coverage changes
-  branches: null
-  flags: null
-  paths: null
+  require_changes: no
