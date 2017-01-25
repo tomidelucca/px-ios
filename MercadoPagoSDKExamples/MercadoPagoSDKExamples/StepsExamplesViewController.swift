@@ -203,7 +203,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
     
      func createPayment(){
         
-        MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
+        /*MercadoPagoContext.setBaseURL(ExamplesUtils.MERCHANT_MOCK_BASE_URL)
         MercadoPagoContext.setPaymentURI(ExamplesUtils.MERCHANT_MOCK_CREATE_PAYMENT_URI)
         
         let item : Item = Item(_id: ExamplesUtils.ITEM_ID, title: ExamplesUtils.ITEM_TITLE, quantity: ExamplesUtils.ITEM_QUANTITY,
@@ -219,7 +219,7 @@ class StepsExamplesViewController: UIViewController, UITableViewDelegate, UITabl
             
             }) { (error) in
             
-        }
+        }*/
         
     }
     

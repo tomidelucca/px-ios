@@ -13,29 +13,34 @@ open class MerchantService : MercadoPagoService {
     
     open var data: NSMutableData = NSMutableData()
     
-    init() {
-        super.init(baseURL: MercadoPagoContext.baseURL())
-    }
 
     open func getCustomer(_ method : String = "GET", success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: MercadoPagoContext.customerURI(), params: "merchant_access_token=" + MercadoPagoContext.merchantAccessToken(), body: nil, method: method, cache: false, success: success, failure: failure)
+        
+        self.baseURL = MercadoPagoCheckout.servicePreference.getCustomerURL()
+        
+        let params = MercadoPagoCheckout.servicePreference.getCustomerAddionalInfo()
+            
+        self.request(uri: MercadoPagoContext.customerURI(), params: params, body: nil, method: method, cache: false, success: success, failure: failure)
     }
     
-    open func createPayment(_ method : String = "POST", payment : MerchantPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+/*    open func createPayment(_ method : String = "POST", payment : MerchantPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         self.request(uri: MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString() as AnyObject?, method: method, cache: false,success: success, failure: failure)
-    }
+    }*/
     
-    open func createMPPayment(_ method : String = "POST", payment : MPPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.baseURL = MercadoPago.MP_API_BASE_URL
+    open func createPayment(_ method : String = "POST", payment : MPPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        
+        self.baseURL = MercadoPagoCheckout.servicePreference.getPaymentURL()
         
         let headers = NSMutableDictionary()
         headers.setValue(MercadoPagoContext.paymentKey() , forKey: "X-Idempotency-Key")
         
-        let params = "api_version=" + MercadoPago.API_VERSION
-        self.request(uri: MercadoPago.MP_PAYMENTS_URI, params: params, body: payment.toJSONString() as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
+        self.request(uri: "", params: nil, body: payment.toJSONString() as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
     }
     
     open func createPreference(_ method : String = "POST", merchantParams : String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: MercadoPagoContext.preferenceURI(), params: nil, body: merchantParams as AnyObject?, method: method, cache: false, success: success, failure: failure)
+        
+        self.baseURL = MercadoPagoCheckout.servicePreference.getCheckoutPreferenceURL()
+        
+        self.request(uri: "", params: nil, body: merchantParams as AnyObject?, method: method, cache: false, success: success, failure: failure)
     }
 }

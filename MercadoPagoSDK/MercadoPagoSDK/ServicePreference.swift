@@ -10,49 +10,59 @@ import Foundation
 
 open class ServicePreference : NSObject{
     
-    var customerURL: NSURL?
+    var customerURL: String
     var customerAdditionalInfo: NSDictionary?
-    var checkoutPreferenceURL: NSURL?
+    var checkoutPreferenceURL: String
     var checkoutAdditionalInfo: NSDictionary?
-    var paymentURL: NSURL
+    var paymentURL: String
     var paymentAdditionalInfo: NSDictionary?
     
-    
-    public init(customerURL: NSURL? = nil, customerAdditionalInfo: NSDictionary? = nil, checkoutPreferenceURL: NSURL? = nil, checkoutAdditionalInfo: NSDictionary? = nil, paymentURL: NSURL = NSURL(string: MercadoPago.MP_PAYMENTS_URI, relativeTo: URL(string: MercadoPago.MP_API_BASE_URL))!, paymentAdditionalInfo: NSDictionary? = nil){
+    public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MercadoPago.MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
+        
+        self.customerURL = customerURL
+        self.checkoutPreferenceURL = checkoutPreferenceURL
+        self.checkoutAdditionalInfo = checkoutAdditionalInfo
         self.paymentURL = paymentURL
+        self .paymentAdditionalInfo = paymentAdditionalInfo
+        
+        if let customerAdditionalInfo = customerAdditionalInfo {
+            self.customerAdditionalInfo = customerAdditionalInfo as NSDictionary
+        }
         
     }
 
-    public func setGetCustomer(URL: String, additionalInfo: NSDictionary? = nil){
-        if let customerURL = NSURL(string: URL) {
-            self.customerURL = customerURL
+    public func setGetCustomer(URL: String, additionalInfo: [String:String]? = nil){
+        customerURL = URL
+        if let additionalInfo = additionalInfo {
+            customerAdditionalInfo = additionalInfo as NSDictionary
         }
-        customerAdditionalInfo = additionalInfo
+        
     }
     
     public func setCreatePayment(URL: String, additionalInfo: NSDictionary? = nil){
-        if let paymentURL = NSURL(string: URL) {
-            self.paymentURL = paymentURL
-        }
+        paymentURL = URL
         paymentAdditionalInfo = additionalInfo
+        
     }
     
-    public func setCreateCheckoutPreference(URL: String, additionalInfo: NSDictionary? = nil){
-        if let checkoutPreferenceURL = NSURL(string: URL) {
-            self.checkoutPreferenceURL = checkoutPreferenceURL
-        }
+    public func setCreatePreference(URL: String, additionalInfo: NSDictionary? = nil){
+        checkoutPreferenceURL = URL
         checkoutAdditionalInfo = additionalInfo
+        
     }
     
-    public func getCustomerURL() -> NSURL?{
+    public func getCustomerURL() -> String{
         return customerURL
     }
     
-    public func getCustomerAddionalInfo() -> NSDictionary? {
-        return customerAdditionalInfo
+    public func getCustomerAddionalInfo() -> String? {
+        if let  customerAdditionalInfo = customerAdditionalInfo {
+            return customerAdditionalInfo.parseToQuery()
+        }
+        return nil
     }
     
-    public func getPaymentURL() -> NSURL{
+    public func getPaymentURL() -> String{
         return paymentURL
     }
     
@@ -60,7 +70,7 @@ open class ServicePreference : NSObject{
         return paymentAdditionalInfo
     }
     
-    public func getCheckoutPreferenceURL() -> NSURL?{
+    public func getCheckoutPreferenceURL() -> String{
         return checkoutPreferenceURL
     }
     
@@ -69,16 +79,10 @@ open class ServicePreference : NSObject{
     }
     
     public func isGetCustomerSet() -> Bool{
-        if let customerURL = customerURL {
-            return !String.isNullOrEmpty(customerURL.absoluteString)
-        }
-        return false
+        return !String.isNullOrEmpty(customerURL)
     }
     public func isCheckoutPreferenceSet() -> Bool{
-        if let checkoutPreferenceURL = checkoutPreferenceURL {
-            return !String.isNullOrEmpty(checkoutPreferenceURL.absoluteString)
-        }
-        return false
+        return !String.isNullOrEmpty(checkoutPreferenceURL)
     }
 
 }

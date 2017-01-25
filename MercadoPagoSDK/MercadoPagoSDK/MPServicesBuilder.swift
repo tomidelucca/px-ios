@@ -218,7 +218,7 @@ open class MPServicesBuilder : NSObject {
     }
     
     
-    open class func createPayment(_ merchantBaseUrl : String, merchantPaymentUri : String, payment : MerchantPayment,
+    open class func createPayment(_ merchantBaseUrl : String, merchantPaymentUri : String, payment : MPPayment,
                                   success: @escaping (_ payment: Payment) -> Void,
                                   failure: ((_ error: NSError) -> Void)?) {
         

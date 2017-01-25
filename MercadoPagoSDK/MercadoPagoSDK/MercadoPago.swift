@@ -74,6 +74,8 @@ import UIKit
     static let MP_CUSTOMER_URI = "/customers?preference_id="
     static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
     
+    static let MP_PAYMENTS_URL = MP_API_BASE_URL + MP_PAYMENTS_URI + "?api_version=" + MercadoPago.API_VERSION
+    
     open var privateKey : String?
     open var pk : String!
     
@@ -439,7 +441,7 @@ import UIKit
         let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
 
         let service : MerchantService = MerchantService()
-        service.createMPPayment(payment: mpPayment, success: { (jsonResult) in
+        service.createPayment(payment: mpPayment, success: { (jsonResult) in
             var payment : Payment? = nil
             
             if let paymentDic = jsonResult as? NSDictionary {

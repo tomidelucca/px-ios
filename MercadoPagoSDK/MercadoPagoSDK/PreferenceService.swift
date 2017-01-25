@@ -12,7 +12,7 @@ open class PreferenceService: MercadoPagoService {
     
     fileprivate var MP_PREFERENCE_URI = MercadoPago.MP_ENVIROMENT + "/preferences/"
     
-    init(){
+    override init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     

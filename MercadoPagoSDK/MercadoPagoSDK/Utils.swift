@@ -129,6 +129,16 @@ class Utils {
     class func getFont(size: CGFloat) -> UIFont{
         return UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
     }
+    
+    class func appendTwoJSONS(firstJSON: String, secondJSON: String) -> String {
+        var firstJSON = firstJSON
+        var secondJSON = secondJSON
+        
+        secondJSON.remove(at: secondJSON.startIndex)
+        firstJSON.remove(at: firstJSON.index(before: firstJSON.endIndex))
+        
+        return firstJSON + secondJSON
+    }
     /**
      Returns cents string formatted
      Ex: formattedString = "100.2", decimalSeparator = "."

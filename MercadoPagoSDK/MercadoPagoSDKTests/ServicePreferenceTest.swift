@@ -12,8 +12,5 @@ class ServicePreferenceTest: BaseTest {
     
     public func testInit(){
         let servicePreference = ServicePreference()
-        print(servicePreference.paymentURL.absoluteString)
-        print(servicePreference.paymentURL.absoluteURL)
-        XCTAssertEqual(servicePreference.paymentURL, NSURL(string: MercadoPago.MP_PAYMENTS_URI, relativeTo: URL(string: MercadoPago.MP_API_BASE_URL))!)
     }
 }

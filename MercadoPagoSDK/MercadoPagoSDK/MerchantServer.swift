@@ -36,7 +36,7 @@ open class MerchantServer : NSObject {
         }, failure: failure)
     }
     
-    open class func createPayment(_ payment : MerchantPayment, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func createPayment(_ payment : MPPayment, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
         let service : MerchantService = MerchantService()
         service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil

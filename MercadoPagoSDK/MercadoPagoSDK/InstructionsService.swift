@@ -32,7 +32,7 @@ open class InstructionsService: MercadoPagoService {
 
     open let MP_INSTRUCTIONS_URI = MercadoPago.MP_ENVIROMENT + "/payments/${payment_id}/results"
     
-    public init(){
+    public override init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     

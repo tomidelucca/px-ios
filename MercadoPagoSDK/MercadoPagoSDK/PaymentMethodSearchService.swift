@@ -32,7 +32,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
     
     open let MP_SEARCH_PAYMENTS_URI = MercadoPago.MP_ENVIROMENT + "/payment_methods/search/options"
     
-    public init(){
+    public override init(){
         super.init(baseURL: MercadoPago.MP_API_BASE_URL)
     }
     
