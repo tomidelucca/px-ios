@@ -65,7 +65,7 @@ int installmentsSelected = 1;
 - (void)startPaymentVault {
     
     //WALLET CONFIGS
-    [MercadoPagoContext setLanguageWithLanguage:Languages_PORTUGUESE];
+    [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH];
     
     [MercadoPagoContext setPublicKey:@"APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d"];
     [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
