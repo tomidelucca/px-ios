@@ -9,10 +9,14 @@
 import Foundation
 
 open class DecorationPreference : NSObject{
-    var baseColor: UIColor = UIColor.px_blueMercadoPago()
+    var baseColor: UIColor
     var textColor: UIColor = UIColor.white
-    var fontName: String = ".SFUIDisplay-Regular"
+    var fontName: String
     
+    public init(baseColor: UIColor = UIColor.px_blueMercadoPago(), fontName: String = ".SFUIDisplay-Regular"){
+        self.baseColor = baseColor
+        self.fontName = fontName
+    }
 
     public func setBaseColor(color: UIColor){
         baseColor = color
