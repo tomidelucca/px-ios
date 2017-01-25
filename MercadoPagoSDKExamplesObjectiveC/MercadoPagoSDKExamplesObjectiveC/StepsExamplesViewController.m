@@ -64,6 +64,17 @@ int installmentsSelected = 1;
 
 - (void)startPaymentVault {
     
+    //WALLET CONFIGS
+    [MercadoPagoContext setLanguageWithLanguage:Languages_PORTUGUESE];
+    
+    [MercadoPagoContext setPublicKey:@"APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d"];
+    [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
+    [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
+    PaymentVaultViewController.maxCustomerPaymentMethods = 100;
+    [CardFormViewController setShowBankDeals:NO];
+    [MercadoPagoContext setPayerAccessToken:@"APP_USR-1945000207238192-012513-61cf8d61682e0915a9a4fe1ca00746cb__LB_LD__-207100706"];
+    
+    
     UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
         currentToken = token;
         selectedIssuer = issuer;

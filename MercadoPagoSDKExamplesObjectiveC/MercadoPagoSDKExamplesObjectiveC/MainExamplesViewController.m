@@ -25,7 +25,8 @@
 }
 
 - (IBAction)checkoutFlow:(id)sender {
-    [MercadoPagoContext setLanguageWithLanguage:Languages_PORTUGUESE];
+
+    
     UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
     } callbackCancel:nil];
     [self presentViewController:choFlow animated:YES completion:^{}];
