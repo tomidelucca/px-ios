@@ -36,8 +36,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var site : Site!
     
-    var language : String!
-    
     var termsAndConditionsSite : String!
 
     var account_money_available = false
@@ -47,6 +45,8 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     var display_default_loading = true
     
     var decorationPreference = DecorationPreference()
+
+    var language: String = NSLocale.preferredLanguages[0]
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -94,6 +94,16 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         case MCO = "MCO"
     }
     
+    public enum languages : String {
+        case SPANISH = "es"
+        case SPANISH_MEXICO = "es-MX"
+        case SPANISH_COLOMBIA = "es-CO"
+        case SPANISH_URUGUAY = "es-UY"
+        case SPANISH_PERU = "es-PE"
+        case SPANISH_VENEZUELA = "es-VE"
+        case PORTUGUESE = "pt"
+    }
+    
     
     
     open func siteId() -> String! {
@@ -104,7 +114,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
-            self.language = siteConfig!["language"] as! String
             self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
@@ -134,9 +143,24 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getTrackListener() -> MPTrackListener? {
         return sharedInstance.trackListener
     }
-    
+    open static func setLanguage(language: languages) -> Void {
+        sharedInstance.language = language.rawValue
+    }
     open static func getLanguage() -> String {
         return sharedInstance.language
+    }
+    open static func getLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        
+        let currentLanguage = MercadoPagoContext.getLanguage()
+        if let path = bundle.path(forResource: currentLanguage, ofType : "lproj"){
+            return path
+        } else if let path = bundle.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj"){
+            return path
+        } else {
+            let path = bundle.path(forResource: "es", ofType : "lproj")
+            return path!
+        }
     }
     
     open static func getTermsAndConditionsSite() -> String {
