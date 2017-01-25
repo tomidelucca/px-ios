@@ -97,11 +97,12 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     public enum languages : String {
         case SPANISH = "es"
         case SPANISH_MEXICO = "es-MX"
-        case SPANISH_COLOMBIA = "es-CO"
+        /*case SPANISH_COLOMBIA = "es-CO"
         case SPANISH_URUGUAY = "es-UY"
         case SPANISH_PERU = "es-PE"
-        case SPANISH_VENEZUELA = "es-VE"
+        case SPANISH_VENEZUELA = "es-VE"*/
         case PORTUGUESE = "pt"
+        case ENGLISH = "en"
     }
     
     
