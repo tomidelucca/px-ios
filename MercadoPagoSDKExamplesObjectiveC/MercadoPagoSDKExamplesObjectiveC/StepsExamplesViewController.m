@@ -72,8 +72,7 @@ int installmentsSelected = 1;
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
     PaymentVaultViewController.maxCustomerPaymentMethods = 100;
     [CardFormViewController setShowBankDeals:NO];
-    [MercadoPagoContext setPayerAccessToken:@"APP_USR-1945000207238192-012513-61cf8d61682e0915a9a4fe1ca00746cb__LB_LD__-207100706"];
-    
+     
     
     UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
         currentToken = token;
