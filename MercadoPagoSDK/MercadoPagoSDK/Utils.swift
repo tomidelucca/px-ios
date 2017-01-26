@@ -130,7 +130,14 @@ class Utils {
         return UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
-    class func appendTwoJSONS(firstJSON: String, secondJSON: String) -> String {
+    class func append(firstJSON: String, secondJSON: String) -> String {
+        if firstJSON == "" && secondJSON == "" {
+            return ""
+        } else if secondJSON == "" {
+            return firstJSON
+        } else if firstJSON == "" {
+            return secondJSON
+        }
         var firstJSON = firstJSON
         var secondJSON = secondJSON
         

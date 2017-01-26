@@ -218,7 +218,7 @@ open class MPServicesBuilder : NSObject {
     }
     
     
-    open class func createPayment(_ merchantBaseUrl : String, merchantPaymentUri : String, payment : MPPayment,
+    /*open class func createPayment(_ merchantBaseUrl : String, merchantPaymentUri : String, payment : MPPayment,
                                   success: @escaping (_ payment: Payment) -> Void,
                                   failure: ((_ error: NSError) -> Void)?) {
         
@@ -250,7 +250,7 @@ open class MPServicesBuilder : NSObject {
                 }
             }
         }, failure: failure)
-    }
+    }*/
     
     
     open class func searchPaymentMethods(_ amount : Double, defaultPaymenMethodId : String?, excludedPaymentTypeIds : Set<String>?, excludedPaymentMethodIds : Set<String>?, success: @escaping (PaymentMethodSearch) -> Void, failure: ((_ error: NSError) -> Void)?) {

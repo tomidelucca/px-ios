@@ -10,11 +10,14 @@ import Foundation
 
 open class ServicePreference : NSObject{
     
-    var customerURL: String
+    var customerURL: String?
+    var customerURI = ""
     var customerAdditionalInfo: NSDictionary?
-    var checkoutPreferenceURL: String
+    var checkoutPreferenceURL: String?
+    var checkoutPreferenceURI = ""
     var checkoutAdditionalInfo: NSDictionary?
-    var paymentURL: String
+    var paymentURL: String = MP_API_BASE_URL
+    var paymentURI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     var paymentAdditionalInfo: NSDictionary?
     
     internal static let MP_ALPHA_ENV = "/gamma"
@@ -36,7 +39,7 @@ open class ServicePreference : NSObject{
     
     internal static let MP_PAYMENTS_URL = MP_API_BASE_URL + MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     
-    public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
+    /*public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
         
         self.customerURL = customerURL
         self.checkoutPreferenceURL = checkoutPreferenceURL
@@ -48,53 +51,74 @@ open class ServicePreference : NSObject{
             self.customerAdditionalInfo = customerAdditionalInfo as NSDictionary
         }
         
-    }
+    }*/
 
-    public func setGetCustomer(URL: String, additionalInfo: [String:String]? = nil){
-        customerURL = URL
+    public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String]? = nil) {
+        customerURL = baseURL
+        customerURI = URI
         if let additionalInfo = additionalInfo {
             customerAdditionalInfo = additionalInfo as NSDictionary
         }
         
     }
     
-    public func setCreatePayment(URL: String, additionalInfo: NSDictionary? = nil){
-        paymentURL = URL
+    public func setCreatePayment(baseURL: String, URI: String, additionalInfo: NSDictionary? = nil) {
+        paymentURL = baseURL
+        paymentURI = URI
         paymentAdditionalInfo = additionalInfo
         
     }
     
-    public func setCreatePreference(URL: String, additionalInfo: NSDictionary? = nil){
-        checkoutPreferenceURL = URL
+    public func setCreatePreference(baseURL: String, URI: String, additionalInfo: NSDictionary? = nil) {
+        checkoutPreferenceURL = baseURL
+        checkoutPreferenceURI = URI
         checkoutAdditionalInfo = additionalInfo
         
     }
     
-    public func getCustomerURL() -> String{
+    public func getCustomerURL() -> String? {
         return customerURL
     }
     
-    public func getCustomerAddionalInfo() -> String? {
+    public func getCustomerURI() -> String {
+        return customerURI
+    }
+    
+    public func getCustomerAddionalInfo() -> String {
         if let  customerAdditionalInfo = customerAdditionalInfo {
             return customerAdditionalInfo.parseToQuery()
         }
-        return nil
+        return ""
     }
     
     public func getPaymentURL() -> String{
         return paymentURL
     }
     
-    public func getPaymentAddionalInfo() -> NSDictionary? {
-        return paymentAdditionalInfo
+    public func getPaymentURI() -> String {
+        return paymentURI
     }
     
-    public func getCheckoutPreferenceURL() -> String{
+    public func getPaymentAddionalInfo() -> String {
+        if let paymentAdditionalInfo = paymentAdditionalInfo?.toJsonString(){
+            return paymentAdditionalInfo
+        }
+        return ""
+    }
+    
+    public func getCheckoutPreferenceURL() -> String?{
         return checkoutPreferenceURL
     }
     
-    public func getCheckoutAddionalInfo() -> NSDictionary? {
-        return checkoutAdditionalInfo
+    public func getCheckoutPreferenceURI() -> String {
+        return checkoutPreferenceURI
+    }
+    
+    public func getCheckoutAddionalInfo() -> String {
+        if let checkoutAdditionalInfo = checkoutAdditionalInfo?.toJsonString(){
+            return checkoutAdditionalInfo
+        }
+        return ""
     }
     
     public func isGetCustomerSet() -> Bool{

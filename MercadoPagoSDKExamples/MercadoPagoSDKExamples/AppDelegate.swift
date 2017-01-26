@@ -37,8 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MercadoPagoContext.setBaseURL("https://private-0c3e9-testingcustomer.apiary-mock.com")
         MercadoPagoContext.setCustomerURI("/get_customer")
         
-        let service = ServicePreference()
-        service.setGetCustomer(URL: "")
+        //let service = ServicePreference()
         
 
         //MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
