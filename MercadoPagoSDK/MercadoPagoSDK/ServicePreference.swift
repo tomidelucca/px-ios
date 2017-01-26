@@ -17,7 +17,26 @@ open class ServicePreference : NSObject{
     var paymentURL: String
     var paymentAdditionalInfo: NSDictionary?
     
-    public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MercadoPago.MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
+    internal static let MP_ALPHA_ENV = "/gamma"
+    internal static var MP_TEST_ENV = "/beta"
+    internal static let MP_PROD_ENV = "/v1"
+    internal static let API_VERSION = "1.3.X"
+    
+    internal static let MP_ENVIROMENT = MP_TEST_ENV  + "/checkout"
+    
+    internal static let MP_OP_ENVIROMENT = "/v1"
+    
+    internal static let MP_ALPHA_API_BASE_URL : String =  "http://api.mp.internal.ml.com"
+    internal static let MP_API_BASE_URL_PROD : String =  "https://api.mercadopago.com"
+    
+    internal static let MP_API_BASE_URL : String =  MP_API_BASE_URL_PROD
+    
+    internal static let MP_CUSTOMER_URI = "/customers?preference_id="
+    internal static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
+    
+    internal static let MP_PAYMENTS_URL = MP_API_BASE_URL + MP_PAYMENTS_URI + "?api_version=" + API_VERSION
+    
+    public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
         
         self.customerURL = customerURL
         self.checkoutPreferenceURL = checkoutPreferenceURL
