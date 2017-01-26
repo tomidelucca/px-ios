@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var pods =[
         {
-            podVersion: "2.2.7",
+            podVersion: "2.2.9",
             xcodeVersion: "8.0+",
             swiftVersion: "3.0.1",
             location: false,
