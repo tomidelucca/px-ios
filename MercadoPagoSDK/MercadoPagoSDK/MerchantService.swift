@@ -25,7 +25,7 @@ open class MerchantService : MercadoPagoService {
     open func getCustomer(_ method : String = "GET", params: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
             
-        self.request(uri: MercadoPagoContext.customerURI(), params: params, body: nil, method: method, cache: false, success: success, failure: failure)
+        self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: success, failure: failure)
     }
     
 /*    open func createPayment(_ method : String = "POST", payment : MerchantPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
@@ -38,12 +38,12 @@ open class MerchantService : MercadoPagoService {
         let headers = NSMutableDictionary()
         headers.setValue(MercadoPagoContext.paymentKey() , forKey: "X-Idempotency-Key")
         
-        self.request(uri: "", params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
+        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: failure)
     }
     
     open func createPreference(_ method : String = "POST", body: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
         
-        self.request(uri: "", params: nil, body: body as AnyObject?, method: method, cache: false, success: success, failure: failure)
+        self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, cache: false, success: success, failure: failure)
     }
 }
