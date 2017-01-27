@@ -37,43 +37,37 @@ open class ServicePreference : NSObject{
     internal static let MP_CUSTOMER_URI = "/customers?preference_id="
     internal static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
     
-    internal static let MP_PAYMENTS_URL = MP_API_BASE_URL + MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     
     /*public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
-        
-        self.customerURL = customerURL
-        self.checkoutPreferenceURL = checkoutPreferenceURL
-        self.checkoutAdditionalInfo = checkoutAdditionalInfo
-        self.paymentURL = paymentURL
-        self .paymentAdditionalInfo = paymentAdditionalInfo
-        
-        if let customerAdditionalInfo = customerAdditionalInfo {
-            self.customerAdditionalInfo = customerAdditionalInfo as NSDictionary
-        }
-        
-    }*/
-
-    public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String]? = nil) {
+     
+     self.customerURL = customerURL
+     self.checkoutPreferenceURL = checkoutPreferenceURL
+     self.checkoutAdditionalInfo = checkoutAdditionalInfo
+     self.paymentURL = paymentURL
+     self .paymentAdditionalInfo = paymentAdditionalInfo
+     
+     if let customerAdditionalInfo = customerAdditionalInfo {
+     self.customerAdditionalInfo = customerAdditionalInfo as NSDictionary
+     }
+     
+     }*/
+    
+    public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
         customerURI = URI
-        if let additionalInfo = additionalInfo {
-            customerAdditionalInfo = additionalInfo as NSDictionary
-        }
-        
+        customerAdditionalInfo = additionalInfo as NSDictionary
     }
     
-    public func setCreatePayment(baseURL: String, URI: String, additionalInfo: NSDictionary? = nil) {
+    public func setCreatePayment(baseURL: String = MP_API_BASE_URL, URI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION, additionalInfo: NSDictionary = [:]) {
         paymentURL = baseURL
         paymentURI = URI
         paymentAdditionalInfo = additionalInfo
-        
     }
     
-    public func setCreatePreference(baseURL: String, URI: String, additionalInfo: NSDictionary? = nil) {
+    public func setCreatePreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
         checkoutPreferenceURL = baseURL
         checkoutPreferenceURI = URI
         checkoutAdditionalInfo = additionalInfo
-        
     }
     
     public func getCustomerURL() -> String? {
@@ -85,8 +79,8 @@ open class ServicePreference : NSObject{
     }
     
     public func getCustomerAddionalInfo() -> String {
-        if let  customerAdditionalInfo = customerAdditionalInfo {
-            return customerAdditionalInfo.parseToQuery()
+        if !NSDictionary.isNullOrEmpty(customerAdditionalInfo){
+            return customerAdditionalInfo!.parseToQuery()
         }
         return ""
     }
@@ -100,8 +94,8 @@ open class ServicePreference : NSObject{
     }
     
     public func getPaymentAddionalInfo() -> String {
-        if let paymentAdditionalInfo = paymentAdditionalInfo?.toJsonString(){
-            return paymentAdditionalInfo
+        if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo){
+            return paymentAdditionalInfo!.toJsonString()
         }
         return ""
     }
@@ -115,17 +109,22 @@ open class ServicePreference : NSObject{
     }
     
     public func getCheckoutAddionalInfo() -> String {
-        if let checkoutAdditionalInfo = checkoutAdditionalInfo?.toJsonString(){
-            return checkoutAdditionalInfo
+        if !NSDictionary.isNullOrEmpty(checkoutAdditionalInfo){
+            return checkoutAdditionalInfo!.toJsonString()
         }
         return ""
     }
     
-    public func isGetCustomerSet() -> Bool{
+    public func isGetCustomerSet() -> Bool {
         return !String.isNullOrEmpty(customerURL)
     }
-    public func isCheckoutPreferenceSet() -> Bool{
+    
+    public func isCheckoutPreferenceSet() -> Bool {
         return !String.isNullOrEmpty(checkoutPreferenceURL)
     }
-
+    
+    public func isCreatePaymentSet() -> Bool {
+        return !String.isNullOrEmpty(paymentURL)
+    }
+    
 }

@@ -357,10 +357,19 @@ class UtilsTest: BaseTest {
     }
     
     func testAppendTwoJSONS(){
-        let JSON1 = "{\n  \"hola\" : \"hola\"\n}"
-        let JSON2 = "{\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}"
+        var JSON1 = "{\n  \"hola\" : \"hola\"\n}"
+        var JSON2 = "{\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}"
         
-        XCTAssertEqual(Utils.appendTwoJSONS(firstJSON: JSON1, secondJSON: JSON2), "{\n  \"hola\" : \"hola\"\n\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}")
+        XCTAssertEqual(Utils.append(firstJSON: JSON1, secondJSON: JSON2), "{\n  \"hola\" : \"hola\"\n\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}")
+        
+        JSON2 = ""
+        XCTAssertEqual(Utils.append(firstJSON: JSON1, secondJSON: JSON2), "{\n  \"hola\" : \"hola\"\n}")
+        
+        JSON1 = ""
+        XCTAssertEqual(Utils.append(firstJSON: JSON1, secondJSON: JSON2), "")
+        
+        JSON2 = "{\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}"
+        XCTAssertEqual(Utils.append(firstJSON: JSON1, secondJSON: JSON2), "{\n  \"2\" : \"B\",\n  \"1\" : \"A\",\n  \"3\" : \"C\"\n}")
     }
     
   
