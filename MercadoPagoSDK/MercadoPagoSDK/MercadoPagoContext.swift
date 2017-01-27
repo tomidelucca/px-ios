@@ -36,8 +36,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var site : Site!
     
-    var language : String!
-    
     var termsAndConditionsSite : String!
 
     var account_money_available = false
@@ -45,6 +43,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     var currency : Currency!
     
     var display_default_loading = true
+    
+    var decorationPreference = DecorationPreference()
+
+    var language: String = NSLocale.preferredLanguages[0]
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -71,7 +73,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return  "iOS"
     }
     open func sdkVersion() -> String!{
-        return "2.2.6"
+        return "2.2.9"
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
@@ -92,7 +94,37 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         case MCO = "MCO"
     }
     
+
     
+    @objc public enum Languages : Int {
+        case _SPANISH
+        case _SPANISH_MEXICO
+        /*
+        case _SPANISH_COLOMBIA
+        case _SPANISH_URUGUAY
+        case _SPANISH_PERU
+        case _SPANISH_VENEZUELA
+ */
+        case _PORTUGUESE
+        case _ENGLISH
+        
+        func langPrefix() -> String {
+            switch self {
+            case ._SPANISH : return "es"
+            case ._SPANISH_MEXICO : return "es-MX"
+                /*
+            case ._SPANISH_COLOMBIA : return "es-CO"
+            case ._SPANISH_URUGUAY : return "es-UY"
+            case ._SPANISH_PERU : return "es-PE"
+            case ._SPANISH_VENEZUELA : return "es-VE"
+                 */
+            case ._PORTUGUESE : return "pt"
+            case ._ENGLISH : return "en"
+            }
+        }
+        
+        
+    }
     
     open func siteId() -> String! {
         return site.rawValue
@@ -102,7 +134,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
-            self.language = siteConfig!["language"] as! String
             self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
@@ -132,9 +163,24 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getTrackListener() -> MPTrackListener? {
         return sharedInstance.trackListener
     }
-    
+    open static func setLanguage(language: Languages) -> Void {
+        sharedInstance.language = language.langPrefix()
+    }
     open static func getLanguage() -> String {
         return sharedInstance.language
+    }
+    open static func getLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        
+        let currentLanguage = MercadoPagoContext.getLanguage()
+        if let path = bundle.path(forResource: currentLanguage, ofType : "lproj"){
+            return path
+        } else if let path = bundle.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj"){
+            return path
+        } else {
+            let path = bundle.path(forResource: "es", ofType : "lproj")
+            return path!
+        }
     }
     
     open static func getTermsAndConditionsSite() -> String {
@@ -144,7 +190,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
-    
+    open static func getDecorationPreference() -> DecorationPreference{
+        return sharedInstance.decorationPreference
+    }
     open func publicKey() -> String!{
         return self.public_key
     }
@@ -182,6 +230,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     internal static func getTextColor() -> UIColor {
         return textColor
     }
+    
     open static func setDarkTextColor(){
         textColor = UIColor.black
     }
@@ -270,6 +319,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func setDisplayDefaultLoading(flag : Bool){
         sharedInstance.display_default_loading = flag
+    }
+    
+    open class func setDecorationPreference(decorationPreference: DecorationPreference){
+        sharedInstance.decorationPreference = decorationPreference
     }
     
     open class func merchantAccessToken() -> String {

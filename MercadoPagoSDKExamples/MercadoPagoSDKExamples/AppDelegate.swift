@@ -23,13 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     
         MercadoPagoContext.setPublicKey("APP_USR-8e3869a6-638f-45cd-b5b7-267c8e6f2b09")
+        
+        //MercadoPagoContext.setPublicKey("TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a")
         //MercadoPagoContext.setPublicKey("APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d")
 
         //MercadoPagoContext.setPayerAccessToken("APP_USR-6105282339975037-110310-7994b404127b8d755adff11a60052b01__LC_LA__-233395668")
         
-        MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
+     //   MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
         MercadoPagoContext.setDisplayDefaultLoading(flag: false)
+        
+        MercadoPagoContext.setLanguage(language: MercadoPagoContext.Languages._PORTUGUESE)
         
 //        let tracker = TrackerExample()
 //        
@@ -43,10 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Pinto de rojo el color primerio
 
-//        MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
 
-        MercadoPagoContext.setLightTextColor()
-        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+        //MercadoPagoContext.setupPrimaryColor(UIColor.black, complementaryColor: UIColor.black)
+        let decorationPreference = DecorationPreference()
+        decorationPreference.setBaseColor(hexColor: "#CA254D")
+        
+        MercadoPagoContext.setDecorationPreference(decorationPreference: decorationPreference)
         
         CardFormViewController.showBankDeals = true
         
