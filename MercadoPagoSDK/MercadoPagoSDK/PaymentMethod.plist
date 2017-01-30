@@ -373,9 +373,9 @@
 		<key>editing_font_color</key>
 		<string>FFFFFF</string>
 		<key>label_mask</key>
-		<string>XXXX XXXX XXXX XXXXXX</string>
+		<string>XXXXXXXXXXXXXXXXXX</string>
 		<key>editText_mask</key>
-		<string>XXXX XXXX XXXX XXXXXX</string>
+		<string>XXXXXXXXXXXXXXXXXX</string>
 	</dict>
 	<key>debcabal</key>
 	<dict>
