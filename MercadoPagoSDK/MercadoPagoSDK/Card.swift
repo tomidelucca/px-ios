@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 open class Card : NSObject, CardInformation {
+
     
     open var cardHolder : Cardholder?
     open var customerId : String?

@@ -84,6 +84,10 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
     public func getImageDescription() -> String{
         return self.idPaymentMethodSearchItem
     }
+    
+    public func hasChildren() -> Bool {
+        return !Array.isNullOrEmpty(self.children)
+    }
 }
 
 public enum PaymentMethodSearchItemType : String {

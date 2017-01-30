@@ -130,6 +130,9 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     public func getImageDescription() -> String {
         return self.getPaymentMethodId()
     }
-
     
+    public func hasChildren() -> Bool {
+        return false
+    }
+
 }

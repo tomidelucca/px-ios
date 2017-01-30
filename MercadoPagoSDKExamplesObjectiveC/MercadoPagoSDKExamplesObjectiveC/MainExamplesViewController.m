@@ -26,9 +26,11 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
-    UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
-    } callbackCancel:nil];
-    [self presentViewController:choFlow animated:YES completion:^{}];
+//    UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
+//    } callbackCancel:nil];
+//    [self presentViewController:choFlow animated:YES completion:^{}];
+    
+    [[[MercadoPagoCheckout alloc] initWithNavigationController:self.navigationController] start];
 }
 
 

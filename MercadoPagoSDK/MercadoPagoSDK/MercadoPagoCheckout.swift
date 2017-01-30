@@ -31,6 +31,10 @@ open class MercadoPagoCheckout: NSObject {
     
     func executeNextStep(optionSelected: String? = nil){
         switch self.viewModel.nextStep() {
+        case .SEARCH_PAYMENT_METHODS :
+            self.collectPaymentMethodSearch()
+        case .PAYMENT_METHOD :
+            self.collectionPaymentMethods()
         case CheckoutStep.CARD_FORM:
             self.collectCard()
         case CheckoutStep.CREDIT_DEBIT:
@@ -42,8 +46,30 @@ open class MercadoPagoCheckout: NSObject {
         case CheckoutStep.FINISH:
             self.finish()
         default:
-             self.collectCard()
+             self.error()
         }
+    }
+    
+    func collectPaymentMethodSearch(){
+        //TODO :  EXCLUSIONES
+        MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
+                success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+                    self.viewModel.updateCheckoutModel(paymentMethodSearch : paymentMethodSearchResponse)
+                    self.executeNextStep()
+                    
+        }, failure: { (error) -> Void in
+            self.viewModel.next = .ERROR
+            self.executeNextStep()
+        })
+
+    }
+    
+    func collectionPaymentMethods(){
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentMethodSelected : PaymentOptionDrawable) -> Void  in
+            self.viewModel.updateCheckoutModel(paymentMethodSelected : paymentMethodSelected)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(paymentMethodSelectionStep, animated: true)
     }
     
     func collectCard(){
@@ -79,6 +105,9 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(payerCostStep, animated: true)
     }
     
+    func error() {
+        // Display error
+    }
     
     func finish(){
         
