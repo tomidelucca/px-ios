@@ -33,6 +33,12 @@ class FlowPreferenceTest: BaseTest {
         flowPreference.disablePaymentRejectedScreen()
         XCTAssertFalse(flowPreference.isPaymentRejectedScreenEnable())
     }
+    func testDisableDefaultSelection(){
+        let flowPreference = FlowPreference()
+        flowPreference.disableDefaultSelection()
+        XCTAssertFalse(flowPreference.isPaymentSearchScreenEnable())
+    }
+
     
     func testEnablePaymentPendingScreen(){
         let flowPreference = FlowPreference()
@@ -79,8 +85,11 @@ class FlowPreferenceTest: BaseTest {
         XCTAssert(flowPreference.isPaymentPendingScreenEnable())
     }
     
-    func testIsPaymentSearchScreenEnable(){
+    func testEnableDefaultSelection(){
         let flowPreference = FlowPreference()
+        XCTAssert(flowPreference.isPaymentSearchScreenEnable())
+        flowPreference.disableDefaultSelection()
+        flowPreference.enableDefaultSelection()
         XCTAssert(flowPreference.isPaymentSearchScreenEnable())
     }
     
