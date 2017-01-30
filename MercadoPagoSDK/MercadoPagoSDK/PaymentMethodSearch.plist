@@ -227,5 +227,10 @@
 		<key>image_name</key>
 		<string>mediosMaestro</string>
 	</dict>
+	<key>debcabal</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosDebCabal</string>
+	</dict>
 </dict>
 </plist>
