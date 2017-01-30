@@ -29,6 +29,52 @@ open class CheckoutPreference : NSObject {
     
     //shipments
     
+    public func addItems(item: Item) {
+        items?.append(item)
+    }
+    
+    public func addItems(items: [Item]) {
+        self.items?.append(contentsOf: items)
+    }
+    
+    public func addExcludedPaymentMethod(_ paymentMethodId: String) {
+        self.paymentPreference.excludedPaymentMethodIds?.insert(paymentMethodId)
+    }
+    public func addExcludedPaymentMethods(_ paymentMethodIds: Set<String>) {
+        self.paymentPreference.excludedPaymentMethodIds? = paymentMethodIds
+    }
+    
+    public func addExcludedPaymentType(_ paymentTypeId: String) {
+        self.paymentPreference.excludedPaymentTypeIds?.insert(paymentTypeId)
+    }
+    
+    public func addExcludedPaymentTypes(_ paymentTypeIds: Set<String>) {
+        self.paymentPreference.excludedPaymentTypeIds? = paymentTypeIds
+    }
+    
+    public func setMaxInstallments(_ maxInstallments : Int) {
+        self.paymentPreference.maxAcceptedInstallments = maxInstallments
+    }
+    
+    public func setDefaultInstallments(_ defaultInstallments: Int){
+        self.paymentPreference.defaultInstallments = defaultInstallments
+    }
+    
+    public func setPayerEmail(_ payerEmail: String){
+        self.payer.email = payerEmail
+    }
+    
+    public func setSite(siteId: String){
+        self.siteId = siteId
+    }
+    
+    public func setExpirationDate(_ expirationDate: Date){
+    }
+    
+    public func setActiveFrom(_ date: Date){
+        
+    }
+    
     open func validate() -> String?{
     
     
