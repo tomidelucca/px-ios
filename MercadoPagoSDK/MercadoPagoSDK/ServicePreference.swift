@@ -38,20 +38,6 @@ open class ServicePreference : NSObject{
     internal static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
     
     
-    /*public init(customerURL: String = "", customerAdditionalInfo : [String:String]? = nil, checkoutPreferenceURL: String = "", checkoutAdditionalInfo : NSDictionary? = nil, paymentURL: String = MP_PAYMENTS_URL, paymentAdditionalInfo : NSDictionary? = nil){
-     
-     self.customerURL = customerURL
-     self.checkoutPreferenceURL = checkoutPreferenceURL
-     self.checkoutAdditionalInfo = checkoutAdditionalInfo
-     self.paymentURL = paymentURL
-     self .paymentAdditionalInfo = paymentAdditionalInfo
-     
-     if let customerAdditionalInfo = customerAdditionalInfo {
-     self.customerAdditionalInfo = customerAdditionalInfo as NSDictionary
-     }
-     
-     }*/
-    
     public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
         customerURI = URI
@@ -64,10 +50,14 @@ open class ServicePreference : NSObject{
         paymentAdditionalInfo = additionalInfo
     }
     
-    public func setCreatePreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
+    public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
         checkoutPreferenceURL = baseURL
         checkoutPreferenceURI = URI
         checkoutAdditionalInfo = additionalInfo
+    }
+    
+    public func setAdditionalPaymentInfo(_ additionalInfo: NSDictionary){
+        paymentAdditionalInfo = additionalInfo
     }
     
     public func getCustomerURL() -> String? {
