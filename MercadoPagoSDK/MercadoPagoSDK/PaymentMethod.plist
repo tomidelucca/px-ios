@@ -365,7 +365,7 @@
 	<key>maestro</key>
 	<dict>
 		<key>image_name</key>
-		<string>icoTC_maestro</string>
+		<string>icoTc_maestro</string>
 		<key>first_color</key>
 		<string>004883</string>
 		<key>font_color</key>
@@ -376,6 +376,21 @@
 		<string>XXXX XXXX XXXX XXXXXX</string>
 		<key>editText_mask</key>
 		<string>XXXX XXXX XXXX XXXXXX</string>
+	</dict>
+	<key>debcabal</key>
+	<dict>
+		<key>image_name</key>
+		<string>icoTc_debcabal</string>
+		<key>first_color</key>
+		<string>D4B44B</string>
+		<key>font_color</key>
+		<string>333333</string>
+		<key>editing_font_color</key>
+		<string>333333</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
 	</dict>
 </dict>
 </plist>
