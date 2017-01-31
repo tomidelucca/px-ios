@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
+open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMethodOption {
     
     open var idPaymentMethodSearchItem : String!
     open var type : PaymentMethodSearchItemType!
@@ -85,8 +85,25 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable {
         return self.idPaymentMethodSearchItem
     }
     
+    /*
+     * PaymentMethodOption implementation
+     */
+
+    
     public func hasChildren() -> Bool {
         return !Array.isNullOrEmpty(self.children)
+    }
+    
+    public func getChildren() -> [PaymentMethodOption]? {
+        return self.children
+    }
+    
+    public func isCard() -> Bool {
+        return PaymentTypeId.isCard(paymentTypeId: self.idPaymentMethodSearchItem.lowercased())
+    }
+    
+    public func getId() -> String {
+        return self.idPaymentMethodSearchItem
     }
 }
 

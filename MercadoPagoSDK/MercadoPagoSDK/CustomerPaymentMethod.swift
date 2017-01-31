@@ -134,5 +134,13 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     public func hasChildren() -> Bool {
         return false
     }
+    
+    public func getChildren() -> PaymentMethodOption? {
+        return nil
+    }
+    
+    public func getId() -> String {
+        return self._id
+    }
 
 }

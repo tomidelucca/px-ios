@@ -18,6 +18,7 @@ public enum CheckoutStep : String {
     case IDENTIFICATION
     case PAYER_COST
     case REVIEW_AND_CONFIRM
+    case POST_PAYMENT
     case CONGRATS
     case FINISH
     case ERROR
@@ -31,10 +32,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var paymentMethods : [PaymentMethod]?
     var cardToken: CardToken?
     var payerCost: PayerCost?
-    var paymentMethodSelected : PaymentOptionDrawable?
+    var paymentMethodSelected : PaymentMethodOption?
     
-    /// VER QUIZAS NO IRIA ACA
-    var paymentMethodSearch : PaymentMethodSearch?
+    
+    //optional?
+    var paymentMethodOptions : [PaymentMethodOption]?
+    //distinto a la lista anterior
+    var availablePaymentMethods : [PaymentMethod]?
     
     // flowpreference
     //
@@ -62,8 +66,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return nil
     }
     
-    public func updateCheckoutModel(paymentMethodSearch : PaymentMethodSearch) {
-        self.paymentMethodSearch = paymentMethodSearch
+    public func updateCheckoutModel(paymentMethodOptions : [PaymentMethodOption], availablePaymentMethods : [PaymentMethod]) {
+        self.paymentMethodOptions = paymentMethodOptions
+        self.availablePaymentMethods = availablePaymentMethods
         self.next = CheckoutStep.PAYMENT_METHOD
     }
     
@@ -80,9 +85,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func paymentVaultViewModel() -> PaymentVaultViewModel {
-        // TODO : Customer payment methods!
-        let paymentMethodOptions : [PaymentOptionDrawable] = self.paymentMethodSearch!.groups //as! [PaymentOptionDrawable])
-        return PaymentVaultViewModel(amount: self.amount, paymentPrefence: getPaymentPreferences(), paymentMethodOptions: paymentMethodOptions)
+        // TODO : Customer payment methods! + yerbas
+        return PaymentVaultViewModel(amount: self.amount, paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!)
     }
     
     public func issuerViewModel() -> CardAdditionalStepViewModel{
@@ -123,17 +127,17 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.next = CheckoutStep.FINISH
     }
     
-    public func updateCheckoutModel(paymentMethodSelected : PaymentOptionDrawable){
+    public func updateCheckoutModel(paymentMethodSelected : PaymentMethodOption){
         self.paymentMethodSelected = paymentMethodSelected
-        // Tener en cuenta si es customer card, ti tiene children y toda la pelota
-//        if (paymentSearchItemSelected.children.count > 0) {
-//            self.callback(paymentSearchItemSelected)
-//        } else {
-//            self.showLoading()
-//            self.viewModel.optionSelected(paymentSearchItemSelected, navigationController: self.navigationController!, cancelPaymentCallback: cardFormCallbackCancel())
-//        }
-        
-        
+        if (self.paymentMethodSelected!.hasChildren()) {
+            self.paymentMethodOptions = self.paymentMethodSelected!.getChildren()
+            self.next = CheckoutStep.PAYMENT_METHOD
+        } else if (self.paymentMethodSelected!.isCard()) {
+            self.next = CheckoutStep.CARD_FORM
+        } else {
+            self.selectedPaymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodSelected.getId())
+            self.next = CheckoutStep.REVIEW_AND_CONFIRM
+        }
     }
     
     public func nextStep() -> CheckoutStep {

@@ -18,3 +18,14 @@ public protocol PaymentOptionDrawable {
     func getSubtitle() -> String?
 }
 
+@objc
+public protocol PaymentMethodOption {
+    
+    func getId() -> String
+    
+    func hasChildren() -> Bool
+    
+    func getChildren() -> [PaymentMethodOption]?
+    
+    func isCard() -> Bool
+}

@@ -62,9 +62,9 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate var defaultOptionSelected = false;
     
-    fileprivate var callback : ((_ paymentMethodSelected : PaymentOptionDrawable) -> Void)!
+    fileprivate var callback : ((_ paymentMethodSelected : PaymentMethodOption) -> Void)!
     
-    init(viewModel : PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected : PaymentOptionDrawable) -> Void) {
+    init(viewModel : PaymentVaultViewModel, callback : @escaping (_ paymentMethodSelected : PaymentMethodOption) -> Void) {
         super.init(nibName: PaymentVaultViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
@@ -281,7 +281,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             } else {
                 let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodSearchItem
                 collectionView.deselectItem(at: indexPath, animated: true)
-                self.callback!(paymentSearchItemSelected as! PaymentOptionDrawable)
+                self.callback!(paymentSearchItemSelected as! PaymentMethodOption)
             }
         }
     
@@ -319,7 +319,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return cell
         } else {
             let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row)
-            cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+            cell.fillCell(drawablePaymentOption: paymentMethodToDisplay as! PaymentOptionDrawable)
         }
         return cell
 
@@ -388,7 +388,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     func heightOfItem(indexItem : Int) -> CGFloat {
-        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : self.viewModel.getPaymentMethodOption(row: indexItem))
+        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : self.viewModel.getPaymentMethodOption(row: indexItem) as! PaymentOptionDrawable)
     }
     
 
@@ -433,7 +433,7 @@ class PaymentVaultViewModel : NSObject {
     var cards : [Card]?
     
     //Should not be optional
-    var paymentMethodOptions : [PaymentOptionDrawable]?
+    var paymentMethodOptions : [PaymentMethodOption]?
     
     weak var controller : PaymentVaultViewController?
     
@@ -444,7 +444,7 @@ class PaymentVaultViewModel : NSObject {
     
     internal var isRoot = true
     
-    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentOptionDrawable], callbackCancel : ((Void) -> Void)? = nil){
+    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], callbackCancel : ((Void) -> Void)? = nil){
         self.amount = amount
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions
@@ -462,7 +462,7 @@ class PaymentVaultViewModel : NSObject {
         
     }
     
-    func getPaymentMethodOption(row : Int) -> PaymentOptionDrawable {
+    func getPaymentMethodOption(row : Int) -> PaymentMethodOption {
         return self.paymentMethodOptions![row]
 //        if (self.getCustomerPaymentMethodsToDisplayCount() > row) {
 //            return self.customerCards![row]
