@@ -50,7 +50,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             attributedAmountFinal.append(attributedAmount)
             attributedAmountFinal.append(NSAttributedString(string : ")"))
             self.totalAmountLabel.attributedText = attributedAmountFinal
-
+            self.totalAmountLabel.attributedText = attributedAmountFinal
         } else {
              self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
             self.totalAmountLabel.text = ""
@@ -65,6 +65,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
         self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
         self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+        self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
