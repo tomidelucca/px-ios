@@ -65,9 +65,14 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         switch (indexPath as NSIndexPath).row {
         case 0:
             //Checkout Example
-            
+            let nav = UINavigationController()
             MercadoPagoCheckout(navigationController:self.navigationController!).start()
+          
             
+           // self.present(nav , animated: true, completion: {
+                //nothing
+           // })
+           
             /*
             let pp = PaymentPreference()
             pp.excludedPaymentTypeIds = ["ticket", "atm", ""]

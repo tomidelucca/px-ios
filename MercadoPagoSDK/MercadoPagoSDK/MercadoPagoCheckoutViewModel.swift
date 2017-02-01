@@ -19,6 +19,7 @@ public enum CheckoutStep : String {
     case PAYER_COST
     case REVIEW_AND_CONFIRM
     case CONGRATS
+    case FINISH
 }
 
 
@@ -30,6 +31,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var cardToken: CardToken?
     var payerCost: PayerCost?
     
+    
+    // flowpreference
+    //
+    //
+    //
+    //
+    //
     
     
     //--- PAYMENT DATA
@@ -97,6 +105,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     public func updateCheckoutModel(payerCost: PayerCost?){
         self.selectedPayerCost = payerCost
+        self.next = CheckoutStep.FINISH
     }
     
     public func nextStep() -> CheckoutStep {
