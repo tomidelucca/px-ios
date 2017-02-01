@@ -11,45 +11,43 @@ import UIKit
 open class CheckoutPreference : NSObject {
     
     open var _id : String!
-    open var items : [Item]? // que el conjunto no sea nulo y que no este vacio, que todos los items tengan la misma currency
-                               // que cada item no sea nulo, que su cantidad sea 1 o mayor
-                                // que el precio no sea nulo, ni menor o igual a cero
-                                // currency no nula
-                                // sean monedas conocidas (argentina, brasil, chile, colombia, mexico, venezuela y eeuu)
+    open var items : [Item]!
     open var payer : Payer!
-    open var paymentPreference : PaymentPreference! //installments = sea mayor a cero y que el defaults_istallment sea mayor a 0
-                                                        // excluded_payment_method < payment_methods
-                                                        //excluded_payment_types < payment_types
-    
-    
+    open var paymentPreference : PaymentPreference!
     open var siteId : String = "MLA"
+    open var expirationDateFrom: Date?
+    open var expirationDateTo: Date?
     
-    
-    open var choImage : UIImage?
-    
-    //shipments
     
     public func addItems(item: Item) {
-        items?.append(item)
+        items.append(item)
     }
     
     public func addItems(items: [Item]) {
-        self.items?.append(contentsOf: items)
+        self.items.append(contentsOf: items)
     }
     
     public func addExcludedPaymentMethod(_ paymentMethodId: String) {
-        self.paymentPreference.excludedPaymentMethodIds?.insert(paymentMethodId)
+        if self.paymentPreference.excludedPaymentMethodIds != nil  {
+            self.paymentPreference.excludedPaymentMethodIds?.insert(paymentMethodId)
+        } else {
+            self.paymentPreference.excludedPaymentMethodIds = [paymentMethodId]
+        }
     }
-    public func addExcludedPaymentMethods(_ paymentMethodIds: Set<String>) {
-        self.paymentPreference.excludedPaymentMethodIds? = paymentMethodIds
+    public func setExcludedPaymentMethods(_ paymentMethodIds: Set<String>) {
+        self.paymentPreference.excludedPaymentMethodIds = paymentMethodIds
     }
     
     public func addExcludedPaymentType(_ paymentTypeId: String) {
-        self.paymentPreference.excludedPaymentTypeIds?.insert(paymentTypeId)
+        if self.paymentPreference.excludedPaymentTypeIds != nil  {
+            self.paymentPreference.excludedPaymentTypeIds?.insert(paymentTypeId)
+        } else {
+            self.paymentPreference.excludedPaymentTypeIds = [paymentTypeId]
+        }
     }
     
-    public func addExcludedPaymentTypes(_ paymentTypeIds: Set<String>) {
-        self.paymentPreference.excludedPaymentTypeIds? = paymentTypeIds
+    public func setExcludedPaymentTypes(_ paymentTypeIds: Set<String>) {
+        self.paymentPreference.excludedPaymentTypeIds = paymentTypeIds
     }
     
     public func setMaxInstallments(_ maxInstallments : Int) {
@@ -58,6 +56,10 @@ open class CheckoutPreference : NSObject {
     
     public func setDefaultInstallments(_ defaultInstallments: Int){
         self.paymentPreference.defaultInstallments = defaultInstallments
+    }
+    
+    public func setDefaultPaymentMethodId(_ paymetMethodId: String){
+        self.paymentPreference.defaultPaymentMethodId = paymetMethodId
     }
     
     public func setPayerEmail(_ payerEmail: String){
@@ -69,41 +71,122 @@ open class CheckoutPreference : NSObject {
     }
     
     public func setExpirationDate(_ expirationDate: Date){
+        self.expirationDateTo = expirationDate
     }
     
-    public func setActiveFrom(_ date: Date){
-        
+    public func setActiveFromDate(_ date: Date){
+        self.expirationDateFrom = date
     }
     
-    open func validate() -> String?{
+    public func setId(_ id: String) {
+        self._id = id
+    }
+    
+    public func getId() -> String {
+        return self._id
+    }
+    
+    public func getItems() -> [Item]? {
+        return items
+    }
+    
+    public func getPayer() -> Payer{
+        return payer
+    }
+    
+    public func getSiteId() -> String {
+        return self.siteId
+    }
+    
+    public func getExpirationDate() -> Date? {
+        return expirationDateTo
+    }
+    
+    public func getActiveFromDate() -> Date? {
+        return expirationDateFrom
+    }
+    
+    open func getExcludedPaymentTypesIds() -> Set<String>? {
+        return paymentPreference.getExcludedPaymentTypesIds()
+    }
+    
+    open func getDefaultInstallments() -> Int {
+        return paymentPreference.getDefaultInstallments()
+    }
+    
+    open func getMaxAcceptedInstallments() -> Int {
+        return paymentPreference.getMaxAcceptedInstallments()
+    }
+    
+    open func getExcludedPaymentMethodsIds() -> Set<String>? {
+        return paymentPreference.getExcludedPaymentMethodsIds()
+    }
+    
+    open func getDefaultPaymentMethodId() -> String? {
+        return paymentPreference.getDefaultPaymentMethodId()
+    }
     
     
-        if(items == nil){
-            return "No hay items".localized
-        }
-        if(items?.count == 0){
-            return "No hay items".localized
-        }
-        //VALIDAR CADA ITEM
-        let currencyIdAllItems = items![0].currencyId
-        for (_, value) in items!.enumerated() {
-            if(value.currencyId != currencyIdAllItems){
-                 return "Los items tienen diferente moneda".localized
-            }
-        }
+    
+    open func validate() -> String? {
         
+        if let itemError = itemsValid() {
+            return itemError
+        }
         if self.payer == nil {
             return "No hay información de payer".localized
         }
         
-        if self.payer.email == nil || self.payer.email.characters.count == 0 {
+        if self.payer.email == nil || self.payer.email?.characters.count == 0 {
             return "Se requiere email de comprador".localized
+        }
+        
+        if !isActive() {
+            return "La preferencia no esta activa.".localized
+        }
+        
+        if isExpired() {
+            return "La preferencia esta expirada".localized
         }
         
         return nil
     }
     
-    public init(items : [Item] = [], payer : Payer? = nil, paymentMethods : PaymentPreference? = nil){
+    open func itemsValid() -> String? {
+        if(items.isEmpty){
+            return "No hay items".localized
+        }
+        let currencyIdAllItems = items[0].currencyId
+        
+        for (_, value) in items.enumerated() {
+            if(value.currencyId != currencyIdAllItems){
+                return "Los items tienen diferente moneda".localized
+            }
+            
+            if let error = value.validate() {
+                return error
+            }
+        }
+        return nil
+    }
+    
+    open func isExpired() -> Bool {
+        let date = Date()
+        if let expirationDateTo = expirationDateTo {
+            return expirationDateTo > date
+        }
+        return false
+    }
+    
+    open func isActive() -> Bool {
+        let date = Date()
+        if let expirationDateFrom = expirationDateFrom {
+            return expirationDateFrom < date
+        }
+        return true
+    }
+    
+    public init(items : [Item] = [], payer : Payer = Payer(), paymentMethods : PaymentPreference = PaymentPreference()){
         self.items = items
         self.payer = payer
         self.paymentPreference = paymentMethods
@@ -119,7 +202,7 @@ open class CheckoutPreference : NSObject {
         if let siteId = JSONHandler.attemptParseToString(json["site_id"]){
             preference.siteId = siteId
         }
-
+        
         if let payerDic = json["payer"] as? NSDictionary {
             preference.payer = Payer.fromJSON(payerDic)
         }
@@ -139,26 +222,8 @@ open class CheckoutPreference : NSObject {
             preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
         }
         
-   
+        
         return preference
-    }
-    
-    
-    open func loadingImageWithCallback(_ callback :((Void) -> Void)? = nil) -> Bool {
-        
-        if (choImage != nil){
-            return false
-        }
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
-            self.choImage = ViewUtils.loadImageFromUrl(self.getPictureUrl())
-            DispatchQueue.main.async(execute: {
-                if (callback != nil){
-                    callback!()
-                }
-            })
-        })
-        return true
-        
     }
     
     
@@ -172,7 +237,7 @@ open class CheckoutPreference : NSObject {
         ]
         
         var itemsJson = ""
-        for item in items! {
+        for item in items {
             itemsJson = itemsJson + item.toJSONString()
         }
         obj["items"] = itemsJson
@@ -182,73 +247,16 @@ open class CheckoutPreference : NSObject {
     
     open func getAmount() -> Double {
         var amount = 0.0
-        for item in self.items! {
+        for item in self.items {
             amount = amount + (Double(item.quantity) * item.unitPrice)
         }
         return amount
     }
     
-    open func getInstallments() -> Int {
-        if self.paymentPreference != nil {
-            if (self.paymentPreference!.maxAcceptedInstallments > 0) {
-                return self.paymentPreference!.maxAcceptedInstallments
-            } else if (self.paymentPreference!.defaultInstallments > 0) {
-                return self.paymentPreference!.defaultInstallments
-            }
-        }
-        return 1
-    }
-    
-    
-    open func getPaymentPreference () -> PaymentPreference {
-        let paymentPreference = PaymentPreference()
-        paymentPreference.excludedPaymentMethodIds = self.getExcludedPaymentMethodsIds()
-        paymentPreference.excludedPaymentTypeIds = self.getExcludedPaymentTypesIds()
-        paymentPreference.defaultPaymentMethodId = self.getDefaultPaymentMethodId()
-        paymentPreference.maxAcceptedInstallments = self.getMaxAcceptedInstallments()
-        paymentPreference.defaultInstallments = self.getDefaultInstallments()
-        return paymentPreference
-    }
-    
-    open func getExcludedPaymentTypesIds() -> Set<String>? {
-        if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentTypeIds != nil) {
-            return self.paymentPreference!.excludedPaymentTypeIds
-        }
-        return nil
-    }
-    
-    open func getDefaultInstallments() -> Int {
-        if (self.paymentPreference != nil && self.paymentPreference!.defaultInstallments > 0) {
-            return self.paymentPreference!.defaultInstallments
-        }
-        return 0
-    }
-    
-    open func getMaxAcceptedInstallments() -> Int {
-        if (self.paymentPreference != nil && self.paymentPreference!.maxAcceptedInstallments > 0) {
-            return self.paymentPreference!.maxAcceptedInstallments
-        }
-        return 0
-    }
-    
-    open func getExcludedPaymentMethodsIds() -> Set<String>? {
-        if (self.paymentPreference != nil && self.paymentPreference!.excludedPaymentMethodIds != nil) {
-            return self.paymentPreference!.excludedPaymentMethodIds
-        }
-        return nil
-    }
-
-    open func getDefaultPaymentMethodId() -> String? {
-        if (self.paymentPreference != nil && self.paymentPreference!.defaultPaymentMethodId != nil && self.paymentPreference!.defaultPaymentMethodId!.isNotEmpty) {
-            return self.paymentPreference!.defaultPaymentMethodId
-        }
-        return nil
-    }
-    
-    open func getTitle() -> String {
+    /*open func getTitle() -> String {
         
-        if self.items!.count > 1 {
-            var title = self.items!.reduce("", { (result, element) -> String in
+        if self.items.count > 1 {
+            var title = self.items.reduce("", { (result, element) -> String in
                 return element.title + ", " + result
             })
             let index = title.index(title.endIndex, offsetBy: -2)
@@ -256,25 +264,17 @@ open class CheckoutPreference : NSObject {
             return title
         }
         
-        return self.items![0].title
-    }
-    
-    open func getCurrencyId() -> String {
-        return self.items![0].currencyId
-    }
-    
-    open func getPictureUrl() -> String {
-        return self.items![0].pictureUrl
-    }
+        return self.items[0].title
+    }*/
 }
 
 public func ==(obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {
     
     let areEqual =
         obj1._id == obj2._id &&
-        obj1.items! == obj2.items! &&
-        obj1.payer == obj2.payer &&
-        obj1.paymentPreference == obj2.paymentPreference
+            obj1.items == obj2.items &&
+            obj1.payer == obj2.payer &&
+            obj1.paymentPreference == obj2.paymentPreference
     
     return areEqual
 }
