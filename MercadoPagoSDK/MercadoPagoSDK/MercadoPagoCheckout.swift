@@ -12,6 +12,7 @@ open class MercadoPagoCheckout: NSObject {
 
     var viewModel : MercadoPagoCheckoutViewModel
     var navigationController : UINavigationController!
+    var viewControllerBase : UIViewController?
     
     public static var servicePreference = ServicePreference()
     
@@ -19,6 +20,10 @@ open class MercadoPagoCheckout: NSObject {
    public init(/* parameters */navigationController : UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel()
         self.navigationController = navigationController
+    
+        if self.navigationController.viewControllers.count > 0 {
+            viewControllerBase = self.navigationController.viewControllers[0]
+        }
     }
     
     public func start(){
@@ -37,6 +42,8 @@ open class MercadoPagoCheckout: NSObject {
             self.collectIssuer()
         case CheckoutStep.PAYER_COST:
             self.collectPayerCost()
+        case CheckoutStep.FINISH:
+            self.finish()
         default:
              self.collectCard()
         }
@@ -75,4 +82,18 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(payerCostStep, animated: true)
     }
     
+    
+    func finish(){
+        
+        if let rootViewController = viewControllerBase{
+            self.navigationController.popToViewController(rootViewController, animated: false)
+        }else{
+            self.navigationController.dismiss(animated: true, completion: { 
+                // --- Nothing
+            })
+        }
+        
+        
+        
+    }
 }
