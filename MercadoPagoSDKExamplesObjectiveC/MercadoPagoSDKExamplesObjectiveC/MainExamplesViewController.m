@@ -26,11 +26,12 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
-//    UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
-//    } callbackCancel:nil];
-//    [self presentViewController:choFlow animated:YES completion:^{}];
+
+    Item *item = [[Item alloc] initWith_id:@"peti item" title:@"peti title" quantity:1 unitPrice:10 description:nil];
+    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"petiemail@mail.com" type:nil identification:nil];
     
-    [[[MercadoPagoCheckout alloc] initWithNavigationController:self.navigationController] start];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:[NSArray arrayWithObject:item] payer:payer paymentMethods:nil];
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
 }
 
 

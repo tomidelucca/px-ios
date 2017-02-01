@@ -196,7 +196,7 @@ open class SecrurityCodeViewModel: NSObject {
     // TODO : OJO
     weak var vc : SecrurityCodeViewController?
     
-    public init(paymentMethod : PaymentMethod!, cardInfo : CardInformationForm){
+    public init(paymentMethod : PaymentMethod, cardInfo : CardInformationForm){
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
         

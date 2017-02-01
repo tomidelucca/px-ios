@@ -14,8 +14,8 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
     
-   public init(/* parameters & preferences */navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel()
+    public init(checkoutPrefence : CheckoutPreference, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPrefence)
         self.navigationController = navigationController
     
         if self.navigationController.viewControllers.count > 0 {
@@ -56,7 +56,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentMethodSearch(){
         //TODO :  EXCLUSIONES
-        MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
+        MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
                 success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodOptions: paymentMethodSearchResponse.groups, availablePaymentMethods : paymentMethodSearchResponse.paymentMethods)
                     
@@ -125,8 +125,11 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentData() {
         // RyC step
-        print("RyC!")
-        
+        let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
+            self.viewModel.updateCheckoutModel(paymentData: paymentData)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(checkoutVC, animated: true)
     }
     
     func collectSecurityCode(){

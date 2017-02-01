@@ -19,16 +19,16 @@ open class MPFlowBuilder : NSObject {
         
     }
     
-    open class func startCheckoutViewController(_ preferenceId: String,
-                                                callback: @escaping (Payment) -> Void,
-                                                callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
-        
-        MercadoPagoContext.initFlavor3()
-        let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
-                                                callback: { (payment : Payment) -> Void in callback(payment) },
-                                                callbackCancel :callbackCancel)
-        return MPFlowController.createNavigationControllerWith(checkoutVC)
-    }
+//    open class func startCheckoutViewController(_ preferenceId: String,
+//                                                callback: @escaping (Payment) -> Void,
+//                                                callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
+//        
+//        MercadoPagoContext.initFlavor3()
+//        let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
+//                                                callback: { (payment : Payment) -> Void in callback(payment) },
+//                                                callbackCancel :callbackCancel)
+//        return MPFlowController.createNavigationControllerWith(checkoutVC)
+//    }
     
     open class func startPaymentVaultViewController(_ amount: Double, paymentPreference : PaymentPreference? = nil,
                                                     callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
