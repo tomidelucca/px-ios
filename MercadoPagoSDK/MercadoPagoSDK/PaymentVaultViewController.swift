@@ -271,20 +271,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.section == 1 {
-         
-            if self.viewModel.isCustomerPaymentMethodOptionSelected(indexPath.row) {
-                let customerCardSelected = self.viewModel.customerCards![indexPath.row] as CardInformation
-                CheckoutViewModel.CUSTOMER_ID = self.viewModel!.customerId ?? ""
-                self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: self.navigationController!, visibleViewController: self)
-            } else {
-                let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodSearchItem
-                collectionView.deselectItem(at: indexPath, animated: true)
-                self.callback!(paymentSearchItemSelected as! PaymentMethodOption)
-            }
+            let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodOption
+            collectionView.deselectItem(at: indexPath, animated: true)
+            self.callback!(paymentSearchItemSelected)
         }
-    
     }
     
 
@@ -430,7 +421,7 @@ class PaymentVaultViewModel : NSObject {
     var paymentMethods : [PaymentMethod]!
     var currentPaymentMethodSearch : [PaymentMethodSearchItem]!
     var defaultPaymentOption : PaymentMethodSearchItem?
-    var cards : [Card]?
+   // var cards : [Card]?
     
     //Should not be optional
     var paymentMethodOptions : [PaymentMethodOption]?
@@ -572,43 +563,43 @@ class PaymentVaultViewModel : NSObject {
         }
     }
     
-    internal func customerOptionSelected(customerCardSelected : CardInformation, navigationController : UINavigationController, visibleViewController : UIViewController){
-        let paymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
-        if paymentMethodSelected.isAccountMoney() {
-            self.callback!(paymentMethodSelected, nil, nil, nil)
-        } else {
-            customerCardSelected.setupPaymentMethod(paymentMethodSelected)
-            customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
-            if let controller = controller {
-                controller.showLoading()
-            }
-            MPServicesBuilder.getInstallments(customerCardSelected.getFirstSixDigits(), amount: amount, issuer: customerCardSelected.getIssuer(), paymentMethodId: customerCardSelected.getPaymentMethodId(), success: { (installments) in
-                self.controller?.hideLoading()
-                let payerCostSelected = self.paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
-                if(payerCostSelected == nil){
-                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
-                        self.callback!(paymentMethod, token, issuer, payerCost)
-                        }, callbackCancel: {
-                            navigationController.popToViewController(visibleViewController, animated: true)
-                    })
-                    navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
-                }else{
-                    let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: customerCardSelected.getPaymentMethod(), cardInfo: customerCardSelected) { (token) in
-                        if String.isNullOrEmpty(token!.lastFourDigits) {
-                            token!.lastFourDigits = customerCardSelected.getCardLastForDigits()
-                        }
-                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as PayerCost)
-                    }
-                    navigationController.pushViewController(secCode, animated: false)
-                }
-                
-                }, failure: { (error) in
-                    self.controller?.hideLoading()
-            })
-
-        }
-
-    }
+//    internal func customerOptionSelected(customerCardSelected : CardInformation, navigationController : UINavigationController, visibleViewController : UIViewController){
+//        let paymentMethodSelected = Utils.findPaymentMethod(self.paymentMethods, paymentMethodId: customerCardSelected.getPaymentMethodId())
+//        if paymentMethodSelected.isAccountMoney() {
+//            self.callback!(paymentMethodSelected, nil, nil, nil)
+//        } else {
+//            customerCardSelected.setupPaymentMethod(paymentMethodSelected)
+//            customerCardSelected.setupPaymentMethodSettings(paymentMethodSelected.settings)
+//            if let controller = controller {
+//                controller.showLoading()
+//            }
+//            MPServicesBuilder.getInstallments(customerCardSelected.getFirstSixDigits(), amount: amount, issuer: customerCardSelected.getIssuer(), paymentMethodId: customerCardSelected.getPaymentMethodId(), success: { (installments) in
+//                self.controller?.hideLoading()
+//                let payerCostSelected = self.paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
+//                if(payerCostSelected == nil){
+//                    let cardFlow = MPFlowBuilder.startCardFlow(amount: self.amount, cardInformation : customerCardSelected, callback: { (paymentMethod,   token, issuer, payerCost) in
+//                        self.callback!(paymentMethod, token, issuer, payerCost)
+//                        }, callbackCancel: {
+//                            navigationController.popToViewController(visibleViewController, animated: true)
+//                    })
+//                    navigationController.pushViewController(cardFlow.viewControllers[0], animated: true)
+//                }else{
+//                    let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: customerCardSelected.getPaymentMethod(), cardInfo: customerCardSelected) { (token) in
+//                        if String.isNullOrEmpty(token!.lastFourDigits) {
+//                            token!.lastFourDigits = customerCardSelected.getCardLastForDigits()
+//                        }
+//                        self.callback(customerCardSelected.getPaymentMethod(),token,customerCardSelected.getIssuer(),installments![0].payerCosts[0] as PayerCost)
+//                    }
+//                    navigationController.pushViewController(secCode, animated: false)
+//                }
+//                
+//                }, failure: { (error) in
+//                    self.controller?.hideLoading()
+//            })
+//
+//        }
+//
+//    }
     
 }
 

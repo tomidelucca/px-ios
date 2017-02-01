@@ -28,4 +28,6 @@ public protocol PaymentMethodOption {
     func getChildren() -> [PaymentMethodOption]?
     
     func isCard() -> Bool
+    
+    func isCustomerPaymentMethod() -> Bool
 }

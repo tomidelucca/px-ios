@@ -93,8 +93,8 @@ open class MPFlowBuilder : NSObject {
         if (cardInformation == nil){
             return startDefaultCardFlow(paymentPreference, amount: amount, cardInformation: cardInformation, paymentMethods: paymentMethods, token: token, callback: callback, callbackCancel: callbackCancel)
         }else{
-            return startCustomerCardFlow(paymentPreference, amount: amount, cardInformation: cardInformation, callback: callback, callbackCancel: callbackCancel)
-
+        //    return startCustomerCardFlow(paymentPreference, amount: amount, cardInformation: cardInformation, callback: callback, callbackCancel: callbackCancel)
+            return UINavigationController()
         }
     }
     
@@ -161,25 +161,25 @@ open class MPFlowBuilder : NSObject {
     
     
     
-    open class func startCustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
-        let mpNav =  UINavigationController()
-        var pcvc : CardAdditionalViewController!
-        pcvc = MPStepBuilder.startPayerCostForm(cardInformation: cardInformation, amount:amount, paymentPreference: paymentPreference, installment:nil, callback: { (payerCost) -> Void in
-                let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
-                    if String.isNullOrEmpty(token!.lastFourDigits) {
-                        token!.lastFourDigits = cardInformation?.getCardLastForDigits()
-                    }
-                    callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(),payerCost as? PayerCost)
-                }
-                pcvc.navigationController!.pushViewController(secCode, animated: true)
-            })
-        pcvc.callbackCancel = callbackCancel
-                    
-        mpNav.pushViewController(pcvc, animated: true)
-        
-        
-        return mpNav
-    }
+//    open class func startCustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
+//        let mpNav =  UINavigationController()
+//        var pcvc : CardAdditionalViewController!
+//        pcvc = MPStepBuilder.startPayerCostForm(cardInformation: cardInformation, amount:amount, paymentPreference: paymentPreference, installment:nil, callback: { (payerCost) -> Void in
+//                let secCode = MPStepBuilder.startSecurityCodeForm(paymentMethod: cardInformation.getPaymentMethod(), cardInfo: cardInformation) { (token) in
+//                    if String.isNullOrEmpty(token!.lastFourDigits) {
+//                        token!.lastFourDigits = cardInformation?.getCardLastForDigits()
+//                    }
+//                    callback(cardInformation.getPaymentMethod(),token,cardInformation.getIssuer(),payerCost as? PayerCost)
+//                }
+//                pcvc.navigationController!.pushViewController(secCode, animated: true)
+//            })
+//        pcvc.callbackCancel = callbackCancel
+//                    
+//        mpNav.pushViewController(pcvc, animated: true)
+//        
+//        
+//        return mpNav
+//    }
     
     
 

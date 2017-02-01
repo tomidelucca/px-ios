@@ -255,13 +255,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     internal func startAuthCard(_ token:Token ){
         
-        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
-            self.token = token
-            self.navigationController!.popToViewController(self, animated: true)
-        }
+//        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
+//            self.token = token
+//            self.navigationController!.popToViewController(self, animated: true)
+//        }
+//        
+//        self.navigationController?.pushViewController(vc, animated: true)
         
-        self.navigationController?.pushViewController(vc, animated: true)
-            
     }
     
     

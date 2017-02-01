@@ -142,5 +142,9 @@ open class CustomerPaymentMethod: NSObject, CardInformation {
     public func getId() -> String {
         return self._id
     }
+    
+    public func isCustomerPaymentMethod() -> Bool {
+        return true
+    }
 
 }

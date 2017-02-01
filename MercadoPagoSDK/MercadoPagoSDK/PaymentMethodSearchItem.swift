@@ -88,7 +88,6 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMe
     /*
      * PaymentMethodOption implementation
      */
-
     
     public func hasChildren() -> Bool {
         return !Array.isNullOrEmpty(self.children)
@@ -104,6 +103,10 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMe
     
     public func getId() -> String {
         return self.idPaymentMethodSearchItem
+    }
+    
+    public func isCustomerPaymentMethod() -> Bool {
+        return false
     }
 }
 

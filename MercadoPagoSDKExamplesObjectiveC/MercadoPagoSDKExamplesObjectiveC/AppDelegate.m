@@ -24,8 +24,8 @@
     
     [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
     [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
-   // [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
-    //[MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
+    [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
+    [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     [MercadoPagoContext setSiteID:@"MLA"];
 
     [MercadoPagoContext setPayerAccessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"];

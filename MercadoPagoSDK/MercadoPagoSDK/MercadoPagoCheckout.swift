@@ -35,17 +35,19 @@ open class MercadoPagoCheckout: NSObject {
             self.collectPaymentMethodSearch()
         case .PAYMENT_METHOD :
             self.collectPaymentMethods()
-        case CheckoutStep.CARD_FORM:
+        case .CARD_FORM:
             self.collectCard()
-        case CheckoutStep.CREDIT_DEBIT:
+        case .CREDIT_DEBIT:
             self.collectCreditDebit()
-        case CheckoutStep.ISSUER:
+        case .ISSUER:
             self.collectIssuer()
-        case CheckoutStep.PAYER_COST:
+        case .PAYER_COST:
             self.collectPayerCost()
         case .REVIEW_AND_CONFIRM :
             self.collectPaymentData()
-        case CheckoutStep.FINISH:
+        case .SECURITY_CODE_ONLY :
+            self.collectSecurityCode()
+        case .FINISH:
             self.finish()
         default:
              self.error()
@@ -57,8 +59,22 @@ open class MercadoPagoCheckout: NSObject {
         MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
                 success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodOptions: paymentMethodSearchResponse.groups, availablePaymentMethods : paymentMethodSearchResponse.paymentMethods)
-                    self.executeNextStep()
                     
+                    self.viewModel.next = .PAYMENT_METHOD
+                    
+                    if (MercadoPagoContext.isCustomerInfoAvailable()) {
+                        MerchantServer.getCustomer({ (customer: Customer) -> Void in
+                            self.viewModel.customerId = customer._id
+                            self.viewModel.updateCheckoutModel(paymentMethodOptions : customer.cards!)
+                            self.executeNextStep()
+                            
+                        }, failure: { (error: NSError?) -> Void in
+                            self.viewModel.next = .ERROR
+                            self.executeNextStep()
+                        })
+                    } else {
+                        self.executeNextStep()
+                    }
         }, failure: { (error) -> Void in
             self.viewModel.next = .ERROR
             self.executeNextStep()
@@ -110,6 +126,16 @@ open class MercadoPagoCheckout: NSObject {
     func collectPaymentData() {
         // RyC step
         print("RyC!")
+        
+    }
+    
+    func collectSecurityCode(){
+        let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
+            self.viewModel.updateCheckoutModel(token: token!)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(securityCodeVc, animated: true)
+        
     }
     
     func error() {
