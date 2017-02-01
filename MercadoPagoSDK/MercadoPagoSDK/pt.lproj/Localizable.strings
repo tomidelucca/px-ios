@@ -168,3 +168,11 @@
 
 "Términos y Condiciones"="Termos e Condições";
 "Verifique su conexión a internet e intente nuevamente"="Sem conexão";
+
+
+//Errores
+
+"El título del item esta vacio" = "O título do artigo é vazia";
+"La currency del item esta vacia" = "A moeda do item está vazia";
+"La preferencia no esta activa" = "A preferência não ativa";
+"La preferencia esta expirada" = "A preferência é expirado";

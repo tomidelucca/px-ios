@@ -265,11 +265,7 @@ open class PaymentMethod : NSObject  {
         if(paymentPreference == nil){
             return true
         }
-        if(paymentPreference!.defaultPaymentTypeId != nil){
-            if (paymentPreference!.defaultPaymentTypeId != self.paymentTypeId){
-                return false
-            }
-        }
+        
         if (paymentPreference!.defaultPaymentMethodId != nil){
             if (self._id != paymentPreference!.defaultPaymentMethodId){
                 return false
