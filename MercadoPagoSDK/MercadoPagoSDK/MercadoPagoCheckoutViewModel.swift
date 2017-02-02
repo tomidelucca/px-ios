@@ -43,12 +43,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var availablePaymentMethods : [PaymentMethod]?
     
     // flowpreference
-    //
-    //
-    //
-    //
-    //
-    
+
     
     //--- PAYMENT DATA
     
@@ -145,7 +140,21 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     public func nextStep() -> CheckoutStep {
-        // --  --
+
+        // MPError != NULL -> *** ERROR ***
+        
+        // Si no tengo PT seleccionado
+            // Si no tengo PMs -> *** Buscar : PMs SEARCH_PAYMENT_METHODS ***
+            // Si tengo PMs -> *** PAYMENT_METHOD *** ( Si ya tengo subseleccion entro con subseleccion, sino con todos los PMs)
+        // Si tengo PT seleccionado
+                //Si es tarjeta de credito
+                    //Si no tengo cardtoken -> *** Pido que complete los datos de tarjeta : CARD_FORM ***
+                    //Si no tengo issuer seleccionado -> *** Pido carga del Issuer : ISSUER ***
+                    //Si no tengo identification seleccionada y es requerida -> *** Pido carga del Identification : IDENTIFICATION ***
+                    //Si no tengo cuota seleccionada -> *** Pido carga del PayerCost : PAYER_COST ***
+            // *** Muestro Revisa y confirma : REVIEW_AND_CONFIRM ***
+        
+        
         return next
     }
     
@@ -168,7 +177,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         self.next = .PAYMENT_METHOD
     }
-   
-    
+
 }
 
