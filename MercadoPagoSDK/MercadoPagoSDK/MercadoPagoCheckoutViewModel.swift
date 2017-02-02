@@ -223,6 +223,24 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentData.token = token
         self.next = .PAYER_COST
     }
+
+    open class func createMPPayment(_ email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, customerId : String? = nil) -> MPPayment {
+        
+        var issuerId = ""
+        if issuer != nil {
+            issuerId = String(issuer!._id!.intValue)
+        }
+        var tokenId = ""
+        if token != nil {
+            tokenId = token!._id
+        }
+        
+        let isBlacklabelPayment = token != nil && token?.cardId != nil && String.isNullOrEmpty(customerId)
+        
+        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
+        return mpPayment
+    }
+    
     
     public func updateCheckoutModel(paymentMethodOptions : [PaymentMethodOption]) {
         if self.rootPaymentMethodOptions != nil {
