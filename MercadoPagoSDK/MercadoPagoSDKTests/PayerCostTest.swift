@@ -32,4 +32,14 @@ class PayerCostTest: BaseTest {
         XCTAssertEqual(payerCostFromJSON, payerCostFromJSON)
     }
     
+    func testGetCFT() {
+    var payerCost = PayerCost(installments: 6, installmentRate: 1.2, labels: labels, minAllowedAmount: 5, maxAllowedAmount: 500, recommendedMessage: "message", installmentAmount: 5.0, totalAmount: 30.0)
+        /*payerCost.labels = ["CFT_89,38%|TEA_71,14%"]
+        XCTAssertEqual(payerCost.getCFT(), ["CFT": "89,38%", "TEA": "71,14%"])
+        payerCost.labels = ["CFT_89,23%|TEA_70,74%"]
+        XCTAssertEqual(payerCost.getCFT(), ["CFT": "89,23%", "TEA": "70,74%"])
+        payerCost.labels = ["CFT_88,33%|TEA_69,73%" , "recommended_interest_installment_with_some_banks"]
+        XCTAssertEqual(payerCost.getCFT(), ["CFT": "88,33%", "TEA": "69,73%"])*/
+    }
+    
 }

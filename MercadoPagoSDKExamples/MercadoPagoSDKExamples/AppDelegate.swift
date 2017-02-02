@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //MercadoPagoContext.setDisplayDefaultLoading(flag: false)
         
-        MercadoPagoContext.setLanguage(language: MercadoPagoContext.Languages._PORTUGUESE)
+        MercadoPagoContext.setLanguage(language: MercadoPagoContext.Languages._SPANISH)
         
 //        let tracker = TrackerExample()
 //        

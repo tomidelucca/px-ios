@@ -247,9 +247,11 @@
 		4B762E9C1DCFAF4700694336 /* InstructionsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */; };
 		4B88E2571E48CC5C00D52527 /* MPCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E2561E48CC5C00D52527 /* MPCustomCell.swift */; };
+		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
+		4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
+		4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */; };
 		4BAA55E71DB0012300501061 /* CardAdditionalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* CardAdditionalViewController.swift */; };
 		4BAA55E81DB0012300501061 /* CardAdditionalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* CardAdditionalViewController.xib */; };
-		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
 		4BAA55EB1DB0015800501061 /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
 		4BAA55EC1DB0015800501061 /* PayerCostCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55EA1DB0015800501061 /* PayerCostCardTableViewCell.xib */; };
 		4BAA55EF1DB0019200501061 /* PayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55ED1DB0019200501061 /* PayerCostRowTableViewCell.swift */; };
@@ -378,6 +380,7 @@
 		766012F01CF284A600897F9D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766012ED1CF284A600897F9D /* WebViewController.swift */; };
 		766012F11CF284A600897F9D /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766012EE1CF284A600897F9D /* WebViewController.xib */; };
 		766012F21CF284A600897F9D /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766012EE1CF284A600897F9D /* WebViewController.xib */; };
+		7669999B1E675193005FB30F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
 		766EE1BE1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */; };
 		766EE1BF1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 766EE1BD1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.xib */; };
 		7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7671F1411D5A185B00B9481F /* CustomerPaymentMethod.swift */; };
@@ -652,6 +655,8 @@
 		4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsRevampViewController.swift; sourceTree = "<group>"; };
 		4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsRevampViewController.xib; sourceTree = "<group>"; };
 		4B88E2561E48CC5C00D52527 /* MPCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCustomCell.swift; sourceTree = "<group>"; };
+		4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
+		4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmAdditionalInfoTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* CardAdditionalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardAdditionalViewController.swift; sourceTree = "<group>"; };
 		4BAA55E61DB0012300501061 /* CardAdditionalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardAdditionalViewController.xib; sourceTree = "<group>"; };
 		4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -1352,6 +1357,8 @@
 		761B893F1C637D9E0015D0BE /* ReviewAndConfirmCells */ = {
 			isa = PBXGroup;
 			children = (
+				4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */,
+				4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */,
 				765F8E5F1DCA59A200943FAC /* PurchaseItemCells */,
 				761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */,
 				761B89411C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib */,
@@ -1767,6 +1774,7 @@
 				766012F11CF284A600897F9D /* WebViewController.xib in Resources */,
 				4BAE1D491DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib in Resources */,
 				76B085281CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
+				4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */,
 				0FC4FC351B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.xib in Resources */,
 				4BAE1D451DCBE8FF0000ED5C /* CallForAuthTableViewCell.xib in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
@@ -1859,6 +1867,7 @@
 				4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				157704B51DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */,
+				7669999B1E675193005FB30F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				76743C821C46A21C00120347 /* CheckoutViewController.swift in Sources */,
 				15904D581E09748C00B3B9FD /* MLSpinnerConfig.m in Sources */,
@@ -2062,6 +2071,7 @@
 				7622E3291DF5EF0B00490C4E /* PayerCostCardTableViewCell.swift in Sources */,
 				1553AF341E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
+				4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				76EC47F81C8629E10086FA53 /* SecurityCodeTest.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
