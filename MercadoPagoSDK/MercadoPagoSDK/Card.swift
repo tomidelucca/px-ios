@@ -193,6 +193,14 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
     public func isCustomerPaymentMethod() -> Bool {
         return true
     }
+    
+    public func getDescription() -> String {
+        return ""
+    }
+    
+    public func getComment() -> String {
+        return ""
+    }
 }
 
 

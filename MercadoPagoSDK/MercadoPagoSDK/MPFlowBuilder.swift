@@ -19,16 +19,16 @@ open class MPFlowBuilder : NSObject {
         
     }
     
-    open class func startCheckoutViewController(_ preferenceId: String,
-                                                callback: @escaping (Payment) -> Void,
-                                                callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
-        
-        MercadoPagoContext.initFlavor3()
-        let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
-                                                callback: { (payment : Payment) -> Void in callback(payment) },
-                                                callbackCancel :callbackCancel)
-        return MPFlowController.createNavigationControllerWith(checkoutVC)
-    }
+//    open class func startCheckoutViewController(_ preferenceId: String,
+//                                                callback: @escaping (Payment) -> Void,
+//                                                callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
+//        
+//        MercadoPagoContext.initFlavor3()
+//        let checkoutVC = CheckoutViewController(preferenceId: preferenceId,
+//                                                callback: { (payment : Payment) -> Void in callback(payment) },
+//                                                callbackCancel :callbackCancel)
+//        return MPFlowController.createNavigationControllerWith(checkoutVC)
+//    }
     
     open class func startPaymentVaultViewController(_ amount: Double, paymentPreference : PaymentPreference? = nil,
                                                     callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost : PayerCost?) -> Void,
@@ -116,35 +116,35 @@ open class MPFlowBuilder : NSObject {
         cardVC = MPStepBuilder.startCreditCardForm(paymentPreference, amount: amount, cardInformation : cardInformation, paymentMethods : paymentMethods, token: token, callback: { (paymentMethod, token, issuer) -> Void in
             
             
-            MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
-                let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
-                if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
-                    
-                    if installments![0].payerCosts.count>1{
-                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0], callback: { (payerCost) -> Void in
-                            callback(paymentMethod, token!, issuer, payerCost)
-                        })
-                        
-                        pcvc.callbackCancel = currentCallbackCancel
-                        
-                        ccf.navigationController!.pushViewController(pcvc, animated: false)
-                    }else {
-                        callback(paymentMethod, token!, issuer, installments![0].payerCosts[0])
-
-                    }
-                    
-                }else{
-                    callback(paymentMethod, token!, issuer, payerCostSelected)
-                }
-                
-                
-                }, failure: { (error) -> Void in
-                    if let nav = ccf.navigationController {
-                        nav.hideLoading()
-                    }
-                    
-                    
-            })
+//            MPServicesBuilder.getInstallments(token!.firstSixDigit, amount: amount, issuer: issuer, paymentMethodId: paymentMethod._id, success: { (installments) -> Void in
+//                let payerCostSelected = paymentPreference?.autoSelectPayerCost(installments![0].payerCosts)
+//                if(payerCostSelected == nil){ // Si tiene una sola opcion de cuotas
+//                    
+//                    if installments![0].payerCosts.count>1{
+//                        let pcvc = MPStepBuilder.startPayerCostForm(paymentMethod, issuer: issuer, token: token!, amount:amount, paymentPreference: paymentPreference, installment:installments![0], callback: { (payerCost) -> Void in
+//                            callback(paymentMethod, token!, issuer, payerCost)
+//                        })
+//                        
+//                        pcvc.callbackCancel = currentCallbackCancel
+//                        
+//                        ccf.navigationController!.pushViewController(pcvc, animated: false)
+//                    }else {
+//                        callback(paymentMethod, token!, issuer, installments![0].payerCosts[0])
+//
+//                    }
+//                    
+//                }else{
+//                    callback(paymentMethod, token!, issuer, payerCostSelected)
+//                }
+//                
+//                
+//                }, failure: { (error) -> Void in
+//                    if let nav = ccf.navigationController {
+//                        nav.hideLoading()
+//                    }
+//                    
+//                    
+//            })
             
             
             }, callbackCancel : currentCallbackCancel)
