@@ -24,8 +24,8 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
     }
     func fillCell(payerCost: PayerCost?){
         if let payerCost = payerCost {
-            CFT.font = Utils.getFont(size: CFT.font.pointSize)
-            TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
+            //CFT.font = Utils.getFont(size: CFT.font.pointSize)
+            //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
             
             CFT.textColor = UIColor.px_grayDark()
             TEALabel.textColor = UIColor.px_grayDark()

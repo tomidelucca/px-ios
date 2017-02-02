@@ -63,8 +63,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
         self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         
-        CFT.font = Utils.getFont(size: CFT.font.pointSize)
-        TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
+        //CFT.font = Utils.getFont(size: CFT.font.pointSize)
+        //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
         
         CFT.textColor = UIColor.px_grayDark()
         TEALabel.textColor = UIColor.px_grayDark()
