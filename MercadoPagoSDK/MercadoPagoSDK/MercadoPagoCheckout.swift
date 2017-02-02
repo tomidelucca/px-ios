@@ -35,8 +35,6 @@ open class MercadoPagoCheckout: NSObject {
         switch self.viewModel.nextStep() {
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
-//        case .SEARCH_CUSTOMER_PAYMENT_METHODS :
-//            self.collectCustomerPaymentMethods()
         case .PAYMENT_METHOD_SELECTION :
             self.collectPaymentMethods()
         case .CARD_FORM:

@@ -27,6 +27,7 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
+    
     Item *item = [[Item alloc] initWith_id:@"peti item" title:@"peti title" quantity:1 unitPrice:10 description:nil];
     Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"petiemail@mail.com" type:nil identification:nil];
     
