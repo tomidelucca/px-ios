@@ -14,7 +14,10 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
     
-   public init(/* parameters & preferences */navigationController : UINavigationController) {
+    public static var servicePreference = ServicePreference()
+    
+    
+   public init(/* parameters */navigationController : UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel()
         self.navigationController = navigationController
     
