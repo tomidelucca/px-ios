@@ -27,7 +27,7 @@
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
     [MercadoPagoContext setCustomerURI: MERCHANT_MOCK_GET_CUSTOMER_URI];
     [MercadoPagoContext setSiteID:@"MLA"];
-    git
+    
     
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
     //[MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];

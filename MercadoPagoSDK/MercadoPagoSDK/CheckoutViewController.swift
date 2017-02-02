@@ -134,7 +134,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 // numberOfRowsInMainSection() + confirmPaymentButton
                 return self.viewModel.numberOfRowsInMainSection() + 1
             case 2:
-                return self.viewModel.preference!.items!.count
+                return self.viewModel.preference!.items.count
             case 3:
                 return 4
             default:
@@ -190,34 +190,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
     }
-
-    //TODO ESTO NO DEBERIA ESTAR
-//    internal func startPaymentVault(_ animated : Bool = false){
-//        self.registerAllCells()
-//        
-//        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.viewModel.preference!.getAmount(), paymentPreference: self.viewModel.preference!.getPaymentPreference(), paymentMethodSearch: self.viewModel.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
-//            self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : animated)
-//        })
-//        
-//        var callbackCancel : ((Void) -> Void)
-//        
-//        // Set action for cancel callback
-//        if self.viewModel.paymentMethod == nil {
-//            callbackCancel = { Void -> Void in
-//                self.callbackCancel!()
-//            }
-//        } else {
-//            callbackCancel = { Void -> Void in
-//               self.navigationController!.popViewController(animated: true)
-//            }
-//        }
-//        
-//        (paymentVaultVC.viewControllers[0] as! PaymentVaultViewController).callbackCancel = callbackCancel
-//        self.navigationController?.pushViewController(paymentVaultVC.viewControllers[0], animated: animated)
-//        
-//    }
     
     internal func startRecoverCard(){
+        
 //         MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
 //        let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.viewModel.preference?.getAmount())!, cardInformation : nil, callback: { (paymentMethod, token, issuer, payerCost) in
 //             self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
@@ -239,7 +214,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 //        }
 //        
 //        self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     
@@ -272,17 +246,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 })
         })
     }
-//
-//    fileprivate func startPayerCostStep(){
-//        let pcf = MPStepBuilder.startPayerCostForm(self.viewModel.paymentMethod!, issuer: self.issuer, token: self.token!, amount: self.viewModel.preference!.getAmount(), paymentPreference: self.viewModel.preference!.paymentPreference, callback: { (payerCost) -> Void in
-//            self.viewModel.payerCost = payerCost
-//            self.navigationController?.popViewController(animated: true)
-//            self.checkoutTable.reloadData()
-//        })
-//        pcf.callbackCancel = { self.navigationController?.popViewController(animated: true)}
-//        self.navigationController?.pushViewController(pcf, animated: true)
-//    }
-    
+
     fileprivate func registerAllCells(){
         
         //Register rows
@@ -361,7 +325,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getPurchaseItemDetailCell(indexPath : IndexPath) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseItemDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDetailTableViewCell", for: indexPath) as! PurchaseItemDetailTableViewCell
-        purchaseItemDetailCell.fillCell(item: (self.viewModel.preference!.items![indexPath.row]), currency: currency)
+        purchaseItemDetailCell.fillCell(item: (self.viewModel.preference!.items[indexPath.row]), currency: currency)
         return purchaseItemDetailCell
     }
     
@@ -504,7 +468,7 @@ open class CheckoutViewModel {
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
             }
         } else if indexPath.section == 2 {
-                return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items![indexPath.row])
+                return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
         } else if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
