@@ -328,6 +328,9 @@
 		4B762E9C1DCFAF4700694336 /* InstructionsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */; };
 		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
+		4BA4DB0A1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
+		4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
+		4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */; };
 		4BAA55E71DB0012300501061 /* CardAdditionalStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E51DB0012300501061 /* CardAdditionalStep.swift */; };
 		4BAA55E81DB0012300501061 /* CardAdditionalStep.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAA55E61DB0012300501061 /* CardAdditionalStep.xib */; };
 		4BAA55EB1DB0015800501061 /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
@@ -875,6 +878,8 @@
 		4B762E951DCF7DDE00694336 /* InstructionsSubtitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsSubtitleTableViewCell.xib; sourceTree = "<group>"; };
 		4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsRevampViewController.swift; sourceTree = "<group>"; };
 		4B762E9B1DCFAF4700694336 /* InstructionsRevampViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsRevampViewController.xib; sourceTree = "<group>"; };
+		4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
+		4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmAdditionalInfoTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* CardAdditionalStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardAdditionalStep.swift; sourceTree = "<group>"; };
 		4BAA55E61DB0012300501061 /* CardAdditionalStep.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardAdditionalStep.xib; sourceTree = "<group>"; };
 		4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostCardTableViewCell.swift; sourceTree = "<group>"; };
@@ -1812,6 +1817,8 @@
 		761B893F1C637D9E0015D0BE /* ReviewAndConfirmCells */ = {
 			isa = PBXGroup;
 			children = (
+				4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */,
+				4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */,
 				765F8E5F1DCA59A200943FAC /* PurchaseItemCells */,
 				761B89401C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift */,
 				761B89411C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib */,
@@ -2345,6 +2352,7 @@
 				766012F11CF284A600897F9D /* WebViewController.xib in Resources */,
 				4BAE1D491DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib in Resources */,
 				76B085281CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
+				4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */,
 				0FC4FC351B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.xib in Resources */,
 				0F9883D41AD2AD5500F750F0 /* CongratsPaymentMethodTableViewCell.xib in Resources */,
 				76B084E01CE0D5A100C157BF /* RejectedPaymentHeaderTableViewCell.xib in Resources */,
@@ -2502,6 +2510,7 @@
 				4BAA55E71DB0012300501061 /* CardAdditionalStep.swift in Sources */,
 				0F9883EC1AD2ADB000F750F0 /* CustomerCardsViewController.swift in Sources */,
 				0F9883BE1AD2AD1600F750F0 /* UIColor+Additions.swift in Sources */,
+				4BA4DB0A1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				0F9883D61AD2AD5500F750F0 /* PaymentIDTableViewCell.swift in Sources */,
 				15E08F661DA2A2BF0087041B /* JSONHandler.swift in Sources */,
 				151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
@@ -2758,6 +2767,7 @@
 				7622E3291DF5EF0B00490C4E /* PayerCostCardTableViewCell.swift in Sources */,
 				76882AD81C4FBDB500B440B1 /* PaymentTitleViewCell.swift in Sources */,
 				76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
+				4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				76151B901C74C8DA007DF0E3 /* SimpleInstructionsViewCell.swift in Sources */,
 				76EC47F81C8629E10086FA53 /* SecurityCodeTest.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
