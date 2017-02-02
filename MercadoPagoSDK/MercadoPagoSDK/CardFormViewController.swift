@@ -540,7 +540,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             
         case cvvLabel! :
             if (self.cardFormManager.getGuessedPM()?.secCodeInBack())!{
-
                 UIView.transition(from: self.cardBack!, to: self.cardFront!, duration: cardFormManager.animationDuration!, options: UIViewAnimationOptions.transitionFlipFromRight, completion: { (completion) -> Void in
                 })
             }
