@@ -147,7 +147,14 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
-        // Llamar servicePreference
+        // TODO : verificar
+        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: "prefId", paymentMethod: self.viewModel.paymentData.paymentMethod!)
+        MerchantServer.createPayment(mpPayment, success: {(Payment) -> Void in
+            
+            
+        }, failure: {(NSError) -> Void in
+        
+        })
     }
     
     func error() {
