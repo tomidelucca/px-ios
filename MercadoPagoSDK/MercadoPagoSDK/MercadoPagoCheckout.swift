@@ -14,8 +14,12 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
     
+    public static var servicePreference = ServicePreference()
+    
+    
     public init(checkoutPrefence : CheckoutPreference, navigationController : UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPrefence)
+
         self.navigationController = navigationController
     
         if self.navigationController.viewControllers.count > 0 {
