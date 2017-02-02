@@ -10,6 +10,7 @@ import UIKit
 
 class TotalPayerCostRowTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var totalLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +20,21 @@ class TotalPayerCostRowTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    public func fillCell(total: Double) {
+        let currency = MercadoPagoContext.getCurrency()
+        
+        let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "Total".localized + ": ", attributes: [NSForegroundColorAttributeName : UIColor.black]))
+        attributedTotal.append(Utils.getAttributedAmount(total, currency: currency, color : UIColor.black, fontSize: 16, centsFontSize: 12,  baselineOffset:3))
+        totalLabel.attributedText = attributedTotal
+    }
+    
+    func addSeparatorLineToTop(width: Double, y: Float){
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+        let line = UIView(frame: lineFrame)
+        line.alpha = 0.6
+        line.backgroundColor = UIColor.px_grayLight()
+        addSubview(line)
     }
     
 }
