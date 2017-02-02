@@ -243,6 +243,9 @@ open class SecrurityCodeViewModel: NSObject {
         let saveCardToken = SavedCardToken(card: cardInfo as! CardInformation, securityCode: secCode, securityCodeRequired: true)
     
            MPServicesBuilder.createToken(saveCardToken, success: { (token) in
+            if token!.lastFourDigits.isEmpty {
+                token!.lastFourDigits = self.cardInfo.getCardLastForDigits()
+            }
             self.vc!.hideLoading()
             self.vc!.collectSecurityCodeCallback(token)
             }, failure: { (error) in
@@ -257,7 +260,6 @@ open class SecrurityCodeViewModel: NSObject {
     
     func getCardHeight() -> CGFloat {
         return getCardWidth()/12*7
-        return (UIScreen.main.bounds.height*0.27 )
     }
     
     func getCardWidth() -> CGFloat {

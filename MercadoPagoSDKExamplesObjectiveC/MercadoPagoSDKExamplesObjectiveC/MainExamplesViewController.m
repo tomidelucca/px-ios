@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
+    [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,7 +27,6 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
-
     Item *item = [[Item alloc] initWith_id:@"peti item" title:@"peti title" quantity:1 unitPrice:10 description:nil];
     Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"petiemail@mail.com" type:nil identification:nil];
     

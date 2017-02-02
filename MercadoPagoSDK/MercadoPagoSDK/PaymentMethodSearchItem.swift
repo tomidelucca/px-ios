@@ -108,6 +108,14 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMe
     public func isCustomerPaymentMethod() -> Bool {
         return false
     }
+    
+    public func getDescription() -> String {
+        return self._description
+    }
+    
+    public func getComment() -> String {
+        return self.comment ?? ""
+    }
 }
 
 public enum PaymentMethodSearchItemType : String {

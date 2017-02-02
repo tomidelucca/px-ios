@@ -23,6 +23,10 @@ public protocol PaymentMethodOption {
     
     func getId() -> String
     
+    func getDescription() -> String
+    
+    func getComment() -> String
+    
     func hasChildren() -> Bool
     
     func getChildren() -> [PaymentMethodOption]?
