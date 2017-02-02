@@ -82,14 +82,17 @@ open class MercadoPagoCheckout: NSObject {
 
     }
     
+    
     func collectPaymentMethods(){
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentMethodSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentMethodSelected : paymentMethodSelected)
             self.executeNextStep()
         })
+        
         self.navigationController.pushViewController(paymentMethodSelectionStep, animated: true)
     }
     
+
     func collectCard(){
         
         let cardFormStep = CardFormViewController(cardFormManager: self.viewModel.cardFormManager(), callback: { (paymentMethods, cardToken) in

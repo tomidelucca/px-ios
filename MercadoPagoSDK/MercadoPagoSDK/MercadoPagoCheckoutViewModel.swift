@@ -139,6 +139,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
+
     public func nextStep() -> CheckoutStep {
 
         // MPError != NULL -> *** ERROR ***
