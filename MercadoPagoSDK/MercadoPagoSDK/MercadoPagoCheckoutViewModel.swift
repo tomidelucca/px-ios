@@ -311,7 +311,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId)
         }else{
             let cardInformation = (self.paymentOptionSelected as! CardInformation)
-            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId:paymentMethodId)
+            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId:cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
             self.paymentData.paymentMethod = cardInformation.getPaymentMethod()
