@@ -28,7 +28,13 @@
 
 
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
-
+    NSDictionary *extraParams = @{
+                                  @"merchant_access_token" : @"mla-cards-data"
+                                  };
+    ServicePreference * servpref = [[ServicePreference alloc] init];
+    [servpref setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+    
+    [MercadoPagoCheckout setServicePreference:servpref];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
 }
 

@@ -64,8 +64,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var error : MPSDKError?
 
     
-    var boolPref : Bool = false
-    
+    var needLoadPreference : Bool = false
+    var readyToPay : Bool = false
 
     init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
@@ -138,12 +138,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-    public func updateCheckoutModel(identification : Identification) {
-        self.cardToken!.cardholder!.identification = identification
-        self.next = .CREATE_CARD_TOKEN
-    }
+
+
     
     //CREDIT_DEBIT
+
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
         self.next = .ISSUER
@@ -151,8 +150,16 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(issuer: Issuer?){
         self.paymentData.issuer = issuer
-        
-        self.next = CheckoutStep.CREATE_CARD_TOKEN
+        if self.paymentData.paymentMethod!.isIdentificationRequired() {
+            self.next = .IDENTIFICATION
+        } else {
+            self.next = .CREATE_CARD_TOKEN
+        }
+    }
+    
+    public func updateCheckoutModel(identification : Identification) {
+        self.cardToken!.cardholder!.identification = identification
+        self.next = .CREATE_CARD_TOKEN
     }
     
     public func updateCheckoutModel(payerCost: PayerCost?){
@@ -186,8 +193,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func nextStep() -> CheckoutStep {
 
-        if !boolPref {
-            boolPref = true
+        if !needLoadPreference {
+            needLoadPreference = true
             return .SEARCH_PREFENCE
         }
         
@@ -216,15 +223,22 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needGetIdentification() {
             return .IDENTIFICATION
         }
-        
+        if needCreateToken(){
+            return .CREATE_CARD_TOKEN
+        }
         if needChosePayerCost() {
             return .PAYER_COST
         }
         
+        if shouldShowCongrats() {
+            return .CONGRATS
+        }
+        if readyToPay {
+            readyToPay = false
+            return .POST_PAYMENT
+        }
+        
         return .REVIEW_AND_CONFIRM
-                //Si es un metodo custom
-                    //Si no tengo cuota seleccionada -> *** Pido carga del PayerCost : PAYER_COST ***
-                    //Si no tengo token -> *** Pido carga del CVV : SECURITY_CODE_ONLY ***
 
 
     }
@@ -291,7 +305,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.rootVC = true
             self.next = .SEARCH_PAYMENT_METHODS
         } else {
-            self.next = .POST_PAYMENT
+            self.readyToPay = true
         }
     }
     

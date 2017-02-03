@@ -50,11 +50,13 @@ extension MercadoPagoCheckoutViewModel {
         guard let holder = self.cardToken?.cardholder else {
             return false
         }
-        if holder.identification == nil && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod(){
-            return true
-        }else{
-            return false
+        if let identification = holder.identification{
+            if String.isNullOrEmpty(identification.number) && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod(){
+                return true
+            }
         }
+        return false
+    
     }
     func needGetIssuer() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
@@ -92,5 +94,15 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
 
+    func needCreateToken() -> Bool {
+        
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+        return self.paymentData.token == nil && pm.isCard()
+    }
     
+    func shouldShowCongrats() -> Bool {
+        return self.payment != nil
+    }
 }
