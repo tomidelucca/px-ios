@@ -29,7 +29,7 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
     }
     
-    open static func setServicePreferencee(_ servicePreference: ServicePreference){
+    open static func setServicePreference(_ servicePreference: ServicePreference){
         MercadoPagoCheckoutViewModel.servicePreference = servicePreference
     }
     
