@@ -16,8 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
-    [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,11 +25,7 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
-    
-    Item *item = [[Item alloc] initWith_id:@"peti item" title:@"peti title" quantity:1 unitPrice:10 description:nil];
-    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"petiemail@mail.com" type:nil identification:nil];
-    
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:[NSArray arrayWithObject:item] payer:payer paymentMethods:nil];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
 }
 

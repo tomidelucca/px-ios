@@ -283,7 +283,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             
         }
     }
+    
     var navBarFontSize: CGFloat = 18
+    
     func showNavBar() {
         
         if navigationController != nil {

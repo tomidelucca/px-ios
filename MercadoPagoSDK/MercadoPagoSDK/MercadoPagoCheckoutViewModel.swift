@@ -9,6 +9,7 @@
 import UIKit
 
 public enum CheckoutStep : String {
+    case SEARCH_PREFENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -17,6 +18,7 @@ public enum CheckoutStep : String {
     case SECURITY_CODE_ONLY
     case CREDIT_DEBIT
     case ISSUER
+    case CREATE_CARD_TOKEN
     case IDENTIFICATION
     case PAYER_COST
     case REVIEW_AND_CONFIRM
@@ -35,9 +37,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var paymentMethods : [PaymentMethod]?
     // card token previo a la tokenización y válido para pago
     var cardToken: CardToken?
-//    var payerCost: PayerCost?
-//    
-    
+//
     var customerId : String?
     
     //optionals?
@@ -54,24 +54,20 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     var rootVC = true
     
+    var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
+    
     // flowpreference
     //
-    //
-    //
-    //
-    //
-    
     
     var paymentData = PaymentData()
-
-    //----------------
-    
+    var identification : Identification?
     var payment : Payment?
-    
-    var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
     
     init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            self.next =  .SEARCH_PREFENCE
+        }
     }
     
     
@@ -126,11 +122,26 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
-        self.next = CheckoutStep.ISSUER
+        if self.paymentData.paymentMethod!.isIdentificationRequired() {
+            self.next = .IDENTIFICATION
+        } else {
+            self.next = .CREDIT_DEBIT
+        }
+    }
+    
+    public func updateCheckoutModel(identification : Identification) {
+        self.identification = identification
+        if self.paymentMethods!.count > 1 {
+            self.next = .CREDIT_DEBIT
+        } else {
+            self.next = .ISSUER
+        }
+        
     }
     
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
+        self.next = .ISSUER
     }
     
     public func updateCheckoutModel(issuer: Issuer?){

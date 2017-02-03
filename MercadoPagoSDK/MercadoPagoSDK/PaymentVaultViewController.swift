@@ -31,7 +31,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var collectionSearch: UICollectionView!
-
+ 
     static public var maxCustomerPaymentMethods = 3
     
     
@@ -400,6 +400,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
+        print(scrollView.contentOffset.x)
         self.didScrollInTable(scrollView)
     }
     
@@ -480,11 +481,6 @@ class PaymentVaultViewModel : NSObject {
     func getPaymentPreferenceDefaultPaymentMethodId() -> String?{
         return (self.paymentPreference != nil) ? self.paymentPreference!.defaultPaymentMethodId : nil
     }
-    
-//    func setPaymentMethodSearchResponse(_ paymentMethodSearchResponse : PaymentMethodSearch){
-//        self.setPaymentMethodSearch(paymentMethods: paymentMethodSearchResponse.paymentMethods, paymentMethodSearchItems: paymentMethodSearchResponse.groups, customerPaymentMethods : paymentMethodSearchResponse.customerPaymentMethods, defaultPaymentOption: paymentMethodSearchResponse.defaultOption)
-//    }
-//    
 
     func isCustomerPaymentMethodOptionSelected(_ row : Int) -> Bool {
         if (Array.isNullOrEmpty(self.customerPaymentOptions)) {
@@ -493,29 +489,6 @@ class PaymentVaultViewModel : NSObject {
         return (row < self.getCustomerPaymentMethodsToDisplayCount())
     }
     
-//    func setPaymentMethodSearch(paymentMethods : [PaymentMethod]? = nil, paymentMethodSearchItems : [PaymentMethodSearchItem]? = nil, customerPaymentMethods : [CardInformation]? = nil, defaultPaymentOption : PaymentMethodSearchItem? = nil) {
-//
-//        self.paymentMethods = paymentMethods
-//        self.paymentMethodOptions = paymentMethodSearchItems
-//        
-//        if let defaultPaymentOption = defaultPaymentOption {
-//            self.defaultPaymentOption = defaultPaymentOption
-//        }
-//        
-//        var currentCustomerCards = customerPaymentMethods
-//        if customerPaymentMethods != nil && customerPaymentMethods!.count > 0 {
-//            let accountMoneyAvailable = MercadoPagoContext.accountMoneyAvailable()
-//            if !accountMoneyAvailable {
-//                currentCustomerCards = customerPaymentMethods!.filter({ (element : CardInformation) -> Bool in
-//                    return element.getPaymentMethodId() != PaymentTypeId.ACCOUNT_MONEY.rawValue
-//                })
-//            }
-//            self.customerPaymentOptions = currentCustomerCards
-//        }
-//        
-//        
-//    }
-//    
     func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
         return (self.paymentMethodOptions.count == 1 && Array.isNullOrEmpty(self.customerPaymentOptions))
     }
