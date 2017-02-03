@@ -84,12 +84,19 @@ open class CardToken : NSObject, CardInformationForm {
         
             let settings : [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
             
-            if settings == nil {
+            guard let cardSettings = settings else {
                 if userInfo == nil {
                     userInfo = [String : String]()
                 }
                 return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
-              //  userInfo?.updateValue("El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized, forKey: "cardNumber")
+            }
+            if cardSettings.isEmpty {
+                
+                if userInfo == nil {
+                    userInfo = [String : String]()
+                }
+                return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
+                
             } else {
                 // Validate card length
                 
@@ -99,10 +106,14 @@ open class CardToken : NSObject, CardInformationForm {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
-                    return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(settings?[0].cardNumber.length)")
+                    if cardSettings.count>1 {
+                        return "invalid_card_length_general".localized
+                    } else {
+                        return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardSettings[0].cardNumber.length)")
+                    }
                 }
                 // Validate luhn
-                if "standard" == settings?[0].cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
+                if "standard" == cardSettings[0].cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
