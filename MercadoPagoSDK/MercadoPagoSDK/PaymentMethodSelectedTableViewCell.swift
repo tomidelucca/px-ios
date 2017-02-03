@@ -86,7 +86,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         var height = DEFAULT_ROW_HEIGHT
         
         if let dic = payerCost?.getCFTValue() {
-            height += 45
+            height += 65
         }
         
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {

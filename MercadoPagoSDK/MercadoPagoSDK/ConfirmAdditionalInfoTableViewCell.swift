@@ -9,7 +9,7 @@
 import UIKit
 
 class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
-    static let ROW_HEIGHT = CGFloat(40)
+    static let ROW_HEIGHT = CGFloat(45)
     @IBOutlet weak var TEALabel: UILabel!
     @IBOutlet weak var CFT: UILabel!
     override func awakeFromNib() {

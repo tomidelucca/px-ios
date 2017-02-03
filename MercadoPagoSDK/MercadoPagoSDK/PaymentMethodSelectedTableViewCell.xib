@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-L7-Gmd">
-                        <rect key="frame" x="154" y="205" width="188" height="21"/>
+                        <rect key="frame" x="154" y="210" width="188" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Visa terminada en: 3456">
                                 <attributes>
@@ -121,7 +121,7 @@
                     <constraint firstItem="7IM-bU-WwN" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hfj-ol-X0h"/>
                     <constraint firstItem="Z7P-hF-Nl6" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="pJn-VV-OLi"/>
                     <constraint firstItem="Zf5-PV-8ZU" firstAttribute="top" secondItem="e6B-2G-k5B" secondAttribute="bottom" id="vKP-Kc-9Xb"/>
-                    <constraint firstItem="aDj-L7-Gmd" firstAttribute="top" secondItem="Tw3-3X-flB" secondAttribute="bottom" constant="5" id="w4O-50-WVm"/>
+                    <constraint firstItem="aDj-L7-Gmd" firstAttribute="top" secondItem="Tw3-3X-flB" secondAttribute="bottom" constant="10" id="w4O-50-WVm" userLabel="Payment Method Description.top = Total Amount Label.bottom + 10"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="0.0"/>
             </tableViewCellContentView>
