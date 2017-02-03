@@ -44,7 +44,10 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod , let option = self.paymentOptionSelected else {
             return false
         }
-        if identification == nil && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod(){
+        guard let holder = self.cardToken?.cardholder else {
+            return false
+        }
+        if holder.identification == nil && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod(){
             return true
         }else{
             return false
