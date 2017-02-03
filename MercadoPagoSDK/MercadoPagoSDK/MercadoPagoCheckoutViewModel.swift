@@ -132,11 +132,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-    public func updateCheckoutModel(identification : Identification) {
-        self.cardToken!.cardholder!.identification = identification
-        self.next = .CREATE_CARD_TOKEN
-    }
-    
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
         self.next = .ISSUER
@@ -144,8 +139,16 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(issuer: Issuer?){
         self.paymentData.issuer = issuer
-        
-        self.next = CheckoutStep.CREATE_CARD_TOKEN
+        if self.paymentData.paymentMethod!.isIdentificationRequired() {
+            self.next = .IDENTIFICATION
+        } else {
+            self.next = .CREATE_CARD_TOKEN
+        }
+    }
+    
+    public func updateCheckoutModel(identification : Identification) {
+        self.cardToken!.cardholder!.identification = identification
+        self.next = .CREATE_CARD_TOKEN
     }
     
     public func updateCheckoutModel(payerCost: PayerCost?){
