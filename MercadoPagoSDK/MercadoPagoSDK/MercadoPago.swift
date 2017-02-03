@@ -421,9 +421,9 @@ import UIKit
         
         let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
 
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckout.servicePreference.paymentURL, URI: MercadoPagoCheckout.servicePreference.getPaymentURI())
+        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.paymentURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
         
-        let body = Utils.append(firstJSON: mpPayment.toJSONString(), secondJSON: MercadoPagoCheckout.servicePreference.getPaymentAddionalInfo())
+        let body = Utils.append(firstJSON: mpPayment.toJSONString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
         service.createPayment(body: body, success: { (jsonResult) in
             var payment : Payment? = nil
             

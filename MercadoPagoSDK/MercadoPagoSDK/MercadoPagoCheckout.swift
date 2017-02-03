@@ -12,13 +12,23 @@ open class MercadoPagoCheckout: NSObject {
 
     var viewModel : MercadoPagoCheckoutViewModel
     var navigationController : UINavigationController!
-    
-    public static var servicePreference = ServicePreference()
-    
+        
     
    public init(/* parameters */navigationController : UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel()
         self.navigationController = navigationController
+    }
+    
+    open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
+        MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
+    }
+    
+    open static func setServicePreferencee(_ servicePreference: ServicePreference){
+        MercadoPagoCheckoutViewModel.servicePreference = servicePreference
+    }
+    
+    open static func setFlowPreference(_ flowPreference: FlowPreference){
+        MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
     public func start(){

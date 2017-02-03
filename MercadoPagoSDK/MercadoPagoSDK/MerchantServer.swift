@@ -16,10 +16,10 @@ open class MerchantServer : NSObject {
     }
     
     open class func getCustomer(_ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        if let baseURL = MercadoPagoCheckout.servicePreference.getCustomerURL() {
+        if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
             
-            let service : MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckout.servicePreference.getCustomerURI())
-            let params = MercadoPagoCheckout.servicePreference.getCustomerAddionalInfo()
+            let service : MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI())
+            let params = MercadoPagoCheckoutViewModel.servicePreference.getCustomerAddionalInfo()
             
             service.getCustomer(params: params, success: {(jsonResult: AnyObject?) -> Void in
                 var cust : Customer? = nil
@@ -64,9 +64,9 @@ open class MerchantServer : NSObject {
     
     open class func createPayment(_ payment : MPPayment, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckout.servicePreference.getPaymentURL(), URI: MercadoPagoCheckout.servicePreference.getPaymentURI())
+        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
         
-        let body = Utils.append(firstJSON: payment.toJSONString(), secondJSON: MercadoPagoCheckout.servicePreference.getPaymentAddionalInfo())
+        let body = Utils.append(firstJSON: payment.toJSONString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
         
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
@@ -122,11 +122,11 @@ open class MerchantServer : NSObject {
     
     open class func createPreference(success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
-        if let baseURL = MercadoPagoCheckout.servicePreference.getCheckoutPreferenceURL() {
-            let service : MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckout.servicePreference.getCheckoutPreferenceURI())
+        if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURL() {
+            let service : MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURI())
             
             
-            service.createPreference(body: MercadoPagoCheckout.servicePreference.getCheckoutAddionalInfo(), success: { (jsonResult) in
+            service.createPreference(body: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutAddionalInfo(), success: { (jsonResult) in
                 var checkoutPreference : CheckoutPreference? = nil
                 
                 if let preferenceDic = jsonResult as? NSDictionary {
