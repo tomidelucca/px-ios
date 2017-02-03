@@ -47,6 +47,8 @@ open class MercadoPagoCheckout: NSObject {
             self.collectCreditDebit()
         case .ISSUER:
             self.collectIssuer()
+        case .CREATE_CARD_TOKEN :
+            self.createCardToken()
         case .PAYER_COST:
             self.collectPayerCost()
         case .REVIEW_AND_CONFIRM :
@@ -154,7 +156,16 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
     
-    func collectPayerCost(){
+    func createCardToken() {
+        MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, success: { (token : Token?) -> Void in
+            self.viewModel.updateCheckoutModel(token: token!)
+            self.executeNextStep()
+        }, failure : { (error) -> Void in
+                self.viewModel.next = .ERROR
+        })
+    }
+    
+    func collectPayerCost(){2
         let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), collectPayerCostCallback: { (payerCost) in
             self.viewModel.updateCheckoutModel(payerCost: payerCost)
             self.executeNextStep()
@@ -181,7 +192,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func createPayment() {
         
-        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentMethod: self.viewModel.paymentData.paymentMethod!)
+        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
         MerchantServer.createPayment(mpPayment, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
