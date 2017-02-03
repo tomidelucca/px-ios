@@ -19,6 +19,7 @@ public enum CheckoutStep : String {
     case PAYER_COST
     case REVIEW_AND_CONFIRM
     case CONGRATS
+    case FINISH
 }
 
 
@@ -34,6 +35,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var cardToken: CardToken?
     var payerCost: PayerCost?
     
+    
+    // flowpreference
+    //
+    //
+    //
+    //
+    //
     
     
     //--- PAYMENT DATA
@@ -101,11 +109,29 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     public func updateCheckoutModel(payerCost: PayerCost?){
         self.selectedPayerCost = payerCost
+        self.next = CheckoutStep.FINISH
     }
     
     public func nextStep() -> CheckoutStep {
         // --  --
         return next
+    }
+    
+    open class func createMPPayment(_ email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, customerId : String? = nil) -> MPPayment {
+        
+        var issuerId = ""
+        if issuer != nil {
+            issuerId = String(issuer!._id!.intValue)
+        }
+        var tokenId = ""
+        if token != nil {
+            tokenId = token!._id
+        }
+        
+        let isBlacklabelPayment = token != nil && token?.cardId != nil && String.isNullOrEmpty(customerId)
+        
+        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
+        return mpPayment
     }
     
    

@@ -37,7 +37,7 @@ class ServicePreferenceTest: BaseTest {
     public func testCreatePayment() {
         let servicePreference = ServicePreference()
         XCTAssertTrue(servicePreference.isCreatePaymentSet())
-        servicePreference.setCreatePayment(additionalInfo: ["sarasa":4])
+        servicePreference.setAdditionalPaymentInfo(["sarasa":4])
         XCTAssertEqual(servicePreference.getPaymentURL(), ServicePreference.MP_API_BASE_URL)
         XCTAssertEqual(servicePreference.getPaymentURI(), ServicePreference.MP_PAYMENTS_URI + "?api_version=" + ServicePreference.API_VERSION)
         XCTAssertEqual(servicePreference.getPaymentAddionalInfo(), servicePreference.paymentAdditionalInfo?.toJsonString())
@@ -58,17 +58,17 @@ class ServicePreferenceTest: BaseTest {
     public func testSetCreateCheckoutPreference() {
         let servicePreference = ServicePreference()
         XCTAssertFalse(servicePreference.isCheckoutPreferenceSet())
-        servicePreference.setCreatePreference(baseURL: "sarasa", URI: "sa")
+        servicePreference.setCreateCheckoutPreference(baseURL: "sarasa", URI: "sa")
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURL(), "sarasa")
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURI(), "sa")
         XCTAssertEqual(servicePreference.getCheckoutAddionalInfo(), "")
         
-        servicePreference.setCreatePreference(baseURL: "sarasa", URI: "sa", additionalInfo: ["sa":"sa"])
+        servicePreference.setCreateCheckoutPreference(baseURL: "sarasa", URI: "sa", additionalInfo: ["sa":"sa"])
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURL(), "sarasa")
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURI(), "sa")
         XCTAssertEqual(servicePreference.getCheckoutAddionalInfo(), servicePreference.checkoutAdditionalInfo?.toJsonString())
         
-        servicePreference.setCreatePreference(baseURL: "sarasa", URI: "sa")
+        servicePreference.setCreateCheckoutPreference(baseURL: "sarasa", URI: "sa")
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURL(), "sarasa")
         XCTAssertEqual(servicePreference.getCheckoutPreferenceURI(), "sa")
         XCTAssertEqual(servicePreference.getCheckoutAddionalInfo(), "")

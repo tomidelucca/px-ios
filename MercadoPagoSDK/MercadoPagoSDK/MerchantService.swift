@@ -28,9 +28,6 @@ open class MerchantService : MercadoPagoService {
         self.request(uri: self.URI, params: params, body: nil, method: method, cache: false, success: success, failure: failure)
     }
     
-/*    open func createPayment(_ method : String = "POST", payment : MerchantPayment, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: MercadoPagoContext.paymentURI(), params: nil, body: payment.toJSONString() as AnyObject?, method: method, cache: false,success: success, failure: failure)
-    }*/
     
     open func createPayment(_ method : String = "POST", body : String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
         

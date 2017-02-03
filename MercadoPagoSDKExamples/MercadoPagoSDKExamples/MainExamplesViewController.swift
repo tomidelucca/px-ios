@@ -79,9 +79,15 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
             servicePreference.setGetCustomer(baseURL: "sarasa.com", URI: "customer")
             servicePreference.setCreatePayment(baseURL: "pulporemeras.com", URI: "payments", additionalInfo:  ["binary_mode" : "true"])
             MercadoPagoCheckout.setServicePreferencee(servicePreference)
-            
+
+            let nav = UINavigationController()
             MercadoPagoCheckout(navigationController:self.navigationController!).start()
+          
             
+           // self.present(nav , animated: true, completion: {
+                //nothing
+           // })
+           
             /*
             let pp = PaymentPreference()
             pp.excludedPaymentTypeIds = ["ticket", "atm", ""]

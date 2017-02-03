@@ -138,7 +138,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 // numberOfRowsInMainSection() + confirmPaymentButton
                 return self.viewModel.numberOfRowsInMainSection() + 1
             case 2:
-                return self.viewModel.preference!.items!.count
+                return self.viewModel.preference!.items.count
             case 3:
                 return 4
             default:
@@ -217,7 +217,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     internal func startPaymentVault(_ animated : Bool = false){
         self.registerAllCells()
         
-        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.viewModel.preference!.getAmount(), paymentPreference: self.viewModel.preference!.getPaymentPreference(), paymentMethodSearch: self.viewModel.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
+        let paymentVaultVC = MPFlowBuilder.startPaymentVaultInCheckout(self.viewModel.preference!.getAmount(), paymentPreference: self.viewModel.preference!.paymentPreference, paymentMethodSearch: self.viewModel.paymentMethodSearch!, callback: { (paymentMethod, token, issuer, payerCost) in
             self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : animated)
         })
         
@@ -465,7 +465,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getPurchaseItemDetailCell(indexPath : IndexPath) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseItemDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDetailTableViewCell", for: indexPath) as! PurchaseItemDetailTableViewCell
-        purchaseItemDetailCell.fillCell(item: (self.viewModel.preference!.items![indexPath.row]), currency: currency)
+        purchaseItemDetailCell.fillCell(item: (self.viewModel.preference!.items[indexPath.row]), currency: currency)
         return purchaseItemDetailCell
     }
     
@@ -619,7 +619,7 @@ open class CheckoutViewModel {
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
             }
         } else if indexPath.section == 2 {
-                return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items![indexPath.row])
+                return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
         } else if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
