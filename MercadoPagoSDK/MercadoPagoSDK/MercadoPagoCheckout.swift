@@ -14,8 +14,6 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
     
-    public static var servicePreference = ServicePreference()
-    
     
    public init(/* parameters */navigationController : UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel()
@@ -24,6 +22,18 @@ open class MercadoPagoCheckout: NSObject {
         if self.navigationController.viewControllers.count > 0 {
             viewControllerBase = self.navigationController.viewControllers[0]
         }
+    }
+    
+    open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
+        MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
+    }
+    
+    open static func setServicePreferencee(_ servicePreference: ServicePreference){
+        MercadoPagoCheckoutViewModel.servicePreference = servicePreference
+    }
+    
+    open static func setFlowPreference(_ flowPreference: FlowPreference){
+        MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
     public func start(){
