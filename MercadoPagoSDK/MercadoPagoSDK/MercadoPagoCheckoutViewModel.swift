@@ -184,7 +184,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func needSearch() -> Bool {
-        return search != nil
+        return search == nil
     }
     func arePaymentTypeSelected() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
@@ -202,6 +202,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return self.cardToken == nil
     }
     
+    func showConfirm() -> Bool {
+        return self.paymentData.complete()
+    }
+    
+    func showCongrats() -> Bool {
+        return self.payment != nil
+    }
     
     
     var search : PaymentMethodSearch?
