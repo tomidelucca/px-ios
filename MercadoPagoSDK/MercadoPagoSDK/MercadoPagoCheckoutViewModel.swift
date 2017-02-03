@@ -59,7 +59,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     // flowpreference
 
     var paymentData = PaymentData()
-    var identification : Identification?
     var payment : Payment?
     
     var error : MPSDKError?
@@ -128,21 +127,20 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
-        if self.paymentData.paymentMethod!.isIdentificationRequired() {
+        if self.paymentMethods!.count > 1 {
+            self.next = .CREDIT_DEBIT
+        } else if self.paymentData.issuer == nil {
+            self.next = .ISSUER
+        } else if self.paymentData.paymentMethod!.isIdentificationRequired() {
             self.next = .IDENTIFICATION
         } else {
-            self.next = .CREDIT_DEBIT
+            self.next = .CREATE_CARD_TOKEN
         }
     }
     
     public func updateCheckoutModel(identification : Identification) {
-        self.identification = identification
-        if self.paymentMethods!.count > 1 {
-            self.next = .CREDIT_DEBIT
-        } else {
-            self.next = .ISSUER
-        }
-        
+        self.cardToken!.cardholder!.identification = identification
+        self.next = .CREATE_CARD_TOKEN
     }
     
     //CREDIT_DEBIT
@@ -153,8 +151,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(issuer: Issuer?){
         self.paymentData.issuer = issuer
-        self.next = CheckoutStep.PAYER_COST
+        
+        self.next = CheckoutStep.CREATE_CARD_TOKEN
     }
+    
     public func updateCheckoutModel(payerCost: PayerCost?){
         self.paymentData.payerCost = payerCost
         self.next = CheckoutStep.REVIEW_AND_CONFIRM
@@ -250,20 +250,24 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.next = .PAYER_COST
     }
 
-    open class func createMPPayment(_ email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, customerId : String? = nil) -> MPPayment {
+    public class func createMPPayment(_ email : String, preferenceId : String, paymentData : PaymentData, customerId : String? = nil) -> MPPayment {
         
         var issuerId = ""
-        if issuer != nil {
-            issuerId = String(issuer!._id!.intValue)
+        if paymentData.issuer != nil {
+            issuerId = String(paymentData.issuer!._id!.intValue)
         }
         var tokenId = ""
-        if token != nil {
-            tokenId = token!._id
+        if paymentData.token != nil {
+            tokenId = paymentData.token!._id
         }
         
-        let isBlacklabelPayment = token != nil && token?.cardId != nil && String.isNullOrEmpty(customerId)
+        var installments : Int = 0
+        if paymentData.payerCost != nil {
+            installments = paymentData.payerCost!.installments
+        }
+        let isBlacklabelPayment = paymentData.token != nil && paymentData.token!.cardId != nil && String.isNullOrEmpty(customerId)
         
-        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
+        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.paymentMethod!._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
         return mpPayment
     }
     
