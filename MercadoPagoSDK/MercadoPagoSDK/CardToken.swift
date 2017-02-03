@@ -82,41 +82,34 @@ open class CardToken : NSObject, CardInformationForm {
             return validCardNumber
         } else {
         
-            let setting : Setting? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
+            let settings : [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
             
-            if setting == nil {
+            if settings == nil {
                 if userInfo == nil {
                     userInfo = [String : String]()
                 }
                 return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
               //  userInfo?.updateValue("El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized, forKey: "cardNumber")
             } else {
-                
                 // Validate card length
-                if (cardNumber!.trimSpaces().characters.count != setting?.cardNumber.length) {
+                
+                let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().characters.count})
+                
+                if filteredSettings?.count == 0 {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
-                    if let cardNumberLength = setting?.cardNumber.length {
-                         return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardNumberLength)")
-                       // userInfo?.updateValue(("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cardNumberLength)"), forKey: "cardNumber")
-                        
-                    } else {
-                        return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
-                       // userInfo?.updateValue("El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized, forKey: "cardNumber")
-                    }
-                    
+                    return ("invalid_card_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(settings?[0].cardNumber.length)")
                 }
-                
                 // Validate luhn
-                if "standard" == setting?.cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
+                if "standard" == settings?[0].cardNumber.validation && !checkLuhn(cardNumber: (cardNumber?.trimSpaces())!) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
                     return "El número de tarjeta que ingresaste es incorrecto".localized
                  //   userInfo?.updateValue("El número de tarjeta que ingresaste es incorrecto".localized, forKey: "cardNumber")
                 }
-            }
+        }
         }
         
         if userInfo == nil {
@@ -158,15 +151,17 @@ open class CardToken : NSObject, CardInformationForm {
     }
     
     open func validateSecurityCodeWithPaymentMethod(_ securityCode: String, paymentMethod: PaymentMethod, bin: String) -> String? {
-        let setting : Setting? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
-        // Validate security code length
-        let cvvLength = setting?.securityCode.length
-        if ((cvvLength != 0) && (securityCode.characters.count != cvvLength)) {
-            return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
-           // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
-        } else {
-            return nil
+        let setting : [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
+        if let settings = setting {
+                let cvvLength = settings[0].securityCode.length
+                if ((cvvLength != 0) && (securityCode.characters.count != cvvLength)) {
+                    return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
+                    // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
+                } else {
+                    return nil
+                }
         }
+        return nil
     }
     
     open func validateExpiryDate() -> String? {

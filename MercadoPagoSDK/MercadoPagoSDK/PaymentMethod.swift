@@ -72,12 +72,13 @@ open class PaymentMethod : NSObject , Cellable {
     }
 
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
-        let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
-        if setting != nil && setting!.securityCode.length != 0 {
-            return true
-        } else {
-            return false
+        let settings : [Setting]? = Setting.getSettingByBin(self.settings, bin: bin)
+        if let settings = settings{
+                if settings[0].securityCode.length != 0 {
+                    return true
+                }
         }
+        return false
     }
     
     open func isAdditionalInfoNeeded(_ param: String!) -> Bool {
@@ -212,7 +213,7 @@ open class PaymentMethod : NSObject , Cellable {
         paymentMethod.paymentTypeId = self.paymentTypeId
         paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
         if(Setting.getSettingByBin(self.settings, bin: bin) != nil){
-            paymentMethod.settings = [Setting.getSettingByBin(self.settings, bin: bin)!]
+            paymentMethod.settings = Setting.getSettingByBin(self.settings, bin: bin)!
             return paymentMethod
         }else{
             return nil
