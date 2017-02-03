@@ -31,14 +31,18 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
     
-    func executeNextStep(optionSelected: String? = nil){
+    func executeNextStep(){
         switch self.viewModel.nextStep() {
+        case .SEARCH_PREFENCE :
+            self.collectCheckoutPreference()
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
         case .PAYMENT_METHOD_SELECTION :
             self.collectPaymentMethods()
         case .CARD_FORM:
             self.collectCard()
+        case .IDENTIFICATION :
+            self.collectIdentification()
         case .CREDIT_DEBIT:
             self.collectCreditDebit()
         case .ISSUER:
@@ -51,6 +55,8 @@ open class MercadoPagoCheckout: NSObject {
             self.collectSecurityCode()
         case .POST_PAYMENT :
             self.createPayment()
+        case .CONGRATS :
+            self.displayPaymentResult()
         case .FINISH:
             self.finish()
         default:
@@ -58,12 +64,31 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
+    func collectCheckoutPreference() {
+        MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, success: {(checkoutPreference : CheckoutPreference) -> Void in
+            self.viewModel.checkoutPreference = checkoutPreference
+            self.viewModel.next = .SEARCH_PAYMENT_METHODS
+            self.executeNextStep()
+        }, failure: {(NSError) -> Void in
+            self.viewModel.next = .ERROR
+        })
+    }
+    
     func collectPaymentMethodSearch() {
         //TODO :  EXCLUSIONES
+      //  let view = viewControllerBase!.view
+        let vcLoading = MercadoPagoUIViewController()
+        
+        
+        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: UIColor.primaryColor())
+        vcLoading.view.addSubview(loadingInstance)
+        
+        self.navigationController.present(vcLoading, animated: false, completion: {})
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
                 success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
                     self.executeNextStep()
+                    vcLoading.dismiss(animated: false, completion: {})
             }, failure: { (error) -> Void in
                 self.viewModel.next = .ERROR
                 self.executeNextStep()
@@ -108,6 +133,14 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(cardFormStep, animated: true)
     }
     
+    func collectIdentification() {
+        let identificationStep = IdentificationViewController { (identification : Identification) in
+            self.viewModel.updateCheckoutModel(identification : identification)
+            self.executeNextStep()
+        }
+        self.navigationController.pushViewController(identificationStep, animated: true)
+    }
+    
     func collectCreditDebit(){
         let crediDebitStep = CardAdditionalViewController(viewModel: self.viewModel.debitCreditViewModel(), collectPaymentMethodCallback: { (paymentMethod) in
             self.viewModel.updateCheckoutModel(paymentMethod: paymentMethod)
@@ -150,14 +183,31 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
-        // TODO : verificar
-        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: "prefId", paymentMethod: self.viewModel.paymentData.paymentMethod!)
-        MerchantServer.createPayment(mpPayment, success: {(Payment) -> Void in
-            
-            
+        
+        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentMethod: self.viewModel.paymentData.paymentMethod!)
+        MerchantServer.createPayment(mpPayment, success: {(payment : Payment) -> Void in
+            self.viewModel.updateCheckoutModel(payment: payment)
+            self.executeNextStep()
         }, failure: {(NSError) -> Void in
         
         })
+    }
+    
+    func displayPaymentResult() {
+        //TODO : por que dos? esta bien? no hay view models, ver que onda
+        let congratsViewController : UIViewController
+        if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
+            congratsViewController = InstructionsRevampViewController(payment: self.viewModel.payment!, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (payment : Payment, state :MPStepBuilder.CongratsState) in
+                self.viewModel.next = .FINISH
+                self.executeNextStep()
+            })
+        } else {
+            congratsViewController = CongratsRevampViewController(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentData.paymentMethod!, callback: { (payment : Payment, state : MPStepBuilder.CongratsState) in
+                self.viewModel.next = .FINISH
+                self.executeNextStep()
+            })
+        }
+        self.navigationController.pushViewController(congratsViewController, animated: true)
     }
     
     func error() {
@@ -173,7 +223,7 @@ open class MercadoPagoCheckout: NSObject {
                 // --- Nothing
             })
         }
-        
+    
         
         
     }

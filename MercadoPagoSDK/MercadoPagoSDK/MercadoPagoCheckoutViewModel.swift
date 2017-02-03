@@ -9,6 +9,7 @@
 import UIKit
 
 public enum CheckoutStep : String {
+    case SEARCH_PREFENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -17,6 +18,7 @@ public enum CheckoutStep : String {
     case SECURITY_CODE_ONLY
     case CREDIT_DEBIT
     case ISSUER
+    case CREATE_CARD_TOKEN
     case IDENTIFICATION
     case PAYER_COST
     case REVIEW_AND_CONFIRM
@@ -35,9 +37,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var paymentMethods : [PaymentMethod]?
     // card token previo a la tokenización y válido para pago
     var cardToken: CardToken?
-//    var payerCost: PayerCost?
-//    
-    
+//
     var customerId : String?
     
     //optionals?
@@ -54,25 +54,25 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     var rootVC = true
     
+    var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
+    
     // flowpreference
 
     var paymentData = PaymentData()
-
-    //----------------
-    
+    var identification : Identification?
     var payment : Payment?
     
-    var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
-    
-    
-    
     var error : MPSDKError?
-    var identification : Identification?
+
     
+    var boolPref : Bool = false
     
-    
+
     init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            self.next =  .SEARCH_PREFENCE
+        }
     }
     
     
@@ -128,12 +128,27 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
-        self.next = CheckoutStep.ISSUER
+        if self.paymentData.paymentMethod!.isIdentificationRequired() {
+            self.next = .IDENTIFICATION
+        } else {
+            self.next = .CREDIT_DEBIT
+        }
+    }
+    
+    public func updateCheckoutModel(identification : Identification) {
+        self.identification = identification
+        if self.paymentMethods!.count > 1 {
+            self.next = .CREDIT_DEBIT
+        } else {
+            self.next = .ISSUER
+        }
+        
     }
     
     //CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
+        self.next = .ISSUER
     }
     
     public func updateCheckoutModel(issuer: Issuer?){
@@ -151,15 +166,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let childrenOptions = paymentOptionSelected.getChildren() {
             self.paymentMethodOptions =  childrenOptions
         }
-        if (self.paymentOptionSelected!.isCustomerPaymentMethod()){
+        if self.paymentOptionSelected!.isCustomerPaymentMethod() /* || !paymentOptionSelected.isCard() */{
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
+        }else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
+            self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
         }
+        
+        
        // } else {
        //     if (self.paymentOptionSelected!.isCard()) {
        //         self.next = .CARD_FORM
        //     } else {
        //         self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
-      //          self.next = .REVIEW_AND_CONFIRM
+       //         self.next = .REVIEW_AND_CONFIRM
        //     }
        // }
     }
@@ -167,6 +186,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func nextStep() -> CheckoutStep {
 
+        if !boolPref {
+            boolPref = true
+            return .SEARCH_PREFENCE
+        }
+        
         if hasError() {
             return .ERROR
         }
@@ -190,7 +214,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         
         if needGetIdentification() {
-       //     return .IDENTIFICATION
+            return .IDENTIFICATION
         }
         
         if needChosePayerCost() {
@@ -205,75 +229,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     }
     
-    func hasError() -> Bool{
-        return error != nil
-    }
-    
-    func needSearch() -> Bool {
-        return search == nil
-    }
-    func arePaymentTypeSelected() -> Bool {
-        guard let selectedType = self.paymentOptionSelected else {
-            return false
-        }
-        return !selectedType.hasChildren()
-    }
-    func needCompleteCard() -> Bool {
-        guard let selectedType = self.paymentOptionSelected else {
-            return false
-        }
-        if !selectedType.isCard() {
-            return false
-        }
-        return self.cardToken == nil && !selectedType.isCustomerPaymentMethod()
-    }
-    
-    func showConfirm() -> Bool {
-        return self.paymentData.complete()
-    }
-    
-    func showCongrats() -> Bool {
-        return self.payment != nil
-    }
-    func needGetIdentification() -> Bool {
-        guard let pm = self.paymentData.paymentMethod , let option = self.paymentOptionSelected else {
-            return false
-        }
-        if identification == nil && pm.isIdentificationRequired() && !option.isCustomerPaymentMethod(){
-            return true
-        }else{
-            return false
-        }
-    }
-    func needGetIssuer() -> Bool {
-        guard let pm = self.paymentData.paymentMethod else {
-            return false
-        }
-        if paymentData.issuer == nil && pm.isIssuerRequired() {
-            return true
-        }
-        return false
-    }
-    func needChosePayerCost() -> Bool {
-        guard let pm = self.paymentData.paymentMethod else {
-            return false
-        }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil {
-            return true
-        }else{
-            return false
-        }
-    }
-    func needSecurityCode() -> Bool {
-        guard let pmSelected = self.paymentOptionSelected else {
-            return false
-        }
-        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil {
-            return true
-        }
-        return false
-    }
-    
+        
     var search : PaymentMethodSearch?
     
     public func updateCheckoutModel(paymentMethodSearch : PaymentMethodSearch) {
@@ -325,7 +281,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     func updateCheckoutModel(paymentData: PaymentData){
         if paymentData.paymentMethod == nil {
             // Vuelvo a root para iniciar la selección de medios de pago
-            self.paymentMethodOptions = self.rootPaymentMethodOptions!
+            self.paymentOptionSelected = nil
+            self.paymentMethodOptions = self.rootPaymentMethodOptions
+                //self.rootPaymentMethodOptions!
             self.rootVC = true
             self.next = .SEARCH_PAYMENT_METHODS
         } else {

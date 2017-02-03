@@ -60,12 +60,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navigationItem.rightBarButtonItem = nil
         
-        //self.navBarTextColor = !self.viewModel.isPreferenceLoaded() ? UIColor.primaryColor() : UIColor.px_blueMercadoPago()
-        
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
         
         self.registerAllCells()
+
     }
 
     
@@ -80,6 +79,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navigationItem.leftBarButtonItem!.tintColor = !self.viewModel.isPreferenceLoaded() ? UIColor.systemFontColor() : UIColor.px_white()
         self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
         
+        self.navBarBackgroundColor = UIColor.px_white()
+        
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
         } else {
@@ -89,11 +90,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
               //  self.checkoutTable.reloadData()
                 if (recover){
                     recover = false
-                    self.startRecoverCard()
+                    //self.startRecoverCard()
                 }
                 if (auth){
                     auth = false
-                    self.startAuthCard(self.viewModel.paymentData.token!)
+                    //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
                 
             } else {
@@ -105,9 +106,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         
-        self.hideNavBar()
         self.navBarBackgroundColor = UIColor.px_white()
+        self.navBarTextColor = !self.viewModel.isPreferenceLoaded() ? UIColor.primaryColor() : UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
+        self.hideNavBar()
     }
 
     override open func didReceiveMemoryWarning() {
@@ -190,32 +192,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
     }
-    
-    internal func startRecoverCard(){
-        
-//         MPServicesBuilder.getPaymentMethods({ (paymentMethods) in
-//        let cardFlow = MPFlowBuilder.startCardFlow(amount: (self.viewModel.preference?.getAmount())!, cardInformation : nil, callback: { (paymentMethod, token, issuer, payerCost) in
-//             self.paymentVaultCallback(paymentMethod, token : token, issuer : issuer, payerCost : payerCost, animated : true)
-//            }, callbackCancel: {
-//                self.navigationController!.popToViewController(self, animated: true)
-//        })
-//        self.navigationController?.pushViewController(cardFlow.viewControllers[0], animated: true)
-//         }) { (error) in
-//            
-//        }
-//        
-        
-    }
-    internal func startAuthCard(_ token:Token ){
-        
-//        let vc = MPStepBuilder.startSecurityCodeForm(paymentMethod: self.viewModel.paymentMethod!, cardInfo: token) { (token) in
-//            self.token = token
-//            self.navigationController!.popToViewController(self, animated: true)
-//        }
-//        
-//        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
     
     @objc fileprivate func confirmPayment(){
         

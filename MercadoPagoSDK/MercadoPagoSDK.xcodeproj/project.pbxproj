@@ -250,6 +250,7 @@
 		1553AF371E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1553AF351E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift */; };
 		155692D11C47D75900521403 /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C801C46A21C00120347 /* CheckoutViewController.swift */; };
 		155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C771C45A24600120347 /* PaymentPreference.swift */; };
+		155F3D331E44F629003F6DD6 /* NextStepHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155F3D321E44F629003F6DD6 /* NextStepHelper.swift */; };
 		1565B1311CBFD7F100181998 /* GuessingFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565B1301CBFD7F100181998 /* GuessingFormTest.swift */; };
 		156DA6431CC55636006B892F /* PayerCostFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156DA6421CC55636006B892F /* PayerCostFormTest.swift */; };
 		15714BAA1C85CC800019945E /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
@@ -837,6 +838,7 @@
 		1529D9A41C7DEA4E00880C29 /* CheckoutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckoutViewController.xib; sourceTree = "<group>"; };
 		1553AF321E36454B00E36C62 /* MercadoPagoCheckout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckout.swift; sourceTree = "<group>"; };
 		1553AF351E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutViewModel.swift; sourceTree = "<group>"; };
+		155F3D321E44F629003F6DD6 /* NextStepHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextStepHelper.swift; sourceTree = "<group>"; };
 		1565B1301CBFD7F100181998 /* GuessingFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessingFormTest.swift; sourceTree = "<group>"; };
 		156DA6421CC55636006B892F /* PayerCostFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostFormTest.swift; sourceTree = "<group>"; };
 		157420F41DF881770041171E /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
@@ -1567,6 +1569,7 @@
 			children = (
 				1553AF321E36454B00E36C62 /* MercadoPagoCheckout.swift */,
 				1553AF351E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift */,
+				155F3D321E44F629003F6DD6 /* NextStepHelper.swift */,
 			);
 			name = MercadoPagoCheckout;
 			sourceTree = "<group>";
@@ -2647,6 +2650,7 @@
 				0F98841D1AD2AE2700F750F0 /* MPExpirationDateTableViewCell.swift in Sources */,
 				76B084E71CE0DB0200C157BF /* AuthorizePaymentHeaderTableViewCell.swift in Sources */,
 				0F9883891AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
+				155F3D331E44F629003F6DD6 /* NextStepHelper.swift in Sources */,
 				76151B871C73C025007DF0E3 /* InstructionsService.swift in Sources */,
 				76FD24811C5BFEA1008C5DC0 /* CardFrontView.swift in Sources */,
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,

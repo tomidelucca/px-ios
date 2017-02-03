@@ -54,7 +54,7 @@ open class PaymentMethodSearchItem : Equatable, PaymentOptionDrawable, PaymentMe
     }
     
     open func isOfflinePayment() -> Bool {
-        return PaymentTypeId.offlinePayments().contains(self.idPaymentMethodSearchItem)
+        return PaymentTypeId.offlinePaymentTypes().contains(self.idPaymentMethodSearchItem)
     }
     
     open func isBitcoin() -> Bool {
