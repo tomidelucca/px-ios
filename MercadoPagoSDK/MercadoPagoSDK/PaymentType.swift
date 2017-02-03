@@ -49,6 +49,10 @@ public enum PaymentTypeId :String {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
     }
 
+    public func isCreditCard() -> Bool {
+        return self == PaymentTypeId.CREDIT_CARD
+    }
+    
     public func isOfflinePayment() -> Bool {
         return PaymentTypeId.offlinePayments().contains(self.rawValue)
     }

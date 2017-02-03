@@ -42,15 +42,13 @@ open class Item : NSObject {
     
     
     
-    public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0, description : String? = "", currencyId: String = "ARS") {
+    public init(_id: String? = nil, title : String? = nil, quantity: Int = 0, unitPrice: Double = 0, description : String? = "") {
         super.init()
         self._id = _id
         self.title = title
         self.quantity = quantity
         self.unitPrice = unitPrice
         self._description = description ?? ""
-        self.currencyId = currencyId
-        
     }
     
     open func toJSONString() -> String {

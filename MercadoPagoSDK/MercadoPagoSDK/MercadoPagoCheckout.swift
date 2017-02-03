@@ -35,8 +35,6 @@ open class MercadoPagoCheckout: NSObject {
         switch self.viewModel.nextStep() {
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
-//        case .SEARCH_CUSTOMER_PAYMENT_METHODS :
-//            self.collectCustomerPaymentMethods()
         case .PAYMENT_METHOD_SELECTION :
             self.collectPaymentMethods()
         case .CARD_FORM:
@@ -91,8 +89,8 @@ open class MercadoPagoCheckout: NSObject {
     
     
     func collectPaymentMethods(){
-        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentMethodSelected : PaymentMethodOption) -> Void  in
-            self.viewModel.updateCheckoutModel(paymentMethodSelected : paymentMethodSelected)
+        let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
+            self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
             self.executeNextStep()
         })
@@ -152,7 +150,14 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
-        // Llamar servicePreference
+        // TODO : verificar
+        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: "prefId", paymentMethod: self.viewModel.paymentData.paymentMethod!)
+        MerchantServer.createPayment(mpPayment, success: {(Payment) -> Void in
+            
+            
+        }, failure: {(NSError) -> Void in
+        
+        })
     }
     
     func error() {
