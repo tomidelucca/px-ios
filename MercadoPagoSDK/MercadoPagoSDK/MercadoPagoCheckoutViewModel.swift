@@ -31,6 +31,10 @@ public enum CheckoutStep : String {
 
 
 open class MercadoPagoCheckoutViewModel: NSObject {
+    
+    static var servicePreference = ServicePreference()
+    static var decorationPreference = DecorationPreference()
+    static var flowPreference = FlowPreference()
 
     var checkoutPreference : CheckoutPreference!
     

@@ -24,6 +24,7 @@
 }
 
 - (IBAction)checkoutFlow:(id)sender {
+
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];

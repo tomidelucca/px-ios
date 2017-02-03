@@ -65,6 +65,21 @@ class MainExamplesViewController: UIViewController, UITableViewDataSource, UITab
         switch (indexPath as NSIndexPath).row {
         case 0:
             //Checkout Example
+            
+            let decorationPreference = DecorationPreference()
+            decorationPreference.setBaseColor(hexColor: "#CA254D")
+            MercadoPagoCheckout.setDecorationPreference(decorationPreference)
+            
+            let flowPreference = FlowPreference()
+            flowPreference.disableReviewAndConfirmScreen()
+            flowPreference.disablePaymentPendingScreen()
+            MercadoPagoCheckout.setFlowPreference(flowPreference)
+            
+            let servicePreference = ServicePreference()
+            servicePreference.setGetCustomer(baseURL: "sarasa.com", URI: "customer")
+            servicePreference.setCreatePayment(baseURL: "pulporemeras.com", URI: "payments", additionalInfo:  ["binary_mode" : "true"])
+            MercadoPagoCheckout.setServicePreferencee(servicePreference)
+
             let nav = UINavigationController()
             MercadoPagoCheckout(navigationController:self.navigationController!).start()
           
