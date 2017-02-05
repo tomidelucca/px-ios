@@ -32,10 +32,13 @@
                                 @"key2" : @"value2"
     };
     [servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
+   // [MercadoPagoCheckout setServicePreference:servicePreference];
+    
+    // Decoration Preference con colores custom
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor blackColor] fontName:@"fontName"];
+    [MercadoPagoCheckout setDecorationPreference:decorationPreference];
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
-    
-   // [MercadoPagoCheckout setServicePreference:servicePreference];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
 }
 
