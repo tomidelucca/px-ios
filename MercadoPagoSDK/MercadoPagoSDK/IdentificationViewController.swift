@@ -84,10 +84,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         if (string.characters.count < 1){
             return true
         }
-        guard let identificationType = identificationType else{
-            return false
-        }
-        if textField.text?.characters.count == identificationType.maxLength{
+        if(textField.text?.characters.count == identificationType!.maxLength){
             return false
         }
         return true
