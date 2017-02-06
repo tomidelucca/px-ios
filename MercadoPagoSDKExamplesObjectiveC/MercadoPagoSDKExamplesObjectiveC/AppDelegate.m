@@ -22,9 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     
-    //[MercadoPagoContext setPublicKey:@"APP_USR-8e3869a6-638f-45cd-b5b7-267c8e6f2b09"];
+    [MercadoPagoContext setPublicKey:@"APP_USR-8e3869a6-638f-45cd-b5b7-267c8e6f2b09"];
 
-    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
+    //[MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 
     [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
     [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];
@@ -32,6 +32,9 @@
     
     [MercadoPagoContext setSiteID:@"MLA"];
     
+    
+    
+    [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
     
     //[MercadoPagoContext setupPrimaryColor:[UIColor redColor] complementaryColor:nil];
     //[MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];

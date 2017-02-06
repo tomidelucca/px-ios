@@ -10,7 +10,7 @@ import Foundation
 
 extension MercadoPagoCheckoutViewModel {
     
-    func hasError() -> Bool{
+    func hasError() -> Bool {
         return error != nil
     }
     
@@ -104,5 +104,9 @@ extension MercadoPagoCheckoutViewModel {
     
     func shouldShowCongrats() -> Bool {
         return self.payment != nil
+    }
+    
+    func shouldExitCheckout() -> Bool {
+        return self.isCheckoutComplete()
     }
 }

@@ -89,13 +89,7 @@ open class MercadoPagoCheckout: NSObject {
     func collectPaymentMethodSearch() {
         //TODO :  EXCLUSIONES
       //  let view = viewControllerBase!.view
-        let vcLoading = MercadoPagoUIViewController()
-        
-        
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: UIColor.primaryColor())
-        vcLoading.view.addSubview(loadingInstance)
-        
-        self.navigationController.present(vcLoading, animated: false, completion: {})
+        let vcLoading = self.presentLoading()
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
                 success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
@@ -107,22 +101,6 @@ open class MercadoPagoCheckout: NSObject {
             })
     }
     
-    func collectCustomerPaymentMethods(){
-        if (MercadoPagoContext.isCustomerInfoAvailable()) {
-            MerchantServer.getCustomer({ (customer: Customer) -> Void in
-                self.viewModel.customerId = customer._id
-                self.viewModel.updateCheckoutModel(paymentMethodOptions : customer.cards!)
-                self.executeNextStep()
-            }, failure: { (error: NSError?) -> Void in
-                self.viewModel.next = .ERROR
-                self.executeNextStep()
-            })
-        } else {
-            self.viewModel.next = .PAYMENT_METHOD_SELECTION
-            self.executeNextStep()
-        }
-
-    }
     
     
     func collectPaymentMethods(){
@@ -187,10 +165,19 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectPaymentData() {
+        
         let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
             self.executeNextStep()
+        }, callbackCancel : { Void -> Void in
+            self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
+            self.executeNextStep()
         })
+        
+        
+        let vcLoading = self.presentLoading()
+        self.navigationController.popToViewController(viewControllerBase!, animated: false)
+        vcLoading.dismiss(animated: true, completion: {})
         self.navigationController.pushViewController(checkoutVC, animated: true)
     }
     
@@ -219,15 +206,14 @@ open class MercadoPagoCheckout: NSObject {
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
             congratsViewController = InstructionsRevampViewController(payment: self.viewModel.payment!, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (payment : Payment, state :MPStepBuilder.CongratsState) in
-                self.viewModel.next = .FINISH
                 self.executeNextStep()
             })
         } else {
             congratsViewController = CongratsRevampViewController(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentData.paymentMethod!, callback: { (payment : Payment, state : MPStepBuilder.CongratsState) in
-                self.viewModel.next = .FINISH
                 self.executeNextStep()
             })
         }
+        self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
         self.navigationController.pushViewController(congratsViewController, animated: true)
     }
     
@@ -238,14 +224,22 @@ open class MercadoPagoCheckout: NSObject {
     func finish(){
         
         if let rootViewController = viewControllerBase{
-            self.navigationController.popToViewController(rootViewController, animated: false)
+            self.navigationController.popToViewController(rootViewController, animated: true)
         }else{
             self.navigationController.dismiss(animated: true, completion: { 
                 // --- Nothing
             })
         }
+    }
     
+    func presentLoading() -> MercadoPagoUIViewController {
+        let vcLoading = MercadoPagoUIViewController()
         
         
+        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: UIColor.primaryColor())
+        vcLoading.view.addSubview(loadingInstance)
+        
+        self.navigationController.present(vcLoading, animated: false, completion: {})
+        return vcLoading
     }
 }

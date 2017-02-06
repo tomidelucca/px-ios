@@ -29,11 +29,12 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     @IBOutlet weak var checkoutTable: UITableView!
     
-    init(viewModel: CheckoutViewModel, callback : @escaping (PaymentData) -> Void,  callbackCancel : ((Void) -> Void)? = nil) {
+    init(viewModel: CheckoutViewModel, callback : @escaping (PaymentData) -> Void,  callbackCancel : @escaping ((Void) -> Void)) {
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.initCommon()
         self.viewModel = viewModel
         self.callback = callback
+        self.callbackCancel = callbackCancel
     }
     
     private func initCommon(){
@@ -64,7 +65,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.delegate = self
         
         self.registerAllCells()
-
+        self.showLoading()
     }
 
     
@@ -74,12 +75,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.showLoading()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
-        
-        self.displayBackButton()
-        self.navigationItem.leftBarButtonItem!.tintColor = !self.viewModel.isPreferenceLoaded() ? UIColor.systemFontColor() : UIColor.px_white()
-        self.navigationItem.leftBarButtonItem?.action = #selector(invokeCallbackCancel)
-        
-        self.navBarBackgroundColor = UIColor.px_white()
         
         if !self.viewModel.isPreferenceLoaded() {
             self.loadPreference()
@@ -106,10 +101,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         
-        self.navBarBackgroundColor = UIColor.px_white()
-        self.navBarTextColor = !self.viewModel.isPreferenceLoaded() ? UIColor.primaryColor() : UIColor.px_blueMercadoPago()
+        self.setNavBarBackgroundColor(color : UIColor.px_white())
+        self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
         self.hideNavBar()
+        self.hideBackButton()
+        self.hideLoading()
+     
     }
 
     override open func didReceiveMemoryWarning() {
@@ -338,6 +336,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     func changePaymentMethodSelected() {
         self.viewModel.paymentData.paymentMethod = nil
+        self.viewModel.paymentData.clear()
         self.callback(self.viewModel.paymentData)
     }
     
