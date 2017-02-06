@@ -10,10 +10,6 @@ import Foundation
 
 extension MercadoPagoCheckoutViewModel {
     
-    func hasError() -> Bool {
-        return error != nil
-    }
-    
     func needSearch() -> Bool {
         return search == nil
     }

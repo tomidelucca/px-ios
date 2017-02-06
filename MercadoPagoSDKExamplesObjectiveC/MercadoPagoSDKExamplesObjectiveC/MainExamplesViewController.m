@@ -50,9 +50,11 @@
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
+    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
     
-    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>//    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-c9727554-8d7e-4984-9205-e9fec5b553f9"];
+    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
+    
+        CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-c9727554-8d7e-4984-9205-e9fec5b553f9"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
     
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];

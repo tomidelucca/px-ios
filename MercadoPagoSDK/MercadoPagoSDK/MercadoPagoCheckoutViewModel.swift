@@ -65,8 +65,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var paymentData = PaymentData()
     var payment : Payment?
     
-    var error : MPSDKError?
-
+    internal var error : MPSDKError?
+    internal var errorCallback : ((Void) -> Void)?
     
     private var needLoadPreference : Bool = false
     private var readyToPay : Bool = false
@@ -80,6 +80,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
+    func hasError() -> Bool {
+        return error != nil
+    }
     
     public func getPaymentPreferences() -> PaymentPreference? {
         return nil
@@ -301,6 +304,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             // Vuelvo a root para iniciar la selección de medios de pago
             self.paymentOptionSelected = nil
             self.paymentMethodOptions = self.rootPaymentMethodOptions
+            self.search = nil
             self.rootVC = true
         } else {
             self.readyToPay = true
@@ -366,5 +370,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return self.checkoutPreference.getExcludedPaymentMethodsIds()
     }
     
+    func errorInputs(error : MPSDKError, errorCallback : ((Void) -> Void)?) {
+        self.error = error
+        self.errorCallback = errorCallback
+    }
+    
+
 }
 

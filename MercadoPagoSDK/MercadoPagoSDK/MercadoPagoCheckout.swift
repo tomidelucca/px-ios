@@ -79,10 +79,12 @@ open class MercadoPagoCheckout: NSObject {
     func collectCheckoutPreference() {
         MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, success: {(checkoutPreference : CheckoutPreference) -> Void in
             self.viewModel.checkoutPreference = checkoutPreference
-            self.viewModel.next = .SEARCH_PAYMENT_METHODS
             self.executeNextStep()
-        }, failure: {(NSError) -> Void in
-            self.viewModel.next = .ERROR
+        }, failure: {(error : NSError) -> Void in
+            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) -> Void in
+               self.collectCheckoutPreference()
+            })
+            self.executeNextStep()
         })
     }
     
@@ -94,7 +96,9 @@ open class MercadoPagoCheckout: NSObject {
                     self.executeNextStep()
                     vcLoading.dismiss(animated: false, completion: {})
             }, failure: { (error) -> Void in
-                self.viewModel.next = .ERROR
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) -> Void in
+                    self.collectPaymentMethodSearch()
+                })
                 self.executeNextStep()
             })
     }
@@ -126,6 +130,7 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(identification : identification)
             self.executeNextStep()
         }
+        identificationStep.callbackCancel = { self.navigationController.popViewController(animated: true)}
         self.navigationController.pushViewController(identificationStep, animated: true)
     }
     
@@ -150,7 +155,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(token: token!)
             self.executeNextStep()
         }, failure : { (error) -> Void in
-                self.viewModel.next = .ERROR
+            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
+                self.createCardToken()
+            })
+            self.executeNextStep()
         })
     }
     
@@ -190,15 +198,15 @@ open class MercadoPagoCheckout: NSObject {
     
     func createPayment() {
         
-        var paymentBody : String!
+        var paymentBody : [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
             let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
-            paymentBody = mpPayment.toJSONString()
+            paymentBody = mpPayment.toJSON()
         } else {
-            paymentBody = self.viewModel.paymentData.toJSONString()
+            paymentBody = self.viewModel.paymentData.toJSON()
         }
         
-        MerchantServer.createPayment(paymentBody, success: {(payment : Payment) -> Void in
+        MerchantServer.createPayment(paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
         }, failure: {(NSError) -> Void in
@@ -224,13 +232,19 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
+        let errorStep = ErrorViewController(error: self.viewModel.error, callback: { (Void) -> Void in
+            self.viewModel.errorCallback?()
+        }, callbackCancel: {(Void) -> Void in
+            // Aparte de default callbackCancel
+        })
+        self.navigationController.present(errorStep, animated: true, completion: {})
     }
     
     func finish(){
         
         if let rootViewController = viewControllerBase{
             self.navigationController.popToViewController(rootViewController, animated: true)
-        }else{
+        } else {
             self.navigationController.dismiss(animated: true, completion: { 
                 // --- Nothing
             })
@@ -239,7 +253,6 @@ open class MercadoPagoCheckout: NSObject {
     
     func presentLoading() -> MercadoPagoUIViewController {
         let vcLoading = MercadoPagoUIViewController()
-        
         
         let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: UIColor.primaryColor())
         vcLoading.view.addSubview(loadingInstance)

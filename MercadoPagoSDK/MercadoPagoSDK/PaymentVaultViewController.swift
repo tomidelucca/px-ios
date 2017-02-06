@@ -189,7 +189,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                     let error = MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
                     self.displayFailure(error)
                 }
-          //      self.viewModel.setPaymentMethodSearchResponse(paymentMethodSearchResponse)
                 
                 self.loadPaymentMethodSearch()
                 
@@ -209,21 +208,10 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.collectionSearch.reloadData()
             self.loadingGroups = false
             
-            /*if self.viewModel.currentPaymentMethodSearch.count == 1 && self.viewModel.currentPaymentMethodSearch[0].children.count > 0 {
-                self.viewModel.currentPaymentMethodSearch = self.viewModel.currentPaymentMethodSearch[0].children
+            if (self.viewModel.getDisplayedPaymentMethodsCount() == 1) {
+                let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as! PaymentMethodOption
+                self.callback(paymentOptionDefault)
             }
-            
-            if  self.viewModel.hasOnlyGroupsPaymentMethodAvailable() {
-                self.viewModel.optionSelected(self.viewModel.currentPaymentMethodSearch[0],navigationController: self.navigationController!, cancelPaymentCallback: self.cardFormCallbackCancel(), animated: false)
-            } else if self.viewModel.hasOnlyCustomerPaymentMethodAvailable() {
-                let customerCardSelected = self.viewModel.customerCards![0] as CardInformation
-                if let nav = self.navigationController { self.viewModel.customerOptionSelected(customerCardSelected: customerCardSelected, navigationController: nav, visibleViewController: self) }
-            } else {
-                self.collectionSearch.delegate = self
-                self.collectionSearch.dataSource = self
-                self.collectionSearch.reloadData()
-                self.loadingGroups = false
-            }*/
         }
     }
     
@@ -462,8 +450,8 @@ class PaymentVaultViewModel : NSObject {
     }
  
     func getDisplayedPaymentMethodsCount() -> Int {
-        let currentPaymentMethodSearchConunt = self.paymentMethodOptions.count
-        return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchConunt
+        let currentPaymentMethodSearchCount = self.paymentMethodOptions.count
+        return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchCount
     }
     
     func getCustomerCardRowHeight() -> CGFloat {
