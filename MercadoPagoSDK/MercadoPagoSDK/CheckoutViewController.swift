@@ -148,7 +148,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
+                //return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
+                return self.getCustomCell(indexPath: indexPath)
             case 1:
                 var title = "Total".localized
                 var addSeparatorLine = false
@@ -257,6 +258,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         
+        let custom = UINib(nibName: "CustomTableViewCell", bundle: Bundle.main)
+        self.checkoutTable.register(custom, forCellReuseIdentifier: "custom")
+        
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
@@ -280,6 +284,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         }
         
         return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost, addSeparatorLine: addSeparatorLine)
+    }
+    
+    private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
+        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "custom", for: indexPath) as! CellProtocol
+        return custom as! UITableViewCell
     }
     
     private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
