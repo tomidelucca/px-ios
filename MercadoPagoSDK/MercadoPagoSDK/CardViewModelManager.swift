@@ -36,7 +36,7 @@ class CardViewModelManager: NSObject {
     var cvvEmpty: Bool = true
     var cardholderNameEmpty: Bool = true
     
-    var animationDuration: Double?
+    let animationDuration: Double = 0.6
     
     var promos : [Promo]?
     
@@ -46,7 +46,6 @@ class CardViewModelManager: NSObject {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = paymentMethod
-        self.animationDuration = 0.6
         
         if customerCard != nil {
             self.customerCard = customerCard
