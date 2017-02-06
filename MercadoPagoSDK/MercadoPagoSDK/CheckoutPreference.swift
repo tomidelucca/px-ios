@@ -22,10 +22,10 @@ open class CheckoutPreference : NSObject {
         self._id = _id
     }
     
-    public init(items : [Item] = [], payer : Payer = Payer(), paymentMethods : PaymentPreference = PaymentPreference()){
+    public init(items : [Item] = [], payer : Payer = Payer(), paymentMethods : PaymentPreference? = nil){
         self.items = items
         self.payer = payer
-        self.paymentPreference = paymentMethods
+        self.paymentPreference = paymentMethods ?? PaymentPreference()
     }
     
     public func addItem(item: Item) {

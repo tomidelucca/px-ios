@@ -10,7 +10,7 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    var paymentMethod : PaymentMethod?
+    var paymentMethod : PaymentMethod!
     var issuer : Issuer?
     var payerCost : PayerCost?
     var token : Token?
@@ -33,12 +33,20 @@ public class PaymentData: NSObject {
         if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
             return false
         }
-        
-//        if paymentMethod.isissuer == nil {
-//            return false
-//        }
 
         return true
-        
     }
+    
+    func toJSONString() -> String {
+       var obj:[String:Any] = [
+            "payment_method_id" : String(describing: self.paymentMethod._id)
+       ]
+       
+        obj["installments"] = (self.payerCost != nil ) ? self.payerCost!.installments : ""
+        obj["card_token_id"] = (self.token != nil ) ? self.token!._id : ""
+        obj["issuer_id"] = (self.issuer != nil ) ? self.issuer!._id : ""
+        return JSONHandler.jsonCoding(obj)
+    }
+
 }
+

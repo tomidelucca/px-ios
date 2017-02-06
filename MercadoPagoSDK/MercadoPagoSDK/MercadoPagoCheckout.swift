@@ -190,17 +190,24 @@ open class MercadoPagoCheckout: NSObject {
     
     func createPayment() {
         
-        let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
-        MerchantServer.createPayment(mpPayment, success: {(payment : Payment) -> Void in
+        var paymentBody : String!
+        if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(self.viewModel.checkoutPreference.getPayer().email, preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
+            paymentBody = mpPayment.toJSONString()
+        } else {
+            paymentBody = self.viewModel.paymentData.toJSONString()
+        }
+        
+        MerchantServer.createPayment(paymentBody, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
         }, failure: {(NSError) -> Void in
-        
+            
         })
     }
     
     func displayPaymentResult() {
-        //TODO : por que dos? esta bien? no hay view models, ver que onda
+        // TODO : por que dos? esta bien? no hay view models, ver que onda
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
             congratsViewController = InstructionsRevampViewController(payment: self.viewModel.payment!, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (payment : Payment, state :MPStepBuilder.CongratsState) in

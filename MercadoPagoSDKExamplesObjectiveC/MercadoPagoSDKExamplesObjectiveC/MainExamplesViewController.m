@@ -31,17 +31,28 @@
     
     // Service Preference para seteo de servicio de pago
     NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla-cards-data"
+                                  @"auth_code" : @"mockAuthCode"
                                   };
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
-    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+    
+    
+    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
     
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
-    //Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE description:nil];
+    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
     
-    //[CheckoutPreference alloc] initWithItems:NSArray payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nonnull)#>
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-c9727554-8d7e-4984-9205-e9fec5b553f9"];
+    Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil];
+    Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description"];
+    Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" type:nil identification:nil];
+    
+    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    
+    PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
+    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
+    
+    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>//    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-c9727554-8d7e-4984-9205-e9fec5b553f9"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
     
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
