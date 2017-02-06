@@ -38,7 +38,10 @@
     
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
+    //Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE description:nil];
+    
+    //[CheckoutPreference alloc] initWithItems:NSArray payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nonnull)#>
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-c9727554-8d7e-4984-9205-e9fec5b553f9"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
     
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];

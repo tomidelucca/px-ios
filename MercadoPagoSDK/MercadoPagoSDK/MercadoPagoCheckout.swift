@@ -87,10 +87,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectPaymentMethodSearch() {
-        //TODO :  EXCLUSIONES
-      //  let view = viewControllerBase!.view
         let vcLoading = self.presentLoading()
-        MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: nil, excludedPaymentTypeIds: nil, excludedPaymentMethodIds: nil,
+        MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                 success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
                     self.executeNextStep()
@@ -175,9 +173,9 @@ open class MercadoPagoCheckout: NSObject {
         })
         
         
-        let vcLoading = self.presentLoading()
+        //let vcLoading = self.presentLoading()
         self.navigationController.popToViewController(viewControllerBase!, animated: false)
-        vcLoading.dismiss(animated: true, completion: {})
+        //vcLoading.dismiss(animated: true, completion: {})
         self.navigationController.pushViewController(checkoutVC, animated: true)
     }
     

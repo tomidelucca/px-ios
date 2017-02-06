@@ -22,7 +22,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     
-    [MercadoPagoContext setPublicKey:@"APP_USR-8e3869a6-638f-45cd-b5b7-267c8e6f2b09"];
+    [MercadoPagoContext setPublicKey:@"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"];
 
     //[MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 

@@ -353,5 +353,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.paymentMethod = cardInformation.getPaymentMethod()
         }
     }
+    
+    func getDefaultPaymentMethodId() -> String? {
+        return self.checkoutPreference.getDefaultPaymentMethodId()
+    }
+    
+    func getExcludedPaymentTypesIds() -> Set<String>? {
+        return self.checkoutPreference.getExcludedPaymentTypesIds()
+    }
+    
+    func getExcludedPaymentMethodsIds() -> Set<String>? {
+        return self.checkoutPreference.getExcludedPaymentMethodsIds()
+    }
+    
 }
 
