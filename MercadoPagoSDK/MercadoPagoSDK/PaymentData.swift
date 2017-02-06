@@ -16,4 +16,25 @@ public class PaymentData: NSObject {
     var token : Token?
     
     
+    
+    
+    func complete() -> Bool {
+        
+        /*
+        if paymentMethod == nil {
+            return false
+        }
+        if issuer == nil {
+            return false
+        }
+        if payerCost == nil {
+            return false
+        }
+        if token == nil {
+            return false
+        }
+         */
+        return true // Deberia devolver true en caso de tener todo lo necesario para hacer el pago
+        
+    }
 }

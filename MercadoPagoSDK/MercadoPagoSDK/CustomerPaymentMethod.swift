@@ -149,6 +149,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     }
     
     public func isCard() -> Bool {
+        
         return PaymentTypeId.isCard(paymentTypeId: self.paymentMethodTypeId)
     }
     

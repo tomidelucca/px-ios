@@ -61,11 +61,16 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
     
     // flowpreference
-    //
-    
+
     var paymentData = PaymentData()
     var payment : Payment?
     
+    var error : MPSDKError?
+
+    
+    var needLoadPreference : Bool = false
+    var readyToPay : Bool = false
+
     init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
@@ -121,6 +126,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return checkoutViewModel
     }
     
+    //SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?){
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
@@ -136,6 +142,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
+
+
+    
+    //CREDIT_DEBIT
+
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
         self.next = .ISSUER
@@ -160,29 +171,87 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.next = CheckoutStep.REVIEW_AND_CONFIRM
     }
     
-    public func updateCheckoutModel(paymentMethodSelected : PaymentMethodOption){
-        self.paymentOptionSelected = paymentMethodSelected
-        if (self.paymentOptionSelected!.hasChildren()) {
-            self.paymentMethodOptions = self.paymentOptionSelected!.getChildren()
-            self.next = .PAYMENT_METHOD_SELECTION
-        } else if (self.paymentOptionSelected!.isCustomerPaymentMethod()){
-            self.handleCustomerPaymentMethod()
-        } else {
-            if (self.paymentOptionSelected!.isCard()) {
-                self.next = .CARD_FORM
-            } else {
-                self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodSelected.getId())
-                self.next = .REVIEW_AND_CONFIRM
-            }
+    //PAYMENT_METHOD_SELECTION
+    public func updateCheckoutModel(paymentOptionSelected : PaymentMethodOption){
+        self.paymentOptionSelected = paymentOptionSelected
+        if let childrenOptions = paymentOptionSelected.getChildren() {
+            self.paymentMethodOptions =  childrenOptions
         }
+        if self.paymentOptionSelected!.isCustomerPaymentMethod() /* || !paymentOptionSelected.isCard() */{
+            self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
+        }else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
+            self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
+        }
+        
+        
+       // } else {
+       //     if (self.paymentOptionSelected!.isCard()) {
+       //         self.next = .CARD_FORM
+       //     } else {
+       //         self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
+       //         self.next = .REVIEW_AND_CONFIRM
+       //     }
+       // }
     }
     
+
     public func nextStep() -> CheckoutStep {
-        // --  --
-        return next
+
+        if !needLoadPreference {
+            needLoadPreference = true
+            return .SEARCH_PREFENCE
+        }
+        
+        if hasError() {
+            return .ERROR
+        }
+        
+        if needSearch() {
+            return .SEARCH_PAYMENT_METHODS
+        }
+        
+        if !arePaymentTypeSelected(){
+            return .PAYMENT_METHOD_SELECTION
+        }
+        if needSecurityCode(){
+            return .SECURITY_CODE_ONLY
+        }
+        if needCompleteCard() {
+            return .CARD_FORM
+        }
+        
+        if needGetIssuer() {
+            return .ISSUER
+        }
+        
+        if needGetIdentification() {
+            return .IDENTIFICATION
+        }
+        if needCreateToken(){
+            return .CREATE_CARD_TOKEN
+        }
+        if needChosePayerCost() {
+            return .PAYER_COST
+        }
+        
+        if shouldShowCongrats() {
+            return .CONGRATS
+        }
+        if readyToPay {
+            readyToPay = false
+            return .POST_PAYMENT
+        }
+        
+        return .REVIEW_AND_CONFIRM
+
+
     }
+    
+        
+    var search : PaymentMethodSearch?
     
     public func updateCheckoutModel(paymentMethodSearch : PaymentMethodSearch) {
+        self.search = paymentMethodSearch
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
             self.customPaymentOptions = paymentMethodSearch.customerPaymentMethods
         }
@@ -234,11 +303,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     func updateCheckoutModel(paymentData: PaymentData){
         if paymentData.paymentMethod == nil {
             // Vuelvo a root para iniciar la selección de medios de pago
-            self.paymentMethodOptions = self.rootPaymentMethodOptions!
+            self.paymentOptionSelected = nil
+            self.paymentMethodOptions = self.rootPaymentMethodOptions
+                //self.rootPaymentMethodOptions!
             self.rootVC = true
             self.next = .SEARCH_PAYMENT_METHODS
         } else {
-            self.next = .POST_PAYMENT
+            self.readyToPay = true
         }
     }
     
@@ -246,11 +317,25 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.payment = payment
         self.next = .CONGRATS
     }
+
     
     internal func getAmount() -> Double {
         return self.checkoutPreference.getAmount()
     }
     
+    
+    internal func findAndCompletePaymentMethodFor(paymentMethodId : String){
+        if paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+            self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId)
+        }else{
+            let cardInformation = (self.paymentOptionSelected as! CardInformation)
+            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId:cardInformation.getPaymentMethodId())
+            cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
+            cardInformation.setupPaymentMethod(paymentMethod)
+            self.paymentData.paymentMethod = cardInformation.getPaymentMethod()
+        }
+        
+    }
     internal func handleCustomerPaymentMethod(){
         if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId())

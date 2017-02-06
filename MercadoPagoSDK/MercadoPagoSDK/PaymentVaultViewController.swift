@@ -400,7 +400,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
-        print(scrollView.contentOffset.x)
+
         self.didScrollInTable(scrollView)
     }
     

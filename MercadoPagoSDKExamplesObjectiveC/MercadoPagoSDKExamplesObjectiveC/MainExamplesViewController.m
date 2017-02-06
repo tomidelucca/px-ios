@@ -25,21 +25,30 @@
 
 - (IBAction)checkoutFlow:(id)sender {
 
-    // Service Preference para seteo de servicio de pago
-    ServicePreference *servicePreference = [[ServicePreference alloc] init];
-    NSDictionary *extraParams = @{
-                                @"key1" : @"value1",
-                                @"key2" : @"value2"
-    };
-    [servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
-   // [MercadoPagoCheckout setServicePreference:servicePreference];
-    
     // Decoration Preference con colores custom
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor blackColor] fontName:@"fontName"];
-    [MercadoPagoCheckout setDecorationPreference:decorationPreference];
+//    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor blackColor] fontName:@"fontName"];
+//    [MercadoPagoCheckout setDecorationPreference:decorationPreference];
+    
+    // Service Preference para seteo de servicio de pago
+    NSDictionary *extraParams = @{
+                                  @"merchant_access_token" : @"mla-cards-data"
+                                  };
+    ServicePreference * servicePreference = [[ServicePreference alloc] init];
+    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+    
+    [MercadoPagoCheckout setServicePreference:servicePreference];
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
+    
+    //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
+   // [MercadoPagoCheckout setServicePreference:servicePreference];
+    
+    
+   
+    
+
+
 }
 
 
