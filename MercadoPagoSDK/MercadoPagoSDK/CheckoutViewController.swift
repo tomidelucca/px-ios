@@ -102,6 +102,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.extendedLayoutIncludesOpaqueBars = true
         
         self.setNavBarBackgroundColor(color : UIColor.px_white())
+        loadMPStyles()
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
         self.hideNavBar()
