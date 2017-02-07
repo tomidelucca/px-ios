@@ -245,11 +245,12 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     fileprivate func getIssuers(){
         MPServicesBuilder.getIssuers(self.viewModel.paymentMethods[0], bin: self.viewModel.token?.getCardBin(), success: { (issuers) -> Void in
             self.viewModel.issuersList = issuers
-            self.hideLoading()
             if issuers.count == 1 {
                 self.viewModel.callbackIssuer!(issuers[0])
+                self.hideLoading()
             } else {
                 self.tableView.reloadData()
+                self.hideLoading()
             }
             
             

@@ -9,10 +9,12 @@
 import UIKit
 
 open class MercadoPagoCheckout: NSObject {
+    
 
     var viewModel : MercadoPagoCheckoutViewModel
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
+    
     
     
     public init(checkoutPrefence : CheckoutPreference, navigationController : UINavigationController) {
@@ -23,6 +25,10 @@ open class MercadoPagoCheckout: NSObject {
         if self.navigationController.viewControllers.count > 0 {
             viewControllerBase = self.navigationController.viewControllers[0]
         }
+    }
+    
+    open static func addReviewble(cell: [MPCustomCells]){
+        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
     }
     
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){

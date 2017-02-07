@@ -35,6 +35,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var servicePreference = ServicePreference()
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
+    
+    internal static var confirmAdditionalCustomCell: [MPCustomCells]?
 
     var checkoutPreference : CheckoutPreference!
     
@@ -202,7 +204,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SEARCH_PAYMENT_METHODS
         }
         
-        if !arePaymentTypeSelected(){
+        if !isPaymentTypeSelected(){
             return .PAYMENT_METHOD_SELECTION
         }
         if needSecurityCode(){
@@ -211,14 +213,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needCompleteCard() {
             return .CARD_FORM
         }
+        if needGetIdentification() {
+            return .IDENTIFICATION
+        }
+        
+        if needSelectCreditDebit() {
+            return .CREDIT_DEBIT
+        }
         
         if needGetIssuer() {
             return .ISSUER
         }
         
-        if needGetIdentification() {
-            return .IDENTIFICATION
-        }
         if needCreateToken(){
             return .CREATE_CARD_TOKEN
         }
@@ -304,6 +310,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             // Vuelvo a root para iniciar la selección de medios de pago
             self.paymentOptionSelected = nil
             self.paymentMethodOptions = self.rootPaymentMethodOptions
+            self.paymentOptionSelected = nil
             self.search = nil
             self.rootVC = true
         } else {
