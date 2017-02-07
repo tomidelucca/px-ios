@@ -83,12 +83,10 @@ open class MainExamplesViewController: UIViewController, UITableViewDataSource, 
             let nav = UINavigationController()
             let pref = CheckoutPreference(_id: "223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632")
             
-            let customCell = CustomTableViewCell()
+            let customCell = CustomTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "0")
             customCell.setHeigth(heigth: 100)
             customCell.setNib(uiNib: UINib(nibName: "CustomTableViewCell", bundle: Bundle.main))
             customCell.setTitle(text: "Numero de documento")
-            //let custom: UITableViewCell = CustomTableViewCell()
-            //let cells: [MPCustomTableViewCell : UINib] = [CustomTableViewCell(): , CustomTableViewCell(): UINib(nibName: "CustomTableViewCell", bundle: Bundle.main) ]
             
             MercadoPagoCheckout.addReviewble(cell: [customCell])
             

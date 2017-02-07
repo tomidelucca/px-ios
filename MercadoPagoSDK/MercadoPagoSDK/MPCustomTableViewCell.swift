@@ -31,4 +31,12 @@ open class MPCustomTableViewCell: UITableViewCell{
         return heigth
     }
     
+    func fillCell(customCell: MPCustomTableViewCell){
+        customCell.fillContent()
+    }
+    
+    open func fillContent() {
+    
+    }
+    
 }

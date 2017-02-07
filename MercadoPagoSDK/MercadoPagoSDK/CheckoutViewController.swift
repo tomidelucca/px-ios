@@ -290,7 +290,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
-        var custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath)
+        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath) as! MPCustomTableViewCell
         return custom
     }
     

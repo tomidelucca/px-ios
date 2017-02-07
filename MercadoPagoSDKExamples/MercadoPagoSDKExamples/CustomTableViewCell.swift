@@ -13,12 +13,12 @@ open class CustomTableViewCell: MPCustomTableViewCell {
     //var imageDelegate: bundle.CellProtocol?
     @IBOutlet weak var title: UILabel!
     
-    open var titleText = ""
+    open static var titleText = "Numero de telefono"
 
     override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        fillCell(text: titleText)
+        fillCell(text: CustomTableViewCell.titleText)
     }
     
     func fillCell(text: String){
@@ -26,7 +26,7 @@ open class CustomTableViewCell: MPCustomTableViewCell {
     }
     
     func setTitle(text: String){
-        self.titleText = text
+        CustomTableViewCell.titleText = text
     }
 
     override open func setSelected(_ selected: Bool, animated: Bool) {
