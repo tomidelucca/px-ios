@@ -259,9 +259,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         var i = 0
         
-        for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell! {
-            self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: String(i))
-            i += 1
+        if MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell != nil {
+            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell! {
+                self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: String(i))
+                i += 1
+            }
         }
         
         self.checkoutTable.delegate = self
