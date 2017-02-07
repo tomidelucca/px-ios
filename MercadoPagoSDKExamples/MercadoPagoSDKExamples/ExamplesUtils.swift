@@ -174,7 +174,7 @@ class ExamplesUtils {
         
         
         //Create CheckoutPreference
-        let preference = CheckoutPreference(items: items, payer: payer, paymentMethods: nil)
+        let preference = CheckoutPreference(items: items, payer: payer)
         preference._id = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
         
         return preference

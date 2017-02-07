@@ -35,6 +35,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var servicePreference = ServicePreference()
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
+    
+    internal static var confirmAdditionalCustomCell: [MPCustomCells]?
 
     var checkoutPreference : CheckoutPreference!
     
