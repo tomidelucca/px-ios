@@ -20,6 +20,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
     
+    @IBOutlet weak var TEALabel: UILabel!
+    @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
     
     @IBOutlet weak var totalAmountLabel: MPLabel!
@@ -60,13 +62,37 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
         self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
         self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+        
+        //CFT.font = Utils.getFont(size: CFT.font.pointSize)
+        //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
+        
+        CFT.textColor = UIColor.px_grayDark()
+        TEALabel.textColor = UIColor.px_grayDark()
+        
+        if let CFTValue = payerCost?.getCFTValue() {
+                CFT.text = "CFT " + CFTValue
+        } else {
+            CFT.text = ""
+        }
+        if let TEAValue = payerCost?.getTEAValeu() {
+            TEALabel.text = "TEA " + TEAValue
+        } else {
+            TEALabel.text = ""
+        }
+        
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
-        if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
-            return DEFAULT_ROW_HEIGHT + 20
+        var height = DEFAULT_ROW_HEIGHT
+        
+        if let dic = payerCost?.getCFTValue() {
+            height += 65
         }
-        return DEFAULT_ROW_HEIGHT
+        
+        if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
+            return height + 20
+        }
+        return height
     }
     
 }
