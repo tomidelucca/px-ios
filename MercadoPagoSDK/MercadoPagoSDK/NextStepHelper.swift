@@ -13,7 +13,7 @@ extension MercadoPagoCheckoutViewModel {
     func needSearch() -> Bool {
         return search == nil
     }
-    func arePaymentTypeSelected() -> Bool {
+    func isPaymentTypeSelected() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
         }
@@ -64,12 +64,21 @@ extension MercadoPagoCheckoutViewModel {
         if selectedType.isCustomerPaymentMethod(){
             return false
         }
-        
         if paymentData.issuer == nil  && pm.isCard()  { 
             return true
         }
         return false
     }
+    
+    func needSelectCreditDebit() -> Bool {
+        if self.paymentMethods != nil && self.paymentMethods?.count == 2 {//&&
+            //((self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD) ||
+            //    (self.paymentMethods![1].paymentTypeId == PaymentTypeId.CREDIT_CARD && self.paymentMethods![0].paymentTypeId == PaymentTypeId.CREDIT_CARD))) {
+            return true
+        }
+        return false
+    }
+    
     func needChosePayerCost() -> Bool {
         guard let pm = self.paymentData.paymentMethod else {
             return false
