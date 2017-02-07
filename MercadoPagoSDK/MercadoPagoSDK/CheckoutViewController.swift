@@ -260,7 +260,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         var i = 0
         
         for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell! {
-            self.checkoutTable.register(customCell.getNib(), forCellReuseIdentifier: String(i))
+            self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: String(i))
             i += 1
         }
         
@@ -291,6 +291,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath) as! MPCustomTableViewCell
+        
+        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell?[indexPath.row].inflator
+        inflator!.fillCell(cell: custom)
         return custom
     }
     
@@ -466,7 +469,7 @@ open class CheckoutViewModel {
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell![indexPath.row].getHeigth()
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell![indexPath.row].cell.getHeigth()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {

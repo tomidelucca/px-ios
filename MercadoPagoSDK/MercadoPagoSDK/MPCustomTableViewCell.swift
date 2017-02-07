@@ -40,3 +40,13 @@ open class MPCustomTableViewCell: UITableViewCell{
     }
     
 }
+
+open class MPCustomCells {
+    open let cell: MPCustomTableViewCell
+    open let inflator: MPCustomInflator
+    
+    public init (cell: MPCustomTableViewCell, inflator: MPCustomInflator){
+        self.cell = cell
+        self.inflator = inflator
+    }
+}

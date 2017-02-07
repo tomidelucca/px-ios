@@ -80,15 +80,19 @@ open class MainExamplesViewController: UIViewController, UITableViewDataSource, 
             servicePreference.setCreatePayment(baseURL: "pulporemeras.com", URI: "payments", additionalInfo:  ["binary_mode" : "true"])
             MercadoPagoCheckout.setServicePreference(servicePreference)
 
-            let nav = UINavigationController()
+            //let nav = UINavigationController()
             let pref = CheckoutPreference(_id: "223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632")
             
-            let customCell = CustomTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "0")
+            let customCell = CustomTableViewCell()
             customCell.setHeigth(heigth: 100)
             customCell.setNib(uiNib: UINib(nibName: "CustomTableViewCell", bundle: Bundle.main))
-            customCell.setTitle(text: "Numero de documento")
             
-            MercadoPagoCheckout.addReviewble(cell: [customCell])
+            let inflator = CustomInflator()
+            inflator.setTitle(text: "Numero de telefono")
+            
+            let custom = MPCustomCells(cell: customCell, inflator: inflator)
+            
+            MercadoPagoCheckout.addReviewble(cell: [custom])
             
             MercadoPagoCheckout(checkoutPrefence: pref, navigationController: self.navigationController!).start()
           

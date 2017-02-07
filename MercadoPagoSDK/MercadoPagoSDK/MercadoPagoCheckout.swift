@@ -27,7 +27,7 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    open static func addReviewble(cell: [MPCustomTableViewCell]){
+    open static func addReviewble(cell: [MPCustomCells]){
         MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
     }
     
