@@ -49,6 +49,8 @@
 		15A08EB91D36B1FF00CE3E71 /* MercadoPagoUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A08EB81D36B1FF00CE3E71 /* MercadoPagoUITest.swift */; };
 		15A2B9AB1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
 		15A2B9AC1D3E5F7E003D3720 /* MainExamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766CDFEE1D240ED000F9FAD4 /* MainExamplesViewController.swift */; };
+		4B01781D1E48E76E008446FE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E2491E48C65000D52527 /* CustomTableViewCell.swift */; };
+		4B01781F1E48E76E008446FE /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E2491E48C65000D52527 /* CustomTableViewCell.swift */; };
 		4B88E24B1E48C65000D52527 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E2491E48C65000D52527 /* CustomTableViewCell.swift */; };
 		4B88E24C1E48C65000D52527 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B88E24A1E48C65000D52527 /* CustomTableViewCell.xib */; };
 		761A2CAE1D9182020044F877 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15FCA7891C84980B00D9E8CE /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -661,6 +663,7 @@
 				150B498B1D368C6200E21C7F /* StepsExamplesViewController.swift in Sources */,
 				0F9885491AD2BDBE00F750F0 /* FinalVaultViewController.swift in Sources */,
 				0F98853B1AD2BD9200F750F0 /* SimpleSecurityCodeTableViewCell.swift in Sources */,
+				4B01781D1E48E76E008446FE /* CustomTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +678,7 @@
 				7639DAB61D353FFE003E3DCB /* ComponentTableViewCell.swift in Sources */,
 				762713691D343424008DC3AB /* CardFlowTest.swift in Sources */,
 				151D084D1D36D65F00ECD232 /* MPTestActions.swift in Sources */,
+				4B01781F1E48E76E008446FE /* CustomTableViewCell.swift in Sources */,
 				7639DABC1D354215003E3DCB /* CardViewController.swift in Sources */,
 				7627136C1D343580008DC3AB /* CardFormActions.swift in Sources */,
 				150ABE621D47971F00BF9271 /* POGuessingForm.swift in Sources */,

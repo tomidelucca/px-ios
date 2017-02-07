@@ -8,16 +8,28 @@
 
 import UIKit
 import MercadoPagoSDK
-@objc
-public class CustomTableViewCell: UITableViewCell, CellProtocol {
-    //var imageDelegate: bundle.CellProtocol?
 
-    override public func awakeFromNib() {
+open class CustomTableViewCell: MPCustomTableViewCell {
+    //var imageDelegate: bundle.CellProtocol?
+    @IBOutlet weak var title: UILabel!
+    
+    open var titleText = ""
+
+    override open func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        fillCell(text: titleText)
+    }
+    
+    func fillCell(text: String){
+        title.text = text
+    }
+    
+    func setTitle(text: String){
+        self.titleText = text
     }
 
-    override public func setSelected(_ selected: Bool, animated: Bool) {
+    override open func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
