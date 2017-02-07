@@ -187,10 +187,10 @@ open class MercadoPagoCheckout: NSObject {
         })
         
         
-        //let vcLoading = self.presentLoading()
+        let vcLoading = self.presentLoading()
         self.navigationController.popToViewController(viewControllerBase!, animated: false)
-        //vcLoading.dismiss(animated: true, completion: {})
         self.navigationController.pushViewController(checkoutVC, animated: true)
+        vcLoading.dismiss(animated: true, completion: {})
     }
     
     func collectSecurityCode(){
