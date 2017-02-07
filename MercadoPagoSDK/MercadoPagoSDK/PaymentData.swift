@@ -10,10 +10,10 @@ import UIKit
 
 public class PaymentData: NSObject {
 
-    var paymentMethod : PaymentMethod!
-    var issuer : Issuer?
-    var payerCost : PayerCost?
-    var token : Token?
+    public var paymentMethod : PaymentMethod!
+    public var issuer : Issuer?
+    public var payerCost : PayerCost?
+    public var token : Token?
     
     func clear() {
         self.paymentMethod = nil
