@@ -1,21 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
-      "filename" : "logoVisaDebito.png",
+      "filename" : "mediosIconoCabal.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logoVisaDebito@2x.png",
+      "filename" : "mediosIconoCabal@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "logoVisaDebito@3x.png",
+      "filename" : "mediosIconoCabal@3x.png",
       "scale" : "3x"
     }
   ],
