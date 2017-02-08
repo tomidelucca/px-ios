@@ -57,17 +57,16 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-//    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
-//    //[customCell setHeigthWithHeigth:30.0];
-//    UINib *customCellNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
-   // [customCell setNibWithUiNib:customCellNib];
+    UINib *customCellNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
+    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] initWithUiNib:customCellNib heigth:20.0];
     
-//    CustomInflator *inflator = [CustomInflator alloc];
-//    [inflator setTitle:@"inflator overriden title"];
-//    
-//    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
-//    [MercadoPagoCheckout addReviewbleWithCell:customCellPair];
-//    
+    CustomInflator *inflator = [[CustomInflator alloc] init];
+  // [inflator setTitle:@"inflator overriden title"];
+    
+    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
+    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
+    [MercadoPagoCheckout addReviewbleWithCell:customCells];
+//
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         NSLog(@"%@", paymentData.token._id);

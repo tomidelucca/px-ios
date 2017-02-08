@@ -15,16 +15,18 @@ open class MPCustomTableViewCell: UITableViewCell{
     var nib: UINib?
     var heigth: CGFloat = 0.0
     
-    open func setNib(uiNib: UINib) {
-        nib = uiNib
+    public init(uiNib : UINib, heigth: CGFloat) {
+        super.init(style: .default, reuseIdentifier: "identifier")
+        self.nib = uiNib
+        self.heigth = heigth
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     open func getNib() -> UINib? {
         return nib
-    }
-    
-    open func setHeigth(heigth: CGFloat) {
-        self.heigth = heigth
     }
     
     open func getHeigth() -> CGFloat {
