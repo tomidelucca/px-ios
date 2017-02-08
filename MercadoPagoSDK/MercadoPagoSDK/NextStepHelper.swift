@@ -33,7 +33,7 @@ extension MercadoPagoCheckoutViewModel {
     }
     
     func showConfirm() -> Bool {
-        return self.paymentData.complete()
+        return self.paymentData.isComplete()
     }
     
     func showCongrats() -> Bool {

@@ -13,6 +13,9 @@
 		763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B44F81D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m */; };
 		763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */; };
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
+		76BAC6471E4B2F220081F675 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */; };
+		76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */; };
+		76BAC64D1E4B30BA0081F675 /* CustomInflator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BAC64C1E4B30BA0081F675 /* CustomInflator.m */; };
 		76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E0681D2AD33F006CE49B /* SimpleVaultViewController.m */; };
 		76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E06D1D2AE529006CE49B /* SimpleVaultFormViewController.m */; };
 		76EF7EC21D2559140087C785 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC11D2559140087C785 /* main.m */; };
@@ -81,6 +84,12 @@
 		763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstallmentsTableViewController.m; sourceTree = "<group>"; };
 		766627551D2AFDF9002EB903 /* SavedCardsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedCardsTableViewController.h; sourceTree = "<group>"; };
 		766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedCardsTableViewController.m; sourceTree = "<group>"; };
+		76BAC63F1E4B2ED80081F675 /* MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h"; sourceTree = "<group>"; };
+		76BAC6451E4B2F220081F675 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
+		76BAC64B1E4B30BA0081F675 /* CustomInflator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInflator.h; sourceTree = "<group>"; };
+		76BAC64C1E4B30BA0081F675 /* CustomInflator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInflator.m; sourceTree = "<group>"; };
 		76E6E0671D2AD33F006CE49B /* SimpleVaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleVaultViewController.h; sourceTree = "<group>"; };
 		76E6E0681D2AD33F006CE49B /* SimpleVaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleVaultViewController.m; sourceTree = "<group>"; };
 		76E6E06C1D2AE529006CE49B /* SimpleVaultFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleVaultFormViewController.h; sourceTree = "<group>"; };
@@ -144,6 +153,11 @@
 				763B45011D2C02DE002E2B39 /* InstallmentsTableViewController.m */,
 				15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */,
 				15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */,
+				76BAC6451E4B2F220081F675 /* CustomTableViewCell.h */,
+				76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */,
+				76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */,
+				76BAC64B1E4B30BA0081F675 /* CustomInflator.h */,
+				76BAC64C1E4B30BA0081F675 /* CustomInflator.m */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -238,6 +252,7 @@
 				76EF7F5C1D27027A0087C785 /* StepsExamplesViewController.m */,
 				76EF7F5E1D2706720087C785 /* ServicesExamplesViewController.h */,
 				76EF7F5F1D2706720087C785 /* ServicesExamplesViewController.m */,
+				76BAC63F1E4B2ED80081F675 /* MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h */,
 			);
 			name = "Component Examples";
 			sourceTree = "<group>";
@@ -294,6 +309,7 @@
 					76EF7EBC1D2559140087C785 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = T9VUHG6RU2;
+						LastSwiftMigration = 0810;
 					};
 					76EF7ED51D2559140087C785 = {
 						CreatedOnToolsVersion = 7.3;
@@ -352,6 +368,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */,
 				76EF7ED01D2559140087C785 /* LaunchScreen.storyboard in Resources */,
 				76EF7ECD1D2559140087C785 /* Assets.xcassets in Resources */,
 				76EF7ECB1D2559140087C785 /* Main.storyboard in Resources */,
@@ -377,6 +394,7 @@
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
+				76BAC64D1E4B30BA0081F675 /* CustomInflator.m in Sources */,
 				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,
 				76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */,
@@ -384,6 +402,7 @@
 				76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */,
 				76EF7EC21D2559140087C785 /* main.m in Sources */,
 				763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */,
+				76BAC6471E4B2F220081F675 /* CustomTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,12 +539,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MercadoPagoSDKExamplesObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mercadopago.MercadoPagoSDKExamplesObjectiveC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MercadoPagoSDKExamplesObjectiveC/MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -533,12 +556,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = T9VUHG6RU2;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = MercadoPagoSDKExamplesObjectiveC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mercadopago.MercadoPagoSDKExamplesObjectiveC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MercadoPagoSDKExamplesObjectiveC/MercadoPagoSDKExamplesObjectiveC-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

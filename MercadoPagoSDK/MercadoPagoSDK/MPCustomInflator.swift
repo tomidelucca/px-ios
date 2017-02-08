@@ -8,7 +8,7 @@
 
 import Foundation
 @objc
-public protocol MPCustomInflator {
+public protocol MPCustomInflator : NSObjectProtocol {
     
     func fillCell(cell: MPCustomTableViewCell)
 }

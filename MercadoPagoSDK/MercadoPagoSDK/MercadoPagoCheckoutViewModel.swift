@@ -35,6 +35,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var servicePreference = ServicePreference()
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
+    internal static var paymentDataCallback : ((PaymentData) -> Void)?
     
     internal static var confirmAdditionalCustomCell: [MPCustomCells]?
 
@@ -74,11 +75,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var readyToPay : Bool = false
     private var checkoutComplete = false
     
+    
+    
     init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
             // Cargar información de preferencia en caso que tenga id
             needLoadPreference = true
+        }
+    }
+    
+    init(paymentData : PaymentData) {
+        if paymentData.isComplete() {
+            self.paymentData = paymentData
         }
     }
     
@@ -149,8 +158,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-
-
     
     //CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
@@ -235,6 +242,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if shouldShowCongrats() {
             return .CONGRATS
         }
+        
         if readyToPay {
             readyToPay = false
             return .POST_PAYMENT
