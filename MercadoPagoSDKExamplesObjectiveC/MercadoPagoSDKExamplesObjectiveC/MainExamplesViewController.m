@@ -57,22 +57,21 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    UINib *customCellNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
-    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] initWithUiNib:customCellNib heigth:20.0];
-//    
-//    CustomInflator *inflator = [[CustomInflator alloc] init];
-//  // [inflator setTitle:@"inflator overriden title"];
-//    
-//    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
-//    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
-//    [MercadoPagoCheckout addReviewbleWithCell:customCells];
-////
-//    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-//        NSLog(@"%@", paymentData.paymentMethod._id);
-//        NSLog(@"%@", paymentData.token._id);
-//        NSLog(@"%ld", paymentData.payerCost.installments);
-//        [self.navigationController popToRootViewControllerAnimated:NO];
-//    }];
+    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
+    
+    CustomInflator *inflator = [[CustomInflator alloc] init];
+  // [inflator setTitle:@"inflator overriden title"];
+    
+    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
+    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
+    [MercadoPagoCheckout addReviewbleWithCell:customCells];
+//
+    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+        NSLog(@"%@", paymentData.paymentMethod._id);
+        NSLog(@"%@", paymentData.token._id);
+        NSLog(@"%ld", paymentData.payerCost.installments);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];

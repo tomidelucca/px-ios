@@ -11,4 +11,10 @@ import Foundation
 public protocol MPCustomInflator : NSObjectProtocol {
     
     func fillCell(cell: MPCustomTableViewCell)
+    
+    func getNib() -> UINib
+    
+    func getHeigth() -> CGFloat
+    
+    var nib: UINib {get}
 }
