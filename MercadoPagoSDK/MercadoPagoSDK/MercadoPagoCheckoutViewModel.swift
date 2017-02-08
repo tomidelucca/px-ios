@@ -74,7 +74,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var needLoadPreference : Bool = false
     private var readyToPay : Bool = false
     private var checkoutComplete = false
-    
+    private var reviewAndConfirm = false
     
     
     init(checkoutPreference : CheckoutPreference){
@@ -85,9 +85,15 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-    init(paymentData : PaymentData) {
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData) {
+        self.checkoutPreference = checkoutPreference
         if paymentData.isComplete() {
             self.paymentData = paymentData
+            self.reviewAndConfirm = true
+        }
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            // Cargar información de preferencia en caso que tenga id
+            needLoadPreference = true
         }
     }
     
@@ -199,6 +205,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SEARCH_PREFENCE
         }
         
+        
         if hasError() {
             return .ERROR
         }
@@ -214,6 +221,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if !isPaymentTypeSelected(){
             return .PAYMENT_METHOD_SELECTION
         }
+        
+        if reviewAndConfirm {
+            return .REVIEW_AND_CONFIRM
+        }
+        
         if needSecurityCode(){
             return .SECURITY_CODE_ONLY
         }
