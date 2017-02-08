@@ -368,6 +368,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
             self.paymentData.paymentMethod = cardInformation.getPaymentMethod()
+            self.paymentData.issuer = cardInformation.getIssuer()
         }
         
     }
