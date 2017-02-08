@@ -43,7 +43,7 @@ open class MerchantServer : NSObject {
         
         var body = ""
         if !NSDictionary.isNullOrEmpty(paymentBody){
-            body = paymentBody.parseToQuery()
+            body = paymentBody.toJsonString()
         }
         
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in

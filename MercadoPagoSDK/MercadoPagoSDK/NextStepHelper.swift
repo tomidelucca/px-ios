@@ -14,6 +14,22 @@ extension MercadoPagoCheckoutViewModel {
         return search == nil
     }
     func isPaymentTypeSelected() -> Bool {
+        
+        if self.paymentData.paymentMethod != nil && (self.search != nil) {
+            var paymentOptionSelected : PaymentMethodSearchItem!
+            if !self.paymentData.paymentMethod.isCard() {
+                if let paymentTypeId = PaymentTypeId(rawValue : paymentData.paymentMethod.paymentTypeId) {
+                    paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentData.paymentMethod._id, paymentTypeId: paymentTypeId)
+                }
+            } else {
+                if let paymentTypeId = PaymentTypeId(rawValue : paymentData.paymentMethod.paymentTypeId) {
+                    paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!, paymentTypeId: paymentTypeId)
+                }
+            }
+            self.paymentOptionSelected = paymentOptionSelected
+            return true
+        }
+        
         guard let selectedType = self.paymentOptionSelected else {
             return false
         }
@@ -29,7 +45,7 @@ extension MercadoPagoCheckoutViewModel {
         if !selectedType.isCard() {
             return false
         }
-        return self.cardToken == nil
+        return self.cardToken == nil && self.paymentData.paymentMethod == nil
     }
     
     func showConfirm() -> Bool {

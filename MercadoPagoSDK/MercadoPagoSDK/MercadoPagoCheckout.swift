@@ -27,8 +27,8 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    public init(paymentData : PaymentData, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(paymentData: paymentData)
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData)
         
         self.navigationController = navigationController
         
@@ -93,7 +93,6 @@ open class MercadoPagoCheckout: NSObject {
         case .FINISH:
             self.finish()
         default: break
-             //self.error()
         }
     }
     

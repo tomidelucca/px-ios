@@ -258,6 +258,19 @@ class Utils {
         return nil
     }
     
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearch : PaymentMethodSearch, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem?  {
+    
+        var filterPaymentMethodSearchFound = paymentMethodSearch.groups.filter{ (arg : PaymentMethodSearchItem) -> Bool in
+            arg.idPaymentMethodSearchItem == paymentTypeId.rawValue
+        }
+        
+        if !Array.isNullOrEmpty(filterPaymentMethodSearchFound) {
+            return filterPaymentMethodSearchFound[0]
+        }
+        
+        return nil
+    }
+    
     internal static func findPaymentMethod(_ paymentMethods : [PaymentMethod], paymentMethodId : String) -> PaymentMethod {
         var paymentTypeSelected = ""
         
