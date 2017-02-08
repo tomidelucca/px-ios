@@ -96,7 +96,7 @@ open class CardToken : NSObject, CardInformationForm {
                     userInfo = [String : String]()
                 }
                 return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
-                
+
             } else {
                 // Validate card length
                 

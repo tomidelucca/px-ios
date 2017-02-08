@@ -45,7 +45,7 @@
 	<key>debvisa</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoVisaDebito</string>
+		<string>mediosVisaDebito</string>
 	</dict>
 	<key>credit_card</key>
 	<dict>
