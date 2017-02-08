@@ -260,9 +260,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         var i = 0
         
-        if MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell != nil {
-            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell! {
-                self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: String(i))
+        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.isEmpty {
+            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell {
+                self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: String(i))
                 i += 1
             }
         }
@@ -295,8 +295,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath) as! MPCustomTableViewCell
         
-        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell?[indexPath.row].inflator
-        inflator!.fillCell(cell: custom)
+        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell[indexPath.row].inflator
+        inflator.fillCell(cell: custom)
         return custom
     }
     
@@ -472,7 +472,7 @@ open class CheckoutViewModel {
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell![indexPath.row].cell.getHeigth()
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell[indexPath.row].inflator.getHeigth()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {
@@ -497,8 +497,8 @@ open class CheckoutViewModel {
     }
     
     func numberOfCustomCell() -> Int {
-        if let count = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell?.count {
-            return count
+        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.isEmpty {
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.count
         }
         return 0
     }

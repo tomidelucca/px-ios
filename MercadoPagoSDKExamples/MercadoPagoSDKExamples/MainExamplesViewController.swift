@@ -84,8 +84,8 @@ open class MainExamplesViewController: UIViewController, UITableViewDataSource, 
             let pref = CheckoutPreference(_id: "223362579-96d6c137-02c3-48a2-bf9c-76e2d263c632")
             
             let customCell = CustomTableViewCell()
-            customCell.setHeigth(heigth: 100)
-            customCell.setNib(uiNib: UINib(nibName: "CustomTableViewCell", bundle: Bundle.main))
+//            customCell.setHeigth(heigth: 100)
+//            customCell.setNib(uiNib: UINib(nibName: "CustomTableViewCell", bundle: Bundle.main))
             
             let inflator = CustomInflator()
             inflator.setTitle(text: "Numero de telefono")
