@@ -17,8 +17,8 @@ open class MercadoPagoCheckout: NSObject {
     
     private var currentLoadingView : UIViewController?
     
-    public init(checkoutPrefence : CheckoutPreference, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPrefence)
+    public init(checkoutPreference : CheckoutPreference, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
 
         self.navigationController = navigationController
     
@@ -271,7 +271,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func finish(){
         
-        if let rootViewController = viewControllerBase{
+        if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)
         } else {
