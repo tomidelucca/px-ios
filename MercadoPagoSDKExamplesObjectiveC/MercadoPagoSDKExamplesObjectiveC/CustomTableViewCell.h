@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @import MercadoPagoSDK;
 
@@ -14,8 +15,8 @@
 
 SWIFT_SUBCLASS
 @interface CustomTableViewCell : MPCustomTableViewCell
-
 @property (weak, nonatomic) IBOutlet UILabel *label;
+
 
 
 @end

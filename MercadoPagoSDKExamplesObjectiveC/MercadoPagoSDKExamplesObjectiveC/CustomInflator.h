@@ -14,6 +14,4 @@
 SWIFT_SUBCLASS
 @interface CustomInflator : NSObject<MPCustomInflator>
 
-- setTitle:(NSString*)title;
-
 @end

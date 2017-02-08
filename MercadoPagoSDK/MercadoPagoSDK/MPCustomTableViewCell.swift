@@ -12,26 +12,13 @@ import UIKit
 open class MPCustomTableViewCell: UITableViewCell{
     //var imageDelegate: bundle.CellProtocol?
     
-    var nib: UINib?
-    var heigth: CGFloat = 0.0
-    
-    public init(uiNib : UINib, heigth: CGFloat) {
-        super.init(style: .default, reuseIdentifier: "identifier")
-        self.nib = uiNib
-        self.heigth = heigth
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    open func getNib() -> UINib? {
-        return nib
-    }
-    
-    open func getHeigth() -> CGFloat {
-        return heigth
-    }
+//    open func getNib() -> UINib? {
+//        return nib
+//    }
+//    
+//    open func getHeigth() -> CGFloat {
+//        return heigth
+//    }
     
     func fillCell(customCell: MPCustomTableViewCell){
         customCell.fillContent()
@@ -42,6 +29,7 @@ open class MPCustomTableViewCell: UITableViewCell{
     }
     
 }
+import Foundation
 
 @objc open class MPCustomCells : NSObject {
     open let cell: MPCustomTableViewCell

@@ -57,8 +57,8 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    UINib *customCellNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle:nil];
-    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] initWithUiNib:customCellNib heigth:20.0];
+    UINib *customCellNib = [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
+    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
     
     CustomInflator *inflator = [[CustomInflator alloc] init];
   // [inflator setTitle:@"inflator overriden title"];
