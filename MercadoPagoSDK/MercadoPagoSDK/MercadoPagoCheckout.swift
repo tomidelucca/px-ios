@@ -27,6 +27,17 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
+    public init(paymentData : PaymentData, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(paymentData: paymentData)
+        
+        self.navigationController = navigationController
+        
+        if self.navigationController.viewControllers.count > 0 {
+            viewControllerBase = self.navigationController.viewControllers[0]
+        }
+    }
+    
+    
     open static func addReviewble(cell: [MPCustomCells]){
         MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
     }
@@ -187,7 +198,7 @@ open class MercadoPagoCheckout: NSObject {
         
         let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
-            if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
+            if MercadoPagoCheckoutViewModel.paymentDataCallback != nil && self.viewModel.paymentData.paymentMethod == nil {
                 MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             } else {
                 self.executeNextStep()
@@ -232,7 +243,6 @@ open class MercadoPagoCheckout: NSObject {
             })
         })
     }
-    
     
     func displayPaymentResult() {
         // TODO : por que dos? esta bien? no hay view models, ver que onda

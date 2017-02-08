@@ -85,6 +85,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
+    init(paymentData : PaymentData) {
+        if paymentData.isComplete() {
+            self.paymentData = paymentData
+        }
+    }
+    
     func hasError() -> Bool {
         return error != nil
     }

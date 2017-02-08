@@ -23,7 +23,7 @@ public class PaymentData: NSObject {
     }
     
     
-    func complete() -> Bool {
+    func isComplete() -> Bool {
         
         
         if paymentMethod == nil {

@@ -41,7 +41,7 @@ open class MPCustomTableViewCell: UITableViewCell{
     
 }
 
-open class MPCustomCells {
+@objc open class MPCustomCells : NSObject {
     open let cell: MPCustomTableViewCell
     open let inflator: MPCustomInflator
     
