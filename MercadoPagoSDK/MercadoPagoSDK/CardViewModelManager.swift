@@ -40,8 +40,6 @@ class CardViewModelManager: NSObject {
     
     var promos : [Promo]?
     
-    var animationDuration: Double?
-    
     init(amount : Double, paymentMethods : [PaymentMethod]?, paymentMethod : [PaymentMethod]? = nil, customerCard : CardInformation? = nil, token : Token? = nil, paymentSettings : PaymentPreference?){
         self.amount = amount
         self.paymentMethods = paymentMethods
