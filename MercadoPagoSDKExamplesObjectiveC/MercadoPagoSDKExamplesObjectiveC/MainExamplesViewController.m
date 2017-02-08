@@ -42,13 +42,15 @@
     
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
+    
+    
     //[servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
     
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description"];
     Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" type:nil identification:nil];
     
-    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
@@ -65,6 +67,8 @@
     MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
     NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
     [MercadoPagoCheckout addReviewbleWithCell:customCells];
+    
+
 //
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
@@ -73,7 +77,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
     
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"241325285-b2757b6a-4d90-4a49-8f28-46490f97d0cd"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
     
 
