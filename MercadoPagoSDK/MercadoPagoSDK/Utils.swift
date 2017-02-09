@@ -258,14 +258,20 @@ class Utils {
         return nil
     }
     
-    static internal func findPaymentMethodTypeId(_ paymentMethodSearch : PaymentMethodSearch, paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem?  {
+    static internal func findPaymentMethodTypeId(_ paymentMethodSearchItems : [PaymentMethodSearchItem], paymentTypeId : PaymentTypeId) -> PaymentMethodSearchItem?  {
     
-        var filterPaymentMethodSearchFound = paymentMethodSearch.groups.filter{ (arg : PaymentMethodSearchItem) -> Bool in
+        var filterPaymentMethodSearchFound = paymentMethodSearchItems.filter{ (arg : PaymentMethodSearchItem) -> Bool in
             arg.idPaymentMethodSearchItem == paymentTypeId.rawValue
         }
         
         if !Array.isNullOrEmpty(filterPaymentMethodSearchFound) {
             return filterPaymentMethodSearchFound[0]
+        }
+        
+        for item in paymentMethodSearchItems {
+            if let paymentMethodSearchItemFound = findPaymentMethodTypeId(item.children, paymentTypeId: paymentTypeId) {
+                return paymentMethodSearchItemFound
+            }
         }
         
         return nil
