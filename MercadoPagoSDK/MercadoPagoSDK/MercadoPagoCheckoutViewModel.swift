@@ -342,6 +342,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.rootVC = true
         } else {
             self.readyToPay = true
+            self.reviewAndConfirm = false
         }
     }
     
