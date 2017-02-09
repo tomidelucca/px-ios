@@ -186,7 +186,7 @@ open class MercadoPagoCheckout: NSObject {
             self.executeNextStep()
         })
     }
-    
+
     func collectPayerCost(){
         let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), collectPayerCostCallback: { (payerCost) in
             self.viewModel.updateCheckoutModel(payerCost: payerCost)

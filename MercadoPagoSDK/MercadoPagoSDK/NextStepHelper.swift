@@ -26,7 +26,11 @@ extension MercadoPagoCheckoutViewModel {
                     paymentOptionSelected = Utils.findPaymentMethodTypeId((self.search?.groups!)!, paymentTypeId: paymentTypeId)
                 }
             }
-            self.paymentOptionSelected = paymentOptionSelected
+            if let paymentOption = self.paymentOptionSelected{
+                if !paymentOption.isCustomerPaymentMethod() {
+                    self.paymentOptionSelected = paymentOptionSelected
+                }
+            }
             return true
         }
         

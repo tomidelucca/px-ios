@@ -230,9 +230,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .REVIEW_AND_CONFIRM
         }
         
-        if needSecurityCode(){
-            return .SECURITY_CODE_ONLY
-        }
         if needCompleteCard() {
             return .CARD_FORM
         }
@@ -248,12 +245,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .ISSUER
         }
         
-        if needCreateToken(){
-            return .CREATE_CARD_TOKEN
-        }
         if needChosePayerCost() {
             return .PAYER_COST
         }
+        
+        if needSecurityCode(){
+            return .SECURITY_CODE_ONLY
+        }
+        
+        if needCreateToken(){
+            return .CREATE_CARD_TOKEN
+        }
+
         
         if shouldShowCongrats() {
             return .CONGRATS
@@ -368,6 +371,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
             self.paymentData.paymentMethod = cardInformation.getPaymentMethod()
+            self.paymentData.issuer = cardInformation.getIssuer()
         }
         
     }
