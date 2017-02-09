@@ -68,7 +68,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var paymentData = PaymentData()
     var payment : Payment?
     
-    internal var error : MPSDKError?
+    static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
     
     private var needLoadPreference : Bool = false
@@ -98,7 +98,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func hasError() -> Bool {
-        return error != nil
+        return MercadoPagoCheckoutViewModel.error != nil
     }
     
     public func getPaymentPreferences() -> PaymentPreference? {
@@ -403,7 +403,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func errorInputs(error : MPSDKError, errorCallback : ((Void) -> Void)?) {
-        self.error = error
+        MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
     }
     

@@ -77,8 +77,8 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
     
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id:@"241325285-b2757b6a-4d90-4a49-8f28-46490f97d0cd"];
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:pref navigationController:self.navigationController] start];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start];
     
 
     PaymentMethod *pm = [[PaymentMethod alloc] init];

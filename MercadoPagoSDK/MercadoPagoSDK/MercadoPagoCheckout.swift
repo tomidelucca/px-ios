@@ -17,8 +17,8 @@ open class MercadoPagoCheckout: NSObject {
     
     private var currentLoadingView : UIViewController?
     
-    public init(checkoutPrefence : CheckoutPreference, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPrefence)
+    public init(checkoutPreference : CheckoutPreference, navigationController : UINavigationController) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
 
         self.navigationController = navigationController
     
@@ -92,6 +92,8 @@ open class MercadoPagoCheckout: NSObject {
             self.displayPaymentResult()
         case .FINISH:
             self.finish()
+        case .ERROR:
+            self.error()
         default: break
         }
     }
@@ -197,7 +199,7 @@ open class MercadoPagoCheckout: NSObject {
         
         let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
-            if MercadoPagoCheckoutViewModel.paymentDataCallback != nil && self.viewModel.paymentData.paymentMethod == nil {
+            if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
                 MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             } else {
                 self.executeNextStep()
@@ -233,6 +235,7 @@ open class MercadoPagoCheckout: NSObject {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
         
+        print(paymentBody)
         MerchantServer.createPayment(paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
@@ -240,6 +243,7 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createPayment()
             })
+            self.executeNextStep()
         })
     }
     
@@ -261,17 +265,20 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
-        let errorStep = ErrorViewController(error: self.viewModel.error, callback: { (Void) -> Void in
+        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: { (Void) -> Void in
             self.viewModel.errorCallback?()
         }, callbackCancel: {(Void) -> Void in
             // Aparte de default callbackCancel
         })
+        // Limpiar error anterior
+        MercadoPagoCheckoutViewModel.error = nil
         self.navigationController.present(errorStep, animated: true, completion: {})
+        
     }
     
     func finish(){
         
-        if let rootViewController = viewControllerBase{
+        if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)
         } else {
