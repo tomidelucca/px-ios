@@ -184,18 +184,6 @@ open class MercadoPagoCheckout: NSObject {
             self.executeNextStep()
         })
     }
-    
-    func createSavedCardToken() {
-        MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, success: { (token : Token?) -> Void in
-            self.viewModel.updateCheckoutModel(token: token!)
-            self.executeNextStep()
-        }, failure : { (error) -> Void in
-            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                self.createCardToken()
-            })
-            self.executeNextStep()
-        })
-    }
 
     func collectPayerCost(){
         let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), collectPayerCostCallback: { (payerCost) in
