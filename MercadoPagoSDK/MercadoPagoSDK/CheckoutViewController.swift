@@ -65,7 +65,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.delegate = self
         
         self.registerAllCells()
-        self.showLoading()
+     
     }
 
     

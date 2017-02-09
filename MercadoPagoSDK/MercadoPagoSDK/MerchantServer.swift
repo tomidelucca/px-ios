@@ -45,11 +45,14 @@ open class MerchantServer : NSObject {
         if !NSDictionary.isNullOrEmpty(paymentBody){
             body = paymentBody.toJsonString()
         }
+        print(body)
         
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
             
+            
             if let paymentDic = jsonResult as? NSDictionary {
+                print(paymentDic)
                 if paymentDic["error"] != nil {
                     if failure != nil {
                         failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
