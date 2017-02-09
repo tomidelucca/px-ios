@@ -53,7 +53,7 @@ class CheckoutPreferenceTest: XCTestCase {
     func testAddItem() {
         let checkoutPreference = CheckoutPreference()
         let item1 = Item(_id: "id1", title : "item 1 title", quantity: 1, unitPrice: 10)
-        checkoutPreference.addItems(item: item1)
+        checkoutPreference.addItem(item: item1)
         XCTAssertEqual(checkoutPreference.getItems()![0], item1)
     }
     
