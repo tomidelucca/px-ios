@@ -658,7 +658,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                     self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
                     self.cardFront?.cardLogo.alpha = 1
                 })
-                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask() != nil) ? cardFormManager.getGuessedPM()?.getLabelMask() : "XXXX XXXX XXXX XXXX"
+                let bin = cardFormManager.getBIN(textEditMaskFormater.textUnmasked(textBox.text))
+                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask(bin: bin!) != nil) ? cardFormManager.getGuessedPM()?.getLabelMask(bin: bin!) : "XXXX XXXX XXXX XXXX"
                 let editTextMask = (cardFormManager.getGuessedPM()?.getEditTextMask() != nil) ? cardFormManager.getGuessedPM()?.getEditTextMask() : "XXXX XXXX XXXX XXXX"
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
                 let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)

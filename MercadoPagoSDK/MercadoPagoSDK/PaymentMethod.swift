@@ -331,8 +331,13 @@ open class PaymentMethod : NSObject , Cellable {
     open func getImage()-> UIImage? {
       return MercadoPago.getImageFor(self)
     }
-    open func getLabelMask()-> String? {
-        return MercadoPago.getLabelMaskFor(self)
+    open func getLabelMask(bin: String?)-> String? {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        return MercadoPago.getLabelMaskFor(self, settings: settings)
     }
     open func getEditTextMask()-> String? {
         return MercadoPago.getEditTextMaskFor(self)
