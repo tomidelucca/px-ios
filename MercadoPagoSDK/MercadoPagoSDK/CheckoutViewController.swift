@@ -304,7 +304,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalCell" + String(indexPath.row), for: indexPath)
         
         let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells[indexPath.row].inflator
-        inflator.fillCell(cell: custom)
+        inflator.fillCell(cell: custom, paymentData: viewModel.paymentData)
         return custom
     }
     
@@ -313,7 +313,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         if viewModel.hasCustomItemCells(){
             let inflator = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].inflator
-            inflator.fillCell(cell: custom)
+            inflator.fillCell(cell: custom, paymentData: viewModel.paymentData)
             return custom
         } else {
             return UITableViewCell()

@@ -10,7 +10,7 @@ import Foundation
 @objc
 public protocol MPCustomInflator : NSObjectProtocol {
     
-    func fillCell(cell: UITableViewCell)
+    func fillCell(cell: UITableViewCell, paymentData: PaymentData)
     
     func getNib() -> UINib
     
