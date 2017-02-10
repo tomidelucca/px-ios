@@ -74,13 +74,13 @@ int installmentsSelected = 1;
     [CardFormViewController setShowBankDeals:NO];
      
     
-    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
-        currentToken = token;
-        selectedIssuer = issuer;
-        paymentMethod = pm;
-    } callbackCancel:nil];
-   
-    [self presentViewController:paymentVaultVC animated:YES completion:^{}];
+//    UIViewController *paymentVaultVC = [MPFlowBuilder startPaymentVaultViewController:AMOUNT paymentPreference:nil callback:^(PaymentMethod *pm, Token *token, Issuer *issuer, PayerCost *payerCost) {
+//        currentToken = token;
+//        selectedIssuer = issuer;
+//        paymentMethod = pm;
+//    } callbackCancel:nil];
+//   
+//    [self presentViewController:paymentVaultVC animated:YES completion:^{}];
 
 }
 
@@ -88,17 +88,17 @@ int installmentsSelected = 1;
 
 - (void)startCardFlow {
     
-    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
-        currentToken = token;
-        selectedIssuer = issuer;
-        paymentMethod = pm;
-        
-        [self dismissViewControllerAnimated:YES completion:^{}];
-    } callbackCancel:^{
-        [self dismissViewControllerAnimated:YES completion:^{}];
-    }];
-    
-    [self presentViewController:cf animated:YES completion:^{}];
+//    UINavigationController *cf = [MPFlowBuilder startCardFlow:nil amount:AMOUNT cardInformation:nil paymentMethods:nil token:nil callback:^(PaymentMethod * pm, Token * token, Issuer * issuer, PayerCost * payercost) {
+//        currentToken = token;
+//        selectedIssuer = issuer;
+//        paymentMethod = pm;
+//        
+//        [self dismissViewControllerAnimated:YES completion:^{}];
+//    } callbackCancel:^{
+//        [self dismissViewControllerAnimated:YES completion:^{}];
+//    }];
+//    
+//    [self presentViewController:cf animated:YES completion:^{}];
 
 }
 

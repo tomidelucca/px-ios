@@ -10,16 +10,7 @@ import UIKit
 
 @objc
 open class MPCustomTableViewCell: UITableViewCell{
-    //var imageDelegate: bundle.CellProtocol?
-    
-//    open func getNib() -> UINib? {
-//        return nib
-//    }
-//    
-//    open func getHeigth() -> CGFloat {
-//        return heigth
-//    }
-    
+
     func fillCell(customCell: MPCustomTableViewCell){
         customCell.fillContent()
     }
@@ -29,6 +20,7 @@ open class MPCustomTableViewCell: UITableViewCell{
     }
     
 }
+
 import Foundation
 
 @objc open class MPCustomCells : NSObject {

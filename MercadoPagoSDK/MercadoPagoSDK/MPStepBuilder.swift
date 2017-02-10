@@ -37,41 +37,6 @@ open class MPStepBuilder : NSObject {
         
     }
     
-    open class func startPaymentMethodsStep(withPreference paymentPreference: PaymentPreference? = nil,
-                                            
-                                            callback:@escaping (_ paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
-        MercadoPagoContext.initFlavor2()
-        return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
-    }
-    
-    @available(*, deprecated: 2.0.0, message: "Use startPaymentMethodsStep with paymentPreference instead")
-    open class func startPaymentMethodsStep(_ supportedPaymentTypes: Set<String>, callback:@escaping (_ paymentMethod: PaymentMethod) -> Void) -> PaymentMethodsViewController {
-        
-        MercadoPagoContext.initFlavor2()
-        let paymentPreference = PaymentPreference()
-        paymentPreference.excludedPaymentTypeIds = PaymentType.allPaymentIDs.subtracting(supportedPaymentTypes)
-        return PaymentMethodsViewController(paymentPreference: paymentPreference, callback: callback)
-    }
-    
-    
-    
-    open class func startInstallmentsStep(_ payerCosts: [PayerCost]? = nil, paymentPreference: PaymentPreference? = nil, amount: Double, issuer: Issuer?, paymentMethodId: String?,
-                                          
-                                          callback: @escaping (_ payerCost: PayerCost?) -> Void) -> InstallmentsViewController {
-        MercadoPagoContext.initFlavor2()
-        return InstallmentsViewController(payerCosts: payerCosts, paymentPreference: paymentPreference,amount: amount, issuer: issuer, paymentMethodId: paymentMethodId, callback: callback)
-    }
-    
-    
-    
-    @available(*, deprecated: 2.0.0, message: "Use startPaymentCongratsStep instead")
-    open class func startCongratsStep(_ payment: Payment, paymentMethod: PaymentMethod) -> CongratsViewController {
-        
-        MercadoPagoContext.initFlavor2()
-        return CongratsViewController(payment: payment, paymentMethod: paymentMethod)
-    }
-    
-    
     open class func startPaymentResultStep(_ payment: Payment, paymentMethod : PaymentMethod,
                                            callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
         MercadoPagoContext.initFlavor2()
