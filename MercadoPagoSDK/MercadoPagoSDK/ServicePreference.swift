@@ -37,6 +37,7 @@ open class ServicePreference : NSObject{
     internal static let MP_CUSTOMER_URI = "/customers?preference_id="
     internal static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
     
+    private var useDefaultPaymentSettings = true
     
     public func setGetCustomer(baseURL: String, URI: String , additionalInfo: [String:String] = [:]) {
         customerURL = baseURL
@@ -48,6 +49,7 @@ open class ServicePreference : NSObject{
         paymentURL = baseURL
         paymentURI = URI
         paymentAdditionalInfo = additionalInfo
+        self.useDefaultPaymentSettings = false
     }
     
     public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
@@ -66,6 +68,10 @@ open class ServicePreference : NSObject{
     
     public func getCustomerURI() -> String {
         return customerURI
+    }
+    
+    public func isUsingDeafaultPaymentSettings() -> Bool {
+        return useDefaultPaymentSettings
     }
     
     public func getCustomerAddionalInfo() -> String {

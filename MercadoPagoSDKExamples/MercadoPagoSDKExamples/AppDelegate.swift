@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
      //   MercadoPagoContext.setMerchantAccessToken(ExamplesUtils.MERCHANT_ACCESS_TOKEN)
 
-        MercadoPagoContext.setDisplayDefaultLoading(flag: false)
+        //MercadoPagoContext.setDisplayDefaultLoading(flag: false)
         
         MercadoPagoContext.setLanguage(language: MercadoPagoContext.Languages._PORTUGUESE)
         

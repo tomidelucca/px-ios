@@ -9,6 +9,7 @@
 import UIKit
 
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet weak var tableView: UITableView!
     var payment : Payment!
     var paymentTypeId : String!
@@ -16,6 +17,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instruction: Instruction?
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         

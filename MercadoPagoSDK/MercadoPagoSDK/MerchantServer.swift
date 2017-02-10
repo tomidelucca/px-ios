@@ -37,47 +37,18 @@ open class MerchantServer : NSObject {
             }, failure: failure)
         }
     }
-    
-    open class func createPayment(_ payment : MPPayment, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
-        
-        let body = Utils.append(firstJSON: payment.toJSONString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
-        
-        service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
-            var payment : Payment? = nil
-            
-            if let paymentDic = jsonResult as? NSDictionary {
-                if paymentDic["error"] != nil {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
-                    }
-                } else {
-                    if paymentDic.allKeys.count > 0 {
-                        payment = Payment.fromJSON(paymentDic)
-                        success(payment!)
-                    } else {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
-                    }
-                    
-                }
-            } else {
-                if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-                }
-            }
-        }, failure: failure)
-    }
-    open class func createPayment(baseURL: String, URI: String, payment : NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service : MerchantService = MerchantService(baseURL: baseURL, URI: URI)
+
+    open class func createPayment(paymentUrl : String, paymentUri: String, paymentBody : NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        let service : MerchantService = MerchantService(baseURL: paymentUrl, URI: paymentUri)
         
         var body = ""
-        if !NSDictionary.isNullOrEmpty(payment){
-            body = payment.toJsonString()
+        if !NSDictionary.isNullOrEmpty(paymentBody){
+            body = paymentBody.toJsonString()
         }
         
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
             var payment : Payment? = nil
+            
             
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {

@@ -46,7 +46,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         }
         
         
-        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds?.count > 0 {
+        if newExcludedPaymentTypesIds != nil && newExcludedPaymentTypesIds!.count > 0 {
             let excludedPaymentTypesParams = newExcludedPaymentTypesIds!.map({$0}).joined(separator: ",")
             params = params + "&excluded_payment_types=" + String(excludedPaymentTypesParams).trimSpaces()
         }

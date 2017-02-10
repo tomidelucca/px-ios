@@ -50,7 +50,6 @@ open class Item : NSObject {
         self.unitPrice = unitPrice
         self._description = description ?? ""
         self.currencyId = currencyId
-        
     }
     
     open func toJSONString() -> String {

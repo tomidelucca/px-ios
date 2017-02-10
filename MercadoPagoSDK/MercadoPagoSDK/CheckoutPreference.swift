@@ -18,8 +18,17 @@ open class CheckoutPreference : NSObject {
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
     
+    public init(_id : String) {
+        self._id = _id
+    }
     
-    public func addItems(item: Item) {
+    public init(items : [Item] = [], payer : Payer = Payer(), paymentMethods : PaymentPreference? = nil){
+        self.items = items
+        self.payer = payer
+        self.paymentPreference = paymentMethods ?? PaymentPreference()
+    }
+    
+    public func addItem(item: Item) {
         items.append(item)
     }
     
@@ -185,13 +194,6 @@ open class CheckoutPreference : NSObject {
         }
         return true
     }
-    
-    public init(items : [Item] = [], payer : Payer = Payer(), paymentMethods : PaymentPreference = PaymentPreference()){
-        self.items = items
-        self.payer = payer
-        self.paymentPreference = paymentMethods
-    }
-    
     
     open class func fromJSON(_ json : NSDictionary) -> CheckoutPreference {
         let preference : CheckoutPreference = CheckoutPreference()

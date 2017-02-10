@@ -310,7 +310,7 @@ import UIKit
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
         
-        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" {
+        if PaymentType.allPaymentIDs.contains(description) || description == "cards" {
             description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
         }
         
