@@ -293,7 +293,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
-        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath) as! MPCustomTableViewCell
+        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath)
         
         let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell[indexPath.row].inflator
         inflator.fillCell(cell: custom)

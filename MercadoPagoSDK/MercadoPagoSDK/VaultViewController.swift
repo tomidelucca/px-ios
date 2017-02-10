@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 com.mercadopago. All rights reserved.
 //
 
-import Foundation
+/*import Foundation
 import UIKit
 
 open class VaultViewController : MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -368,4 +368,4 @@ open class VaultViewController : MercadoPagoUIViewController, UITableViewDataSou
         })
     }
     
-}
+}*/
