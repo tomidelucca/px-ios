@@ -386,14 +386,22 @@ import UIKit
 
     }
     
-    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary
-        let etMask = pmConfig?.value(forKey: "label_mask") as? String
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let etMask = pmConfig.value(forKey: "label_mask") as? String
+            return etMask
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let etMask = pmConfig.value(forKey: "label_mask") as? String
+                return etMask
+            }
+        }
+        return "XXXX XXXX XXXX XXXX"
         
-        return etMask
+        
     }
     
     open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{

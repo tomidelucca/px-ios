@@ -45,7 +45,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
           //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
-                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
+                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: token.getCardBin()), completeEmptySpaces: true, leftToRight: false)
                 cardFront?.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
             }
             
