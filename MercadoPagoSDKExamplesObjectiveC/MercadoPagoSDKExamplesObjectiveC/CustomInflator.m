@@ -12,22 +12,21 @@
 
 @implementation CustomInflator
 
-UINib *customCellNib = nil;
-PaymentData *data;
+@synthesize delegate = _delegate;
+@synthesize callbackPaymentData = _callbackPaymentData;
+@synthesize nib;
 
-CustomRowDelegate *delegate;
-
-
--(void)invokeCallback{
-
-    delegate.
+-(void)invokeCallback {
+    
+    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+        self.callbackPaymentData(paymentData);
+    }];
 }
 
 
--(void)fillCellWithCell:(UITableViewCell *)cell paymentData:(PaymentData *)paymentData{
+-(void)fillCellWithCell:(UITableViewCell *)cell {
     CustomTableViewCell *currentCell = (CustomTableViewCell *)cell;
     currentCell.label.text = @"1562663448";
-    data = paymentData;
     [currentCell.button addTarget:self action:@selector(invokeCallback) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -38,6 +37,13 @@ CustomRowDelegate *delegate;
 
 -(CGFloat)getHeigth {
     return (CGFloat)180;
+}
+
+-(void) setDelegate: (CheckoutViewController * ) delegate {
+    _delegate = delegate;
+}
+-(void) setCallbackPaymentData:(void (^)(PaymentData * _Nonnull))callbackPaymentData{
+    _callbackPaymentData = callbackPaymentData;
 }
 
 
