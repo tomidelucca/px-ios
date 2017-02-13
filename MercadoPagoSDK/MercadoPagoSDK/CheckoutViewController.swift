@@ -9,7 +9,12 @@
 import UIKit
 
 
-open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
+open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, CustomRowDelegate {
+    
+    public func invokeCallbackWithPaymentData(paymentData: PaymentData) {
+        //MercadoPagoCheckoutViewModel.co
+    }
+
 
     static let kNavBarOffset = CGFloat(-64.0);
     static let kDefaultNavBarOffset = CGFloat(0.0);
@@ -604,4 +609,8 @@ open class CheckoutViewModel {
     func isPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 3
     }
+}
+
+@objc public protocol CustomRowDelegate {
+    func invokeCallbackWithPaymentData(paymentData: PaymentData)
 }

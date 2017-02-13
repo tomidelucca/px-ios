@@ -16,5 +16,7 @@ public protocol MPCustomInflator : NSObjectProtocol {
     
     func getHeigth() -> CGFloat
     
+    func callback()
+    
     var nib: UINib {get}
 }

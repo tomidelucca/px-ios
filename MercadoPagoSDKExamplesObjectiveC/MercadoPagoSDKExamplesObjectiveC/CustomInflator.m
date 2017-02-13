@@ -15,10 +15,12 @@
 UINib *customCellNib = nil;
 PaymentData *data;
 
+CustomRowDelegate *delegate;
+
 
 -(void)invokeCallback{
 
-    
+    delegate.
 }
 
 
