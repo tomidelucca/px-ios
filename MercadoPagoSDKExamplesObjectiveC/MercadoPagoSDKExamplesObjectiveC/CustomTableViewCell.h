@@ -14,7 +14,7 @@
 #define SWIFT_SUBCLASS __attribute__((objc_subclassing_restricted))
 
 SWIFT_SUBCLASS
-@interface CustomTableViewCell : MPCustomTableViewCell
+@interface CustomTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
 

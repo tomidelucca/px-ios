@@ -23,17 +23,17 @@ UINib *customCellNib = nil;
     return self;
     
 }
--(void)fillCellWithCell:(MPCustomTableViewCell *)cell {
+-(void)fillCellWithCell:(UITableViewCell *)cell {
     CustomTableViewCell *currentCell = (CustomTableViewCell *)cell;
-    currentCell.label.text = @"override";
+    currentCell.label.text = @"1562663448";
 }
 
 -(UINib *)getNib {
     return [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
 }
 
--(CGFloat *)getHeigth {
-    return 100;
+-(CGFloat)getHeigth {
+    return (CGFloat)150;
 }
 
 
