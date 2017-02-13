@@ -22,13 +22,19 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         self.tableView.estimatedRowHeight = 60
         self.tableView.separatorStyle = .none
         
-        self.viewModel.color = self.viewModel.getColor()
-        
+        addUpperScrollingFrame()
+        registerCells()
+    }
+    
+    func addUpperScrollingFrame() {
         var frame = self.tableView.bounds
         frame.origin.y = -frame.size.height;
         let view = UIView(frame: frame)
-        view.backgroundColor = self.viewModel.color
+        view.backgroundColor = self.viewModel.getColor()
         tableView.addSubview(view)
+    }
+    
+    func registerCells() {
         
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
         self.tableView.register(headerNib, forCellReuseIdentifier: "headerNib")
@@ -48,10 +54,11 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
-            ViewUtils.addStatusBar(self.view, color: self.viewModel.color)
+            ViewUtils.addStatusBar(self.view, color: self.viewModel.getColor())
         }
     }
     open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         MPTracker.trackPaymentEvent(self.viewModel.payment.tokenId, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
@@ -84,85 +91,83 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-            headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.color, instruction: nil)
-            headerCell.selectionStyle = .none
-            return headerCell
-        } else if indexPath.section == 1 {
-            if self.viewModel.approved(){
-                if indexPath.row == 0{
-                    let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
-                    approvedCell.selectionStyle = .none
-                    approvedCell.fillCell(payment: self.viewModel.payment!)
-                    return approvedCell
-                } else {
-                    let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                    confirmEmailCell.fillCell(payment: self.viewModel.payment!, instruction:nil)
-                    confirmEmailCell.selectionStyle = .none
-                    ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
-                    return confirmEmailCell
-                }
-            } else if self.viewModel.callForAuth() {
-                if indexPath.row == 0{
-                    let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
-                    callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
-                    callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentMethod!)
-                    callFAuthCell.selectionStyle = .none
-                    return callFAuthCell
-                } else {
-                    let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-                    rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
-                    rejectedCell.selectionStyle = .none
-                    rejectedCell.fillCell(payment: self.viewModel.payment)
-                    ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
-                    return rejectedCell
-                }
-                
-            } else if self.viewModel.inProcess() {
-                let pendingCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-                pendingCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
-                pendingCell.selectionStyle = .none
-                pendingCell.fillCell(payment: self.viewModel.payment)
-                return pendingCell
-                
-            } else {
-                let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-                rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
-                rejectedCell.selectionStyle = .none
-                rejectedCell.fillCell(payment: self.viewModel.payment!)
-                return rejectedCell
+        if viewModel.isHeaderCellFor(indexPath: indexPath) {
+            return self.getHeaderCell()
+        
+        } else if viewModel.isApprovedBodyCellFor(indexPath: indexPath){
+            return getApprovedBodyCell()
+        
+        } else if viewModel.isEmailCellFor(indexPath: indexPath) {
+            return getConfirmEmailCell()
+        
+        } else if viewModel.isCallForAuthFor(indexPath: indexPath) {
+            return getCallForAuthCell()
+            
+        } else if viewModel.isSelectOtherPaymentMethodCellFor(indexPath: indexPath){
+            if viewModel.callForAuth() {
+                return getOtherPaymentMethodCell(drawLine: true)
             }
-        } else {
-            let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
-            footerNib.selectionStyle = .none
-            footerNib.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.ok)
-            footerNib.fillCell(payment: self.viewModel.payment)
-            if self.viewModel.approved(){
-                ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
-            }
-            return footerNib
+            return getOtherPaymentMethodCell(drawLine: false)
+        
+        } else if viewModel.isFooterCellFor(indexPath: indexPath){
+            return getFooterCell()
         }
+        
+        return UITableViewCell()
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
+    private func getHeaderCell() -> UITableViewCell {
+        let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
+        headerCell.fillCell(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.getColor(), instruction: nil)
+        return headerCell
+    }
     
+    private func getFooterCell() -> UITableViewCell {
+        let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
+        footerNib.setCallbackStatus(callback: self.viewModel.callback, payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.ok)
+        footerNib.fillCell(payment: self.viewModel.payment)
+        if self.viewModel.approved(){
+            ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
+        }
+        return footerNib
+    }
+    
+    private func getApprovedBodyCell() -> UITableViewCell {
+        let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
+        approvedCell.fillCell(payment: self.viewModel.payment!)
+        return approvedCell
+    }
+    
+    private func getConfirmEmailCell() -> UITableViewCell {
+        let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
+        confirmEmailCell.fillCell(payment: self.viewModel.payment!, instruction:nil)
+        ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
+        return confirmEmailCell
+    }
+    
+    private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
+        let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
+        rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.cancel_RETRY)
+        rejectedCell.fillCell(payment: self.viewModel.payment)
+        if drawLine {
+            ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
+        }
+        return rejectedCell
+    }
+    
+    private func getCallForAuthCell() -> UITableViewCell {
+        let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
+        callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), payment: self.viewModel.payment, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
+        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentMethod!)
+        return callFAuthCell
+    }
 }
 class CongratsViewModel : NSObject, MPPaymentTrackInformer{
-    var color: UIColor!
     var payment: Payment!
     var paymentMethod: PaymentMethod?
     var callback: (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
     
-    init(payment: Payment, paymentMethod : PaymentMethod, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(payment: Payment, paymentMethod : PaymentMethod, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
         
         self.payment = payment
         self.paymentMethod = paymentMethod
@@ -187,7 +192,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         return String(payment!.issuerId)
     }
     
-    func getColor()->UIColor{
+    func getColor() -> UIColor{
         if approved() {
             return UIColor(red: 59, green: 194, blue: 128)
         } else if inProcess() {
@@ -200,7 +205,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         return UIColor()
     }
     func callForAuth() ->Bool{
-        if self.payment.statusDetail == "cc_rejected_call_for_authorize"{
+        if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
             return true
         } else {
             return false
@@ -239,6 +244,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         
         return payment.status
     }
+    
     func setCallbackWithTracker(cellName: String) -> (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void{
         let callbackWithTracker : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void = {(payment ,status) in
             let paymentAction: PaymentActions
@@ -266,6 +272,29 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         case RECOVER_PAYMENT = "RECOVER_PAYMENT"
         case RECOVER_TOKEN = "RECOVER_TOKEN"
         case SELECTED_OTHER_PM = "SELECT_OTHER_PAYMENT_METHOD"
+    }
+    
+    func isHeaderCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0
+    }
+    
+    func isFooterCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 2
+    }
+    
+    func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && indexPath.row == 0 && approved()
+    }
+    
+    func isEmailCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && indexPath.row == 1 && approved()
+    }
+    
+    func isCallForAuthFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && indexPath.row == 0 && callForAuth()
+    }
+    func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
     }
 }
 

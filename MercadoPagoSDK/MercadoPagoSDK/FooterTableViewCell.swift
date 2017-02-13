@@ -16,6 +16,7 @@ class FooterTableViewCell: CallbackCancelTableViewCell {
         // Initialization code
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
         self.button.titleLabel?.font = Utils.getFont(size: 16)
+        self.selectionStyle = .none
     }
     func fillCell(payment: Payment){
         if payment.statusDetail.contains("cc_rejected_bad_filled"){

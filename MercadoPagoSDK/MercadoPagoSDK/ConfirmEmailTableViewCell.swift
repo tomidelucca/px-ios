@@ -14,6 +14,7 @@ class ConfirmEmailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.selectionStyle = .none
     }
     func fillCell(payment: Payment, instruction: Instruction?) -> Void {
         label.font = Utils.getFont(size: label.font.pointSize)

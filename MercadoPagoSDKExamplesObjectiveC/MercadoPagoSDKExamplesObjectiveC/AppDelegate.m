@@ -22,9 +22,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     
-    [MercadoPagoContext setPublicKey:@"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"];
+    //[MercadoPagoContext setPublicKey:@"APP_USR-5a399d42-6015-4f6a-8ff8-dd7d368068f8"];
 
-    //[MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
+    [MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 
 //    [MercadoPagoContext setMerchantAccessToken: MERCHANT_ACCESS_TOKEN];
 //    [MercadoPagoContext setBaseURL: MERCHANT_MOCK_BASE_URL];

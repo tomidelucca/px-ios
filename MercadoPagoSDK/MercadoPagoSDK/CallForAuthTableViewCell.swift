@@ -19,6 +19,7 @@ class CallForAuthTableViewCell: CallbackCancelTableViewCell {
         self.button.titleLabel?.numberOfLines = 0
         self.button.titleLabel?.textAlignment = NSTextAlignment.center
         self.button.titleLabel?.font = Utils.getFont(size: 16)
+        self.selectionStyle = .none
 
         // Initialization code
     }

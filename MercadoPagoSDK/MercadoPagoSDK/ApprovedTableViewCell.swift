@@ -25,6 +25,7 @@ class ApprovedTableViewCell: UITableViewCell {
         installmentRate.font = Utils.getFont(size: installmentRate.font.pointSize)
         comprobante.text = "Comprobante".localized
         comprobante.font = Utils.getFont(size: comprobante.font.pointSize)
+        self.selectionStyle = .none
     }
     func fillCell(payment: Payment){
         paymentId.text = "Nº \(payment._id)"

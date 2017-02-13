@@ -70,12 +70,12 @@
     
 
 //
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+    /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         NSLog(@"%@", paymentData.token._id);
         NSLog(@"%ld", paymentData.payerCost.installments);
         [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
+    }];*/
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start];
