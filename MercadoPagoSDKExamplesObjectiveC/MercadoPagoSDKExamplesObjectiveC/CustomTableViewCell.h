@@ -16,6 +16,7 @@
 SWIFT_SUBCLASS
 @interface CustomTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 
 

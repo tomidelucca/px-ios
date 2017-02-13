@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Número de telefono" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcF-dr-QH3">
-                        <rect key="frame" x="140.5" y="38" width="211" height="29"/>
+                        <rect key="frame" x="141" y="38" width="211" height="29"/>
                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -31,16 +31,23 @@
                         <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xFw-c5-KGq">
+                        <rect key="frame" x="223" y="123" width="46" height="30"/>
+                        <state key="normal" title="Button"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="fcF-dr-QH3" firstAttribute="top" secondItem="wus-cE-Gfp" secondAttribute="topMargin" constant="30" id="1c7-Kq-g0e"/>
+                    <constraint firstItem="xFw-c5-KGq" firstAttribute="top" secondItem="Nvs-nj-xcC" secondAttribute="bottom" constant="10" id="GlJ-Wp-lLZ"/>
                     <constraint firstItem="Nvs-nj-xcC" firstAttribute="top" secondItem="fcF-dr-QH3" secondAttribute="bottom" constant="25" id="Vs0-E3-z7T"/>
                     <constraint firstItem="Nvs-nj-xcC" firstAttribute="centerX" secondItem="wus-cE-Gfp" secondAttribute="centerX" id="WnL-rD-Rn3"/>
+                    <constraint firstItem="xFw-c5-KGq" firstAttribute="centerX" secondItem="wus-cE-Gfp" secondAttribute="centerX" id="dnS-gn-LQR"/>
                     <constraint firstItem="fcF-dr-QH3" firstAttribute="centerX" secondItem="wus-cE-Gfp" secondAttribute="centerX" id="fhz-bR-eiQ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.80784313725490198" green="0.81960784313725488" blue="0.81960784313725488" alpha="0.61115301724137927" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="button" destination="xFw-c5-KGq" id="gFs-Zt-qcb"/>
                 <outlet property="label" destination="Nvs-nj-xcC" id="9Fi-PY-LlJ"/>
             </connections>
             <point key="canvasLocation" x="95" y="156.5"/>
