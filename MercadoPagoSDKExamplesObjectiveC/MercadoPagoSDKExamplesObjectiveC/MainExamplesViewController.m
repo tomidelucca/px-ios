@@ -59,21 +59,20 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
+   // CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
     
-    CustomCellProvider *inflator = [[CustomCellProvider alloc] init];
-    inflator.callbackPaymentData =  ^(PaymentData *paymentData) {
+    CustomCellProvider *customCellProvider = [[CustomCellProvider alloc] init];
+    customCellProvider.callbackPaymentData =  ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         [self.navigationController popToRootViewControllerAnimated:NO];
     };
-  // [inflator setTitle:@"inflator overriden title"];
     
-    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithCell:customCell contentProvider:inflator];
+    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
     NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
     [MercadoPagoCheckout addConfirmAdditionalCells:customCells];
     
     
-    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithCell:customCell contentProvider:inflator];
+    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCellPair, customItemCellPair, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     

@@ -16,5 +16,7 @@ public protocol MPCellContentProvider : NSObjectProtocol {
     
     func fillCell(cell: UITableViewCell)
     
+    func getNib() -> UINib
+    
+    func getHeigth() -> CGFloat
 }
-

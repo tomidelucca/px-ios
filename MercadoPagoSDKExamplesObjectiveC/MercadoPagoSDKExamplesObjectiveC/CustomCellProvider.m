@@ -36,5 +36,12 @@
     _callbackPaymentData = callbackPaymentData;
 }
 
+-(UINib *)getNib {
+    return [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
+}
+
+-(CGFloat)getHeigth {
+    return (CGFloat)180;
+}
 
 @end

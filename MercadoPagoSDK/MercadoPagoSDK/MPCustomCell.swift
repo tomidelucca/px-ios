@@ -11,19 +11,10 @@ import UIKit
 import Foundation
 
 @objc open class MPCustomCell : NSObject {
-    open let cell: MPReviewableCell
+    
     open let contentProvider: MPCellContentProvider
     
-    public init (cell: MPReviewableCell, contentProvider: MPCellContentProvider){
-        self.cell = cell
+    public init (contentProvider: MPCellContentProvider){
         self.contentProvider = contentProvider
     }
-}
-
-@objc public protocol MPReviewableCell : NSObjectProtocol {
-    
-    func getNib() -> UINib
-    
-    func getHeigth() -> CGFloat
-    
 }
