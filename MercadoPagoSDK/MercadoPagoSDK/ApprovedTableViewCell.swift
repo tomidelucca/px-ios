@@ -50,7 +50,7 @@ class ApprovedTableViewCell: UITableViewCell {
         
         fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
         
-        fillStatementDescriptionLabel()
+        fillStatementDescriptionLabel(description: paymentResult.statementDescription)
         
         
     }
@@ -108,10 +108,12 @@ class ApprovedTableViewCell: UITableViewCell {
         }
     }
     
-    func fillStatementDescriptionLabel() {
-        //statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult.statementDescriptor!)")
-        // si no esta sacar la constraint
-        paymentMethodStatementDescriptionConstraint.constant = 0
+    func fillStatementDescriptionLabel(description: String?) {
+        if !String.isNullOrEmpty(description) {
+            statement.text = ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(description!)")
+        } else {
+            paymentMethodStatementDescriptionConstraint.constant = 0
+        }
     }
     
     func emptyTextLabel() {

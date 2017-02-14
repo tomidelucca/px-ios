@@ -15,8 +15,9 @@ open class PaymentResult: NSObject {
     var payerEmail: String?
     var _id: String?
     var amount: Double?
+    var statementDescription: String?
     
-    init (status: String, statusDetail: String, paymentData: PaymentData?, currencyId: String?, payerEmail:String?, id: String?, amount: Double?){
+    init (status: String, statusDetail: String, paymentData: PaymentData?, currencyId: String?, payerEmail:String?, id: String?, amount: Double?, statementDescription: String?){
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
@@ -24,6 +25,7 @@ open class PaymentResult: NSObject {
         self.payerEmail = payerEmail
         self._id = id
         self.amount = amount
+        self.statementDescription = statementDescription
     }
     
     init (payment: Payment, paymentData: PaymentData?){
@@ -34,5 +36,6 @@ open class PaymentResult: NSObject {
         self._id = payment._id
         self.amount = payment.transactionAmount
         self.payerEmail = payment.payer.email
+        self.statementDescription = payment.statementDescriptor
     }
 }
