@@ -9,9 +9,8 @@
 #import <Foundation/Foundation.h>
 @import MercadoPagoSDK;
 
-#define SWIFT_SUBCLASS __attribute__((objc_subclassing_restricted))
+@interface CustomCellProvider : NSObject<MPCellContentProvider>
 
-SWIFT_SUBCLASS
-@interface CustomInflator : NSObject<MPCustomInflator>
+@property (nonatomic, copy) void (^ _Nonnull callbackPaymentData)(PaymentData * _Nonnull);
 
 @end

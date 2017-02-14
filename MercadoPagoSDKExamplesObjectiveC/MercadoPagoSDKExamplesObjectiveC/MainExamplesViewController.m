@@ -9,11 +9,12 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "CustomInflator.h"
+#import "CustomCellProvider.h"
 @import MercadoPagoSDK;
 
 
 @implementation MainExamplesViewController
+
 
 
 - (void)viewDidLoad {
@@ -33,7 +34,7 @@
     
     // Service Preference para seteo de servicio de pago
     NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla_cards_data"
+                                  @"merchant_access_token" : @"mla-cards-data"
                                   };
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
     
@@ -44,7 +45,7 @@
     
     
     
-    //[servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+  //  [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
     
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
@@ -59,23 +60,37 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
     
-    CustomInflator *inflator = [[CustomInflator alloc] init];
-  // [inflator setTitle:@"inflator overriden title"];
     
-    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
-    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
-    [MercadoPagoCheckout addReviewbleWithCell:customCells];
+    CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    
+    customCellItem.label.text = @"Item 1";
+    [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+    [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    
+    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
+    self.customCell = customItemCell;
+    
+    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    customCell2.label.text = @"Item 2";
+    [customCell2.button setTitle:@"MOficiame" forState:UIControlStateNormal];
+    
+    
+    
+    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
+    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
+    [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     
 
+    
+    
 //
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+    /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         NSLog(@"%@", paymentData.token._id);
         NSLog(@"%ld", paymentData.payerCost.installments);
         [self.navigationController popToRootViewControllerAnimated:NO];
-    }];
+    }];*/
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start];
@@ -105,5 +120,15 @@
 
 }
 
+-(void)invokeCallback:(MPCustomCell *)button {
+    
+    [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+        NSLog(@"%@", paymentData.paymentMethod._id);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
+//    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+//        self.callbackPaymentData(paymentData);
+//    }];
+}
 
 @end

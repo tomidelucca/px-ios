@@ -38,8 +38,12 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     
-    open static func addReviewble(cell: [MPCustomCells]){
-        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
+    open static func addConfirmAdditionalCells(_ cells: [MPCustomCell]){
+        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells = cells
+    }
+    
+    open static func addConfirmItemCells(_ cells: [MPCustomCell]){
+        MercadoPagoCheckoutViewModel.confirmItemsCells = cells
     }
     
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
@@ -218,8 +222,13 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectSecurityCode(){
         let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
-            self.viewModel.updateCheckoutModel(token: token!)
-            self.executeNextStep()
+            if token == nil {
+                self.navigationController.popViewController(animated: true)
+                self.viewModel.paymentData.clear()
+            } else {
+                self.viewModel.updateCheckoutModel(token: token!)
+                self.executeNextStep()
+            }
         })
         self.navigationController.pushViewController(securityCodeVc, animated: true)
         

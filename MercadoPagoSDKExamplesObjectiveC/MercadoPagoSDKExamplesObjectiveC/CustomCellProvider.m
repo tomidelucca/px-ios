@@ -6,35 +6,38 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-#import "CustomInflator.h"
+#import "CustomCellProvider.h"
 #import "CustomTableViewCell.h"
 @import MercadoPagoSDK;
 
+@implementation CustomCellProvider
 
-@implementation CustomInflator
+//@synthesize delegate = _delegate;
+@synthesize callbackPaymentData = _callbackPaymentData;
 
-UINib *customCellNib = nil;
 
--(id)initWithUINib:(UINib*)nib{
-    self = [super init];
-    if (self) {
-        customCellNib = nib;
-    }
-    return self;
-    
+
+
+
+-(void) setCallbackPaymentData:(void (^)(PaymentData * _Nonnull))callbackPaymentData{
+    _callbackPaymentData = callbackPaymentData;
 }
+
+/*** MPCellContentProvider  implementation **/
+
 -(void)fillCellWithCell:(UITableViewCell *)cell {
     CustomTableViewCell *currentCell = (CustomTableViewCell *)cell;
     currentCell.label.text = @"1562663448";
+    [currentCell.button addTarget:self action:@selector(invokeCallback) forControlEvents:UIControlEventTouchUpInside];
 }
+
 
 -(UINib *)getNib {
     return [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
 }
 
--(CGFloat)getHeigth {
-    return (CGFloat)150;
+-(CGFloat)getHeight {
+    return (CGFloat)180;
 }
-
 
 @end

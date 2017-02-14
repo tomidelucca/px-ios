@@ -11,12 +11,10 @@
 
 @import MercadoPagoSDK;
 
-#define SWIFT_SUBCLASS __attribute__((objc_subclassing_restricted))
+@interface CustomTableViewCell : UITableViewCell<MPCellContentProvider>
 
-SWIFT_SUBCLASS
-@interface CustomTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
-
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 
 @end
