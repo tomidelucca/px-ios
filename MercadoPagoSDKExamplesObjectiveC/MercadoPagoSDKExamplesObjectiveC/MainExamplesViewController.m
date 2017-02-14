@@ -9,7 +9,7 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "CustomCellProvider.h"
+
 @import MercadoPagoSDK;
 
 
@@ -73,13 +73,13 @@
     
     CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     customCell2.label.text = @"Item 2";
-    [customCell2.button setTitle:@"MOficiame" forState:UIControlStateNormal];
+    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
     
     
     
     MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
-    [MercadoPagoCheckout addConfirmItemCells:customItemCells];
+    [MercadoPagoCheckout addConfirmAdditionalCells:customItemCells];
     
 
     
