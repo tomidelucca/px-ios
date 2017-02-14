@@ -8,7 +8,7 @@
 
 import Foundation
 @objc
-public protocol MPCustomInflator : NSObjectProtocol {
+public protocol MPCellContentProvider : NSObjectProtocol {
     
     weak var delegate : CustomRowDelegate? { set get }
     

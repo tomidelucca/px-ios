@@ -264,7 +264,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
             for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells! {
                 self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
-                customCell.inflator.delegate = self
+                customCell.contentProvider.delegate = self
                 i += 1
             }
         }
@@ -273,7 +273,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         if viewModel.hasCustomItemCells(){
             for customCell in MercadoPagoCheckoutViewModel.confirmItemsCells! {
                 self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
-                customCell.inflator.delegate = self
+                customCell.contentProvider.delegate = self
                 i += 1
             }
         }
@@ -306,8 +306,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalCell" + String(indexPath.row), for: indexPath)
         
-        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].inflator
-        inflator.fillCell(cell: custom)
+        let contentProvider = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].contentProvider
+        contentProvider.fillCell(cell: custom)
         return custom
     }
     
@@ -315,8 +315,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalItemCell" + String(indexPath.row), for: indexPath)
         
         if viewModel.hasCustomItemCells(){
-            let inflator = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].inflator
-            inflator.fillCell(cell: custom)
+            let contentProvider = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].contentProvider
+            contentProvider.fillCell(cell: custom)
             return custom
         } else {
             return UITableViewCell()

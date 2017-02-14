@@ -6,11 +6,11 @@
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
-#import "CustomInflator.h"
+#import "CustomCellProvider.h"
 #import "CustomTableViewCell.h"
 @import MercadoPagoSDK;
 
-@implementation CustomInflator
+@implementation CustomCellProvider
 
 @synthesize delegate = _delegate;
 @synthesize callbackPaymentData = _callbackPaymentData;

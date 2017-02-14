@@ -11,16 +11,16 @@ import UIKit
 import Foundation
 
 @objc open class MPCustomCell : NSObject {
-    open let cell: ReviewableCell
-    open let inflator: MPCustomInflator
+    open let cell: MPReviewableCell
+    open let contentProvider: MPCellContentProvider
     
-    public init (cell: ReviewableCell, inflator: MPCustomInflator){
+    public init (cell: MPReviewableCell, contentProvider: MPCellContentProvider){
         self.cell = cell
-        self.inflator = inflator
+        self.contentProvider = contentProvider
     }
 }
 
-@objc public protocol ReviewableCell : NSObjectProtocol {
+@objc public protocol MPReviewableCell : NSObjectProtocol {
     
     func getNib() -> UINib
     

@@ -9,7 +9,7 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "CustomInflator.h"
+#import "CustomCellProvider.h"
 @import MercadoPagoSDK;
 
 
@@ -61,19 +61,19 @@
     
     CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
     
-    CustomInflator *inflator = [[CustomInflator alloc] init];
+    CustomCellProvider *inflator = [[CustomCellProvider alloc] init];
     inflator.callbackPaymentData =  ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         [self.navigationController popToRootViewControllerAnimated:NO];
     };
   // [inflator setTitle:@"inflator overriden title"];
     
-    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithCell:customCell inflator:inflator];
+    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithCell:customCell contentProvider:inflator];
     NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
     [MercadoPagoCheckout addConfirmAdditionalCells:customCells];
     
     
-    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithCell:customCell inflator:inflator];
+    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithCell:customCell contentProvider:inflator];
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCellPair, customItemCellPair, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     
