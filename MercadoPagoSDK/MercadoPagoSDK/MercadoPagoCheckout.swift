@@ -58,6 +58,10 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
+    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
+    }
+    
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
         MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
     }

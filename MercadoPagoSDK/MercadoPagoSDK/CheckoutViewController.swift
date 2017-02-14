@@ -154,7 +154,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return getMainTitleCell(indexPath : indexPath)
             
         } else if self.viewModel.isProductlCellFor(indexPath: indexPath){
-            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
+            let productsTitle = MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle()
+            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : productsTitle, amount : self.viewModel.preference!.getAmount())
             
         } else if self.viewModel.isInstallmentsCellFor(indexPath: indexPath) {
             return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.payerCost, addSeparatorLine: true)
@@ -267,7 +268,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
-        payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
+        payerCostTitleTableViewCell.setTitle(string: MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle())
         payerCostTitleTableViewCell.title.textColor = UIColor.px_blueMercadoPago()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
         titleCell = payerCostTitleTableViewCell
@@ -310,6 +311,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
         confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
+        let confirmPaymentTitle =  MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText()
+        confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle,for: .normal)
         return confirmPaymentTableViewCell
     }
     
@@ -339,6 +342,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getCancelPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell {
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
+        let exitButtonTitle = MercadoPagoCheckoutViewModel.reviewScreenPreference.getCancelButtonTitle()
+        exitButtonCell.exitButton.setTitle(exitButtonTitle, for: .normal)
         exitButtonCell.exitButton.addTarget(self, action: #selector(CheckoutViewController.exitCheckoutFlow), for: .touchUpInside)
         return exitButtonCell
     }
@@ -370,7 +375,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         if (self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset) {
             return ""
         }
-        return "Confirma tu compra".localized
+        return MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle()
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){

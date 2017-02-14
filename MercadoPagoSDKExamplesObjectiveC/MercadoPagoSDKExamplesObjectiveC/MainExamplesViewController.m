@@ -61,24 +61,29 @@
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
     
+    ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
+    [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
+    [reviewPreference setProductsDeteailWithProductsTitle:@"Carga SUBE"];
+    [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
     
+    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
     CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     
-    customCellItem.label.text = @"Item 1";
+    customCellItem.label.text = @"Carga SUBE";
     [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
     [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
     
     MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
     self.customCell = customItemCell;
     
-    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-    customCell2.label.text = @"Item 2";
-    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
+//    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+//    customCell2.label.text = @"Item 2";
+//    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
+//    
     
     
-    
-    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
-    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
+    //MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
+    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, nil];
     [MercadoPagoCheckout addConfirmAdditionalCells:customItemCells];
     
 
