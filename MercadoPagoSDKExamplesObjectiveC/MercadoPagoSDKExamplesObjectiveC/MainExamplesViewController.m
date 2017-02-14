@@ -9,7 +9,7 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "CustomCellProvider.h"
+
 @import MercadoPagoSDK;
 
 
@@ -60,29 +60,34 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
+    CustomTableViewCell *cargaSubeCell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCell.label.text = @"Carga SUBE";
+    [cargaSubeCell.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+    [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
+    self.customCell = customCargaSube;
     
+    ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
+    [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
+    [reviewPreference setProductsDeteailWithProductsTitle:@"Carga SUBE"];
+    [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
+    [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
+    [ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+    //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
     
-    CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-    
-    customCellItem.label.text = @"Item 1";
-    [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
-    [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
-    
-    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
-    self.customCell = customItemCell;
-    
-    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-    customCell2.label.text = @"Item 2";
-    [customCell2.button setTitle:@"MOficiame" forState:UIControlStateNormal];
-    
-    
-    
-    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
-    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
-    [MercadoPagoCheckout addConfirmItemCells:customItemCells];
+    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
     
 
+//    
     
+    
+//    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+//    customCell2.label.text = @"Item 2";
+//    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
+//    
+    
+    
+    //MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
     
 //
     /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
@@ -92,7 +97,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];*/
     
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    CheckoutPreference *pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start];
     
 

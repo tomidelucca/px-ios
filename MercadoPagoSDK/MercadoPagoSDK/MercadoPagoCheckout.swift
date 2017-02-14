@@ -37,15 +37,6 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    
-    open static func addConfirmAdditionalCells(_ cells: [MPCustomCell]){
-        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells = cells
-    }
-    
-    open static func addConfirmItemCells(_ cells: [MPCustomCell]){
-        MercadoPagoCheckoutViewModel.confirmItemsCells = cells
-    }
-    
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
         MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
     }
@@ -56,6 +47,10 @@ open class MercadoPagoCheckout: NSObject {
     
     open static func setFlowPreference(_ flowPreference: FlowPreference){
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
+    }
+    
+    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
     }
     
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
@@ -286,6 +281,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func finish(){
         
+        ReviewScreenPreference.clear()
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)
