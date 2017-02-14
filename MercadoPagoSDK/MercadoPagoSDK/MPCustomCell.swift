@@ -11,11 +11,19 @@ import UIKit
 import Foundation
 
 @objc open class MPCustomCell : NSObject {
-    open let cell: UITableViewCell
+    open let cell: ReviewableCell
     open let inflator: MPCustomInflator
     
-    public init (cell: UITableViewCell, inflator: MPCustomInflator){
+    public init (cell: ReviewableCell, inflator: MPCustomInflator){
         self.cell = cell
         self.inflator = inflator
     }
+}
+
+@objc public protocol ReviewableCell : NSObjectProtocol {
+    
+    func getNib() -> UINib
+    
+    func getHeigth() -> CGFloat
+    
 }

@@ -263,7 +263,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
             for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells! {
-                self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
+                self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
                 customCell.inflator.delegate = self
                 i += 1
             }
@@ -272,7 +272,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         i = 0
         if viewModel.hasCustomItemCells(){
             for customCell in MercadoPagoCheckoutViewModel.confirmItemsCells! {
-                self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
+                self.checkoutTable.register(customCell.cell.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
                 customCell.inflator.delegate = self
                 i += 1
             }
@@ -493,14 +493,14 @@ open class CheckoutViewModel {
             }
             
         } else if isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].inflator.getHeigth() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].cell.getHeigth() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if isPaymentMethodCellFor(indexPath: indexPath){
             return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].inflator.getHeigth()
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].cell.getHeigth()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {

@@ -14,7 +14,6 @@
 
 @synthesize delegate = _delegate;
 @synthesize callbackPaymentData = _callbackPaymentData;
-@synthesize nib;
 
 -(void)invokeCallback {
     
@@ -28,15 +27,6 @@
     CustomTableViewCell *currentCell = (CustomTableViewCell *)cell;
     currentCell.label.text = @"1562663448";
     [currentCell.button addTarget:self action:@selector(invokeCallback) forControlEvents:UIControlEventTouchUpInside];
-}
-
-
--(UINib *)getNib {
-    return [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
-}
-
--(CGFloat)getHeigth {
-    return (CGFloat)180;
 }
 
 -(void) setDelegate: (CheckoutViewController * ) delegate {
