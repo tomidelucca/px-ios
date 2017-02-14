@@ -16,7 +16,7 @@ open class MPCustomCell: NSObject {
     
     private var cell : UITableViewCell!
 
-    public init(cell : UITableViewCell, contentProvider: MPCellContentProvider) {
+    public init(cell : UITableViewCell) {
         self.cell = cell
     }
  

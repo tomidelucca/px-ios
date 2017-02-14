@@ -16,6 +16,7 @@
 @implementation MainExamplesViewController
 
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
@@ -59,30 +60,16 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-   // CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
     
-    CustomCellProvider *customCellProvider = [[CustomCellProvider alloc] init];
-    customCellProvider.callbackPaymentData =  ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod._id);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    };
     
-//    MPCustomCell *customCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
-//    [MercadoPagoCheckout addConfirmAdditionalCells:[[NSArray alloc] initWithObjects:customCell, nil]];
-//
-//
     CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     
     customCellItem.label.text = @"Item 1";
     [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
-
+    [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
     
-    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem contentProvider:customCellProvider];
-    
-    
-    ;
-    
-    [customCellItem.button addTarget:self action:@selector(invokeCallback:customItemCell:) forControlEvents:UIControlEventTouchUpInside];
+    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
+    self.customCell = customItemCell;
     
     CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     customCell2.label.text = @"Item 2";
@@ -90,7 +77,7 @@
     
     
     
-    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2 contentProvider:customCellProvider];
+    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     
@@ -135,7 +122,7 @@
 
 -(void)invokeCallback:(MPCustomCell *)button {
     
-    [[button getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+    [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
