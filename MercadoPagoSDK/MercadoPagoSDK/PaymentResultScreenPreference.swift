@@ -11,20 +11,53 @@ import Foundation
 open class PaymentResultScreenPreference: NSObject {
     
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
-    var approvedSubTitle = "H"
+    var approvedSubtitle = "Se le enviara un sms bla bla bla bla bla bla"
     var pendingTitle = "Estamos procesando el pago".localized
-    var pendingSubtitle = "H"
+    var pendingSubtitle = ""
     var exitButttonTitle = "Continuar".localized
     var headerPendingIconName = "iconoAcreditado"
     var headerPendingIconBundle = MercadoPago.getBundle()!
     var disableSelectAnotherPaymentMethod = false
+    
+    func setAppovedTitle(title: String) {
+        self.approvedTitle = title
+    }
+    
+    func setAppovedSubtitle(subtitle: String) {
+        self.approvedSubtitle = subtitle
+    }
+    
+    func setPendingTitle(title: String) {
+        self.pendingTitle = title
+    }
+    
+    func setPendingSubtitle(subtitle: String) {
+        self.pendingSubtitle = subtitle
+    }
+    
+    func setExitButtonTitle(title: String) {
+        self.exitButttonTitle = title
+    }
+    
+    func setPendingHeaderIcon(name: String, bundle: Bundle) {
+        self.headerPendingIconName = name
+        self.headerPendingIconBundle = bundle
+    }
+    
+    func disableChangePaymentMethodCell(){
+        self.disableSelectAnotherPaymentMethod = true
+    }
+    
+    func enableChangePaymentMethodCell(){
+        self.disableSelectAnotherPaymentMethod = false
+    }
     
     func getApprovedTitle() -> String {
         return approvedTitle
     }
     
     func getApprovedSubtitle() -> String {
-        return approvedSubTitle
+        return approvedSubtitle
     }
     
     func getPendingTitle() -> String {

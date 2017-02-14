@@ -16,6 +16,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
     @IBOutlet weak var title: UILabel!
     var timerLabel : MPLabel?
     
+    @IBOutlet weak var subtitle: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
@@ -24,6 +25,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         title.font = Utils.getFont(size: title.font.pointSize)
         messageError.text = ""
         messageError.font = Utils.getFont(size: messageError.font.pointSize)
+        subtitle.text = ""
     }
     
     func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor, instruction: Instruction?){
@@ -33,10 +35,12 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         if paymentResult.status == "approved" {
             icon.image = MercadoPago.getImage("iconoAcreditado")
             title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedTitle()
+            subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSubtitle()
         
         } else if paymentResult.status == "in_process" {
             icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderPendingIcon()
             title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingTitle()
+            subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSubtitle()
         
         } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
             icon.image = MercadoPago.getImage("congrats_iconoAutorizarTel")
