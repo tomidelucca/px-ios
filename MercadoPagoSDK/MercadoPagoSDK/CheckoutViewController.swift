@@ -287,13 +287,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
-        let customCell = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row]
+        let customCell = ReviewScreenPreference.additionalInfoCells[indexPath.row]//confirmAdditionalCustomCells!
         customCell.setDelegate(delegate: self)
         return customCell.getTableViewCell()
     }
     
     private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell{
-        let customCell = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row]
+        let customCell = ReviewScreenPreference.customItemCells[indexPath.row]
         customCell.setDelegate(delegate: self)
         return customCell.getTableViewCell()
     }
@@ -473,14 +473,14 @@ open class CheckoutViewModel {
             }
             
         } else if isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if isPaymentMethodCellFor(indexPath: indexPath){
             return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].getHeight()
+            return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {
@@ -505,21 +505,21 @@ open class CheckoutViewModel {
     }
     
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells!.count
+        if !Array.isNullOrEmpty(ReviewScreenPreference.additionalInfoCells) {
+            return ReviewScreenPreference.additionalInfoCells.count
         }
         return 0
     }
     
     func numberOfCustomItemCells() -> Int {
         if hasCustomItemCells() {
-            return MercadoPagoCheckoutViewModel.confirmItemsCells!.count
+            return ReviewScreenPreference.customItemCells.count
         }
         return 0
     }
     
     func hasCustomItemCells() -> Bool {
-        return !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmItemsCells)
+        return !Array.isNullOrEmpty(ReviewScreenPreference.customItemCells)
     }
     
     func hasPayerCostAddionalInfo() -> Bool {

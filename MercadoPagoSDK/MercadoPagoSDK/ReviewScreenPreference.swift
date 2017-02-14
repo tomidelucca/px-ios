@@ -15,6 +15,9 @@ open class ReviewScreenPreference: NSObject {
     private var confirmButtonText = "Confirmar".localized
     private var cancelButtonText = "Cancelar Pago".localized
     
+    internal static var additionalInfoCells = [MPCustomCell]()
+    internal static var customItemCells = [MPCustomCell]()
+    
     open func setTitle(title : String){
         self.title = title
     }
@@ -46,5 +49,17 @@ open class ReviewScreenPreference: NSObject {
     open func getCancelButtonTitle() -> String {
         return cancelButtonText
     }
+    
+    open static func addCustomItemCell(customCell : MPCustomCell) {
+        ReviewScreenPreference.customItemCells.append(customCell)
+    }
+    
+    open static func addAddionalInfoCell(customCell : MPCustomCell) {
+        ReviewScreenPreference.additionalInfoCells.append(customCell)
+    }
+    
+    
+    
+    
     
 }

@@ -38,8 +38,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var paymentDataCallback : ((PaymentData) -> Void)?
     internal static var reviewScreenPreference = ReviewScreenPreference()
     
-    open static var confirmAdditionalCustomCells : [MPCustomCell]?
-    open static var confirmItemsCells: [MPCustomCell]?
+   
 
     var checkoutPreference : CheckoutPreference!
     
