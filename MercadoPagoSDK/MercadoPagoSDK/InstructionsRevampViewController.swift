@@ -11,9 +11,9 @@ import UIKit
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    var payment : Payment!
+    var paymentResult : PaymentResult!
     var paymentTypeId : String!
-    var callback : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
+    var callback : (_ payment : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instruction: Instruction?
@@ -63,10 +63,10 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.tableView.reloadData()
         }
     }
-    public init(payment : Payment, paymentTypeId : String, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(paymentResult : PaymentResult, paymentTypeId : String, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
         self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
-        self.payment = payment
+        self.paymentResult = paymentResult
         self.paymentTypeId = paymentTypeId
     }
     
@@ -101,7 +101,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         case 0:
             if indexPath.row == 0 {
                 let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-                headerCell.fillCell(payment: payment, paymentMethod: nil, color: color!, instruction: instruction)
+                headerCell.fillCell(paymentResult: paymentResult, paymentMethod: nil, color: color!, instruction: instruction)
                 headerCell.selectionStyle = .none
                 return headerCell
             } else {
@@ -113,20 +113,20 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
-            bodyCell.fillCell(instruction: self.instruction!, payment: self.payment)
+            bodyCell.fillCell(instruction: self.instruction!, paymentResult: self.paymentResult)
             return bodyCell
         default:
             if indexPath.row == 0{
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                confirmEmailCell.fillCell(payment: payment, instruction: instruction)
+                confirmEmailCell.fillCell(paymentResult: paymentResult, instruction: instruction)
                 confirmEmailCell.selectionStyle = .none
                 ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                 return confirmEmailCell
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                footerNib.setCallbackStatus(callback: callback, payment: payment, status: MPStepBuilder.CongratsState.ok)
-                footerNib.fillCell(payment: payment)
+                footerNib.setCallbackStatus(callback: callback, paymentResult: paymentResult, status: MPStepBuilder.CongratsState.ok)
+                footerNib.fillCell(paymentResult: paymentResult)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib
             }
@@ -134,7 +134,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     fileprivate func getInstructions(){
-        MPServicesBuilder.getInstructions(for: payment._id, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
+        MPServicesBuilder.getInstructions(for: paymentResult._id!, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
             self.instruction = instructionsInfo.instructions[0]
             self.tableView.reloadData()
             self.hideLoading()

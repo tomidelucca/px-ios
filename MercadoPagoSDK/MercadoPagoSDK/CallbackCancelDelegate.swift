@@ -12,16 +12,16 @@ open class CallbackCancelTableViewCell : UITableViewCell {
 
     var callbackCancel : ((Void) -> Void)?
     var defaultCallback : ((Void) -> Void)?
-    var callbackStatus: ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void)?
-    var payment: Payment?
+    var callbackStatus: ((_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void)?
+    var paymentResult: PaymentResult?
     var status: MPStepBuilder.CongratsState?
     
-    func getCallbackStatus() -> ((_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void){
+    func getCallbackStatus() -> ((_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void){
         return callbackStatus!
     }
-    func setCallbackStatus(callback: @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void, payment: Payment,status: MPStepBuilder.CongratsState){
+    func setCallbackStatus(callback: @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void, paymentResult: PaymentResult,status: MPStepBuilder.CongratsState){
         callbackStatus = callback
-        self.payment = payment
+        self.paymentResult = paymentResult
         self.status = status
     }
     
@@ -35,8 +35,8 @@ open class CallbackCancelTableViewCell : UITableViewCell {
         }
     }
     func invokeCallback(){
-        if let callbackStatus = self.callbackStatus , let payment = payment , let status = status  {
-            callbackStatus(payment, status)
+        if let callbackStatus = self.callbackStatus , let paymentResult = paymentResult , let status = status  {
+            callbackStatus(paymentResult, status)
         }
     }
 

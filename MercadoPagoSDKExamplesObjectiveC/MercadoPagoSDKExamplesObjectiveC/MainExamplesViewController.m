@@ -59,7 +59,11 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    CustomTableViewCell *customCell = [[CustomTableViewCell alloc] init];
+    CustomTableViewCell *customCell = [[[NSBundle mainBundle]
+                                        loadNibNamed:@"CustomTableViewCell"
+                                        owner:self options:nil]
+                                       firstObject];
+    customCell.label.text = @"llalala";
     
     CustomInflator *inflator = [[CustomInflator alloc] init];
   // [inflator setTitle:@"inflator overriden title"];
@@ -78,7 +82,7 @@
     }];*/
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start];
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
     
 
     PaymentMethod *pm = [[PaymentMethod alloc] init];
