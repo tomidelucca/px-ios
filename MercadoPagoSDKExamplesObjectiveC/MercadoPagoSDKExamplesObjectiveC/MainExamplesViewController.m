@@ -68,12 +68,12 @@
     };
   // [inflator setTitle:@"inflator overriden title"];
     
-    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
+    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithCell:customCell inflator:inflator];
     NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
     [MercadoPagoCheckout addConfirmAdditionalCells:customCells];
     
     
-    MPCustomCells *customItemCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
+    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithCell:customCell inflator:inflator];
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCellPair, customItemCellPair, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     

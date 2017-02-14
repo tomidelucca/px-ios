@@ -10,7 +10,7 @@ import UIKit
 
 import Foundation
 
-@objc open class MPCustomCells : NSObject {
+@objc open class MPCustomCell : NSObject {
     open let cell: UITableViewCell
     open let inflator: MPCustomInflator
     

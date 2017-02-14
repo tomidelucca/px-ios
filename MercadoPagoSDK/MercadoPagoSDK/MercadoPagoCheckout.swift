@@ -38,11 +38,11 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     
-    open static func addConfirmAdditionalCells(_ cells: [MPCustomCells]){
+    open static func addConfirmAdditionalCells(_ cells: [MPCustomCell]){
         MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells = cells
     }
     
-    open static func addConfirmItemCells(_ cells: [MPCustomCells]){
+    open static func addConfirmItemCells(_ cells: [MPCustomCell]){
         MercadoPagoCheckoutViewModel.confirmItemsCells = cells
     }
     

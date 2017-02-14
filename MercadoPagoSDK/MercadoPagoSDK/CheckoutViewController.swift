@@ -261,8 +261,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         var i = 0
         
-        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells.isEmpty {
-            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells {
+        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
+            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells! {
                 self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
                 customCell.inflator.delegate = self
                 i += 1
@@ -273,7 +273,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         if viewModel.hasCustomItemCells(){
             for customCell in MercadoPagoCheckoutViewModel.confirmItemsCells! {
                 self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
-                customerCell.inflator.delegate = self
+                customCell.inflator.delegate = self
                 i += 1
             }
         }
@@ -306,7 +306,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalCell" + String(indexPath.row), for: indexPath)
         
-        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells[indexPath.row].inflator
+        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].inflator
         inflator.fillCell(cell: custom)
         return custom
     }
@@ -500,7 +500,7 @@ open class CheckoutViewModel {
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells[indexPath.row].inflator.getHeigth()
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].inflator.getHeigth()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {
@@ -525,8 +525,8 @@ open class CheckoutViewModel {
     }
     
     func numberOfCustomAdditionalCells() -> Int {
-        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells.isEmpty {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells.count
+        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells!.count
         }
         return 0
     }
