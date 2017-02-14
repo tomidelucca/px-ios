@@ -10,27 +10,30 @@ import UIKit
 
 import Foundation
 
-@objc open class MPCustomCell : NSObject {
+open class MPCustomCell: NSObject {
     
-    private let contentProvider: MPCellContentProvider
+    weak var delegate : MPCustomRowDelegate?
     
-    public init (contentProvider: MPCellContentProvider){
-        self.contentProvider = contentProvider
+    private var cell : UITableViewCell!
+
+    public init(cell : UITableViewCell, contentProvider: MPCellContentProvider) {
+        self.cell = cell
     }
-    
-    public func getNib() -> UINib {
-        return contentProvider.getNib()
-    }
-    
+ 
     public func getHeight() -> CGFloat {
+        let contentProvider = self.getTableViewCell() as! MPCellContentProvider
         return contentProvider.getHeight()
     }
-    
+
     public func setDelegate(delegate : MPCustomRowDelegate) {
-        self.contentProvider.delegate = delegate
+        self.delegate = delegate
     }
     
-    public func fillCell(cell : UITableViewCell) {
-        self.contentProvider.fillCell(cell : cell)
+    public func getDelegate() -> MPCustomRowDelegate {
+        return self.delegate!
+    }
+    
+    public func getTableViewCell() -> UITableViewCell {
+        return self.cell
     }
 }

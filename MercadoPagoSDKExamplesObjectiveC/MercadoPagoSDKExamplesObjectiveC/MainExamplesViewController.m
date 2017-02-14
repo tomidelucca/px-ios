@@ -67,15 +67,36 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     };
     
-    MPCustomCell *customCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
-    [MercadoPagoCheckout addConfirmAdditionalCells:[[NSArray alloc] initWithObjects:customCell, nil]];
-//    
-//    
-    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
-    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, customItemCell, nil];
+//    MPCustomCell *customCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
+//    [MercadoPagoCheckout addConfirmAdditionalCells:[[NSArray alloc] initWithObjects:customCell, nil]];
+//
+//
+    CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    
+    customCellItem.label.text = @"Item 1";
+    [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+
+    
+    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem contentProvider:customCellProvider];
+    
+    
+    ;
+    
+    [customCellItem.button addTarget:self action:@selector(invokeCallback:customItemCell:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    customCell2.label.text = @"Item 2";
+    [customCell2.button setTitle:@"MOficiame" forState:UIControlStateNormal];
+    
+    
+    
+    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2 contentProvider:customCellProvider];
+    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     
 
+    
+    
 //
     /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
@@ -112,5 +133,15 @@
 
 }
 
+-(void)invokeCallback:(MPCustomCell *)button {
+    
+    [[button getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+        NSLog(@"%@", paymentData.paymentMethod._id);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
+//    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+//        self.callbackPaymentData(paymentData);
+//    }];
+}
 
 @end

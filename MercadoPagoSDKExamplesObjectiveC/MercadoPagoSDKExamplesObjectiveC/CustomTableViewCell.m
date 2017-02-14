@@ -11,6 +11,8 @@
 
 @implementation CustomTableViewCell 
 
-
+-(CGFloat)getHeight {
+    return (CGFloat)180;
+}
 
 @end

@@ -259,24 +259,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
-        var i = 0
-        
-        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
-            for cell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells! {
-                self.checkoutTable.register(cell.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
-                cell.setDelegate(delegate: self)
-                i += 1
-            }
-        }
-        
-        i = 0
-        if viewModel.hasCustomItemCells(){
-            for customCell in MercadoPagoCheckoutViewModel.confirmItemsCells! {
-                self.checkoutTable.register(customCell.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
-                customCell.setDelegate(delegate: self)
-                i += 1
-            }
-        }
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -304,22 +286,17 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
-        let customCellNib = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalCell" + String(indexPath.row), for: indexPath)
-        
-        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].fillCell(cell: customCellNib)
-        return customCellNib
+        let customCell = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row]
+        customCell.setDelegate(delegate: self)
+        return customCell.getTableViewCell()
     }
     
     private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell{
-        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalItemCell" + String(indexPath.row), for: indexPath)
-
-        if viewModel.hasCustomItemCells(){
-            MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].fillCell(cell: custom)
-            return custom
-        } else {
-            return UITableViewCell()
-        }
+        let customCell = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row]
+        customCell.setDelegate(delegate: self)
+        return customCell.getTableViewCell()
     }
+    
     
     
     private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{

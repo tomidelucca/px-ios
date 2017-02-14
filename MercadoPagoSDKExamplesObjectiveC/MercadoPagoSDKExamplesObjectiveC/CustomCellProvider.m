@@ -12,16 +12,11 @@
 
 @implementation CustomCellProvider
 
-@synthesize delegate = _delegate;
+//@synthesize delegate = _delegate;
 @synthesize callbackPaymentData = _callbackPaymentData;
 
 
--(void)invokeCallback {
-    
-    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-        self.callbackPaymentData(paymentData);
-    }];
-}
+
 
 
 -(void) setCallbackPaymentData:(void (^)(PaymentData * _Nonnull))callbackPaymentData{
