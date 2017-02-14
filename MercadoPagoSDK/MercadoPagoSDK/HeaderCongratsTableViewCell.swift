@@ -32,11 +32,11 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         
         if paymentResult.status == "approved" {
             icon.image = MercadoPago.getImage("iconoAcreditado")
-            title.text = "¡Listo, se acreditó tu pago!".localized
+            title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedTitle()
         
         } else if paymentResult.status == "in_process" {
-            icon.image = MercadoPago.getImage("congrats_iconPending")
-            title.text = "Estamos procesando el pago".localized
+            icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderPendingIcon()
+            title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingTitle()
         
         } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
             icon.image = MercadoPago.getImage("congrats_iconoAutorizarTel")

@@ -248,9 +248,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func displayPaymentResult() {
         // TODO : por que dos? esta bien? no hay view models, ver que onda
-        self.viewModel.paymentData.payerCost?.installments = 1
-        //self.viewModel.paymentData.paymentMethod._id = ""
-        let paymentResult = PaymentResult(status: self.viewModel.payment!.status, statusDetail: self.viewModel.payment!.statusDetail, paymentData: self.viewModel.paymentData, currencyId: MercadoPagoContext.getCurrency()._id, payerEmail: self.viewModel.payment!.payer.email, id: nil, amount: 50.0)
+        let paymentResult = PaymentResult(status: self.viewModel.payment!.status, statusDetail: self.viewModel.payment!.statusDetail, paymentData: self.viewModel.paymentData, currencyId: MercadoPagoContext.getCurrency()._id, payerEmail: "", id: nil, amount: 50.0)
         
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {

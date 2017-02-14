@@ -37,6 +37,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var flowPreference = FlowPreference()
     internal static var paymentDataCallback : ((PaymentData) -> Void)?
     
+    internal static var paymentResultScreenPreference = PaymentResultScreenPreference()
+    
     open static var confirmAdditionalCustomCell = [MPCustomCells]()
 
     var checkoutPreference : CheckoutPreference!

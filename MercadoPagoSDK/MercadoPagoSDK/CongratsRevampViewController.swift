@@ -48,7 +48,6 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         self.tableView.register(callFAuthNib, forCellReuseIdentifier: "callFAuthNib")
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
-
         
     }
     
@@ -81,7 +80,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.viewModel.numberOfRowsInSection(indexPath: indexPath)
+        return self.viewModel.numberOfRowsInSection(section: section)
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -240,9 +239,9 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     internal func getLayoutName() -> String! {
         
         if paymentResult.status == PaymentStatus.REJECTED.rawValue {
-            if paymentResult.statusDetail != nil && paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
+            if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
                 return "authorize" //C4A
-            } else if paymentResult.statusDetail != nil && paymentResult.statusDetail.contains("cc_rejected_bad_filled")  {
+            } else if paymentResult.statusDetail.contains("cc_rejected_bad_filled")  {
                 return "recovery" //bad fill something
             }
         }
@@ -299,25 +298,26 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         return indexPath.section == 1 && indexPath.row == 0 && callForAuth()
     }
     func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
+        return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
     }
     
-    func numberOfRowsInSection(indexPath: IndexPath) -> Int {
-        if indexPath.section == 1 {
+    func numberOfRowsInSection(section: Int) -> Int {
+        if section == 1 {
             return numberOfCellInBody()
         }
         return 1
     }
     
     func numberOfCellInBody() -> Int {
+        let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() ? 1 : 0
         if approved() {
             return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
         
         } else if callForAuth() {
-            return 2
+            return selectAnotherCell + 1
         }
         
-        return 1
+        return selectAnotherCell
     }
 }
 
