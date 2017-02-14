@@ -58,7 +58,10 @@ open class ReviewScreenPreference: NSObject {
         ReviewScreenPreference.additionalInfoCells.append(customCell)
     }
     
-    
+    open static func clear() {
+        ReviewScreenPreference.customItemCells = [MPCustomCell]()
+        ReviewScreenPreference.additionalInfoCells = [MPCustomCell]()
+    }
     
     
     

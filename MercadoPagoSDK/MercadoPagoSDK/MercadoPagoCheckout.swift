@@ -281,6 +281,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func finish(){
         
+        ReviewScreenPreference.clear()
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)

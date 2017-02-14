@@ -609,6 +609,7 @@
 		76B64B231C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B64B201C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.swift */; };
 		76B64B241C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B211C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib */; };
 		76B64B251C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76B64B211C75FAFC00300F50 /* SimpleInstructionsWithButtonViewCell.xib */; };
+		76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EF21E61E52C07700718ED2 /* ReviewScreenPreference.swift */; };
 		76C834411D510CD4003C4717 /* AmountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C834401D510CD4003C4717 /* AmountInfo.swift */; };
 		76CA7C711E01EA73009080B3 /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
 		76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
@@ -2952,6 +2953,7 @@
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
 				76B084FE1CE2165B00C157BF /* ApprovedPaymentBodyTableViewCell.swift in Sources */,
 				7652F43E1D78ADEE006022AF /* MPStepBuilderTest.swift in Sources */,
+				76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */,
 				0F9883BD1AD2AD1600F750F0 /* UIDevice+Additions.swift in Sources */,
 				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
 				0F9883FE1AD2ADEE00F750F0 /* IssuerTableViewCell.swift in Sources */,

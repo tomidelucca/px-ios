@@ -72,7 +72,8 @@
     [reviewPreference setProductsDeteailWithProductsTitle:@"Carga SUBE"];
     [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
-    [ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
+    [ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+    //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
     
