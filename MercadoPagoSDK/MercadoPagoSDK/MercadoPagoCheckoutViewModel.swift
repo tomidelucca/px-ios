@@ -338,13 +338,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             // Vuelvo a root para iniciar la selección de medios de pago
             self.paymentOptionSelected = nil
             self.paymentMethodOptions = self.rootPaymentMethodOptions
-            self.paymentOptionSelected = nil
             self.search = nil
             self.rootVC = true
+            self.cardToken = nil
         } else {
             self.readyToPay = true
-            self.reviewAndConfirm = false
         }
+        self.reviewAndConfirm = false
     }
     
     public func updateCheckoutModel(payment : Payment) {

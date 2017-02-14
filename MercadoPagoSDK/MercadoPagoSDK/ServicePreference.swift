@@ -123,4 +123,8 @@ open class ServicePreference : NSObject{
         return !String.isNullOrEmpty(paymentURL)
     }
     
+    public func isCustomerInfoAvailable() -> Bool {
+        return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI) && customerAdditionalInfo != nil
+    }
+
 }

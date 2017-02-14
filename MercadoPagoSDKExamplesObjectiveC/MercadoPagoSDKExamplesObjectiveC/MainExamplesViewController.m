@@ -33,7 +33,7 @@
     
     // Service Preference para seteo de servicio de pago
     NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla_cards_data"
+                                  @"merchant_access_token" : @"mla-cards-data"
                                   };
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
     
@@ -44,7 +44,7 @@
     
     
     
-    //[servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+  //  [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
     
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];

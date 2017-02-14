@@ -222,8 +222,13 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectSecurityCode(){
         let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
-            self.viewModel.updateCheckoutModel(token: token!)
-            self.executeNextStep()
+            if token == nil {
+                self.navigationController.popViewController(animated: true)
+                self.viewModel.paymentData.clear()
+            } else {
+                self.viewModel.updateCheckoutModel(token: token!)
+                self.executeNextStep()
+            }
         })
         self.navigationController.pushViewController(securityCodeVc, animated: true)
         

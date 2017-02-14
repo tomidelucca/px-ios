@@ -148,8 +148,8 @@ int installmentsSelected = 1;
 - (void)createPayment {
     
     [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
-    [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
-    [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
+//    [MercadoPagoContext setBaseURL:MERCHANT_MOCK_BASE_URL];
+//    [MercadoPagoContext setPaymentURI:MERCHANT_MOCK_CREATE_PAYMENT_URI];
     
 //    Item *item = [[Item alloc] initWith_id:ITEM_ID title:ITEM_TITLE quantity:ITEM_QUANTITY unitPrice:ITEM_UNIT_PRICE description:nil currency:@"ARS"];
 //

@@ -96,6 +96,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
             
             self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
             displayBackButton()
+            self.navigationItem.leftBarButtonItem!.action = #selector(SecrurityCodeViewController.executeBack)
         }
     }
     
@@ -186,6 +187,10 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         label?.text?.append("•")
         return true
         
+    }
+    
+    override func executeBack(){
+        self.collectSecurityCodeCallback(nil)
     }
 
 }
