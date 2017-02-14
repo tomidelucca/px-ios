@@ -15,6 +15,7 @@
 @synthesize delegate = _delegate;
 @synthesize callbackPaymentData = _callbackPaymentData;
 
+
 -(void)invokeCallback {
     
     [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
@@ -23,24 +24,24 @@
 }
 
 
+-(void) setCallbackPaymentData:(void (^)(PaymentData * _Nonnull))callbackPaymentData{
+    _callbackPaymentData = callbackPaymentData;
+}
+
+/*** MPCellContentProvider  implementation **/
+
 -(void)fillCellWithCell:(UITableViewCell *)cell {
     CustomTableViewCell *currentCell = (CustomTableViewCell *)cell;
     currentCell.label.text = @"1562663448";
     [currentCell.button addTarget:self action:@selector(invokeCallback) forControlEvents:UIControlEventTouchUpInside];
 }
 
--(void) setDelegate: (CheckoutViewController * ) delegate {
-    _delegate = delegate;
-}
--(void) setCallbackPaymentData:(void (^)(PaymentData * _Nonnull))callbackPaymentData{
-    _callbackPaymentData = callbackPaymentData;
-}
 
 -(UINib *)getNib {
     return [UINib nibWithNibName:@"CustomTableViewCell" bundle: [NSBundle mainBundle]];
 }
 
--(CGFloat)getHeigth {
+-(CGFloat)getHeight {
     return (CGFloat)180;
 }
 

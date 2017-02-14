@@ -9,7 +9,7 @@
 import UIKit
 
 
-open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, CustomRowDelegate {
+open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate {
 
 
     static let kNavBarOffset = CGFloat(-64.0);
@@ -263,8 +263,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells) {
             for cell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells! {
-                self.checkoutTable.register(cell.contentProvider.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
-                cell.contentProvider.delegate = self
+                self.checkoutTable.register(cell.getNib(), forCellReuseIdentifier: "confirmAdditionalCell"+String(i))
+                cell.setDelegate(delegate: self)
                 i += 1
             }
         }
@@ -272,8 +272,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         i = 0
         if viewModel.hasCustomItemCells(){
             for customCell in MercadoPagoCheckoutViewModel.confirmItemsCells! {
-                self.checkoutTable.register(customCell.contentProvider.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
-                customCell.contentProvider.delegate = self
+                self.checkoutTable.register(customCell.getNib(), forCellReuseIdentifier: "confirmAdditionalItemCell"+String(i))
+                customCell.setDelegate(delegate: self)
                 i += 1
             }
         }
@@ -306,8 +306,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
         let customCellNib = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalCell" + String(indexPath.row), for: indexPath)
         
-        let contentProvider = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].contentProvider
-        contentProvider.fillCell(cell: customCellNib)
+        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].fillCell(cell: customCellNib)
         return customCellNib
     }
     
@@ -315,8 +314,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmAdditionalItemCell" + String(indexPath.row), for: indexPath)
 
         if viewModel.hasCustomItemCells(){
-            let contentProvider = MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].contentProvider
-            contentProvider.fillCell(cell: custom)
+            MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].fillCell(cell: custom)
             return custom
         } else {
             return UITableViewCell()
@@ -493,14 +491,14 @@ open class CheckoutViewModel {
             }
             
         } else if isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].contentProvider.getHeigth() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.confirmItemsCells![indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if isPaymentMethodCellFor(indexPath: indexPath){
             return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].contentProvider.getHeigth()
+            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCells![indexPath.row].getHeight()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {
@@ -615,6 +613,6 @@ open class CheckoutViewModel {
 
 }
 
-@objc public protocol CustomRowDelegate {
+@objc public protocol MPCustomRowDelegate {
     func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void))
 }

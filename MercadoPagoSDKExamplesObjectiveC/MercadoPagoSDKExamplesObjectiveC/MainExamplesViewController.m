@@ -67,13 +67,12 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     };
     
-    MPCustomCell *customCellPair = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
-    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
-    [MercadoPagoCheckout addConfirmAdditionalCells:customCells];
-    
-    
-    MPCustomCell *customItemCellPair = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
-    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCellPair, customItemCellPair, nil];
+    MPCustomCell *customCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
+    [MercadoPagoCheckout addConfirmAdditionalCells:[[NSArray alloc] initWithObjects:customCell, nil]];
+//    
+//    
+    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithContentProvider:customCellProvider];
+    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, customItemCell, nil];
     [MercadoPagoCheckout addConfirmItemCells:customItemCells];
     
 

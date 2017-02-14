@@ -10,13 +10,11 @@ import Foundation
 @objc
 public protocol MPCellContentProvider : NSObjectProtocol {
     
-    weak var delegate : CustomRowDelegate? { set get }
-    
-    var callbackPaymentData : (PaymentData) -> Void { set get }
+    weak var delegate : MPCustomRowDelegate? { set get }
     
     func fillCell(cell: UITableViewCell)
     
     func getNib() -> UINib
     
-    func getHeigth() -> CGFloat
+    func getHeight() -> CGFloat
 }
