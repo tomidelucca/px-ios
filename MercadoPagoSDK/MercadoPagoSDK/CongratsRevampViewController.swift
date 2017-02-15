@@ -111,7 +111,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getHeaderCell(indexPath: IndexPath) -> UITableViewCell {
         let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.getColor(), instruction: nil)
+        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.getColor())
         return headerCell
     }
     

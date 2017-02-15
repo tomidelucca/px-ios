@@ -11,12 +11,12 @@ import UIKit
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    var paymentResult : PaymentResult!
+    var payment : Payment!
     var paymentTypeId : String!
-    var callback : (_ payment : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void
+    var callback : (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
-    var instruction: Instruction?
+    var instructionsInfo: InstructionsInfo?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -56,17 +56,17 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if instruction == nil {
+        if instructionsInfo == nil {
             self.showLoading()
             getInstructions()
         } else {
             self.tableView.reloadData()
         }
     }
-    public init(paymentResult : PaymentResult, paymentTypeId : String, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(payment : Payment, paymentTypeId : String, callback : @escaping (_ payment : Payment, _ status : MPStepBuilder.CongratsState) -> Void) {
         self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
-        self.paymentResult = paymentResult
+        self.payment = payment
         self.paymentTypeId = paymentTypeId
     }
     
@@ -84,7 +84,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return (instruction != nil) ? 3 : 0
+        return (instructionsInfo != nil) ? 3 : 0
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,7 +101,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
         case 0:
             if indexPath.row == 0 {
                 let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-                headerCell.fillCell(paymentResult: paymentResult, paymentMethod: nil, color: color!, instruction: instruction)
+                headerCell.fillCell(instructionsInfo: instructionsInfo!, color: color!)
                 headerCell.selectionStyle = .none
                 return headerCell
             } else {
@@ -113,20 +113,20 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             let bodyCell = self.tableView.dequeueReusableCell(withIdentifier: "bodyNib") as! InstructionBodyTableViewCell
             bodyCell.selectionStyle = .none
             ViewUtils.drawBottomLine(y: bodyCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: bodyCell.contentView)
-            bodyCell.fillCell(instruction: self.instruction!, paymentResult: self.paymentResult)
+            bodyCell.fillCell(instruction: self.instructionsInfo!.instructions[0], payment: payment)
             return bodyCell
         default:
             if indexPath.row == 0{
                 let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-                confirmEmailCell.fillCell(paymentResult: paymentResult, instruction: instruction)
+                confirmEmailCell.fillCell(paymentResult: nil, instruction: instructionsInfo?.instructions[0])
                 confirmEmailCell.selectionStyle = .none
                 ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
                 return confirmEmailCell
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                footerNib.setCallbackStatus(callback: callback, paymentResult: paymentResult, status: MPStepBuilder.CongratsState.ok)
-                footerNib.fillCell(paymentResult: paymentResult)
+                //footerNib.setCallbackStatus(callback: callback, paymentResult: paymentResult, status: MPStepBuilder.CongratsState.ok)
+                //footerNib.fillCell(paymentResult: paymentResult)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib
             }
@@ -134,8 +134,8 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     }
     
     fileprivate func getInstructions(){
-        MPServicesBuilder.getInstructions(for: paymentResult._id!, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
-            self.instruction = instructionsInfo.instructions[0]
+        MPServicesBuilder.getInstructions(for: payment._id, paymentTypeId : self.paymentTypeId, success: { (instructionsInfo : InstructionsInfo) -> Void in
+            self.instructionsInfo = instructionsInfo
             self.tableView.reloadData()
             self.hideLoading()
         }, failure: { (error) -> Void in

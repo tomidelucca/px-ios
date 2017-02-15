@@ -28,7 +28,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         subtitle.text = ""
     }
     
-    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor, instruction: Instruction?){
+    func fillCell(paymentResult: PaymentResult, paymentMethod: PaymentMethod?, color: UIColor){
         
         view.backgroundColor = color
         
@@ -36,12 +36,12 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             icon.image = MercadoPago.getImage("iconoAcreditado")
             title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedTitle()
             subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSubtitle()
-        
+            
         } else if paymentResult.status == "in_process" {
             icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderPendingIcon()
             title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingTitle()
             subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSubtitle()
-        
+            
         } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
             icon.image = MercadoPago.getImage("congrats_iconoAutorizarTel")
             var titleWithParams:String = ""
@@ -64,35 +64,13 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
                 self.title.attributedText = attributedTitle
             }
             
-        } /*else if paymentResult.status == "pending"{
-            icon.image = MercadoPago.getImage("iconoPagoOffline")
-            
-            let currency = MercadoPagoContext.getCurrency()
-            let currencySymbol = currency.getCurrencySymbolOrDefault()
-            let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
-            let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
-            
-            let arr = String(paymentResult.transactionAmount).characters.split(separator: ".").map(String.init)
-            let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
-            let centsStr = Utils.getCentsFormatted(String(paymentResult.transactionAmount), decimalSeparator: decimalSeparator)
-            let amountRange = instruction?.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
-            
-            if amountRange != nil {
-                let attributedTitle = NSMutableAttributedString(string: (instruction?.title.substring(to: (amountRange?.lowerBound)!))!, attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
-                let attributedAmount = Utils.getAttributedAmount(paymentResult.transactionAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
-                attributedTitle.append(attributedAmount)
-                let endingTitle = NSAttributedString(string: (instruction?.title.substring(from: (amountRange?.upperBound)!))!, attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
-                attributedTitle.append(endingTitle)
-                
-                self.title.attributedText = attributedTitle
-            }
-        } */else {
+        } else {
             icon.image = MercadoPago.getImage("congrats_iconoTcError")
             var title = (paymentResult.statusDetail + "_title")
             if !title.existsLocalized() {
                 title = "Uy, no pudimos procesar el pago".localized
             }
-          
+            
             
             if CountdownTimer.getInstance().hasTimer() {
                 self.timerLabel = MPLabel(frame: CGRect(x: UIScreen.main.bounds.size.width - 66, y: 10, width: 56, height: 20))
@@ -111,7 +89,34 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             messageError.text = "Algo salió mal… ".localized
         }
     }
-
+    
+    func fillCell(instructionsInfo: InstructionsInfo, color: UIColor) {
+        
+        view.backgroundColor = color
+        
+        icon.image = MercadoPago.getImage("iconoPagoOffline")
+        let currency = instructionsInfo.amountInfo.currency!
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
+        let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
+        
+        let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
+        let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
+        let amountRange = instructionsInfo.instructions[0].title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
+        
+        if amountRange != nil {
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white())
+            attributedTitle.append(attributedAmount)
+            let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: 22)])
+            attributedTitle.append(endingTitle)
+            
+            self.title.attributedText = attributedTitle
+        }
+        
+    }
+    
     
     func updateTimer() {
         if self.timerLabel != nil {

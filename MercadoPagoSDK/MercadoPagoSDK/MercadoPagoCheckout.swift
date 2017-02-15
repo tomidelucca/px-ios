@@ -252,7 +252,7 @@ open class MercadoPagoCheckout: NSObject {
         
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
-            congratsViewController = InstructionsRevampViewController(paymentResult: paymentResult, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (paymentResult : PaymentResult, state :MPStepBuilder.CongratsState) in
+            congratsViewController = InstructionsRevampViewController(payment: self.viewModel.payment!, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (payment : Payment, state :MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         } else {
