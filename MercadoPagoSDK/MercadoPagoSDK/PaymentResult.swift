@@ -17,11 +17,13 @@ open class PaymentResult: NSObject {
     var amount: Double?
     var statementDescription: String?
     
-    init (status: String, statusDetail: String, paymentData: PaymentData?, currencyId: String?, payerEmail:String?, id: String?, amount: Double?, statementDescription: String?){
+    init (status: String, statusDetail: String, paymentData: PaymentData?, siteId: String, payerEmail:String?, id: String?, amount: Double?, statementDescription: String?){
+        
+        MercadoPagoContext.setSiteID(siteId)
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
-        self.currencyId = currencyId
+        self.currencyId = MercadoPagoContext.getCurrency()._id
         self.payerEmail = payerEmail
         self._id = id
         self.amount = amount

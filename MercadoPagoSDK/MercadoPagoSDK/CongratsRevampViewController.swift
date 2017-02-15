@@ -63,7 +63,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(paymentResult: PaymentResult, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(paymentResult: PaymentResult, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
         self.viewModel = CongratsViewModel(paymentResult: paymentResult, callback: callback)
     }
@@ -117,7 +117,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getFooterCell() -> UITableViewCell {
         let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
-        footerNib.setCallbackStatus(callback: self.viewModel.callback, paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.ok)
+        footerNib.setCallbackStatus(callback: self.viewModel.callback, status: MPStepBuilder.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult)
         if self.viewModel.approved(){
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
@@ -140,7 +140,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
         let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-        rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
+        rejectedCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
         rejectedCell.fillCell(paymentResult: self.viewModel.paymentResult)
         if drawLine {
             ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
@@ -150,16 +150,16 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getCallForAuthCell() -> UITableViewCell {
         let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
-        callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
+        callFAuthCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
         callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
         return callFAuthCell
     }
 }
 class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     var paymentResult: PaymentResult!
-    var callback: (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void
+    var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
     
-    init(paymentResult: PaymentResult, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
+    init(paymentResult: PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
         
         self.paymentResult = paymentResult
         self.callback = callback
@@ -256,7 +256,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
                 paymentAction = PaymentActions.RECOVER_TOKEN
             }
             MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: paymentAction.rawValue, result: nil)
-            self.callback(paymentResult, status)
+            self.callback(status)
         }
         return callbackWithTracker
     }

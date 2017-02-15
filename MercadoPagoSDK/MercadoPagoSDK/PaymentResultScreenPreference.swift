@@ -44,11 +44,11 @@ open class PaymentResultScreenPreference: NSObject {
         self.headerPendingIconBundle = bundle
     }
     
-    func disableChangePaymentMethodCell(){
+    func disableChangePaymentMethodOption(){
         self.disableSelectAnotherPaymentMethod = true
     }
     
-    func enableChangePaymentMethodCell(){
+    func enableChangePaymentMethodOption(){
         self.disableSelectAnotherPaymentMethod = false
     }
     
