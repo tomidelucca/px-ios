@@ -157,7 +157,9 @@ open class CheckoutPreference : NSObject {
         if isExpired() {
             return "La preferencia esta expirada".localized
         }
-        
+        if (self.getAmount() < 0) {
+            return "El monto de la compra no es válido".localized
+        }
         return nil
     }
     
@@ -176,6 +178,8 @@ open class CheckoutPreference : NSObject {
                 return error
             }
         }
+        
+        
         return nil
     }
     
