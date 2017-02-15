@@ -74,7 +74,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     fileprivate func initCommon(){
         
-        self.merchantBaseUrl = MercadoPagoContext.baseURL()
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
         self.currency = MercadoPagoContext.getCurrency()
@@ -431,6 +430,7 @@ class PaymentVaultViewModel : NSObject {
     
     func shouldGetCustomerCardsInfo() -> Bool {
         return MercadoPagoContext.isCustomerInfoAvailable() && self.isRoot && (self.customerPaymentOptions == nil || self.customerPaymentOptions?.count == 0)
+        
     }
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
@@ -454,9 +454,9 @@ class PaymentVaultViewModel : NSObject {
         return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchCount
     }
     
-    func getCustomerCardRowHeight() -> CGFloat {
-        return self.getCustomerPaymentMethodsToDisplayCount() > 0 ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
-    }
+//    func getCustomerCardRowHeight() -> CGFloat {
+//        return self.getCustomerPaymentMethodsToDisplayCount() > 0 ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
+//    }
     
     func getExcludedPaymentTypeIds() -> Set<String>? {
         return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentTypeIds : nil
