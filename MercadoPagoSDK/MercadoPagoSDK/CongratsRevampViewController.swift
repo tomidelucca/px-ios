@@ -86,13 +86,13 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if viewModel.isHeaderCellFor(indexPath: indexPath) {
             return self.getHeaderCell(indexPath: indexPath)
-        
+            
         } else if viewModel.isApprovedBodyCellFor(indexPath: indexPath){
             return getApprovedBodyCell()
-        
+            
         } else if viewModel.isEmailCellFor(indexPath: indexPath) {
             return getConfirmEmailCell()
-        
+            
         } else if viewModel.isCallForAuthFor(indexPath: indexPath) {
             return getCallForAuthCell()
             
@@ -101,7 +101,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
                 return getOtherPaymentMethodCell(drawLine: true)
             }
             return getOtherPaymentMethodCell(drawLine: false)
-        
+            
         } else if viewModel.isFooterCellFor(indexPath: indexPath){
             return getFooterCell()
         }
@@ -165,31 +165,27 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         self.callback = callback
     }
     open func methodId() -> String!{
-        //return paymentResult!.paymentMethodId
-        return ""
+        return paymentResult.paymentData?.paymentMethod._id ?? ""
     }
     
     open func status() -> String!{
-        return paymentResult!.status
+        return paymentResult.status
     }
     
     open func statusDetail() -> String!{
-        return paymentResult!.statusDetail
+        return paymentResult.statusDetail
     }
     
     open func typeId() -> String!{
-       // return paymentResult!.paymentTypeId
-         return ""
+        return paymentResult.paymentData?.paymentMethod.paymentTypeId ?? ""
     }
     
-    open func installments() -> String!{
-        //return String(paymentResult!.installments)
-         return ""
+    open func installments() -> String! {
+        return String(describing: paymentResult.paymentData?.payerCost?.installments)
     }
     
     open func issuerId() -> String!{
-        //return String(paymentResult!.issuerId)
-         return ""
+        return String(describing: paymentResult.paymentData?.issuer?._id)
     }
     
     func getColor() -> UIColor{
@@ -310,7 +306,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() ? 1 : 0
         if approved() {
             return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
-        
+            
         } else if callForAuth() {
             return selectAnotherCell + 1
         }
