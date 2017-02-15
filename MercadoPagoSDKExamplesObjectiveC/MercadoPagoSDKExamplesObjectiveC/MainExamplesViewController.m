@@ -9,11 +9,12 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "CustomInflator.h"
+
 @import MercadoPagoSDK;
 
 
 @implementation MainExamplesViewController
+
 
 
 - (void)viewDidLoad {
@@ -33,7 +34,7 @@
     
     // Service Preference para seteo de servicio de pago
     NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla_cards_data"
+                                  @"merchant_access_token" : @"mla-cards-data"
                                   };
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
     
@@ -44,7 +45,7 @@
     
     
     
-    //[servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+  //  [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
     
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
@@ -59,20 +60,36 @@
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
     
-    CustomTableViewCell *customCell = [[[NSBundle mainBundle]
-                                        loadNibNamed:@"CustomTableViewCell"
-                                        owner:self options:nil]
-                                       firstObject];
-    customCell.label.text = @"llalala";
+    CustomTableViewCell *cargaSubeCell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCell.label.text = @"Carga SUBE";
+    [cargaSubeCell.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+    [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
+    self.customCell = customCargaSube;
+
     
-    CustomInflator *inflator = [[CustomInflator alloc] init];
-  // [inflator setTitle:@"inflator overriden title"];
+    ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
+    [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
+    [reviewPreference setProductsDeteailWithProductsTitle:@"Carga SUBE"];
+    [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
+    [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
+    [ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+    //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
     
-    MPCustomCells *customCellPair = [[MPCustomCells alloc] initWithCell:customCell inflator:inflator];
-    NSArray *customCells = [[NSArray alloc] initWithObjects:customCellPair, nil];
-    [MercadoPagoCheckout addReviewbleWithCell:customCells];
+    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
     
 
+//    
+    
+    
+//    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+//    customCell2.label.text = @"Item 2";
+//    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
+//    
+    
+    
+    //MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
+    
 //
     /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
@@ -85,7 +102,6 @@
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
-    
 
     PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
@@ -111,5 +127,15 @@
 
 }
 
+-(void)invokeCallback:(MPCustomCell *)button {
+    
+    [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+        NSLog(@"%@", paymentData.paymentMethod._id);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
+//    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
+//        self.callbackPaymentData(paymentData);
+//    }];
+}
 
 @end

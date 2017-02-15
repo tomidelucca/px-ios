@@ -186,12 +186,31 @@ class CheckoutPreferenceTest: XCTestCase {
         XCTAssertEqual(checkoutPreference.itemsValid(), "El título del item esta vacio")
     }
     
-    func testValidate() {
+    func testValidateMissingPayer() {
         let checkoutPreference = CheckoutPreference()
         let item1 = Item(_id: "id1", title : "item 1 title", quantity: 1, unitPrice: 10)
         let item2 = Item(_id: "id2", title : "item 2 title", quantity: 3, unitPrice: 5)
         checkoutPreference.addItems(items: [item1, item2])
         XCTAssertEqual(checkoutPreference.validate(), "Se requiere email de comprador")
+    }
+    
+    func testValidateGreaterThanZeroAmount() {
+        let checkoutPreference = CheckoutPreference()
+        let item1 = Item(_id: "id1", title : "item 1 title", quantity: 1, unitPrice: 10)
+        let item2 = Item(_id: "id2", title : "item 2 title", quantity: 3, unitPrice: -5)
+        checkoutPreference.addItems(items: [item1, item2])
+        checkoutPreference.payer = Payer()
+        checkoutPreference.setPayerEmail("payerem@il.com")
+        XCTAssertEqual(checkoutPreference.validate(), "El monto de la compra no es válido")
+    }
+    
+    func testValidateGreaterThanZeroAmount_OneItem() {
+        let checkoutPreference = CheckoutPreference()
+        let item1 = Item(_id: "id1", title : "item 1 title", quantity: 4, unitPrice: -2)
+        checkoutPreference.addItems(items: [item1])
+        checkoutPreference.payer = Payer()
+        checkoutPreference.setPayerEmail("payerem@il.com")
+        XCTAssertEqual(checkoutPreference.validate(), "El monto de la compra no es válido")
     }
     
 }

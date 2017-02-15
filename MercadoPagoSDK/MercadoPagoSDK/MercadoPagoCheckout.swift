@@ -37,11 +37,6 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    
-    open static func addReviewble(cell: [MPCustomCells]){
-        MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell = cell
-    }
-    
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
         MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
     }
@@ -56,6 +51,10 @@ open class MercadoPagoCheckout: NSObject {
     
     open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
         MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
+    }
+    
+    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
     }
     
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
@@ -222,8 +221,13 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectSecurityCode(){
         let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
-            self.viewModel.updateCheckoutModel(token: token!)
-            self.executeNextStep()
+            if token == nil {
+                self.navigationController.popViewController(animated: true)
+                self.viewModel.paymentData.clear()
+            } else {
+                self.viewModel.updateCheckoutModel(token: token!)
+                self.executeNextStep()
+            }
         })
         self.navigationController.pushViewController(securityCodeVc, animated: true)
         
@@ -284,6 +288,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func finish(){
         
+        ReviewScreenPreference.clear()
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)

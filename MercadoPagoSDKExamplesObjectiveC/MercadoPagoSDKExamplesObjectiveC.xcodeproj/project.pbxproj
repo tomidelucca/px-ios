@@ -15,7 +15,6 @@
 		766627571D2AFDF9002EB903 /* SavedCardsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766627561D2AFDF9002EB903 /* SavedCardsTableViewController.m */; };
 		76BAC6471E4B2F220081F675 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */; };
 		76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */; };
-		76BAC64D1E4B30BA0081F675 /* CustomInflator.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BAC64C1E4B30BA0081F675 /* CustomInflator.m */; };
 		76E6E06A1D2AD33F006CE49B /* SimpleVaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E0681D2AD33F006CE49B /* SimpleVaultViewController.m */; };
 		76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E6E06D1D2AE529006CE49B /* SimpleVaultFormViewController.m */; };
 		76EF7EC21D2559140087C785 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC11D2559140087C785 /* main.m */; };
@@ -88,8 +87,6 @@
 		76BAC6451E4B2F220081F675 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
-		76BAC64B1E4B30BA0081F675 /* CustomInflator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInflator.h; sourceTree = "<group>"; };
-		76BAC64C1E4B30BA0081F675 /* CustomInflator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInflator.m; sourceTree = "<group>"; };
 		76E6E0671D2AD33F006CE49B /* SimpleVaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleVaultViewController.h; sourceTree = "<group>"; };
 		76E6E0681D2AD33F006CE49B /* SimpleVaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleVaultViewController.m; sourceTree = "<group>"; };
 		76E6E06C1D2AE529006CE49B /* SimpleVaultFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleVaultFormViewController.h; sourceTree = "<group>"; };
@@ -156,8 +153,6 @@
 				76BAC6451E4B2F220081F675 /* CustomTableViewCell.h */,
 				76BAC6461E4B2F220081F675 /* CustomTableViewCell.m */,
 				76BAC6491E4B30060081F675 /* CustomTableViewCell.xib */,
-				76BAC64B1E4B30BA0081F675 /* CustomInflator.h */,
-				76BAC64C1E4B30BA0081F675 /* CustomInflator.m */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -394,7 +389,6 @@
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
-				76BAC64D1E4B30BA0081F675 /* CustomInflator.m in Sources */,
 				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,
 				76EF7F5D1D27027A0087C785 /* StepsExamplesViewController.m in Sources */,

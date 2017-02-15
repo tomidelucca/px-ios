@@ -9,7 +9,8 @@
 import UIKit
 
 
-open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate {
+open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate {
+
 
     static let kNavBarOffset = CGFloat(-64.0);
     static let kDefaultNavBarOffset = CGFloat(0.0);
@@ -135,11 +136,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 // numberOfRowsInMainSection() + confirmPaymentButton
                 return self.viewModel.numberOfRowsInMainSection() + 1
             case 2:
-                return self.viewModel.preference!.items.count
+                return viewModel.hasCustomItemCells() ? viewModel.numberOfCustomItemCells() : self.viewModel.preference!.items.count
             case 3:
                 return 1
             case 4:
-                return self.viewModel.numberOfCustomCell()
+                return self.viewModel.numberOfCustomAdditionalCells()
             case 5:
                 return 3
             default:
@@ -153,7 +154,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return getMainTitleCell(indexPath : indexPath)
             
         } else if self.viewModel.isProductlCellFor(indexPath: indexPath){
-            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Productos".localized, amount : self.viewModel.preference!.getAmount())
+            let productsTitle = MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle()
+            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : productsTitle, amount : self.viewModel.preference!.getAmount())
             
         } else if self.viewModel.isInstallmentsCellFor(indexPath: indexPath) {
             return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.payerCost, addSeparatorLine: true)
@@ -165,7 +167,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return self.getConfirmPaymentButtonCell(indexPath: indexPath)
             
         } else if self.viewModel.isItemCellFor(indexPath: indexPath){
-            return self.getPurchaseItemDetailCell(indexPath: indexPath)
+            return viewModel.hasCustomItemCells() ? self.getCustomItemCell(indexPath: indexPath) : self.getPurchaseItemDetailCell(indexPath: indexPath)
             
         } else if viewModel.isPaymentMethodCellFor(indexPath: indexPath) {
             if self.viewModel.isPaymentMethodSelectedCard() {
@@ -174,7 +176,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return self.getOfflinePaymentMethodSelectedCell(indexPath: indexPath)
             
         } else if viewModel.isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return self.getCustomCell(indexPath: indexPath)
+            return self.getCustomAdditionalCell(indexPath: indexPath)
             
         } else if viewModel.isFotterCellFor(indexPath: indexPath) {
             switch indexPath.row {
@@ -258,14 +260,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
-        var i = 0
-        
-        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.isEmpty {
-            for customCell in MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell {
-                self.checkoutTable.register(customCell.inflator.getNib(), forCellReuseIdentifier: String(i))
-                i += 1
-            }
-        }
         
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
@@ -274,7 +268,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
         let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
-        payerCostTitleTableViewCell.setTitle(string: "Confirma tu compra".localized)
+        payerCostTitleTableViewCell.setTitle(string: MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle())
         payerCostTitleTableViewCell.title.textColor = UIColor.px_blueMercadoPago()
         payerCostTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
         titleCell = payerCostTitleTableViewCell
@@ -292,13 +286,19 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost, addSeparatorLine: addSeparatorLine)
     }
     
-    private func getCustomCell(indexPath: IndexPath) -> UITableViewCell{
-        let custom = self.checkoutTable.dequeueReusableCell(withIdentifier: String(indexPath.row), for: indexPath) as! MPCustomTableViewCell
-        
-        let inflator = MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell[indexPath.row].inflator
-        inflator.fillCell(cell: custom)
-        return custom
+    private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
+        let customCell = ReviewScreenPreference.additionalInfoCells[indexPath.row]//confirmAdditionalCustomCells!
+        customCell.setDelegate(delegate: self)
+        return customCell.getTableViewCell()
     }
+    
+    private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell{
+        let customCell = ReviewScreenPreference.customItemCells[indexPath.row]
+        customCell.setDelegate(delegate: self)
+        return customCell.getTableViewCell()
+    }
+    
+    
     
     private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
@@ -311,6 +311,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
         confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
+        let confirmPaymentTitle =  MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText()
+        confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle,for: .normal)
         return confirmPaymentTableViewCell
     }
     
@@ -340,6 +342,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getCancelPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell {
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
+        let exitButtonTitle = MercadoPagoCheckoutViewModel.reviewScreenPreference.getCancelButtonTitle()
+        exitButtonCell.exitButton.setTitle(exitButtonTitle, for: .normal)
         exitButtonCell.exitButton.addTarget(self, action: #selector(CheckoutViewController.exitCheckoutFlow), for: .touchUpInside)
         return exitButtonCell
     }
@@ -371,7 +375,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         if (self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset) {
             return ""
         }
-        return "Confirma tu compra".localized
+        return MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle()
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
@@ -381,6 +385,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.hideLoading()
+    }
+    
+    public func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void)) {
+        rowCallback(self.viewModel.paymentData)
     }
 }
 
@@ -465,14 +473,14 @@ open class CheckoutViewModel {
             }
             
         } else if isItemCellFor(indexPath: indexPath) {
-            return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if isPaymentMethodCellFor(indexPath: indexPath){
             return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
         }
             
         else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell[indexPath.row].inflator.getHeigth()
+            return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
         }
             
         else if isFotterCellFor(indexPath: indexPath) {
@@ -496,15 +504,26 @@ open class CheckoutViewModel {
         return self.paymentData.payerCost != nil && !self.paymentData.payerCost!.hasInstallmentsRate() && self.paymentData.payerCost!.installments != 1
     }
     
-    func numberOfCustomCell() -> Int {
-        if !MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.isEmpty {
-            return MercadoPagoCheckoutViewModel.confirmAdditionalCustomCell.count
+    func numberOfCustomAdditionalCells() -> Int {
+        if !Array.isNullOrEmpty(ReviewScreenPreference.additionalInfoCells) {
+            return ReviewScreenPreference.additionalInfoCells.count
         }
         return 0
     }
     
+    func numberOfCustomItemCells() -> Int {
+        if hasCustomItemCells() {
+            return ReviewScreenPreference.customItemCells.count
+        }
+        return 0
+    }
+    
+    func hasCustomItemCells() -> Bool {
+        return !Array.isNullOrEmpty(ReviewScreenPreference.customItemCells)
+    }
+    
     func hasPayerCostAddionalInfo() -> Bool {
-            return false
+        return false
     }
     
     func getTotalAmmount() -> Double {
@@ -572,4 +591,10 @@ open class CheckoutViewModel {
     func isPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 3
     }
+    
+
+}
+
+@objc public protocol MPCustomRowDelegate {
+    func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void))
 }
