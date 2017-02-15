@@ -256,7 +256,7 @@ open class MercadoPagoCheckout: NSObject {
                 self.executeNextStep()
             })
         } else {
-            congratsViewController = CongratsRevampViewController(paymentResult: paymentResult, paymentMethod: self.viewModel.paymentData.paymentMethod!, callback: { (paymentResult : PaymentResult, state : MPStepBuilder.CongratsState) in
+            congratsViewController = CongratsRevampViewController(paymentResult: paymentResult, callback: { (paymentResult : PaymentResult, state : MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         }

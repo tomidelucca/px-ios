@@ -63,9 +63,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(paymentResult: PaymentResult, paymentMethod : PaymentMethod, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(paymentResult: PaymentResult, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
-        self.viewModel = CongratsViewModel(paymentResult: paymentResult, paymentMethod: paymentMethod, callback: callback)
+        self.viewModel = CongratsViewModel(paymentResult: paymentResult, callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -111,7 +111,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getHeaderCell(indexPath: IndexPath) -> UITableViewCell {
         let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.getColor())
+        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentResult.paymentData?.paymentMethod, color: self.viewModel.getColor())
         return headerCell
     }
     
@@ -151,19 +151,17 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     private func getCallForAuthCell() -> UITableViewCell {
         let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
         callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
-        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentMethod!)
+        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
         return callFAuthCell
     }
 }
 class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     var paymentResult: PaymentResult!
-    var paymentMethod: PaymentMethod?
     var callback: (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void
     
-    init(paymentResult: PaymentResult, paymentMethod : PaymentMethod, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
+    init(paymentResult: PaymentResult, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
         
         self.paymentResult = paymentResult
-        self.paymentMethod = paymentMethod
         self.callback = callback
     }
     open func methodId() -> String!{
