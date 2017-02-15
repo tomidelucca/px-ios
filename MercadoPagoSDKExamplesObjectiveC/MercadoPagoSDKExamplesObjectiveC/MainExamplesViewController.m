@@ -29,7 +29,7 @@
 - (IBAction)checkoutFlow:(id)sender {
 
     // Decoration Preference con colores custom
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName"];
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
     
     // Service Preference para seteo de servicio de pago
