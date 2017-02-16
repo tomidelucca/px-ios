@@ -80,7 +80,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         
         self.loadMPStyles()
         hideTimer()
-        
+        MercadoPagoCheckout.firstViewControllerPushed = true
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
