@@ -319,7 +319,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     private func createCurrentLoading() {
-        let vcLoading = MercadoPagoUIViewController()
+        let vcLoading = MPXLoadingViewController()
         vcLoading.view.backgroundColor = MercadoPagoCheckoutViewModel.decorationPreference.baseColor
         let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: MercadoPagoCheckoutViewModel.decorationPreference.baseColor)
         
@@ -340,8 +340,7 @@ open class MercadoPagoCheckout: NSObject {
         CATransaction.begin()
         CATransaction.setCompletionBlock { 
             if MercadoPagoCheckout.firstViewControllerPushed {
-                let delay = 1.0
-                self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: delay)
+                self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
             }
         }
         self.navigationController.pushViewController(viewController, animated: animated)
