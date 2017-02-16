@@ -208,7 +208,6 @@ open class MercadoPagoCheckout: NSObject {
         
         let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
             self.viewModel.updateCheckoutModel(paymentData: paymentData)
-            let currentViewControllers = self.navigationController.viewControllers
             if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
                 MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             } else {
