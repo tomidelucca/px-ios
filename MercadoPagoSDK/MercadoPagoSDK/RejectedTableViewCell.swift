@@ -15,7 +15,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
     @IBOutlet weak var button: UIButton!
     
     var paymentTypeId: String?;
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,7 +28,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
         self.button.titleLabel?.font = Utils.getFont(size: 16)
         self.selectionStyle = .none
     }
-
+    
     func fillCell (paymentResult: PaymentResult){
         
         if paymentResult.status == "rejected"{
@@ -56,10 +56,18 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
                     self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
                 }
             }
-        } else if paymentResult.statusDetail == "pending_contingency"{
-            self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
-        } else {
-            self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+        } else if paymentResult.status == "in_process" {
+            self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContetTitle()
+            
+            if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContentText()){
+                self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContentText()
+            
+            } else if paymentResult.statusDetail == "pending_contingency"{
+                self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
+            
+            } else {
+                self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+            }
         }
     }
 }

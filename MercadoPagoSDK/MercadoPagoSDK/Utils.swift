@@ -130,6 +130,10 @@ class Utils {
         return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
     }
     
+    class func getLightFont(size: CGFloat) -> UIFont {
+        return UIFont(name: MercadoPagoContext.getDecorationPreference().getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
+    
     class func append(firstJSON: String, secondJSON: String) -> String {
         if firstJSON == "" && secondJSON == "" {
             return ""

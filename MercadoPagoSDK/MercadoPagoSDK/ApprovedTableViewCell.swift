@@ -58,7 +58,7 @@ class ApprovedTableViewCell: UITableViewCell {
     func fillID(id: String?){
         if !String.isNullOrEmpty(id) {
             comprobante.text = "Comprobante".localized
-            paymentId.text = "Nº \(id)"
+            paymentId.text = "Nº \(id!)"
             
         } else {
             idInstallmentConstraint.constant = 0

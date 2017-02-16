@@ -8,13 +8,9 @@
 
 import Foundation
 @objc
-public protocol MPCustomInflator : NSObjectProtocol {
+public protocol MPCellContentProvider : NSObjectProtocol {
     
-    func fillCell(cell: MPCustomTableViewCell)
     
-    func getNib() -> UINib
     
-    func getHeigth() -> CGFloat
-    
-    var nib: UINib {get}
+    func getHeight() -> CGFloat
 }

@@ -618,13 +618,30 @@ class PaymentVaultViewModelTest: BaseTest {
     }
     
     func testShouldGetCustomerCardsInfo(){
-        
-        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
-        
-        //Root vc, valid input but customerCards loaded already
-        instance!.isRoot = true
-        instance!.customerPaymentOptions = [MockBuilder.buildCard()]
-        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+
+//        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+//        
+//        MercadoPagoContext.setBaseURL("baseUrl")
+//        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+//        
+//        MercadoPagoContext.setCustomerURI("customerUri")
+//        MercadoPagoContext.setMerchantAccessToken("merchantAT")
+//        XCTAssertTrue(instance!.shouldGetCustomerCardsInfo())
+//        
+//        // CustomerUri invalid
+//        MercadoPagoContext.setCustomerURI("")
+//        MercadoPagoContext.setMerchantAccessToken("merchantAT")
+//        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+//        
+//        //Valid input but no root viewController
+//        MercadoPagoContext.setCustomerURI("customeruri")
+//        instance!.isRoot = false
+//        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
+//        
+//        //Root vc, valid input but customerCards loaded already
+//        instance!.isRoot = true
+//        instance!.customerPaymentOptions = [MockBuilder.buildCard()]
+//        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
 
         
     }
@@ -972,7 +989,7 @@ class PaymentVaultViewModelTest: BaseTest {
      *  optionSelected() for credit_card
      */
     func testOptionSelectedNewCard(){
-//        
+
 //        let currentNavigationController = UINavigationController()
 //        let cardPaymentMethodSearchitem = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
 //        instance!.optionSelected(cardPaymentMethodSearchitem, navigationController: currentNavigationController, cancelPaymentCallback: {})
@@ -980,14 +997,14 @@ class PaymentVaultViewModelTest: BaseTest {
 //        XCTAssertNotNil(currentNavigationController.viewControllers)
 //        XCTAssertTrue(currentNavigationController.viewControllers.count > 0)
 //        XCTAssertTrue(currentNavigationController.viewControllers[0] is CardFormViewController)
-//        
-//      
+
     }
     
     /**
      *  optionSelected() for offline payment method
      */
     func testOptionSelectedOfflinePaymentmethod(){
+
 //        let currentNavigationController = UINavigationController()
 //        
 //        let offlinePayment = MockBuilder.buildPaymentMethod("rapipago")

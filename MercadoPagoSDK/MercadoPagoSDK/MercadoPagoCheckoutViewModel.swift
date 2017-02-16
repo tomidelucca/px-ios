@@ -36,10 +36,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var decorationPreference = DecorationPreference()
     internal static var flowPreference = FlowPreference()
     internal static var paymentDataCallback : ((PaymentData) -> Void)?
-    
+    internal static var reviewScreenPreference = ReviewScreenPreference()
     internal static var paymentResultScreenPreference = PaymentResultScreenPreference()
-    
-    open static var confirmAdditionalCustomCell = [MPCustomCells]()
 
     var checkoutPreference : CheckoutPreference!
     
@@ -339,13 +337,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             // Vuelvo a root para iniciar la selección de medios de pago
             self.paymentOptionSelected = nil
             self.paymentMethodOptions = self.rootPaymentMethodOptions
-            self.paymentOptionSelected = nil
             self.search = nil
             self.rootVC = true
+            self.cardToken = nil
         } else {
             self.readyToPay = true
-            self.reviewAndConfirm = false
         }
+        self.reviewAndConfirm = false
     }
     
     public func updateCheckoutModel(payment : Payment) {

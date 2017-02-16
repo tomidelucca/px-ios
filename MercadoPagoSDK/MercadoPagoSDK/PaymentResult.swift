@@ -8,20 +8,22 @@
 
 import Foundation
 open class PaymentResult: NSObject {
-    var paymentData: PaymentData?
-    var status: String
-    var statusDetail: String
-    var currencyId: String?
-    var payerEmail: String?
-    var _id: String?
-    var amount: Double?
-    var statementDescription: String?
+    open var paymentData: PaymentData?
+    open var status: String
+    open var statusDetail: String
+    open var currencyId: String?
+    open var payerEmail: String?
+    open var _id: String?
+    open var amount: Double?
+    open var statementDescription: String?
     
-    init (status: String, statusDetail: String, paymentData: PaymentData?, currencyId: String?, payerEmail:String?, id: String?, amount: Double?, statementDescription: String?){
+    init (status: String, statusDetail: String, paymentData: PaymentData?, siteId: String, payerEmail:String?, id: String?, amount: Double?, statementDescription: String?){
+        
+        MercadoPagoContext.setSiteID(siteId)
         self.status = status
         self.statusDetail = statusDetail
         self.paymentData = paymentData
-        self.currencyId = currencyId
+        self.currencyId = MercadoPagoContext.getCurrency()._id
         self.payerEmail = payerEmail
         self._id = id
         self.amount = amount

@@ -21,7 +21,7 @@ class ConfirmEmailTableViewCell: UITableViewCell {
         if let instruction = instruction?.secondaryInfo?[0] {
             label.text = instruction
         } else if paymentResult?.status == "approved"{
-            label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult?.payerEmail!)")
+            label.text = ("Te enviaremos este comprobante a %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentResult!.payerEmail!)")
         } else {
             label.text = "También enviamos el código a tu email".localized
         }

@@ -72,6 +72,7 @@ UILabel *identificationType;
     
     if (!errorOcurred) {
         [MercadoPagoContext setPublicKey:MERCHANT_PUBLIC_KEY];
+
         NSInteger installments = (selectedPayerCost == nil) ? 1 : selectedPayerCost.installments;
         
         if (customerCard == nil) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CongratsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+open class CongratsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
@@ -63,20 +63,28 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(paymentResult: PaymentResult, paymentMethod : PaymentMethod, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void){
+    init(paymentResult: PaymentResult, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
-        self.viewModel = CongratsViewModel(paymentResult: paymentResult, paymentMethod: paymentMethod, callback: callback)
+        self.viewModel = CongratsViewModel(paymentResult: paymentResult, callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
+            if viewModel.inProcess(){
+                return PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()
+            } else if viewModel.approved(){
+                return PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
+            }
+        }
         return UITableViewAutomaticDimension
+        
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,13 +94,13 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if viewModel.isHeaderCellFor(indexPath: indexPath) {
             return self.getHeaderCell(indexPath: indexPath)
-        
+            
         } else if viewModel.isApprovedBodyCellFor(indexPath: indexPath){
             return getApprovedBodyCell()
-        
+            
         } else if viewModel.isEmailCellFor(indexPath: indexPath) {
             return getConfirmEmailCell()
-        
+            
         } else if viewModel.isCallForAuthFor(indexPath: indexPath) {
             return getCallForAuthCell()
             
@@ -101,6 +109,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
                 return getOtherPaymentMethodCell(drawLine: true)
             }
             return getOtherPaymentMethodCell(drawLine: false)
+            
+        } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
+            return getAdditionalCustomCell(indexPath: indexPath)
         
         } else if viewModel.isFooterCellFor(indexPath: indexPath){
             return getFooterCell()
@@ -111,13 +122,13 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getHeaderCell(indexPath: IndexPath) -> UITableViewCell {
         let headerCell = self.tableView.dequeueReusableCell(withIdentifier: "headerNib") as! HeaderCongratsTableViewCell
-        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentMethod!, color: self.viewModel.getColor())
+        headerCell.fillCell(paymentResult: self.viewModel.paymentResult!, paymentMethod: self.viewModel.paymentResult.paymentData?.paymentMethod, color: self.viewModel.getColor())
         return headerCell
     }
     
     private func getFooterCell() -> UITableViewCell {
         let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
-        footerNib.setCallbackStatus(callback: self.viewModel.callback, paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.ok)
+        footerNib.setCallbackStatus(callback: self.viewModel.callback, status: MPStepBuilder.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult)
         if self.viewModel.approved(){
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
@@ -140,7 +151,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
         let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-        rejectedCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
+        rejectedCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
         rejectedCell.fillCell(paymentResult: self.viewModel.paymentResult)
         if drawLine {
             ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
@@ -150,48 +161,62 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getCallForAuthCell() -> UITableViewCell {
         let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
-        callFAuthCell.setCallbackStatus(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
-        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentMethod!)
+        callFAuthCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.call_FOR_AUTH)
+        callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
         return callFAuthCell
     }
-}
-class CongratsViewModel : NSObject, MPPaymentTrackInformer{
-    var paymentResult: PaymentResult!
-    var paymentMethod: PaymentMethod?
-    var callback: (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void
     
-    init(paymentResult: PaymentResult, paymentMethod : PaymentMethod, callback : @escaping (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void) {
+    private func getAdditionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
+        
+        if self.viewModel.inProcess(){
+            let customCell = PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row]
+            customCell.setDelegate(delegate: self)
+            return customCell.getTableViewCell()
+        } else {
+            let customCell = PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row]
+            customCell.setDelegate(delegate: self)
+            return customCell.getTableViewCell()
+        }
+    }
+    
+    public func invokeCallbackWithPaymentResult(rowCallback : ((PaymentResult) -> Void)) {
+        rowCallback(self.viewModel.paymentResult)
+    }
+
+}
+
+class CongratsViewModel : NSObject, MPPaymentTrackInformer {
+    
+    var paymentResult: PaymentResult!
+    var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
+    
+    init(paymentResult: PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
         
         self.paymentResult = paymentResult
-        self.paymentMethod = paymentMethod
         self.callback = callback
     }
     open func methodId() -> String!{
-        //return paymentResult!.paymentMethodId
-        return ""
+        return paymentResult.paymentData?.paymentMethod._id ?? ""
     }
     
     open func status() -> String!{
-        return paymentResult!.status
+        return paymentResult.status
     }
     
     open func statusDetail() -> String!{
-        return paymentResult!.statusDetail
+        return paymentResult.statusDetail
     }
     
     open func typeId() -> String!{
-       // return paymentResult!.paymentTypeId
-         return ""
+        return paymentResult.paymentData?.paymentMethod.paymentTypeId ?? ""
     }
     
-    open func installments() -> String!{
-        //return String(paymentResult!.installments)
-         return ""
+    open func installments() -> String! {
+        return String(describing: paymentResult.paymentData?.payerCost?.installments)
     }
     
     open func issuerId() -> String!{
-        //return String(paymentResult!.issuerId)
-         return ""
+        return String(describing: paymentResult.paymentData?.issuer?._id)
     }
     
     func getColor() -> UIColor{
@@ -262,7 +287,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
                 paymentAction = PaymentActions.RECOVER_TOKEN
             }
             MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: paymentAction.rawValue, result: nil)
-            self.callback(paymentResult, status)
+            self.callback(status)
         }
         return callbackWithTracker
     }
@@ -283,7 +308,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     }
     
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 2
+        return indexPath.section == 3
     }
     
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
@@ -301,9 +326,15 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
     }
     
+    func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 2
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
         if section == 1 {
             return numberOfCellInBody()
+        } else if section == 2 {
+            return numberOfCustomAdditionalCells()
         }
         return 1
     }
@@ -312,12 +343,21 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() ? 1 : 0
         if approved() {
             return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
-        
+            
         } else if callForAuth() {
             return selectAnotherCell + 1
         }
         
         return selectAnotherCell
+    }
+    
+    func numberOfCustomAdditionalCells() -> Int {
+        if !Array.isNullOrEmpty(PaymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
+            return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
+        } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
+            return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
+        }
+        return 0
     }
 }
 
