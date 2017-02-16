@@ -103,10 +103,10 @@
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     
     
-    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
-    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
-    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
-    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+//    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
+//    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
     
 //

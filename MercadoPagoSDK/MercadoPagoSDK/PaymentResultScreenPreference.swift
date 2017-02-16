@@ -14,6 +14,8 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubtitle = ""
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
+    var contentTitle = "¿Qué puedo hacer?".localized
+    var contentText = ""
     var exitButttonTitle = "Continuar".localized
     var headerPendingIconName = "iconoAcreditado"
     var headerPendingIconBundle = MercadoPago.getBundle()!
@@ -68,6 +70,14 @@ open class PaymentResultScreenPreference: NSObject {
         PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
     }
     
+    open func setContentText(text: String){
+        self.contentText = text
+    }
+    
+    open func setContentTitle(title: String){
+        self.contentTitle = title
+    }
+    
     open func getApprovedTitle() -> String {
         return approvedTitle
     }
@@ -94,5 +104,13 @@ open class PaymentResultScreenPreference: NSObject {
     
     open func isSelectAnotherPaymentMethodDisable() -> Bool {
         return disableSelectAnotherPaymentMethod
+    }
+    
+    open func getContetTitle() -> String {
+        return contentTitle
+    }
+    
+    open func getContentText() -> String {
+        return contentText
     }
 }
