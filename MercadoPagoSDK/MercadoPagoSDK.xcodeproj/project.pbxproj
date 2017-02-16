@@ -541,6 +541,7 @@
 		767C9CD61E266C0600BB4662 /* MPPaymentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C9CD51E266C0600BB4662 /* MPPaymentTest.swift */; };
 		767C9CDE1E266E2C00BB4662 /* PromoViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C9CDD1E266E2C00BB4662 /* PromoViewControllerTest.swift */; };
 		767D8DCF1E5554460004FCA9 /* MPXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */; };
+		767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */; };
 		76882AD61C4FBAD900B440B1 /* PaymentTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */; };
 		76882AD71C4FBAD900B440B1 /* PaymentTitleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76882AD51C4FBAD900B440B1 /* PaymentTitleViewCell.xib */; };
 		76882AD81C4FBDB500B440B1 /* PaymentTitleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76882AD41C4FBAD900B440B1 /* PaymentTitleViewCell.swift */; };
@@ -3018,6 +3019,7 @@
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F9883681AD2AB6000F750F0 /* Cause.swift in Sources */,
 				76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */,
+				767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */,
 				76B084FF1CE2166900C157BF /* RejectedPaymentBodyTableViewCell.swift in Sources */,
 				7622E3351DF5F05700490C4E /* FooterTableViewCell.swift in Sources */,
 				0F2071C31B1F4BF700CE11AB /* UILoadingView.swift in Sources */,
