@@ -261,6 +261,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let purchaseTermsAndConditions = UINib(nibName: "TermsAndConditionsViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseTermsAndConditions, forCellReuseIdentifier: "termsAndConditionsViewCell")
         
+        if Array.isNullOrEmpty(ReviewScreenPreference.additionalInfoCells) {
+            for customCell in ReviewScreenPreference.additionalInfoCells {
+                self.checkoutTable.register(customCell.getTableViewCell().classForCoder, forCellReuseIdentifier: "cell")
+                    //customCell.getTableViewCell(), forCellReuseIdentifier: String(describing:customCell))
+            }
+        
+        }
+        
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
@@ -288,7 +296,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
         let customCell = ReviewScreenPreference.additionalInfoCells[indexPath.row]
+        //let nib = self.checkoutTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+       
         customCell.setDelegate(delegate: self)
+        self.checkoutTable.bringSubview(toFront: customCell.getTableViewCell())
         return customCell.getTableViewCell()
     }
     
