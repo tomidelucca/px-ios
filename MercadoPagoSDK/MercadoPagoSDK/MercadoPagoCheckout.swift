@@ -239,6 +239,14 @@ open class MercadoPagoCheckout: NSObject {
         
     }
     
+    public func updateReviewAndConfirm(){
+        let currentViewController = self.navigationController.viewControllers
+        if let checkoutVC = currentViewController.last as? CheckoutViewController {
+            checkoutVC.showNavBar()
+            checkoutVC.checkoutTable.reloadData()
+        }
+    }
+    
     func createPayment() {
         
         var paymentBody : [String:Any]

@@ -12,5 +12,7 @@
 @interface MainExamplesViewController : UITableViewController
 
 @property MPCustomCell *customCell;
+@property CheckoutPreference *pref;
+@property MercadoPagoCheckout *mpCheckout;
 
 @end
