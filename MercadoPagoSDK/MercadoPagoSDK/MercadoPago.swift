@@ -208,23 +208,23 @@ import UIKit
 
     }
     
-    open class func getColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
+    open class func getColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = CardFormViewController.cardDefaultColor
        
-    
-        if dictPM?.value(forKey: paymentMethod._id) != nil{
-            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-            let stringColor = pmConfig.value(forKey: "first_color") as! String
-            //let intColor = Int(stringColor)
-            return UIColor(netHex:Int(stringColor, radix: 16)!)
-        }else {
-            return defaultColor
+        
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let stringColor = pmConfig.value(forKey: "first_color") as? String
+            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let stringColor = pmConfig.value(forKey: "first_color") as? String
+                return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            }
         }
+            return defaultColor
         
-        
-
     }
     
     open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String?{
@@ -245,50 +245,60 @@ import UIKit
         
     }
     
-    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
+    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary
-        let etMask = pmConfig?.value(forKey: "editText_mask") as? String
-
-        return etMask
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let etMask = pmConfig.value(forKey: "editText_mask") as? String
+            return etMask
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let etMask = pmConfig.value(forKey: "editText_mask") as? String
+                return etMask
+            }
+        }
+        return "XXXX XXXX XXXX XXXX"
     }
     
     
-    open class func getFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
+    open class func getFontColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.defaultColorText
     
 
-        if dictPM?.value(forKey: paymentMethod._id) != nil{
-            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-            let stringColor = pmConfig.value(forKey: "font_color") as! String
-            //let intColor = Int(stringColor)
-            return UIColor(netHex:Int(stringColor, radix: 16)!)
-        }else {
-            return defaultColor
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let stringColor = pmConfig.value(forKey: "font_color") as? String
+            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let stringColor = pmConfig.value(forKey: "font_color") as? String
+                return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            }
         }
+        return defaultColor
 
         
         
     }
     
-    open class func getEditingFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
+    open class func getEditingFontColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let defaultColor = MPLabel.highlightedColorText
         
         
-        if dictPM?.value(forKey: paymentMethod._id) != nil{
-            let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-            let stringColor = pmConfig.value(forKey: "editing_font_color") as! String
-            //let intColor = Int(stringColor)
-            return UIColor(netHex:Int(stringColor, radix: 16)!)
-        }else {
-            return defaultColor
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let stringColor = pmConfig.value(forKey: "editing_font_color") as? String
+            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let stringColor = pmConfig.value(forKey: "editing_font_color") as? String
+                return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            }
         }
+        return defaultColor
         
         
         
