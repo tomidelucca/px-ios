@@ -131,7 +131,7 @@ class Utils {
     }
     
     class func getLightFont(size: CGFloat) -> UIFont {
-        return UIFont(name: MercadoPagoContext.getDecorationPreference().getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+        return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
     }
     
     class func append(firstJSON: String, secondJSON: String) -> String {

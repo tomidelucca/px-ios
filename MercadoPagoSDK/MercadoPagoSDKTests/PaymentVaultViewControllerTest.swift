@@ -709,16 +709,6 @@ class PaymentVaultViewModelTest: BaseTest {
         
     }
     
-    func testGetCustomerCardRowHeight() {
-        
-        var result = instance!.getCustomerCardRowHeight()
-        XCTAssertEqual(0, result)
-        
-        let cardMock = MockBuilder.buildCard()
-        instance!.customerPaymentOptions = [cardMock]
-        result = instance!.getCustomerCardRowHeight()
-        XCTAssertEqual(CustomerPaymentMethodCell.ROW_HEIGHT, result)
-    }
     
     func testGetExcludedPaymentTypeIds(){
         

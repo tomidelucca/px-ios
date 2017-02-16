@@ -230,10 +230,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
-<<<<<<< HEAD
-=======
-   
->>>>>>> add-CongratsPreference
     
     open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
@@ -263,13 +259,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         return sharedInstance.display_default_loading
     }
     
-<<<<<<< HEAD
-    open class func isCustomerInfoAvailable() -> Bool {
-        return !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL())
-    }
-    
-=======
->>>>>>> add-CongratsPreference
     open class func paymentKey() -> String {
         if sharedInstance.payment_key == "" {
             sharedInstance.payment_key = String(arc4random()) + String(Date().timeIntervalSince1970)
