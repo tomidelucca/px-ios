@@ -112,26 +112,26 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
     func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
         if viewModel.showFrontCard() {
             if let paymentMethod = paymentMethod{
-                self.cardFront.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
-                self.cardFront.backgroundColor = MercadoPago.getColorFor(paymentMethod)
                 self.cardFront.cardLogo.alpha = 1
-                let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
                 if let token = cardInformation{
+                    self.cardFront.cardLogo.image =  paymentMethod.getImage(bin: cardInformation?.getCardBin())
+                    self.cardFront.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
                     self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: cardInformation?.getCardBin()), completeEmptySpaces: true, leftToRight: false)
+                    let fontColor = paymentMethod.getFontColor(bin: cardInformation?.getCardBin())
+                    cardFront.cardNumber.textColor =  fontColor
                     cardFront.cardNumber.text =  self.textMaskFormater.textMasked(token.getCardLastForDigits())
                 }
                 cardFront.cardName.text = ""
                 cardFront.cardExpirationDate.text = ""
                 cardFront.cardNumber.alpha = 0.8
                 cardFront.cardCVV.alpha = 0.8
-                cardFront.cardNumber.textColor =  fontColor
                 cardFront.layer.cornerRadius = 11
             }
 
         }else {
             if let paymentMethod = paymentMethod{
-                self.cardBack.backgroundColor = MercadoPago.getColorFor(paymentMethod)
-                let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
+                self.cardBack.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
+                let fontColor = paymentMethod.getFontColor(bin: cardInformation?.getCardBin())
                 cardBack.cardCVV.alpha = 0.8
                 cardBack.cardCVV.textColor =  fontColor
                 cardBack.layer.cornerRadius = 11
