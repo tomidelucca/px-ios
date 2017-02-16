@@ -287,8 +287,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
-        let customCell = ReviewScreenPreference.additionalInfoCells[indexPath.row]//confirmAdditionalCustomCells!
+        let customCell = ReviewScreenPreference.additionalInfoCells[indexPath.row]
         customCell.setDelegate(delegate: self)
+        self.checkoutTable.bringSubview(toFront: customCell.getTableViewCell())
         return customCell.getTableViewCell()
     }
     
