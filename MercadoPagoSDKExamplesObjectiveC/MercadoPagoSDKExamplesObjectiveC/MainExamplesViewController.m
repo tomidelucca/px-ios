@@ -11,6 +11,7 @@
 #import "CustomTableViewCell.h"
 #import "PendingTableViewCell.h"
 #import "SubeTableViewCell.h"
+#import "DineroEnCuentaTableViewCell.h"
 
 @import MercadoPagoSDK;
 
@@ -44,6 +45,8 @@
     //[servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
     
     [MercadoPagoCheckout setServicePreference:servicePreference];
+    
+    [MercadoPagoContext setLanguageWithLanguage:"es"];
     
     
     
@@ -83,36 +86,28 @@
     
     PendingTableViewCell *cargaSubeCellCongrats = [[[NSBundle mainBundle] loadNibNamed:@"PendingTableViewCell" owner:self options:nil] firstObject];
     cargaSubeCellCongrats.label.text = @"Para acreditar tu recarga";
-
-
     MPCustomCell *customCargaSubeCongrats = [[MPCustomCell alloc] initWithCell:cargaSubeCellCongrats];
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
-
-    
     MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
 
-    
+    DineroEnCuentaTableViewCell *dineroEnCuenta = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
+    [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
+    MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
+    self.dineroEnCuentaCell = dineroEnCuentaCustom;
     PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference disableChangePaymentMethodOption];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
+    [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+    
+    
     [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
     [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
-
-//    
-    
-    
-//    CustomTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-//    customCell2.label.text = @"Item 2";
-//    [customCell2.button setTitle:@"Modificame" forState:UIControlStateNormal];
-//    
-    
-    
-    //MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
     
 //
     /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
@@ -144,17 +139,20 @@
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
    // [MercadoPagoCheckout setServicePreference:servicePreference];
     
-    
-   
-    
-
-
 }
 
 -(void)invokeCallback:(MPCustomCell *)button {
     
     [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
+}
+
+-(void)invokeCallbackPaymentResult:(MPCustomCell *)button {
+    
+    [[self.dineroEnCuentaCell getDelegate] invokeCallbackWithPaymentResultWithRowCallback:^(PaymentResult *paymentResult) {
+        NSLog(@"%@", paymentResult.status);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
 }

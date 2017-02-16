@@ -13,4 +13,6 @@
 
 @property MPCustomCell *customCell;
 
+@property MPCustomCell *dineroEnCuentaCell;
+
 @end

@@ -10,6 +10,10 @@
 		15AF42AA1D36848100E70343 /* MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; };
 		15AF42AB1D36848100E70343 /* MercadoPagoSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 76EF7EFB1D255AA10087C785 /* MercadoPagoSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */; };
+		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
+		4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
+		4B7AA9821E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */; };
+		4B7AA9831E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */; };
 		4B7D07DB1E55324700E6CA78 /* SubeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */; };
 		4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */; };
 		4B7D07E11E55337D00E6CA78 /* PendingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7D07DF1E55337D00E6CA78 /* PendingTableViewCell.m */; };
@@ -83,6 +87,9 @@
 /* Begin PBXFileReference section */
 		15C84A961D2D531E002E4988 /* MediosOffTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediosOffTableViewController.h; sourceTree = "<group>"; };
 		15C84A971D2D531E002E4988 /* MediosOffTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediosOffTableViewController.m; sourceTree = "<group>"; };
+		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
+		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
+		4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DineroEnCuentaTableViewCell.xib; sourceTree = "<group>"; };
 		4B7D07D81E55324700E6CA78 /* SubeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubeTableViewCell.h; sourceTree = "<group>"; };
 		4B7D07D91E55324700E6CA78 /* SubeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubeTableViewCell.m; sourceTree = "<group>"; };
 		4B7D07DA1E55324700E6CA78 /* SubeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubeTableViewCell.xib; sourceTree = "<group>"; };
@@ -171,6 +178,9 @@
 				4B7D07DE1E55337D00E6CA78 /* PendingTableViewCell.h */,
 				4B7D07DF1E55337D00E6CA78 /* PendingTableViewCell.m */,
 				4B7D07E01E55337D00E6CA78 /* PendingTableViewCell.xib */,
+				4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */,
+				4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */,
+				4B7AA97F1E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -382,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76BAC64A1E4B30060081F675 /* CustomTableViewCell.xib in Resources */,
+				4B7AA9821E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */,
 				4B7D07E21E55337D00E6CA78 /* PendingTableViewCell.xib in Resources */,
 				4B7D07DC1E55324700E6CA78 /* SubeTableViewCell.xib in Resources */,
 				76EF7ED01D2559140087C785 /* LaunchScreen.storyboard in Resources */,
@@ -395,6 +406,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7D07E41E553B0F00E6CA78 /* PendingTableViewCell.xib in Resources */,
+				4B7AA9831E55E64C000902B9 /* DineroEnCuentaTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +432,7 @@
 				76EF7EC21D2559140087C785 /* main.m in Sources */,
 				763B44F91D2BFEB0002E2B39 /* SelectPaymentMethodTableViewController.m in Sources */,
 				76BAC6471E4B2F220081F675 /* CustomTableViewCell.m in Sources */,
+				4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +440,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */,
 				76EF7EDB1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveCTests.m in Sources */,
 				4B7D07E31E553B0B00E6CA78 /* PendingTableViewCell.m in Sources */,
 			);

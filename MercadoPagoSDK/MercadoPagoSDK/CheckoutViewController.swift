@@ -599,6 +599,6 @@ open class CheckoutViewModel {
     
     @objc optional func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void))
     
-    @objc optional func invokeCallbackWithPaymentResutl(rowCallback : ((PaymentResult) -> Void))
+    @objc optional func invokeCallbackWithPaymentResult(rowCallback : ((PaymentResult) -> Void))
 
 }

@@ -59,7 +59,12 @@ open class PaymentResultScreenPreference: NSObject {
         PaymentResultScreenPreference.pendingAdditionalInfoCells.append(customCell)
     }
     
+    open static func addCustomApprovedCell(customCell : MPCustomCell) {
+        PaymentResultScreenPreference.approvedAdditionalInfoCells.append(customCell)
+    }
+    
     open static func clear() {
+        PaymentResultScreenPreference.approvedAdditionalInfoCells = [MPCustomCell]()
         PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
     }
     
