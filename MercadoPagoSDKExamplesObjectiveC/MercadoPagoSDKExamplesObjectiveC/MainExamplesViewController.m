@@ -9,6 +9,8 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
+#import "PendingTableViewCell.h"
+#import "SubeTableViewCell.h"
 
 @import MercadoPagoSDK;
 
@@ -75,8 +77,30 @@
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     [ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-    
+//
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
+    
+    
+    PendingTableViewCell *cargaSubeCellCongrats = [[[NSBundle mainBundle] loadNibNamed:@"PendingTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCellCongrats.label.text = @"Para acreditar tu recarga";
+
+
+    MPCustomCell *customCargaSubeCongrats = [[MPCustomCell alloc] initWithCell:cargaSubeCellCongrats];
+    
+    SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
+
+    
+    MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
+
+    
+    PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
+    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
+    [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
+    [resultPreference disableChangePaymentMethodOption];
+    [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
+    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
+    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
 
 //    
@@ -133,9 +157,6 @@
         NSLog(@"%@", paymentData.paymentMethod._id);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
-//    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-//        self.callbackPaymentData(paymentData);
-//    }];
 }
 
 @end

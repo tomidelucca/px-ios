@@ -258,6 +258,9 @@ open class MercadoPagoCheckout: NSObject {
         // TODO : por que dos? esta bien? no hay view models, ver que onda
         
         let paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+        paymentResult.statementDescription = ""
+        paymentResult.payerEmail = ""
+        paymentResult._id = ""
         
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
@@ -289,6 +292,7 @@ open class MercadoPagoCheckout: NSObject {
     func finish(){
         
         ReviewScreenPreference.clear()
+        PaymentResultScreenPreference.clear()
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)

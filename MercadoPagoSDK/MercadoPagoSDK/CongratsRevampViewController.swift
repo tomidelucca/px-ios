@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CongratsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+open class CongratsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
@@ -72,11 +72,19 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
+            if viewModel.inProcess(){
+                return PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()
+            } else if viewModel.approved(){
+                return PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
+            }
+        }
         return UITableViewAutomaticDimension
+        
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,6 +110,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
             }
             return getOtherPaymentMethodCell(drawLine: false)
             
+        } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
+            return getAdditionalCustomCell(indexPath: indexPath)
+        
         } else if viewModel.isFooterCellFor(indexPath: indexPath){
             return getFooterCell()
         }
@@ -154,8 +165,28 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
         return callFAuthCell
     }
+    
+    private func getAdditionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
+        
+        if self.viewModel.inProcess(){
+            let customCell = PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row]
+            customCell.setDelegate(delegate: self)
+            return customCell.getTableViewCell()
+        } else {
+            let customCell = PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row]
+            customCell.setDelegate(delegate: self)
+            return customCell.getTableViewCell()
+        }
+    }
+    
+    public func invokeCallbackWithPaymentResult(rowCallback : ((PaymentResult) -> Void)) {
+        rowCallback(self.viewModel.paymentResult)
+    }
+
 }
-class CongratsViewModel : NSObject, MPPaymentTrackInformer{
+
+class CongratsViewModel : NSObject, MPPaymentTrackInformer {
+    
     var paymentResult: PaymentResult!
     var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
     
@@ -277,7 +308,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     }
     
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 2
+        return indexPath.section == 3
     }
     
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
@@ -295,9 +326,15 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
     }
     
+    func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == 2
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
         if section == 1 {
             return numberOfCellInBody()
+        } else if section == 2 {
+            return numberOfCustomAdditionalCells()
         }
         return 1
     }
@@ -312,6 +349,15 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer{
         }
         
         return selectAnotherCell
+    }
+    
+    func numberOfCustomAdditionalCells() -> Int {
+        if !Array.isNullOrEmpty(PaymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
+            return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
+        } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
+            return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
+        }
+        return 0
     }
 }
 

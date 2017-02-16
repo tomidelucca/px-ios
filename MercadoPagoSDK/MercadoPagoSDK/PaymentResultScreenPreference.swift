@@ -11,7 +11,7 @@ import Foundation
 open class PaymentResultScreenPreference: NSObject {
     
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
-    var approvedSubtitle = "Se le enviara un sms bla bla bla bla bla bla"
+    var approvedSubtitle = ""
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
     var exitButttonTitle = "Continuar".localized
@@ -19,64 +19,75 @@ open class PaymentResultScreenPreference: NSObject {
     var headerPendingIconBundle = MercadoPago.getBundle()!
     var disableSelectAnotherPaymentMethod = false
     
-    func setAppovedTitle(title: String) {
+    internal static var pendingAdditionalInfoCells = [MPCustomCell]()
+    internal static var approvedAdditionalInfoCells = [MPCustomCell]()
+    
+    open func setAppovedTitle(title: String) {
         self.approvedTitle = title
     }
     
-    func setAppovedSubtitle(subtitle: String) {
+    open func setAppovedSubtitle(subtitle: String) {
         self.approvedSubtitle = subtitle
     }
     
-    func setPendingTitle(title: String) {
+    open func setPendingTitle(title: String) {
         self.pendingTitle = title
     }
     
-    func setPendingSubtitle(subtitle: String) {
+    open func setPendingSubtitle(subtitle: String) {
         self.pendingSubtitle = subtitle
     }
     
-    func setExitButtonTitle(title: String) {
+    open func setExitButtonTitle(title: String) {
         self.exitButttonTitle = title
     }
     
-    func setPendingHeaderIcon(name: String, bundle: Bundle) {
+    open func setPendingHeaderIcon(name: String, bundle: Bundle) {
         self.headerPendingIconName = name
         self.headerPendingIconBundle = bundle
     }
     
-    func disableChangePaymentMethodOption(){
+    open func disableChangePaymentMethodOption(){
         self.disableSelectAnotherPaymentMethod = true
     }
     
-    func enableChangePaymentMethodOption(){
+    open func enableChangePaymentMethodOption(){
         self.disableSelectAnotherPaymentMethod = false
     }
     
-    func getApprovedTitle() -> String {
+    open static func addCustomPendingCell(customCell : MPCustomCell) {
+        PaymentResultScreenPreference.pendingAdditionalInfoCells.append(customCell)
+    }
+    
+    open static func clear() {
+        PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
+    }
+    
+    open func getApprovedTitle() -> String {
         return approvedTitle
     }
     
-    func getApprovedSubtitle() -> String {
+    open func getApprovedSubtitle() -> String {
         return approvedSubtitle
     }
     
-    func getPendingTitle() -> String {
+    open func getPendingTitle() -> String {
         return pendingTitle
     }
     
-    func getPendingSubtitle() -> String {
+    open func getPendingSubtitle() -> String {
         return pendingSubtitle
     }
     
-    func getExitButtonTitle() -> String {
+    open func getExitButtonTitle() -> String {
         return exitButttonTitle
     }
     
-    func getHeaderPendingIcon() -> UIImage? {
+    open func getHeaderPendingIcon() -> UIImage? {
         return MercadoPago.getImage(headerPendingIconName, bundle: headerPendingIconBundle)
     }
     
-    func isSelectAnotherPaymentMethodDisable() -> Bool {
+    open func isSelectAnotherPaymentMethodDisable() -> Bool {
         return disableSelectAnotherPaymentMethod
     }
 }
