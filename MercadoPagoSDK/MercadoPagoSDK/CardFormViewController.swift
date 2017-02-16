@@ -646,15 +646,15 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         if (textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
+            let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
             if(cardFormManager.getGuessedPM()  != nil){
-                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
+                self.cardFront?.cardLogo.image =  (self.cardFormManager.getGuessedPM()?.getImage(bin: bin))
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
+                    self.cardView.backgroundColor = (self.cardFormManager.getGuessedPM()?.getColor(bin: bin))
                     self.cardFront?.cardLogo.alpha = 1
                 })
-                let bin = cardFormManager.getBIN(textEditMaskFormater.textUnmasked(textBox.text))
-                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask(bin: bin!) != nil) ? cardFormManager.getGuessedPM()?.getLabelMask(bin: bin!) : "XXXX XXXX XXXX XXXX"
-                let editTextMask = (cardFormManager.getGuessedPM()?.getEditTextMask() != nil) ? cardFormManager.getGuessedPM()?.getEditTextMask() : "XXXX XXXX XXXX XXXX"
+                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask(bin: bin))
+                let editTextMask = (cardFormManager.getGuessedPM()?.getEditTextMask(bin: bin))
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
                 let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)
                 cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
@@ -694,9 +694,9 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func delightedLabels(){
-        cardNumberLabel?.textColor = self.cardFormManager.getLabelTextColor()
-        nameLabel?.textColor = self.cardFormManager.getLabelTextColor()
-        expirationDateLabel?.textColor = self.cardFormManager.getLabelTextColor()
+        cardNumberLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
+        nameLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
+        expirationDateLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
         
         cvvLabel?.textColor = MPLabel.defaultColorText
         cardNumberLabel?.alpha = 0.7
@@ -707,7 +707,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     func lightEditingLabel(){
         if (editingLabel != cvvLabel){
-            editingLabel?.textColor = self.cardFormManager.getEditingLabelColor()
+            editingLabel?.textColor = self.cardFormManager.getEditingLabelColor(cardNumber: cardNumberLabel?.text)
         }
         editingLabel?.alpha = 1
     }

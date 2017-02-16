@@ -297,12 +297,46 @@ open class PaymentMethod : NSObject  {
     }
     
     
-    open func getColor()-> UIColor? {
-     return MercadoPago.getColorFor(self)
+    
+    // IMAGE
+    open func getImage(bin: String?)-> UIImage? {
+        return MercadoPago.getImageFor(self)
     }
-    open func getImage()-> UIImage? {
-      return MercadoPago.getImageFor(self)
+    
+    // COLORS
+        // First Color
+    open func getColor(bin: String?)-> UIColor? {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+
+        return MercadoPago.getColorFor(self, settings: settings)
     }
+        // Font Color
+    open func getFontColor(bin: String?)-> UIColor {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        
+        return MercadoPago.getFontColorFor(self, settings: settings)
+    }
+        // Edit Font Color
+    open func getEditingFontColor(bin: String?)-> UIColor {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        
+        return MercadoPago.getEditingFontColorFor(self, settings: settings)
+    }
+    
+    // MASKS
+        // Label Mask
     open func getLabelMask(bin: String?)-> String? {
         var settings: [Setting]? = nil
         
@@ -311,8 +345,14 @@ open class PaymentMethod : NSObject  {
         }
         return MercadoPago.getLabelMaskFor(self, settings: settings)
     }
-    open func getEditTextMask()-> String? {
-        return MercadoPago.getEditTextMaskFor(self)
+        // Edit Text Mask
+    open func getEditTextMask(bin: String?)-> String? {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        return MercadoPago.getEditTextMaskFor(self, settings: settings)
     }
 
 
