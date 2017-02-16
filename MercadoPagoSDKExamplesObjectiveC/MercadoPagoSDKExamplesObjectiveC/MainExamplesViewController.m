@@ -9,6 +9,9 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
+#import "PendingTableViewCell.h"
+#import "SubeTableViewCell.h"
+#import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
 
 @import MercadoPagoSDK;
@@ -44,6 +47,8 @@
     
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
+    [MercadoPagoContext setLanguageWithLanguage:"es"];
+    
     
     
   //  [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
@@ -56,8 +61,8 @@
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-//    CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
-//    pref
+    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
+
     
     
     //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
@@ -68,6 +73,7 @@
     [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
     MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
     self.customCell = customCargaSube;
+
     
     ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
     [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
@@ -84,6 +90,25 @@
     [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
     [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
     
+    
+    PendingTableViewCell *cargaSubeCellCongrats = [[[NSBundle mainBundle] loadNibNamed:@"PendingTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCellCongrats.label.text = @"Para acreditar tu recarga";
+    MPCustomCell *customCargaSubeCongrats = [[MPCustomCell alloc] initWithCell:cargaSubeCellCongrats];
+    
+    SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
+    MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
+
+    DineroEnCuentaTableViewCell *dineroEnCuenta = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
+    [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
+    MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
+    self.dineroEnCuentaCell = dineroEnCuentaCustom;
+    PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
+    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
+    [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
+    [resultPreference disableChangePaymentMethodOption];
+    [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
+    [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+    
     MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
     self.customCell = customItemCell;
     
@@ -93,8 +118,11 @@
     
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
     
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+//    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
+//    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
-    //MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
     
 //
     /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
@@ -103,6 +131,12 @@
         NSLog(@"%ld", paymentData.payerCost.installments);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];*/
+    
+    [MercadoPagoContext setLanguageWithLanguage:"es"];
+    
+//    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+//    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
+
     PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
     pm.paymentTypeId = @"credit_card";
@@ -121,6 +155,7 @@
 
     
 
+
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
     
@@ -135,11 +170,6 @@
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
    // [MercadoPagoCheckout setServicePreference:servicePreference];
     
-    
-   
-    
-
-
 }
 
 -(void)invokeCallback:(MPCustomCell *)button {
@@ -148,9 +178,14 @@
         NSLog(@"%@", paymentData.paymentMethod._id);
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
-//    [self.delegate invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
-//        self.callbackPaymentData(paymentData);
-//    }];
+}
+
+-(void)invokeCallbackPaymentResult:(MPCustomCell *)button {
+    
+    [[self.dineroEnCuentaCell getDelegate] invokeCallbackWithPaymentResultWithRowCallback:^(PaymentResult *paymentResult) {
+        NSLog(@"%@", paymentResult.status);
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }];
 }
 
 @end
