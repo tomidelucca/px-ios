@@ -15,4 +15,6 @@
 @property CheckoutPreference *pref;
 @property MercadoPagoCheckout *mpCheckout;
 
+@property MPCustomCell *dineroEnCuentaCell;
+
 @end

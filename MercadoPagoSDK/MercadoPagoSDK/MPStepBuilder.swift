@@ -37,34 +37,6 @@ open class MPStepBuilder : NSObject {
         
     }
     
-    open class func startPaymentResultStep(_ payment: Payment, paymentMethod : PaymentMethod,
-                                           callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> MercadoPagoUIViewController {
-        MercadoPagoContext.initFlavor2()
-        if (!paymentMethod.isOnlinePaymentMethod()){
-            return self.startInstructionsStep(payment, paymentTypeId: paymentMethod.paymentTypeId, callback: callback)
-        } else {
-            return self.startPaymentCongratsStep(payment, paymentMethod: paymentMethod, callback : callback)
-        }
-        
-    }
-    
-
-    open class func startPaymentCongratsStep(_ payment: Payment, paymentMethod : PaymentMethod,
-                         callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> CongratsRevampViewController {
-        
-      MercadoPagoContext.initFlavor2()
-        return CongratsRevampViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
-
-    }
-    
-    open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,
-                                          callback : @escaping (_ payment : Payment, _ status: CongratsState) -> Void) -> InstructionsRevampViewController {
-        MercadoPagoContext.initFlavor2()
-        return InstructionsRevampViewController(payment: payment, paymentTypeId : paymentTypeId, callback : {(payment : Payment, status: CongratsState) -> Void in
-            callback(payment, CongratsState.ok)
-        })
-    }
-    
     open class func startPromosStep(promos : [Promo]? = nil,
         _ callback : ((Void) -> (Void))? = nil) -> PromoViewController {
         MercadoPagoContext.initFlavor2()
@@ -86,16 +58,6 @@ open class MPStepBuilder : NSObject {
 //        }
         return false
     }
-    
-    
-    
-    
-    
-//    open class func startSecurityCodeForm(paymentMethod : PaymentMethod! ,cardInfo : CardInformationForm!, callback: ((_ token: Token?)->Void)! ) -> SecrurityCodeViewController {
-//        let secVC = SecrurityCodeViewController(paymentMethod: paymentMethod, cardInfo: cardInfo, callback: callback)
-//        return secVC
-//    }
-    
     
     open class func startCreditCardForm(_ paymentSettings : PaymentPreference? = nil , amount: Double, cardInformation: CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, callback : @escaping ((_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?) -> Void), callbackCancel : ((Void) -> Void)?) -> UINavigationController {
         MercadoPagoContext.initFlavor2()

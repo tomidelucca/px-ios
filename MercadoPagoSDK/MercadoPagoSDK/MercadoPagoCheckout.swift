@@ -52,6 +52,10 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
+    open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
+        MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
+    }
+    
     open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
         MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
     }
@@ -270,13 +274,16 @@ open class MercadoPagoCheckout: NSObject {
     
     func displayPaymentResult() {
         // TODO : por que dos? esta bien? no hay view models, ver que onda
+        
+        let paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
-            congratsViewController = InstructionsRevampViewController(payment: self.viewModel.payment!, paymentTypeId: self.viewModel.paymentData.paymentMethod!.paymentTypeId, callback: { (payment : Payment, state :MPStepBuilder.CongratsState) in
+            congratsViewController = InstructionsRevampViewController(paymentResult: paymentResult,  callback: { (state :MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         } else {
-            congratsViewController = CongratsRevampViewController(payment: self.viewModel.payment!, paymentMethod: self.viewModel.paymentData.paymentMethod!, callback: { (payment : Payment, state : MPStepBuilder.CongratsState) in
+            congratsViewController = CongratsRevampViewController(paymentResult: paymentResult, callback: { (state : MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         }
@@ -300,6 +307,7 @@ open class MercadoPagoCheckout: NSObject {
     func finish(){
         
         ReviewScreenPreference.clear()
+        PaymentResultScreenPreference.clear()
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)

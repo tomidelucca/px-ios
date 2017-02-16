@@ -596,5 +596,9 @@ open class CheckoutViewModel {
 }
 
 @objc public protocol MPCustomRowDelegate {
-    func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void))
+    
+    @objc optional func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void))
+    
+    @objc optional func invokeCallbackWithPaymentResult(rowCallback : ((PaymentResult) -> Void))
+
 }
