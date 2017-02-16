@@ -68,6 +68,8 @@ open class PaymentMethodSearchService: MercadoPagoService {
             params = params + "&customer_id=" + customerId!
         }
         
+        params = params + "&site_id=" + MercadoPagoContext.getSite()
+        
         params = params + "&api_version=" + ServicePreference.API_VERSION
 
         var groupsPayerBody : AnyObject? = nil
