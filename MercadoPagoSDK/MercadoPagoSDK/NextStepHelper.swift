@@ -129,7 +129,7 @@ extension MercadoPagoCheckoutViewModel {
         } else {
            
             if let paymentTypeId = PaymentTypeId(rawValue : paymentData.paymentMethod.paymentTypeId) {
-                self.paymentOptionSelected = Utils.findPaymentMethodTypeId((self.search?.groups!)!, paymentTypeId: paymentTypeId)
+                self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
         }
     }
