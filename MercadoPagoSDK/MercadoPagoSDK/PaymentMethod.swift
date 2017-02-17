@@ -305,7 +305,7 @@ open class PaymentMethod : NSObject  {
     
     // COLORS
         // First Color
-    open func getColor(bin: String?)-> UIColor? {
+    open func getColor(bin: String?)-> UIColor {
         var settings: [Setting]? = nil
         
         if let bin = bin {
@@ -337,7 +337,7 @@ open class PaymentMethod : NSObject  {
     
     // MASKS
         // Label Mask
-    open func getLabelMask(bin: String?)-> String? {
+    open func getLabelMask(bin: String?)-> String {
         var settings: [Setting]? = nil
         
         if let bin = bin {
@@ -346,7 +346,7 @@ open class PaymentMethod : NSObject  {
         return MercadoPago.getLabelMaskFor(self, settings: settings)
     }
         // Edit Text Mask
-    open func getEditTextMask(bin: String?)-> String? {
+    open func getEditTextMask(bin: String?)-> String {
         var settings: [Setting]? = nil
         
         if let bin = bin {
