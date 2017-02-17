@@ -40,6 +40,16 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController, paymentResult: PaymentResult) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
+        
+        self.navigationController = navigationController
+        
+        if self.navigationController.viewControllers.count > 0 {
+            viewControllerBase = self.navigationController.viewControllers[0]
+        }
+    }
+    
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
         MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
     }
@@ -274,16 +284,17 @@ open class MercadoPagoCheckout: NSObject {
     
     func displayPaymentResult() {
         // TODO : por que dos? esta bien? no hay view models, ver que onda
-        
-        let paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+        if self.viewModel.paymentResult == nil {
+            self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+        }
 
         let congratsViewController : UIViewController
-        if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.payment!.paymentTypeId)) {
-            congratsViewController = InstructionsRevampViewController(paymentResult: paymentResult,  callback: { (state :MPStepBuilder.CongratsState) in
+        if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
+            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         } else {
-            congratsViewController = CongratsRevampViewController(paymentResult: paymentResult, callback: { (state : MPStepBuilder.CongratsState) in
+            congratsViewController = CongratsRevampViewController(paymentResult: self.viewModel.paymentResult!, callback: { (state : MPStepBuilder.CongratsState) in
                 self.executeNextStep()
             })
         }
