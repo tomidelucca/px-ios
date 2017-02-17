@@ -37,7 +37,6 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     var editingLabel : UILabel?
     
-    static public var cardDefaultColor = UIColor(netHex: 0xEEEEEE)
     
     var callback : (( _ paymentMethods: [PaymentMethod],_ cardtoken: CardToken?) -> Void)?
     
@@ -618,7 +617,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
-            self.cardView.backgroundColor = CardFormViewController.cardDefaultColor
+            self.cardView.backgroundColor = UIColor.cardDefaultColor()
         })
         self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -647,14 +646,14 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
-            if(cardFormManager.getGuessedPM()  != nil){
-                self.cardFront?.cardLogo.image =  (self.cardFormManager.getGuessedPM()?.getImage(bin: bin))
+            if let paymentMethod = cardFormManager.getGuessedPM(){
+                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardView.backgroundColor = (self.cardFormManager.getGuessedPM()?.getColor(bin: bin))
+                    self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                     self.cardFront?.cardLogo.alpha = 1
                 })
-                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask(bin: bin))
-                let editTextMask = (cardFormManager.getGuessedPM()?.getEditTextMask(bin: bin))
+                let labelMask = paymentMethod.getLabelMask(bin: bin)
+                let editTextMask = paymentMethod.getEditTextMask(bin: bin)
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
                 let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)
                 cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))

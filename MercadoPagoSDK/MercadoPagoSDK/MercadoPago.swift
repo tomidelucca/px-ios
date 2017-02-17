@@ -367,57 +367,58 @@ import UIKit
 
     }
     
-    open class func getColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor?{
+    open class func getColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
-        let defaultColor = CardFormViewController.cardDefaultColor
        
         
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
             let stringColor = pmConfig.value(forKey: "first_color") as? String
             return UIColor(netHex:Int(stringColor!, radix: 16)!)
-        } else if let setting = settings?[0]{
+        } else if let setting = settings?[0] {
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
                 let stringColor = pmConfig.value(forKey: "first_color") as? String
                 return UIColor(netHex:Int(stringColor!, radix: 16)!)
             }
         }
-            return defaultColor
+            return UIColor.cardDefaultColor()
         
     }
     
-    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String?{
+    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let defaultMask = "XXXX XXXX XXXX XXXX"
         
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
             let etMask = pmConfig.value(forKey: "label_mask") as? String
-            return etMask
+            return etMask ?? defaultMask
         } else if let setting = settings?[0]{
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
                 let etMask = pmConfig.value(forKey: "label_mask") as? String
-                return etMask
+                return etMask ?? defaultMask
             }
         }
-        return "XXXX XXXX XXXX XXXX"
-        
-        
+        return defaultMask
     }
     
-    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String?{
+    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         
+        let defaultMask = "XXXX XXXX XXXX XXXX"
+        
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
             let etMask = pmConfig.value(forKey: "editText_mask") as? String
-            return etMask
+            return etMask ?? defaultMask
         } else if let setting = settings?[0]{
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
                 let etMask = pmConfig.value(forKey: "editText_mask") as? String
-                return etMask
+                return etMask ?? defaultMask
             }
         }
-        return "XXXX XXXX XXXX XXXX"
+        return defaultMask
     }
     
     
