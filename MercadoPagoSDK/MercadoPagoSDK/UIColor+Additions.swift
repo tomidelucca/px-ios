@@ -130,7 +130,10 @@ extension UIColor {
     class public func primaryColor() -> UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
     }
-   
+    
+    class public func cardDefaultColor() -> UIColor {
+        return UIColor(netHex: 0xEEEEEE)
+    }
     
     func lighter() -> UIColor {
             return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
