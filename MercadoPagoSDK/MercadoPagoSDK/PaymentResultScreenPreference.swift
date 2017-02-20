@@ -19,8 +19,9 @@ open class PaymentResultScreenPreference: NSObject {
     var exitButttonTitle = "Continuar".localized
     var headerPendingIconName = "iconoAcreditado"
     var headerPendingIconBundle = MercadoPago.getBundle()!
-    var disableSelectAnotherPaymentMethodCell = false
-    var disableChangePaymentMethodButton = false
+    var hideChangePaymentMethodCell = false
+    var hideChangePaymentMethodButton = false
+    var hidePendingContentText = false
     
     internal static var pendingAdditionalInfoCells = [MPCustomCell]()
     internal static var approvedAdditionalInfoCells = [MPCustomCell]()
@@ -51,19 +52,27 @@ open class PaymentResultScreenPreference: NSObject {
     }
     
     open func disableChangePaymentMethodOptionCell(){
-        self.disableSelectAnotherPaymentMethodCell = true
+        self.hideChangePaymentMethodCell = true
     }
     
     open func disableChangePaymentMethodOptionButton(){
-        self.disableChangePaymentMethodButton = true
+        self.hideChangePaymentMethodButton = true
+    }
+    
+    open func disablePendingContentText() {
+        self.hidePendingContentText = true
     }
     
     open func enableChangePaymentMethodOptionButton(){
-        self.disableChangePaymentMethodButton = false
+        self.hideChangePaymentMethodButton = false
     }
     
     open func enableChangePaymentMethodOptionCell(){
-        self.disableSelectAnotherPaymentMethodCell = false
+        self.hideChangePaymentMethodCell = false
+    }
+    
+    open func enablePaymentContentText() {
+        self.hidePendingContentText = false
     }
     
     open static func addCustomPendingCell(customCell : MPCustomCell) {
@@ -112,18 +121,22 @@ open class PaymentResultScreenPreference: NSObject {
     }
     
     open func isSelectAnotherPaymentMethodDisableCell() -> Bool {
-        return disableSelectAnotherPaymentMethodCell
+        return hideChangePaymentMethodCell
     }
     
     open func isSelectAnotherPaymentMethodDisableButton() -> Bool {
-        return disableChangePaymentMethodButton
+        return hideChangePaymentMethodButton
     }
     
-    open func getContetTitle() -> String {
+    open func isPendingContentTextDisable() -> Bool {
+        return hidePendingContentText
+    }
+    
+    open func getPendingContetTitle() -> String {
         return contentTitle
     }
     
-    open func getContentText() -> String {
+    open func getPendingContentText() -> String {
         return contentText
     }
 }

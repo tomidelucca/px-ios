@@ -66,16 +66,22 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
                 }
             }
         } else if paymentResult.status == "in_process" {
-            self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContetTitle()
+            self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContetTitle()
             
-            if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContentText()){
-                self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getContentText()
-            
-            } else if paymentResult.statusDetail == "pending_contingency"{
-                self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
+            if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingContentTextDisable() {
+                self.subtitile.text = ""
+                self.subtitleButtonConstrain.constant = 0
             
             } else {
-                self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+                if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()) {
+                    self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()
+                    
+                } else if paymentResult.statusDetail == "pending_contingency"{
+                    self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
+                    
+                } else {
+                    self.subtitile.text = "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+                }
             }
         }
     }
