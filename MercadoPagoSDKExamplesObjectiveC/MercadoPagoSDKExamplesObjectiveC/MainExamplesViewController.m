@@ -106,8 +106,8 @@
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
 //    [resultPreference disableChangePaymentMethodOptionCell];
-    [resultPreference disablePendingContentText];
-    //[resultPreference setPendingContentTextWithText:@""];
+//    [resultPreference disablePendingContentText];
+    [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     
