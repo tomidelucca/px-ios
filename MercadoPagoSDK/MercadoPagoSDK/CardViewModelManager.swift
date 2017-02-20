@@ -71,12 +71,10 @@ class CardViewModelManager: NSObject {
     }
  
     func getLabelTextColor(cardNumber: String?) -> UIColor {
-        if cardNumber != nil{
-            if let bin = getBIN(cardNumber!){
+        if let cardNumber = cardNumber{
+            if let bin = getBIN(cardNumber){
                 if let guessedPM = self.getGuessedPM(){
                     return (guessedPM.getFontColor(bin: bin))
-                }else{
-                    return MPLabel.defaultColorText
                 }
             }
         }
@@ -84,12 +82,10 @@ class CardViewModelManager: NSObject {
     }
 
     func getEditingLabelColor(cardNumber: String?) -> UIColor {
-        if cardNumber != nil{
-            if let bin = getBIN(cardNumber!){
+        if let cardNumber = cardNumber{
+            if let bin = getBIN(cardNumber){
                 if let guessedPM = self.getGuessedPM(){
                     return (guessedPM.getEditingFontColor(bin: bin))
-                }else{
-                    return MPLabel.highlightedColorText
                 }
             }
         }
