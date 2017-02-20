@@ -61,10 +61,11 @@
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
+
+    self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:nil];
+
     
-    
-    //CheckoutPreference * pref = [[CheckoutPreference alloc] initWithItems:<#(NSArray<Item *> * _Nonnull)#> payer:<#(Payer * _Nonnull)#> paymentMethods:<#(PaymentPreference * _Nullable)#>
+  
     
     CustomTableViewCell *cargaSubeCell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     cargaSubeCell.label.text = @"Carga SUBE";
@@ -109,7 +110,7 @@
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     
     MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
-    self.customCell = customItemCell;
+  //  self.customCell = customItemCell;
     
     CustomItemTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomItemTableViewCell" owner:self options:nil] firstObject];
     customCell2.itemTitle.text = @"Item title updated";
@@ -117,24 +118,27 @@
     
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
     
-//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
-//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
-//    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
-//    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
+    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
+    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
+    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
     
 //
-    /*[MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod._id);
-        NSLog(@"%@", paymentData.token._id);
-        NSLog(@"%ld", paymentData.payerCost.installments);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }];*/
-    
-    [MercadoPagoContext setLanguageWithLanguage:"es"];
-    
-    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
+//    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+//        NSLog(@"%@", paymentData.paymentMethod._id);
+//        NSLog(@"%@", paymentData.token._id);
+//        NSLog(@"%ld", paymentData.payerCost.installments);        
+//        
+//        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
+//        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
+//        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+//        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
+//        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+//        //[self.navigationController popToRootViewControllerAnimated:NO];
+//    }];
+
 
     /*PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
@@ -148,13 +152,19 @@
     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"card" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
     pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
+    
+    pd.issuer = [[Issuer alloc] init];
+    pd.issuer._id = [NSNumber numberWithInt:200];;
+    
+    
+    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd siteId:@"MLA" payerEmail:nil id:nil amount:50.0 statementDescription:nil];*/
 
     
-
    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];*/
+//    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
+
     
-    //UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
+    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
     //NSLog(vc);
     
 
@@ -171,7 +181,21 @@
     
     [[self.customCell getDelegate] invokeCallbackWithPaymentDataWithRowCallback:^(PaymentData *paymentData) {
         NSLog(@"%@", paymentData.paymentMethod._id);
-        [self.navigationController popToRootViewControllerAnimated:NO];
+        NSLog(@"%@", paymentData.token._id);
+        NSLog(@"%ld", paymentData.payerCost.installments);
+        
+        // Mostrar modal
+        NSArray *currentViewControllers = self.navigationController.viewControllers;
+        
+        // Cuando retorna de modal
+        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
+        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
+        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+
+//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+//        
+        [self.mpCheckout updateReviewAndConfirm];
+        
     }];
 }
 

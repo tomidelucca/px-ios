@@ -67,6 +67,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     var paymentData = PaymentData()
     var payment : Payment?
+    var paymentResult: PaymentResult?
     
     static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
@@ -91,6 +92,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData = paymentData
             self.reviewAndConfirm = true
         }
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            // Cargar información de preferencia en caso que tenga id
+            needLoadPreference = true
+        }
+    }
+    
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentResult: PaymentResult) {
+        self.checkoutPreference = checkoutPreference
+        if paymentData.isComplete() {
+            self.paymentData = paymentData
+            self.reviewAndConfirm = false
+        }
+        self.paymentResult = paymentResult
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
             // Cargar información de preferencia en caso que tenga id
             needLoadPreference = true
