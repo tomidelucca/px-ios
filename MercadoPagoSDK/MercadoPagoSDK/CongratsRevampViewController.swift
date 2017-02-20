@@ -323,7 +323,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer {
         return indexPath.section == 1 && indexPath.row == 0 && callForAuth()
     }
     func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-        return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
+        return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
     }
     
     func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
@@ -340,7 +340,7 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func numberOfCellInBody() -> Int {
-        let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() ? 1 : 0
+        let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() ? 1 : 0
         if approved() {
             return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
             

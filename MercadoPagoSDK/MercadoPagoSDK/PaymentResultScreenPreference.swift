@@ -19,7 +19,8 @@ open class PaymentResultScreenPreference: NSObject {
     var exitButttonTitle = "Continuar".localized
     var headerPendingIconName = "iconoAcreditado"
     var headerPendingIconBundle = MercadoPago.getBundle()!
-    var disableSelectAnotherPaymentMethod = false
+    var disableSelectAnotherPaymentMethodCell = false
+    var disableChangePaymentMethodButton = false
     
     internal static var pendingAdditionalInfoCells = [MPCustomCell]()
     internal static var approvedAdditionalInfoCells = [MPCustomCell]()
@@ -49,12 +50,20 @@ open class PaymentResultScreenPreference: NSObject {
         self.headerPendingIconBundle = bundle
     }
     
-    open func disableChangePaymentMethodOption(){
-        self.disableSelectAnotherPaymentMethod = true
+    open func disableChangePaymentMethodOptionCell(){
+        self.disableSelectAnotherPaymentMethodCell = true
     }
     
-    open func enableChangePaymentMethodOption(){
-        self.disableSelectAnotherPaymentMethod = false
+    open func disableChangePaymentMethodOptionButton(){
+        self.disableChangePaymentMethodButton = true
+    }
+    
+    open func enableChangePaymentMethodOptionButton(){
+        self.disableChangePaymentMethodButton = false
+    }
+    
+    open func enableChangePaymentMethodOptionCell(){
+        self.disableSelectAnotherPaymentMethodCell = false
     }
     
     open static func addCustomPendingCell(customCell : MPCustomCell) {
@@ -102,8 +111,12 @@ open class PaymentResultScreenPreference: NSObject {
         return MercadoPago.getImage(headerPendingIconName, bundle: headerPendingIconBundle)
     }
     
-    open func isSelectAnotherPaymentMethodDisable() -> Bool {
-        return disableSelectAnotherPaymentMethod
+    open func isSelectAnotherPaymentMethodDisableCell() -> Bool {
+        return disableSelectAnotherPaymentMethodCell
+    }
+    
+    open func isSelectAnotherPaymentMethodDisableButton() -> Bool {
+        return disableChangePaymentMethodButton
     }
     
     open func getContetTitle() -> String {

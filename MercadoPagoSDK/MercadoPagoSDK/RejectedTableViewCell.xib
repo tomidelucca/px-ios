@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="446"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="358" height="445"/>
+                <rect key="frame" x="0.0" y="0.0" width="358" height="446"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="¿Qué puedo hacer?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBX-U3-5lx">
@@ -56,13 +56,14 @@ O si prefieres, puedes elegir otro medio de pago.</string>
                     <constraint firstItem="G6G-nr-CA4" firstAttribute="top" secondItem="DBX-U3-5lx" secondAttribute="bottom" constant="20" id="eqD-a0-XaS"/>
                     <constraint firstItem="j5E-cG-bps" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="hDu-fR-Oih"/>
                     <constraint firstAttribute="trailingMargin" secondItem="j5E-cG-bps" secondAttribute="trailing" constant="24" id="k6C-82-3rS"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="j5E-cG-bps" secondAttribute="bottom" id="tSk-ba-3uP"/>
                     <constraint firstAttribute="bottom" secondItem="j5E-cG-bps" secondAttribute="bottom" id="zMz-C5-ZIm"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="button" destination="j5E-cG-bps" id="g8c-27-rZg"/>
+                <outlet property="buttonHeightConstrain" destination="2cD-3e-VzU" id="5lN-S3-fLP"/>
                 <outlet property="subtitile" destination="G6G-nr-CA4" id="Z1b-ZI-mZ4"/>
+                <outlet property="subtitleButtonConstrain" destination="e5a-oq-l0g" id="OAY-zH-eW3"/>
                 <outlet property="title" destination="DBX-U3-5lx" id="9aW-Gr-xYu"/>
             </connections>
             <point key="canvasLocation" x="103" y="352"/>

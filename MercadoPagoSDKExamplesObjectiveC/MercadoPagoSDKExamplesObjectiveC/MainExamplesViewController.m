@@ -104,7 +104,7 @@
     PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
-    [resultPreference disableChangePaymentMethodOption];
+    [resultPreference disableChangePaymentMethodOptionCell];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     
@@ -133,10 +133,10 @@
     
     [MercadoPagoContext setLanguageWithLanguage:"es"];
     
-//    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-//    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] start] ;
 
-    PaymentMethod *pm = [[PaymentMethod alloc] init];
+    /*PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
     pm.paymentTypeId = @"credit_card";
     pm.name = @"visa";
@@ -152,7 +152,7 @@
     
 
    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
+    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];*/
     
     //UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
     //NSLog(vc);

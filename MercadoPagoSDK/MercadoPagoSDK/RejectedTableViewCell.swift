@@ -14,6 +14,8 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
     @IBOutlet weak var subtitile: UILabel!
     @IBOutlet weak var button: UIButton!
     
+    @IBOutlet weak var subtitleButtonConstrain: NSLayoutConstraint!
+    @IBOutlet weak var buttonHeightConstrain: NSLayoutConstraint!
     var paymentTypeId: String?;
     
     override func awakeFromNib() {
@@ -30,6 +32,13 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
     }
     
     func fillCell (paymentResult: PaymentResult){
+        
+        if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableButton() {
+            button.isHidden = true
+            subtitleButtonConstrain.constant = 0
+            buttonHeightConstrain.constant = 0
+            
+        }
         
         if paymentResult.status == "rejected"{
             
