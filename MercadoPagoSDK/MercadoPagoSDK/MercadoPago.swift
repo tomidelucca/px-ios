@@ -214,12 +214,18 @@ import UIKit
        
         
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
-            let stringColor = pmConfig.value(forKey: "first_color") as? String
-            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            if let stringColor = pmConfig.value(forKey: "first_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return UIColor.cardDefaultColor()
+            }
         } else if let setting = settings?[0] {
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
-                let stringColor = pmConfig.value(forKey: "first_color") as? String
-                return UIColor(netHex:Int(stringColor!, radix: 16)!)
+                if let stringColor = pmConfig.value(forKey: "first_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return UIColor.cardDefaultColor()
+                }
             }
         }
             return UIColor.cardDefaultColor()
@@ -270,13 +276,18 @@ import UIKit
     
 
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
-            let stringColor = pmConfig.value(forKey: "font_color") as? String
-            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            if let stringColor = pmConfig.value(forKey: "first_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return UIColor.cardDefaultColor()
+            }
         } else if let setting = settings?[0]{
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
-                let stringColor = pmConfig.value(forKey: "font_color") as? String
-                return UIColor(netHex:Int(stringColor!, radix: 16)!)
-            }
+                if let stringColor = pmConfig.value(forKey: "font_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return UIColor.cardDefaultColor()
+                }            }
         }
         return defaultColor
 
@@ -291,12 +302,18 @@ import UIKit
         
         
         if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
-            let stringColor = pmConfig.value(forKey: "editing_font_color") as? String
-            return UIColor(netHex:Int(stringColor!, radix: 16)!)
+            if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return UIColor.cardDefaultColor()
+            }
         } else if let setting = settings?[0]{
             if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
-                let stringColor = pmConfig.value(forKey: "editing_font_color") as? String
-                return UIColor(netHex:Int(stringColor!, radix: 16)!)
+                if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return UIColor.cardDefaultColor()
+                }
             }
         }
         return defaultColor
