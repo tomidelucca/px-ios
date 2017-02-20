@@ -303,12 +303,14 @@ import UIKit
         
     }
     
-    open class func getImageForPaymentMethod(withDescription : String) -> UIImage?{
+    open class func getImageForPaymentMethod(withDescription : String, defaultColor : Bool = false) -> UIImage?{
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
         
-        if PaymentType.allPaymentIDs.contains(description) || description == "cards" {
+        if defaultColor {
+            description = description+"Azul"
+        } else if (PaymentType.allPaymentIDs.contains(description) || description == "cards") {
             description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
         }
         
