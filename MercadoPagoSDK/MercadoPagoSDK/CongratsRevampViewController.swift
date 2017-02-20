@@ -63,9 +63,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(paymentResult: PaymentResult, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "CongratsRevampViewController", bundle : bundle)
-        self.viewModel = CongratsViewModel(paymentResult: paymentResult, callback: callback)
+        self.viewModel = CongratsViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -138,7 +138,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getApprovedBodyCell() -> UITableViewCell {
         let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
-        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!)
+        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference)
         return approvedCell
     }
     
@@ -189,11 +189,13 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer {
     
     var paymentResult: PaymentResult!
     var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
+    var checkoutPreference: CheckoutPreference?
     
-    init(paymentResult: PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
         
         self.paymentResult = paymentResult
         self.callback = callback
+        self.checkoutPreference = checkoutPreference
     }
     open func methodId() -> String!{
         return paymentResult.paymentData?.paymentMethod._id ?? ""

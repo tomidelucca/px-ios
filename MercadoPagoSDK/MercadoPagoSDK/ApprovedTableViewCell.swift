@@ -30,9 +30,9 @@ class ApprovedTableViewCell: UITableViewCell {
         setFonts()
     }
     
-    func fillCell(paymentResult: PaymentResult){
+    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?){
         
-        let currency = CurrenciesUtil.getCurrencyFor(paymentResult.currencyId) ?? CurrenciesUtil.getCurrencyFor("ARS")!
+        let currency = MercadoPagoContext.getCurrency()
         
         fillID(id: paymentResult._id)
         
@@ -41,7 +41,7 @@ class ApprovedTableViewCell: UITableViewCell {
             fillInterestLabel(payerCost: payerCost)
             fillTotalLabel(payerCost: payerCost, currency: currency)
             
-        } else if let amount = paymentResult.amount{
+        } else if let amount = checkoutPreference?.getAmount(){
             fillInstallmentLabel(amount: amount, currency: currency)
             paymentMethodTotalConstraint.constant = 0
         }

@@ -79,11 +79,11 @@ open class PaymentResultScreenPreference: NSObject {
         PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
     }
     
-    open func setContentText(text: String){
+    open func setPendingContentText(text: String){
         self.contentText = text
     }
     
-    open func setContentTitle(title: String){
+    open func setPendingContentTitle(title: String){
         self.contentTitle = title
     }
     
