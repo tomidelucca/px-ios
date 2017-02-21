@@ -30,6 +30,10 @@ public class PaymentData: NSObject {
             return false
         }
         
+        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+            return true
+        }
+        
         if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
             return false
         }
