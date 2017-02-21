@@ -84,20 +84,12 @@ open class CardToken : NSObject, CardInformationForm {
         
             let settings : [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
             
-            guard let cardSettings = settings else {
+            guard let cardSettings = settings , !settings!.isEmpty else {
                 if userInfo == nil {
                     userInfo = [String : String]()
                 }
                 return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
             }
-            if cardSettings.isEmpty {
-                
-                if userInfo == nil {
-                    userInfo = [String : String]()
-                }
-                return "El número de tarjeta que ingresaste no se corresponde con el tipo de tarjeta".localized
-                
-            } else {
                 // Validate card length
                 
                 let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().characters.count})
@@ -120,7 +112,6 @@ open class CardToken : NSObject, CardInformationForm {
                     return "El número de tarjeta que ingresaste es incorrecto".localized
                  //   userInfo?.updateValue("El número de tarjeta que ingresaste es incorrecto".localized, forKey: "cardNumber")
                 }
-        }
         }
         
         if userInfo == nil {
