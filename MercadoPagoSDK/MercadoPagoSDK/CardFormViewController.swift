@@ -75,9 +75,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             //Navigation bar colors
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
-            if let fontChosed = UIFont(name: MercadoPagoContext.getDecorationPreference().getFontName(), size: 18) {
-                titleDict = [NSForegroundColorAttributeName: MercadoPagoContext.getDecorationPreference().getFontColor(), NSFontAttributeName:fontChosed]
-            }
+            let fontChosed = Utils.getFont(size: 18)
+            titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName:fontChosed]
             
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
@@ -485,7 +484,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
         
         
-        let font = UIFont(name:MercadoPagoContext.getDecorationPreference().getFontName(), size: 14) ?? UIFont.systemFont(ofSize: 14)
+        let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
