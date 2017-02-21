@@ -125,19 +125,19 @@
     
     
 //
-    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-        NSLog(@"%@", paymentData.paymentMethod._id);
-        NSLog(@"%@", paymentData.token._id);
-        NSLog(@"%ld", paymentData.payerCost.installments);        
-        
-        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
-        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
-        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
-        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-        //[self.navigationController popToRootViewControllerAnimated:NO];
-    }];
+//    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+//        NSLog(@"%@", paymentData.paymentMethod._id);
+//        NSLog(@"%@", paymentData.token._id);
+//        NSLog(@"%ld", paymentData.payerCost.installments);        
+//        
+//        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
+//        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
+//        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+//        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
+//        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+//        //[self.navigationController popToRootViewControllerAnimated:NO];
+//    }];
 
     PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
@@ -161,11 +161,11 @@
     
 
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:pd navigationController:self.navigationController paymentResult:paymentResult];
+//    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:pd navigationController:self.navigationController paymentResult:paymentResult];
+//    
+//    UIViewController *vc =  [ self.mpCheckout getRootViewController];
     
-    UIViewController *vc =  [ self.mpCheckout getRootViewController];
-    
-    //UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
+    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
     //NSLog(vc);
     
 
