@@ -22,6 +22,9 @@ open class PaymentResultScreenPreference: NSObject {
     var hideChangePaymentMethodCell = false
     var hideChangePaymentMethodButton = false
     var hidePendingContentText = false
+    var hideAmount = false
+    var hidePaymentId = false
+    var hidePaymentMethod = false
     
     internal static var pendingAdditionalInfoCells = [MPCustomCell]()
     internal static var approvedAdditionalInfoCells = [MPCustomCell]()
@@ -63,6 +66,26 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePendingContentText = true
     }
     
+    open func disableApprovedAmount() {
+        self.hideAmount = true
+    }
+    
+    open func disableApprovedReceipt() {
+        self.hidePaymentId = true
+    }
+    
+    open func disableApprovedPaymentMethodInfo() {
+        self.hidePaymentMethod = true
+    }
+    
+    open func enableAmount() {
+        self.hideAmount = false
+    }
+    
+    open func enableApprovedReceipt(){
+        self.hidePaymentId = true
+    }
+    
     open func enableChangePaymentMethodOptionButton(){
         self.hideChangePaymentMethodButton = false
     }
@@ -73,6 +96,10 @@ open class PaymentResultScreenPreference: NSObject {
     
     open func enablePaymentContentText() {
         self.hidePendingContentText = false
+    }
+    
+    open func enableApprovedPaymentMethodInfo() {
+        self.hidePaymentMethod = false
     }
     
     open static func addCustomPendingCell(customCell : MPCustomCell) {
@@ -130,6 +157,18 @@ open class PaymentResultScreenPreference: NSObject {
     
     open func isPendingContentTextDisable() -> Bool {
         return hidePendingContentText
+    }
+    
+    open func isPaymentMethodDisable() -> Bool {
+        return hidePaymentMethod
+    }
+    
+    open func isAmountDisable() -> Bool {
+        return hideAmount
+    }
+    
+    open func isPaymentIdDisable() -> Bool {
+        return hidePaymentId
     }
     
     open func getPendingContetTitle() -> String {

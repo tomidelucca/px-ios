@@ -34,21 +34,34 @@ class ApprovedTableViewCell: UITableViewCell {
         
         let currency = MercadoPagoContext.getCurrency()
         
-        fillID(id: paymentResult._id)
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentIdDisable(){
+            fillID(id: paymentResult._id)
+        } else {
+            idInstallmentConstraint.constant = 0
+        }
         
-        if let payerCost = paymentResult.paymentData?.payerCost {
-            fillInstallmentLabel(amount: payerCost.totalAmount, installments: payerCost.installments, currency: currency)
-            fillInterestLabel(payerCost: payerCost)
-            fillTotalLabel(payerCost: payerCost, currency: currency)
-            
-        } else if let amount = checkoutPreference?.getAmount(){
-            fillInstallmentLabel(amount: amount, currency: currency)
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isAmountDisable(){
+            if let payerCost = paymentResult.paymentData?.payerCost {
+                fillInstallmentLabel(amount: payerCost.totalAmount, installments: payerCost.installments, currency: currency)
+                fillInterestLabel(payerCost: payerCost)
+                fillTotalLabel(payerCost: payerCost, currency: currency)
+                
+            } else if let amount = checkoutPreference?.getAmount() {
+                fillInstallmentLabel(amount: amount, currency: currency)
+                paymentMethodTotalConstraint.constant = 0
+            }
+        } else {
             paymentMethodTotalConstraint.constant = 0
         }
         
-        fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
-        
-        fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
+        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentMethodDisable() {
+            
+            fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
+            
+            fillPaymentMethodDescriptionLabel(paymentMethod: paymentResult.paymentData?.paymentMethod, token: paymentResult.paymentData?.token)
+        } else {
+            paymentMethodTotalConstraint.constant = 0
+        }
         
         fillStatementDescriptionLabel(description: paymentResult.statementDescription)
         
