@@ -12,17 +12,37 @@ open class PaymentResultScreenPreference: NSObject {
     
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
     var approvedSubtitle = ""
+    var approvedSecondaryExitButtonText = ""
+    var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+    
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
-    var contentTitle = "¿Qué puedo hacer?".localized
-    var contentText = ""
-    var exitButttonTitle = "Continuar".localized
-    var secondaryExitButtonText = "Pagar con otro medio".localized
-    var headerPendingIconName = "iconoAcreditado"
-    var headerPendingIconBundle = MercadoPago.getBundle()!
-    var hideChangePaymentMethodCell = false
-    var hideChangePaymentMethodButton = false
+    var pendingContentTitle = "¿Qué puedo hacer?".localized
+    var pendingContentText = ""
+    var pendingIconName = "iconoAcreditado"
+    var pendingIconBundle = MercadoPago.getBundle()!
+    var hidePendingSecondaryButton = false
     var hidePendingContentText = false
+    var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
+    var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+    
+    var rejectedTitle = "Uy, no pudimos procesar el pago"
+    var rejectedSubtitle = ""
+    var rejectedIconSubtext = "Algo salió mal… ".localized
+    var rejectedIconName = "congrats_iconoTcError"
+    var rejectedIconBundle = MercadoPago.getBundle()!
+    var rejectedContentTitle = "¿Qué puedo hacer?".localized
+    var rejectedContentText = ""
+    var hideRejectedSecondaryButton = false
+    var hideRejectedContentText = false
+    var hideRejectedContentTitle = false
+    var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
+    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+
+    var exitButtonTitle = "Continuar".localized
+
+    
+    var hideChangePaymentMethodCell = false
     var hideAmount = false
     var hidePaymentId = false
     var hidePaymentMethod = false
@@ -30,13 +50,22 @@ open class PaymentResultScreenPreference: NSObject {
     internal static var pendingAdditionalInfoCells = [MPCustomCell]()
     internal static var approvedAdditionalInfoCells = [MPCustomCell]()
     
-    open func setAppovedTitle(title: String) {
+    // Sets de Approved
+    
+    open func setApprovedTitle(title: String) {
         self.approvedTitle = title
     }
     
-    open func setAppovedSubtitle(subtitle: String) {
+    open func setApprovedSubtitle(subtitle: String) {
         self.approvedSubtitle = subtitle
     }
+    
+    open func setApprovedSecondaryExitButton(callback: ((PaymentResult) -> Void)? ,text: String) {
+        self.approvedSecondaryExitButtonText = text
+        self.approvedSecondaryExitButtonCallback = callback
+    }
+    
+    // Sets de Pending
     
     open func setPendingTitle(title: String) {
         self.pendingTitle = title
@@ -46,29 +75,85 @@ open class PaymentResultScreenPreference: NSObject {
         self.pendingSubtitle = subtitle
     }
     
-    open func setExitButtonTitle(title: String) {
-        self.exitButttonTitle = title
-    }
-    
-    open func setSecondaryExitButtonText(text: String) {
-        self.secondaryExitButtonText = text
-    }
-    
     open func setPendingHeaderIcon(name: String, bundle: Bundle) {
-        self.headerPendingIconName = name
-        self.headerPendingIconBundle = bundle
+        self.pendingIconName = name
+        self.pendingIconBundle = bundle
     }
     
-    open func disableChangePaymentMethodOptionCell(){
-        self.hideChangePaymentMethodCell = true
+    open func setPendingContentText(text: String) {
+        self.pendingContentText = text
     }
     
-    open func disableChangePaymentMethodOptionButton(){
-        self.hideChangePaymentMethodButton = true
+    open func setPendingContentTitle(title: String) {
+        self.pendingContentTitle = title
+    }
+    
+    open func disablePendingSecondaryExitButton() {
+        self.hidePendingSecondaryButton = true
     }
     
     open func disablePendingContentText() {
         self.hidePendingContentText = true
+    }
+    
+    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)? ,text: String) {
+        self.pendingSecondaryExitButtonText = text
+        self.pendingSecondaryExitButtonCallback = callback
+    }
+    
+    
+    // Sets de rejected
+    
+    open func setRejectedTitle(title: String) {
+        self.rejectedTitle = title
+    }
+    
+    open func setRejectedSubtitle(subtitle: String) {
+        self.rejectedSubtitle = subtitle
+    }
+
+    open func setRejectedHeaderIcon(name: String, bundle: Bundle) {
+        self.rejectedIconName = name
+        self.rejectedIconBundle = bundle
+    }
+    
+    open func setRejectedContentText(text: String) {
+        self.rejectedContentText = text
+    }
+    
+    open func setRejectedContentTitle(title: String) {
+        self.rejectedContentTitle = title
+    }
+    
+    open func setRejectedIconSubtext(text: String) {
+        self.rejectedIconSubtext = text
+    }
+    
+    open func disableRejectdSecondaryExitButton() {
+        self.hideRejectedSecondaryButton = true
+    }
+    
+    open func disableRejectedContentText() {
+        self.hideRejectedContentText = true
+    }
+    
+    open func disableRejectedContentTitle() {
+        self.hideRejectedContentTitle = true
+    }
+    
+    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)? ,text: String) {
+        self.rejectedSecondaryExitButtonText = text
+        self.rejectedSecondaryExitButtonCallback = callback
+    }
+    
+    open func setExitButtonTitle(title: String) {
+        self.exitButtonTitle = title
+    }
+    
+    // Disables
+    
+    open func disableChangePaymentMethodOptionCell() {
+        self.hideChangePaymentMethodCell = true
     }
     
     open func disableApprovedAmount() {
@@ -91,10 +176,6 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePaymentId = true
     }
     
-    open func enableChangePaymentMethodOptionButton(){
-        self.hideChangePaymentMethodButton = false
-    }
-    
     open func enableChangePaymentMethodOptionCell(){
         self.hideChangePaymentMethodCell = false
     }
@@ -106,6 +187,8 @@ open class PaymentResultScreenPreference: NSObject {
     open func enableApprovedPaymentMethodInfo() {
         self.hidePaymentMethod = false
     }
+    
+    //Custom Rows
     
     open static func addCustomPendingCell(customCell : MPCustomCell) {
         PaymentResultScreenPreference.pendingAdditionalInfoCells.append(customCell)
@@ -120,13 +203,7 @@ open class PaymentResultScreenPreference: NSObject {
         PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
     }
     
-    open func setPendingContentText(text: String){
-        self.contentText = text
-    }
-    
-    open func setPendingContentTitle(title: String){
-        self.contentTitle = title
-    }
+    //Approved
     
     open func getApprovedTitle() -> String {
         return approvedTitle
@@ -136,6 +213,15 @@ open class PaymentResultScreenPreference: NSObject {
         return approvedSubtitle
     }
     
+    open func getApprovedSecondaryButtonText() -> String {
+        return approvedSecondaryExitButtonText
+    }
+    open func getApprovedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
+        return approvedSecondaryExitButtonCallback
+    }
+    
+    //Pending
+    
     open func getPendingTitle() -> String {
         return pendingTitle
     }
@@ -144,28 +230,85 @@ open class PaymentResultScreenPreference: NSObject {
         return pendingSubtitle
     }
     
-    open func getExitButtonTitle() -> String {
-        return exitButttonTitle
-    }
-    
-    open func getSecondaryButtonText() -> String {
-        return secondaryExitButtonText
-    }
-    
     open func getHeaderPendingIcon() -> UIImage? {
-        return MercadoPago.getImage(headerPendingIconName, bundle: headerPendingIconBundle)
+        return MercadoPago.getImage(pendingIconName, bundle: pendingIconBundle)
     }
     
-    open func isSelectAnotherPaymentMethodDisableCell() -> Bool {
-        return hideChangePaymentMethodCell
+    open func getPendingContetTitle() -> String {
+        return pendingContentTitle
     }
     
-    open func isSelectAnotherPaymentMethodDisableButton() -> Bool {
-        return hideChangePaymentMethodButton
+    open func getPendingContentText() -> String {
+        return pendingContentText
+    }
+    
+    open func getPendingSecondaryButtonText() -> String {
+        return pendingSecondaryExitButtonText
+    }
+    
+    open func getPendingSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
+        return pendingSecondaryExitButtonCallback
+    }
+    
+    open func isPendingSecondaryExitButtonDisable() -> Bool {
+        return hidePendingSecondaryButton
     }
     
     open func isPendingContentTextDisable() -> Bool {
         return hidePendingContentText
+    }
+    
+    // Rejected 
+    
+    open func getRejectedTitle() -> String {
+        return rejectedTitle
+    }
+    
+    open func getRejectedSubtitle() -> String {
+        return rejectedSubtitle
+    }
+    
+    open func getHeaderRejectedIcon() -> UIImage? {
+        return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+    }
+    
+    open func getRejectedContetTitle() -> String {
+        return rejectedContentTitle
+    }
+    
+    open func getRejectedContentText() -> String {
+        return rejectedContentText
+    }
+    
+    open func getRejectedIconSubtext() -> String {
+        return rejectedIconSubtext
+    }
+    
+    open func getRejectedSecondaryButtonText() -> String {
+        return rejectedSecondaryExitButtonText
+    }
+    open func getRejectedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
+        return rejectedSecondaryExitButtonCallback
+    }
+    
+    open func isRejectedSecondaryExitButtonDisable() -> Bool {
+        return hideRejectedSecondaryButton
+    }
+    
+    open func isRejectedContentTextDisable() -> Bool {
+        return hideRejectedContentText
+    }
+    
+    open func isRejectedContentTitleDisable() -> Bool {
+        return hideRejectedContentTitle
+    }
+    
+    open func getExitButtonTitle() -> String {
+        return exitButtonTitle
+    }
+    
+    open func isSelectAnotherPaymentMethodDisableCell() -> Bool {
+        return hideChangePaymentMethodCell
     }
     
     open func isPaymentMethodDisable() -> Bool {
@@ -180,11 +323,4 @@ open class PaymentResultScreenPreference: NSObject {
         return hidePaymentId
     }
     
-    open func getPendingContetTitle() -> String {
-        return contentTitle
-    }
-    
-    open func getPendingContentText() -> String {
-        return contentText
-    }
 }

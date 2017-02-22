@@ -30,7 +30,7 @@
 }
 
 - (IBAction)checkoutFlow:(id)sender {
-
+    
     // Setear DecorationPreference
     DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
@@ -39,12 +39,12 @@
     
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
     
-//    NSDictionary *extraParams = @{
-//                              @"merchant_access_token" : @"mla-cards-data" };
-//    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
-//    
-//    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
-
+    //    NSDictionary *extraParams = @{
+    //                              @"merchant_access_token" : @"mla-cards-data" };
+    //    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
+    //
+    //    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+    
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
     
@@ -61,9 +61,9 @@
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
-
+    
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:nil];
-
+    
     
     // Setear celdas custom para RyC
     
@@ -73,7 +73,7 @@
     [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
     MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
     self.customCell = customCargaSube;
-
+    
     // Setear Revisa y confima Preference
     
     ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
@@ -89,7 +89,7 @@
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
     MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
-
+    
     DineroEnCuentaTableViewCell *dineroEnCuenta = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
     [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
     MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
@@ -101,11 +101,29 @@
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
-    [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+    [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
-    [resultPreference setSecondaryExitButtonTextWithText:@"Ir a mi actividad"];
-//    [resultPreference disablePendingContentText];
-//    [resultPreference disableChangePaymentMethodOptionButton];
+    //[resultPreference disableRejectdSecondaryExitButton];
+    [resultPreference setRejectedTitleWithTitle:@"No pudimos hacer la recarga"];
+    [resultPreference setRejectedSubtitleWithSubtitle:@"Movistar no esta disponible ahora"];
+    [resultPreference setRejectedIconSubtextWithText:@"Uppss..."];
+    [resultPreference setRejectedContentTextWithText:@"Vuelve más tarde"];
+    [resultPreference setRejectedContentTitleWithTitle:@"¿Qué hago?"];
+    //    [resultPreference disableRejectedContentTitle];
+    //    [resultPreference disableRejectedContentText];
+    //    [resultPreference setRejectedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
+    //        NSLog(@"%@", paymentResult.status);
+    //    } text:@"Ir a mi activdad"];
+    //    [resultPreference disablePendingContentText];
+    //    [resultPreference disableChangePaymentMethodOptionButton];
+    //    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
+    //        NSLog(@"%@", paymentResult.status);
+    //        [self.navigationController popToRootViewControllerAnimated:NO];
+    //    } text:@"Ir a mi actividad"];
+//    [resultPreference setApprovedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
+//        NSLog(@"%@", paymentResult.status);
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+//    } text:@"Ir a mi actividad"];
     
     
     // Agregar celdas custom
@@ -116,57 +134,57 @@
     
     //Agregar un paymentDataCallBack que recarge RyC
     
-//    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
-//        NSLog(@"%@", paymentData.paymentMethod._id);
-//        NSLog(@"%@", paymentData.token._id);
-//        NSLog(@"%ld", paymentData.payerCost.installments);        
-//        
-//        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
-//        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
-//        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
-//        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-//        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-//        //[self.navigationController popToRootViewControllerAnimated:NO];
-//    }];
-
-
+    //    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
+    //        NSLog(@"%@", paymentData.paymentMethod._id);
+    //        NSLog(@"%@", paymentData.token._id);
+    //        NSLog(@"%ld", paymentData.payerCost.installments);
+    //
+    //        ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
+    //        [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
+    //        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
+    //        //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
+    //        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+    //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+    //        //[self.navigationController popToRootViewControllerAnimated:NO];
+    //    }];
+    
+    
     //Entrar a RyC directo
     
     /*PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm._id = @"visa";
-    pm.paymentTypeId = @"credit_card";
-    pm.name = @"visa";
-
+     pm._id = @"visa";
+     pm.paymentTypeId = @"credit_card";
+     pm.name = @"visa";
+     
+     
+     PaymentData *pd = [[PaymentData alloc] init];
+     pd.paymentMethod = pm;
+     
+     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"card" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
+     pd.token.lastFourDigits = @"7890";
+     pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
+     
+     pd.issuer = [[Issuer alloc] init];
+     pd.issuer._id = [NSNumber numberWithInt:200];;
+     
+     
+     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd siteId:@"MLA" payerEmail:nil id:nil amount:50.0 statementDescription:nil];*/
     
-    PaymentData *pd = [[PaymentData alloc] init];
-    pd.paymentMethod = pm;
     
-    pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"card" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
-    pd.token.lastFourDigits = @"7890";
-    pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
+    CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    //    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
     
-    pd.issuer = [[Issuer alloc] init];
-    pd.issuer._id = [NSNumber numberWithInt:200];;
-    
-    
-    PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd siteId:@"MLA" payerEmail:nil id:nil amount:50.0 statementDescription:nil];*/
-
-    
-   CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
-//    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
-
     
     UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref navigationController:self.navigationController] getRootViewController];
     //NSLog(vc);
     
-
     
     
-       //[[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] start];
+    
+    //[[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] start];
     //[[MercadoPagoCheckout alloc] initWithCheckoutPrefence:<#(CheckoutPreference * _Nonnull)#> navigationController:<#(UINavigationController * _Nonnull)#>
     //[servicePreference setCreatePaymentWithBaseURL:@"baseUrl" URI:@"paymentUri" additionalInfo:extraParams];
-   // [MercadoPagoCheckout setServicePreference:servicePreference];
+    // [MercadoPagoCheckout setServicePreference:servicePreference];
     
 }
 
@@ -184,9 +202,9 @@
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
         [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-
-//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
-//        
+        
+        //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+        //
         [self.mpCheckout updateReviewAndConfirm];
         
     }];

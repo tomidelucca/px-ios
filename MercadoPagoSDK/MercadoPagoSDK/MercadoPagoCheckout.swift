@@ -285,7 +285,7 @@ open class MercadoPagoCheckout: NSObject {
     func displayPaymentResult() {
         // TODO : por que dos? esta bien? no hay view models, ver que onda
         if self.viewModel.paymentResult == nil {
-            self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
+            self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)            
         }
 
         let congratsViewController : UIViewController

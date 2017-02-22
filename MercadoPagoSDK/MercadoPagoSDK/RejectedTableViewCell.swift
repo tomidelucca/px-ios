@@ -22,6 +22,7 @@ class RejectedTableViewCell: UITableViewCell {
         self.title.text = "¿Qué puedo hacer?".localized
         self.title.font = Utils.getFont(size: self.title.font.pointSize)
         self.subtitile.font = Utils.getFont(size: self.subtitile.font.pointSize)
+        self.subtitile.text = ""
         self.selectionStyle = .none
     }
     
@@ -41,12 +42,26 @@ class RejectedTableViewCell: UITableViewCell {
                     paymentTypeId = "credit_card"
                 }
                 
-                var title = (paymentResult.statusDetail + "_subtitle_" + paymentTypeId!)
+                let title = (paymentResult.statusDetail + "_subtitle_" + paymentTypeId!)
                 
                 if !title.existsLocalized() {
-                    title = ""
+                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTitleDisable() {
+                        self.title.text = ""
+                        self .titleSubtitleCoinstraint.constant = 0
+                    } else if String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
+                        self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()
+                    }
+                    
+                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTextDisable() {
+                        self.subtitile.text = ""
+                        self .titleSubtitleCoinstraint.constant = 0
+                    } else if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()) {
+                        self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()
+                    }
+
+                } else {
+                    self.subtitile.text = title.localized
                 }
-                self.subtitile.text = title.localized
             }
         } else if paymentResult.status == "in_process" {
             self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContetTitle()
@@ -54,7 +69,7 @@ class RejectedTableViewCell: UITableViewCell {
             if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingContentTextDisable() {
                 self.subtitile.text = ""
                 self .titleSubtitleCoinstraint.constant = 0
-            
+                
             } else {
                 if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()) {
                     self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()

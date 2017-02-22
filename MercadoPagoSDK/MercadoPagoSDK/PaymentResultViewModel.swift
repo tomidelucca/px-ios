@@ -167,7 +167,14 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
             return numberOfCustomAdditionalCells()
         
         } else if isSecondaryExitButtonCellFor(indexPath: IndexPath(row: 0, section: section)){
-            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableButton() ? 0 : 1
+            if approved() && MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
+                return 1
+            } else if inProcess() && !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
+                return 1
+            } else if rejected() && !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
+                return 1
+            }
+            return 0
         }
         return 1
     }
