@@ -47,6 +47,7 @@ O si prefieres, puedes elegir otro medio de pago.</string>
             <connections>
                 <outlet property="subtitile" destination="G6G-nr-CA4" id="Z1b-ZI-mZ4"/>
                 <outlet property="title" destination="DBX-U3-5lx" id="9aW-Gr-xYu"/>
+                <outlet property="titleSubtitleCoinstraint" destination="eqD-a0-XaS" id="nYT-5G-OQU"/>
             </connections>
             <point key="canvasLocation" x="103" y="398"/>
         </tableViewCell>

@@ -9,7 +9,6 @@
 #import "MainExamplesViewController.h"
 #import "ExampleUtils.h"
 #import "CustomTableViewCell.h"
-#import "PendingTableViewCell.h"
 #import "SubeTableViewCell.h"
 #import "DineroEnCuentaTableViewCell.h"
 #import "CustomItemTableViewCell.h"
@@ -32,27 +31,28 @@
 
 - (IBAction)checkoutFlow:(id)sender {
 
-    // Decoration Preference con colores custom
+    // Setear DecorationPreference
     DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
     
-    // Service Preference para seteo de servicio de pago
-    NSDictionary *extraParams = @{
-                                  @"merchant_access_token" : @"mla-cards-data"
-                                  };
+    // Setear ServicePreference
+    
     ServicePreference * servicePreference = [[ServicePreference alloc] init];
     
-    
-    //[servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
-    
+//    NSDictionary *extraParams = @{
+//                              @"merchant_access_token" : @"mla-cards-data" };
+//    [servicePreference setCreatePaymentWithBaseURL:@"https://private-0d59c-mercadopagoexamples.apiary-mock.com" URI:@"/create_payment" additionalInfo:extraParams];
+//    
+//    [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
+
     [MercadoPagoCheckout setServicePreference:servicePreference];
     
+    
+    // Setear el idioma de la aplicación
     [MercadoPagoContext setLanguageWithLanguage:"es"];
     
     
-    
-  //  [servicePreference setGetCustomerWithBaseURL:@"https://www.mercadopago.com" URI:@"/checkout/examples/getCustomer" additionalInfo:extraParams];
-    
+    // Setear una preferencia hecha a mano
     Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
     Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" type:nil identification:nil];
@@ -65,7 +65,7 @@
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:nil];
 
     
-  
+    // Setear celdas custom para RyC
     
     CustomTableViewCell *cargaSubeCell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     cargaSubeCell.label.text = @"Carga SUBE";
@@ -74,6 +74,7 @@
     MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
     self.customCell = customCargaSube;
 
+    // Setear Revisa y confima Preference
     
     ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
     [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
@@ -83,17 +84,8 @@
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     [ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
     
-    CustomTableViewCell *customCellItem = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
     
-    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
-    customCellItem.label.text = @"Item 1";
-    [customCellItem.button setTitle:@"Cambiar" forState:UIControlStateNormal];
-    [customCellItem.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    PendingTableViewCell *cargaSubeCellCongrats = [[[NSBundle mainBundle] loadNibNamed:@"PendingTableViewCell" owner:self options:nil] firstObject];
-    cargaSubeCellCongrats.label.text = @"Para acreditar tu recarga";
-    MPCustomCell *customCargaSubeCongrats = [[MPCustomCell alloc] initWithCell:cargaSubeCellCongrats];
+    // Celdas custom de Payment Result
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
     MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
@@ -102,29 +94,28 @@
     [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
     MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
     self.dineroEnCuentaCell = dineroEnCuentaCustom;
+    
+    // Setear la paymentResultPreference
     PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+    [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
+    [resultPreference setSecondaryExitButtonTextWithText:@"Ir a mi actividad"];
+//    [resultPreference disablePendingContentText];
+//    [resultPreference disableChangePaymentMethodOptionButton];
     
-    MPCustomCell *customItemCell = [[MPCustomCell alloc] initWithCell:customCellItem];
-  //  self.customCell = customItemCell;
     
-    CustomItemTableViewCell *customCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomItemTableViewCell" owner:self options:nil] firstObject];
-    customCell2.itemTitle.text = @"Item title updated";
-    MPCustomCell *itemCell = [[MPCustomCell alloc] initWithCell:customCell2];
-    
-    NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
-    
-//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
-//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
-//    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
+    // Agregar celdas custom
+    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
     
-//
+    //Agregar un paymentDataCallBack que recarge RyC
+    
 //    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback: ^(PaymentData *paymentData) {
 //        NSLog(@"%@", paymentData.paymentMethod._id);
 //        NSLog(@"%@", paymentData.token._id);
@@ -140,6 +131,8 @@
 //    }];
 
 
+    //Entrar a RyC directo
+    
     /*PaymentMethod *pm = [[PaymentMethod alloc] init];
     pm._id = @"visa";
     pm.paymentTypeId = @"credit_card";

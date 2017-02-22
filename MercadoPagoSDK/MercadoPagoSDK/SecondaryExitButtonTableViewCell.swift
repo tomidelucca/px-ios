@@ -8,16 +8,23 @@
 
 import UIKit
 
-class SecondaryExitButtonTableViewCell: UITableViewCell {
+class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
 
     @IBOutlet weak var button: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         button.layer.cornerRadius = 3
-        //self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
-        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
+        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getSecondaryButtonText(), for: .normal)
         self.button.titleLabel?.font = Utils.getFont(size: 16)
+    }
+    
+    open func fillCell(paymentResult: PaymentResult){
+        if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+            status = MPStepBuilder.CongratsState.cancel_RECOVER
+            self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

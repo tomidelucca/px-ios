@@ -17,6 +17,7 @@ open class PaymentResultScreenPreference: NSObject {
     var contentTitle = "¿Qué puedo hacer?".localized
     var contentText = ""
     var exitButttonTitle = "Continuar".localized
+    var secondaryExitButtonText = "Pagar con otro medio".localized
     var headerPendingIconName = "iconoAcreditado"
     var headerPendingIconBundle = MercadoPago.getBundle()!
     var hideChangePaymentMethodCell = false
@@ -47,6 +48,10 @@ open class PaymentResultScreenPreference: NSObject {
     
     open func setExitButtonTitle(title: String) {
         self.exitButttonTitle = title
+    }
+    
+    open func setSecondaryExitButtonText(text: String) {
+        self.secondaryExitButtonText = text
     }
     
     open func setPendingHeaderIcon(name: String, bundle: Bundle) {
@@ -141,6 +146,10 @@ open class PaymentResultScreenPreference: NSObject {
     
     open func getExitButtonTitle() -> String {
         return exitButttonTitle
+    }
+    
+    open func getSecondaryButtonText() -> String {
+        return secondaryExitButtonText
     }
     
     open func getHeaderPendingIcon() -> UIImage? {

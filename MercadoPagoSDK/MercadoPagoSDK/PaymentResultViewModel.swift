@@ -162,8 +162,12 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     func numberOfRowsInSection(section: Int) -> Int {
         if section == 1 {
             return numberOfCellInBody()
-        } else if section == 2 {
+        
+        } else if isAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: section)) {
             return numberOfCustomAdditionalCells()
+        
+        } else if isSecondaryExitButtonCellFor(indexPath: IndexPath(row: 0, section: section)){
+            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableButton() ? 0 : 1
         }
         return 1
     }

@@ -72,7 +72,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     }
     
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
-        super.init(nibName: "CongratsRevampViewController", bundle : bundle)
+        super.init(nibName: "PaymentResultViewController", bundle : bundle)
         self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
@@ -162,7 +162,6 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     
     private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
         let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-        rejectedCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
         rejectedCell.fillCell(paymentResult: self.viewModel.paymentResult)
         if drawLine {
             ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
@@ -192,6 +191,8 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     
     private func getSecondaryExitButtonCell() -> UITableViewCell {
         let secondaryButtonCell = self.tableView.dequeueReusableCell(withIdentifier: "secondaryButtonNib") as! SecondaryExitButtonTableViewCell
+        secondaryButtonCell.fillCell(paymentResult: self.viewModel.paymentResult)
+        secondaryButtonCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
         return secondaryButtonCell
     }
     
