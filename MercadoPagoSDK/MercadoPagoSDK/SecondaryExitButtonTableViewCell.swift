@@ -10,9 +10,14 @@ import UIKit
 
 class SecondaryExitButtonTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var button: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        button.layer.cornerRadius = 3
+        //self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
+        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
+        self.button.titleLabel?.font = Utils.getFont(size: 16)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

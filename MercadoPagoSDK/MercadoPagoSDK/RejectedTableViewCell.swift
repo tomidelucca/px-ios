@@ -12,31 +12,24 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subtitile: UILabel!
-    @IBOutlet weak var button: UIButton!
     
-    @IBOutlet weak var subtitleButtonConstrain: NSLayoutConstraint!
-    @IBOutlet weak var buttonHeightConstrain: NSLayoutConstraint!
     var paymentTypeId: String?;
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        button.layer.cornerRadius = 3
         self.title.text = "¿Qué puedo hacer?".localized
         self.title.font = Utils.getFont(size: self.title.font.pointSize)
         self.subtitile.font = Utils.getFont(size: self.subtitile.font.pointSize)
-        self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
-        self.button.setTitle("Pagar con otro medio".localized, for: .normal)
-        self.button.titleLabel?.font = Utils.getFont(size: 16)
         self.selectionStyle = .none
     }
     
     func fillCell (paymentResult: PaymentResult){
         
         if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableButton() {
-            button.isHidden = true
-            subtitleButtonConstrain.constant = 0
-            buttonHeightConstrain.constant = 0
+            //button.isHidden = true
+//            subtitleButtonConstrain.constant = 0
+//            buttonHeightConstrain.constant = 0
             
         }
         
@@ -62,7 +55,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
                 self.subtitile.text = title.localized
                 if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
                     status = MPStepBuilder.CongratsState.cancel_RECOVER
-                    self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
+//                    self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
                 }
             }
         } else if paymentResult.status == "in_process" {
@@ -70,7 +63,7 @@ class RejectedTableViewCell: CallbackCancelTableViewCell {
             
             if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingContentTextDisable() {
                 self.subtitile.text = ""
-                self.subtitleButtonConstrain.constant = 0
+//                self.subtitleButtonConstrain.constant = 0
             
             } else {
                 if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()) {
