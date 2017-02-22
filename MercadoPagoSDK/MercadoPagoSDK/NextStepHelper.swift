@@ -15,7 +15,7 @@ extension MercadoPagoCheckoutViewModel {
     }
     func isPaymentTypeSelected() -> Bool {
         
-        if self.paymentData.paymentMethod != nil && (self.search != nil) && !self.paymentData.paymentMethod.isAccountMoney() && self.paymentOptionSelected == nil {
+        if self.paymentData.isComplete() && (self.search != nil) && self.paymentOptionSelected == nil {
             self.setPaymentOptionSelected()
             return true
         }
@@ -122,12 +122,18 @@ extension MercadoPagoCheckoutViewModel {
     }
     
     func setPaymentOptionSelected(){
-        if !self.paymentData.paymentMethod.isCard() {
+        if self.paymentData.paymentMethod.isAccountMoney() {
+            if !Array.isNullOrEmpty(self.customPaymentOptions) {
+                let result = self.customPaymentOptions!.filter({ (cardInformation : CardInformation) -> Bool in
+                    return cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
+                })
+                self.paymentOptionSelected = result[0] as? PaymentMethodOption
+            }
+        } else if !self.paymentData.paymentMethod.isCard() && self.paymentData.paymentMethod.isAccountMoney() {
             if let paymentTypeId = PaymentTypeId(rawValue : paymentData.paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodSearchItemInGroups(self.search!, paymentMethodId: paymentData.paymentMethod._id, paymentTypeId: paymentTypeId)
             }
         } else {
-           
             if let paymentTypeId = PaymentTypeId(rawValue : paymentData.paymentMethod.paymentTypeId) {
                 self.paymentOptionSelected = Utils.findPaymentMethodTypeId(self.search!.groups, paymentTypeId: paymentTypeId)
             }
