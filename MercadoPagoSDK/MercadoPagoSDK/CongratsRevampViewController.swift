@@ -363,3 +363,10 @@ class CongratsViewModel : NSObject, MPPaymentTrackInformer {
     }
 }
 
+enum PaymentStatus : String {
+    case APPROVED = "approved"
+    case REJECTED = "rejected"
+    case RECOVERY = "recovery"
+    case IN_PROCESS = "in_process"
+}
+

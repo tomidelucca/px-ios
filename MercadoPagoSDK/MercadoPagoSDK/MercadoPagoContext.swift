@@ -20,17 +20,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var payer_access_token: String = ""
     
-    var base_url: String = ""
-
-    var customer_uri: String = ""
-    
     var merchant_access_token: String = ""
     
     var initialFlavor: Flavor?
-
-    var preference_uri: String = ""
-    
-    var payment_uri: String = ""
     
     var payment_key : String = ""
     
@@ -44,7 +36,6 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var display_default_loading = true
     
-    var decorationPreference = DecorationPreference()
 
     var language: String = NSLocale.preferredLanguages[0]
     
@@ -145,6 +136,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setSite(_ site : Site) {
         MercadoPagoContext.sharedInstance.setSite(site)
     }
+    
     open class func getSite() -> String{
         return MercadoPagoContext.sharedInstance.site.rawValue
     }
@@ -190,54 +182,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open static func getCurrency() -> Currency {
         return sharedInstance.currency
     }
-    open static func getDecorationPreference() -> DecorationPreference{
-        return sharedInstance.decorationPreference
-    }
+
     open func publicKey() -> String!{
         return self.public_key
     }
-    
-    fileprivate static var primaryColor : UIColor = UIColor.mpDefaultColor()
-
-    
-    fileprivate static var complementaryColor : UIColor = UIColor.px_blueMercadoPago()
-    fileprivate static var textColor : UIColor = UIColor.px_white()
-    
-    open static func setupPrimaryColor(_ color: UIColor, complementaryColor: UIColor? = nil){
-        MercadoPagoContext.primaryColor = color
-        if (complementaryColor != nil){
-            MercadoPagoContext.setupComplementaryColor(complementaryColor!)
-        }else{
-            if (color == UIColor.mpDefaultColor()){
-                MercadoPagoContext.setupComplementaryColor(UIColor.px_blueMercadoPago())
-            }else{
-                MercadoPagoContext.setupComplementaryColor(color.lighter())
-            }
-        }
-    }
-    open static func setupComplementaryColor(_ color: UIColor){
-        MercadoPagoContext.complementaryColor = color
-    }
-    
-    internal static func getPrimaryColor() -> UIColor {
-        return primaryColor
-    }
-    
-    internal static func getComplementaryColor() -> UIColor {
-        return complementaryColor
-    }
-    
-    internal static func getTextColor() -> UIColor {
-        return textColor
-    }
-    
-    open static func setDarkTextColor(){
-        textColor = UIColor.black
-    }
-    open static func setLightTextColor(){
-        textColor = UIColor.px_white()
-    }
-    
     
     fileprivate override init() {
         super.init()
@@ -268,76 +216,43 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_1
     }
+    
     public class func initFlavor2(){
         if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
             return
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_2
     }
+    
     public class func initFlavor3(){
         if (MercadoPagoContext.sharedInstance.initialFlavor != nil){
             return
         }
         MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
-   
     
     open class func setAccountMoneyAvailable(accountMoneyAvailable : Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
     
-    
     open class func setDisplayDefaultLoading(flag : Bool){
         sharedInstance.display_default_loading = flag
-    }
-    
-    open class func setDecorationPreference(decorationPreference: DecorationPreference){
-        sharedInstance.decorationPreference = decorationPreference
     }
     
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
     }
     
-
     open class func publicKey() -> String {
-        
         return sharedInstance.public_key
-        
     }
     
-    
     open class func payerAccessToken() -> String {
-        
         return sharedInstance.payer_access_token
-        
     }
     
     open class func accountMoneyAvailable() -> Bool {
         return sharedInstance.account_money_available
-    }
-    
-    open class func baseURL() -> String {
-        
-        return sharedInstance.base_url
-        
-    }
-    open class func customerURI() -> String {
-        
-        return sharedInstance.customer_uri
-        
-    }
-    
-    open class func preferenceURI() -> String {
-        
-        return sharedInstance.preference_uri
-        
-    }
-    
-    open class func paymentURI() -> String {
-        
-        return sharedInstance.payment_uri
-        
     }
     
     open class func shouldDisplayDefaultLoading() -> Bool {
