@@ -21,7 +21,7 @@ import UIKit
         return "public_key"
     }
     open class var PRIVATE_KEY : String {
-        return "private_key"
+        return "access_token"
     }
     
     open class var ERROR_KEY_CODE : Int {
