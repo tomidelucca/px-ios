@@ -205,7 +205,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
  
     fileprivate func loadPreference() {
-        MPServicesBuilder.getPreference(self.preferenceId, success: { (preference) in
+        MPServicesBuilder.getPreference(self.preferenceId, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (preference) in
                 if let error = preference.validate() {
                     // Invalid preference - cannot continue
                     let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: error.localized, retry: false)

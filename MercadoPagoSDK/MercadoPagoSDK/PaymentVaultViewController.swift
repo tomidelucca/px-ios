@@ -183,7 +183,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate func loadPaymentMethodSearch(){
 
         if Array.isNullOrEmpty(self.viewModel.paymentMethodOptions) {
-            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+            MPServicesBuilder.searchPaymentMethods(self.viewModel.amount, defaultPaymenMethodId: self.viewModel.getPaymentPreferenceDefaultPaymentMethodId(), excludedPaymentTypeIds: viewModel.getExcludedPaymentTypeIds(), excludedPaymentMethodIds: viewModel.getExcludedPaymentMethodIds(), baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                 if paymentMethodSearchResponse.customerPaymentMethods?.count == 0 && paymentMethodSearchResponse.groups.count == 0{
                     let error = MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false)
                     self.displayFailure(error)
