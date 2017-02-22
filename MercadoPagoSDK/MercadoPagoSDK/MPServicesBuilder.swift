@@ -290,7 +290,7 @@ open class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PREFERENCE", result: nil)
         let preferenceService = PreferenceService(baseURL: baseURL)
         preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
-           // MercadoPagoContext.setSiteID(preference.siteId)
+           MercadoPagoContext.setSiteID(preference.siteId)
             success(preference)
         }, failure: failure)
     }
