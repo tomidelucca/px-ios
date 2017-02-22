@@ -169,7 +169,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         
         if (self.cardFormManager.paymentMethods == nil){
-            MPServicesBuilder.getPaymentMethods({ (paymentMethods) -> Void in
+            MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
                 
 
                 self.cardFormManager.paymentMethods = paymentMethods
@@ -226,7 +226,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     private func getPromos(){
-        MPServicesBuilder.getPromos({(promos : [Promo]?) -> Void in
+        MPServicesBuilder.getPromos(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), {(promos : [Promo]?) -> Void in
             self.cardFormManager.promos = promos
             self.updateCardSkin()
         }, failure: { (error: NSError) in
