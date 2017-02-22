@@ -105,13 +105,6 @@
     PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
-    [resultPreference disableChangePaymentMethodOptionCell];
-    [resultPreference disableApprovedReceipt];
-    [resultPreference disableApprovedAmount];
-    [resultPreference disablePendingContentText];
-    [resultPreference disableApprovedPaymentMethodInfo];
-    [resultPreference disableChangePaymentMethodOptionButton];
-    [resultPreference disableApprovedPaymentMethodInfo];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
     [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
     [resultPreference setAppovedTitleWithTitle:@"¡Listo, recargaste el celular"];
@@ -125,9 +118,9 @@
     
     NSArray *customItemCells = [[NSArray alloc] initWithObjects: customItemCell, itemCell, nil];
     
-    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
-    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
-    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:customCargaSubeCongrats];
+//    [PaymentResultScreenPreference addCustomPendingCellWithCustomCell:subeCongrats];
+//    [PaymentResultScreenPreference addCustomApprovedCellWithCustomCell:dineroEnCuentaCustom];
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
     

@@ -227,6 +227,12 @@
 		4B31AA3B1E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B31AA371E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.xib */; };
 		4B31AA3D1E5A0A790084C5DB /* InstructionsSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B31AA361E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.swift */; };
 		4B31AA3E1E5A0A860084C5DB /* InstructionBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B31AA341E5A078B0084C5DB /* InstructionBodyTableViewCell.swift */; };
+		4B34DC2F1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */; };
+		4B34DC301E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */; };
+		4B34DC311E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */; };
+		4B34DC321E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */; };
+		4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */; };
+		4B34DC371E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */; };
 		4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */; };
 		4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */; };
 		4B53C5EC1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */; };
@@ -263,8 +269,8 @@
 		4BAE1D4B1DCBE8FF0000ED5C /* RejectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */; };
 		4BAE1D521DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */; };
 		4BAE1D531DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */; };
-		4BAE1D541DCBE9340000ED5C /* CongratsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */; };
-		4BAE1D551DCBE9340000ED5C /* CongratsRevampViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* CongratsRevampViewController.xib */; };
+		4BAE1D541DCBE9340000ED5C /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */; };
+		4BAE1D551DCBE9340000ED5C /* PaymentResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */; };
 		4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BDE2D461E37B4AC00C1D614 /* ServicePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */; };
 		4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */; };
@@ -309,7 +315,7 @@
 		7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA56231DB6B58D00501061 /* CardTypeTableViewCell.swift */; };
 		7622E3291DF5EF0B00490C4E /* PayerCostCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55E91DB0015800501061 /* PayerCostCardTableViewCell.swift */; };
 		7622E32D1DF5EFEE00490C4E /* InstructionsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsRevampViewController.swift */; };
-		7622E32E1DF5EFF500490C4E /* CongratsRevampViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */; };
+		7622E32E1DF5EFF500490C4E /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */; };
 		7622E32F1DF5F00500490C4E /* PayerCostTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* PayerCostTitleTableViewCell.swift */; };
 		7622E3301DF5F02C00490C4E /* PaymentVaultTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */; };
 		7622E3311DF5F03E00490C4E /* HeaderCongratsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3E1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift */; };
@@ -629,6 +635,9 @@
 		4B31AA351E5A078B0084C5DB /* InstructionBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionBodyTableViewCell.xib; sourceTree = "<group>"; };
 		4B31AA361E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		4B31AA371E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsSubtitleTableViewCell.xib; sourceTree = "<group>"; };
+		4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryExitButtonTableViewCell.swift; sourceTree = "<group>"; };
+		4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondaryExitButtonTableViewCell.xib; sourceTree = "<group>"; };
+		4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModel.swift; sourceTree = "<group>"; };
 		4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreferenceTest.swift; sourceTree = "<group>"; };
 		4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCellContentProvider.swift; sourceTree = "<group>"; };
 		4B59F02A1E36676100B5837B /* FlowPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreference.swift; sourceTree = "<group>"; };
@@ -660,8 +669,8 @@
 		4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RejectedTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailTableViewCell.swift; sourceTree = "<group>"; };
 		4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmEmailTableViewCell.xib; sourceTree = "<group>"; };
-		4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CongratsRevampViewController.swift; sourceTree = "<group>"; };
-		4BAE1D511DCBE9340000ED5C /* CongratsRevampViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CongratsRevampViewController.xib; sourceTree = "<group>"; };
+		4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
+		4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentResultViewController.xib; sourceTree = "<group>"; };
 		4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicePreference.swift; sourceTree = "<group>"; };
 		4BE51C1F1E2CFEC6004E5F7D /* DecorationPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecorationPreference.swift; sourceTree = "<group>"; };
 		4BEF80F51E53308C00797CD1 /* PaymentResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResult.swift; sourceTree = "<group>"; };
@@ -1251,8 +1260,9 @@
 		4BAE1D4C1DCBE90C0000ED5C /* Revamp */ = {
 			isa = PBXGroup;
 			children = (
-				4BAE1D501DCBE9340000ED5C /* CongratsRevampViewController.swift */,
-				4BAE1D511DCBE9340000ED5C /* CongratsRevampViewController.xib */,
+				4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */,
+				4BAE1D511DCBE9340000ED5C /* PaymentResultViewController.xib */,
+				4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */,
 				4BAE1D4D1DCBE9130000ED5C /* Cells */,
 			);
 			name = Revamp;
@@ -1273,6 +1283,8 @@
 				4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */,
 				4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */,
 				4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */,
+				4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */,
+				4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1708,7 +1720,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76FD247F1C5BFEA1008C5DC0 /* CardFormViewController.xib in Resources */,
-				4BAE1D551DCBE9340000ED5C /* CongratsRevampViewController.xib in Resources */,
+				4BAE1D551DCBE9340000ED5C /* PaymentResultViewController.xib in Resources */,
 				150786A61CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */,
 				4BAA55E81DB0012300501061 /* CardAdditionalViewController.xib in Resources */,
 				765F8E5E1DCA57D000943FAC /* ConfirmPaymentTableViewCell.xib in Resources */,
@@ -1721,6 +1733,7 @@
 				15904D561E09748C00B3B9FD /* MLSpinner.xib in Resources */,
 				1529D9A51C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */,
 				151A94101DBF8DE300A5557B /* RevampImages.xcassets in Resources */,
+				4B34DC311E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */,
 				0FC4FC291B0FB2B200CF7148 /* PromosTyCTableViewCell.xib in Resources */,
 				157704B71DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */,
 				0FC4FC3B1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
@@ -1776,6 +1789,7 @@
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
 				760BD1F21C99ADE300FDA170 /* MockedResponse.plist in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
+				4B34DC321E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */,
 				76B085071CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */,
 				761B89451C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib in Resources */,
@@ -1831,6 +1845,7 @@
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				76743C821C46A21C00120347 /* CheckoutViewController.swift in Sources */,
 				15904D581E09748C00B3B9FD /* MLSpinnerConfig.m in Sources */,
+				4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */,
 				762B8C241D19752A00A86097 /* MPServicesBuilder.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
@@ -1853,7 +1868,7 @@
 				7627DE8A1DB56EC30082E5D7 /* CountdownTimer.swift in Sources */,
 				0F9883611AD2AB6000F750F0 /* CardIssuer.swift in Sources */,
 				76AB4DB21E424BB10015EA3B /* PaymentData.swift in Sources */,
-				4BAE1D541DCBE9340000ED5C /* CongratsRevampViewController.swift in Sources */,
+				4BAE1D541DCBE9340000ED5C /* PaymentResultViewController.swift in Sources */,
 				0F9883751AD2AB6000F750F0 /* Identification.swift in Sources */,
 				4B31AA381E5A078B0084C5DB /* InstructionBodyTableViewCell.swift in Sources */,
 				4BEF81001E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,
@@ -1881,6 +1896,7 @@
 				0FC4FC1B1B0FAD0600CF7148 /* PromosService.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
 				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
+				4B34DC2F1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
 				0F9886201AD39E7E00F750F0 /* ErrorTableViewCell.swift in Sources */,
 				0F9883571AD2AB6000F750F0 /* Address.swift in Sources */,
@@ -2132,6 +2148,7 @@
 				150786A41CD7CD1E0034C5B1 /* IdentificationCardView.swift in Sources */,
 				157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */,
 				0F9883741AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
+				4B34DC301E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */,
 				761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */,
 				0F9883961AD2AB6000F750F0 /* Setting.swift in Sources */,
 				76743C7C1C4695EA00120347 /* PaymentType.swift in Sources */,
@@ -2143,6 +2160,7 @@
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
 				7652F43E1D78ADEE006022AF /* MPStepBuilderTest.swift in Sources */,
 				76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */,
+				4B34DC371E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				0F9883BD1AD2AD1600F750F0 /* UIDevice+Additions.swift in Sources */,
 				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
 				76EC48081C862B160086FA53 /* InstructionReferenceTest.swift in Sources */,
@@ -2182,7 +2200,7 @@
 				76FD248A1C5BFEA1008C5DC0 /* TextFieldsEffects.swift in Sources */,
 				76EC47FA1C862A030086FA53 /* SettingTest.swift in Sources */,
 				7622E3251DF5EE6200490C4E /* CardAdditionalViewController.swift in Sources */,
-				7622E32E1DF5EFF500490C4E /* CongratsRevampViewController.swift in Sources */,
+				7622E32E1DF5EFF500490C4E /* PaymentResultViewController.swift in Sources */,
 				7672545F1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift in Sources */,
 				155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */,
 				157704B61DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */,
