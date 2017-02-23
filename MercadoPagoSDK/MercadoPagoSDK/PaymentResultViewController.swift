@@ -8,11 +8,11 @@
 
 import UIKit
 
-open class CongratsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
+open class PaymentResultViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
-    var viewModel: CongratsViewModel!
+    var viewModel: PaymentResultViewModel!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +38,22 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         
         let headerNib = UINib(nibName: "HeaderCongratsTableViewCell", bundle: self.bundle)
         self.tableView.register(headerNib, forCellReuseIdentifier: "headerNib")
+        
         let emailNib = UINib(nibName: "ConfirmEmailTableViewCell", bundle: self.bundle)
         self.tableView.register(emailNib, forCellReuseIdentifier: "emailNib")
+        
         let approvedNib = UINib(nibName: "ApprovedTableViewCell", bundle: self.bundle)
         self.tableView.register(approvedNib, forCellReuseIdentifier: "approvedNib")
+        
         let rejectedNib = UINib(nibName: "RejectedTableViewCell", bundle: self.bundle)
         self.tableView.register(rejectedNib, forCellReuseIdentifier: "rejectedNib")
+        
         let callFAuthNib = UINib(nibName: "CallForAuthTableViewCell", bundle: self.bundle)
         self.tableView.register(callFAuthNib, forCellReuseIdentifier: "callFAuthNib")
+        
+        let secondaryButtonNib = UINib(nibName: "SecondaryExitButtonTableViewCell", bundle: self.bundle)
+        self.tableView.register(secondaryButtonNib, forCellReuseIdentifier: "secondaryButtonNib")
+        
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
         
@@ -63,9 +71,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
     
-    init(paymentResult: PaymentResult, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
-        super.init(nibName: "CongratsRevampViewController", bundle : bundle)
-        self.viewModel = CongratsViewModel(paymentResult: paymentResult, callback: callback)
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
+        super.init(nibName: "PaymentResultViewController", bundle : bundle)
+        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -84,7 +92,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -113,6 +121,9 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
             return getAdditionalCustomCell(indexPath: indexPath)
         
+        } else if viewModel.isSecondaryExitButtonCellFor(indexPath: indexPath){
+            return getSecondaryExitButtonCell()
+        
         } else if viewModel.isFooterCellFor(indexPath: indexPath){
             return getFooterCell()
         }
@@ -138,7 +149,7 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getApprovedBodyCell() -> UITableViewCell {
         let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
-        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!)
+        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference)
         return approvedCell
     }
     
@@ -151,7 +162,6 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     
     private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
         let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-        rejectedCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
         rejectedCell.fillCell(paymentResult: self.viewModel.paymentResult)
         if drawLine {
             ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
@@ -179,192 +189,16 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         }
     }
     
+    private func getSecondaryExitButtonCell() -> UITableViewCell {
+        let secondaryButtonCell = self.tableView.dequeueReusableCell(withIdentifier: "secondaryButtonNib") as! SecondaryExitButtonTableViewCell
+        secondaryButtonCell.fillCell(paymentResult: self.viewModel.paymentResult)
+        secondaryButtonCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: MPStepBuilder.CongratsState.cancel_RETRY)
+        return secondaryButtonCell
+    }
+    
     public func invokeCallbackWithPaymentResult(rowCallback : ((PaymentResult) -> Void)) {
         rowCallback(self.viewModel.paymentResult)
     }
 
-}
-
-class CongratsViewModel : NSObject, MPPaymentTrackInformer {
-    
-    var paymentResult: PaymentResult!
-    var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
-    
-    init(paymentResult: PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
-        
-        self.paymentResult = paymentResult
-        self.callback = callback
-    }
-    open func methodId() -> String!{
-        return paymentResult.paymentData?.paymentMethod._id ?? ""
-    }
-    
-    open func status() -> String!{
-        return paymentResult.status
-    }
-    
-    open func statusDetail() -> String!{
-        return paymentResult.statusDetail
-    }
-    
-    open func typeId() -> String!{
-        return paymentResult.paymentData?.paymentMethod.paymentTypeId ?? ""
-    }
-    
-    open func installments() -> String! {
-        return String(describing: paymentResult.paymentData?.payerCost?.installments)
-    }
-    
-    open func issuerId() -> String!{
-        return String(describing: paymentResult.paymentData?.issuer?._id)
-    }
-    
-    func getColor() -> UIColor{
-        if approved() {
-            return UIColor(red: 59, green: 194, blue: 128)
-        } else if inProcess() {
-            return UIColor(red: 255, green: 161, blue: 90)
-        } else if callForAuth() {
-            return UIColor(red: 58, green: 184, blue: 239)
-        } else if rejected(){
-            return UIColor(red: 255, green: 89, blue: 89)
-        }
-        return UIColor()
-    }
-    
-    func callForAuth() ->Bool{
-        if self.paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func approved() -> Bool{
-        if self.paymentResult.status == PaymentStatus.APPROVED.rawValue {
-            return true
-        } else {
-            return false
-        }
-    }
-    func inProcess() -> Bool{
-        if self.paymentResult.status == PaymentStatus.IN_PROCESS.rawValue {
-            return true
-        } else {
-            return false
-        }
-    }
-    func rejected() -> Bool{
-        if self.paymentResult.status == PaymentStatus.REJECTED.rawValue {
-            return true
-        } else {
-            return false
-        }
-    }
-    internal func getLayoutName() -> String! {
-        
-        if paymentResult.status == PaymentStatus.REJECTED.rawValue {
-            if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
-                return "authorize" //C4A
-            } else if paymentResult.statusDetail.contains("cc_rejected_bad_filled")  {
-                return "recovery" //bad fill something
-            }
-        }
-        
-        return paymentResult.status
-    }
-    
-    func setCallbackWithTracker(cellName: String) -> (_ paymentResult : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void{
-        let callbackWithTracker : (_ paymentResutl : PaymentResult, _ status : MPStepBuilder.CongratsState) -> Void = {(paymentResult ,status) in
-            let paymentAction: PaymentActions
-            if self.paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
-                paymentAction = PaymentActions.RECOVER_PAYMENT
-            } else if paymentResult.status == PaymentStatus.REJECTED.rawValue{
-                paymentAction = PaymentActions.SELECTED_OTHER_PM
-            } else if cellName == "rejected" {
-                paymentAction = PaymentActions.RECOVER_PAYMENT
-            } else {
-                paymentAction = PaymentActions.RECOVER_TOKEN
-            }
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: paymentAction.rawValue, result: nil)
-            self.callback(status)
-        }
-        return callbackWithTracker
-    }
-    enum PaymentStatus : String {
-        case APPROVED = "approved"
-        case REJECTED = "rejected"
-        case RECOVERY = "recovery"
-        case IN_PROCESS = "in_process"
-    }
-    enum PaymentActions : String {
-        case RECOVER_PAYMENT = "RECOVER_PAYMENT"
-        case RECOVER_TOKEN = "RECOVER_TOKEN"
-        case SELECTED_OTHER_PM = "SELECT_OTHER_PAYMENT_METHOD"
-    }
-    
-    func isHeaderCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 0
-    }
-    
-    func isFooterCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 3
-    }
-    
-    func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 0 && approved()
-    }
-    
-    func isEmailCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 1 && approved()
-    }
-    
-    func isCallForAuthFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 0 && callForAuth()
-    }
-    func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-        return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
-    }
-    
-    func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 2
-    }
-    
-    func numberOfRowsInSection(section: Int) -> Int {
-        if section == 1 {
-            return numberOfCellInBody()
-        } else if section == 2 {
-            return numberOfCustomAdditionalCells()
-        }
-        return 1
-    }
-    
-    func numberOfCellInBody() -> Int {
-        let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisable() ? 1 : 0
-        if approved() {
-            return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
-            
-        } else if callForAuth() {
-            return selectAnotherCell + 1
-        }
-        
-        return selectAnotherCell
-    }
-    
-    func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(PaymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
-            return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
-        } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
-            return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
-        }
-        return 0
-    }
-}
-
-enum PaymentStatus : String {
-    case APPROVED = "approved"
-    case REJECTED = "rejected"
-    case RECOVERY = "recovery"
-    case IN_PROCESS = "in_process"
 }
 
