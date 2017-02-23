@@ -142,7 +142,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             case 4:
                 return self.viewModel.numberOfCustomAdditionalCells()
             case 5:
-                return 3
+                // No mostrar TyC en caso de que se tenga AT
+                return (String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())) ? 3 : 2
             default:
                 return 0
         }
@@ -181,9 +182,15 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if viewModel.isFotterCellFor(indexPath: indexPath) {
             switch indexPath.row {
             case 0 :
-                return self.getTermsAndConditionsCell(indexPath: indexPath)
-            case 1 :
+                if String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
+                    return self.getTermsAndConditionsCell(indexPath: indexPath)
+                }
                 return self.getConfirmPaymentButtonCell(indexPath: indexPath)
+            case 1 :
+                if String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {
+                    return self.getConfirmPaymentButtonCell(indexPath: indexPath)
+                }
+                return self.getCancelPaymentButtonCell(indexPath: indexPath)
             default :
                 return self.getCancelPaymentButtonCell(indexPath: indexPath)
             }

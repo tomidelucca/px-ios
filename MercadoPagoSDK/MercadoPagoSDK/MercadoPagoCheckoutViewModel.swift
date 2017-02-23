@@ -66,7 +66,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
     
-    // flowpreference
 
     var paymentData = PaymentData()
     var payment : Payment?
@@ -78,7 +77,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var needLoadPreference : Bool = false
     private var readyToPay : Bool = false
     private var checkoutComplete = false
-    private var reviewAndConfirm = false
+    internal var reviewAndConfirm = false
     
     
     init(checkoutPreference : CheckoutPreference){
@@ -211,10 +210,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
-            if self.paymentOptionSelected?.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-                self.reviewAndConfirm = true
-            }
-        }else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
+        } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
         }
         
