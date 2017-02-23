@@ -30,7 +30,7 @@ public class PaymentData: NSObject {
             return false
         }
         
-        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod() {
             return true
         }
         
@@ -39,6 +39,10 @@ public class PaymentData: NSObject {
         }
 
         return true
+    }
+    
+    func hasCustomerPaymentOption() -> Bool {
+        return self.paymentMethod != nil && (self.paymentMethod.isAccountMoney() || (self.token != nil && !String.isNullOrEmpty(self.token!.cardId)))
     }
     
     func toJSONString() -> String {

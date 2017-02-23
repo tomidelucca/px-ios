@@ -226,6 +226,20 @@ class Utils {
         return nil
     }
     
+    static internal func findCardInformationIn(customOptions : [CardInformation], paymentData : PaymentData) -> CardInformation? {
+        let customOptionsFound = customOptions.filter { (cardInformation : CardInformation) -> Bool in
+            if paymentData.paymentMethod.isAccountMoney(){
+                return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
+            } else {
+                if (paymentData.token != nil) {
+                    return paymentData.token!.cardId == cardInformation.getCardId()
+                }
+            }
+            return false
+        }
+        return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
+    }
+    
     static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList : [PaymentMethodSearchItem], paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {
         
         var filterPaymentMethodSearchFound = paymentMethodSearchList.filter { (arg : PaymentMethodSearchItem) -> Bool in

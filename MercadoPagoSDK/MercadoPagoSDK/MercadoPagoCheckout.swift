@@ -164,10 +164,11 @@ open class MercadoPagoCheckout: NSObject {
     
     
     func collectPaymentMethods(){
+        // Se limpia paymentData antes de ofrecer selección de medio de pago
+        self.viewModel.paymentData.clear()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
-            self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             self.executeNextStep()
         })
         
@@ -261,6 +262,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectSecurityCode(){
         let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
+            self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             if token == nil {
                 self.navigationController.popViewController(animated: true)
                 self.viewModel.paymentData.clear()
