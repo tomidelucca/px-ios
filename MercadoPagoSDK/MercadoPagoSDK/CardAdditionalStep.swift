@@ -205,15 +205,19 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if (indexPath.section == 2){
-            self.showLoading()
             if self.viewModel.hasIssuer(){
-                let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row]
-                self.viewModel.callback!(payerCost)
+                if indexPath.row != 0 {
+                    let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row - 1]
+                    self.showLoading()
+                    self.viewModel.callback!(payerCost)
+                }
             } else if self.viewModel.hasPaymentMethod(){
                 let issuer : Issuer = self.viewModel.issuersList![(indexPath as NSIndexPath).row]
+                self.showLoading()
                 self.viewModel.callback!(issuer)
             } else {
                 let paymentMethod : PaymentMethod = self.viewModel.paymentMethod[(indexPath as NSIndexPath).row]
+                self.showLoading()
                 self.viewModel.callback!(paymentMethod)
             }
         }
