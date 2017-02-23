@@ -76,6 +76,14 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
     }
     
+    open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
+        MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
+    }
+    
+    open static func setCallback(callback : @escaping (Void) -> Void) {
+        MercadoPagoCheckoutViewModel.callback = callback
+    }
+    
     public func start(){
         executeNextStep()
     }
@@ -331,6 +339,11 @@ open class MercadoPagoCheckout: NSObject {
         
         ReviewScreenPreference.clear()
         PaymentResultScreenPreference.clear()
+        if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
+            paymentCallback(payment)
+        } else if let callback = MercadoPagoCheckoutViewModel.callback {
+            callback()
+        }
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
             self.navigationController.setNavigationBarHidden(false, animated: false)

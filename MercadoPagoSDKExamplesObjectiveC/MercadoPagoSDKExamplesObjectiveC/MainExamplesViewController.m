@@ -170,6 +170,18 @@
      
      PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd siteId:@"MLA" payerEmail:nil id:nil amount:50.0 statementDescription:nil];*/
     
+    //Callback que devuelve un payment
+    
+//    [MercadoPagoCheckout setPaymentCallbackWithPaymentCallback:^(Payment * payment) {
+//        NSLog(@"%@", payment._id);
+//    }];
+    
+    // Callback que no devuelve nada
+    
+//    [MercadoPagoCheckout setCallbackWithCallback:^{
+//        NSLog(@"Se termino el flujo");
+//    }];
+    
     
     CheckoutPreference * pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
     //    UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:pref paymentData:pd navigationController:self.navigationController] getRootViewController];
