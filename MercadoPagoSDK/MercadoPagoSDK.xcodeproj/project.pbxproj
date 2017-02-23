@@ -233,6 +233,7 @@
 		4B34DC321E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */; };
 		4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */; };
 		4B34DC371E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */; };
+		4B34DC3D1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */; };
 		4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */; };
 		4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */; };
 		4B53C5EC1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */; };
@@ -638,6 +639,7 @@
 		4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryExitButtonTableViewCell.swift; sourceTree = "<group>"; };
 		4B34DC2E1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondaryExitButtonTableViewCell.xib; sourceTree = "<group>"; };
 		4B34DC351E5DAEF300FDD295 /* PaymentResultViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModel.swift; sourceTree = "<group>"; };
+		4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultScreenPreferenceTest.swift; sourceTree = "<group>"; };
 		4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreferenceTest.swift; sourceTree = "<group>"; };
 		4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCellContentProvider.swift; sourceTree = "<group>"; };
 		4B59F02A1E36676100B5837B /* FlowPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreference.swift; sourceTree = "<group>"; };
@@ -1455,6 +1457,7 @@
 				4BFAC0FD1E2E8A6C005EB383 /* DecorationPreferenceTest.swift */,
 				4B277F681E38F00D00AF5DF8 /* ServicePreferenceTest.swift */,
 				4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */,
+				4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2114,6 +2117,7 @@
 				7622E32D1DF5EFEE00490C4E /* InstructionsRevampViewController.swift in Sources */,
 				153AEB2D1D382983008A3338 /* PaymentVaultViewController.swift in Sources */,
 				4B31AA3E1E5A0A860084C5DB /* InstructionBodyTableViewCell.swift in Sources */,
+				4B34DC3D1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift in Sources */,
 				76EC47C41C85DCA10086FA53 /* AddressTest.swift in Sources */,
 				76F41E2A1D3D4AA800B25E5B /* MPStepBuilder.swift in Sources */,
 				7672546B1C7CB34200EB5EBA /* MockBuilder.swift in Sources */,
