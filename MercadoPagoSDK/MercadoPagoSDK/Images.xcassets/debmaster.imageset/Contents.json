@@ -2,22 +2,22 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "mastercardDebit.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "mediosIconoMasterDebito.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "mastercardDebit@2x.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "mediosIconoMasterDebito@2x.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "mastercardDebit@3x.png",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "mediosIconoMasterDebito@3x.png"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "zeplin",
+    "version" : "1"
   }
 }
