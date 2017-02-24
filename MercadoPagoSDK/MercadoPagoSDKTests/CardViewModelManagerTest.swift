@@ -82,8 +82,8 @@ class CardViewModelManagerTest: BaseTest {
     
     func testGetPMLabelColorsForMultipleSettings() {
         let paymentMethod = MockBuilder.buildPaymentMethod("maestro", name : "Maestro", paymentTypeId : "debit_card", multipleSettings: true)
-        let firstSettingCardNumber = "501041415281778603"
-        let secondSettingCardNumber = "5010810660634280114"
+        let firstSettingCardNumber = "501041456060594693"
+        let secondSettingCardNumber = "5010811232093852985"
         self.cardFormManager = CardViewModelManager(amount: 10, paymentMethods: nil, paymentMethod: [paymentMethod], paymentSettings: nil)
         
         let firstBin = firstSettingCardNumber.substring(to: (firstSettingCardNumber.characters.index(firstSettingCardNumber.startIndex, offsetBy: 6)))
