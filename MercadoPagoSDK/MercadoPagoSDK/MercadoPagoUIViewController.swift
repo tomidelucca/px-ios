@@ -131,15 +131,15 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     internal func clearMercadoPagoStyle(){
         //Navigation bar colors
-        guard let navController = self.navigationController else {
-            return
-        }
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: navController)
+        self.navigationController?.navigationBar.titleTextAttributes = nil
+        self.navigationController?.navigationBar.barTintColor = nil
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        
+      
     }
     
     internal func invokeCallbackCancel(){
         if(self.callbackCancel != nil){
-            self.showNavBar()
             self.callbackCancel!()
         }
 
@@ -289,7 +289,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
-           // self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = nil
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
@@ -359,9 +358,6 @@ extension UINavigationBar {
     
     func removeBottomLine() {
         self.setValue(true, forKey: "hidesShadow")
-    }
-    func restoreBottomLine() {
-        self.setValue(false, forKey: "hidesShadow")
     }
 
 }

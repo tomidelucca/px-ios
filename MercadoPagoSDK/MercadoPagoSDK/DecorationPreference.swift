@@ -68,5 +68,3 @@ open class DecorationPreference : NSObject{
         return fontName
     }
 }
-
-

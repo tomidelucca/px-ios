@@ -76,13 +76,32 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?) {
+    
+    init(checkoutPreference : CheckoutPreference){
         self.checkoutPreference = checkoutPreference
-        if let pm = paymentData{
-            if pm.isComplete() {
-                self.paymentData = pm
-                self.reviewAndConfirm = true
-            }
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            // Cargar información de preferencia en caso que tenga id
+            needLoadPreference = true
+        }
+    }
+    
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData) {
+        self.checkoutPreference = checkoutPreference
+        if paymentData.isComplete() {
+            self.paymentData = paymentData
+            self.reviewAndConfirm = true
+        }
+        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+            // Cargar información de preferencia en caso que tenga id
+            needLoadPreference = true
+        }
+    }
+    
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentResult: PaymentResult) {
+        self.checkoutPreference = checkoutPreference
+        if paymentData.isComplete() {
+            self.paymentData = paymentData
+            self.reviewAndConfirm = false
         }
         self.paymentResult = paymentResult
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
