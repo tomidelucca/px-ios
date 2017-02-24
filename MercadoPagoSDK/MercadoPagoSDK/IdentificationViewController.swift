@@ -35,6 +35,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     }
     
     override func loadMPStyles(){
+
         var titleDict : NSDictionary = [:]
         if self.navigationController != nil {
             let font = Utils.getFont(size: 18)
