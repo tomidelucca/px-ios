@@ -15,8 +15,6 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController : UINavigationController!
     var viewControllerBase : UIViewController?
     
-
-    
     private var currentLoadingView : UIViewController?
     
     internal static var firstViewControllerPushed = false
@@ -33,7 +31,7 @@ open class MercadoPagoCheckout: NSObject {
             viewControllerBase = self.navigationController.viewControllers[0]
         }
     }
-
+    
     open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
         MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
     }
