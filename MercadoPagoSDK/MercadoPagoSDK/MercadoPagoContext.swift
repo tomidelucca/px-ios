@@ -44,7 +44,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
     
     open class var PRIVATE_KEY : String {
-        return "private_key"
+        return "access_token"
     }
 
     open class func isAuthenticatedUser() -> Bool{
@@ -196,7 +196,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open class func setPayerAccessToken(_ payerAccessToken : String){
         
         
-        sharedInstance.payer_access_token = payerAccessToken
+        sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
       _ = CardFrontView()
       _ = CardBackView()
         
@@ -278,10 +278,7 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
         }
     }
     
-    open class func keyValue(_ forcingPublic : Bool = true) -> String{
-        if forcingPublic {
-            return MercadoPagoContext.publicKey()
-        }
+    open class func keyValue() -> String{
         if(MercadoPagoContext.isAuthenticatedUser()){
             return MercadoPagoContext.payerAccessToken()
         }else{

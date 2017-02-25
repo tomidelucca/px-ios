@@ -334,7 +334,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getOnlinePaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
         let paymentMethodSelectedTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "paymentMethodSelectedTableViewCell", for: indexPath) as! PaymentMethodSelectedTableViewCell
         
-        paymentMethodSelectedTableViewCell.fillCell(self.viewModel.paymentData.paymentMethod!, amount : self.viewModel.paymentData.payerCost!.totalAmount, payerCost : self.viewModel.paymentData.payerCost, lastFourDigits: self.viewModel.paymentData.token!.lastFourDigits)
+        paymentMethodSelectedTableViewCell.fillCell(self.viewModel.paymentData.paymentMethod!, amount : self.viewModel.getTotalAmmount(), payerCost : self.viewModel.paymentData.payerCost, lastFourDigits: self.viewModel.paymentData.token!.lastFourDigits)
         
         paymentMethodSelectedTableViewCell.selectOtherPaymentMethodButton.addTarget(self, action: #selector(changePaymentMethodSelected), for: .touchUpInside)
         return paymentMethodSelectedTableViewCell
