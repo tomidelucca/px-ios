@@ -14,7 +14,9 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubtitle = ""
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    
+	var approvedIconName = "iconoAcreditado"
+	var approvedIconBundle = MercadoPago.getBundle()!
+	
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
     var pendingContentTitle = "¿Qué puedo hacer?".localized
@@ -66,7 +68,12 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedSecondaryExitButtonText = text
         self.approvedSecondaryExitButtonCallback = callback
     }
-    
+	
+	open func setApprovedHeaderIcon(name: String, bundle: Bundle) {
+		self.approvedIconName = name
+		self.approvedIconBundle = bundle
+	}
+	
     // Sets de Pending
     
     open func setPendingTitle(title: String) {
@@ -231,7 +238,11 @@ open class PaymentResultScreenPreference: NSObject {
     open func getApprovedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
         return approvedSecondaryExitButtonCallback
     }
-    
+	
+	open func getHeaderApprovedIcon() -> UIImage? {
+		return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
+	}
+	
     //Pending
     
     open func getPendingTitle() -> String {
