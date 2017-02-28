@@ -247,14 +247,22 @@ open class MercadoPagoCheckout: NSObject {
             
             
             self.presentLoading()
-            self.navigationController.popToViewController(viewControllerBase!, animated: false)
-            self.pushViewController(viewController :checkoutVC, animated: false)
+			self.cleanNavigationStack()
+			self.navigationController.pushViewController(checkoutVC, animated: true);
             self.dismissLoading(animated: false)
         } else {
             self.executePaymentDataCallback()
         }
     }
-    
+	
+	func cleanNavigationStack () {
+		
+		
+		var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self);
+		}
+		self.navigationController.viewControllers = newNavigationStack;
+	}
+	
     private func executePaymentDataCallback() {
         if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
