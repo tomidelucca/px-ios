@@ -62,16 +62,28 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
-        
-        self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
-        self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+		
+		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+			self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
+			self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+		} else {
+			self.selectOtherPaymentMethodButton.isHidden = true;
+		}
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
+		
+		var cellHeight = DEFAULT_ROW_HEIGHT
+		
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
-            return DEFAULT_ROW_HEIGHT + 20
+			cellHeight += 20
         }
-        return DEFAULT_ROW_HEIGHT
+		
+		if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+			cellHeight -= 64
+		}
+		
+		return cellHeight;
     }
     
 }
