@@ -40,6 +40,8 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
     var exitButtonTitle = "Continuar".localized
+	
+	var statusBackgroundColor : UIColor?
 
     
     var hideChangePaymentMethodCell = false
@@ -149,7 +151,17 @@ open class PaymentResultScreenPreference: NSObject {
     open func setExitButtonTitle(title: String) {
         self.exitButtonTitle = title
     }
-    
+	
+	// Sets cross status
+	
+	open func setStatusBackgroundColor(color: UIColor) {
+		self.statusBackgroundColor = color
+	}
+	
+	open func getStatusBackgroundColor() -> UIColor? {
+		return statusBackgroundColor
+	}
+	
     // Disables
     
     open func disableChangePaymentMethodOptionCell() {
