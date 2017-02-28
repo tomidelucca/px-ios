@@ -12,7 +12,8 @@ open class ReviewScreenPreference: NSObject {
 
     private var title = "Confirma tu compra".localized
     private var productsTitle = "Products".localized
-    private var confirmButtonText = "Confirmar".localized
+	private var confirmButtonText = "Confirmar".localized
+	private var secondaryConfirmButtonText : String?
     private var cancelButtonText = "Cancelar Pago".localized
     
     internal static var additionalInfoCells = [MPCustomCell]()
@@ -41,7 +42,19 @@ open class ReviewScreenPreference: NSObject {
     open func getConfirmButtonText() -> String {
         return confirmButtonText
     }
-    
+	
+	open func setSecondaryConfirmButtonText(secondaryConfirmButtonText : String){
+		self.secondaryConfirmButtonText = secondaryConfirmButtonText
+	}
+	
+	open func getSecondaryConfirmButtonText() -> String {
+		if let confirmText = secondaryConfirmButtonText {
+			return confirmText
+		} else {
+			return self.confirmButtonText
+		}
+	}
+	
     open func setCancelButtonText(cancelButtonText : String){
         self.cancelButtonText = cancelButtonText
     }
