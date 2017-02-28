@@ -45,7 +45,7 @@ open class PaymentResultScreenPreference: NSObject {
 	
 	var statusBackgroundColor : UIColor?
 
-    
+	var hideApprovedPaymentBodyCell = false
     var hideChangePaymentMethodCell = false
     var hideAmount = false
     var hidePaymentId = false
@@ -174,7 +174,11 @@ open class PaymentResultScreenPreference: NSObject {
     open func disableChangePaymentMethodOptionCell() {
         self.hideChangePaymentMethodCell = true
     }
-    
+	
+	open func disableApprovedBodyCell() {
+		self.hideApprovedPaymentBodyCell = true
+	}
+	
     open func disableApprovedAmount() {
         self.hideAmount = true
     }
@@ -198,7 +202,11 @@ open class PaymentResultScreenPreference: NSObject {
     open func enableChangePaymentMethodOptionCell(){
         self.hideChangePaymentMethodCell = false
     }
-    
+	
+	open func enableApprovedPaymentBodyCell(){
+		self.hideApprovedPaymentBodyCell = false
+	}
+	
     open func enablePaymentContentText() {
         self.hidePendingContentText = false
     }
@@ -333,7 +341,11 @@ open class PaymentResultScreenPreference: NSObject {
     open func isSelectAnotherPaymentMethodDisableCell() -> Bool {
         return hideChangePaymentMethodCell
     }
-    
+	
+	open func isApprovedPaymentBodyDisableCell() -> Bool {
+		return hideApprovedPaymentBodyCell
+	}
+	
     open func isPaymentMethodDisable() -> Bool {
         return hidePaymentMethod
     }

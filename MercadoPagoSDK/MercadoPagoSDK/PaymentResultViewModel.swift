@@ -139,24 +139,46 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 0 && approved()
+		//approved case
+		let precondition = indexPath.section == 1 && approved()
+		//if row at index 0 exists and approved body is not disabled, row 0 should display approved body
+		let case1 = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+        return precondition && case1
     }
     
     func isEmailCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 1 && approved()
+		//approved case
+		let precondition = indexPath.section == 1 && approved()
+		//if row at index 0 exists and approved body is disabled, row 0 should display email row
+		let case1 = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+		//if row at index 1 exists, row 1 should display email row
+		let case2 = indexPath.row == 1;
+		return precondition && (case1 || case2)
     }
     
     func isCallForAuthFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == 0 && callForAuth()
+		//non approved case
+		let precondition = indexPath.section == 1 && !approved()
+		//if row at index 0 exists and callForAuth is not disabled, row 0 should display callForAuth cell
+		let case1 = callForAuth() && indexPath.row == 0;
+		return precondition && case1
     }
+	
     func isSelectOtherPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
-        return !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() && indexPath.section == 1 && (rejected() || inProcess() || (indexPath.row == 1 && callForAuth()))
+		
+		//non approved case
+		let precondition = indexPath.section == 1 && !approved()
+		//if row at index 0 exists and callForAuth is disabled, row 0 should display select another payment row
+		let case1 = !callForAuth() && indexPath.row == 0;
+		//if row at index 1 exists, row 1 should display select another payment row
+		let case2 = indexPath.row == 1;
+		return precondition && (case1 || case2)
     }
     
     func isAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 2
     }
-    
+	
     func isSecondaryExitButtonCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 3
     }
@@ -182,15 +204,16 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func numberOfCellInBody() -> Int {
-        let selectAnotherCell = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() ? 1 : 0
         if approved() {
-            return !String.isNullOrEmpty(paymentResult.payerEmail) ? 2 : 1
-            
-        } else if callForAuth() {
-            return selectAnotherCell + 1
-        }
-        
-        return selectAnotherCell
+			let approvedBodyAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0;
+			let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0;
+			return approvedBodyAdd + emailCellAdd;
+			
+		} else {
+			let callForAuthAdd = callForAuth() ? 1 : 0;
+			let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() ? 1 : 0
+			return callForAuthAdd + selectAnotherCellAdd;
+		}
     }
     
     func numberOfCustomAdditionalCells() -> Int {
