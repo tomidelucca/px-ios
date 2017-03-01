@@ -11,17 +11,14 @@ import UIKit
 
 open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate {
 
-
     static let kNavBarOffset = CGFloat(-64.0);
     static let kDefaultNavBarOffset = CGFloat(0.0);
-    
     var preferenceId : String!
     var publicKey : String!
     var accessToken : String!
     var bundle : Bundle? = MercadoPago.getBundle()
     var callback : ((PaymentData) -> Void)!
     var viewModel : CheckoutViewModel!
- 
     override open var screenName : String { get{ return "REVIEW_AND_CONFIRM" } }
     fileprivate var reviewAndConfirmContent = Set<String>()
     
@@ -458,8 +455,42 @@ open class CheckoutViewModel {
         return numberOfRows
         
     }
+    func heightForRow(_ indexPath: IndexPath) -> CGFloat {
+        if isTitleCellFor(indexPath: indexPath) {
+            return 60
+        } else if self.isProductlCellFor(indexPath: indexPath){
+           return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
+            
+        } else if self.isInstallmentsCellFor(indexPath: indexPath) {
+           return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
+            
+        } else if self.isTotalCellFor(indexPath: indexPath){
+            return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
+            
+        } else if self.isConfirmButtonCellFor(indexPath: indexPath){
+            return ConfirmPaymentTableViewCell.ROW_HEIGHT
+            
+        } else if self.isItemCellFor(indexPath: indexPath){
+            return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            
+        } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
+                return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
+        } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
+            return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
+            
+        } else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
+            return TermsAndConditionsViewCell.getCellHeight()
+        } else if isConfirmPaymentTableViewCellFor(indexPath: indexPath){
+            return ConfirmPaymentTableViewCell.ROW_HEIGHT
+        } else if isExitButtonTableViewCellFor(indexPath: indexPath){
+            return ExitButtonTableViewCell.ROW_HEIGHT
+        }
+
+        return 0
+    }
     
-    func heightForRow(_ indexPath : IndexPath) -> CGFloat {
+    
+    func heightForRow1(_ indexPath : IndexPath) -> CGFloat {
         if isTitleCellFor(indexPath: indexPath) {
             return 60
             
@@ -490,19 +521,34 @@ open class CheckoutViewModel {
             return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
         }
             
-        else if isFotterCellFor(indexPath: indexPath) {
-            switch indexPath.row {
-            case 0 :
-                return TermsAndConditionsViewCell.getCellHeight()
-            case 1 :
+        else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
+            return TermsAndConditionsViewCell.getCellHeight()
+        } else if isConfirmPaymentTableViewCellFor(indexPath: indexPath){
                 return ConfirmPaymentTableViewCell.ROW_HEIGHT
-            default:
+        } else if isExitButtonTableViewCellFor(indexPath: indexPath){
                 return ExitButtonTableViewCell.ROW_HEIGHT
-            }
         }
         return 0
     }
     
+    func isTermsAndConditionsViewCellFor(indexPath: IndexPath) -> Bool{
+        if !isFotterCellFor(indexPath: indexPath) {
+            return false
+        }
+        return ( indexPath.row == 0 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
+    }
+    func isConfirmPaymentTableViewCellFor(indexPath: IndexPath) -> Bool{
+        if !isFotterCellFor(indexPath: indexPath) {
+            return false
+        }
+        return ( indexPath.row == 1 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) ) || ( indexPath.row == 0 && !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
+    }
+    func isExitButtonTableViewCellFor(indexPath: IndexPath) -> Bool{
+        if !isFotterCellFor(indexPath: indexPath) {
+            return false
+        }
+        return ( indexPath.row == 2 && String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) ) || ( indexPath.row == 1 && !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) )
+    }
     func isPreferenceLoaded() -> Bool {
         return self.preference != nil
     }
