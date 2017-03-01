@@ -168,26 +168,6 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePaymentMethod = true
     }
     
-    open func enableAmount() {
-        self.hideAmount = false
-    }
-    
-    open func enableApprovedReceipt(){
-        self.hidePaymentId = true
-    }
-    
-    open func enableChangePaymentMethodOptionCell(){
-        self.hideChangePaymentMethodCell = false
-    }
-    
-    open func enablePaymentContentText() {
-        self.hidePendingContentText = false
-    }
-    
-    open func enableApprovedPaymentMethodInfo() {
-        self.hidePaymentMethod = false
-    }
-    
     //Custom Rows
     
     open static func addCustomPendingCell(customCell : MPCustomCell) {
