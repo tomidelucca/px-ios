@@ -66,7 +66,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
     
-    // flowpreference
 
     var paymentData = PaymentData()
     var payment : Payment?
@@ -78,7 +77,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var needLoadPreference : Bool = false
     private var readyToPay : Bool = false
     private var checkoutComplete = false
-    private var reviewAndConfirm = false
+    internal var reviewAndConfirm = false
     
     
     init(checkoutPreference : CheckoutPreference){
@@ -119,7 +118,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     public func getPaymentPreferences() -> PaymentPreference? {
-        return nil
+        return self.checkoutPreference.paymentPreference
     }
     
     public func cardFormManager() -> CardViewModelManager{
@@ -205,17 +204,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     //PAYMENT_METHOD_SELECTION
     public func updateCheckoutModel(paymentOptionSelected : PaymentMethodOption){
         self.paymentOptionSelected = paymentOptionSelected
-        if let childrenOptions = paymentOptionSelected.getChildren() {
-            self.paymentMethodOptions =  childrenOptions
+        if paymentOptionSelected.hasChildren() {
+            self.paymentMethodOptions =  paymentOptionSelected.getChildren()
         }
         
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
-            if self.paymentOptionSelected?.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-                self.reviewAndConfirm = true
+            if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+                self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             }
-        }else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
+        } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
+            self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }
         
     }
@@ -317,6 +317,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(token : Token) {
         self.paymentData.token = token
+        self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 
     public class func createMPPayment(_ email : String, preferenceId : String, paymentData : PaymentData, customerId : String? = nil) -> MPPayment {

@@ -164,7 +164,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
             let cardCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
             cardCell.selectionStyle = .none
             cardCell.loadCard()
-            cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0])
+            cardCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], cardInformation: self.viewModel.cardInformation)
             cardCell.backgroundColor = UIColor.primaryColor()
             
             return cardCell
@@ -236,6 +236,12 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.amount, issuer: self.viewModel.issuer, paymentMethodId: self.viewModel.paymentMethods[0]._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(),success: { (installments) -> Void in
             self.viewModel.installment = installments?[0]
             self.viewModel.payerCosts = installments![0].payerCosts
+            if let payerCost = installments![0].payerCosts {
+                let defaultPayerCost = self.viewModel.paymentPreference?.autoSelectPayerCost(payerCost)
+                if defaultPayerCost != nil {
+                    self.viewModel.callbackPayerCost!(defaultPayerCost)
+                }
+            }
             self.tableView.reloadData()
             self.hideLoading()
         }) { (error) -> Void in

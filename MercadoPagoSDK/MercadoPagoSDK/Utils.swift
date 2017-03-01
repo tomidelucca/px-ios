@@ -111,6 +111,7 @@ class Utils {
     
     class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
+        let currency = MercadoPagoContext.getCurrency()
         
         let descriptionAttributes: [String:AnyObject] = [NSFontAttributeName : getFont(size: fontSize),NSForegroundColorAttributeName:color]
         
@@ -118,7 +119,7 @@ class Utils {
         
         stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
-        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: ".", decimalSeparator: ",", currencySymbol: "$" , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
+        stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault() , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
         
         if additionalString != nil {
             stringToWrite.append(additionalString!)
@@ -223,6 +224,20 @@ class Utils {
             return result
         }
         return nil
+    }
+    
+    static internal func findCardInformationIn(customOptions : [CardInformation], paymentData : PaymentData) -> CardInformation? {
+        let customOptionsFound = customOptions.filter { (cardInformation : CardInformation) -> Bool in
+            if paymentData.paymentMethod.isAccountMoney(){
+                return  cardInformation.getPaymentMethodId() == PaymentTypeId.ACCOUNT_MONEY.rawValue
+            } else {
+                if (paymentData.token != nil) {
+                    return paymentData.token!.cardId == cardInformation.getCardId()
+                }
+            }
+            return false
+        }
+        return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
     
     static fileprivate func findPaymentMethodSearchItemById(_ paymentMethodSearchList : [PaymentMethodSearchItem], paymentMethodId : String, paymentTypeId : PaymentTypeId?) -> PaymentMethodSearchItem? {

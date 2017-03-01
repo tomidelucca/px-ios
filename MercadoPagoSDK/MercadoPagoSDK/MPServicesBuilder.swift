@@ -23,9 +23,10 @@ open class MPServicesBuilder : NSObject {
         
         cardToken.device = Device()
         let service = GatewayService(baseURL: baseURL)
-        service.getToken(public_key: MercadoPagoContext.publicKey(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
+        service.getToken(key: MercadoPagoContext.keyValue(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {
+                print(tokenDic)
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
                     MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
@@ -47,7 +48,7 @@ open class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_SAVED_TOKEN", result: nil)
         savedCardToken.device = Device()
         let service : GatewayService = GatewayService(baseURL: baseURL)
-        service.getToken(public_key: MercadoPagoContext.publicKey(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in
+        service.getToken(key: MercadoPagoContext.keyValue(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in
             var token : Token? = nil
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
@@ -99,7 +100,7 @@ open class MPServicesBuilder : NSObject {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PAYMENT_METHODS", result: nil)
         let service : PaymentService = PaymentService(baseURL: baseURL)
-        service.getPaymentMethods(public_key: MercadoPagoContext.publicKey(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getPaymentMethods(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
                     if failure != nil {
@@ -129,7 +130,7 @@ open class MPServicesBuilder : NSObject {
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_IDENTIFICATION_TYPES", result: nil)
         let service : IdentificationService = IdentificationService(baseURL: baseURL)
-        service.getIdentificationTypes(public_key: MercadoPagoContext.publicKey(), success: {(jsonResult: AnyObject?) -> Void in
+        service.getIdentificationTypes(key: MercadoPagoContext.keyValue(), success: {(jsonResult: AnyObject?) -> Void in
             
             if let error = jsonResult as? NSDictionary {
                 if (error["status"]! as? Int) == 404 {
@@ -161,7 +162,7 @@ open class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_INSTALLMENTS", result: nil)
         
         let service : PaymentService = PaymentService(baseURL: baseURL)
-        service.getInstallments(public_key:MercadoPagoContext.publicKey(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
+        service.getInstallments(key: MercadoPagoContext.keyValue(), bin: bin, amount: amount, issuer_id: issuer?._id, payment_method_id: paymentMethodId, success: success, failure: failure)
         
     }
     
@@ -170,7 +171,7 @@ open class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_ISSUERS", result: nil)
         
         let service : PaymentService = PaymentService(baseURL: baseURL)
-        service.getIssuers(public_key: MercadoPagoContext.publicKey(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
+        service.getIssuers(key: MercadoPagoContext.keyValue(), payment_method_id: paymentMethod._id, bin: bin, success: {(jsonResult: AnyObject?) -> Void in
             
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
@@ -289,7 +290,7 @@ open class MPServicesBuilder : NSObject {
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "GET_PREFERENCE", result: nil)
         let preferenceService = PreferenceService(baseURL: baseURL)
         preferenceService.getPreference(preferenceId, success: { (preference : CheckoutPreference) in
-            MercadoPagoContext.setSiteID(preference.siteId)
+           MercadoPagoContext.setSiteID(preference.siteId)
             success(preference)
         }, failure: failure)
     }
