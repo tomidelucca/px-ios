@@ -376,12 +376,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return tycCell
     }
     
-    func changePaymentMethodSelected() {
-        self.viewModel.paymentData.paymentMethod = nil
-        self.viewModel.paymentData.clear()
-        self.callbackPaymentData(self.viewModel.paymentData)
-    }
-    
+	func changePaymentMethodSelected() {
+		self.callbackPaymentData(PaymentData())
+	}
+	
     internal func openTermsAndConditions(_ title: String, url : URL){
         let webVC = WebViewController(url: url)
         webVC.title = title
