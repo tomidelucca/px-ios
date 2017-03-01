@@ -147,7 +147,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         if (section == 0 || section == 1){
             return 1
         } else {
-            return self.viewModel.numberOfPayerCost() + 1
+            return self.viewModel.numberOfCellsInBody()
         }
     }
     
@@ -318,15 +318,22 @@ open class CardAdditionalStepViewModel : NSObject {
         self.cardInformation = cardInformation
         self.callback = callback
     }
-    func numberOfPayerCost() -> Int{
-        if hasIssuer(){
-            return (self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments)) ?? 0
-        }else if hasPaymentMethod(){
+
+    func numberOfCellsInBody() -> Int{
+        if hasIssuer() {
+            if let maxInstallmentsAccepted = self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments) {
+                return maxInstallmentsAccepted + 1
+            }
+            return  0
+        
+        } else if hasPaymentMethod() {
             return (issuersList?.count) ?? 0
+        
         } else {
             return paymentMethods.count
         }
     }
+    
     func getTitle() -> String{
         if hasIssuer() {
             return "¿En cuántas cuotas?".localized

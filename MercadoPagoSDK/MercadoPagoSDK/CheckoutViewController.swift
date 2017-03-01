@@ -462,9 +462,6 @@ open class CheckoutViewModel {
         if self.shippingIncluded {
             numberOfRows = numberOfRows + 1
         }
-        if hasPayerCostAddionalInfo() {
-            numberOfRows += 1
-        }
         
         if hasPayerCostAddionalInfo() {
             numberOfRows += 1
