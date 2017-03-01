@@ -234,12 +234,7 @@ open class MercadoPagoCheckout: NSObject {
         if self.viewModel.reviewAndConfirm {
             let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
-				if MercadoPagoCheckoutViewModel.paymentDataCallback != nil && paymentData.paymentMethod != nil {
-					self.executePaymentDataCallback()
-				} else {
-					self.executeNextStep()
-				}
-
+                    self.executeNextStep()
             }, callbackCancel : { Void -> Void in
                 self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
                 self.executeNextStep()
