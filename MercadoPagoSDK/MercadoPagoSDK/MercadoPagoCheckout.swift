@@ -20,31 +20,11 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController : UIViewController?
     
-    public init(checkoutPreference : CheckoutPreference, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
 
-        self.navigationController = navigationController
     
-        if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
-        }
-    }
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData)
-        
-        self.navigationController = navigationController
-        
-        self.viewModel.reviewAndConfirm = true
-        
-        if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
-        }
-    }
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController, paymentResult: PaymentResult) {
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
-        
+        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
@@ -337,6 +317,7 @@ open class MercadoPagoCheckout: NSObject {
         
         ReviewScreenPreference.clear()
         PaymentResultScreenPreference.clear()
+        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
         if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
         } else if let callback = MercadoPagoCheckoutViewModel.callback {
@@ -353,6 +334,7 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
+    
     func presentLoading(animated : Bool = false) {
         if self.currentLoadingView == nil {
             self.createCurrentLoading()
@@ -363,6 +345,7 @@ open class MercadoPagoCheckout: NSObject {
     func dismissLoading(animated : Bool = false) {
         if self.currentLoadingView != nil {
             self.currentLoadingView!.dismiss(animated: animated, completion: {})
+            self.currentLoadingView?.view.alpha = 0
             self.currentLoadingView = nil
         }
     }
