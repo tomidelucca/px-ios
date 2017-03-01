@@ -88,6 +88,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.paymentMethodDescription.attributedText = attributedTitle
 		
 		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+   			self.changePaymentButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)			
 			self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
 			self.changePaymentButton.setTitle("Cambiar pago".localized, for: .normal)
 		} else {
