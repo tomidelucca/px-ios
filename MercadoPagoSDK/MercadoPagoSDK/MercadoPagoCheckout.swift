@@ -386,6 +386,7 @@ open class MercadoPagoCheckout: NSObject {
     
     private func pushViewController(viewController: UIViewController,
                                    animated: Bool) {
+        viewController.hidesBottomBarWhenPushed = true
         CATransaction.begin()
         CATransaction.setCompletionBlock { 
             if MercadoPagoCheckout.firstViewControllerPushed {
