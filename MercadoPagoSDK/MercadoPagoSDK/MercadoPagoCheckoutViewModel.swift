@@ -219,6 +219,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .FINISH
         }
         
+        if shouldShowCongrats() {
+            return .CONGRATS
+        }
+        
         if needSearch() {
             return .SEARCH_PAYMENT_METHODS
         }
@@ -256,11 +260,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         
         if needCreateToken(){
             return .CREATE_CARD_TOKEN
-        }
-
-        
-        if shouldShowCongrats() {
-            return .CONGRATS
         }
         
         if readyToPay {
