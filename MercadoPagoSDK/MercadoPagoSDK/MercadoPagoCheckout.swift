@@ -20,31 +20,11 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController : UIViewController?
     
-    public init(checkoutPreference : CheckoutPreference, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference)
 
-        self.navigationController = navigationController
     
-        if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
-        }
-    }
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData)
-        
-        self.navigationController = navigationController
-        
-        self.viewModel.reviewAndConfirm = true
-        
-        if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
-        }
-    }
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, navigationController : UINavigationController, paymentResult: PaymentResult) {
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
-        
+        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
@@ -78,6 +58,10 @@ open class MercadoPagoCheckout: NSObject {
     
     open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
         MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
+    }
+    
+    open static func setPaymentDataConfirmCallback(paymentDataConfirmCallback : @escaping (_ paymentData : PaymentData) -> Void) {
+        MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = paymentDataConfirmCallback
     }
     
     open static func setCallback(callback : @escaping (Void) -> Void) {
@@ -169,6 +153,7 @@ open class MercadoPagoCheckout: NSObject {
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
+            //self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             self.executeNextStep()
         })
         
@@ -232,24 +217,40 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentData() {
         if self.viewModel.reviewAndConfirm {
-            let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callback: {(paymentData : PaymentData) -> Void in
+            let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: {(paymentData : PaymentData) -> Void in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
-                    self.executeNextStep()
+                self.executeNextStep()
             }, callbackCancel : { Void -> Void in
                 self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
                 self.executeNextStep()
+            }, callbackConfirm : {(paymentData : PaymentData) -> Void in
+                self.viewModel.updateCheckoutModel(paymentData: paymentData)
+                if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
+                    MercadoPagoCheckoutViewModel.paymentDataConfirmCallback!(self.viewModel.paymentData)
+                } else {
+                    self.executeNextStep()
+                }
             })
             
             
             self.presentLoading()
-            self.navigationController.popToViewController(viewControllerBase!, animated: false)
-            self.pushViewController(viewController :checkoutVC, animated: false)
+			self.cleanNavigationStack()
+			self.navigationController.pushViewController(checkoutVC, animated: true);
             self.dismissLoading(animated: false)
         } else {
+            // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
         }
     }
-    
+	
+	func cleanNavigationStack () {
+		
+		// TODO WALLET
+		var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self);
+		}
+		self.navigationController.viewControllers = newNavigationStack;
+	}
+	
     private func executePaymentDataCallback() {
         if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
@@ -337,6 +338,7 @@ open class MercadoPagoCheckout: NSObject {
         
         ReviewScreenPreference.clear()
         PaymentResultScreenPreference.clear()
+        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
         if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
         } else if let callback = MercadoPagoCheckoutViewModel.callback {
@@ -353,6 +355,7 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
+    
     func presentLoading(animated : Bool = false) {
         if self.currentLoadingView == nil {
             self.createCurrentLoading()
@@ -363,6 +366,7 @@ open class MercadoPagoCheckout: NSObject {
     func dismissLoading(animated : Bool = false) {
         if self.currentLoadingView != nil {
             self.currentLoadingView!.dismiss(animated: animated, completion: {})
+            self.currentLoadingView?.view.alpha = 0
             self.currentLoadingView = nil
         }
     }
