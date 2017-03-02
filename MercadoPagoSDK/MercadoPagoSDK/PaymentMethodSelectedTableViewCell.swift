@@ -64,10 +64,17 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
         }
+
+		
+		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+       		self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
+        	self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+        	self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
+		} else {
+			self.selectOtherPaymentMethodButton.isHidden = true;
+		}
         
-        self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
-        self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
-        self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
+
         
         //CFT.font = Utils.getFont(size: CFT.font.pointSize)
         //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
@@ -89,16 +96,22 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
     
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
-        var height = DEFAULT_ROW_HEIGHT
-        
-        if let dic = payerCost?.getCFTValue() {
-            height += 65
-        }
-        
+		
+		var cellHeight = DEFAULT_ROW_HEIGHT
+		
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
-            return height + 20
+			cellHeight += 20
         }
-        return height
+
+		if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+			cellHeight -= 64
+		}
+
+        if let dic = payerCost?.getCFTValue() {
+            cellHeight += 65
+        }
+
+        return cellHeight
     }
     
 }

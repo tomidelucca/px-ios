@@ -87,6 +87,8 @@
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     [ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
     
+    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
+    
     
     // Celdas custom de Payment Result
     
