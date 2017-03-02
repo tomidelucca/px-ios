@@ -332,7 +332,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
         confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
-        let confirmPaymentTitle =  MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText()
+		let confirmPaymentTitle = (indexPath.section == 1) ? MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText() :
+		 MercadoPagoCheckoutViewModel.reviewScreenPreference.getSecondaryConfirmButtonText()
         confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle,for: .normal)
         return confirmPaymentTableViewCell
     }
@@ -375,12 +376,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return tycCell
     }
     
-    func changePaymentMethodSelected() {
-        self.viewModel.paymentData.paymentMethod = nil
-        self.viewModel.paymentData.clear()
-        self.callbackPaymentData(self.viewModel.paymentData)
-    }
-    
+	func changePaymentMethodSelected() {
+		self.callbackPaymentData(PaymentData())
+	}
+	
     internal func openTermsAndConditions(_ title: String, url : URL){
         let webVC = WebViewController(url: url)
         webVC.title = title

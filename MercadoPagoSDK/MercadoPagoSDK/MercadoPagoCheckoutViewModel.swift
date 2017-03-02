@@ -150,7 +150,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     //SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?){
-        self.paymentMethods = paymentMethods
+		self.paymentData = paymentData
+		self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
         if self.paymentMethods!.count > 1 {
