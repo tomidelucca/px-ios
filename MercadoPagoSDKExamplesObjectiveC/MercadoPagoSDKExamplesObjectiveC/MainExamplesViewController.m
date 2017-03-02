@@ -81,7 +81,7 @@
     
     ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
     [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
-    [reviewPreference setProductsDeteailWithProductsTitle:@"Carga SUBE"];
+    [reviewPreference setProductsDetailWithProductsTitle:@"Carga SUBE"];
     [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];

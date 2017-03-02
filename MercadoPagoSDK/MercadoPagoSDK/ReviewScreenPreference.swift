@@ -11,7 +11,7 @@ import UIKit
 open class ReviewScreenPreference: NSObject {
 
     private var title = "Confirma tu compra".localized
-    private var productsTitle = "Products".localized
+    private var productsTitle = "Productos".localized
     private var confirmButtonText = "Confirmar".localized
     private var cancelButtonText = "Cancelar Pago".localized
     
@@ -26,7 +26,7 @@ open class ReviewScreenPreference: NSObject {
         return title
     }
     
-    open func setProductsDeteail(productsTitle : String) {
+    open func setProductsDetail(productsTitle : String) {
         self.productsTitle = productsTitle
     }
     
