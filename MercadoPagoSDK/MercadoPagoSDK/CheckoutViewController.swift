@@ -488,49 +488,7 @@ open class CheckoutViewModel {
 
         return 0
     }
-    
-    
-    func heightForRow1(_ indexPath : IndexPath) -> CGFloat {
-        if isTitleCellFor(indexPath: indexPath) {
-            return 60
-            
-        } else if indexPath.section == 1 {
-            switch indexPath.row {
-            case 0:
-                // Productos
-                return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
-            case 1:
-                if  shouldDisplayNoRate() {
-                    return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
-                }
-                return PurchaseSimpleDetailTableViewCell.ROW_HEIGHT
-            case 2:
-                return (self.isPaymentMethodSelectedCard()) ? PurchaseSimpleDetailTableViewCell.ROW_HEIGHT : ConfirmPaymentTableViewCell.ROW_HEIGHT
-            default:
-                return ConfirmPaymentTableViewCell.ROW_HEIGHT
-            }
-            
-        } else if isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
-            
-        } else if isPaymentMethodCellFor(indexPath: indexPath){
-            return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
-        }
-            
-        else if isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
-        }
-            
-        else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
-            return TermsAndConditionsViewCell.getCellHeight()
-        } else if isConfirmPaymentTableViewCellFor(indexPath: indexPath){
-                return ConfirmPaymentTableViewCell.ROW_HEIGHT
-        } else if isExitButtonTableViewCellFor(indexPath: indexPath){
-                return ExitButtonTableViewCell.ROW_HEIGHT
-        }
-        return 0
-    }
-    
+        
     func isTermsAndConditionsViewCellFor(indexPath: IndexPath) -> Bool{
         if !isFotterCellFor(indexPath: indexPath) {
             return false
