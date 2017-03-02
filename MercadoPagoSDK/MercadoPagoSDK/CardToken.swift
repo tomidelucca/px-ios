@@ -84,7 +84,7 @@ open class CardToken : NSObject, CardInformationForm {
         
             let settings : [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
             
-            guard let cardSettings = settings , !settings!.isEmpty else {
+            guard let cardSettings = settings , !Array.isNullOrEmpty(settings) else {
                 if userInfo == nil {
                     userInfo = [String : String]()
                 }
@@ -95,7 +95,7 @@ open class CardToken : NSObject, CardInformationForm {
                 
                 let filteredSettings = settings?.filter({return $0.cardNumber.length == cardNumber!.trimSpaces().characters.count})
                 
-                if filteredSettings?.count == 0 {
+                if Array.isNullOrEmpty(filteredSettings) {
                     if userInfo == nil {
                         userInfo = [String : String]()
                     }
