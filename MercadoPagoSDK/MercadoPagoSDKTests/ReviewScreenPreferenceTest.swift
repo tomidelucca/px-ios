@@ -11,9 +11,9 @@ import XCTest
 class ReviewScreenPreferenceTest: BaseTest {
     
     let reviewScreenPreference = ReviewScreenPreference()
-
+    
     func testSetTitle() {
-     
+        
         XCTAssertEqual(reviewScreenPreference.getTitle(), "Confirma tu compra".localized)
         
         reviewScreenPreference.setTitle(title: "1")
@@ -50,5 +50,28 @@ class ReviewScreenPreferenceTest: BaseTest {
         MercadoPagoCheckout.setReviewScreenPreference(reviewScreenPreference)
         
         XCTAssertEqual(MercadoPagoCheckoutViewModel.reviewScreenPreference.getCancelButtonTitle(), "1")
+    }
+    
+    func testSetSecondaryButtonText() {
+        XCTAssertEqual(reviewScreenPreference.getSecondaryConfirmButtonText(), "Confirmar".localized)
+        
+        reviewScreenPreference.setSecondaryConfirmButtonText(secondaryConfirmButtonText: "1")
+        
+        MercadoPagoCheckout.setReviewScreenPreference(reviewScreenPreference)
+        
+        XCTAssertEqual(MercadoPagoCheckoutViewModel.reviewScreenPreference.getSecondaryConfirmButtonText(), "1")
+        
+    }
+    
+    func testIsChangePaymentMethodDisable() {
+        XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
+        
+        reviewScreenPreference.disableChangeMethodOption()
+        
+        XCTAssertFalse(reviewScreenPreference.isChangeMethodOptionEnabled())
+        
+        reviewScreenPreference.enableChangeMethodOption()
+        
+        XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
     }
 }
