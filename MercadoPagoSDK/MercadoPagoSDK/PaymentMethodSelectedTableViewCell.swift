@@ -115,4 +115,3 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
     
 }
-																																					ººº	ººº
