@@ -184,6 +184,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         if paymentOptionSelected.hasChildren() {
             self.paymentMethodOptions =  paymentOptionSelected.getChildren()
+        } else {
+            resetInformation()
         }
         
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
@@ -191,6 +193,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             if self.paymentOptionSelected!.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
                 self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             }
+        
         } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
             self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
@@ -417,6 +420,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     func errorInputs(error : MPSDKError, errorCallback : ((Void) -> Void)?) {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
+    }
+    
+    func resetInformation() {
+        self.paymentData.clear()
+        self.cardToken = nil
+        self.issuers = nil
+        self.installment = nil
     }
     
 
