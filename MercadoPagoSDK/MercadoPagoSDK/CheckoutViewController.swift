@@ -311,9 +311,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let screenSize : CGRect = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let customView = customCell.getTableViewCell().contentView
+        customCell.setDelegate(delegate: self)
         let frame = customView.frame
         customView.frame = CGRect(x: (screenWidth - frame.size.width) / 2, y: 0, width: frame.size.width, height: frame.size.height)
-        var cell = UITableViewCell(style: .default, reuseIdentifier: indentifier)
+        let cell = UITableViewCell(style: .default, reuseIdentifier: indentifier)
         cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         cell.contentView.addSubview(customView)
         return cell
