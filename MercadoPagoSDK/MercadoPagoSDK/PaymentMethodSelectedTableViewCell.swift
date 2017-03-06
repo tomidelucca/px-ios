@@ -67,7 +67,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
 		
 		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
-       		self.selectOtherPaymentMethodButton.setTitle("Cambiar pago".localized, for: .normal)
+       		self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
         	self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         	self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
 		} else {

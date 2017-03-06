@@ -296,6 +296,15 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
         
+        if self.search!.getPaymentOptionsCount() == 1 {
+            if self.search!.groups.count == 1 {
+                self.updateCheckoutModel(paymentOptionSelected: self.search!.groups[0])
+            } else {
+                let customOption = self.search!.customerPaymentMethods![0] as! PaymentMethodOption
+                self.updateCheckoutModel(paymentOptionSelected: customOption)
+            }
+        }
+        
         // La primera vez las opciones a mostrar van a ser el root de grupos
         self.rootPaymentMethodOptions = paymentMethodSearch.groups
         self.paymentMethodOptions = self.rootPaymentMethodOptions
