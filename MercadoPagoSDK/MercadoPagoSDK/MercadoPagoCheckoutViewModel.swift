@@ -17,10 +17,12 @@ public enum CheckoutStep : String {
     case CARD_FORM
     case SECURITY_CODE_ONLY
     case CREDIT_DEBIT
-    case ISSUER
+    case GET_ISSUERS
+    case ISSUERS_SCREEN
     case CREATE_CARD_TOKEN
     case IDENTIFICATION
-    case PAYER_COST
+    case GET_PAYER_COSTS
+    case PAYER_COST_SCREEN
     case REVIEW_AND_CONFIRM
     case POST_PAYMENT
     case CONGRATS
@@ -72,6 +74,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var payment : Payment?
     var paymentResult: PaymentResult?
     
+    open var installment: Installment?
+    open var issuers: [Issuer]?
+    
     static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
     
@@ -114,7 +119,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let _ = paymentMethods {
             pms = paymentMethods!
         }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, callback: nil)
+        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : nil, callback: nil)
     }
     
     func paymentVaultViewModel() -> PaymentVaultViewModel {
@@ -126,7 +131,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, callback: nil)
+        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : self.issuers, callback: nil)
     }
     
     public func payerCostViewModel() -> CardAdditionalStepViewModel{
@@ -135,7 +140,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: nil, callback: nil)
+        return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: self.installment, issuersList : nil, callback: nil)
     }
     
     public func securityCodeViewModel() -> SecrurityCodeViewModel {
@@ -153,15 +158,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 		self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
-        if self.paymentMethods!.count > 1 {
-            self.next = .CREDIT_DEBIT
-        } else if self.paymentData.issuer == nil {
-            self.next = .ISSUER
-        } else if self.paymentData.paymentMethod!.isIdentificationRequired() {
-            self.next = .IDENTIFICATION
-        } else {
-            self.next = .CREATE_CARD_TOKEN
-        }
     }
     
     
@@ -246,12 +242,20 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .CREDIT_DEBIT
         }
         
-        if needGetIssuer() {
-            return .ISSUER
+        if needGetIssuers() {
+            return .GET_ISSUERS
+        }
+        
+        if needIssuerSelectionScreen() {
+            return .ISSUERS_SCREEN
         }
         
         if needChosePayerCost() {
-            return .PAYER_COST
+            return .GET_PAYER_COSTS
+        }
+        
+        if needPayerCostSelectionScreen(){
+            return .PAYER_COST_SCREEN
         }
         
         if needSecurityCode(){
@@ -342,6 +346,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.search = nil
             self.rootVC = true
             self.cardToken = nil
+            self.issuers = nil
+            self.installment = nil
         } else {
             self.readyToPay = true
         }
