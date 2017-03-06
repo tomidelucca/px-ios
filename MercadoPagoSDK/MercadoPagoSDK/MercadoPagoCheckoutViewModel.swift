@@ -84,6 +84,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var readyToPay : Bool = false
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
+    internal var initWithPaymentData = false
     
     init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?) {
         self.checkoutPreference = checkoutPreference
@@ -91,6 +92,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             if pm.isComplete() {
                 self.paymentData = pm
                 self.reviewAndConfirm = true
+                self.initWithPaymentData = true
             }
         }
         self.paymentResult = paymentResult
@@ -184,7 +186,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         if paymentOptionSelected.hasChildren() {
             self.paymentMethodOptions =  paymentOptionSelected.getChildren()
-        } else {
+        } else if !self.initWithPaymentData {
             resetInformation()
         }
         
@@ -360,6 +362,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.cardToken = nil
             self.issuers = nil
             self.installment = nil
+            self.initWithPaymentData = false
         } else {
             self.readyToPay = true
         }
