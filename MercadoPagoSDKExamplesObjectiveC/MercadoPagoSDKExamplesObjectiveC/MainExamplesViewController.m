@@ -78,35 +78,16 @@
     
     //Setear Void Callback
     //[self setVoidCallback];
-
+    
     
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData navigationController:self.navigationController paymentResult:self.paymentResult] start];
     
-}
--(void) setPaymentData {
-    PaymentMethod *pm = [[PaymentMethod alloc] init];
-     pm._id = @"visa";
-     pm.paymentTypeId = @"credit_card";
-     pm.name = @"visa";
-     
-     
-     PaymentData *pd = [[PaymentData alloc] init];
-     pd.paymentMethod = pm;
-     
-     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"card" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
-     pd.token.lastFourDigits = @"7890";
-     pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
-     
-     pd.issuer = [[Issuer alloc] init];
-     pd.issuer._id = [NSNumber numberWithInt:200];
-    
-    self.paymentData = pd;
 }
 
 -(void)setPaymentResult {
     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"" paymentData:self.paymentData payerEmail:@"sarasa" id:@"123" statementDescription:@"sarasa"];
     self.paymentResult = paymentResult;
-
+    
 }
 
 -(void)setRyCUpdate {
@@ -120,12 +101,12 @@
         //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
         //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
         [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
-//        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
+        //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //[self.navigationController popToRootViewControllerAnimated:NO];
     }];
 }
 
--(void)setPaymentDataCallback {
++(void)setPaymentDataCallback {
     
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
         NSLog(@"PaymentMethod: %@", paymentData.paymentMethod._id);
@@ -137,15 +118,15 @@
 }
 
 -(void)setPaymentCallback {
-        [MercadoPagoCheckout setPaymentCallbackWithPaymentCallback:^(Payment * payment) {
-            NSLog(@"%@", payment._id);
-        }];
+    [MercadoPagoCheckout setPaymentCallbackWithPaymentCallback:^(Payment * payment) {
+        NSLog(@"%@", payment._id);
+    }];
 }
 
 -(void)setVoidCallback {
-        [MercadoPagoCheckout setCallbackWithCallback:^{
-            NSLog(@"Se termino el flujo");
-        }];
+    [MercadoPagoCheckout setCallbackWithCallback:^{
+        NSLog(@"Se termino el flujo");
+    }];
 }
 
 -(void)finishFlowBeforeRYC {
@@ -246,7 +227,7 @@
     [PaymentResultScreenPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
     
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
-
+    
 }
 
 -(void)setReviewScreenPreference {
