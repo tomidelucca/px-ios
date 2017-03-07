@@ -11,36 +11,42 @@ import UIKit
 class PayerCostCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cell: UIView!
-    var cardView: UIView!
+    var cellView: UIView!
     var cardFront : CardFrontView!
     
-    func loadCard(){
-        self.cardView = UIView()
+    func loadCellView(View: UIView?){
+        var view = View
         
-        let cardHeight = getCardHeight()
-        let cardWidht = getCardWidth()
-        let xMargin = (UIScreen.main.bounds.size.width  - cardWidht) / 2
-        let yMargin = (UIScreen.main.bounds.size.width*0.5 - cardHeight ) / 2
+        if let cardView = view{
+            self.cellView = UIView()
+            
+            let cellViewHeight = getCardHeight()
+            let cellViewWidht = getCardWidth()
+            let xMargin = (UIScreen.main.bounds.size.width  - cellViewWidht) / 2
+            let yMargin = (UIScreen.main.bounds.size.width*0.5 - cellViewHeight ) / 2
+            
+            let rectBackground = CGRect(x: xMargin, y: yMargin, width: cellViewWidht, height: cellViewHeight)
+            let rect = CGRect(x: 0, y: 0, width: cellViewWidht, height: cellViewHeight)
+            self.cellView.frame = rectBackground
+            
+            self.cellView.layer.cornerRadius = 8
+            self.cellView.layer.masksToBounds = true
+            self.addSubview(self.cellView)
+            
+            view = UIView(frame: rect)
+            view?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            cellView.addSubview(view!)
+            self.cell.backgroundColor = UIColor.primaryColor()
+        }
         
-        let rectBackground = CGRect(x: xMargin, y: yMargin, width: cardWidht, height: cardHeight)
-        let rect = CGRect(x: 0, y: 0, width: cardWidht, height: cardHeight)
-        self.cardView.frame = rectBackground
-        
-        self.cardView.layer.cornerRadius = 8
-        self.cardView.layer.masksToBounds = true
-        self.addSubview(self.cardView)
-
-        cardFront = CardFrontView(frame: rect)
-        cardFront?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        cardView.addSubview(cardFront!)
-        self.cell.backgroundColor = UIColor.primaryColor()
     }
     func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?, cardInformation: CardInformation?) {
         
         if let paymentMethod = paymentMethod{
             
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
-            self.cardView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
+            self.cellView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
             self.cardFront?.cardLogo.alpha = 1
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
@@ -60,13 +66,13 @@ class PayerCostCardTableViewCell: UITableViewCell {
     }
     func fadeCard(){
         UIView.animate(withDuration: 0.80) {
-            self.cardView?.alpha = 0
+            self.cellView?.alpha = 0
         }
         
     }
     func showCard(){
         UIView.animate(withDuration: 1.50) {
-            self.cardView?.alpha = 1
+            self.cellView?.alpha = 1
         }
         
     }

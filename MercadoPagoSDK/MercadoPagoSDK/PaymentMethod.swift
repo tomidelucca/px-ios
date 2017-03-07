@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class PaymentMethod : NSObject  {
+open class PaymentMethod : NSObject , Cellable {
     
     open var _id : String!
 
@@ -33,6 +33,15 @@ open class PaymentMethod : NSObject  {
         self._id = _id
         self.name = name
         self.paymentTypeId = paymentTypeId
+    }
+    
+    open func getCell(width: Double, y: Float) -> UITableViewCell {
+        let cell: CardTypeTableViewCell = Bundle.main.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
+        cell.setPaymentMethod(paymentMethod: self)
+        cell.addSeparatorLineToTop(width: width, y: y)
+        cell.selectionStyle = .none
+        
+        return cell
     }
     
     open func isIssuerRequired() -> Bool {

@@ -116,33 +116,44 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return CardViewModelManager(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
     }
     
-    public func debitCreditViewModel() -> CardAdditionalStepViewModel{
-        var pms : [PaymentMethod] = []
-        if let _ = paymentMethods {
-            pms = paymentMethods!
-        }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : nil, callback: nil)
-    }
-    
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC)
     }
     
-    public func issuerViewModel() -> CardAdditionalStepViewModel{
+    public func debitCreditViewModel() -> AdditionalStepViewModel{
+        var pms : [PaymentMethod] = []
+        if let _ = paymentMethods {
+            pms = paymentMethods!
+        }
+
+        return CardTypeAdditionalStepViewModel(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        //return CardTypeAdditionalStepViewModel(token: nil, cell: "CardTypeTableViewCell", showCard: true, showTotal: false, dataSource: pms)
+        //return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList: nil, callback: nil)
+    }
+    
+    public func issuerViewModel() -> AdditionalStepViewModel{
         var pms : [PaymentMethod] = []
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : self.issuers, callback: nil)
+
+        
+        return IssuerAdditionalStepViewModel(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        //return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: nil, cell: "IssuerRowTableViewCell", dataSource: self.issuers)
+        //return AdditionalStepViewModel(amount: self.getAmount(), token: nil, cell: "IssuerRowTableViewCell", showCard: true, showTotal: false, dataSource: pms)
+        //return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList: self.issuers, callback: nil)
     }
     
-    public func payerCostViewModel() -> CardAdditionalStepViewModel{
+    public func payerCostViewModel() -> AdditionalStepViewModel{
         let cardInformation = self.paymentOptionSelected as? CardInformation ?? nil
         var pms : [PaymentMethod] = []
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: self.installment, issuersList : nil, callback: nil)
+
+        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        //return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, cell: "PayerCostRowTableViewCell", showCard: true, showTotal: false, dataSource: pms)
+        //return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: installment, issuersList: nil, callback: nil)
     }
     
     public func securityCodeViewModel() -> SecrurityCodeViewModel {

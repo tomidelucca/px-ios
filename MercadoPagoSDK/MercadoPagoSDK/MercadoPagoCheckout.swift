@@ -184,8 +184,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectCreditDebit(){
-        let crediDebitStep = CardAdditionalViewController(viewModel: self.viewModel.debitCreditViewModel(), collectPaymentMethodCallback: { (paymentMethod) in
-            self.viewModel.updateCheckoutModel(paymentMethod: paymentMethod)
+        let crediDebitStep = CardAdditionalViewController(viewModel: self.viewModel.debitCreditViewModel(), callback: { (paymentMethod) in
+            self.viewModel.updateCheckoutModel(paymentMethod: paymentMethod as! PaymentMethod)
             self.executeNextStep()
         })
         self.pushViewController(viewController : crediDebitStep, animated: true)
@@ -210,8 +210,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func startIssuersScreen() {
-        let issuerStep = CardAdditionalViewController(viewModel: self.viewModel.issuerViewModel(), collectIssuerCallback: { (issuer) in
-            self.viewModel.updateCheckoutModel(issuer: issuer)
+        let issuerStep = CardAdditionalViewController(viewModel: self.viewModel.issuerViewModel(), callback: { (issuer) in
+            self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
             self.executeNextStep()
         })
         self.navigationController.pushViewController(issuerStep, animated: true)
@@ -250,8 +250,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func startPayerCostScreen() {
-        let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), collectPayerCostCallback: { (payerCost) in
-            self.viewModel.updateCheckoutModel(payerCost: payerCost)
+        let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), callback: { (payerCost) in
+            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
             self.executeNextStep()
         })
         self.pushViewController(viewController : payerCostStep, animated: true)

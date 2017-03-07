@@ -8,9 +8,18 @@
 
 import Foundation
 
-open class Issuer : NSObject {
+open class Issuer : NSObject, Cellable {
     open var _id : NSNumber?
     open var name : String?
+    
+    open func getCell(width: Double, y: Float) -> UITableViewCell {
+        let cell = IssuerRowTableViewCell()
+        cell.fillCell(issuer: self, bundle: MercadoPago.getBundle()!)
+        cell.addSeparatorLineToTop(width: width, y: y)
+        cell.selectionStyle = .none
+        
+        return cell
+    }
     
     open class func fromJSON(_ json : NSDictionary) -> Issuer {
         let issuer : Issuer = Issuer()

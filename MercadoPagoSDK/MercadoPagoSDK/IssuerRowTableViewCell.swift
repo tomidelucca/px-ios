@@ -11,6 +11,7 @@ import UIKit
 class IssuerRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var issuerImage: UIImageView!
+    
     func fillCell(issuer: Issuer, bundle: Bundle){
         issuerImage.image = UIImage(named: "issuer_\(issuer._id!)", in: bundle, compatibleWith: nil)
     }
@@ -20,8 +21,8 @@ class IssuerRowTableViewCell: UITableViewCell {
         // Initialization code
     }
     func addSeparatorLineToTop(width: Double, y: Float){
-        var lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
-        var line = UIView(frame: lineFrame)
+        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+        let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()
         addSubview(line)
