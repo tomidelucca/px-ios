@@ -364,6 +364,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
+        let error = MercadoPagoCheckoutViewModel.error
         let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: { (Void) -> Void in
             self.viewModel.errorCallback?()
         }, callbackCancel: {(Void) -> Void in
@@ -371,7 +372,9 @@ open class MercadoPagoCheckout: NSObject {
         })
         // Limpiar error anterior
         MercadoPagoCheckoutViewModel.error = nil
+        self.dismissLoading()
         self.navigationController.present(errorStep, animated: true, completion: {})
+        //self.pushViewController(viewController : errorStep, animated: true)
         
     }
     
@@ -433,7 +436,7 @@ open class MercadoPagoCheckout: NSObject {
                                    animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
         CATransaction.begin()
-        CATransaction.setCompletionBlock { 
+        CATransaction.setCompletionBlock {
             if MercadoPagoCheckout.firstViewControllerPushed {
                 self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
             }

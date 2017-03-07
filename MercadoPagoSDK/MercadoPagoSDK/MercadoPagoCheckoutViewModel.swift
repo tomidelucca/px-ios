@@ -286,6 +286,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(paymentMethodSearch : PaymentMethodSearch) {
         self.search = paymentMethodSearch
+        
+        if search?.getPaymentOptionsCount() == 0 {
+            self.errorInputs(error: MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (Void) in
+                
+            })
+        }
+        
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
             
             if !MercadoPagoContext.accountMoneyAvailable() {
