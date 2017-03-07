@@ -14,7 +14,11 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
     
-    override open func viewDidLoad() {
+    override open var screenName : String { get {
+        return "RESULT_" + viewModel.status().uppercased()
+    } }
+        
+     override open func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         self.tableView.delegate = self
