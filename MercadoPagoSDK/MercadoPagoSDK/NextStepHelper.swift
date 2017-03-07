@@ -15,7 +15,7 @@ extension MercadoPagoCheckoutViewModel {
     }
     func isPaymentTypeSelected() -> Bool {
         
-        if self.paymentData.isComplete() && (self.search != nil) && self.paymentOptionSelected == nil {
+        if self.paymentData.isComplete() && (self.search != nil){
             self.setPaymentOptionSelected()
             return true
         }
