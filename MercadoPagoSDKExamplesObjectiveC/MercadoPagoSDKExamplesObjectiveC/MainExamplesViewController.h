@@ -19,4 +19,6 @@
 
 @property MPCustomCell *dineroEnCuentaCell;
 
++(void)setPaymentDataCallback;
+
 @end
