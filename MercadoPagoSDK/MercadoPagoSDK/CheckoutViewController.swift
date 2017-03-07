@@ -317,6 +317,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let cell = UITableViewCell(style: .default, reuseIdentifier: indentifier)
         cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         cell.contentView.addSubview(customView)
+        cell.selectionStyle = .none
         return cell
     }
     
