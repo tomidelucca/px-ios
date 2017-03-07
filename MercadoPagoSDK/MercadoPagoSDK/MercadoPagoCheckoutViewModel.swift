@@ -287,6 +287,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func updateCheckoutModel(paymentMethodSearch : PaymentMethodSearch) {
         self.search = paymentMethodSearch
         
+        // La primera vez las opciones a mostrar van a ser el root de grupos
+        self.rootPaymentMethodOptions = paymentMethodSearch.groups
+        self.paymentMethodOptions = self.rootPaymentMethodOptions
+        self.availablePaymentMethods = paymentMethodSearch.paymentMethods
+        
         if search?.getPaymentOptionsCount() == 0 {
             self.errorInputs(error: MPSDKError(message: "Ha ocurrido un error".localized, messageDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (Void) in
                 
@@ -314,10 +319,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
         
-        // La primera vez las opciones a mostrar van a ser el root de grupos
-        self.rootPaymentMethodOptions = paymentMethodSearch.groups
-        self.paymentMethodOptions = self.rootPaymentMethodOptions
-        self.availablePaymentMethods = paymentMethodSearch.paymentMethods
+
     }
     
     
