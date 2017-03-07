@@ -157,7 +157,7 @@
     NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
     
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
-    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card",@"credit_card", nil];
+    paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", @"debit_card", nil];
     paymentExclusions.defaultInstallments = 1;
     
     self.pref = [[CheckoutPreference alloc] initWithItems:items payer:payer paymentMethods:paymentExclusions];
@@ -178,7 +178,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a338"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
 }
 
 -(void)setPaymentResultScreenPreference {
