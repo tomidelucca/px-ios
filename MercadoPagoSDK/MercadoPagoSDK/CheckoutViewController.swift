@@ -108,6 +108,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
+        self.hideNavBar()
         self.hideLoading()
      
     }
