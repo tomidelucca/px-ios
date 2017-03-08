@@ -83,8 +83,8 @@ CheckoutPreference *pref;
     [CardFormViewController setShowBankDeals:NO];
     
     PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm._id = @"visa";
-    pm.paymentTypeId = @"credit_card";
+    pm._id = @"debvisa";
+    pm.paymentTypeId = @"debit_card";
     pm.name = @"visa";
      
      
@@ -93,9 +93,9 @@ CheckoutPreference *pref;
      
     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
-    pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
+    pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
      
-    pd.issuer = [[Issuer alloc] init];
+    pd.issuer = nil;//[[Issuer alloc] init];
     pd.issuer._id = [NSNumber numberWithInt:200];
     
     
@@ -126,17 +126,19 @@ CheckoutPreference *pref;
 - (void)showCongrats {
     
     PaymentMethod *pm = [[PaymentMethod alloc] init];
-    pm._id = @"visa";
-    pm.paymentTypeId = @"credit_card";
-    pm.name = @"visa";
+    pm._id = @"debvisa";
+    pm.paymentTypeId = @"debit_card";
+    //pm.name = @"visa";
 
     PaymentData *pd = [[PaymentData alloc] init];
     pd.paymentMethod = pm;
     
     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
-    pd.payerCost = [[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
+    pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:2 totalAmount:6];
+    //pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
     
+    pd.issuer = nil;//[[Issuer alloc] init];
      PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd payerEmail:nil id:nil statementDescription:nil];
     
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:pd navigationController:self.navigationController paymentResult:paymentResult] start];
