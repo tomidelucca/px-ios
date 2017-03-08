@@ -59,6 +59,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         self.navigationItem.rightBarButtonItem = nil
         self.navBarTextColor = UIColor.primaryColor()
         
