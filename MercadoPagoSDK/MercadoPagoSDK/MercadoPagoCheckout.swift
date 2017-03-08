@@ -275,7 +275,11 @@ open class MercadoPagoCheckout: NSObject {
                 }
             })
             self.navigationController.pushViewController(checkoutVC, animated: true);
-            self.cleanNavigationStack()
+            CATransaction.begin();
+            CATransaction.setCompletionBlock {
+                self.cleanNavigationStack()
+            }
+            CATransaction.commit();
         } else {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
