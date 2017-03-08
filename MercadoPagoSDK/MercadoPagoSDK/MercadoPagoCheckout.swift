@@ -28,7 +28,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
+            viewControllerBase = self.navigationController.viewControllers.last
         }
     }
     
@@ -387,6 +387,7 @@ open class MercadoPagoCheckout: NSObject {
             paymentCallback(payment)
         } else if let callback = MercadoPagoCheckoutViewModel.callback {
             callback()
+            return
         }
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
