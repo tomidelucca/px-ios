@@ -31,6 +31,12 @@
 
 - (IBAction)checkoutFlow:(id)sender {
     
+    [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.opaque = YES;
+    
     self.pref = nil;
     self.paymentData = nil;
     self.paymentResult = nil;

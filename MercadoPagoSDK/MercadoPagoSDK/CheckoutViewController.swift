@@ -44,8 +44,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override func loadMPStyles(){
-          self.navigationItem.hidesBackButton = true
+        self.setNavBarBackgroundColor(color : UIColor.px_white())
+        super.loadMPStyles()
     }
+    
     required public init?(coder aDecoder: NSCoder) {
         MercadoPagoContext.clearPaymentKey()
         fatalError("init(coder:) has not been implemented")
@@ -104,11 +106,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
 
         self.extendedLayoutIncludesOpaqueBars = true
         
-        self.setNavBarBackgroundColor(color : UIColor.px_white())
-        loadMPStyles()
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
-        self.hideNavBar()
         self.hideLoading()
      
     }
