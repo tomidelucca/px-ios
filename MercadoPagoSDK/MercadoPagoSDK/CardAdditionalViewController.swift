@@ -192,11 +192,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                 return cardSectionCell
             
             }else{
-                let cellView = viewModel.getCardSectionView()
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
-                cardSectionCell.loadCellView(View: nil)
-                cardSectionCell.selectionStyle = .none
-                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0])
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 return cardSectionCell
             }
@@ -272,7 +268,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                         if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
                             card.fadeCard()
                         } else{
-                            card.cellView.alpha = 44/tableView.contentOffset.y;
+                            card.containerView.alpha = 44/tableView.contentOffset.y;
                         }
                     }
                 }

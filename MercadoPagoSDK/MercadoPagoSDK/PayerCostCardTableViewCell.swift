@@ -11,31 +11,31 @@ import UIKit
 class PayerCostCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cell: UIView!
-    var cellView: UIView!
+    var containerView: UIView!
     var cardFront : CardFrontView!
     
     func loadCellView(View: UIView?){
         
-        if var cardView = View{
-            self.cellView = UIView()
+        if var content = View{
+            self.containerView = UIView()
             
-            let cellViewHeight = getCardHeight()
-            let cellViewWidht = getCardWidth()
-            let xMargin = (UIScreen.main.bounds.size.width  - cellViewWidht) / 2
-            let yMargin = (UIScreen.main.bounds.size.width*0.5 - cellViewHeight ) / 2
+            let containerHeight = getCardHeight()
+            let containerWidht = getCardWidth()
+            let xMargin = (UIScreen.main.bounds.size.width  - containerWidht) / 2
+            let yMargin = (UIScreen.main.bounds.size.width*0.5 - containerHeight ) / 2
             
-            let rectBackground = CGRect(x: xMargin, y: yMargin, width: cellViewWidht, height: cellViewHeight)
-            let rect = CGRect(x: 0, y: 0, width: cellViewWidht, height: cellViewHeight)
-            self.cellView.frame = rectBackground
+            let rectBackground = CGRect(x: xMargin, y: yMargin, width: containerWidht, height: containerHeight)
+            let rect = CGRect(x: 0, y: 0, width: containerWidht, height: containerHeight)
             
-            self.cellView.layer.cornerRadius = 8
-            self.cellView.layer.masksToBounds = true
-            self.addSubview(self.cellView)
+            self.containerView.frame = rectBackground
+            self.containerView.layer.cornerRadius = 8
+            self.containerView.layer.masksToBounds = true
+            self.addSubview(self.containerView)
             
-            cardView = UIView(frame: rect)
-            cardView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            content = UIView(frame: rect)
+            content.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            cellView.addSubview(cardView)
+            containerView.addSubview(content)
             self.cell.backgroundColor = UIColor.primaryColor()
         }
         
@@ -45,7 +45,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
         if let paymentMethod = paymentMethod{
             
             self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
-            self.cellView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
+            self.containerView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
             self.cardFront?.cardLogo.alpha = 1
             let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
             if let token = token{
@@ -62,13 +62,13 @@ class PayerCostCardTableViewCell: UITableViewCell {
     }
     func fadeCard(){
         UIView.animate(withDuration: 0.80) {
-            self.cellView?.alpha = 0
+            self.containerView?.alpha = 0
         }
         
     }
     func showCard(){
         UIView.animate(withDuration: 1.50) {
-            self.cellView?.alpha = 1
+            self.containerView?.alpha = 1
         }
         
     }

@@ -151,7 +151,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: IdentificationCardView(), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
+        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
         //return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, cell: "PayerCostRowTableViewCell", showCard: true, showTotal: false, dataSource: pms)
         //return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: installment, issuersList: nil, callback: nil)
     }
