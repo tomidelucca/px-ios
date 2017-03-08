@@ -285,7 +285,7 @@ open class MercadoPagoCheckout: NSObject {
 	func cleanNavigationStack () {
 		
 		// TODO WALLET
-        var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
         }
         self.navigationController.viewControllers = newNavigationStack;
         
