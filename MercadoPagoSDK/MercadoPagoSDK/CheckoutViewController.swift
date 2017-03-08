@@ -49,9 +49,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     override open func viewDidLoad() {
-
         super.viewDidLoad()
-        
     }
     
     var paymentEnabled = true
@@ -61,6 +59,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navigationItem.rightBarButtonItem = nil
         self.navBarTextColor = UIColor.primaryColor()
+        
+        self.displayBackButton()
+        self.navigationItem.leftBarButtonItem!.action = #selector(CheckoutViewController.exitCheckoutFlow)
         
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
@@ -93,11 +94,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
                 
-            } else {
-                self.displayBackButton()
-                self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
-             //   self.loadGroupsAndStartPaymentVault(true)
-            }
+            } 
         }
 
         self.extendedLayoutIncludesOpaqueBars = true
@@ -107,7 +104,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
         self.hideNavBar()
-        self.hideBackButton()
         self.hideLoading()
      
     }
