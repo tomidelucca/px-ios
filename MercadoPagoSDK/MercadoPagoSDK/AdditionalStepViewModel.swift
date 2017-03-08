@@ -21,8 +21,9 @@ open class AdditionalStepViewModel : NSObject{
 
     public var screenName: String
     public var screenTitle: String
-    open var amount: Double?
+    open var amount: Double
     open var token: CardInformationForm?
+    open var paymentMethods: [PaymentMethod]
     open var cardSectionView: UIView?
     open var cellName: String!
     open var cardSectionVisible: Bool
@@ -32,11 +33,12 @@ open class AdditionalStepViewModel : NSObject{
     open var callback: ((_ result: NSObject?) -> Void)?
 
     
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: UIView? = nil, totalRowVisible: Bool, amount: Double? = nil, token: CardInformationForm? , dataSource: [Cellable] ){
+    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: UIView? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
         self.screenName = screenName
         self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
+        self.paymentMethods = paymentMethods
         self.cardSectionVisible = cardSectionVisible
         self.cardSectionView = cardSectionView
         self.totalRowVisible = totalRowVisible

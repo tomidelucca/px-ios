@@ -12,10 +12,11 @@ open class Issuer : NSObject, Cellable {
     open var _id : NSNumber?
     open var name : String?
     
-    open func getCell(width: Double, y: Float) -> UITableViewCell {
-        let cell = IssuerRowTableViewCell()
-        cell.fillCell(issuer: self, bundle: MercadoPago.getBundle()!)
-        cell.addSeparatorLineToTop(width: width, y: y)
+    open func getCell() -> UITableViewCell {
+        let bundle = MercadoPago.getBundle()
+        let cell: IssuerRowTableViewCell = bundle!.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as! IssuerRowTableViewCell
+        cell.fillCell(issuer: self, bundle: bundle!)
+        cell.addSeparatorLineToTop(width: Double(cell.contentView.frame.width), y: Float(cell.contentView.bounds.maxY))
         cell.selectionStyle = .none
         
         return cell

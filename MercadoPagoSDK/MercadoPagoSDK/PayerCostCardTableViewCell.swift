@@ -15,9 +15,8 @@ class PayerCostCardTableViewCell: UITableViewCell {
     var cardFront : CardFrontView!
     
     func loadCellView(View: UIView?){
-        var view = View
         
-        if let cardView = view{
+        if var cardView = View{
             self.cellView = UIView()
             
             let cellViewHeight = getCardHeight()
@@ -33,15 +32,15 @@ class PayerCostCardTableViewCell: UITableViewCell {
             self.cellView.layer.masksToBounds = true
             self.addSubview(self.cellView)
             
-            view = UIView(frame: rect)
-            view?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            cardView = UIView(frame: rect)
+            cardView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
-            cellView.addSubview(view!)
+            cellView.addSubview(cardView)
             self.cell.backgroundColor = UIColor.primaryColor()
         }
         
     }
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?, cardInformation: CardInformation?) {
+    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
         
         if let paymentMethod = paymentMethod{
             
@@ -53,9 +52,6 @@ class PayerCostCardTableViewCell: UITableViewCell {
           //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
                 let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
                 cardFront?.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
-            } else if let cardInformation = cardInformation {
-                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
-                cardFront?.cardNumber.text = mask.textMasked(cardInformation.getCardLastForDigits())
             }
             
             cardFront?.cardName.text = ""

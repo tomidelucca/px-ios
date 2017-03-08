@@ -126,7 +126,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = paymentMethods!
         }
 
-        return CardTypeAdditionalStepViewModel(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        return CardTypeAdditionalStepViewModel(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
         //return CardTypeAdditionalStepViewModel(token: nil, cell: "CardTypeTableViewCell", showCard: true, showTotal: false, dataSource: pms)
         //return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList: nil, callback: nil)
     }
@@ -138,7 +138,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
         
-        return IssuerAdditionalStepViewModel(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        return IssuerAdditionalStepViewModel(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
         //return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: nil, cell: "IssuerRowTableViewCell", dataSource: self.issuers)
         //return AdditionalStepViewModel(amount: self.getAmount(), token: nil, cell: "IssuerRowTableViewCell", showCard: true, showTotal: false, dataSource: pms)
         //return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList: self.issuers, callback: nil)
@@ -151,7 +151,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, dataSource: pms)
+        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: IdentificationCardView(), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
         //return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, cell: "PayerCostRowTableViewCell", showCard: true, showTotal: false, dataSource: pms)
         //return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: installment, issuersList: nil, callback: nil)
     }

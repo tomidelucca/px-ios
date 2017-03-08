@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Cellable{
     
-    func getCell(width: Double, y: Float)-> UITableViewCell
+    func getCell()-> UITableViewCell
 
 }
 

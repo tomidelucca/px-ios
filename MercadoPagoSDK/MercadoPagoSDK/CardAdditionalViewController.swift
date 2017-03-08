@@ -54,6 +54,9 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
 //        self.tableView.register(bodyCell, forCellReuseIdentifier: "bodyCell")
 
         
+        let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
+        self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
+
         
 //        let rowInstallmentNib = UINib(nibName: "PayerCostRowTableViewCell", bundle: self.bundle)
 //        self.tableView.register(rowInstallmentNib, forCellReuseIdentifier: "rowInstallmentNib")
@@ -61,8 +64,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
 //        self.tableView.register(rowIssuerNib, forCellReuseIdentifier: "rowIssuerNib")
 //        let cardTypeNib = UINib(nibName: "CardTypeTableViewCell", bundle: self.bundle)
 //        self.tableView.register(cardTypeNib, forCellReuseIdentifier: "cardTypeNib")
-//        let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
-//        self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
     }
     
     override open func didReceiveMemoryWarning() {
@@ -185,86 +186,48 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
                 cardSectionCell.loadCellView(View: cellView)
                 cardSectionCell.selectionStyle = .none
-                //cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], cardInformation: self.viewModel.cardInformation)
+                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0])
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 
+                return cardSectionCell
+            
+            }else{
+                let cellView = viewModel.getCardSectionView()
+                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
+                cardSectionCell.loadCellView(View: nil)
+                cardSectionCell.selectionStyle = .none
+                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0])
+                cardSectionCell.backgroundColor = UIColor.primaryColor()
                 return cardSectionCell
             }
             
             
         } else {
-   
-            let cellWidth = tableView.cellForRow(at: indexPath)?.contentView.frame.width
-            let cellMaxY = tableView.cellForRow(at: indexPath)?.contentView.bounds.maxY
-            if cellWidth != nil && cellMaxY != nil{
-                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth!), y: Float(cellMaxY!))
+            
+//            if cellWidth != nil && cellMaxY != nil{
+//                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth!), y: Float(cellMaxY!))
+//                return cell
+//            }
+
+            if self.viewModel.showTotalRow(){
+                if indexPath.row == 0 {
+                    let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
+                    totalCell.fillCell(total: self.viewModel.amount)
+                    return totalCell as UITableViewCell
+                } else{
+                    let cell = self.viewModel.dataSource[indexPath.row-1].getCell()
+                    //let cell = self.viewModel.getCell(dataSource: dataSource[indexPath.row-1])
+                    return cell
+                }
+            } else{
+            
+                let cell = self.viewModel.dataSource[indexPath.row].getCell()
                 return cell
             }
-
-         
-//            if self.viewModel.showTotalRow(){
-//                if indexPath.row == 0 {
-//                    let totalCell = tableView.dequeueReusableCell(withIdentifier: "bodyCell", for: indexPath as IndexPath) as! AdditionalStepCellProtocol
-//                    totalCell.fillCell(self.viewModel.amount)
-//                    return totalCell as! UITableViewCell
-//                } else{
-//                    let bodyCell = tableView.dequeueReusableCell(withIdentifier: "bodyCell", for: indexPath as IndexPath) as! AdditionalStepCellProtocol
-//                    bodyCell.fillCell(self.viewModel.dataSource[indexPath.row-1])
-//                    return bodyCell as! UITableViewCell
-//                }
-//            } else{
-            
-//                let cellWidth = tableView.cellForRow(at: indexPath)?.contentView.frame.width
-//                let cellMaxY = tableView.cellForRow(at: indexPath)?.contentView.bounds.maxY
-//                if cellWidth != nil, cellMaxY != nil{
-//                    let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth!), y: Float(cellMaxY!))
-//                    return cell
-//                }
-//                let totalCell = tableView.dequeueReusableCell(withIdentifier: "bodyCell", for: indexPath as IndexPath) as! AdditionalStepCellProtocol
-//                totalCell.fillCell(self.viewModel.amount)
-//                return totalCell as! UITableViewCell
-            
-//                let bodyCell = tableView.dequeueReusableCell(withIdentifier: "bodyCell", for: indexPath as IndexPath) as! AdditionalStepCellProtocol
-//                bodyCell.fillCell(self.viewModel.dataSource[indexPath.row])
-//                return bodyCell as! UITableViewCell
-            //}
-            
-            
-            
-            
-//            if self.viewModel.hasPayerCost(){
-//                if indexPath.row == 0 {
-//                    let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath) as! TotalPayerCostRowTableViewCell
-//                    totalCell.fillCell(total: self.viewModel.amount)
-//                    totalCell.addSeparatorLineToTop(width: Double(totalCell.contentView.frame.width), y:Float(totalCell.contentView.bounds.maxY))
-//                    return totalCell
-//                }
-//                let payerCost : PayerCost = self.viewModel.payerCosts![indexPath.row - 1]
-//                let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath) as! PayerCostRowTableViewCell
-//                installmentCell.fillCell(payerCost: payerCost)
-//                installmentCell.selectionStyle = .none
-//                installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width), y:Float(installmentCell.contentView.bounds.maxY))
-//                
-//                return installmentCell
-//                
-//            } else  if self.viewModel.hasPaymentMethod(){
-//                let issuer : Issuer = self.viewModel.issuersList![indexPath.row]
-//                let issuerCell = tableView.dequeueReusableCell(withIdentifier: "rowIssuerNib", for: indexPath) as! IssuerRowTableViewCell
-//                issuerCell.fillCell(issuer: issuer, bundle: self.bundle!)
-//                issuerCell.selectionStyle = .none
-//                issuerCell.addSeparatorLineToTop(width: Double(issuerCell.contentView.frame.width), y:Float(issuerCell.contentView.bounds.maxY))
-//                
-//                return issuerCell
-//            } else{
-//                let cardType = tableView.dequeueReusableCell(withIdentifier: "cardTypeNib", for: indexPath) as! CardTypeTableViewCell
-//                cardType.setPaymentMethod(paymentMethod: self.viewModel.paymentMethods[indexPath.row])
-//                cardType.addSeparatorLineToTop(width: Double(cardType.contentView.frame.width), y:Float(cardType.contentView.bounds.maxY))
-//                return cardType
-//            }
         }
-        let cell: UITableViewCell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(20.0), y: Float(12.0))
-        return cell
     }
+    
+    
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
