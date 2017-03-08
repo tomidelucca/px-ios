@@ -274,13 +274,8 @@ open class MercadoPagoCheckout: NSObject {
                     self.executeNextStep()
                 }
             })
-            
-            
-            self.presentLoading()
-            self.cleanNavigationStack()
             self.navigationController.pushViewController(checkoutVC, animated: true);
-            self.dismissLoading(animated: false)
-
+            self.cleanNavigationStack()
         } else {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
@@ -290,7 +285,7 @@ open class MercadoPagoCheckout: NSObject {
 	func cleanNavigationStack () {
 		
 		// TODO WALLET
-        var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self);
+        var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
         }
         self.navigationController.viewControllers = newNavigationStack;
         

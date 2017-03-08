@@ -43,6 +43,9 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
     
+    override func loadMPStyles(){
+          self.navigationItem.hidesBackButton = true
+    }
     required public init?(coder aDecoder: NSCoder) {
         MercadoPagoContext.clearPaymentKey()
         fatalError("init(coder:) has not been implemented")
