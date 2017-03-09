@@ -511,6 +511,12 @@
 		FCBF134A1E7204C30092B756 /* FinancialInstitutionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF13471E7204C30092B756 /* FinancialInstitutionTableViewCell.swift */; };
 		FCBF134B1E7204C30092B756 /* FinancialInstitutionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13481E7204C30092B756 /* FinancialInstitutionTableViewCell.xib */; };
 		FCBF134C1E7204C30092B756 /* FinancialInstitutionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13481E7204C30092B756 /* FinancialInstitutionTableViewCell.xib */; };
+		FCBF134E1E7208900092B756 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF134D1E7208900092B756 /* EntityType.swift */; };
+		FCBF134F1E7208900092B756 /* EntityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF134D1E7208900092B756 /* EntityType.swift */; };
+		FCBF13521E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */; };
+		FCBF13531E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */; };
+		FCBF13541E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
+		FCBF13551E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -846,6 +852,9 @@
 		FCBF13411E7201570092B756 /* FinancialInstituion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinancialInstituion.swift; sourceTree = "<group>"; };
 		FCBF13471E7204C30092B756 /* FinancialInstitutionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinancialInstitutionTableViewCell.swift; sourceTree = "<group>"; };
 		FCBF13481E7204C30092B756 /* FinancialInstitutionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FinancialInstitutionTableViewCell.xib; sourceTree = "<group>"; };
+		FCBF134D1E7208900092B756 /* EntityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityType.swift; sourceTree = "<group>"; };
+		FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTypeTableViewCell.swift; sourceTree = "<group>"; };
+		FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntityTypeTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1206,6 +1215,7 @@
 				0F9883461AD2AB6000F750F0 /* Installment.swift */,
 				0F9883471AD2AB6000F750F0 /* Issuer.swift */,
 				FCBF13411E7201570092B756 /* FinancialInstituion.swift */,
+				FCBF134D1E7208900092B756 /* EntityType.swift */,
 				0F9883481AD2AB6000F750F0 /* Item.swift */,
 				0F98834A1AD2AB6000F750F0 /* Order.swift */,
 				0F98834B1AD2AB6000F750F0 /* Payer.swift */,
@@ -1304,6 +1314,8 @@
 				4BFD451E1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib */,
 				4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */,
 				4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */,
+				FCBF13501E720A6E0092B756 /* EntityTypeTableViewCell.swift */,
+				FCBF13511E720A6E0092B756 /* EntityTypeTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1817,6 +1829,7 @@
 				4BAE1D4B1DCBE8FF0000ED5C /* RejectedTableViewCell.xib in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
+				FCBF13541E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */,
 				15DA7E601CD92C670068896E /* IdentificationViewController.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				4BAA55FC1DB0241700501061 /* PayerCostTitleTableViewCell.xib in Resources */,
@@ -1865,6 +1878,7 @@
 				15DA7E611CD92C670068896E /* IdentificationViewController.xib in Resources */,
 				157704B81DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */,
 				15E7D6E81C87164E00101872 /* MockedData.plist in Resources */,
+				FCBF13551E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1973,6 +1987,7 @@
 				76062BCA1C4D1F450067A14B /* PaymentMethodSearchService.swift in Sources */,
 				766012E71CEBA19700897F9D /* ErrorViewController.swift in Sources */,
 				0F9883671AD2AB6000F750F0 /* Cause.swift in Sources */,
+				FCBF134E1E7208900092B756 /* EntityType.swift in Sources */,
 				76062BC71C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
 				15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */,
 				0F9883B51AD2AD0C00F750F0 /* Regex.swift in Sources */,
@@ -2025,6 +2040,7 @@
 				0F9883AF1AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
+				FCBF13521E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
 				0F9883911AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
 				15DA7E5E1CD92C670068896E /* IdentificationViewController.swift in Sources */,
@@ -2214,6 +2230,7 @@
 				0F9883661AD2AB6000F750F0 /* CardToken.swift in Sources */,
 				0F9883841AD2AB6000F750F0 /* Payer.swift in Sources */,
 				4B277F691E38F00D00AF5DF8 /* ServicePreferenceTest.swift in Sources */,
+				FCBF134F1E7208900092B756 /* EntityType.swift in Sources */,
 				76EC48061C862B000086FA53 /* InstructionTest.swift in Sources */,
 				0F98836E1AD2AB6000F750F0 /* Device.swift in Sources */,
 				767C9CD61E266C0600BB4662 /* MPPaymentTest.swift in Sources */,
@@ -2252,6 +2269,7 @@
 				15A7B18E1C88BFDF007D0C4E /* CardTest.swift in Sources */,
 				76EC47D41C85E82B0086FA53 /* CustomerTest.swift in Sources */,
 				76EC480A1C862B2D0086FA53 /* InstructionActionTest.swift in Sources */,
+				FCBF13531E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */,
 				7622E3321DF5F04200490C4E /* ConfirmEmailTableViewCell.swift in Sources */,
 				0F98837A1AD2AB6000F750F0 /* Installment.swift in Sources */,
 				76EC47F01C8616230086FA53 /* PhoneTest.swift in Sources */,

@@ -98,6 +98,9 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 }
 
+class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
+}
+
 
 
 
