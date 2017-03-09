@@ -13,19 +13,10 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     @IBOutlet weak var tableView: UITableView!
     
     var bundle : Bundle? = MercadoPago.getBundle()
-//    let viewModel : CardAdditionalStepViewModel!
     let viewModel : AdditionalStepViewModel!
     
     
     override open var screenName : String { get{
-//        if viewModel.hasPayerCost() {
-//            return "PAYER_COST"
-//        } else if viewModel.hasPaymentMethod(){
-//            return "ISSUER"
-//        } else {
-//            return "CARD_TYPE"
-//        }
-
         return viewModel.getScreenName()
         } }
     
@@ -50,20 +41,8 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "PayerCostCardTableViewCell", bundle: self.bundle)
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
-//        let bodyCell = UINib(nibName: viewModel.getCellName(), bundle: self.bundle)
-//        self.tableView.register(bodyCell, forCellReuseIdentifier: "bodyCell")
-
-        
         let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
         self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
-
-        
-//        let rowInstallmentNib = UINib(nibName: "PayerCostRowTableViewCell", bundle: self.bundle)
-//        self.tableView.register(rowInstallmentNib, forCellReuseIdentifier: "rowInstallmentNib")
-//        let rowIssuerNib = UINib(nibName: "IssuerRowTableViewCell", bundle: self.bundle)
-//        self.tableView.register(rowIssuerNib, forCellReuseIdentifier: "rowIssuerNib")
-//        let cardTypeNib = UINib(nibName: "CardTypeTableViewCell", bundle: self.bundle)
-//        self.tableView.register(cardTypeNib, forCellReuseIdentifier: "cardTypeNib")
     }
     
     override open func didReceiveMemoryWarning() {
@@ -107,24 +86,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         self.viewModel.callback = callback
         super.init(nibName: "CardAdditionalViewController", bundle: self.bundle)
     }
-    
-//    public init(viewModel : CardAdditionalStepViewModel, collectPayerCostCallback: @escaping ((_ payerCost: PayerCost?)->Void) ) {
-//        self.viewModel = viewModel
-//        self.viewModel.callbackPayerCost = collectPayerCostCallback
-//        super.init(nibName: "CardAdditionalViewController", bundle: self.bundle)
-//    }
-//    
-//    public init(viewModel : CardAdditionalStepViewModel, collectPaymentMethodCallback: @escaping ((_ paymentMethod: PaymentMethod?)->Void) ) {
-//        self.viewModel = viewModel
-//        self.viewModel.callbackPaymentMethod = collectPaymentMethodCallback
-//        super.init(nibName: "CardAdditionalViewController", bundle: self.bundle)
-//    }
-//    
-//    public init(viewModel : CardAdditionalStepViewModel,  collectIssuerCallback: @escaping ((_ issuer: Issuer?)->Void) ) {
-//        self.viewModel = viewModel
-//        self.viewModel.callbackIssuer = collectIssuerCallback
-//        super.init(nibName: "CardAdditionalViewController", bundle: self.bundle)
-//    }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -200,11 +161,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
             
         } else {
             
-//            if cellWidth != nil && cellMaxY != nil{
-//                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth!), y: Float(cellMaxY!))
-//                return cell
-//            }
-
             if self.viewModel.showTotalRow(){
                 if indexPath.row == 0 {
                     let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
@@ -212,7 +168,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                     return totalCell as UITableViewCell
                 } else{
                     let cell = self.viewModel.dataSource[indexPath.row-1].getCell()
-                    //let cell = self.viewModel.getCell(dataSource: dataSource[indexPath.row-1])
                     return cell
                 }
             } else{
@@ -227,8 +182,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
-        
         if (indexPath.section == 2){
             if self.viewModel.showTotalRow(){
                 if indexPath.row != 0{
@@ -238,23 +191,9 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                 }
             } else{
                 let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
+                self.showLoading()
                 self.viewModel.callback!(callbackData)
             }
-//            if self.viewModel.hasPayerCost(){
-//                if indexPath.row != 0 {
-//                    let payerCost : PayerCost = self.viewModel.payerCosts![(indexPath as NSIndexPath).row - 1]
-//                    self.showLoading()
-//                    self.viewModel.callbackPayerCost!(payerCost)
-//                }
-//            } else if self.viewModel.hasPaymentMethod(){
-//                let issuer : Issuer = self.viewModel.issuersList![(indexPath as NSIndexPath).row]
-//                self.showLoading()
-//                self.viewModel.callbackIssuer!(issuer)
-//            } else {
-//                let paymentMethod : PaymentMethod = self.viewModel.paymentMethods[(indexPath as NSIndexPath).row]
-//                self.showLoading()
-//                self.viewModel.callbackPaymentMethod!(paymentMethod)
-//            }
         }
     }
     
@@ -284,89 +223,6 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     override open func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.hideLoading()
-    }
-    
-}
-open class CardAdditionalStepViewModel : NSObject {
-    
-    var payerCosts : [PayerCost]?
-    var installment : Installment?
-    var paymentMethods : [PaymentMethod]
-    var token : CardInformationForm?
-    var issuer: Issuer?
-    var amount: Double!
-    var paymentPreference: PaymentPreference?
-    var issuersList:[Issuer]?
-    var cardInformation : CardInformation?
-    var callback : ((_ result: NSObject?) -> Void)?
-    
-    var callbackIssuer : ((_ issuer: Issuer?) -> Void)?
-    var callbackPayerCost : ((_ payerCost: PayerCost?) -> Void)?
-    var callbackPaymentMethod : ((_ paymentMethod: PaymentMethod?) -> Void)?
-    
-    init(cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod] ,issuer : Issuer?, token : CardInformationForm?, amount: Double?, paymentPreference: PaymentPreference?,installment: Installment?, issuersList: [Issuer]?, callback: ((_ payerCost: NSObject?)->Void)? ){
-        self.paymentMethods = paymentMethods
-        self.payerCosts = installment?.payerCosts
-        self.installment = installment
-        self.token = token
-        self.amount = amount
-        self.issuer = issuer
-        self.paymentPreference = paymentPreference
-        self.cardInformation = cardInformation
-        self.issuersList = issuersList
-        self.callback = callback
-    }
-    
-    func numberOfCellsInBody() -> Int{
-        if hasPayerCost() {
-            if let maxInstallmentsAccepted = self.installment?.numberOfPayerCostToShow(self.paymentPreference?.maxAcceptedInstallments) {
-                return maxInstallmentsAccepted + 1
-            }
-            return  0
-            
-        } else if hasPaymentMethod() {
-            return (issuersList?.count) ?? 0
-            
-        } else {
-            return paymentMethods.count
-        }
-    }
-    
-    func getTitle() -> String{
-        if hasPayerCost() {
-            return "¿En cuántas cuotas?".localized
-        } else if hasPaymentMethod(){
-            return "¿Quién emitió tu tarjeta?".localized
-        } else {
-            return "¿Qué tipo de tarjeta es?".localized
-        }
-    }
-    func hasPayerCost()-> Bool{
-        if (self.cardInformation != nil) {
-            return !self.cardInformation!.isIssuerRequired()
-        }
-        return (issuer != nil || (token != nil && !token!.isIssuerRequired()))
-    }
-    func hasPaymentMethod()->Bool{
-        if (paymentMethods.count)>1{
-            return false
-        } else {
-            return true
-        }
-    }
-    func getCardCellHeight() -> CGFloat {
-        return UIScreen.main.bounds.width*0.50
-    }
-    func getRowCellHeight(row: Int) -> CGFloat {
-        if hasPayerCost() {
-            if row == 0 {
-                return 42
-            } else {
-                return 60
-            }
-        } else {
-            return 80
-        }
     }
     
 }

@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 
-protocol AdditionalStepCellProtocol {
-    
-    func fillCell(_ data: Any)
-    
-}
-
 open class AdditionalStepViewModel : NSObject{
     
     var bundle : Bundle? = MercadoPago.getBundle()

@@ -16,7 +16,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
     
     func loadCellView(View: UIView?){
         
-        if var content = View{
+        if let content = View{
             self.containerView = UIView()
             
             let containerHeight = getCardHeight()
