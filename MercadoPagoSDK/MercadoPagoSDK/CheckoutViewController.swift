@@ -22,6 +22,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     var viewModel : CheckoutViewModel!
     override open var screenName : String { get{ return "REVIEW_AND_CONFIRM" } }
     fileprivate var reviewAndConfirmContent = Set<String>()
+    private var statusBarView : UIView?
     
     fileprivate var recover = false
     fileprivate var auth = false
@@ -53,8 +54,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         fatalError("init(coder:) has not been implemented")
     }
     
-    override open func viewDidLoad() {
-        super.viewDidLoad()
+    override func showNavBar() {
+        
+        super.showNavBar()
+        
+        if self.statusBarView == nil {
+            self.displayStatusBar()
+        }
     }
     
     var paymentEnabled = true
@@ -74,12 +80,18 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.checkoutTable.delegate = self
         
         self.registerAllCells()
-     
+        
+        self.displayStatusBar()
+        
+        self.hideNavBar()
     }
 
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        self.showLoading()
+        self.hideNavBar()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
@@ -105,7 +117,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
-        self.hideNavBar()
+ 
+        
+        self.hideLoading()
+        
      
     }
 
@@ -207,6 +222,16 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideNavBar()
         self.hideBackButton()
         self.hideTimer()
+        
+        // Add status bar
+        self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
+        self.statusBarView!.backgroundColor = UIColor.lightGray
+        self.statusBarView!.tag = 1
+        
+        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
+        
+        self.showLoading()
+
         self.callbackConfirm(self.viewModel.paymentData)
     }
  
@@ -411,6 +436,37 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     public func invokeCallbackWithPaymentData(rowCallback : ((PaymentData) -> Void)) {
         rowCallback(self.viewModel.paymentData)
     }
+    
+    open override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        removeStatusBar()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeStatusBar()
+    }
+    
+    private func removeStatusBar(){
+        if self.navigationController != nil {
+            for v in (self.navigationController!.navigationBar.subviews) {
+                if (v.tag != 0) {
+                    v.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
+    private func displayStatusBar(){
+    
+        self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
+        self.statusBarView!.backgroundColor = UIColor.lightGray
+        self.statusBarView!.tag = 1
+        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
+    
+    }
+    
+    
 }
 
 open class CheckoutViewModel {
@@ -627,6 +683,8 @@ open class CheckoutViewModel {
     func isPaymentMethodCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 3
     }
+    
+    
     
 
 }
