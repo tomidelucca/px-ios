@@ -95,6 +95,9 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 }
 
+class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
+}
+
 
 
 
