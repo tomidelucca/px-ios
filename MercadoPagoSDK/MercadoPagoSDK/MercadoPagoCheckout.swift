@@ -268,9 +268,8 @@ open class MercadoPagoCheckout: NSObject {
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
                 if paymentData.paymentMethod == nil && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
                     MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
-                } else {
-                    self.executeNextStep()
                 }
+                self.executeNextStep()
             }, callbackCancel : { Void -> Void in
                 self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
                 self.executeNextStep()
