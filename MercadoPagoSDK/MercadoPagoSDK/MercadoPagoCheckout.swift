@@ -56,6 +56,10 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
     }
     
+    open static func setChangePaymentMethodCallback(changePaymentMethodCallback : @escaping (Void) -> Void) {
+        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
+    }
+    
     open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
         MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
     }
@@ -262,7 +266,11 @@ open class MercadoPagoCheckout: NSObject {
         if self.viewModel.reviewAndConfirm {
             let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: {(paymentData : PaymentData) -> Void in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
-                self.executeNextStep()
+                if paymentData.paymentMethod == nil && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
+                    MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
+                } else {
+                    self.executeNextStep()
+                }
             }, callbackCancel : { Void -> Void in
                 self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
                 self.executeNextStep()
