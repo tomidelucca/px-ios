@@ -32,7 +32,7 @@ class PayerCostCardTableViewCell: UITableViewCell {
             self.containerView.layer.masksToBounds = true
             self.addSubview(self.containerView)
             
-            content = UIView(frame: rect)
+            content.frame = rect
             content.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             
             containerView.addSubview(content)
@@ -40,24 +40,13 @@ class PayerCostCardTableViewCell: UITableViewCell {
         }
         
     }
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?) {
+    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?, View: Updatable?) {
         
-        if let paymentMethod = paymentMethod{
-            
-            self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
-            self.containerView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
-            self.cardFront?.cardLogo.alpha = 1
-            let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
-            if let token = token{
-          //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
-                let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
-                cardFront?.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
+        if let content = View{
+            if let paymentMethod = paymentMethod{
+                content.updateCard(token: token, paymentMethod: paymentMethod)
+                self.containerView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
             }
-            
-            cardFront?.cardName.text = ""
-            cardFront?.cardExpirationDate.text = ""
-            cardFront?.cardNumber.alpha = 0.8
-            cardFront?.cardNumber.textColor =  fontColor
         }
     }
     func fadeCard(){

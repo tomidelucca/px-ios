@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@IBDesignable open class CardFrontView : UIView {
+@IBDesignable open class CardFrontView : UIView, Updatable {
   var view:UIView!;
     
     @IBOutlet weak var cardLogo: UIImageView!
@@ -28,6 +28,25 @@ import UIKit
         
         loadViewFromNib ()
     }
+    
+    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
+        
+        self.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
+        self.cardLogo.alpha = 1
+        let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
+        if let token = token{
+            //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
+            let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
+            self.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
+        }
+        
+        cardName.text = ""
+        cardExpirationDate.text = ""
+        cardNumber.alpha = 0.8
+        cardNumber.textColor =  fontColor
+        
+    }
+    
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)

@@ -184,9 +184,9 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                 let cellView = viewModel.getCardSectionView()
                 
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
-                cardSectionCell.loadCellView(View: cellView)
+                cardSectionCell.loadCellView(View: cellView as! UIView?)
                 cardSectionCell.selectionStyle = .none
-                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0])
+                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], View: cellView)
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 
                 return cardSectionCell
