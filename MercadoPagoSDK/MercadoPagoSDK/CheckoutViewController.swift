@@ -104,11 +104,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                     recover = false
                     //self.startRecoverCard()
                 }
-                if (auth){
+                if (auth) {
                     auth = false
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
-                
             } 
         }
 
@@ -444,6 +443,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             for v in (self.navigationController!.navigationBar.subviews) {
                 if (v.tag != 0) {
                     v.removeFromSuperview()
+
                 }
             }
         }
@@ -452,10 +452,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func displayStatusBar(){
     
         self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
-        self.statusBarView!.backgroundColor = UIColor.lightGray
-        self.statusBarView!.tag = 1
-        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
+        self.statusBarView!.backgroundColor = UIColor.px_grayLines()
     
+        
+        self.statusBarView!.tag = 1
+        
+        self.navigationController!.navigationBar.barStyle = .blackTranslucent
+        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
     }
     
     
