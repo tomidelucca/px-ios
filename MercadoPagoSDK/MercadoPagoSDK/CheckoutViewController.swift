@@ -43,15 +43,18 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
     
+    override func loadMPStyles(){
+        self.setNavBarBackgroundColor(color : UIColor.px_white())
+        super.loadMPStyles()
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         MercadoPagoContext.clearPaymentKey()
         fatalError("init(coder:) has not been implemented")
     }
     
     override open func viewDidLoad() {
-
         super.viewDidLoad()
-        
     }
     
     var paymentEnabled = true
@@ -59,8 +62,13 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         self.navigationItem.rightBarButtonItem = nil
         self.navBarTextColor = UIColor.primaryColor()
+        
+        self.displayBackButton()
+        self.navigationItem.leftBarButtonItem!.action = #selector(CheckoutViewController.exitCheckoutFlow)
         
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
@@ -93,21 +101,14 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
                 
-            } else {
-                self.displayBackButton()
-                self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
-             //   self.loadGroupsAndStartPaymentVault(true)
-            }
+            } 
         }
 
         self.extendedLayoutIncludesOpaqueBars = true
         
-        self.setNavBarBackgroundColor(color : UIColor.px_white())
-        loadMPStyles()
         self.navBarTextColor = UIColor.px_blueMercadoPago()
         self.titleCellHeight = 44
         self.hideNavBar()
-        self.hideBackButton()
         self.hideLoading()
      
     }
@@ -313,10 +314,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let customView = customCell.getTableViewCell().contentView
         customCell.setDelegate(delegate: self)
         let frame = customView.frame
-        customView.frame = CGRect(x: (screenWidth - frame.size.width) / 2, y: 0, width: frame.size.width, height: frame.size.height)
+        customView.frame = CGRect(x: (screenWidth - frame.size.width) / 2, y: 0, width: frame.size.width, height: customCell.getHeight())
         let cell = UITableViewCell(style: .default, reuseIdentifier: indentifier)
         cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         cell.contentView.addSubview(customView)
+        cell.selectionStyle = .none
         return cell
     }
     

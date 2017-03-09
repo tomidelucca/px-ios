@@ -28,7 +28,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers[0]
+            viewControllerBase = self.navigationController.viewControllers.last
         }
     }
     
@@ -274,12 +274,12 @@ open class MercadoPagoCheckout: NSObject {
                     self.executeNextStep()
                 }
             })
-            
-            
-            self.presentLoading()
-			self.cleanNavigationStack()
-			self.navigationController.pushViewController(checkoutVC, animated: true);
-            self.dismissLoading(animated: false)
+            self.navigationController.pushViewController(checkoutVC, animated: true);
+            CATransaction.begin();
+            CATransaction.setCompletionBlock {
+                self.cleanNavigationStack()
+            }
+            CATransaction.commit();
         } else {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
@@ -289,9 +289,10 @@ open class MercadoPagoCheckout: NSObject {
 	func cleanNavigationStack () {
 		
 		// TODO WALLET
-		var newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self);
-		}
-		self.navigationController.viewControllers = newNavigationStack;
+        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+        }
+        self.navigationController.viewControllers = newNavigationStack;
+        
 	}
 	
     private func executePaymentDataCallback() {
@@ -371,7 +372,9 @@ open class MercadoPagoCheckout: NSObject {
         })
         // Limpiar error anterior
         MercadoPagoCheckoutViewModel.error = nil
-        self.navigationController.present(errorStep, animated: true, completion: {})
+        self.dismissLoading(completion : {
+            self.navigationController.present(errorStep, animated: true, completion: {})
+        })
         
     }
     
@@ -384,6 +387,7 @@ open class MercadoPagoCheckout: NSObject {
             paymentCallback(payment)
         } else if let callback = MercadoPagoCheckoutViewModel.callback {
             callback()
+            return
         }
         if let rootViewController = viewControllerBase {
             self.navigationController.popToViewController(rootViewController, animated: true)
@@ -397,16 +401,16 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     
-    func presentLoading(animated : Bool = false) {
+    func presentLoading(animated : Bool = false, completion: (() -> Swift.Void)? = nil) {
         if self.currentLoadingView == nil {
             self.createCurrentLoading()
-            self.navigationController.present(self.currentLoadingView!, animated: animated, completion: {})
+            self.navigationController.present(self.currentLoadingView!, animated: animated, completion: completion)
         }
     }
     
-    func dismissLoading(animated : Bool = false) {
+    func dismissLoading(animated : Bool = false, completion: (() -> Swift.Void)? = nil) {
         if self.currentLoadingView != nil {
-            self.currentLoadingView!.dismiss(animated: animated, completion: {})
+            self.currentLoadingView!.dismiss(animated: animated, completion: completion)
             self.currentLoadingView?.view.alpha = 0
             self.currentLoadingView = nil
         }
@@ -433,7 +437,7 @@ open class MercadoPagoCheckout: NSObject {
                                    animated: Bool) {
         viewController.hidesBottomBarWhenPushed = true
         CATransaction.begin()
-        CATransaction.setCompletionBlock { 
+        CATransaction.setCompletionBlock {
             if MercadoPagoCheckout.firstViewControllerPushed {
                 self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
             }
