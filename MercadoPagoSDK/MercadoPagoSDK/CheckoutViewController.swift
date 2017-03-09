@@ -91,7 +91,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.viewDidAppear(animated)
         
         self.showLoading()
-        self.hideNavBar()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
@@ -222,13 +221,6 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideNavBar()
         self.hideBackButton()
         self.hideTimer()
-        
-        // Add status bar
-        self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
-        self.statusBarView!.backgroundColor = UIColor.lightGray
-        self.statusBarView!.tag = 1
-        
-        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
         
         self.showLoading()
 
