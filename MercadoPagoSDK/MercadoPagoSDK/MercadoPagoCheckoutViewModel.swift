@@ -145,7 +145,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
     }
     
     public func securityCodeViewModel() -> SecrurityCodeViewModel {

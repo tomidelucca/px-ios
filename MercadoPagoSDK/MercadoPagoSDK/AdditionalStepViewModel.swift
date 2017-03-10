@@ -106,6 +106,22 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
 }
 
 class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
+    
+    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
+    
+    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+        self.screenName = screenName
+        self.screenTitle = screenTitle
+        self.amount = amount
+        self.token = token
+        self.paymentMethods = paymentMethods
+        self.cardSectionVisible = cardSectionVisible
+        self.cardSectionView = cardSectionView
+        self.totalRowVisible = totalRowVisible
+        self.dataSource = dataSource
+    }
+    
 }
 
 class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
