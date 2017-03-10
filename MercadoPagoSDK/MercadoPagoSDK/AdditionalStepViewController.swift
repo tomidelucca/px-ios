@@ -1,5 +1,5 @@
 //
-//  CardAdditionalStep.swift
+//  AdditionalStepViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/13/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITableViewDelegate,UITableViewDataSource {
+open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -84,7 +84,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     public init(viewModel : AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject?)-> Void)) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
-        super.init(nibName: "CardAdditionalViewController", bundle: self.bundle)
+        super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
