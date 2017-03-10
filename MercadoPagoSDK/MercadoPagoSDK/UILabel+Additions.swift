@@ -33,7 +33,7 @@ extension NSAttributedString {
         return boundingBox.height
     }
     
-    func widthWithConstrainedHeight(height: CGFloat) -> CGFloat {
+    public func widthWithConstrainedHeight(height: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
         
