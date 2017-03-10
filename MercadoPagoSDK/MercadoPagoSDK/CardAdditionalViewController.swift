@@ -39,7 +39,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
     func loadCells() {
         let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
-        let cardNib = UINib(nibName: "PayerCostCardTableViewCell", bundle: self.bundle)
+        let cardNib = UINib(nibName: "AdditionalStepCardTableViewCell", bundle: self.bundle)
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
         let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
         self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
@@ -144,7 +144,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
             if viewModel.showCardSection(){
                 let cellView = viewModel.getCardSectionView()
                 
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
+                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
                 cardSectionCell.loadCellView(View: cellView as! UIView?)
                 cardSectionCell.selectionStyle = .none
                 cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], View: cellView)
@@ -153,7 +153,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
                 return cardSectionCell
             
             }else{
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! PayerCostCardTableViewCell
+                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 return cardSectionCell
             }
@@ -202,7 +202,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         let visibleIndexPaths = tableView.indexPathsForVisibleRows!
         for index in visibleIndexPaths {
             if index.section == 1  {
-                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? PayerCostCardTableViewCell{
+                if let card = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? AdditionalStepCardTableViewCell{
                     if tableView.contentOffset.y > 0{
                         if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
                             card.fadeCard()

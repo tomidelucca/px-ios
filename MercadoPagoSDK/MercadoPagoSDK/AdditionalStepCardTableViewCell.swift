@@ -1,5 +1,5 @@
 //
-//  PayerCostCardTableViewCell.swift
+//  AdditionalStepCardTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/13/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PayerCostCardTableViewCell: UITableViewCell {
+class AdditionalStepCardTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cell: UIView!
     var containerView: UIView!
