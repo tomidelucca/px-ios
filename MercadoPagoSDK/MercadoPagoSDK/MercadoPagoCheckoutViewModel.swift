@@ -127,7 +127,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = paymentMethods!
         }
 
-        return CardTypeAdditionalStepViewModel(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
+        return CardTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
     }
     
     public func issuerViewModel() -> AdditionalStepViewModel{
