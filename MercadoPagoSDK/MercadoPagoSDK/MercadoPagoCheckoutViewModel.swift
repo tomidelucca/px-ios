@@ -136,7 +136,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return IssuerAdditionalStepViewModel(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
+        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
     }
     
     public func payerCostViewModel() -> AdditionalStepViewModel{
