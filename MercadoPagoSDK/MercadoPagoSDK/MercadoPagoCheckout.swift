@@ -28,7 +28,9 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers.last
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+            }
+            viewControllerBase = newNavigationStack.last
         }
     }
     
@@ -54,6 +56,10 @@ open class MercadoPagoCheckout: NSObject {
     
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
         MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
+    }
+    
+    open static func setChangePaymentMethodCallback(changePaymentMethodCallback : @escaping (Void) -> Void) {
+        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
     }
     
     open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
@@ -262,6 +268,9 @@ open class MercadoPagoCheckout: NSObject {
         if self.viewModel.reviewAndConfirm {
             let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: {(paymentData : PaymentData) -> Void in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
+                if paymentData.paymentMethod == nil && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
+                    MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
+                }
                 self.executeNextStep()
             }, callbackCancel : { Void -> Void in
                 self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
@@ -323,6 +332,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
+        self.presentLoading()
         
         var paymentBody : [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
@@ -335,6 +345,7 @@ open class MercadoPagoCheckout: NSObject {
         MerchantServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
+            self.dismissLoading()
         }, failure: {(error : NSError) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createPayment()
