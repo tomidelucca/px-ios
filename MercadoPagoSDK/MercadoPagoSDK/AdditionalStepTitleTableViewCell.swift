@@ -1,5 +1,5 @@
 //
-//  PayerCostTitleTableViewCell.swift
+//  AdditionalStepTitleTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/13/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PayerCostTitleTableViewCell: UITableViewCell, TitleCellScrollable {
+class AdditionalStepTitleTableViewCell: UITableViewCell, TitleCellScrollable {
     
     internal func updateTitleFontSize(toSize: CGFloat) {
         self.title.font = Utils.getFont(size: toSize)

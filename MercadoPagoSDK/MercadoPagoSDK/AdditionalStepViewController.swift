@@ -37,7 +37,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
     
     func loadCells() {
-        let titleNib = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
+        let titleNib = UINib(nibName: "AdditionalStepTitleTableViewCell", bundle: self.bundle)
         self.tableView.register(titleNib, forCellReuseIdentifier: "titleNib")
         let cardNib = UINib(nibName: "AdditionalStepCardTableViewCell", bundle: self.bundle)
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
@@ -132,7 +132,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         
         if (indexPath.section == 0){
             
-            let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! PayerCostTitleTableViewCell
+            let titleCell = tableView.dequeueReusableCell(withIdentifier: "titleNib", for: indexPath as IndexPath) as! AdditionalStepTitleTableViewCell
             titleCell.selectionStyle = .none
             titleCell.setTitle(string: self.getNavigationBarTitle())
             titleCell.backgroundColor = UIColor.primaryColor()
