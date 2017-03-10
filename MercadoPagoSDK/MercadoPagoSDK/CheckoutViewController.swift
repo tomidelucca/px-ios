@@ -82,8 +82,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.registerAllCells()
         
         self.displayStatusBar()
+
         
-        self.hideNavBar()
     }
 
     
@@ -91,6 +91,12 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         super.viewDidAppear(animated)
         
         self.showLoading()
+        
+        
+        self.titleCellHeight = 44
+        
+        
+        self.hideNavBar()
         
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
         
@@ -108,17 +114,20 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                     auth = false
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
-            } 
+            }
         }
 
         self.extendedLayoutIncludesOpaqueBars = true
         
         self.navBarTextColor = UIColor.px_blueMercadoPago()
-        self.titleCellHeight = 44
+        
  
         
-        self.hideLoading()
         
+        if self.shouldShowNavBar(self.checkoutTable) {
+            self.showNavBar()
+        }
+        self.hideLoading()
      
     }
 
@@ -439,20 +448,16 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func removeStatusBar(){
-        if self.navigationController != nil {
-            for v in (self.navigationController!.navigationBar.subviews) {
-                if (v.tag != 0) {
-                    v.removeFromSuperview()
-
-                }
-            }
+        guard let _ = self.navigationController, let view = statusBarView else {
+            return
         }
+        view.removeFromSuperview()
     }
     
     private func displayStatusBar(){
     
         self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
-        self.statusBarView!.backgroundColor = UIColor.px_grayLines()
+        self.statusBarView!.backgroundColor = UIColor.grayStatusBar()
     
         
         self.statusBarView!.tag = 1
