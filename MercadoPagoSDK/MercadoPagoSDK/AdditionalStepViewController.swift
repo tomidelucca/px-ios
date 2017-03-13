@@ -129,6 +129,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellWidth = self.tableView.bounds.width
         
         if (indexPath.section == 0){
             
@@ -163,16 +164,19 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
             if self.viewModel.showTotalRow(){
                 if indexPath.row == 0 {
+                    let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
                     let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
                     totalCell.fillCell(total: self.viewModel.amount)
+                    totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: Double(cellHeight))
                     return totalCell as UITableViewCell
                 } else{
-                    let cell = self.viewModel.dataSource[indexPath.row-1].getCell()
+                    let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
+                    let cell = self.viewModel.dataSource[indexPath.row-1].getCell(width: Double(cellWidth), height: Double(cellHeight))
                     return cell
                 }
             } else{
-            
-                let cell = self.viewModel.dataSource[indexPath.row].getCell()
+                let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
+                let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth), height: Double(cellHeight))
                 return cell
             }
         }
