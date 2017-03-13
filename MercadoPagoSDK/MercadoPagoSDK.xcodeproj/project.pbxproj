@@ -169,10 +169,10 @@
 		1565B1311CBFD7F100181998 /* GuessingFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565B1301CBFD7F100181998 /* GuessingFormTest.swift */; };
 		157420F61DF881770041171E /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
 		157420F71DF881770041171E /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
-		157704B51DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */; };
-		157704B61DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */; };
-		157704B71DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */; };
-		157704B81DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */; };
+		157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */; };
+		157704B61DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */; };
+		157704B71DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */; };
+		157704B81DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */; };
 		157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */; };
 		158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */; };
@@ -624,8 +624,8 @@
 		1565B1301CBFD7F100181998 /* GuessingFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessingFormTest.swift; sourceTree = "<group>"; };
 		157420F41DF881770041171E /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
 		157420F51DF881770041171E /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
-		157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecrurityCodeViewController.swift; sourceTree = "<group>"; };
-		157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecrurityCodeViewController.xib; sourceTree = "<group>"; };
+		157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewController.swift; sourceTree = "<group>"; };
+		157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecurityCodeViewController.xib; sourceTree = "<group>"; };
 		15904D4D1E09748C00B3B9FD /* MLSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLSpinner.h; sourceTree = "<group>"; };
 		15904D4E1E09748C00B3B9FD /* MLSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLSpinner.m; sourceTree = "<group>"; };
 		15904D4F1E09748C00B3B9FD /* MLSpinner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLSpinner.xib; sourceTree = "<group>"; };
@@ -1263,8 +1263,9 @@
 			isa = PBXGroup;
 			children = (
 				4BAA55E31DAFFBAC00501061 /* AdditionalStep */,
-				157704B31DCBA1500038C550 /* SecrurityCodeViewController.swift */,
-				157704B41DCBA1500038C550 /* SecrurityCodeViewController.xib */,
+				157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */,
+				157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */,
+
 			);
 			name = Revamp;
 			sourceTree = "<group>";
@@ -1796,7 +1797,7 @@
 				151A94101DBF8DE300A5557B /* RevampImages.xcassets in Resources */,
 				4B34DC311E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */,
 				0FC4FC291B0FB2B200CF7148 /* PromosTyCTableViewCell.xib in Resources */,
-				157704B71DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */,
+				157704B71DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */,
 				0FC4FC3B1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				155F58331E3923180070A0D6 /* Images.xcassets in Resources */,
 				4BAA55EC1DB0015800501061 /* AdditionalStepCardTableViewCell.xib in Resources */,
@@ -1866,7 +1867,7 @@
 				76062BDA1C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				0FC4FC241B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
 				15DA7E611CD92C670068896E /* IdentificationViewController.xib in Resources */,
-				157704B81DCBA1500038C550 /* SecrurityCodeViewController.xib in Resources */,
+				157704B81DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */,
 				15E7D6E81C87164E00101872 /* MockedData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1909,7 +1910,7 @@
 				4BAA55FF1DB503E600501061 /* IssuerRowTableViewCell.swift in Sources */,
 				4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */,
 				76062BC41C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
-				157704B51DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */,
+				157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */,
 				7669999B1E675193005FB30F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				76743C821C46A21C00120347 /* CheckoutViewController.swift in Sources */,
@@ -2286,7 +2287,7 @@
 				7622E32E1DF5EFF500490C4E /* PaymentResultViewController.swift in Sources */,
 				7672545F1C7CB14500EB5EBA /* CheckoutPreferenceTest.swift in Sources */,
 				155692D21C47DA1200521403 /* PaymentPreference.swift in Sources */,
-				157704B61DCBA1500038C550 /* SecrurityCodeViewController.swift in Sources */,
+				157704B61DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */,
 				0FC4FC341B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
 				15521E391E60A0B000148979 /* AppDecorationKeeper.swift in Sources */,
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,

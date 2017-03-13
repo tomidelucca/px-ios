@@ -272,7 +272,7 @@
 }
 
 -(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 
