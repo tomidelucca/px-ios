@@ -23,6 +23,7 @@ open class AdditionalStepViewModel : NSObject{
     open var cardSectionVisible: Bool
     open var totalRowVisible: Bool
     open var dataSource: [Cellable]
+    open var defaultTitleCellHeight: CGFloat = 70
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject?) -> Void)?
 
@@ -65,6 +66,10 @@ open class AdditionalStepViewModel : NSObject{
     
     func getCardSectionView() -> Updatable?{
         return cardSectionView
+    }
+    
+    func getTitleCellHeight() -> CGFloat{
+        return defaultTitleCellHeight
     }
     
     func getCardSectionCellHeight() -> CGFloat{

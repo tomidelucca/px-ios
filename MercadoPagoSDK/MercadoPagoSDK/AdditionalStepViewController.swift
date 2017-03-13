@@ -91,7 +91,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         
         switch indexPath.section {
         case 0:
-            return self.titleCellHeight
+            return self.viewModel.getTitleCellHeight()
         case 1:
             return self.viewModel.getCardSectionCellHeight()
         case 2:
