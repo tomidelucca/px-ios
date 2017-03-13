@@ -19,7 +19,6 @@ open class AdditionalStepViewModel : NSObject{
     open var token: CardInformationForm?
     open var paymentMethods: [PaymentMethod]
     open var cardSectionView: Updatable?
-    open var cellName: String!
     open var cardSectionVisible: Bool
     open var totalRowVisible: Bool
     open var dataSource: [Cellable]
@@ -58,10 +57,6 @@ open class AdditionalStepViewModel : NSObject{
 
     func numberOfCellsInBody() -> Int{
         return dataSource.count
-    }
-    
-    func getCellName() -> String{
-        return cellName
     }
     
     func getCardSectionView() -> Updatable?{
