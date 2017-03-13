@@ -12,7 +12,7 @@ class WalletIntegrationTest: BaseTest {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.continueAfterFailure = false
     }
     
     override func tearDown() {
@@ -20,16 +20,92 @@ class WalletIntegrationTest: BaseTest {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testBasicFlow() {
+        
+        // Deshabilita RyC
+        let fp = FlowPreference()
+        fp.disableReviewAndConfirmScreen()
+        MercadoPagoCheckout.setFlowPreference(fp)
+
+        // Inicia Checkout con preferencia
+        let preference = MockBuilder.buildCheckoutPreference()
+        let mpCheckout = MercadoPagoCheckout(checkoutPreference: preference, navigationController: UINavigationController())
+        
+        var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
+        
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
+        
+        step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.PAYMENT_METHOD_SELECTION)
+        
+        MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
+        
+        var paymentData : PaymentData?
+        let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
+        MercadoPagoCheckout.setPaymentDataCallback { (paymentData : PaymentData) in
+            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            expectPaymentDataCallback.fulfill()
         }
+        
+        mpCheckout.collectPaymentData()
+        step = mpCheckout.viewModel.nextStep()
+        waitForExpectations(timeout: 10, handler: nil)
+        
+        // Se vuelve a llamar a Checkout para que muestre RyC
+        let mpCheckoutWithRyC = MercadoPagoCheckout(checkoutPreference: preference, paymentData : paymentData, navigationController: UINavigationController())
+        step = mpCheckoutWithRyC.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
+        
+        
+        // Se realiza pago, se llama a confirmPaymentCallback
+        // Se llama a congrats con paymentResult
     }
     
+    func testChangePaymentMethodFlow() {
+        
+        // Deshabilita RyC
+        // Inicia Checkout con preferencia
+        // Llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se modifica medio de pago => se llama a changePaymentMethodCallback y se desactiva nuevamente RyC
+        // Se reinicia checkout automaticamente
+        
+        // Se vuelve a llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se realiza pago, se llama a confirmPaymentCallback
+        // Se llama a congrats con paymentResult
+        
+    }
+    
+    func testAccountMoneyOnlyFlow() {
+        // Deshabilita RyC
+        // Inicia Checkout con preferencia con solo medio de pago account_money
+        // Llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se modifica medio de pago => se llama a changePaymentMethodCallback y se desactiva nuevamente RyC
+        // Se reinicia checkout automaticamente
+        
+        // Se vuelve a llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se realiza pago, se llama a confirmPaymentCallback
+        // Se llama a congrats con paymentResult
+    }
+    
+    func testCreditCardOnlyFlow() {
+        // Deshabilita RyC
+        // Inicia Checkout con preferencia con solo medio de pago tarjetas
+        // Llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se modifica medio de pago => se llama a changePaymentMethodCallback y se desactiva nuevamente RyC
+        // Se reinicia checkout automaticamente
+        
+        // Se vuelve a llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
+        
+        // Se realiza pago, se llama a confirmPaymentCallback
+        // Se llama a congrats con paymentResult
+    }
 }

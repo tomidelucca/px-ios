@@ -37,18 +37,14 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
         
-        // Simular api call a grupos
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], customOptions : [accountMoneyOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
         // 3. Display payment methods (no exclusions)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYMENT_METHOD_SELECTION, step)
         
         // 4. Payment option selected : account_money => RyC
-        mpCheckout.viewModel.paymentOptionSelected = accountMoneyOption as! PaymentMethodOption
+        MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.REVIEW_AND_CONFIRM, step)
         
@@ -74,6 +70,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     }
     
     func testNextStep_withCheckoutPreference_masterCreditCard(){
+        
         // Set access_token
         MercadoPagoContext.setPayerAccessToken("access_token")
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
@@ -89,18 +86,14 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
         
-        // Simular api call a grupos
-        let debitCardOption = MockBuilder.buildPaymentMethodSearchItem("debit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption, debitCardOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
         // 3. Display payment methods (no exclusions)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYMENT_METHOD_SELECTION, step)
         
         // 4. Payment option selected : tarjeta de credito => Form Tarjeta
-        mpCheckout.viewModel.paymentOptionSelected = creditCardOption
+        MPCheckoutTestAction.selectCreditCardOption(mpCheckout: mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.CARD_FORM, step)
         
@@ -199,18 +192,14 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
         
-        // Simular api call a grupos
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], customOptions : [accountMoneyOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
         // 3. Display payment methods (no exclusions)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYMENT_METHOD_SELECTION, step)
         
         // 4. Payment option selected : account_money => paymentDataCallback
-        mpCheckout.viewModel.paymentOptionSelected = accountMoneyOption as! PaymentMethodOption
+        MPCheckoutTestAction.selectAccountMoney(mpCheckout : mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.REVIEW_AND_CONFIRM, step)
 
@@ -253,12 +242,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SEARCH_PAYMENT_METHODS, step)
 
-        // Simular api call a grupos
-        let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
-        let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], customOptions : [accountMoneyOption])
-        mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
-
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
         // 3. PaymentData complete => RyC
         step = mpCheckout.viewModel.nextStep()
