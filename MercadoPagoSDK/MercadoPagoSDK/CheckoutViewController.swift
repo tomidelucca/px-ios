@@ -494,14 +494,16 @@ open class CheckoutViewModel {
     }
     
     func setSummaryRows() {
-        if MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()[0].customDescription != MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle() {
-        let productsSummary = SummaryRow(customDescription: MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: true)
         
         var summaryRows = MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()
+        
+        if summaryRows.count == 0 || summaryRows[0].customDescription != MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle() {
+        let productsSummary = SummaryRow(customDescription: MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: true)
         
         summaryRows.insert(productsSummary, at: 0)
         
         MercadoPagoCheckoutViewModel.reviewScreenPreference.setSummaryRows(summaryRows: summaryRows)
+        
         }
     }
     
