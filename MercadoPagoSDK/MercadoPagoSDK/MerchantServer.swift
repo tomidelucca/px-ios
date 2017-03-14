@@ -43,7 +43,7 @@ open class MerchantServer : NSObject {
         
         var body = ""
         if !NSDictionary.isNullOrEmpty(paymentBody){
-            body = paymentBody.toJsonString()
+            body = Utils.append(firstJSON: paymentBody.toJsonString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
         }
         
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
