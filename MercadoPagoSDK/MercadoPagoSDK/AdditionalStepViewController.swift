@@ -142,13 +142,12 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             return titleCell
             
         } else if (indexPath.section == 1){
-            if viewModel.showCardSection(){
-                let cellView = viewModel.getCardSectionView()
+            if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
                 
                 let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.loadCellView(View: cellView as! UIView?)
+                cardSectionCell.loadCellView(view: cellView as! UIView)
                 cardSectionCell.selectionStyle = .none
-                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], View: cellView)
+                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
                 cardSectionCell.backgroundColor = UIColor.primaryColor()
                 
                 return cardSectionCell

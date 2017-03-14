@@ -14,52 +14,45 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
     var containerView: UIView!
     var cardFront : CardFrontView!
     
-    func loadCellView(View: UIView?){
+    func loadCellView(view: UIView){
         
-        if let content = View{
-            self.containerView = UIView()
-            
-            let containerHeight = getCardHeight()
-            let containerWidht = getCardWidth()
-            let xMargin = (UIScreen.main.bounds.size.width  - containerWidht) / 2
-            let yMargin = (UIScreen.main.bounds.size.width*0.5 - containerHeight ) / 2
-            
-            let rectBackground = CGRect(x: xMargin, y: yMargin, width: containerWidht, height: containerHeight)
-            let rect = CGRect(x: 0, y: 0, width: containerWidht, height: containerHeight)
-            
-            self.containerView.frame = rectBackground
-            self.containerView.layer.cornerRadius = 8
-            self.containerView.layer.masksToBounds = true
-            self.addSubview(self.containerView)
-            
-            content.frame = rect
-            content.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            
-            containerView.addSubview(content)
-            self.cell.backgroundColor = UIColor.primaryColor()
-        }
+        self.containerView = UIView()
+        
+        let containerHeight = getCardHeight()
+        let containerWidht = getCardWidth()
+        let xMargin = (UIScreen.main.bounds.size.width  - containerWidht) / 2
+        let yMargin = (UIScreen.main.bounds.size.width*0.5 - containerHeight ) / 2
+        
+        let rectBackground = CGRect(x: xMargin, y: yMargin, width: containerWidht, height: containerHeight)
+        let rect = CGRect(x: 0, y: 0, width: containerWidht, height: containerHeight)
+        
+        self.containerView.frame = rectBackground
+        self.containerView.layer.cornerRadius = 8
+        self.containerView.layer.masksToBounds = true
+        self.addSubview(self.containerView)
+        
+        view.frame = rect
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        containerView.addSubview(view)
+        self.cell.backgroundColor = UIColor.primaryColor()
+        
         
     }
-    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod?, View: Updatable?) {
+    func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod, view: Updatable) {
         
-        if let content = View{
-            if let paymentMethod = paymentMethod{
-                content.updateCard(token: token, paymentMethod: paymentMethod)
-                self.containerView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
-            }
-        }
+        view.updateCard(token: token, paymentMethod: paymentMethod)
+        self.containerView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
     }
     func fadeCard(){
         UIView.animate(withDuration: 0.80) {
             self.containerView?.alpha = 0
         }
-        
     }
     func showCard(){
         UIView.animate(withDuration: 1.50) {
             self.containerView?.alpha = 1
         }
-        
     }
     override func awakeFromNib() {
         super.awakeFromNib()
