@@ -30,7 +30,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentMethodSearchService: MercadoPagoService {
     
-    open let MP_SEARCH_PAYMENTS_URI = ServicePreference.MP_ENVIROMENT + "/payment_methods/search/options"
     
 //    public override init(){
 //        super.init(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL())
@@ -84,7 +83,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
         headers.setValue(MercadoPagoContext.getLanguage() , forKey: "Accept-Language")
        
         
-        self.request(uri: MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
+        self.request(uri: ServicePreference.MP_SEARCH_PAYMENTS_URI, params: params, body: groupsPayerBody, method: "POST", headers: headers, cache: false, success: { (jsonResult) -> Void in
             
             if let paymentSearchDic = jsonResult as? NSDictionary {
                 if paymentSearchDic["error"] != nil {
