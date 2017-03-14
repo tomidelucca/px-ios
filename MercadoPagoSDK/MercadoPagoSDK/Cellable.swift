@@ -1,5 +1,5 @@
 //
-//  getCellProtocol.swift
+//  Cellable.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 3/6/17.

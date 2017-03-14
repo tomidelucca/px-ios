@@ -1,5 +1,5 @@
 //
-//  getCardSectionViewProtocol.swift
+//  Updatable.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 3/9/17.
