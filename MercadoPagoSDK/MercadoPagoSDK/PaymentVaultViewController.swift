@@ -85,6 +85,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        self.showLoading()
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10;
         upperFrame.size.width = UIScreen.main.bounds.width
@@ -129,6 +130,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+       
         
         self.collectionSearch.allowsSelection = true
         self.getCustomerCards()
@@ -141,7 +143,18 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.loadingInstance = LoadingOverlay.shared.showOverlay(temporalView, backgroundColor: UIColor.primaryColor())
             self.view.bringSubview(toFront: self.loadingInstance!)
         }
+         self.hideLoading()
         
+    }
+    
+    open override func willMove(toParentViewController parent: UIViewController?) {
+        super.willMove(toParentViewController: parent)
+        self.hideLoading()
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.hideLoading()
     }
 
 

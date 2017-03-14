@@ -263,54 +263,6 @@ import UIKit
         
     }
     
-    open class func createMPPayment(_ email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, customerId : String? = nil, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-    
-        var issuerId = ""
-        if issuer != nil {
-            issuerId = String(issuer!._id!.intValue)
-        }
-
-        
-        var tokenId = ""
-        if token != nil {
-            tokenId = token!._id
-        }
-        
-        let isBlacklabelPayment = token != nil && token?.cardId != nil && String.isNullOrEmpty(customerId)
-        
-        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
-
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.paymentURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
-        
-        let body = Utils.append(firstJSON: mpPayment.toJSONString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
-        service.createPayment(body: body, success: { (jsonResult) in
-            var payment : Payment? = nil
-            
-            if let paymentDic = jsonResult as? NSDictionary {
-                if paymentDic["error"] != nil {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
-                    }
-                } else {
-                    if paymentDic.allKeys.count > 0 {
-                        payment = Payment.fromJSON(paymentDic)
-                        success(payment!)
-                        // Clear payment key after post payment success
-                        MercadoPagoContext.clearPaymentKey()
-                    } else {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
-                    }
-                    
-                }
-            } else {
-                if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
-                }
-            }}, failure: failure)
-
-    }
-    
-    
     internal class func openURL(_ url : String){
         let currentURL = URL(string: url)
         if (currentURL != nil && UIApplication.shared.canOpenURL(currentURL!)) {
