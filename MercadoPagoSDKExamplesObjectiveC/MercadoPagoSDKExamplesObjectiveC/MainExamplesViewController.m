@@ -86,6 +86,7 @@
     //[self setVoidCallback];
     
     
+
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData navigationController:self.navigationController paymentResult:self.paymentResult] start];
     
 }
@@ -218,6 +219,7 @@
     //    } text:@"Ir a mi actividad"];
     
     
+
     // Celdas custom de Payment Result
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];

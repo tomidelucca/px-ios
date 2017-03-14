@@ -83,7 +83,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal var errorCallback : ((Void) -> Void)?
     
     private var needLoadPreference : Bool = false
-    private var readyToPay : Bool = false
+    internal var readyToPay : Bool = false
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
     internal var initWithPaymentData = false

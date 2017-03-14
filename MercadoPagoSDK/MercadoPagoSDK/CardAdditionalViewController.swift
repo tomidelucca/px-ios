@@ -123,7 +123,7 @@ open class CardAdditionalViewController: MercadoPagoUIScrollViewController, UITa
         case 1:
             return self.viewModel.getCardCellHeight()
         case 2:
-            return self.viewModel.gerRowCellHeight(row: indexPath.row)
+            return self.viewModel.getRowCellHeight(row: indexPath.row)
             
         default:
             return 60
@@ -318,7 +318,7 @@ open class CardAdditionalStepViewModel : NSObject {
     func getCardCellHeight() -> CGFloat {
         return UIScreen.main.bounds.width*0.50
     }
-    func gerRowCellHeight(row: Int) -> CGFloat {
+    func getRowCellHeight(row: Int) -> CGFloat {
         if hasIssuer() {
             if row == 0 {
                 return 42

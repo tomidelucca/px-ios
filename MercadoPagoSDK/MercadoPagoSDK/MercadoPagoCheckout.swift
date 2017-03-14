@@ -163,7 +163,6 @@ open class MercadoPagoCheckout: NSObject {
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
-            //self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             self.executeNextStep()
         })
         
@@ -222,6 +221,7 @@ open class MercadoPagoCheckout: NSObject {
         })
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
+
     
     func createCardToken() {
         MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token : Token?) -> Void in
@@ -293,6 +293,7 @@ open class MercadoPagoCheckout: NSObject {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
         }
+
     }
 	
 	func cleanNavigationStack () {
@@ -307,8 +308,9 @@ open class MercadoPagoCheckout: NSObject {
     private func executePaymentDataCallback() {
         if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
+
         }
-    }
+	}
     
     func collectSecurityCode(){
         let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
@@ -363,14 +365,13 @@ open class MercadoPagoCheckout: NSObject {
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
             congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+                self.finish()
             })
         } else {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+                self.finish()
             })
         }
-        self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
         self.pushViewController(viewController : congratsViewController, animated: true)
     }
     

@@ -84,7 +84,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
             
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }
-		
+
         self.paymentMethodDescription.attributedText = attributedTitle
 		
 		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
