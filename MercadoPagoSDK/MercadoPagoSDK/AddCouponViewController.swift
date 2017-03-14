@@ -27,6 +27,13 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         self.viewModel = AddCouponViewModel(amount: amount)
     }
     
+    
+    init (viewModel : AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
+      super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
+        self.callback = callback
+        self.callbackCancel = callbackCancel
+        self.viewModel = viewModel
+    }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -54,7 +61,7 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         let toolbar = UIToolbar(frame: frame)
         
         toolbar.barStyle = UIBarStyle.default;
-        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1;
         toolbar.isUserInteractionEnabled = true
         
@@ -62,7 +69,7 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
         
         
-        let font = UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14)
+         let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         
@@ -138,8 +145,8 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
 
     func showErrorMessage(_ errorMessage:String){
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
-        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
+        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)

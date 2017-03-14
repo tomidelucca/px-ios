@@ -22,6 +22,14 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
         self.viewModel = CouponDetailViewModel(coupon: coupon)
     }
     
+    init(viewModel: CouponDetailViewModel, callbackCancel : ((Void) -> Void)? = nil) {
+        super.init(nibName: "CouponDetailViewController", bundle: MercadoPago.getBundle())
+        self.callbackCancel = callbackCancel
+        self.viewModel = viewModel
+    }
+    
+
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

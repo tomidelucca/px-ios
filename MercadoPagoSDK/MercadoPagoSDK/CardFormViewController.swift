@@ -202,7 +202,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
-        self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+        self.cardView.backgroundColor = UIColor.mpLightGray()
         self.cardView.layer.cornerRadius = 11
         self.cardView.layer.masksToBounds = true
         self.cardBackground.addSubview(self.cardView)
@@ -476,7 +476,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         let toolbar = UIToolbar(frame: frame)
         
         toolbar.barStyle = UIBarStyle.default;
-        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.backgroundColor = UIColor.mpLightGray();
         toolbar.alpha = 1;
         toolbar.isUserInteractionEnabled = true
         
@@ -510,8 +510,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     func showErrorMessage(_ errorMessage:String){
         
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
-        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
+        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
@@ -622,7 +622,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
-            self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
+            self.cardView.backgroundColor = UIColor.mpLightGray()
             })
         self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")

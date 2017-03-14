@@ -127,6 +127,14 @@ extension UIColor {
         return UIColorFromRGB(0xE6E6E6)
     }
     
+    class public func mpLightGray() -> UIColor {
+        return UIColorFromRGB(0xEEEEEE)
+    }
+    
+    class public func mpRedErrorMessage() -> UIColor {
+        return UIColorFromRGB(0xf04449)
+    }
+    
     class public func primaryColor() -> UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
     }

@@ -63,17 +63,15 @@ class Utils {
         return dateFormatter.string(from: date)
     }
     
-    class func getAttributedAmount(_ amount : Double, currency : Currency, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, baselineOffset : Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
-        return self.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color, fontSize : fontSize, baselineOffset : baselineOffset, negativeAmount:negativeAmount)
-    }
+
     
-    class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getAttributedAmount(_ formattedString : String, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator : thousandSeparator, decimalSeparator: decimalSeparator)
         
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
-        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: 10) ?? UIFont.systemFont(ofSize: 10),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize),NSForegroundColorAttributeName: color]
+        let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
         
         
         
@@ -88,13 +86,16 @@ class Utils {
         return attributedSymbol
     }
     
+    class func getAttributedAmount(_ amount : Double, currency: Currency, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
+        return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount)
+    }
     
     class func getAttributedAmount(_ amount : Double, thousandSeparator: String, decimalSeparator: String, currencySymbol : String, color : UIColor = UIColor.px_white(), fontSize : CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset : Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
         
         
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize),NSForegroundColorAttributeName: color]
+        let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: fontSize) ?? Utils.getFont(size: fontSize),NSForegroundColorAttributeName: color]
         let smallAttributes : [String:AnyObject] = [NSFontAttributeName : UIFont(name: MercadoPago.DEFAULT_FONT_NAME, size: centsFontSize) ?? UIFont.systemFont(ofSize: centsFontSize),NSForegroundColorAttributeName: color, NSBaselineOffsetAttributeName : baselineOffset as AnyObject]
         
         var symbols : String!

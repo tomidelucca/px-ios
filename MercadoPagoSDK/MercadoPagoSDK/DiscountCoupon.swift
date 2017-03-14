@@ -34,9 +34,9 @@ open class DiscountCoupon: NSObject {
     
    open var _id : String!
    open var name : String?
-   open var percent_off : String! = "0"
-   open var amount_off : String! = "0"
-   open var coupon_amount : String! = "0"
+   open var percent_off : String = "0"
+   open var amount_off : String = "0"
+   open var coupon_amount : String = "0"
    open var currency_id : String?
     
    open var amount: Double!
