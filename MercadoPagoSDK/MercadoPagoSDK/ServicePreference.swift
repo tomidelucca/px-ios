@@ -20,22 +20,32 @@ open class ServicePreference : NSObject{
     var paymentURI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     var paymentAdditionalInfo: NSDictionary?
     
-    internal static let MP_ALPHA_ENV = "/gamma"
-    internal static var MP_TEST_ENV = "/beta"
-    internal static let MP_PROD_ENV = "/v1"
-    internal static let API_VERSION = "1.3.X"
+    static let MP_ALPHA_ENV = "/gamma"
+    static var MP_TEST_ENV = "/beta"
+    static let MP_PROD_ENV = "/v1"
+    static let API_VERSION = "1.3.X"
     
-    internal static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+    static let MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
     
-    internal static let MP_OP_ENVIROMENT = "/v1"
+    static let MP_OP_ENVIROMENT = "/v1"
     
-    internal static let MP_ALPHA_API_BASE_URL : String =  "http://api.mp.internal.ml.com"
-    internal static let MP_API_BASE_URL_PROD : String =  "https://api.mercadopago.com"
+    static let MP_ALPHA_API_BASE_URL : String =  "http://api.mp.internal.ml.com"
+    static let MP_API_BASE_URL_PROD : String =  "https://api.mercadopago.com"
     
-    internal static let MP_API_BASE_URL : String =  MP_API_BASE_URL_PROD
+    static let MP_API_BASE_URL : String =  MP_API_BASE_URL_PROD
     
-    internal static let MP_CUSTOMER_URI = "/customers?preference_id="
-    internal static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
+    static let MP_CUSTOMER_URI = "/customers?preference_id="
+    static let MP_PAYMENTS_URI = MP_ENVIROMENT + "/payments"
+    
+    static let MP_CREATE_TOKEN_URI = MP_OP_ENVIROMENT + "/card_tokens"
+    static let MP_PAYMENT_METHODS_URI = MP_OP_ENVIROMENT + "/payment_methods"
+    static let MP_INSTALLMENTS_URI = MP_OP_ENVIROMENT + "/payment_methods/installments"
+    static let MP_ISSUERS_URI = MP_OP_ENVIROMENT + "/payment_methods/card_issuers"
+    static let MP_IDENTIFICATION_URI = "/identification_types"
+    static let MP_PROMOS_URI = MP_OP_ENVIROMENT + "/payment_methods/deals"
+    static let MP_SEARCH_PAYMENTS_URI = MP_ENVIROMENT + "/payment_methods/search/options"
+    static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + "/payments/${payment_id}/results"
+    static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
     
     private var useDefaultPaymentSettings = true
     
