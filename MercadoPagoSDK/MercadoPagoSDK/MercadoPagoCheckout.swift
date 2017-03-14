@@ -228,7 +228,7 @@ open class MercadoPagoCheckout: NSObject {
             createNewCardToken()
             return
         }
-        if cardInfo.canBeClone(){
+        if cardInfo.canBeClone() {
             cloneCardToken(cardInformation: cardInfo, securityCode: securityCode!)
         
         } else {
@@ -237,13 +237,13 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createNewCardToken() {
-        //self.dismissLoading()
         self.presentLoading()
         
         MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token : Token?) -> Void in
             self.viewModel.updateCheckoutModel(token: token!)
             self.executeNextStep()
             self.dismissLoading()
+        
         }, failure : { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createCardToken()
@@ -254,8 +254,8 @@ open class MercadoPagoCheckout: NSObject {
     
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
         self.presentLoading()
-        let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         
+        let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
         
         MPServicesBuilder.createToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token) in
@@ -273,10 +273,13 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func cloneCardToken(cardInformation: CardInformation, securityCode: String) {
+        self.presentLoading()
+        
         if let token = cardInformation as? Token {
             MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
                 self.viewModel.updateCheckoutModel(token: token)
                 self.executeNextStep()
+                self.dismissLoading()
             }, failure: { (error) in
                 self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                     self.createCardToken()
