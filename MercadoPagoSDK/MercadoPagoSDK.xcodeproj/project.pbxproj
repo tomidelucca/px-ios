@@ -251,6 +251,8 @@
 		4B88E2431E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */; };
 		4B88E2441E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */; };
 		4B88E2571E48CC5C00D52527 /* MPCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E2561E48CC5C00D52527 /* MPCustomCell.swift */; };
+		4B8D73511E780F8F009C1209 /* SummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D73501E780F8F009C1209 /* SummaryRow.swift */; };
+		4B8D73521E780F8F009C1209 /* SummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D73501E780F8F009C1209 /* SummaryRow.swift */; };
 		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
 		4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
 		4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */; };
@@ -662,6 +664,7 @@
 		4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmInstallmentsTableViewCell.swift; sourceTree = "<group>"; };
 		4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmInstallmentsTableViewCell.xib; sourceTree = "<group>"; };
 		4B88E2561E48CC5C00D52527 /* MPCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCustomCell.swift; sourceTree = "<group>"; };
+		4B8D73501E780F8F009C1209 /* SummaryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryRow.swift; sourceTree = "<group>"; };
 		4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmAdditionalInfoTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* CardAdditionalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardAdditionalViewController.swift; sourceTree = "<group>"; };
@@ -950,6 +953,7 @@
 				4BEF80F51E53308C00797CD1 /* PaymentResult.swift */,
 				4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */,
 				76EF21E61E52C07700718ED2 /* ReviewScreenPreference.swift */,
+				4B8D73501E780F8F009C1209 /* SummaryRow.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1997,6 +2001,7 @@
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
 				0F9883911AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
 				15DA7E5E1CD92C670068896E /* IdentificationViewController.swift in Sources */,
+				4B8D73511E780F8F009C1209 /* SummaryRow.swift in Sources */,
 				76AA2E341CBD8BCA006D0678 /* MPTextView.swift in Sources */,
 				76445ADB1CC921B5008EE68E /* ViewUtils.swift in Sources */,
 				765F8E5D1DCA57D000943FAC /* ConfirmPaymentTableViewCell.swift in Sources */,
@@ -2229,6 +2234,7 @@
 				769A73611DF736D30089A1BF /* Utils.swift in Sources */,
 				76EC47CC1C85E3E60086FA53 /* CardIssuerTest.swift in Sources */,
 				767254681C7CB2AB00EB5EBA /* CheckoutViewControllerTest.swift in Sources */,
+				4B8D73521E780F8F009C1209 /* SummaryRow.swift in Sources */,
 				0F9883781AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				0F9883BB1AD2AD1600F750F0 /* String+Additions.swift in Sources */,
 				76D00A011CA2CA3E00F52BC6 /* UtilsTest.swift in Sources */,

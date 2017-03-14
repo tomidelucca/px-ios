@@ -24,19 +24,45 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true){
+    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark()){
         
-        //Deafult values for cells
+        fillDescription(title: title, color: titleColor)
+        
+        self.removeFromSuperview()
+        
+        fillAmount(amount: amount, color: amountColor, payerCost: payerCost, currency: currency)
+        
+        addSeperatorLine(addLine: addSeparatorLine)
+    }
+    
+    internal func fillCell(summaryRow: SummaryRow, currency : Currency, payerCost : PayerCost? = nil){
+        
+        fillDescription(title: summaryRow.customDescription, color: summaryRow.colorDescription)
+        
+        self.removeFromSuperview()
+        
+        fillAmount(amount: summaryRow.customAmount, color: summaryRow.colorAmount, payerCost: payerCost, currency: currency)
+        
+        addSeperatorLine(addLine: summaryRow.separatorLine)
+    }
+    
+    func fillDescription(title: String, color: UIColor) {
         self.titleLabel.text = title
         self.titleLabel.font = Utils.getFont(size: titleLabel.font.pointSize)
-        self.removeFromSuperview()
+        self.titleLabel.textColor = color
+    }
+    
+    func fillAmount(amount: Double, color: UIColor, payerCost: PayerCost?, currency: Currency) {
         if payerCost != nil {
             let purchaseAmount = getInstallmentsAmount(payerCost: payerCost!)
             self.unitPrice.attributedText = purchaseAmount
         } else {
-            self.unitPrice.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : UIColor.px_grayDark(), fontSize : 18, baselineOffset : 5)
+            self.unitPrice.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color , fontSize : 18, baselineOffset : 5)
         }
-        if addSeparatorLine {
+    }
+    
+    func addSeperatorLine(addLine: Bool) {
+        if addLine {
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: PurchaseSimpleDetailTableViewCell.SEPARATOR_LINE_HEIGHT, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }

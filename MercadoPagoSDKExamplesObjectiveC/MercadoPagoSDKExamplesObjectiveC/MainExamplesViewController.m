@@ -255,6 +255,9 @@
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     
+    
+    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
+    
     [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube, nil]];
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
