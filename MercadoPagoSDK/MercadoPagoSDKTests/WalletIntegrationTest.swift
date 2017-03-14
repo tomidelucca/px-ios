@@ -24,7 +24,7 @@ class WalletIntegrationTest: BaseTest {
     func testBasicFlow() {
         
         // Deshabilita RyC
-        let fp = FlowPreference()
+        var fp = FlowPreference()
         fp.disableReviewAndConfirmScreen()
         MercadoPagoCheckout.setFlowPreference(fp)
 
@@ -44,23 +44,35 @@ class WalletIntegrationTest: BaseTest {
         
         MPCheckoutTestAction.selectAccountMoney(mpCheckout: mpCheckout)
         
-        var paymentData : PaymentData?
+        var localPaymentData : PaymentData?
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData : PaymentData) in
             XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
             expectPaymentDataCallback.fulfill()
+            localPaymentData = paymentData
         }
         
         mpCheckout.collectPaymentData()
         step = mpCheckout.viewModel.nextStep()
         waitForExpectations(timeout: 10, handler: nil)
         
+        // Se habilita RyC
+        fp = FlowPreference()
+        fp.enableReviewAndConfirmScreen()
+        MercadoPagoCheckout.setFlowPreference(fp)
+        
         // Se vuelve a llamar a Checkout para que muestre RyC
-        let mpCheckoutWithRyC = MercadoPagoCheckout(checkoutPreference: preference, paymentData : paymentData, navigationController: UINavigationController())
+        let mpCheckoutWithRyC = MercadoPagoCheckout(checkoutPreference: preference, paymentData : localPaymentData, navigationController: UINavigationController())
+        step = mpCheckoutWithRyC.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
+        
         step = mpCheckoutWithRyC.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
         
+        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckoutWithRyC)
         
+        step = mpCheckoutWithRyC.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.REVIEW_AND_CONFIRM)
         // Se realiza pago, se llama a confirmPaymentCallback
         // Se llama a congrats con paymentResult
     }

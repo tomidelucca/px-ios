@@ -16,14 +16,16 @@ class MPCheckoutTestAction: NSObject {
         let customerCardOption = MockBuilder.buildCustomerPaymentMethod("customerCardId", paymentMethodId: "visa")
         let creditCardOption = MockBuilder.buildPaymentMethodSearchItem("credit_card", type: PaymentMethodSearchItemType.PAYMENT_TYPE)
         let paymentMethodVisa = MockBuilder.buildPaymentMethod("visa")
+        let paymentMethodAM = MockBuilder.buildPaymentMethod("account_money")
         
-        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa], customOptions : [customerCardOption, accountMoneyOption])
+        let paymentMethodSearchMock = MockBuilder.buildPaymentMethodSearch(groups : [creditCardOption], paymentMethods : [paymentMethodVisa, paymentMethodAM], customOptions : [customerCardOption, accountMoneyOption])
         mpCheckout.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchMock)
     }
     
     static func selectAccountMoney(mpCheckout : MercadoPagoCheckout){
         let accountMoneyOption = MockBuilder.buildCustomerPaymentMethod("account_money", paymentMethodId : "account_money")
-        mpCheckout.viewModel.paymentOptionSelected = accountMoneyOption as! PaymentMethodOption
+        mpCheckout.viewModel.updateCheckoutModel(paymentOptionSelected: accountMoneyOption as! PaymentMethodOption)
+        
     }
     
     static func selectCreditCardOption(mpCheckout : MercadoPagoCheckout){
