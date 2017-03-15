@@ -21,7 +21,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var cardFront : CardFrontView!
     var cardBack : CardBackView!
     var ccvLabelEmpty : Bool = true
-    //var collectSecurityCodeCallback : ((_ cardInformation: CardInformation, _ securityCode: String) -> Void)!
     
     override open var screenName : String { get{ return "SECURITY_CODE" } }
     
