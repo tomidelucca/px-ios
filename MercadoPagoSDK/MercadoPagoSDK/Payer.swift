@@ -12,13 +12,15 @@ open class Payer : NSObject {
 	open var email : String!
 	open var _id : String?
 	open var identification : Identification?
+    open var entityType: EntityType?
 	
 	
 	
-	public init(_id : String? = nil, email: String = "", type : String? = nil, identification: Identification? = nil){
+    public init(_id : String? = nil, email: String = "", type : String? = nil, identification: Identification? = nil, entityType: EntityType? = nil){
 		self._id = _id
 		self.email = email
 		self.identification = identification
+        self.entityType = entityType
 	}
 	
 	open class func fromJSON(_ json : NSDictionary) -> Payer {
@@ -33,6 +35,11 @@ open class Payer : NSObject {
 		if let identificationDic = json["identification"] as? NSDictionary {
 			payer.identification = Identification.fromJSON(identificationDic)
 		}
+        
+        if let entityTypeDic = json["entity_type"] as? NSDictionary {
+            payer.entityType = EntityType.fromJSON(entityTypeDic)
+        }
+        
 		return payer
 	}
 	
@@ -45,10 +52,12 @@ open class Payer : NSObject {
         let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
         let _id : Any = self._id == nil ? JSONHandler.null : self._id
         let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
+        let entityType : Any = self.entityType == nil ? JSONHandler.null : self.entityType!.toJSONString()
         let obj:[String:Any] = [
             "email": email,
             "_id": _id,
-            "identification" : identification
+            "identification" : identification,
+            "entity_type" : entityType
         ]
         return obj
     }
@@ -70,7 +79,8 @@ public func ==(obj1: Payer, obj2: Payer) -> Bool {
 	let areEqual =
 		obj1._id == obj2._id &&
 			obj1.email == obj2.email &&
-			obj1.identification == obj2.identification
+			obj1.identification == obj2.identification &&
+            obj1.entityType == obj2.entityType
 	
 	return areEqual
 }
