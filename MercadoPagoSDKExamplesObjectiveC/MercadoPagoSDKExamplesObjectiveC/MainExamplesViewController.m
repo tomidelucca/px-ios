@@ -84,9 +84,16 @@
     
     //Setear Void Callback
     //[self setVoidCallback];
-    
-    
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData navigationController:self.navigationController paymentResult:self.paymentResult] start];
+
+    DiscountCoupon* dc = [[DiscountCoupon alloc] init];
+    dc._id = @"123";
+    dc.name = @"Patito Off";
+    dc.coupon_amount = @"30";
+    dc.amount_off = @"30";
+    dc.currency_id = @"ARS";
+    dc.concept = @"Descuento de patito";
+    dc.amount = 300;
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ] start];
     
 }
 
@@ -150,7 +157,7 @@
         [flowPreference enableReviewAndConfirmScreen];
         [MercadoPagoCheckout setFlowPreference:flowPreference];
         
-        [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController paymentResult:nil] start];
+        [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData discount:nil navigationController:self.navigationController paymentResult:nil] start];
         
     }];
 }

@@ -21,7 +21,7 @@ public class PaymentData: NSObject {
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
-        self.discount = nil
+        // No borrar el descuento
     }
     
     

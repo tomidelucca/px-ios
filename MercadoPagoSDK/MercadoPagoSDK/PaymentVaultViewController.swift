@@ -486,6 +486,7 @@ class PaymentVaultViewModel : NSObject {
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions
         self.customerPaymentOptions = customerPaymentOptions
+        self.discount = discount
         self.isRoot = isRoot
     }
     

@@ -40,7 +40,7 @@ open class DiscountCoupon: NSObject {
    open var currency_id : String?
    open var concept : String?
     
-   open var amount: Double!
+   open var amount: Double = 0
     
     open class func fromJSON(_ json : NSDictionary, amount: Double) -> DiscountCoupon? {
         let discount = DiscountCoupon()
