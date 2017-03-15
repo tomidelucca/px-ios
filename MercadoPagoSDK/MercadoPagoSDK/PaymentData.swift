@@ -14,12 +14,14 @@ public class PaymentData: NSObject {
     public var issuer : Issuer?
     public var payerCost : PayerCost?
     public var token : Token?
+    public var payer : Payer?
     
     func clear() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
+        self.payer = nil
     }
     
     
@@ -32,6 +34,10 @@ public class PaymentData: NSObject {
         
         if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod() {
             return true
+        }
+        
+        if paymentMethod.isEntityTypeRequired() && payer?.entityType == nil {
+            return false
         }
         
         if paymentMethod!.isCard() && (token == nil || payerCost == nil) {
@@ -61,6 +67,8 @@ public class PaymentData: NSObject {
         obj["installments"] = (self.payerCost != nil ) ? self.payerCost!.installments : ""
         obj["card_token_id"] = (self.token != nil ) ? self.token!._id : ""
         obj["issuer_id"] = (self.issuer != nil ) ? self.issuer!._id : ""
+        obj["payer"] = (self.payer != nil) ? self.payer?.toJSON() : ""
+        
         return obj
     }
 
