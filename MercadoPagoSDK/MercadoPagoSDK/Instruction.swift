@@ -75,7 +75,7 @@ open class Instruction: NSObject {
                 }
                 
             }
-            instruction.secondaryInfo = info
+            instruction.tertiaryInfo = info
         }
         
         

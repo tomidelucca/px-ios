@@ -359,35 +359,30 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         })
     }
     
-    fileprivate func getIdMask(IDtype: String)-> [TextMaskFormater]{
+    fileprivate func maskFinder(dictID: String, forKey: String) -> [TextMaskFormater]?{
         let path = MercadoPago.getBundle()!.path(forResource: "IdentificationTypes", ofType: "plist")
-        let dictID = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
+        let dictionary = NSDictionary(contentsOfFile: path!)
         
-        if let idConfig = dictID?.value(forKey: (site+"_"+(identificationType?._id!)!)) as? NSDictionary{
-            if let etMask = idConfig.value(forKey: "identification_mask") as? String, etMask != ""{
-                let customInitialMask = TextMaskFormater(mask: etMask,completeEmptySpaces: true,leftToRight: true)
-                let customMask = TextMaskFormater(mask: etMask,completeEmptySpaces: false,leftToRight: true)
+        if let IDtype = dictionary?.value(forKey: dictID) as? NSDictionary{
+            if let mask = IDtype.value(forKey: forKey) as? String, mask != ""{
+                let customInitialMask = TextMaskFormater(mask: mask,completeEmptySpaces: true,leftToRight: true)
+                let customMask = TextMaskFormater(mask: mask,completeEmptySpaces: false,leftToRight: true)
                 return[customInitialMask,customMask]
-            }else if let idConfig = dictID?.value(forKey: (site)) as? NSDictionary{
-                if let etMask = idConfig.value(forKey: "identification_mask") as? String, etMask != ""{
-                    let customInitialMask = TextMaskFormater(mask: etMask,completeEmptySpaces: true,leftToRight: true)
-                    let customMask = TextMaskFormater(mask: etMask,completeEmptySpaces: false,leftToRight: true)
-                    return[customInitialMask,customMask]
-                }else{
-                    return [defaultInitialMask,defaultMask]
-                }
-            }
-        }else if let idConfig = dictID?.value(forKey: (site)) as? NSDictionary{
-            if let etMask = idConfig.value(forKey: "identification_mask") as? String, etMask != ""{
-                let customInitialMask = TextMaskFormater(mask: etMask,completeEmptySpaces: true,leftToRight: true)
-                let customMask = TextMaskFormater(mask: etMask,completeEmptySpaces: false,leftToRight: true)
-                return[customInitialMask,customMask]
-            }else{
-                return [defaultInitialMask,defaultMask]
             }
         }
-        return [defaultInitialMask,defaultMask]
+        return nil
+    }
+    
+    fileprivate func getIdMask(IDtype: String)-> [TextMaskFormater]{
+        let site = MercadoPagoContext.getSite()
+        
+        if let masks = maskFinder(dictID: site+"_"+(identificationType?._id)!, forKey: "identification_mask"){
+            return masks
+        }else if let masks = maskFinder(dictID: site, forKey: "identification_mask"){
+            return masks
+        }else{
+            return [defaultInitialMask,defaultMask]
+        }
     }
 
     
@@ -418,8 +413,6 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
                 self.numberDocLabel.text = defaultInitialMask.textMasked("")
             }
         }
-        
-        
     }
 }
 
