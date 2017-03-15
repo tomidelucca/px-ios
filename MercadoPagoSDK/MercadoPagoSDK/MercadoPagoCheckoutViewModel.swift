@@ -79,6 +79,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     open var installment: Installment?
     open var issuers: [Issuer]?
+    open var entityTypes: [EntityType]?
     
     static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
@@ -121,6 +122,15 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC)
+    }
+    
+    public func entityTypeViewModel() -> AdditionalStepViewModel{
+        var pms : [PaymentMethod] = []
+        if let _ = paymentMethods {
+            pms = paymentMethods!
+        }
+        
+        return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.entityTypes!)
     }
     
     public func debitCreditViewModel() -> AdditionalStepViewModel{
@@ -374,6 +384,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.rootVC = true
             self.cardToken = nil
             self.issuers = nil
+            self.entityTypes = nil
             self.installment = nil
             self.initWithPaymentData = false
         } else {
@@ -452,6 +463,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cardToken = nil
         self.issuers = nil
         self.installment = nil
+        self.entityTypes = nil
     }
     
 
