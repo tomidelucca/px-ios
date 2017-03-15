@@ -170,6 +170,10 @@ open class MPStepBuilder : NSObject {
         return ErrorViewController(error: error, callback: callback, callbackCancel: callbackCancel)
     }
     
+    open class func startDetailDiscountDetailStep(coupon: DiscountCoupon) -> CouponDetailViewController {
+        MercadoPagoContext.initFlavor2()
+        return CouponDetailViewController(coupon: coupon)
+    }
     fileprivate class func getIssuers(_ paymentMethod : PaymentMethod, cardToken : CardToken, customerCard : CardInformation? = nil, ccf : MercadoPagoUIViewController,
                                       callback : @escaping (_ paymentMethod: PaymentMethod, _ token: Token, _ issuer:Issuer?) -> Void ,
                                       callbackCancel : ((Void) -> Void)? = nil){

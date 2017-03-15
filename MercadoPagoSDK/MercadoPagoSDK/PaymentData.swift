@@ -14,12 +14,14 @@ public class PaymentData: NSObject {
     public var issuer : Issuer?
     public var payerCost : PayerCost?
     public var token : Token?
+    public var discount : DiscountCoupon?
     
     func clear() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
+        self.discount = nil
     }
     
     

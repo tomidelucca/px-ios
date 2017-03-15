@@ -38,6 +38,7 @@ open class DiscountCoupon: NSObject {
    open var amount_off : String = "0"
    open var coupon_amount : String = "0"
    open var currency_id : String?
+   open var concept : String?
     
    open var amount: Double!
     
@@ -62,6 +63,9 @@ open class DiscountCoupon: NSObject {
         }
         if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
             discount.currency_id = json["currency_id"] as! String
+        }
+        if json["concept"] != nil && !(json["concept"]! is NSNull) {
+            discount.concept = json["concept"] as! String
         }
         discount.amount = amount
         return discount

@@ -22,8 +22,8 @@ open class MercadoPagoCheckout: NSObject {
     
 
     
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
         
