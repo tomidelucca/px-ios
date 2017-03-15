@@ -12,13 +12,13 @@ open class FinancialInstitution : NSObject, Cellable {
     open var _id : NSNumber?
     open var _description : String?
     
-    open func getCell() -> UITableViewCell {
+    open func getCell(width: Double, height: Double) -> UITableViewCell {
         let bundle = MercadoPago.getBundle()
         let cell: FinancialInstitutionTableViewCell = bundle!.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as! FinancialInstitutionTableViewCell
         cell.fillCell(financialInstitution: self, bundle: bundle!)
-        cell.addSeparatorLineToTop(width: Double(cell.contentView.frame.width), y: Float(cell.contentView.bounds.maxY))
+        cell.addSeparatorLineToBottom(width: width, height: height)
         cell.selectionStyle = .none
-        
+
         return cell
     }
     
