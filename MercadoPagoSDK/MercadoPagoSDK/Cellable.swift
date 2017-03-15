@@ -1,5 +1,5 @@
 //
-//  getCellProtocol.swift
+//  Cellable.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 3/6/17.
@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Cellable{
     
-    func getCell()-> UITableViewCell
+    func getCell(width: Double, height: Double)-> UITableViewCell
 
 }
 

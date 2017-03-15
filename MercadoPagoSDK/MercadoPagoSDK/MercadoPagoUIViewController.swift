@@ -79,6 +79,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
         UIApplication.shared.statusBarStyle = .lightContent
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         self.loadMPStyles()
         hideTimer()
         MercadoPagoCheckout.firstViewControllerPushed = true

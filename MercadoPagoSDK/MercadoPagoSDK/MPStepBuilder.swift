@@ -111,7 +111,7 @@ open class MPStepBuilder : NSObject {
                                          callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         
 //        MercadoPagoContext.initFlavor2()
-//        return CardAdditionalViewController(paymentMethods: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, callback: callback)
+//        return AdditionalStepViewController(paymentMethods: paymentMethod, issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment : nil, callback: callback)
         return UINavigationController()
     }
     
@@ -123,7 +123,7 @@ open class MPStepBuilder : NSObject {
 //        let call : (_ payerCost: NSObject?) -> Void = {(payerCost: NSObject?) in
 //            callback(payerCost as? PayerCost)
 //        }
-//        return CardAdditionalViewController(paymentMethods: [paymentMethod], issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: call)
+//        return AdditionalStepViewController(paymentMethods: [paymentMethod], issuer: issuer, token: token, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: call)
         return UINavigationController()
     }
 
@@ -132,7 +132,7 @@ open class MPStepBuilder : NSObject {
                                        callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         
 //        MercadoPagoContext.initFlavor2()
-//        return CardAdditionalViewController(cardInformation: cardInformation, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: callback)
+//        return AdditionalStepViewController(cardInformation: cardInformation, amount: amount, paymentPreference: paymentPreference, installment: installment, callback: callback)
         return UINavigationController()
     }
     
@@ -157,7 +157,7 @@ open class MPStepBuilder : NSObject {
                                     callback : @escaping ((_ issuer: NSObject?) -> Void)) -> UINavigationController {
         
 //        MercadoPagoContext.initFlavor2()
-//        return CardAdditionalViewController(paymentMethods: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, callback: callback)
+//        return AdditionalStepViewController(paymentMethods: [paymentMethod], issuer: nil, token: cardToken, amount: nil, paymentPreference: nil, installment : nil, callback: callback)
         return UINavigationController()
         
     }

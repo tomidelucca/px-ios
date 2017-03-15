@@ -19,11 +19,11 @@ open class PayerCost : NSObject, Cellable {
     open var totalAmount : Double = 0
     
     
-    open func getCell() -> UITableViewCell {
+    open func getCell(width: Double, height: Double) -> UITableViewCell {
         let bundle = MercadoPago.getBundle()
         let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
         cell.fillCell(payerCost: self)
-        cell.addSeparatorLineToTop(width: Double(cell.contentView.frame.width), y: Float(cell.contentView.bounds.maxY))
+        cell.addSeparatorLineToBottom(width: width, height: height)
         cell.selectionStyle = .none
         
         return cell

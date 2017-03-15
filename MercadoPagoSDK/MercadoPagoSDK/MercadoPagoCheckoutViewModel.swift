@@ -9,7 +9,7 @@
 import UIKit
 
 public enum CheckoutStep : String {
-    case SEARCH_PREFENCE
+    case SEARCH_PREFERENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -44,6 +44,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var paymentDataConfirmCallback : ((PaymentData) -> Void)?
     internal static var paymentCallback : ((Payment) -> Void)?
     internal static var callback: ((Void) -> Void)?
+    internal static var changePaymentMethodCallback: ((Void) -> Void)?
+    
 
     var checkoutPreference : CheckoutPreference!
     
@@ -127,7 +129,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = paymentMethods!
         }
 
-        return CardTypeAdditionalStepViewModel(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
+        return CardTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
     }
     
     public func issuerViewModel() -> AdditionalStepViewModel{
@@ -136,7 +138,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return IssuerAdditionalStepViewModel(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
+        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
     }
     
     public func payerCostViewModel() -> AdditionalStepViewModel{
@@ -145,7 +147,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             pms = [pm]
         }
 
-        return PayerCostAdditionalStepViewModel(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!)
     }
     
     public func securityCodeViewModel() -> SecrurityCodeViewModel {
@@ -177,7 +179,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(identification : Identification) {
         self.cardToken!.cardholder!.identification = identification
-        self.next = .CREATE_CARD_TOKEN
     }
     
     public func updateCheckoutModel(payerCost: PayerCost?){
@@ -211,7 +212,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needLoadPreference {
             needLoadPreference = false
-            return .SEARCH_PREFENCE
+            return .SEARCH_PREFERENCE
         }
         
         
