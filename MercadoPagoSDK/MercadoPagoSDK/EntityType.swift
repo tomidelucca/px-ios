@@ -9,8 +9,8 @@
 import Foundation
 
 open class EntityType : NSObject, Cellable {
-    open var _id : NSNumber?
-    open var name : String?
+    open var _id : String!
+    open var name : String!
     
     open func getCell(width: Double, height: Double) -> UITableViewCell {
         let bundle = MercadoPago.getBundle()
@@ -25,7 +25,7 @@ open class EntityType : NSObject, Cellable {
     open class func fromJSON(_ json : NSDictionary) -> EntityType {
         let entityType : EntityType = EntityType()
         
-        if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue{
+        if let _id = JSONHandler.attemptParseToString(json["id"]){
             entityType._id = _id
         }
         if let name = JSONHandler.attemptParseToString(json["name"]){
