@@ -13,9 +13,9 @@
 		<key>editing_font_color</key>
 		<string>333333</string>
 		<key>label_mask</key>
-		<string>XXXX XXXXXX XXXX</string>
+		<string>XXXX XXXX XXXX XXXX</string>
 		<key>editText_mask</key>
-		<string>XXXX XXXXXX XXXX</string>
+		<string>XXXX XXXX XXXX XXXX</string>
 	</dict>
 	<key>debmaster</key>
 	<dict>
