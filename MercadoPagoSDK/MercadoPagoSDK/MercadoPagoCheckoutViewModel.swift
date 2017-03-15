@@ -21,6 +21,7 @@ public enum CheckoutStep : String {
     case ISSUERS_SCREEN
     case CREATE_CARD_TOKEN
     case IDENTIFICATION
+    case ENTITY_TYPE
     case GET_PAYER_COSTS
     case PAYER_COST_SCREEN
     case REVIEW_AND_CONFIRM
@@ -259,6 +260,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         if needGetIdentification() {
             return .IDENTIFICATION
+        }
+        
+        if needGetEntityTypes() {
+            return .ENTITY_TYPE
         }
         
         if needSelectCreditDebit() {

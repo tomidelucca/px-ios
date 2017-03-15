@@ -97,6 +97,8 @@ open class MercadoPagoCheckout: NSObject {
             self.collectCard()
         case .IDENTIFICATION :
             self.collectIdentification()
+        case .ENTITY_TYPE :
+            self.collectEntityTypes()
         case .CREDIT_DEBIT:
             self.collectCreditDebit()
         case .GET_ISSUERS:
@@ -195,6 +197,38 @@ open class MercadoPagoCheckout: NSObject {
             self.executeNextStep()
         })
         self.pushViewController(viewController : crediDebitStep, animated: true)
+    }
+    
+    func collectEntityTypes(){
+        
+        let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
+        let dictET = NSDictionary(contentsOfFile: path!)
+        let site = MercadoPagoContext.getSite()
+    
+        let siteETsDictionary = dictET?.value(forKey: site) as! NSDictionary
+        let entityTypesKeys = siteETsDictionary.allKeys
+        var entityTypes = [EntityType]()
+        
+        for ET in entityTypesKeys{
+            let entityType = EntityType()
+            entityType._id = ET as! String
+            entityType.name = siteETsDictionary.value(forKey: ET as! String) as! String!
+            
+            entityTypes.append(entityType)
+        }
+    
+        self.viewModel.entityTypes = entityTypes
+        
+        if entityTypes.count == 1 {
+            self.viewModel.updateCheckoutModel(entityType: entityTypes[0])
+        }
+        
+        let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
+            self.viewModel.updateCheckoutModel(entityType: entityType as! EntityType?)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(entityTypeStep, animated: true)
+        
     }
     
     func collectIssuers(){

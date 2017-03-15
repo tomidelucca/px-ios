@@ -62,6 +62,20 @@ extension MercadoPagoCheckoutViewModel {
         return false
     
     }
+    
+    func needGetEntityTypes() -> Bool {
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+        if paymentData.payer?.entityType == nil && pm.isEntityTypeRequired() && pm.isIdentificationTypeRequired() {
+            return true
+        }
+        return false
+    }
+    
     func needGetIssuers() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
