@@ -222,10 +222,11 @@ open class MockBuilder: NSObject {
         return paymentMethodSearchItem
     }
     
-    class func buildPaymentMethodSearch(groups : [PaymentMethodSearchItem]? = nil, paymentMethods : [PaymentMethod]? = nil) -> PaymentMethodSearch {
+    class func buildPaymentMethodSearch(groups : [PaymentMethodSearchItem]? = nil, paymentMethods : [PaymentMethod]? = nil, customOptions : [CardInformation]? = nil) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
         paymentMethodSearch.groups = groups
         paymentMethodSearch.paymentMethods = paymentMethods
+        paymentMethodSearch.customerPaymentMethods = customOptions
         return paymentMethodSearch
     }
     
@@ -250,9 +251,16 @@ open class MockBuilder: NSObject {
         return token
     }
     
+    class func buildCardToken() -> CardToken {
+        let cardToken = CardToken()
+        cardToken.cardholder = MockBuilder.buildCardholder()
+        return cardToken
+    }
+    
     class func buildCardholder() -> Cardholder {
         let cardHolder = Cardholder()
         cardHolder.name = "name"
+        cardHolder.identification = Identification()
         return cardHolder
     }
     
@@ -289,4 +297,46 @@ open class MockBuilder: NSObject {
         issuer._id = 1234
         return issuer
     }
+    
+    class func buildPaymentOptionSelected(_ id : String) -> PaymentMethodOption {
+        let option = PaymentMethodSearchItem()
+        option.idPaymentMethodSearchItem = id
+        option._description = "description"
+        return option
+    }
+    
+    class func buildCustomerPaymentMethod(_ id : String, paymentMethodId : String) -> CardInformation {
+        let customOption = CustomerPaymentMethod()
+        customOption._id = id
+        customOption.paymentMethodId = paymentMethodId
+        return customOption 
+    }
+    
+    class func buildPaymentData(paymentMethod : PaymentMethod) -> PaymentData {
+        let paymentData = PaymentData()
+        paymentData.paymentMethod = paymentMethod
+        return paymentData
+    }
+    
+    class func buildPayment(_ paymentMethodId : String) -> Payment {
+        let payment = Payment()
+        payment.paymentMethodId = paymentMethodId
+        return payment
+    }
+    
+    class func buildPaymentResult(_ status : String? = "status", paymentMethodId : String) -> PaymentResult {
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
+        let paymentData = MockBuilder.buildPaymentData(paymentMethod: pm)
+        let paymentResult = PaymentResult(status: status!, statusDetail: "detail", paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
+        return paymentResult
+    }
+    
+    class func buildInstallment() -> Installment {
+        let installment = Installment()
+        let payerCost = MockBuilder.buildPayerCost()
+        let payerCostNext = MockBuilder.buildPayerCost()
+        installment.payerCosts = [payerCost, payerCostNext]
+        return installment
+    }
+
 }

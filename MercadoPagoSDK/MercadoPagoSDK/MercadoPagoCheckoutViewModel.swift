@@ -9,7 +9,7 @@
 import UIKit
 
 public enum CheckoutStep : String {
-    case SEARCH_PREFENCE
+    case SEARCH_PREFERENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -176,7 +176,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(identification : Identification) {
         self.cardToken!.cardholder!.identification = identification
-        self.next = .CREATE_CARD_TOKEN
     }
     
     public func updateCheckoutModel(payerCost: PayerCost?){
@@ -210,7 +209,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needLoadPreference {
             needLoadPreference = false
-            return .SEARCH_PREFENCE
+            return .SEARCH_PREFERENCE
         }
         
         

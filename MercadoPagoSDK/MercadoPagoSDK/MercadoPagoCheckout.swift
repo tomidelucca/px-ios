@@ -87,7 +87,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func executeNextStep(){
         switch self.viewModel.nextStep() {
-        case .SEARCH_PREFENCE :
+        case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
