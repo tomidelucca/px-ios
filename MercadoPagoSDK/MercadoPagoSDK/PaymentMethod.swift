@@ -56,6 +56,10 @@ open class PaymentMethod : NSObject , Cellable {
         return isAdditionalInfoNeeded("cardholder_identification_type")
     }
     
+    open func isEntityTypeRequired() -> Bool {
+        return isAdditionalInfoNeeded("entity_type")
+    }
+    
     open func isCard() -> Bool {
         if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
             return paymentTypeId.isCard()
