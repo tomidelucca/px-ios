@@ -195,6 +195,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.paymentData.payerCost = payerCost
     }
     
+    public func updateCheckoutModel(entityType: EntityType?){
+        self.paymentData.payer?.entityType = entityType
+    }
+    
     //PAYMENT_METHOD_SELECTION
     public func updateCheckoutModel(paymentOptionSelected : PaymentMethodOption){
         self.paymentOptionSelected = paymentOptionSelected
