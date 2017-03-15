@@ -259,8 +259,8 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     fileprivate func registerAllCells(){
         
         //Register rows
-        let payerCostTitleTableViewCell = UINib(nibName: "PayerCostTitleTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(payerCostTitleTableViewCell, forCellReuseIdentifier: "payerCostTitleTableViewCell")
+        let AdditionalStepTitleTableViewCell = UINib(nibName: "AdditionalStepTitleTableViewCell", bundle: self.bundle)
+        self.checkoutTable.register(AdditionalStepTitleTableViewCell, forCellReuseIdentifier: "AdditionalStepTitleTableViewCell")
         
         let purchaseDetailTableViewCell = UINib(nibName: "PurchaseDetailTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseDetailTableViewCell, forCellReuseIdentifier: "purchaseDetailTableViewCell")
@@ -301,12 +301,12 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getMainTitleCell(indexPath : IndexPath) -> UITableViewCell{
-        let payerCostTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "payerCostTitleTableViewCell", for: indexPath) as! PayerCostTitleTableViewCell
-        payerCostTitleTableViewCell.setTitle(string: MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle())
-        payerCostTitleTableViewCell.title.textColor = UIColor.primaryColor()
-        payerCostTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
-        titleCell = payerCostTitleTableViewCell
-        return payerCostTitleTableViewCell
+        let AdditionalStepTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "AdditionalStepTitleTableViewCell", for: indexPath) as! AdditionalStepTitleTableViewCell
+        AdditionalStepTitleTableViewCell.setTitle(string: MercadoPagoCheckoutViewModel.reviewScreenPreference.getTitle())
+        AdditionalStepTitleTableViewCell.title.textColor = UIColor.primaryColor()
+        AdditionalStepTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
+        titleCell = AdditionalStepTitleTableViewCell
+        return AdditionalStepTitleTableViewCell
     }
     
     private func getPurchaseDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{

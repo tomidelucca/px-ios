@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class IdentificationCardView: UIView {
+open class IdentificationCardView: UIView, Updatable {
 var view:UIView!;
     
     override init(frame: CGRect) {
@@ -21,6 +21,11 @@ var view:UIView!;
         
         loadViewFromNib ()
     }
+    
+    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
+       
+    }
+    
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)
