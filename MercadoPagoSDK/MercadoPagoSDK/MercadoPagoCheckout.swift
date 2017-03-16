@@ -101,6 +101,10 @@ open class MercadoPagoCheckout: NSObject {
             self.collectEntityTypes()
         case .CREDIT_DEBIT:
             self.collectCreditDebit()
+        case .GET_FINANCIAL_INSTITUTIONS:
+            self.collectFinancialInstitutions()
+        case .FINANCIAL_INSTITUTIONS_SCREEN:
+            self.startFinancialInstitutionsScreen()
         case .GET_ISSUERS:
             self.collectIssuers()
         case .ISSUERS_SCREEN:
@@ -199,6 +203,26 @@ open class MercadoPagoCheckout: NSObject {
         self.pushViewController(viewController : crediDebitStep, animated: true)
     }
     
+    func collectFinancialInstitutions(){
+        let financialInstitutions = self.viewModel.paymentData.paymentMethod.financialInstitutions
+        
+        self.viewModel.financialInstitutions = financialInstitutions
+        
+        if financialInstitutions?.count == 1 {
+            self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions?[0])
+            self.executeNextStep()
+        }
+        self.executeNextStep()
+    }
+    
+    func startFinancialInstitutionsScreen(){
+        let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
+            self.viewModel.updateCheckoutModel(financialInstitution: financialInstitution as! FinancialInstitution?)
+            self.executeNextStep()
+        })
+        self.navigationController.pushViewController(financialInstitutionStep, animated: true)
+    }
+    
     func collectEntityTypes(){
         
         let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
@@ -221,6 +245,7 @@ open class MercadoPagoCheckout: NSObject {
         
         if entityTypes.count == 1 {
             self.viewModel.updateCheckoutModel(entityType: entityTypes[0])
+            self.executeNextStep()
         }
         
         let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
