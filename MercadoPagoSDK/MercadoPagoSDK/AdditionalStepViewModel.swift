@@ -144,6 +144,20 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
 }
 
 class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
+    
+    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
+        super.init(screenName: "FINANCIAL_INSTITUTION", screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+        self.screenName = screenName
+        self.screenTitle = screenTitle
+        self.amount = amount
+        self.token = token
+        self.paymentMethods = paymentMethods
+        self.cardSectionVisible = cardSectionVisible
+        self.cardSectionView = cardSectionView
+        self.totalRowVisible = totalRowVisible
+        self.dataSource = dataSource
+    }
+    
 }
 
 class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
