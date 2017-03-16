@@ -16,9 +16,6 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
     
-   // var identificationTypeLabel: UILabel?
-   // var numberLabel: UILabel?
-    
     var callback : (( Identification) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
@@ -373,46 +370,48 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         return nil
     }
     
-    fileprivate func getIdMask(IDtype: String)-> [TextMaskFormater]{
+    fileprivate func getIdMask(IDtype: IdentificationType?)-> [TextMaskFormater]{
         let site = MercadoPagoContext.getSite()
         
-        if let masks = maskFinder(dictID: site+"_"+(identificationType?._id)!, forKey: "identification_mask"){
-            return masks
-        }else if let masks = maskFinder(dictID: site, forKey: "identification_mask"){
-            return masks
-        }else{
+        if IDtype != nil{
+            if let masks = maskFinder(dictID: site+"_"+(IDtype?._id)!, forKey: "identification_mask"){
+                return masks
+            }else if let masks = maskFinder(dictID: site, forKey: "identification_mask"){
+                return masks
+            }else{
+                return [defaultInitialMask,defaultMask]
+            }
+        }else {
             return [defaultInitialMask,defaultMask]
         }
     }
 
-    
+    fileprivate func drawMask(masks: [TextMaskFormater]){
+        
+        let charactersCount = numberTextField.text?.characters.count
+
+        if charactersCount! >= 1{
+            let identificationMask = masks[1]
+            
+            numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text,remasked: true)
+            
+            self.numberDocLabel.text = identificationMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
+
+        } else {
+            let identificationMask = masks[0]
+            
+            numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text,remasked: true)
+            
+            self.numberDocLabel.text = identificationMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
+
+        }
+        
+    }
     
     fileprivate func remask(){
         
-        let charactersCount = numberTextField.text?.characters.count
-        
-        if let IDtype = identificationType?._id{
-            let masks = getIdMask(IDtype: IDtype)
-            
-            if charactersCount! >= 1{
-                let identificationMask = masks[1]
-                numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text,remasked: true)
-                self.numberDocLabel.text = identificationMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
-            } else {
-                let identificationMask = masks[0]
-                self.numberDocLabel.text = identificationMask.textMasked("")
-            }
-            
-        }else{
-            
-            if charactersCount! >= 1{
-                numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text,remasked: true)
-                self.numberDocLabel.text = defaultMask.textMasked(defaultEditTextMask.textUnmasked(numberTextField.text))
-            }else if charactersCount == 0{
-                numberTextField.text = defaultEditTextMask.textMasked(numberTextField.text,remasked: true)
-                self.numberDocLabel.text = defaultInitialMask.textMasked("")
-            }
-        }
+        drawMask(masks: getIdMask(IDtype: identificationType))
+
     }
 }
 
