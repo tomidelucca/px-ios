@@ -28,10 +28,10 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
         if let titleCell = titleCell {
             let fontSize = 18 - (scrollView.contentOffset.y + scrollPositionToShowNavBar())/(CGFloat(64) - scrollPositionToShowNavBar())*4
             
-            if fontSize<24 {
+            if fontSize<21 {
                 titleCell.updateTitleFontSize(toSize: fontSize)
             } else {
-                titleCell.updateTitleFontSize(toSize: 24)
+                titleCell.updateTitleFontSize(toSize: 21)
             }
             
         }

@@ -12,6 +12,7 @@ import UIKit
 @IBDesignable open class CardFrontView : UIView, Updatable {
   var view:UIView!;
     
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var cardLogo: UIImageView!
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
@@ -44,6 +45,7 @@ import UIKit
         cardExpirationDate.text = ""
         cardNumber.alpha = 0.8
         cardNumber.textColor =  fontColor
+        backgroundView.backgroundColor = MercadoPago.getColorFor(paymentMethod)
         
     }
     
