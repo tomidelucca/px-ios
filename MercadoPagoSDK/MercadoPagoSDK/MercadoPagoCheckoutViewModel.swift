@@ -22,6 +22,8 @@ public enum CheckoutStep : String {
     case CREATE_CARD_TOKEN
     case IDENTIFICATION
     case ENTITY_TYPE
+    case GET_FINANCIAL_INSTITUTIONS
+    case FINANCIAL_INSTITUTIONS_SCREEN
     case GET_PAYER_COSTS
     case PAYER_COST_SCREEN
     case REVIEW_AND_CONFIRM
@@ -81,6 +83,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var installment: Installment?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?
+    open var financialInstitutions: [FinancialInstitution]?
     
     static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
@@ -134,6 +137,15 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return EntityTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.entityTypes!)
     }
     
+    public func financialInstitutionViewModel() -> AdditionalStepViewModel{
+        var pms : [PaymentMethod] = []
+        if let _ = paymentMethods {
+            pms = paymentMethods!
+        }
+        
+        return FinancialInstitutionAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.financialInstitutions!)
+    }
+    
     public func debitCreditViewModel() -> AdditionalStepViewModel{
         var pms : [PaymentMethod] = []
         if let _ = paymentMethods {
@@ -182,6 +194,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     //CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PaymentMethod?){
         self.paymentData.paymentMethod = paymentMethod
+    }
+    
+    public func updateCheckoutModel(financialInstitution: FinancialInstitution?){
+        self.paymentData.transactionDetails.financialInstitution = financialInstitution
     }
     
     public func updateCheckoutModel(issuer: Issuer?){
@@ -268,6 +284,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         
         if needSelectCreditDebit() {
             return .CREDIT_DEBIT
+        }
+        
+        if needGetFinancialInstitutions(){
+            return .GET_FINANCIAL_INSTITUTIONS
+        }
+        
+        if needFinancialInstitutionSelectionScreen(){
+            return .FINANCIAL_INSTITUTIONS_SCREEN
         }
         
         if needGetIssuers() {
@@ -394,6 +418,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.cardToken = nil
             self.issuers = nil
             self.entityTypes = nil
+            self.financialInstitutions = nil
             self.installment = nil
             self.initWithPaymentData = false
         } else {
@@ -473,6 +498,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.issuers = nil
         self.installment = nil
         self.entityTypes = nil
+        self.financialInstitutions = nil
     }
     
 
