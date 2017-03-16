@@ -17,6 +17,7 @@ open class PaymentMethod : NSObject , Cellable {
     open var paymentTypeId : String!
     open var settings : [Setting]!
     open var additionalInfoNeeded : [String]!
+    open var financialInstitutions : [FinancialInstitution]!
     open var accreditationTime : Int? // [ms]
     open var status : String!
     open var secureThumbnail : String!
@@ -129,11 +130,17 @@ open class PaymentMethod : NSObject , Cellable {
         }
         obj["additional_info_needed"] = String(additionalInfoJson.characters.dropLast())
       
-        var settingsJson = " "
+        var settingsJson = ""
         for setting in self.settings {
             settingsJson.append(setting.toJSONString() + ",")
         }
         obj["settings"] = String(settingsJson.characters.dropLast())
+        
+        var financialInstitutionsJson = ""
+        for financialInstitution in self.financialInstitutions {
+            financialInstitutionsJson.append(financialInstitution.toJSONString() + ",")
+        }
+        obj["financial_institutions"] = String(financialInstitutionsJson.characters.dropLast())
 
         
         return obj
@@ -196,13 +203,24 @@ open class PaymentMethod : NSObject , Cellable {
                 }
             }
         }
+        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+
         
         if let accreditationTime = json["accreditation_time"] as? Int {
             paymentMethod.accreditationTime = accreditationTime
         }
         
+        var financialInstitutions : [FinancialInstitution] = [FinancialInstitution]()
+        if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
+            for i in 0..<financialInstitutionsArray.count {
+                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
+                    financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
+                }
+            }
+        }
+        paymentMethod.financialInstitutions = financialInstitutions
         
-        paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+        
         return paymentMethod
     }
     
@@ -355,7 +373,8 @@ public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
     obj1.name == obj2.name &&
     obj1.paymentTypeId == obj2.paymentTypeId &&
     obj1.settings == obj2.settings &&
-    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded
+    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
+    obj1.financialInstitutions == obj2.financialInstitutions
     
     return areEqual
 }
