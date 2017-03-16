@@ -37,13 +37,7 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
     
     internal func fillCell(summaryRow: SummaryRow, currency : Currency, payerCost : PayerCost? = nil){
         
-        fillDescription(title: summaryRow.customDescription, color: summaryRow.colorDescription)
-        
-        self.removeFromSuperview()
-        
-        fillAmount(amount: summaryRow.customAmount, color: summaryRow.colorAmount, payerCost: payerCost, currency: currency)
-        
-        addSeperatorLine(addLine: summaryRow.separatorLine)
+        fillCell(summaryRow.customDescription, amount: summaryRow.customAmount, currency: currency, addSeparatorLine: summaryRow.separatorLine, titleColor: summaryRow.colorDescription, amountColor: summaryRow.colorAmount)
     }
     
     func fillDescription(title: String, color: UIColor) {
