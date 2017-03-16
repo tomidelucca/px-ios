@@ -46,7 +46,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
         let currency = MercadoPagoContext.getCurrency()
 
-        self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
+        self.paymentMethodIcon.image = MercadoPago.getImage("review_iconoTarjeta")
         if let payerCost = payerCost {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)

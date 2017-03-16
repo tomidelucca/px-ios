@@ -192,7 +192,7 @@
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
-    [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
+    [resultPreference setPendingHeaderIconWithName:@"sube"];
     [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
     //[resultPreference disableRejectdSecondaryExitButton];

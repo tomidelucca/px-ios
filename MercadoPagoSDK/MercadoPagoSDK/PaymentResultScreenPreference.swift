@@ -14,15 +14,13 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubtitle = ""
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-	var approvedIconName = "iconoAcreditado"
-	var approvedIconBundle = MercadoPago.getBundle()!
+	var approvedIconName = "payment_result_approved"
 	
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
     var pendingContentTitle = "¿Qué puedo hacer?".localized
     var pendingContentText = ""
-    var pendingIconName = "iconoAcreditado"
-    var pendingIconBundle = MercadoPago.getBundle()!
+    var pendingIconName = "payment_result_pending"
     var hidePendingSecondaryButton = false
     var hidePendingContentText = false
     var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
@@ -31,7 +29,7 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedTitle = "Uy, no pudimos procesar el pago".localized
     var rejectedSubtitle = ""
     var rejectedIconSubtext = "Algo salió mal… ".localized
-    var rejectedIconName = "congrats_iconoTcError"
+    var rejectedIconName = "payment_result_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
@@ -69,9 +67,8 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedSecondaryExitButtonCallback = callback
     }
 	
-	open func setApprovedHeaderIcon(name: String, bundle: Bundle) {
+	open func setApprovedHeaderIcon(name: String) {
 		self.approvedIconName = name
-		self.approvedIconBundle = bundle
 	}
 	
     // Sets de Pending
@@ -84,9 +81,8 @@ open class PaymentResultScreenPreference: NSObject {
         self.pendingSubtitle = subtitle
     }
     
-    open func setPendingHeaderIcon(name: String, bundle: Bundle) {
+    open func setPendingHeaderIcon(name: String) {
         self.pendingIconName = name
-        self.pendingIconBundle = bundle
     }
     
     open func setPendingContentText(text: String) {
@@ -248,7 +244,7 @@ open class PaymentResultScreenPreference: NSObject {
     }
 	
 	open func getHeaderApprovedIcon() -> UIImage? {
-		return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
+		return MercadoPago.getImage(approvedIconName)
 	}
 	
     //Pending
@@ -262,7 +258,7 @@ open class PaymentResultScreenPreference: NSObject {
     }
     
     open func getHeaderPendingIcon() -> UIImage? {
-        return MercadoPago.getImage(pendingIconName, bundle: pendingIconBundle)
+        return MercadoPago.getImage(pendingIconName)
     }
     
     open func getPendingContetTitle() -> String {

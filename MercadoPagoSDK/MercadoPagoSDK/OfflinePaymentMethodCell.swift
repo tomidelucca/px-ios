@@ -62,7 +62,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         
         if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
             attributedTitle.append(NSAttributedString(string : " con dinero en tu cuenta de MercadoPago.".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
-            self.iconCash.image = MercadoPago.getImage("iconoDineroEnCuenta")
+            self.iconCash.image = MercadoPago.getImage("review_dineroEnCuenta")
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
         } else {
