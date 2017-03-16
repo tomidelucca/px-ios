@@ -121,11 +121,14 @@ import UIKit
         if name == nil || (name?.isEmpty)! {
             return nil
         }
-        if let image = MercadoPago.getImage(name, bundle: Bundle.main){
-            return image
-        } else {
-            return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+        if name!.hasPrefix("MPSDK_") {
+            if let image = MercadoPago.getImage(name, bundle: Bundle.main){
+                return image
+            } else {
+                return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+            }
         }
+        return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
         
     }
     
