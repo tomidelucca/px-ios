@@ -13,7 +13,13 @@ class FinancialInstitutionTableViewCell: UITableViewCell {
     @IBOutlet weak var financialInstitutionImage: UIImageView!
     
     func fillCell(financialInstitution: FinancialInstitution, bundle: Bundle){
-        financialInstitutionImage.image = UIImage(named: "issuer_\(financialInstitution._id!)", in: bundle, compatibleWith: nil)
+        if let image = UIImage(named: "financial_institution_\(financialInstitution._id!)", in: bundle, compatibleWith: nil){
+            financialInstitutionImage.image = image
+        }else {
+            financialInstitutionImage.image = nil
+            textLabel?.text = financialInstitution._description
+            textLabel?.textAlignment = .center
+        }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
