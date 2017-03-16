@@ -30,6 +30,7 @@ class DiscountBodyCell: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     func loadNoCouponView() {
         let currency = MercadoPagoContext.getCurrency()
         let screenWidth = frame.size.width
@@ -80,6 +81,8 @@ class DiscountBodyCell: UIView {
         }
         let tituloLabel = MPLabel(frame: CGRect(x: margin, y: 20, width: (frame.size.width - 2 * margin), height: 20) )
         tituloLabel.textAlignment = .center;
+        tituloLabel.attributedText = result
+        
         let result = NSMutableAttributedString()
         let normalAttributes: [String:AnyObject] = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 16) ?? UIFont.systemFont(ofSize: 16),NSForegroundColorAttributeName: UIColor.px_grayDark()]
         let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
@@ -91,7 +94,7 @@ class DiscountBodyCell: UIView {
         result.append(oldAmount)
         result.append(space)
         result.append(newAmount)
-        tituloLabel.attributedText = result
+
         let picFlag = UIImageView()
         picFlag.image = MercadoPago.getImage("couponArrowFlag")
         picFlag.image = picFlag.image?.withRenderingMode(.alwaysTemplate)

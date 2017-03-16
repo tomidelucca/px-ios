@@ -446,15 +446,15 @@ open class MercadoPagoCheckout: NSObject {
     
     private func pushViewController(viewController: UIViewController,
                                    animated: Bool) {
-        viewController.hidesBottomBarWhenPushed = true
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {
-            if MercadoPagoCheckout.firstViewControllerPushed {
-                self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
-            }
-        }
+      //  viewController.hidesBottomBarWhenPushed = true
+      //  CATransaction.begin()
+     //   CATransaction.setCompletionBlock {
+     //       if MercadoPagoCheckout.firstViewControllerPushed {
+     //           self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
+     //       }
+     //   }
         self.navigationController.pushViewController(viewController, animated: animated)
-        CATransaction.commit()
+      //  CATransaction.commit()
     }
     
     internal func removeRootLoading() {

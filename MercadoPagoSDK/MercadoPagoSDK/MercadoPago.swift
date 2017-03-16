@@ -98,6 +98,8 @@ import UIKit
        return Bundle(for:MercadoPago.self)
     }
     
+    
+    
     open class func getImage(_ name: String?, bundle: Bundle = MercadoPago.getBundle()!) -> UIImage? {
         if name == nil || (name?.isEmpty)! {
             return nil
