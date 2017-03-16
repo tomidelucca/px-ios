@@ -76,6 +76,37 @@ extension MercadoPagoCheckoutViewModel {
         return false
     }
     
+    func needGetFinancialInstitutions() -> Bool {
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        guard let pm = self.paymentData.paymentMethod else {
+            return false
+        }
+        
+        if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(pm.financialInstitutions) {
+           return true
+        }
+
+        return false
+    }
+    
+    func needFinancialInstitutionSelectionScreen() -> Bool {
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        guard let _ = self.paymentData.paymentMethod else {
+            return false
+        }
+        
+        if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(financialInstitutions) {
+            return true
+        }
+        
+        return false
+
+    }
+    
     func needGetIssuers() -> Bool {
         guard let selectedType = self.paymentOptionSelected else {
             return false
