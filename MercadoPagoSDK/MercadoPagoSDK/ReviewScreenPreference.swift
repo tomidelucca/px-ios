@@ -17,6 +17,8 @@ open class ReviewScreenPreference: NSObject {
     private var cancelButtonText = "Cancelar Pago".localized
 	private var shouldDisplayChangeMethodOption = true
     
+    private var summaryRows = [SummaryRow]()
+    
     internal static var additionalInfoCells = [MPCustomCell]()
     internal static var customItemCells = [MPCustomCell]()
     
@@ -75,6 +77,14 @@ open class ReviewScreenPreference: NSObject {
 	open func enableChangeMethodOption() {
 		self.shouldDisplayChangeMethodOption = true
 	}
+    
+    open func setSummaryRows(summaryRows: [SummaryRow]) {
+        self.summaryRows = summaryRows
+    }
+    
+    open func getSummaryRows() -> [SummaryRow]{
+        return summaryRows
+    }
 	
     open static func setCustomItemCell(customCell : [MPCustomCell]) {
         ReviewScreenPreference.customItemCells = customCell

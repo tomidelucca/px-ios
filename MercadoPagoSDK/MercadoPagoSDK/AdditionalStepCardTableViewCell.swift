@@ -42,6 +42,7 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
     func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod, view: Updatable) {
         
         view.updateCard(token: token, paymentMethod: paymentMethod)
+
     }
     func fadeCard(){
         UIView.animate(withDuration: 0.80) {

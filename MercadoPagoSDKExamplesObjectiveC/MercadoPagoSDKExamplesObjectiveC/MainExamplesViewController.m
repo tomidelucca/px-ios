@@ -255,6 +255,10 @@
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     
+    SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
+    
+    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
+    
     [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube, nil]];
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
@@ -272,7 +276,7 @@
 }
 
 -(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 

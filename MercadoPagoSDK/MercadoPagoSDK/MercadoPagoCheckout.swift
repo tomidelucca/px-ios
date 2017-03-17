@@ -282,16 +282,69 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
     
-    func createCardToken() {
+    func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
+        guard let cardInfo = cardInformation else {
+            createNewCardToken()
+            return
+        }
+        if cardInfo.canBeClone() {
+            cloneCardToken(cardInformation: cardInfo, securityCode: securityCode!)
+        
+        } else {
+            createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode!)
+        }
+    }
+    
+    func createNewCardToken() {
+        self.presentLoading()
+        
         MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token : Token?) -> Void in
             self.viewModel.updateCheckoutModel(token: token!)
             self.executeNextStep()
+            self.dismissLoading()
+        
         }, failure : { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createCardToken()
             })
             self.executeNextStep()
         })
+    }
+    
+    func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
+        self.presentLoading()
+        
+        let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
+        let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
+        
+        MPServicesBuilder.createToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token) in
+            if token.lastFourDigits.isEmpty {
+                token.lastFourDigits = cardInformation.getCardLastForDigits()
+            }
+            self.viewModel.updateCheckoutModel(token: token)
+            self.executeNextStep()
+            self.dismissLoading()
+        }, failure: { (error) in
+            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
+                self.createCardToken()
+            })
+        })
+    }
+    
+    func cloneCardToken(cardInformation: CardInformation, securityCode: String) {
+        self.presentLoading()
+        
+        if let token = cardInformation as? Token {
+            MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
+                self.viewModel.updateCheckoutModel(token: token)
+                self.executeNextStep()
+                self.dismissLoading()
+            }, failure: { (error) in
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
+                    self.createCardToken()
+                })
+            })
+        }
     }
 
     func collectPayerCosts() {
@@ -370,13 +423,9 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectSecurityCode(){
-        let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
-            if token == nil {
-                self.navigationController.popViewController(animated: true)
-            } else {
-                self.viewModel.updateCheckoutModel(token: token!)
-                self.executeNextStep()
-            }
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { (cardInformation: CardInformation, securityCode: String) -> Void in
+            self.createCardToken(cardInformation: cardInformation, securityCode: securityCode)
+
         })
         self.pushViewController(viewController : securityCodeVc, animated: true)
         

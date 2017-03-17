@@ -176,7 +176,7 @@ class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
         self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
-    
+
 }
 
 
