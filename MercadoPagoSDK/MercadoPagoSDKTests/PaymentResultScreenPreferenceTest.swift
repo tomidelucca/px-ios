@@ -205,11 +205,11 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
     
     func testDisableChangePaymentMethodCell() {
-        XCTAssertFalse(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell())
+        XCTAssertFalse(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable())
         
-        paymentResultScreenPreference.disableChangePaymentMethodOptionCell()
+        paymentResultScreenPreference.disableContentCell()
         MercadoPagoCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
         
-        XCTAssert(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell())
+        XCTAssert(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable())
     }
 }
