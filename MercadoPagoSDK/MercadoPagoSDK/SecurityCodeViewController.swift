@@ -8,20 +8,19 @@
 
 import UIKit
 
-open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate{
+open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate{
     
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     @IBOutlet weak var errorLabel: UILabel!
     
     @IBOutlet weak var panelView: UIView!
-    var viewModel : SecrurityCodeViewModel!
+    var viewModel : SecurityCodeViewModel!
     @IBOutlet weak var button: UIButton!
     var textMaskFormater : TextMaskFormater!
     var cardFront : CardFrontView!
     var cardBack : CardBackView!
     var ccvLabelEmpty : Bool = true
-    var collectSecurityCodeCallback : ((_ token: Token?)->Void)!
     
     override open var screenName : String { get{ return "SECURITY_CODE" } }
     
@@ -49,7 +48,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         
         securityCodeTextField.autocorrectionType = UITextAutocorrectionType.no
         securityCodeTextField.keyboardType = UIKeyboardType.numberPad
-        securityCodeTextField.addTarget(self, action: #selector(SecrurityCodeViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
+        securityCodeTextField.addTarget(self, action: #selector(SecurityCodeViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         securityCodeTextField.delegate = self
         completeCvvLabel()
     }
@@ -67,11 +66,10 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         super.init(coder: aDecoder)
     }
 
-    public init(viewModel : SecrurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ token: Token?) -> Void ) {
-        super.init(nibName: "SecrurityCodeViewController", bundle: MercadoPago.getBundle())
+    public init(viewModel : SecurityCodeViewModel, collectSecurityCodeCallback: @escaping (_ cardInformation: CardInformation, _ securityCode: String) -> Void ) {
+        super.init(nibName: "SecurityCodeViewController", bundle: MercadoPago.getBundle())
         self.viewModel = viewModel
-        self.viewModel.vc = self
-        self.collectSecurityCodeCallback = collectSecurityCodeCallback
+        self.viewModel.callback = collectSecurityCodeCallback
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -97,7 +95,6 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
             
             self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") //saca linea molesta
             displayBackButton()
-            self.navigationItem.leftBarButtonItem!.action = #selector(SecrurityCodeViewController.executeBack)
         }
     }
     
@@ -108,7 +105,7 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
             showErrorMessage()
             return
         }
-        self.viewModel.tokenAndCallback(secCode: securityCodeTextField.text)
+        self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
     }
     
     func updateCardSkin(cardInformation: CardInformationForm?, paymentMethod: PaymentMethod?) {
@@ -189,24 +186,17 @@ open class SecrurityCodeViewController: MercadoPagoUIViewController, UITextField
         return true
         
     }
-    
-    override func executeBack(){
-        self.collectSecurityCodeCallback(nil)
-    }
-
 }
 
-open class SecrurityCodeViewModel: NSObject {
+open class SecurityCodeViewModel: NSObject {
     var paymentMethod : PaymentMethod!
     var cardInfo : CardInformationForm!
-
-    // TODO : OJO
-    weak var vc : SecrurityCodeViewController?
+    
+    var callback: ((_ cardInformation: CardInformation, _ securityCode: String) -> Void)?
     
     public init(paymentMethod : PaymentMethod, cardInfo : CardInformationForm){
         self.paymentMethod = paymentMethod
         self.cardInfo = cardInfo
-        
     }
     
     public func showFrontCard() -> Bool {
@@ -220,53 +210,12 @@ open class SecrurityCodeViewModel: NSObject {
         return paymentMethod.secCodeLenght()
     }
     
-    
-    func tokenAndCallback(secCode : String!){
-        if let token = cardInfo as? Token {
-            self.cloneTokenAndCallback(secCode: secCode)
-        }else{
-            self.createTokenAndCallback(secCode: secCode)
-        }
+    func executeCallback(secCode : String!) {
+        callback!(cardInfo as! CardInformation, secCode)
     }
-    func cloneTokenAndCallback(secCode : String!) {
-        
-        self.vc?.showLoading()
-        if let token = cardInfo as? Token {
-            MPServicesBuilder.cloneToken(token,securityCode:secCode, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token) in
-                self.vc?.hideLoading()
-                self.vc!.collectSecurityCodeCallback(token)
-                }, failure: { (error) in
-                    self.vc?.hideLoading()
-                    let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
-                    self.vc?.displayFailure(mpError)
-            })
-        }
-       
-    }
-    
-    func createTokenAndCallback(secCode : String!) {
-        
-        self.vc?.showLoading()
-        let saveCardToken = SavedCardToken(card: cardInfo as! CardInformation, securityCode: secCode, securityCodeRequired: true)
-    
-        MPServicesBuilder.createToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token) in
-            if token!.lastFourDigits.isEmpty {
-                token!.lastFourDigits = self.cardInfo.getCardLastForDigits()
-            }
-            self.vc!.hideLoading()
-            self.vc!.collectSecurityCodeCallback(token)
-            }, failure: { (error) in
-                self.vc!.hideLoading()
-                 let mpError =  MPSDKError(message: "Hubo un error".localized, messageDetail: "", retry: false)
-                self.vc!.displayFailure(mpError)
-           })
-
-        
-    }
-    
     
     func getCardHeight() -> CGFloat {
-        return getCardWidth()/12*7
+        return getCardWidth() / 12 * 7
     }
     
     func getCardWidth() -> CGFloat {

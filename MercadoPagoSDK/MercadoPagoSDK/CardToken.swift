@@ -363,5 +363,9 @@ open class CardToken : NSObject, CardInformationForm {
     public func isIssuerRequired() -> Bool {
         return true
     }
+    
+    public func canBeClone() -> Bool {
+        return false
+    }
 
 }

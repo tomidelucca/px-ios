@@ -154,9 +154,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!, discount: self.paymentData.discount)
     }
     
-    public func securityCodeViewModel() -> SecrurityCodeViewModel {
+    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentOptionSelected as! CardInformation
-        return SecrurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+    }
+    
+    public func recoverTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: paymentData.token!)
     }
     
     public func checkoutViewModel() -> CheckoutViewModel {
