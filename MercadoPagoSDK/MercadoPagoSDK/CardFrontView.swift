@@ -12,6 +12,7 @@ import UIKit
 @IBDesignable open class CardFrontView : UIView, Updatable {
   var view:UIView!;
     
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var cardLogo: UIImageView!
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
@@ -33,10 +34,10 @@ import UIKit
         
         self.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
         self.cardLogo.alpha = 1
-        let fontColor = MercadoPago.getFontColorFor(paymentMethod)!
+        let fontColor = paymentMethod.getFontColor(bin: token?.getCardBin())
         if let token = token{
             //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
-            let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(), completeEmptySpaces: true, leftToRight: false)
+            let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: token.getCardBin()), completeEmptySpaces: true, leftToRight: false)
             self.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
         }
         
@@ -44,6 +45,7 @@ import UIKit
         cardExpirationDate.text = ""
         cardNumber.alpha = 0.8
         cardNumber.textColor =  fontColor
+        backgroundView.backgroundColor = paymentMethod.getColor(bin: token?.getCardBin())
         
     }
     
