@@ -399,6 +399,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return self.checkoutPreference.getAmount()
     }
     
+    internal func getFinalAmount() -> Double {
+        if let discount = paymentData.discount {
+            return discount.newAmount()
+        }else{
+            return self.checkoutPreference.getAmount()
+        }
+    }
+    
     public func isCheckoutComplete() -> Bool {
         return checkoutComplete
     }
