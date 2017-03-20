@@ -12,7 +12,7 @@ import UIKit
 open class AdditionalStepViewModel : NSObject{
     
     var bundle : Bundle? = MercadoPago.getBundle()
-
+    open var discount : DiscountCoupon?
     public var screenName: String
     public var screenTitle: String
     open var amount: Double
@@ -43,10 +43,18 @@ open class AdditionalStepViewModel : NSObject{
         return cardSectionVisible
     }
     
+    func showDiscountSection() -> Bool{
+        return false
+    }
+    
     func showTotalRow() -> Bool{
         return totalRowVisible
     }
 
+    func showAmountDetailRow() -> Bool {
+        return showTotalRow() || showDiscountSection()
+    }
+    
     func getScreenName() -> String{
         return screenName
     }
@@ -72,9 +80,13 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func getBodyCellHeight(row: Int) -> CGFloat{
-        if showTotalRow() {
+        if showTotalRow() || showDiscountSection() {
             if row == 0 {
-                return 42
+                if showDiscountSection() {
+                  return 84
+                }else{
+                   return 42
+                }
             } else {
                 return 60
             }
@@ -108,7 +120,7 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
 class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
-    var discount : DiscountCoupon?
+
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil ){
         super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
         self.screenName = screenName
@@ -121,6 +133,9 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         self.cardSectionView = cardSectionView
         self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
+    }
+     override func showDiscountSection() -> Bool{
+        return (discount != nil)
     }
     
 }

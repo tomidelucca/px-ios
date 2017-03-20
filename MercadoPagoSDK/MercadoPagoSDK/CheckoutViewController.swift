@@ -410,8 +410,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
 	func changePaymentMethodSelected() {
-		self.callbackPaymentData(PaymentData())
+        let pm = PaymentData()
+        pm.discount = self.viewModel.paymentData.discount
+		self.callbackPaymentData(pm)
 	}
+    
 	
     internal func openTermsAndConditions(_ title: String, url : URL){
         let webVC = WebViewController(url: url)
