@@ -59,7 +59,7 @@
     [self setReviewScreenPreference];
     
     //Setear flowPreference
-    //[self finishFlowBeforeRYC];
+    [self finishFlowBeforeRYC];
     
     
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
@@ -245,7 +245,14 @@
     cargaSubeCell.label.text = @"Carga SUBE";
     [cargaSubeCell.button setTitle:@"Cambiar" forState:UIControlStateNormal];
     [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CustomTableViewCell *cargaSubeCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCell2.label.text = @"Carga SUBE";
+    [cargaSubeCell2.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+    [cargaSubeCell2.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    
     MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
+    MPCustomCell *customCargaSube2 = [[MPCustomCell alloc] initWithCell:cargaSubeCell2];
     self.customCell = customCargaSube;
     
     // Setear Revisa y confima Preference
@@ -259,9 +266,10 @@
     
     SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
     
-    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
+//    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
     
-    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube, nil]];
+    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
 }

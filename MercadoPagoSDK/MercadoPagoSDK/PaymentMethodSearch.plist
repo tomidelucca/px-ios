@@ -45,7 +45,7 @@
 	<key>debvisa</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoVisaDebito</string>
+		<string>mediosVisaDebito</string>
 	</dict>
 	<key>credit_card</key>
 	<dict>
@@ -371,6 +371,11 @@
 	<dict>
 		<key>image_name</key>
 		<string>mediosWebpay</string>
+	</dict>
+	<key>debcabal</key>
+	<dict>
+		<key>image_name</key>
+		<string>mediosDebCabal</string>
 	</dict>
 </dict>
 </plist>

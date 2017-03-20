@@ -72,12 +72,13 @@ open class PaymentMethod : NSObject , Cellable {
     }
 
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
-        let setting : Setting? = Setting.getSettingByBin(settings, bin: bin)
-        if setting != nil && setting!.securityCode.length != 0 {
-            return true
-        } else {
-            return false
+        let settings : [Setting]? = Setting.getSettingByBin(self.settings, bin: bin)
+        if let settings = settings{
+                if settings[0].securityCode.length != 0 {
+                    return true
+                }
         }
+        return false
     }
     
     open func isAdditionalInfoNeeded(_ param: String!) -> Bool {
@@ -212,7 +213,7 @@ open class PaymentMethod : NSObject , Cellable {
         paymentMethod.paymentTypeId = self.paymentTypeId
         paymentMethod.additionalInfoNeeded = self.additionalInfoNeeded
         if(Setting.getSettingByBin(self.settings, bin: bin) != nil){
-            paymentMethod.settings = [Setting.getSettingByBin(self.settings, bin: bin)!]
+            paymentMethod.settings = Setting.getSettingByBin(self.settings, bin: bin)!
             return paymentMethod
         }else{
             return nil
@@ -324,17 +325,62 @@ open class PaymentMethod : NSObject , Cellable {
     }
     
     
-    open func getColor()-> UIColor? {
-     return MercadoPago.getColorFor(self)
+    
+    // IMAGE
+    open func getImage(bin: String?)-> UIImage? {
+        return MercadoPago.getImageFor(self)
     }
-    open func getImage()-> UIImage? {
-      return MercadoPago.getImageFor(self)
+    
+    // COLORS
+        // First Color
+    open func getColor(bin: String?)-> UIColor {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+
+        return MercadoPago.getColorFor(self, settings: settings)
     }
-    open func getLabelMask()-> String? {
-        return MercadoPago.getLabelMaskFor(self)
+        // Font Color
+    open func getFontColor(bin: String?)-> UIColor {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        
+        return MercadoPago.getFontColorFor(self, settings: settings)
     }
-    open func getEditTextMask()-> String? {
-        return MercadoPago.getEditTextMaskFor(self)
+        // Edit Font Color
+    open func getEditingFontColor(bin: String?)-> UIColor {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        
+        return MercadoPago.getEditingFontColorFor(self, settings: settings)
+    }
+    
+    // MASKS
+        // Label Mask
+    open func getLabelMask(bin: String?)-> String {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        return MercadoPago.getLabelMaskFor(self, settings: settings)
+    }
+        // Edit Text Mask
+    open func getEditTextMask(bin: String?)-> String {
+        var settings: [Setting]? = nil
+        
+        if let bin = bin {
+            settings = Setting.getSettingByBin(self.settings, bin: bin)
+        }
+        return MercadoPago.getEditTextMaskFor(self, settings: settings)
     }
 
 

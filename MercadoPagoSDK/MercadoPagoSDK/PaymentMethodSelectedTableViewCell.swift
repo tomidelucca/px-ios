@@ -29,8 +29,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
-        self.contentView.layer.borderWidth = 1.0
 
     }
 
@@ -93,6 +91,9 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         } else {
             TEALabel.text = ""
         }
+        
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
         
     }
     
