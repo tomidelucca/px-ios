@@ -10,6 +10,7 @@
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Revisa este dato";
 "invalid_card_length" = "Ingresa los %1$s números de la tarjeta";
+"invalid_card_length_general" = "Ingresa todos los números de la tarjeta";
 "security_code" = "Código de seguridad";
 "cod_seg_desc" = "Últimos %1$s números al dorso de la tarjeta";
 "cod_seg_desc_amex" = "%1$s números al frente de la tarjeta";
@@ -168,6 +169,7 @@
 "¿Cómo quiéres pagar?"="¿Cómo quiéres pagar?";
 "Cancelar Pago"="Cancelar Pago";
 "Términos y Condiciones"="Términos y Condiciones";
+"Con dinero en cuenta" = "Con dinero en cuenta";
 
 // PaymentTypes para RyC
 "ryc_title_default"=" en un ";
