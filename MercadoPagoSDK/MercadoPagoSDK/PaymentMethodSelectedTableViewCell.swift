@@ -29,8 +29,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
-        self.contentView.layer.borderWidth = 1.0
 
     }
 
@@ -46,7 +44,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
         let currency = MercadoPagoContext.getCurrency()
 
-        self.paymentMethodIcon.image = MercadoPago.getImage("iconCard")
+        self.paymentMethodIcon.image = MercadoPago.getImage("MPSDK_review_iconoTarjeta")
         if let payerCost = payerCost {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
@@ -92,6 +90,9 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         } else {
             TEALabel.text = ""
         }
+        
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
         
     }
     
