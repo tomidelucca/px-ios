@@ -22,6 +22,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        self.showLoading()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
@@ -62,7 +63,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
-        
+        self.hideLoading()
     }
     
     override func loadMPStyles(){
@@ -189,12 +190,10 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             if self.viewModel.showTotalRow(){
                 if indexPath.row != 0{
                     let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.showLoading()
                     self.viewModel.callback!(callbackData)
                 }
             } else{
                 let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.showLoading()
                 self.viewModel.callback!(callbackData)
             }
         }
@@ -221,11 +220,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     override func getNavigationBarTitle() -> String {
         return self.viewModel.getTitle()
-    }
-    
-    override open func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.hideLoading()
     }
     
 }

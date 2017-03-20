@@ -99,7 +99,7 @@ import UIKit
        return Bundle(for:MercadoPago.self)
     }
     
-    open class func getImage(_ name: String?, bundle: Bundle = MercadoPago.getBundle()!) -> UIImage? {
+    open class func getImage(_ name: String?, bundle: Bundle) -> UIImage? {
         if name == nil || (name?.isEmpty)! {
             return nil
         }
@@ -116,6 +116,21 @@ import UIKit
         }
         return UIImage(named:name!, in: bundle, compatibleWith:nil)
     
+    }
+    
+    open class func getImage(_ name: String?) -> UIImage? {
+        if name == nil || (name?.isEmpty)! {
+            return nil
+        }
+        if name!.hasPrefix("MPSDK_") {
+            if let image = MercadoPago.getImage(name, bundle: Bundle.main){
+                return image
+            } else {
+                return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+            }
+        }
+        return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+        
     }
     
     open class func screenBoundsFixedToPortraitOrientation() -> CGRect {

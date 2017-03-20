@@ -24,6 +24,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         
         self.contentView.layer.borderColor = UIColor.grayTableSeparator().cgColor
         self.contentView.layer.borderWidth = 1.0
+        self.itemImage.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

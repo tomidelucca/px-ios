@@ -158,6 +158,10 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
         return self.issuer == nil
     }
     
+    public func canBeClone() -> Bool {
+        return false
+    }
+    
     /** PaymentOptionDrawable implementation */
     
     public func getTitle() -> String {
@@ -201,6 +205,7 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
     public func getComment() -> String {
         return ""
     }
+    
 }
 
 
