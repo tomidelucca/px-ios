@@ -335,6 +335,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         cell.contentView.addSubview(customView)
         cell.selectionStyle = .none
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: customCell.getHeight()-1, width: screenWidth, height: 1)
+        cell.addSubview(separatorLine)
+        cell.contentView.backgroundColor = customView.backgroundColor
+        cell.clipsToBounds = true
         return cell
     }
     
@@ -362,8 +366,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getConfirmPaymentButtonCell(indexPath : IndexPath) -> UITableViewCell{
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
         confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
-		let confirmPaymentTitle = (indexPath.section == 1) ? MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText() :
-		 MercadoPagoCheckoutViewModel.reviewScreenPreference.getSecondaryConfirmButtonText()
+		let confirmPaymentTitle = (indexPath.section == 1) ? MercadoPagoCheckoutViewModel.reviewScreenPreference.getConfirmButtonText() : "Confirmar".localized
         confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle,for: .normal)
         return confirmPaymentTableViewCell
     }
