@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardFrontView" customModule="MercadoPagoSDK">
             <connections>
-                <outlet property="backgroundView" destination="iN0-l3-epB" id="vSi-Zz-swo"/>
+                <outlet property="backgroundView" destination="iN0-l3-epB" id="vlF-0l-abe"/>
                 <outlet property="cardCVV" destination="KwN-Cd-QgM" id="2LH-SN-U64"/>
                 <outlet property="cardExpirationDate" destination="rrP-jA-FVI" id="qqc-J7-PSt"/>
                 <outlet property="cardLogo" destination="y6l-UX-KQ5" id="Og4-I1-U8b"/>

@@ -63,7 +63,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
                 attributedTitle.append(endingTitle)
                 self.title.attributedText = attributedTitle
             }
-            
+     
         } else {
             icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderRejectedIcon()
             var title = (paymentResult.statusDetail + "_title")
