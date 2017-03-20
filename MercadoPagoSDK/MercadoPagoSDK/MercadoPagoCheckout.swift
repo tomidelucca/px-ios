@@ -121,7 +121,6 @@ open class MercadoPagoCheckout: NSObject {
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
-            //self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             self.executeNextStep()
         })
         
@@ -180,6 +179,7 @@ open class MercadoPagoCheckout: NSObject {
         })
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
+
     
     func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
         guard let cardInfo = cardInformation else {
@@ -304,6 +304,7 @@ open class MercadoPagoCheckout: NSObject {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
         }
+
     }
 	
 	func cleanNavigationStack () {
@@ -318,8 +319,9 @@ open class MercadoPagoCheckout: NSObject {
     private func executePaymentDataCallback() {
         if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
+
         }
-    }
+	}
     
     func collectSecurityCode(){
         let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { (cardInformation: CardInformation, securityCode: String) -> Void in
@@ -368,16 +370,15 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         let congratsViewController : UIViewController
-        if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+        if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
+                self.finish()
             })
         } else {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
+                self.finish()
             })
         }
-        self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
         self.pushViewController(viewController : congratsViewController, animated: true)
     }
     

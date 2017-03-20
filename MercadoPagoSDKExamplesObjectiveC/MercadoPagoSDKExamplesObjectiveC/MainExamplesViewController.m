@@ -85,6 +85,7 @@
     //Setear Void Callback
     //[self setVoidCallback];
 
+
     DiscountCoupon* dc = [[DiscountCoupon alloc] init];
     dc._id = @"123";
     dc.name = @"Patito Off";
@@ -94,6 +95,7 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ] start];
+
     
 }
 
@@ -225,6 +227,7 @@
     //    } text:@"Ir a mi actividad"];
     
     
+
     // Celdas custom de Payment Result
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];

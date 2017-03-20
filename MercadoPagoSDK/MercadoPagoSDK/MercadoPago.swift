@@ -57,6 +57,7 @@ import UIKit
     
     let BIN_LENGTH : Int = 6
     
+
     open var privateKey : String?
     open var pk : String!
     

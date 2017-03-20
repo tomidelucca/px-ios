@@ -115,7 +115,7 @@ class Utils {
         return attributedSymbol
     }
     
-    class func getTransactionInstallmentsDescription(_ installments : String, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
+    class func getTransactionInstallmentsDescription(_ installments : String,currency: Currency, installmentAmount : Double, additionalString : NSAttributedString? = nil, color : UIColor? = nil, fontSize : CGFloat = 22, centsFontSize : CGFloat = 10, baselineOffset : Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         let currency = MercadoPagoContext.getCurrency()
         
@@ -125,6 +125,7 @@ class Utils {
         
         stringToWrite.append(NSMutableAttributedString(string: installments + "x ", attributes: descriptionAttributes))
         
+
         stringToWrite.append(Utils.getAttributedAmount(installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault() , color:color, fontSize : fontSize, centsFontSize: centsFontSize, baselineOffset : baselineOffset))
         
         if additionalString != nil {
@@ -162,7 +163,7 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString : String, decimalSeparator : String) -> String {
+    class func getCentsFormatted(_ formattedString : String, decimalSeparator : String, decimalPlaces: Int = MercadoPagoContext.getCurrency().decimalPlaces) -> String {
         let range = formattedString.range(of: decimalSeparator)
         var cents = ""
         if range != nil {
@@ -170,14 +171,14 @@ class Utils {
             cents = formattedString.substring(from: centsIndex)
         }
         
-        if cents.isEmpty || cents.characters.count < 2 {
-            var missingZeros = 2 - cents.characters.count
+        if cents.isEmpty || cents.characters.count < decimalPlaces {
+            var missingZeros = decimalPlaces - cents.characters.count
             while missingZeros > 0 {
                 cents.append("0")
                 missingZeros = missingZeros - 1
             }
-        } else if cents.characters.count > 2 {
-            let index1 = cents.index(cents.startIndex, offsetBy: 2)
+        } else if cents.characters.count > decimalPlaces {
+            let index1 = cents.index(cents.startIndex, offsetBy: decimalPlaces)
             cents = cents.substring(to: index1)
         }
         
