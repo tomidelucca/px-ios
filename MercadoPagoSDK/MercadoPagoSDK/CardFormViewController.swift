@@ -37,6 +37,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     var editingLabel : UILabel?
     
+    
     var callback : (( _ paymentMethods: [PaymentMethod],_ cardtoken: CardToken?) -> Void)?
     
     var textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -622,8 +623,8 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         
         UIView.animate(withDuration: 0.7, animations: { () -> Void in
             self.cardFront?.cardLogo.alpha =  0
-            self.cardView.backgroundColor = UIColor(netHex: 0xEEEEEE)
-            })
+            self.cardView.backgroundColor = UIColor.cardDefaultColor()
+        })
         self.cardFront?.cardLogo.image =  nil
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
@@ -650,14 +651,15 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         if (textEditMaskFormater.textUnmasked(textBox.text).characters.count>=6 || cardFormManager.customerCard != nil || cardFormManager.cardToken != nil){
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
-            if(cardFormManager.getGuessedPM()  != nil){
-                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(self.cardFormManager.getGuessedPM()!)
+            let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
+            if let paymentMethod = cardFormManager.getGuessedPM(){
+                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
-                    self.cardView.backgroundColor = MercadoPago.getColorFor(self.cardFormManager.getGuessedPM()!)
+                    self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                     self.cardFront?.cardLogo.alpha = 1
                 })
-                let labelMask = (cardFormManager.getGuessedPM()?.getLabelMask() != nil) ? cardFormManager.getGuessedPM()?.getLabelMask() : "XXXX XXXX XXXX XXXX"
-                let editTextMask = (cardFormManager.getGuessedPM()?.getEditTextMask() != nil) ? cardFormManager.getGuessedPM()?.getEditTextMask() : "XXXX XXXX XXXX XXXX"
+                let labelMask = paymentMethod.getLabelMask(bin: bin)
+                let editTextMask = paymentMethod.getEditTextMask(bin: bin)
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
                 let textEditMaskFormaterAux = TextMaskFormater(mask:editTextMask, completeEmptySpaces :false)
                 cardNumberLabel?.text = textMaskFormaterAux.textMasked(textMaskFormater.textUnmasked(cardNumberLabel!.text))
@@ -697,9 +699,9 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     }
     
     func delightedLabels(){
-        cardNumberLabel?.textColor = self.cardFormManager.getLabelTextColor()
-        nameLabel?.textColor = self.cardFormManager.getLabelTextColor()
-        expirationDateLabel?.textColor = self.cardFormManager.getLabelTextColor()
+        cardNumberLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
+        nameLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
+        expirationDateLabel?.textColor = self.cardFormManager.getLabelTextColor(cardNumber: cardNumberLabel?.text)
         
         cvvLabel?.textColor = MPLabel.defaultColorText
         cardNumberLabel?.alpha = 0.7
@@ -710,7 +712,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     func lightEditingLabel(){
         if (editingLabel != cvvLabel){
-            editingLabel?.textColor = self.cardFormManager.getEditingLabelColor()
+            editingLabel?.textColor = self.cardFormManager.getEditingLabelColor(cardNumber: cardNumberLabel?.text)
         }
         editingLabel?.alpha = 1
     }
