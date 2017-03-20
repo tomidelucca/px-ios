@@ -126,10 +126,24 @@ extension UIColor {
     class public func grayStatusBar() -> UIColor {
         return UIColorFromRGB(0xE6E6E6)
     }
+
+    class public func mpLightGray() -> UIColor {
+        return UIColorFromRGB(0xEEEEEE)
+    }
     
+    class public func mpRedErrorMessage() -> UIColor {
+        return UIColorFromRGB(0xf04449)
+    }
     class public func primaryColor() -> UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
     }
+
+   
+    class public func mpGreenishTeal() -> UIColor
+    {
+        return UIColorFromRGB(0x3bc280)
+    }
+
     
     class public func cardDefaultColor() -> UIColor {
         return UIColor(netHex: 0xEEEEEE)
@@ -138,7 +152,7 @@ extension UIColor {
     class public func px_grayBackgroundColor() -> UIColor {
         return UIColorFromRGB(0xF7F7F7)
     }
-       
+
     func lighter() -> UIColor {
             return self.adjust(0.25, green: 0.25, blue: 0.25, alpha: 1)
     }

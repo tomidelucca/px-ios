@@ -193,3 +193,17 @@
 "ryc_complementary_banamex_bank_transfer"="Internet Banking de ";
 "ryc_complementary_banamex_atm"="caixa eletrônico de ";
 "ryc_complementary_redlink_atm"="caixa eletrônico de ";
+
+
+//Discount
+"Código de descuento"="Código de desconto";
+"Canejar"="Aplicar";
+"Código inválido"="Código inválido";
+"de descuento"="de desconto";
+"Tengo un descuento"="Tenho um desconto";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor não tem desconto disponíveis";
+"Se agotó la cantidad de usos"="O número de pedidos esgotados";
+"Importe fuera del alcance"="Montante fora do alcance";
+"La campaña expiró"="Campanha expirado";
+

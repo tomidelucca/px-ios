@@ -241,6 +241,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
         
+         self.collectionSearch.register(UICollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "CouponCell")
+        
     }
     
     override func getNavigationBarTitle() -> String {
@@ -271,31 +273,63 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.loadingGroups {
             return 0
         }
-        return 2
+        return viewModel.discount == nil ? 2 : 3
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if isGroupSection(section: indexPath.section) {
             let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodOption
             collectionView.deselectItem(at: indexPath, animated: true)
             collectionView.allowsSelection = false
             self.callback!(paymentSearchItemSelected)
+        }else if isCouponSection(section: indexPath.section) {
+            
+            if let coupon = self.viewModel.discount  {
+               let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
+               self.present(step, animated: false, completion: {})
+            }
         }
     }
+    
+    func isHeaderSection(section: Int) -> Bool {
+        if (section == 0 ){
+            return true
+        }else{
+            return false
+        }
+    }
+    func isCouponSection(section: Int) -> Bool {
+        guard let _ = viewModel.discount else{
+            return false
+        }
+        return section == 1
+    }
+    
+    func isGroupSection(section: Int) -> Bool {
+        var sectionGroup = 1
+        if viewModel.discount != nil {
+            sectionGroup = 2
+        }
+        return sectionGroup == section
+    }
+
     
 
     public func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
         
-        if (loadingGroups) {
-            return 0
-        }
-        
-        if (section == 0){
-            return 1
-        }
-        
-        return self.viewModel.getDisplayedPaymentMethodsCount()
+            if (loadingGroups) {
+                return 0
+            }
+            
+            if (isHeaderSection(section: section)){
+                return 1
+            }
+            if (isCouponSection(section: section)){
+                return 1
+            }
+            
+            return self.viewModel.getDisplayedPaymentMethodsCount()
         
     }
     
@@ -313,9 +347,16 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.titleSectionReference = cell
             titleCell = cell
             return cell
-        } else {
+        } else if isGroupSection(section: indexPath.section){
             let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row)
             cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+        }else if isCouponSection(section: indexPath.section){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell",for: indexPath)
+            cell.contentView.viewWithTag(1)?.removeFromSuperview()
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            discountBody.tag = 1
+            cell.contentView.addSubview(discountBody)
+            return cell
         }
         return cell
 
@@ -426,6 +467,8 @@ class PaymentVaultViewModel : NSObject {
     var defaultPaymentOption : PaymentMethodSearchItem?
    // var cards : [Card]?
     
+    var discount: DiscountCoupon?
+    
     weak var controller : PaymentVaultViewController?
     
     var customerId : String?
@@ -435,8 +478,9 @@ class PaymentVaultViewModel : NSObject {
     
     internal var isRoot = true
     
-    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, callbackCancel : ((Void) -> Void)? = nil){
+    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, discount: DiscountCoupon? = nil, callbackCancel : ((Void) -> Void)? = nil){
         self.amount = amount
+        self.discount = discount
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions
         self.customerPaymentOptions = customerPaymentOptions
