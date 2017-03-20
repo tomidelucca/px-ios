@@ -130,6 +130,10 @@ extension UIColor {
     class public func primaryColor() -> UIColor {
         return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
     }
+    
+    class public func px_grayBackgroundColor() -> UIColor {
+        return UIColorFromRGB(0xF7F7F7)
+    }
    
     
     func lighter() -> UIColor {

@@ -52,17 +52,6 @@ class ReviewScreenPreferenceTest: BaseTest {
         XCTAssertEqual(MercadoPagoCheckoutViewModel.reviewScreenPreference.getCancelButtonTitle(), "1")
     }
     
-    func testSetSecondaryButtonText() {
-        XCTAssertEqual(reviewScreenPreference.getSecondaryConfirmButtonText(), "Confirmar".localized)
-        
-        reviewScreenPreference.setSecondaryConfirmButtonText(secondaryConfirmButtonText: "1")
-        
-        MercadoPagoCheckout.setReviewScreenPreference(reviewScreenPreference)
-        
-        XCTAssertEqual(MercadoPagoCheckoutViewModel.reviewScreenPreference.getSecondaryConfirmButtonText(), "1")
-        
-    }
-    
     func testIsChangePaymentMethodDisable() {
         XCTAssert(reviewScreenPreference.isChangeMethodOptionEnabled())
         
