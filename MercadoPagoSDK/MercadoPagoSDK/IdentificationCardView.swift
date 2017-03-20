@@ -11,6 +11,10 @@ import UIKit
 open class IdentificationCardView: UIView, Updatable {
 var view:UIView!;
     
+    @IBOutlet weak var tipoDeDocumentoLabel: UILabel!
+    @IBOutlet weak var numberDocLabel: UILabel!
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib ()
