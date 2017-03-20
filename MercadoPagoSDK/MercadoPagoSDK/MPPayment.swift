@@ -36,19 +36,23 @@ open class MPPayment: NSObject {
     open var installments : Int = 0
     open var issuerId : String?
     open var tokenId : String?
+    open var payer : Payer?
+    open var transactionDetails : TransactionDetails?
 
     override init() {
         super.init()
     }
     
-    init(email : String, preferenceId : String, publicKey : String, paymentMethodId : String, installments : Int = 0, issuerId : String = "", tokenId : String = "") {
+    init(preferenceId : String, publicKey : String, paymentMethodId : String, installments : Int = 0, issuerId : String = "", tokenId : String = "", transactionDetails: TransactionDetails, payer: Payer) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
         self.installments = installments
         self.issuerId = issuerId
         self.tokenId = tokenId
-        self.email = email
+        self.transactionDetails = transactionDetails
+        self.payer = payer
+        self.email = payer.email
     }
     
     open func toJSONString() -> String {
@@ -83,8 +87,8 @@ open class CustomerPayment: MPPayment {
     
     open var customerId : String!
     
-    init(email: String, preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String){
-        super.init(email: email, preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, tokenId : tokenId)
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String){
+        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, tokenId : tokenId)
         self.customerId = customerId
     }
     
@@ -112,15 +116,15 @@ open class BlacklabelPayment: MPPayment {
 
 open class MPPaymentFactory {
     
-    open class func createMPPayment(email: String, preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String? = nil, isBlacklabelPayment : Bool) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String? = nil, isBlacklabelPayment : Bool) -> MPPayment {
         
         if !String.isNullOrEmpty(customerId) {
-            return CustomerPayment(email: email, preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!)
+            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!)
         } else if (isBlacklabelPayment) {
-            return BlacklabelPayment(email: email, preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
+            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
         }
         
-        return MPPayment(email: email, preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
+        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
         
     }
 
