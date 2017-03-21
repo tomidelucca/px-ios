@@ -31,7 +31,7 @@ class ApprovedTableViewCell: UITableViewCell {
         setFonts()
     }
     
-    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?, discount: DiscountCoupon? = nil){
+    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?){
         
         let currency = MercadoPagoContext.getCurrency()
         
@@ -66,7 +66,7 @@ class ApprovedTableViewCell: UITableViewCell {
         
         fillStatementDescriptionLabel(description: paymentResult.statementDescription)
         
-        if discount != nil {
+        if let discount = paymentResult.paymentData?.discount {
             let screenSize : CGRect = UIScreen.main.bounds
             let screenWidth = screenSize.width
             let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!)
