@@ -199,3 +199,16 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking of ";
 "ryc_complementary_banamex_atm"="ATM of ";
 "ryc_complementary_redlink_atm"="ATM of ";
+
+
+//Discount
+"Código de descuento"="Discount code";
+"Canejar"="Exchange";
+"Código inválido"="Invalid code";
+"de descuento"="of discount";
+"Tengo un descuento"="I have a discount";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Merchant without discount available";
+"Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
+"Importe fuera del alcance"="Amount out of reach";
+"La campaña expiró"="/Campaign expired";

@@ -346,7 +346,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getSummaryCell(indexPath : IndexPath) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
-        purchaseSimpleDetailTableViewCell.fillCell(summaryRow: MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()[indexPath.row], currency: currency, payerCost: nil)
+        purchaseSimpleDetailTableViewCell.fillCell(summaryRow: self.viewModel.summaryRows[indexPath.row], currency: currency, payerCost: nil)
         return purchaseSimpleDetailTableViewCell
     }
     
@@ -410,8 +410,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
 	func changePaymentMethodSelected() {
-		self.callbackPaymentData(PaymentData())
+        let pm = PaymentData()
+        pm.discount = self.viewModel.paymentData.discount
+		self.callbackPaymentData(pm)
 	}
+    
 	
     internal func openTermsAndConditions(_ title: String, url : URL){
         let webVC = WebViewController(url: url)
@@ -485,12 +488,17 @@ open class CheckoutViewModel {
     var paymentData : PaymentData!
     var paymentOptionSelected : PaymentMethodOption
     
+    var discount : DiscountCoupon?
+    
+    var summaryRows = MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()
+    
     public static var CUSTOMER_ID = ""
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption) {
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
+        self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
         
         self.setSummaryRows()
@@ -498,14 +506,14 @@ open class CheckoutViewModel {
     
     func setSummaryRows() {
         
-        var summaryRows = MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()
+
+        let productsSummary = SummaryRow(customDescription: MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: shouldShowTotal())
         
-        if summaryRows.count == 0 || summaryRows[0].customDescription != MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle() {
-            let productsSummary = SummaryRow(customDescription: MercadoPagoCheckoutViewModel.reviewScreenPreference.getProductsTitle(), descriptionColor: nil, customAmount: self.preference!.getAmount(), amountColor: nil, separatorLine: true)
-            
-            summaryRows.insert(productsSummary, at: 0)
-            
-            MercadoPagoCheckoutViewModel.reviewScreenPreference.setSummaryRows(summaryRows: summaryRows)
+        summaryRows.insert(productsSummary, at: 0)
+        
+        if let discount = self.paymentData.discount {
+            let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount: -discount.getDiscountAmount()!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
+            summaryRows.insert(discountSummary, at: 1)
         }
         MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()[0].separatorLine = shouldShowTotal()
     }
@@ -546,7 +554,7 @@ open class CheckoutViewModel {
             numberOfRows += 1
         }
         // Productos + customSummaryRows
-        numberOfRows += MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows().count
+        numberOfRows += summaryRows.count
         
         // Total
         numberOfRows = numberOfRows + 1
@@ -639,12 +647,15 @@ open class CheckoutViewModel {
     }
     
     func numberOfSummaryRows() -> Int{
-        return MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows().count
+        return summaryRows.count
     }
     
     func getTotalAmount() -> Double {
         if let payerCost = paymentData.payerCost {
             return payerCost.totalAmount
+        }
+        if let discount = paymentData.discount {
+            return discount.newAmount()
         }
         return self.preference!.getAmount()
     }

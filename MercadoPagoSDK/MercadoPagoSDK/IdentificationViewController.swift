@@ -255,7 +255,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         let toolbar = UIToolbar(frame: frame)
         
         toolbar.barStyle = UIBarStyle.default;
-        toolbar.backgroundColor = UIColor(netHex: 0xEEEEEE);
+        toolbar.backgroundColor = UIColor.mpLightGray()
         toolbar.alpha = 1;
         toolbar.isUserInteractionEnabled = true
         
@@ -301,8 +301,8 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
      var errorLabel : MPLabel?
     func showErrorMessage(_ errorMessage:String){
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor(netHex: 0xEEEEEE)
-        self.errorLabel!.textColor = UIColor(netHex: 0xf04449)
+        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
+        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)

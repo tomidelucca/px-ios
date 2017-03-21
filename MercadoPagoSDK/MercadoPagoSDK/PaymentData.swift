@@ -16,6 +16,7 @@ public class PaymentData: NSObject {
     public var token : Token?
     public var payer = Payer()
     public var transactionDetails : TransactionDetails?
+    public var discount : DiscountCoupon?
     
     func clearCollectedData() {
         self.paymentMethod = nil
@@ -24,6 +25,7 @@ public class PaymentData: NSObject {
         self.token = nil
         self.payer.clearCollectedData()
         self.transactionDetails = nil
+        // No borrar el descuento
     }
     
     

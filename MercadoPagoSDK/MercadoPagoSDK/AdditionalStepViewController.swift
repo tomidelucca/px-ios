@@ -162,13 +162,25 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
         } else {
             
-            if self.viewModel.showTotalRow(){
+            if self.viewModel.showAmountDetailRow() {
                 if indexPath.row == 0 {
-                    let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
-                    let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
-                    totalCell.fillCell(total: self.viewModel.amount)
-                    totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: Double(cellHeight))
-                    return totalCell as UITableViewCell
+                    
+                    if self.viewModel.showDiscountSection() {
+                        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
+                        cell.contentView.viewWithTag(1)?.removeFromSuperview()
+                        let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+                        discountBody.tag = 1
+                        cell.contentView.addSubview(discountBody)
+                        cell.selectionStyle = .none
+                        return cell
+                    }else {
+                        let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
+                        let totalCell = tableView.dequeueReusableCell(withIdentifier: "totalRowNib", for: indexPath as IndexPath) as! TotalPayerCostRowTableViewCell
+                        totalCell.fillCell(total: self.viewModel.amount)
+                        totalCell.addSeparatorLineToBottom(width: Double(cellWidth), height: Double(cellHeight))
+                        totalCell.selectionStyle = .none
+                        return totalCell as UITableViewCell
+                    }
                 } else{
                     let cellHeight = self.viewModel.getBodyCellHeight(row: indexPath.row)
                     let cell = self.viewModel.dataSource[indexPath.row-1].getCell(width: Double(cellWidth), height: Double(cellHeight))
