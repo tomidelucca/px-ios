@@ -76,9 +76,14 @@ open class MPPayment: NSObject {
             obj["issuer_id"] = self.issuerId
         }
         
-        let payer = Payer(email : self.email)
-        obj["payer"] = payer.toJSON()
+        if self.payer != nil{
+                obj["payer"] = self.payer?.toJSON()
+        }
         
+        if self.transactionDetails != nil {
+            obj["transaction_details"] = self.transactionDetails?.toJSON()
+        }
+ 
         return obj
     }
 }
@@ -87,8 +92,8 @@ open class CustomerPayment: MPPayment {
     
     open var customerId : String!
     
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String){
-        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, tokenId : tokenId)
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String, transactionDetails: TransactionDetails, payer: Payer){
+        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
         self.customerId = customerId
     }
     
@@ -116,15 +121,15 @@ open class BlacklabelPayment: MPPayment {
 
 open class MPPaymentFactory {
     
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String? = nil, isBlacklabelPayment : Bool) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String? = nil, isBlacklabelPayment : Bool, transactionDetails: TransactionDetails, payer: Payer) -> MPPayment {
         
         if !String.isNullOrEmpty(customerId) {
-            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!)
+            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer)
         } else if (isBlacklabelPayment) {
-            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
+            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
         }
         
-        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId)
+        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
         
     }
 
