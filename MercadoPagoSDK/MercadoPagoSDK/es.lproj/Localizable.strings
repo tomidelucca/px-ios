@@ -199,7 +199,6 @@
 "ryc_complementary_banamex_atm"="cajero automático de ";
 "ryc_complementary_redlink_atm"="cajero automático de ";
 
-
 //Discount
 "Código de descuento"="Código de descuento";
 "Canejar"="Canejar";
@@ -211,4 +210,3 @@
 "Se agotó la cantidad de usos"="Se agotó la cantidad de usos";
 "Importe fuera del alcance"="Importe fuera del alcance";
 "La campaña expiró"="La campaña expiró";
-
