@@ -15,7 +15,7 @@ open class MPServicesBuilder : NSObject {
     
     
     open class func createNewCardToken(_ cardToken : CardToken, baseURL: String = ServicePreference.MP_API_BASE_URL,
-                                       success:@escaping (_ token : Token?) -> Void,
+                                       success:@escaping (_ token : Token) -> Void,
                                        failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
@@ -24,11 +24,11 @@ open class MPServicesBuilder : NSObject {
         cardToken.device = Device()
         let service = GatewayService(baseURL: baseURL)
         service.getToken(key: MercadoPagoContext.keyValue(), cardToken: cardToken, success: {(jsonResult: AnyObject?) -> Void in
-            var token : Token? = nil
+            var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token._id)
                     success(token)
                 } else {
                     if failure != nil {
@@ -40,7 +40,7 @@ open class MPServicesBuilder : NSObject {
     }
     
     open class func createToken(_ savedCardToken : SavedCardToken,
-                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token : Token?) -> Void,
+                                baseURL: String =  ServicePreference.MP_API_BASE_URL, success: @escaping (_ token : Token) -> Void,
                                 failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
@@ -48,11 +48,11 @@ open class MPServicesBuilder : NSObject {
         savedCardToken.device = Device()
         let service : GatewayService = GatewayService(baseURL: baseURL)
         service.getToken(key: MercadoPagoContext.keyValue(), savedCardToken: savedCardToken, success: {(jsonResult: AnyObject?) -> Void in
-            var token : Token? = nil
+            var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token._id)
                     success(token)
                 } else {
                     if failure != nil {
@@ -66,18 +66,18 @@ open class MPServicesBuilder : NSObject {
     
     open class func cloneToken(_ token : Token,
                                securityCode: String,
-                               baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ token : Token?) -> Void,
+                               baseURL: String = ServicePreference.MP_API_BASE_URL, success: @escaping (_ token : Token) -> Void,
                                failure: ((_ error: NSError) -> Void)?) {
         
         MercadoPagoContext.initFlavor1()
         MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CLONE_TOKEN", result: nil)
         let service : GatewayService = GatewayService(baseURL: baseURL)
         service.cloneToken(public_key: MercadoPagoContext.publicKey(), token: token,securityCode: securityCode, success:{(jsonResult: AnyObject?) -> Void in
-            var token : Token? = nil
+            var token : Token
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token?._id)
+                    MPTracker.trackCreateToken(MercadoPagoContext.sharedInstance, token: token._id)
                     success(token)
                 } else {
                     if failure != nil {

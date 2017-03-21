@@ -10,6 +10,7 @@
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Check this information";
 "invalid_card_length" = "Enter the %1$s card numbers";
+"invalid_card_length_general" = "Enter all card numbers";
 "security_code" = "Security Code";
 "cod_seg_desc" = "Last %1$s digits code on the back of the card";
 "cod_seg_desc_amex" = "%1$s digits code on the front of the card";
@@ -180,6 +181,7 @@
 "Fecha" = "Date";
 "Cancelar Pago"="Cancel Payment";
 "Pagáras " = "You will pay ";
+"Con dinero en cuenta" = "With account money";
 
 
 
@@ -197,3 +199,16 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking of ";
 "ryc_complementary_banamex_atm"="ATM of ";
 "ryc_complementary_redlink_atm"="ATM of ";
+
+
+//Discount
+"Código de descuento"="Discount code";
+"Canejar"="Exchange";
+"Código inválido"="Invalid code";
+"de descuento"="of discount";
+"Tengo un descuento"="I have a discount";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Merchant without discount available";
+"Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
+"Importe fuera del alcance"="Amount out of reach";
+"La campaña expiró"="/Campaign expired";

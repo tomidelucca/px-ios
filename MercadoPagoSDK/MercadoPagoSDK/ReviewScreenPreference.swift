@@ -13,9 +13,10 @@ open class ReviewScreenPreference: NSObject {
     private var title = "Confirma tu compra".localized
     private var productsTitle = "Productos".localized
     private var confirmButtonText = "Confirmar".localized
-	private var secondaryConfirmButtonText : String?
     private var cancelButtonText = "Cancelar Pago".localized
 	private var shouldDisplayChangeMethodOption = true
+    
+    private var summaryRows = [SummaryRow]()
     
     internal static var additionalInfoCells = [MPCustomCell]()
     internal static var customItemCells = [MPCustomCell]()
@@ -44,18 +45,6 @@ open class ReviewScreenPreference: NSObject {
         return confirmButtonText
     }
 	
-	open func setSecondaryConfirmButtonText(secondaryConfirmButtonText : String){
-		self.secondaryConfirmButtonText = secondaryConfirmButtonText
-	}
-	
-	open func getSecondaryConfirmButtonText() -> String {
-		if let confirmText = secondaryConfirmButtonText {
-			return confirmText
-		} else {
-			return self.confirmButtonText
-		}
-	}
-	
     open func setCancelButtonText(cancelButtonText : String){
         self.cancelButtonText = cancelButtonText
     }
@@ -75,6 +64,14 @@ open class ReviewScreenPreference: NSObject {
 	open func enableChangeMethodOption() {
 		self.shouldDisplayChangeMethodOption = true
 	}
+    
+    open func setSummaryRows(summaryRows: [SummaryRow]) {
+        self.summaryRows = summaryRows
+    }
+    
+    open func getSummaryRows() -> [SummaryRow]{
+        return summaryRows
+    }
 	
     open static func setCustomItemCell(customCell : [MPCustomCell]) {
         ReviewScreenPreference.customItemCells = customCell

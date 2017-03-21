@@ -10,7 +10,6 @@ import Foundation
 @objc
 public protocol MPCellContentProvider : NSObjectProtocol {
     
-    
-    
     func getHeight() -> CGFloat
+    
 }

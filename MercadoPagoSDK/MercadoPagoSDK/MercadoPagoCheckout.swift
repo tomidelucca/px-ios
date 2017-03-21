@@ -20,56 +20,16 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController : UIViewController?
     
-
-    
-    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
-        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult)
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController : UINavigationController, paymentResult: PaymentResult? = nil) {
+        viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
         
         if self.navigationController.viewControllers.count > 0 {
-            viewControllerBase = self.navigationController.viewControllers.last
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self);
+            }
+            viewControllerBase = newNavigationStack.last
         }
-    }
-    
-    open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
-        MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
-    }
-    
-    open static func setServicePreference(_ servicePreference: ServicePreference){
-        MercadoPagoCheckoutViewModel.servicePreference = servicePreference
-    }
-    
-    open static func setFlowPreference(_ flowPreference: FlowPreference){
-        MercadoPagoCheckoutViewModel.flowPreference = flowPreference
-    }
-    
-    open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
-        MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
-    }
-    
-    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
-        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
-    }
-    
-    open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
-    }
-    
-    open static func setChangePaymentMethodCallback(changePaymentMethodCallback : @escaping (Void) -> Void) {
-        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
-    }
-    
-    open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
-    }
-    
-    open static func setPaymentDataConfirmCallback(paymentDataConfirmCallback : @escaping (_ paymentData : PaymentData) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = paymentDataConfirmCallback
-    }
-    
-    open static func setCallback(callback : @escaping (Void) -> Void) {
-        MercadoPagoCheckoutViewModel.callback = callback
     }
     
     public func start(){
@@ -85,7 +45,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func executeNextStep(){
         switch self.viewModel.nextStep() {
-        case .SEARCH_PREFENCE :
+        case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
@@ -139,7 +99,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentMethodSearch() {
         self.presentLoading()
-        MPServicesBuilder.searchPaymentMethods(self.viewModel.getAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
+        MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
                                                baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
                     self.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
                     self.executeNextStep()
@@ -161,7 +121,6 @@ open class MercadoPagoCheckout: NSObject {
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
-            //self.viewModel.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
             self.executeNextStep()
         })
         
@@ -188,8 +147,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectCreditDebit(){
-        let crediDebitStep = CardAdditionalViewController(viewModel: self.viewModel.debitCreditViewModel(), collectPaymentMethodCallback: { (paymentMethod) in
-            self.viewModel.updateCheckoutModel(paymentMethod: paymentMethod)
+        let crediDebitStep = AdditionalStepViewController(viewModel: self.viewModel.debitCreditViewModel(), callback: { (paymentMethod) in
+            self.viewModel.updateCheckoutModel(paymentMethod: paymentMethod as! PaymentMethod)
             self.executeNextStep()
         })
         self.pushViewController(viewController : crediDebitStep, animated: true)
@@ -214,17 +173,35 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func startIssuersScreen() {
-        let issuerStep = CardAdditionalViewController(viewModel: self.viewModel.issuerViewModel(), collectIssuerCallback: { (issuer) in
-            self.viewModel.updateCheckoutModel(issuer: issuer)
+        let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { (issuer) in
+            self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
             self.executeNextStep()
         })
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
+
     
-    func createCardToken() {
+    func createCardToken(cardInformation: CardInformation? = nil, securityCode: String? = nil) {
+        guard let cardInfo = cardInformation else {
+            createNewCardToken()
+            return
+        }
+        if cardInfo.canBeClone() {
+            cloneCardToken(cardInformation: cardInfo, securityCode: securityCode!)
+        
+        } else {
+            createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode!)
+        }
+    }
+    
+    func createNewCardToken() {
+        self.presentLoading()
+        
         MPServicesBuilder.createNewCardToken(self.viewModel.cardToken!, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token : Token?) -> Void in
             self.viewModel.updateCheckoutModel(token: token!)
             self.executeNextStep()
+            self.dismissLoading()
+        
         }, failure : { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createCardToken()
@@ -232,11 +209,47 @@ open class MercadoPagoCheckout: NSObject {
             self.executeNextStep()
         })
     }
+    
+    func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
+        self.presentLoading()
+        
+        let cardInformation = self.viewModel.paymentOptionSelected as! CardInformation
+        let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
+        
+        MPServicesBuilder.createToken(saveCardToken, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getGatewayURL(), success: { (token) in
+            if token.lastFourDigits.isEmpty {
+                token.lastFourDigits = cardInformation.getCardLastForDigits()
+            }
+            self.viewModel.updateCheckoutModel(token: token)
+            self.executeNextStep()
+            self.dismissLoading()
+        }, failure: { (error) in
+            self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
+                self.createCardToken()
+            })
+        })
+    }
+    
+    func cloneCardToken(cardInformation: CardInformation, securityCode: String) {
+        self.presentLoading()
+        
+        if let token = cardInformation as? Token {
+            MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
+                self.viewModel.updateCheckoutModel(token: token)
+                self.executeNextStep()
+                self.dismissLoading()
+            }, failure: { (error) in
+                self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
+                    self.createCardToken()
+                })
+            })
+        }
+    }
 
     func collectPayerCosts() {
         
         let bin = self.viewModel.cardToken?.getBin()
-        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.checkoutPreference.getAmount() , issuer: self.viewModel.paymentData.issuer, paymentMethodId: self.viewModel.paymentData.paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(),success: { (installments) -> Void in
+        MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.issuer, paymentMethodId: self.viewModel.paymentData.paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(),success: { (installments) -> Void in
             self.viewModel.installment = installments[0]
             
             let defaultPayerCost = self.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
@@ -254,8 +267,8 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func startPayerCostScreen() {
-        let payerCostStep = CardAdditionalViewController(viewModel: self.viewModel.payerCostViewModel(), collectPayerCostCallback: { (payerCost) in
-            self.viewModel.updateCheckoutModel(payerCost: payerCost)
+        let payerCostStep = AdditionalStepViewController(viewModel: self.viewModel.payerCostViewModel(), callback: { (payerCost) in
+            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
             self.executeNextStep()
         })
         self.pushViewController(viewController : payerCostStep, animated: true)
@@ -291,6 +304,7 @@ open class MercadoPagoCheckout: NSObject {
             // Caso en que RyC esté deshabilitada
             self.executePaymentDataCallback()
         }
+
     }
 	
 	func cleanNavigationStack () {
@@ -305,17 +319,14 @@ open class MercadoPagoCheckout: NSObject {
     private func executePaymentDataCallback() {
         if MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
+
         }
-    }
+	}
     
     func collectSecurityCode(){
-        let securityCodeVc = SecrurityCodeViewController(viewModel: self.viewModel.securityCodeViewModel(), collectSecurityCodeCallback : { (token: Token?) -> Void in
-            if token == nil {
-                self.navigationController.popViewController(animated: true)
-            } else {
-                self.viewModel.updateCheckoutModel(token: token!)
-                self.executeNextStep()
-            }
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { (cardInformation: CardInformation, securityCode: String) -> Void in
+            self.createCardToken(cardInformation: cardInformation, securityCode: securityCode)
+
         })
         self.pushViewController(viewController : securityCodeVc, animated: true)
         
@@ -330,6 +341,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func createPayment() {
+        self.presentLoading()
         
         var paymentBody : [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
@@ -342,6 +354,7 @@ open class MercadoPagoCheckout: NSObject {
         MerchantServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: {(payment : Payment) -> Void in
             self.viewModel.updateCheckoutModel(payment: payment)
             self.executeNextStep()
+            self.dismissLoading()
         }, failure: {(error : NSError) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createPayment()
@@ -357,16 +370,15 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         let congratsViewController : UIViewController
-        if (PaymentTypeId.isOfflineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+        if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
+                self.finish()
             })
         } else {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
-                self.executeNextStep()
+            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
+                self.finish()
             })
         }
-        self.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
         self.pushViewController(viewController : congratsViewController, animated: true)
     }
     
@@ -442,15 +454,7 @@ open class MercadoPagoCheckout: NSObject {
     
     private func pushViewController(viewController: UIViewController,
                                    animated: Bool) {
-        viewController.hidesBottomBarWhenPushed = true
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {
-            if MercadoPagoCheckout.firstViewControllerPushed {
-                self.perform(#selector(self.removeRootLoading), with: nil, afterDelay: 1.0)
-            }
-        }
         self.navigationController.pushViewController(viewController, animated: animated)
-        CATransaction.commit()
     }
     
     internal func removeRootLoading() {
@@ -459,4 +463,48 @@ open class MercadoPagoCheckout: NSObject {
         }
         self.navigationController.viewControllers = currentViewControllers
     }
+}
+
+extension MercadoPagoCheckout {
+    
+    open static func setDecorationPreference(_ decorationPreference: DecorationPreference){
+        MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
+    }
+    
+    open static func setServicePreference(_ servicePreference: ServicePreference){
+        MercadoPagoCheckoutViewModel.servicePreference = servicePreference
+    }
+    
+    open static func setFlowPreference(_ flowPreference: FlowPreference){
+        MercadoPagoCheckoutViewModel.flowPreference = flowPreference
+    }
+    
+    open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
+        MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
+    }
+    
+    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
+    }
+    
+    open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {
+        MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
+    }
+    
+    open static func setChangePaymentMethodCallback(changePaymentMethodCallback : @escaping (Void) -> Void) {
+        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
+    }
+    
+    open static func setPaymentCallback(paymentCallback : @escaping (_ payment : Payment) -> Void) {
+        MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
+    }
+    
+    open static func setPaymentDataConfirmCallback(paymentDataConfirmCallback : @escaping (_ paymentData : PaymentData) -> Void) {
+        MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = paymentDataConfirmCallback
+    }
+    
+    open static func setCallback(callback : @escaping (Void) -> Void) {
+        MercadoPagoCheckoutViewModel.callback = callback
+    }
+
 }

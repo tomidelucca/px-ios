@@ -115,10 +115,10 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
     
     func testSetHeaderIcon() {
-        XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingIconName, "iconoAcreditado")
+        XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingIconName, "MPSDK_payment_result_pending")
         XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingIconBundle, MercadoPago.getBundle())
 
-        XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.rejectedIconName, "congrats_iconoTcError")
+        XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.rejectedIconName, "MPSDK_payment_result_error")
         XCTAssertEqual(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.rejectedIconBundle, MercadoPago.getBundle())
         
         paymentResultScreenPreference.setPendingHeaderIcon(name: "lala", bundle: Bundle.main)
@@ -205,11 +205,11 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
     
     func testDisableChangePaymentMethodCell() {
-        XCTAssertFalse(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell())
+        XCTAssertFalse(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable())
         
-        paymentResultScreenPreference.disableChangePaymentMethodOptionCell()
+        paymentResultScreenPreference.disableContentCell()
         MercadoPagoCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
         
-        XCTAssert(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell())
+        XCTAssert(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable())
     }
 }

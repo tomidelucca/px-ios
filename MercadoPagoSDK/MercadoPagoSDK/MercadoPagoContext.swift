@@ -68,11 +68,25 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
+        //Argentina
         "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
+        //Brasil
         "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
-        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
-        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"]
-     ]
+        //Chile
+
+        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.cl/ayuda/terminos-y-condiciones_299"],
+        //Mexico
+        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"],
+        //Peru
+        "MPE" : ["language" : "es", "currency" : "PEN","termsconditions" : "https://www.mercadopago.com.pe/ayuda/terminos-condiciones-uso_2483"],
+        //Uruguay
+        "MLU" : ["language" : "es", "currency" : "UYU","termsconditions" : "https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834"],
+        //Colombia
+        "MCO" : ["language" : "es-CO", "currency" : "COP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
+        //Venezuela
+        "MLV" : ["language" : "es", "currency" : "VEF","termsconditions" : "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
+]
+
 
     public enum Site : String {
         case MLA = "MLA"
@@ -90,11 +104,13 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     @objc public enum Languages : Int {
         case _SPANISH
         case _SPANISH_MEXICO
-        /*
         case _SPANISH_COLOMBIA
+        /*
         case _SPANISH_URUGUAY
         case _SPANISH_PERU
         case _SPANISH_VENEZUELA
+        case _SPANISH_CHILE
+
  */
         case _PORTUGUESE
         case _ENGLISH
@@ -103,11 +119,13 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             switch self {
             case ._SPANISH : return "es"
             case ._SPANISH_MEXICO : return "es-MX"
-                /*
+                
             case ._SPANISH_COLOMBIA : return "es-CO"
+                /*
             case ._SPANISH_URUGUAY : return "es-UY"
             case ._SPANISH_PERU : return "es-PE"
             case ._SPANISH_VENEZUELA : return "es-VE"
+            case ._SPANISH_CHILE : return "es-CH"
                  */
             case ._PORTUGUESE : return "pt"
             case ._ENGLISH : return "en"

@@ -59,7 +59,7 @@
     [self setReviewScreenPreference];
     
     //Setear flowPreference
-    //[self finishFlowBeforeRYC];
+    [self finishFlowBeforeRYC];
     
     
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
@@ -84,9 +84,18 @@
     
     //Setear Void Callback
     //[self setVoidCallback];
-    
-    
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData navigationController:self.navigationController paymentResult:self.paymentResult] start];
+
+
+    DiscountCoupon* dc = [[DiscountCoupon alloc] init];
+    dc._id = @"123";
+    dc.name = @"Patito Off";
+    dc.coupon_amount = @"30";
+    dc.amount_off = @"30";
+    dc.currency_id = @"ARS";
+    dc.concept = @"Descuento de patito";
+    dc.amount = 300;
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ] start];
+
     
 }
 
@@ -150,7 +159,7 @@
         [flowPreference enableReviewAndConfirmScreen];
         [MercadoPagoCheckout setFlowPreference:flowPreference];
         
-        [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController paymentResult:nil] start];
+        [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData discount:nil navigationController:self.navigationController paymentResult:nil] start];
         
     }];
 }
@@ -192,7 +201,7 @@
     [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
-    [resultPreference setPendingHeaderIconWithName:@"iconoPagoOffline" bundle:[NSBundle mainBundle]];
+    [resultPreference setPendingHeaderIconWithName:@"sube" bundle:[NSBundle mainBundle]];
     [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
     //[resultPreference disableRejectdSecondaryExitButton];
@@ -218,6 +227,7 @@
     //    } text:@"Ir a mi actividad"];
     
     
+
     // Celdas custom de Payment Result
     
     SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
@@ -243,7 +253,14 @@
     cargaSubeCell.label.text = @"Carga SUBE";
     [cargaSubeCell.button setTitle:@"Cambiar" forState:UIControlStateNormal];
     [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CustomTableViewCell *cargaSubeCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
+    cargaSubeCell2.label.text = @"Carga SUBE";
+    [cargaSubeCell2.button setTitle:@"Cambiar" forState:UIControlStateNormal];
+    [cargaSubeCell2.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
+    
     MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
+    MPCustomCell *customCargaSube2 = [[MPCustomCell alloc] initWithCell:cargaSubeCell2];
     self.customCell = customCargaSube;
     
     // Setear Revisa y confima Preference
@@ -255,7 +272,12 @@
     [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     
-    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube, nil]];
+    SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
+    
+    [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
+    
+    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
 }
@@ -272,7 +294,7 @@
 }
 
 -(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor greenColor] fontName:@"fontName" fontLightName:@"fontName"];
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"] fontName:@"fontName" fontLightName:@"fontName"];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 

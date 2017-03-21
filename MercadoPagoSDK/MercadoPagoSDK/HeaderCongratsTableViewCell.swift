@@ -43,7 +43,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             subtitle.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSubtitle()
             
         } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
-            icon.image = MercadoPago.getImage("congrats_iconoAutorizarTel")
+            icon.image = MercadoPago.getImage("MPSDK_payment_result_c4a")
             var titleWithParams:String = ""
             if let paymentMethodName = paymentMethod?.name {
                 titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
@@ -63,7 +63,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
                 attributedTitle.append(endingTitle)
                 self.title.attributedText = attributedTitle
             }
-            
+     
         } else {
             icon.image = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getHeaderRejectedIcon()
             var title = (paymentResult.statusDetail + "_title")
@@ -99,7 +99,7 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
         
         view.backgroundColor = color
         
-        icon.image = MercadoPago.getImage("iconoPagoOffline")
+        icon.image = MercadoPago.getImage("MPSDK_payment_result_off")
         let currency = instructionsInfo.amountInfo.currency!
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."

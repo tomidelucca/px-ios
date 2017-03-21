@@ -48,6 +48,13 @@ class OfflinePaymentMethodCell: UITableViewCell {
         image = image?.withRenderingMode(.alwaysTemplate)
         self.accreditationTimeIcon.tintColor = UIColor.px_grayLight()
         self.accreditationTimeIcon.image = image
+        
+        self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
+        
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: nil) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
+
+        self.iconCash.image = MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,12 +64,12 @@ class OfflinePaymentMethodCell: UITableViewCell {
     internal func fillCell(_ paymentMethodOption : PaymentMethodOption, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
         
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
-        let attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20)])
+        var attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()])
         attributedTitle.append(attributedAmount)
         
         if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
-            attributedTitle.append(NSAttributedString(string : " con dinero en tu cuenta de MercadoPago.".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
-            self.iconCash.image = MercadoPago.getImage("iconoDineroEnCuenta")
+            attributedTitle = NSMutableAttributedString(string : "Con dinero en cuenta".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()])
+            self.iconCash.image = MercadoPago.getImage("MPSDK_review_dineroEnCuenta")
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
         } else {
@@ -74,17 +81,17 @@ class OfflinePaymentMethodCell: UITableViewCell {
                 currentTitle = "ryc_title_default".localized
             }
             
-            attributedTitle.append(NSAttributedString(string : currentTitle, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
+            attributedTitle.append(NSAttributedString(string : currentTitle, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             
             let complementaryTitle = "ryc_complementary_" + paymentMethodOption.getId()
             if complementaryTitle.existsLocalized() {
-                attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
+                attributedTitle.append(NSAttributedString(string : complementaryTitle.localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             }
-            attributedTitle.append(NSAttributedString(string : paymentMethodOption.getDescription(), attributes: [NSFontAttributeName: Utils.getFont(size: 20)]))
+            attributedTitle.append(NSAttributedString(string : paymentMethodOption.getDescription(), attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()]))
             
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }
-		
+
         self.paymentMethodDescription.attributedText = attributedTitle
 		
 		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
@@ -94,6 +101,8 @@ class OfflinePaymentMethodCell: UITableViewCell {
 		} else {
 			self.changePaymentButton.isHidden = true;
 		}
+        self.setNeedsUpdateConstraints()
+        self.setNeedsLayout()
     }
     
 	

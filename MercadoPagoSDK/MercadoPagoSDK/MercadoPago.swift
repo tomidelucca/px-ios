@@ -57,6 +57,7 @@ import UIKit
     
     let BIN_LENGTH : Int = 6
     
+
     open var privateKey : String?
     open var pk : String!
     
@@ -98,7 +99,8 @@ import UIKit
        return Bundle(for:MercadoPago.self)
     }
     
-    open class func getImage(_ name: String?, bundle: Bundle = MercadoPago.getBundle()!) -> UIImage? {
+
+    open class func getImage(_ name: String?, bundle: Bundle) -> UIImage? {
         if name == nil || (name?.isEmpty)! {
             return nil
         }
@@ -115,6 +117,21 @@ import UIKit
         }
         return UIImage(named:name!, in: bundle, compatibleWith:nil)
     
+    }
+    
+    open class func getImage(_ name: String?) -> UIImage? {
+        if name == nil || (name?.isEmpty)! {
+            return nil
+        }
+        if name!.hasPrefix("MPSDK_") {
+            if let image = MercadoPago.getImage(name, bundle: Bundle.main){
+                return image
+            } else {
+                return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+            }
+        }
+        return MercadoPago.getImage(name, bundle: MercadoPago.getBundle()!)
+        
     }
     
     open class func screenBoundsFixedToPortraitOrientation() -> CGRect {
@@ -208,107 +225,119 @@ import UIKit
 
     }
     
-    open class func getColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
+    open class func getColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
+       
         
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "first_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
-        
-    }
-    
-    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
-        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
-        
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let etMask = pmConfig.value(forKey: "label_mask") as! String
-        
-        return etMask
-    }
-    
-    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, forCell: Bool? = false) -> String?{
-        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
-        
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let etMask = pmConfig.value(forKey: "editText_mask") as! String
-
-        return etMask
-    }
-    
-    
-    open class func getFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
-        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
-        
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "font_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
-        
-    }
-    
-    open class func getEditingFontColorFor(_ paymentMethod : PaymentMethod) -> UIColor?{
-        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
-        let dictPM = NSDictionary(contentsOfFile: path!)
-        
-        let pmConfig = dictPM?.value(forKey: paymentMethod._id) as! NSDictionary
-        let stringColor = pmConfig.value(forKey: "editing_font_color") as! String
-        //let intColor = Int(stringColor)
-        return UIColor(netHex:Int(stringColor, radix: 16)!)
-        
-    }
-    
-    open class func createMPPayment(_ email : String, preferenceId : String, paymentMethod: PaymentMethod, token : Token? = nil, installments: Int = 1, issuer: Issuer? = nil, customerId : String? = nil, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-    
-        var issuerId = ""
-        if issuer != nil {
-            issuerId = String(issuer!._id!.intValue)
-        }
-
-        
-        var tokenId = ""
-        if token != nil {
-            tokenId = token!._id
-        }
-        
-        let isBlacklabelPayment = token != nil && token?.cardId != nil && String.isNullOrEmpty(customerId)
-        
-        let mpPayment = MPPaymentFactory.createMPPayment(email: email, preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentMethod._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment)
-
-        let service : MerchantService = MerchantService(baseURL: MercadoPagoCheckoutViewModel.servicePreference.paymentURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI())
-        
-        let body = Utils.append(firstJSON: mpPayment.toJSONString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
-        service.createPayment(body: body, success: { (jsonResult) in
-            var payment : Payment? = nil
-            
-            if let paymentDic = jsonResult as? NSDictionary {
-                if paymentDic["error"] != nil {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
-                    }
-                } else {
-                    if paymentDic.allKeys.count > 0 {
-                        payment = Payment.fromJSON(paymentDic)
-                        success(payment!)
-                        // Clear payment key after post payment success
-                        MercadoPagoContext.clearPaymentKey()
-                    } else {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PAYMENT_ERROR".localized]))
-                    }
-                    
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            if let stringColor = pmConfig.value(forKey: "first_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return UIColor.cardDefaultColor()
+            }
+        } else if let setting = settings?[0] {
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                if let stringColor = pmConfig.value(forKey: "first_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return UIColor.cardDefaultColor()
                 }
-            } else {
-                if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: NSURLErrorCannotDecodeContentData, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : "No se ha podido procesar el pago".localized]))
-                }
-            }}, failure: failure)
-
+            }
+        }
+            return UIColor.cardDefaultColor()
+        
     }
     
+    open class func getLabelMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let defaultMask = "XXXX XXXX XXXX XXXX"
+        
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let etMask = pmConfig.value(forKey: "label_mask") as? String
+            return etMask ?? defaultMask
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let etMask = pmConfig.value(forKey: "label_mask") as? String
+                return etMask ?? defaultMask
+            }
+        }
+        return defaultMask
+    }
+    
+    open class func getEditTextMaskFor(_ paymentMethod : PaymentMethod, settings: [Setting]?, forCell: Bool? = false) -> String{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        
+        let defaultMask = "XXXX XXXX XXXX XXXX"
+        
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            let etMask = pmConfig.value(forKey: "editText_mask") as? String
+            return etMask ?? defaultMask
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                let etMask = pmConfig.value(forKey: "editText_mask") as? String
+                return etMask ?? defaultMask
+            }
+        }
+        return defaultMask
+    }
+    
+    
+    open class func getFontColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        let defaultColor = MPLabel.defaultColorText
+    
+
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            if let stringColor = pmConfig.value(forKey: "font_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return defaultColor
+            }
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                if let stringColor = pmConfig.value(forKey: "font_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return defaultColor
+                }            }
+        }
+        return defaultColor
+
+        
+        
+    }
+    
+    open class func getEditingFontColorFor(_ paymentMethod : PaymentMethod, settings: [Setting]?) -> UIColor{
+        let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethod", ofType: "plist")
+        let dictPM = NSDictionary(contentsOfFile: path!)
+        let defaultColor = MPLabel.highlightedColorText
+        
+        
+        if let pmConfig = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary{
+            if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String{
+                return UIColor.fromHex(stringColor)
+            }else{
+                return defaultColor
+            }
+        } else if let setting = settings?[0]{
+            if let pmConfig = dictPM?.value(forKey: paymentMethod._id + "_" + String(setting.cardNumber.length)) as? NSDictionary{
+                if let stringColor = pmConfig.value(forKey: "editing_font_color") as? String{
+                    return UIColor.fromHex(stringColor)
+                }else{
+                    return defaultColor
+                }
+            }
+        }
+        return defaultColor
+        
+        
+        
+    }
     
     internal class func openURL(_ url : String){
         let currentURL = URL(string: url)

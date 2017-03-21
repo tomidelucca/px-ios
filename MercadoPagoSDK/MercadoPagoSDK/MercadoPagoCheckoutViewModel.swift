@@ -9,7 +9,7 @@
 import UIKit
 
 public enum CheckoutStep : String {
-    case SEARCH_PREFENCE
+    case SEARCH_PREFERENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -71,6 +71,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     var next : CheckoutStep = .SEARCH_PAYMENT_METHODS
     
+    let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
 
     var paymentData = PaymentData()
     var payment : Payment?
@@ -88,7 +89,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal var reviewAndConfirm = false
     internal var initWithPaymentData = false
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?) {
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         self.checkoutPreference = checkoutPreference
         if let pm = paymentData{
             if pm.isComplete() {
@@ -96,6 +97,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
                 self.reviewAndConfirm = true
                 self.initWithPaymentData = true
             }
+        }
+        if let discount = discount {
+            self.paymentData = PaymentData()
+            self.paymentData.discount = discount
         }
         self.paymentResult = paymentResult
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
@@ -118,38 +123,44 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return CardViewModelManager(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
     }
     
-    public func debitCreditViewModel() -> CardAdditionalStepViewModel{
+    func paymentVaultViewModel() -> PaymentVaultViewModel {
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount)
+    }
+    
+    public func debitCreditViewModel() -> AdditionalStepViewModel{
         var pms : [PaymentMethod] = []
         if let _ = paymentMethods {
             pms = paymentMethods!
         }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: nil, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : nil, callback: nil)
+        return CardTypeAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: pms)
+
     }
     
-    func paymentVaultViewModel() -> PaymentVaultViewModel {
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC)
-    }
-    
-    public func issuerViewModel() -> CardAdditionalStepViewModel{
+    public func issuerViewModel() -> AdditionalStepViewModel{
         var pms : [PaymentMethod] = []
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(paymentMethods: pms, issuer: nil, token: self.cardToken, amount: self.getAmount(), paymentPreference: nil, installment: nil, issuersList : self.issuers, callback: nil)
+
+        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
     }
     
-    public func payerCostViewModel() -> CardAdditionalStepViewModel{
-        let cardInformation = self.paymentOptionSelected as? CardInformation ?? nil
+    public func payerCostViewModel() -> AdditionalStepViewModel{
         var pms : [PaymentMethod] = []
         if let pm = self.paymentData.paymentMethod {
             pms = [pm]
         }
-        return CardAdditionalStepViewModel(cardInformation : cardInformation, paymentMethods: pms, issuer: self.paymentData.issuer, token: self.cardToken, amount: self.getAmount(), paymentPreference: getPaymentPreferences(), installment: self.installment, issuersList : nil, callback: nil)
+
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: (installment?.payerCosts)!, discount: self.paymentData.discount)
     }
     
-    public func securityCodeViewModel() -> SecrurityCodeViewModel {
+    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentOptionSelected as! CardInformation
-        return SecrurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+    }
+    
+    public func recoverTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: paymentData.token!)
     }
     
     public func checkoutViewModel() -> CheckoutViewModel {
@@ -176,7 +187,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(identification : Identification) {
         self.cardToken!.cardholder!.identification = identification
-        self.next = .CREATE_CARD_TOKEN
     }
     
     public func updateCheckoutModel(payerCost: PayerCost?){
@@ -210,7 +220,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needLoadPreference {
             needLoadPreference = false
-            return .SEARCH_PREFENCE
+            return .SEARCH_PREFERENCE
         }
         
         
@@ -387,6 +397,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     internal func getAmount() -> Double {
         return self.checkoutPreference.getAmount()
+    }
+    
+    internal func getFinalAmount() -> Double {
+        if let discount = paymentData.discount {
+            return discount.newAmount()
+        }else{
+            return self.checkoutPreference.getAmount()
+        }
     }
     
     public func isCheckoutComplete() -> Bool {

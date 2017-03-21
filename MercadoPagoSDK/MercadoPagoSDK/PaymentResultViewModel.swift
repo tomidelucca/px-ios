@@ -211,7 +211,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
 			
 		} else {
 			let callForAuthAdd = callForAuth() ? 1 : 0;
-			let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isSelectAnotherPaymentMethodDisableCell() ? 1 : 0
+			let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
 			return callForAuthAdd + selectAnotherCellAdd;
 		}
     }
