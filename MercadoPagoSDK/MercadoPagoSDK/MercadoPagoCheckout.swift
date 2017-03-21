@@ -103,8 +103,6 @@ open class MercadoPagoCheckout: NSObject {
             self.collectCreditDebit()
         case .GET_FINANCIAL_INSTITUTIONS:
             self.collectFinancialInstitutions()
-        case .FINANCIAL_INSTITUTIONS_SCREEN:
-            self.startFinancialInstitutionsScreen()
         case .GET_ISSUERS:
             self.collectIssuers()
         case .ISSUERS_SCREEN:
@@ -135,6 +133,7 @@ open class MercadoPagoCheckout: NSObject {
         self.presentLoading()
         MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {(checkoutPreference : CheckoutPreference) -> Void in
             self.viewModel.checkoutPreference = checkoutPreference
+            self.viewModel.paymentData.payer = checkoutPreference.getPayer()
             self.executeNextStep()
            // self.dismissLoading()
         }, failure: {(error : NSError) -> Void in
@@ -165,7 +164,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentMethods(){
         // Se limpia paymentData antes de ofrecer selección de medio de pago
-        self.viewModel.paymentData.clear()
+        self.viewModel.paymentData.clearCollectedData()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
@@ -203,23 +202,20 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectFinancialInstitutions(){
-        let financialInstitutions = self.viewModel.paymentData.paymentMethod.financialInstitutions
-        
-        self.viewModel.financialInstitutions = financialInstitutions
-        
-        if financialInstitutions?.count == 1 {
-            self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions?[0])
-            self.executeNextStep()
+        if let financialInstitutions = self.viewModel.paymentData.paymentMethod.financialInstitutions{
+            self.viewModel.financialInstitutions = financialInstitutions
+            
+            if financialInstitutions.count == 1 {
+                self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
+                self.executeNextStep()
+            } else {
+                let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
+                    self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution?)!)
+                    self.executeNextStep()
+                })
+                self.navigationController.pushViewController(financialInstitutionStep, animated: true)
+            }
         }
-        self.executeNextStep()
-    }
-    
-    func startFinancialInstitutionsScreen(){
-        let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
-            self.viewModel.updateCheckoutModel(financialInstitution: financialInstitution as! FinancialInstitution?)
-            self.executeNextStep()
-        })
-        self.navigationController.pushViewController(financialInstitutionStep, animated: true)
     }
     
     func collectEntityTypes(){
@@ -248,7 +244,7 @@ open class MercadoPagoCheckout: NSObject {
         }
         
         let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
-            self.viewModel.updateCheckoutModel(entityType: entityType as! EntityType?)
+            self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType?)!)
             self.executeNextStep()
         })
         self.navigationController.pushViewController(entityTypeStep, animated: true)
