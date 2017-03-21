@@ -22,6 +22,12 @@ open class Payer : NSObject {
 		self.identification = identification
         self.entityType = entityType
 	}
+    
+    func clearCollectedData() {
+        self._id = nil
+        self.entityType = nil
+        self.identification = nil
+    }
 	
 	open class func fromJSON(_ json : NSDictionary) -> Payer {
 		let payer : Payer = Payer()
@@ -53,12 +59,23 @@ open class Payer : NSObject {
         let _id : Any = self._id == nil ? JSONHandler.null : self._id
         let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
         let entityType : Any = self.entityType == nil ? JSONHandler.null : self.entityType!.toJSONString()
-        let obj:[String:Any] = [
+        var obj:[String:Any] = [
             "email": email,
-            "_id": _id,
-            "identification" : identification,
-            "entity_type" : entityType
+            "_id": _id
         ]
+        
+        if self._id != nil {
+            obj["id"] = self._id
+        }
+        
+        if self.identification != nil {
+            obj["identification"] = self.identification?.toJSON()
+        }
+
+        if let ET = self.entityType {
+            obj["entity_type"] = ET._id
+        }
+        
         return obj
     }
 	

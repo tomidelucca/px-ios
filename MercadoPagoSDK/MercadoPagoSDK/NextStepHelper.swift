@@ -51,6 +51,12 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod , let option = self.paymentOptionSelected else {
             return false
         }
+        
+        if !self.paymentData.paymentMethod.isOnlinePaymentMethod() && (self.paymentData.paymentMethod.isIdentificationRequired() || self.paymentData.paymentMethod.isIdentificationTypeRequired()) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
+            
+            return true
+        }
+        
         guard let holder = self.cardToken?.cardholder else {
             return false
         }
@@ -70,7 +76,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if paymentData.payer?.entityType == nil && pm.isEntityTypeRequired() && pm.isIdentificationTypeRequired() {
+        if paymentData.payer.entityType == nil && pm.isEntityTypeRequired() {
             return true
         }
         return false
@@ -89,22 +95,6 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         return false
-    }
-    
-    func needFinancialInstitutionSelectionScreen() -> Bool {
-        guard let _ = self.paymentOptionSelected else {
-            return false
-        }
-        guard let _ = self.paymentData.paymentMethod else {
-            return false
-        }
-        
-        if paymentData.transactionDetails?.financialInstitution == nil && !Array.isNullOrEmpty(financialInstitutions) {
-            return true
-        }
-        
-        return false
-
     }
     
     func needGetIssuers() -> Bool {
