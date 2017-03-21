@@ -511,7 +511,7 @@ open class CheckoutViewModel {
         summaryRows.insert(productsSummary, at: 0)
         
         if let discount = self.paymentData.discount {
-            let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount: -discount.getDiscountAmount()!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
+            let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount:-Double(discount.coupon_amount)!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
             summaryRows.insert(discountSummary, at: 1)
         }
     }

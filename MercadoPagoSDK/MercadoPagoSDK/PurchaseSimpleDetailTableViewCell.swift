@@ -47,11 +47,17 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
     }
     
     func fillAmount(amount: Double, color: UIColor, payerCost: PayerCost?, currency: Currency) {
+        var absoluteAmount = amount
+        var isNegative = false
+        if absoluteAmount < 0 {
+            absoluteAmount = absoluteAmount * -1
+            isNegative = true
+        }
         if payerCost != nil {
             let purchaseAmount = getInstallmentsAmount(payerCost: payerCost!)
             self.unitPrice.attributedText = purchaseAmount
         } else {
-            self.unitPrice.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color , fontSize : 18, baselineOffset : 5)
+            self.unitPrice.attributedText = Utils.getAttributedAmount(absoluteAmount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color : color , fontSize : 18, baselineOffset : 5, negativeAmount: isNegative)
         }
     }
     
