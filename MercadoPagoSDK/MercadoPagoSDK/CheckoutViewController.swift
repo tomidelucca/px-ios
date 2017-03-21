@@ -515,7 +515,6 @@ open class CheckoutViewModel {
             let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount: -discount.getDiscountAmount()!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
             summaryRows.insert(discountSummary, at: 1)
         }
-        MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()[0].separatorLine = shouldShowTotal()
     }
     
     func isPaymentMethodSelectedCard() -> Bool {
