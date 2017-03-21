@@ -652,6 +652,9 @@ open class CheckoutViewModel {
         if let payerCost = paymentData.payerCost {
             return payerCost.totalAmount
         }
+        if let discount = paymentData.discount {
+            return discount.newAmount()
+        }
         return self.preference!.getAmount()
     }
     
