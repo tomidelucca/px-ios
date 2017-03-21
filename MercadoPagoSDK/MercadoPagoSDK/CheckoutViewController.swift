@@ -488,12 +488,15 @@ open class CheckoutViewModel {
     var paymentData : PaymentData!
     var paymentOptionSelected : PaymentMethodOption
     
+    var discount : DiscountCoupon?
+    
     public static var CUSTOMER_ID = ""
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption) {
+    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
+        self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
         
         self.setSummaryRows()
