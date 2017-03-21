@@ -138,7 +138,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 4
     }
-    
+
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
 		//approved case
 		let precondition = indexPath.section == 1 && approved()
@@ -156,6 +156,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
 		let case2 = indexPath.row == 1;
 		return precondition && (case1 || case2)
     }
+    
     
     func isCallForAuthFor(indexPath: IndexPath) -> Bool {
 		//non approved case

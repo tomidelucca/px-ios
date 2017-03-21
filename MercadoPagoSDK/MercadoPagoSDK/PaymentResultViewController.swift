@@ -154,7 +154,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     
     private func getApprovedBodyCell() -> UITableViewCell {
         let approvedCell = self.tableView.dequeueReusableCell(withIdentifier: "approvedNib") as! ApprovedTableViewCell
-        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference)
+        approvedCell.fillCell(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, discount: viewModel.discount)
         return approvedCell
     }
     
