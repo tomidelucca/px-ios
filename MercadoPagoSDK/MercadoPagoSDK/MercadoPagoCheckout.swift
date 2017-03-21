@@ -371,7 +371,7 @@ open class MercadoPagoCheckout: NSObject {
 
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, discount: self.viewModel.paymentData.discount, callback: { (state : MPStepBuilder.CongratsState) in
                 self.finish()
             })
         } else {

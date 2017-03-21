@@ -1,4 +1,4 @@
- //
+//
 //  PaymentVaultViewController.swift
 //  MercadoPagoSDK
 //
@@ -378,11 +378,12 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let availableWidth = view.frame.width - paddingSpace
         
         titleCellHeight = 82
-        if indexPath.section == 0 {
+        if isHeaderSection(section: indexPath.section) {
             return CGSize(width : view.frame.width, height : titleCellHeight)
         }
-        
-       
+        if isCouponSection(section: indexPath.section) {
+            return CGSize(width : view.frame.width, height : 84)
+        }
         
         let widthPerItem = availableWidth / itemsPerRow
         return CGSize(width: widthPerItem, height: maxHegithRow(indexPath:indexPath)  )
@@ -432,6 +433,9 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     public func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
+        if isCouponSection(section: section){
+            return UIEdgeInsetsMake(0, 0, 0, 0)
+        }
         return UIEdgeInsetsMake(8, 8, 8, 8)
 
     }

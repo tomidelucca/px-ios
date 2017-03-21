@@ -62,10 +62,10 @@ open class DiscountCoupon: NSObject {
             discount.coupon_amount = String( describing: json["coupon_amount"]  as! NSNumber)
         }
         if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
-            discount.currency_id = json["currency_id"] as! String
+            discount.currency_id = json["currency_id"] as? String
         }
         if json["concept"] != nil && !(json["concept"]! is NSNull) {
-            discount.concept = json["concept"] as! String
+            discount.concept = json["concept"] as? String
         }
         discount.amount = amount
         return discount
@@ -88,6 +88,29 @@ open class DiscountCoupon: NSObject {
         }else{
             return ""
         }
+    }
+    open func getDiscountAmount() -> Double? {
+        if percent_off != "0" {
+            return Double(percent_off) // Deberia devolver el monto que se descuenta
+        } else if amount_off != "0" {
+            return  Double(amount_off)
+        }
+        return nil
+    }
+    
+    open func getDiscountReviewDescription() -> String {
+        var text = ""
+        if let concept = self.concept {
+            text = concept
+        }else{
+           text  = "Descuento"
+        }
+            
+        
+        if percent_off != "0" {
+            return text + " " + percent_off + " %"
+        }
+        return text
     }
     
     open func newAmount() -> Double {
