@@ -99,11 +99,18 @@ open class DiscountCoupon: NSObject {
     }
     
     open func getDiscountReviewDescription() -> String {
-        let description = "Descuento"
-        if percent_off != "0" {
-            return description + " " + percent_off + " %"
+        var text = ""
+        if let concept = self.concept {
+            text = concept
+        }else{
+           text  = "Descuento"
         }
-        return description
+            
+        
+        if percent_off != "0" {
+            return text + " " + percent_off + " %"
+        }
+        return text
     }
     
     open func newAmount() -> Double {
