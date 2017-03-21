@@ -508,8 +508,14 @@ open class CheckoutViewModel {
             
             summaryRows.insert(productsSummary, at: 0)
             
-            MercadoPagoCheckoutViewModel.reviewScreenPreference.setSummaryRows(summaryRows: summaryRows)
         }
+        if let discount = self.paymentData.discount {
+            if summaryRows.count == 1 || summaryRows[1].customDescription != "" {
+                let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount: -discount.getDiscountAmount()!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
+                summaryRows.insert(discountSummary, at: 1)
+            }
+        }
+        MercadoPagoCheckoutViewModel.reviewScreenPreference.setSummaryRows(summaryRows: summaryRows)
         MercadoPagoCheckoutViewModel.reviewScreenPreference.getSummaryRows()[0].separatorLine = shouldShowTotal()
     }
     
