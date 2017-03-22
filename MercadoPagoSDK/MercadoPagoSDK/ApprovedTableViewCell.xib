@@ -110,6 +110,7 @@
                 <outlet property="paymentId" destination="5Q0-cp-03V" id="sPh-ss-6g4"/>
                 <outlet property="paymentMethod" destination="i8n-4l-cmC" id="TFl-Ht-hRa"/>
                 <outlet property="paymentMethodStatementDescriptionConstraint" destination="2C1-Jw-RFh" id="6H2-fU-bQQ"/>
+                <outlet property="paymentMethodTotalConstraint" destination="yp0-yr-aX3" id="Ehz-MI-h6e"/>
                 <outlet property="statement" destination="V3V-ZN-8xJ" id="0rX-c4-d5p"/>
                 <outlet property="total" destination="1vd-yi-RVw" id="w71-hX-J8J"/>
             </connections>
