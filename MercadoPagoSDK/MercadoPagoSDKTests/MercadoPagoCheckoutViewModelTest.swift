@@ -16,7 +16,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
@@ -204,6 +203,16 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         fp.disableReviewAndConfirmScreen()
         MercadoPagoCheckout.setFlowPreference(fp)
         
+        // Setear paymentDataCallback
+        let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
+        MercadoPagoCheckout.setPaymentDataCallback { (paymentData : PaymentData) in
+            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            XCTAssertNil(paymentData.issuer)
+            XCTAssertNil(paymentData.payerCost)
+            XCTAssertNil(paymentData.token)
+            expectPaymentDataCallback.fulfill()
+        }
+
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
         
@@ -231,32 +240,13 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.PAYMENT_METHOD_SELECTION, step)
         
+        
         // 6. Payment option selected : account_money => paymentDataCallback
         MPCheckoutTestAction.selectAccountMoney(mpCheckout : mpCheckout)
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.FINISH, step)
 
-<<<<<<< 58fb96294e0c4a6b621ddd21be94707e41d3e9a3
-        
-        // 7. RyC pero no se muestra y se llama a paymentDataCallback
-        let accountMoneyPm = MockBuilder.buildPaymentMethod("account_money", name: "Dinero en cuenta", paymentTypeId: PaymentTypeId.ACCOUNT_MONEY.rawValue)
-        let paymentDataMock = MockBuilder.buildPaymentData(paymentMethod: accountMoneyPm)
-        mpCheckout.viewModel.updateCheckoutModel(paymentData: paymentDataMock)
-        
-        
-=======
-        // Setear paymentDataCallback
->>>>>>> Default step FINISH. reviewAndConfirm removed. Tests updated
-        let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
-        MercadoPagoCheckout.setPaymentDataCallback { (paymentData : PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
-            XCTAssertNil(paymentData.issuer)
-            XCTAssertNil(paymentData.payerCost)
-            XCTAssertNil(paymentData.token)
-            expectPaymentDataCallback.fulfill()
-        }
-        
-        // Ejecutar finish
+        // 7. Execute finish to call paymentDataCallback
         mpCheckout.executeNextStep()
         
         waitForExpectations(timeout: 10, handler: nil)
@@ -568,6 +558,55 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         
     }
 
+    /****************************************************/
+    /********** ViewModel Builders Tests ****************/
+    /****************************************************/
+    
+    func testHasError(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckout = MercadoPagoCheckout(checkoutPreference: checkoutPreference, navigationController: UINavigationController())
+        
+        XCTAssertFalse(mpCheckout.viewModel.hasError())
+        
+        let error = MPSDKError()
+        MercadoPagoCheckoutViewModel.error = error
+        
+        XCTAssertTrue(mpCheckout.viewModel.hasError())
+        
+        MercadoPagoCheckoutViewModel.error = nil
+        
+    }
+    
+    func testIssuerViewModel(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount: nil)
+        
+        // Simular installments
+        let issuer = MockBuilder.buildIssuer()
+        mpCheckoutViewModel.issuers = [issuer]
+    
+        
+        let issuerVM = mpCheckoutViewModel.issuerViewModel()
+        XCTAssertTrue(issuerVM.isKind(of: IssuerAdditionalStepViewModel.self))
+        XCTAssertEqual(issuerVM.amount, checkoutPreference.getAmount())
+        
+    }
+    
+    func testPayerCostViewModel(){
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : nil, discount: nil)
+        
+        let issuer = MockBuilder.buildIssuer()
+        mpCheckoutViewModel.issuers = [issuer]
+        
+        mpCheckoutViewModel.payerCosts = [MockBuilder.buildPayerCost()]
+        
+        let payerCostVM = mpCheckoutViewModel.payerCostViewModel()
+        XCTAssertTrue(payerCostVM.isKind(of: PayerCostAdditionalStepViewModel.self))
+        XCTAssertEqual(payerCostVM.amount, checkoutPreference.getAmount())
+        
+        
+    }
     
     
 }
