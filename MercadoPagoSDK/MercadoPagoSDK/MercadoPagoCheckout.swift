@@ -177,6 +177,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
             self.executeNextStep()
         })
+        issuerStep.callbackCancel = {
+            self.viewModel.issuers = nil
+            self.viewModel.paymentData.issuer = nil
+        }
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
 
@@ -271,6 +275,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
             self.executeNextStep()
         })
+        payerCostStep.callbackCancel = {
+            self.viewModel.installment = nil
+            self.viewModel.paymentData.payerCost = nil
+        }
         self.pushViewController(viewController : payerCostStep, animated: true)
     }
 
