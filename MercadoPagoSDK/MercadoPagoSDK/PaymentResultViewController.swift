@@ -160,7 +160,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     
     private func getConfirmEmailCell() -> UITableViewCell {
         let confirmEmailCell = self.tableView.dequeueReusableCell(withIdentifier: "emailNib") as! ConfirmEmailTableViewCell
-        confirmEmailCell.fillCell(paymentResult: self.viewModel.paymentResult!, instruction:nil)
+        confirmEmailCell.fillCell(paymentResult: self.viewModel.paymentResult)
         ViewUtils.drawBottomLine(y: confirmEmailCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: confirmEmailCell.contentView)
         return confirmEmailCell
     }
