@@ -176,12 +176,11 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    func collectEntityTypes(){
-        
+    func getEntityTypes() -> [EntityType]{
         let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
         let dictET = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-    
+        
         let siteETsDictionary = dictET?.value(forKey: site) as! NSDictionary
         let entityTypesKeys = siteETsDictionary.allKeys
         var entityTypes = [EntityType]()
@@ -193,7 +192,13 @@ open class MercadoPagoCheckout: NSObject {
             
             entityTypes.append(entityType)
         }
+        
+        return entityTypes
+    }
     
+    func collectEntityTypes(){
+        let entityTypes = getEntityTypes()
+        
         self.viewModel.entityTypes = entityTypes
         
         if entityTypes.count == 1 {
