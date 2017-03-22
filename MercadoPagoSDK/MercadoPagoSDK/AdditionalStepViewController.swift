@@ -22,7 +22,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoading()
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         loadMPStyles()
@@ -60,10 +59,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = ""
-        
+        self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
         self.extendedLayoutIncludesOpaqueBars = true
         self.titleCellHeight = 44
-        self.hideLoading()
     }
     
     override func loadMPStyles(){
