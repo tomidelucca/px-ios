@@ -21,6 +21,9 @@ open class TransactionDetails : NSObject {
         super.init()
     }
     
+    public init(financialInstitution: FinancialInstitution? = nil){
+        self.financialInstitution = financialInstitution
+    }
     
     open class func fromJSON(_ json : NSDictionary) -> TransactionDetails {
         let transactionDetails : TransactionDetails = TransactionDetails()

@@ -196,15 +196,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     public func updateCheckoutModel(financialInstitution: FinancialInstitution){
-        let financialInstitution = FinancialInstitution()
         if let TDs = self.paymentData.transactionDetails {
             TDs.financialInstitution = financialInstitution
         }else {
-            let TD = TransactionDetails()
-            TD.financialInstitution = financialInstitution
+            let TD = TransactionDetails(financialInstitution: financialInstitution)
             self.paymentData.transactionDetails = TD
         }
-        self.paymentData.transactionDetails?.financialInstitution = financialInstitution
         if paymentData.isComplete(){
             self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }
@@ -219,10 +216,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.cardToken!.cardholder!.identification = identification
         }else{
             paymentData.payer.identification = identification
-        }
-        
-        if paymentData.isComplete(){
-            self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            if paymentData.isComplete(){
+                self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+            }
         }
     }
     
