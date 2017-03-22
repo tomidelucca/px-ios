@@ -104,14 +104,9 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
         super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
         self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
     
@@ -123,15 +118,10 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
 
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil ){
         super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
         self.discount = discount
         self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
      override func showDiscountSection() -> Bool{
@@ -146,14 +136,9 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
         super.init(screenName: "CARD_TYPE", screenTitle: "¿Qué tipo de tarjeta es?".localized, cardSectionVisible: true, cardSectionView:CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
         self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
     
@@ -163,14 +148,9 @@ class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
         super.init(screenName: "FINANCIAL_INSTITUTION", screenTitle: "¿Cuál es tu banco?".localized, cardSectionVisible: false, cardSectionView: nil, totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
         self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
     
@@ -182,14 +162,9 @@ class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
     
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
         super.init(screenName: "ENTITY_TYPE", screenTitle: "¿Cuál es el tipo de persona?".localized, cardSectionVisible: true, cardSectionView:IdentificationCardView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
         self.amount = amount
         self.token = token
         self.paymentMethods = [paymentMethod]
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
     }
 
