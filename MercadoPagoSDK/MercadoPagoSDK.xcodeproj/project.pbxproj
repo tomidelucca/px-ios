@@ -176,19 +176,19 @@
 		157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76DA646A1C90C3E3004F9A7C /* TermsAndConditionsViewCell.xib */; };
 		157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DA64691C90C3E3004F9A7C /* TermsAndConditionsViewCell.swift */; };
 		158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */; };
-		15904D541E09748C00B3B9FD /* MLSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D4D1E09748C00B3B9FD /* MLSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15904D551E09748C00B3B9FD /* MLSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D4E1E09748C00B3B9FD /* MLSpinner.m */; };
-		15904D561E09748C00B3B9FD /* MLSpinner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15904D4F1E09748C00B3B9FD /* MLSpinner.xib */; };
-		15904D571E09748C00B3B9FD /* MLSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D501E09748C00B3B9FD /* MLSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15904D581E09748C00B3B9FD /* MLSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D511E09748C00B3B9FD /* MLSpinnerConfig.m */; };
+		15904D541E09748C00B3B9FD /* MLPXSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D4D1E09748C00B3B9FD /* MLPXSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15904D551E09748C00B3B9FD /* MLPXSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */; };
+		15904D561E09748C00B3B9FD /* MLPXSpinner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15904D4F1E09748C00B3B9FD /* MLPXSpinner.xib */; };
+		15904D571E09748C00B3B9FD /* MLPXSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D501E09748C00B3B9FD /* MLPXSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15904D581E09748C00B3B9FD /* MLPXSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */; };
 		15904D591E09748C00B3B9FD /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D521E09748C00B3B9FD /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D531E09748C00B3B9FD /* MPSDKLoadingView.m */; };
 		15904D5B1E09769700B3B9FD /* MPSDKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D531E09748C00B3B9FD /* MPSDKLoadingView.m */; };
 		15904D5C1E0976B100B3B9FD /* MPSDKLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D521E09748C00B3B9FD /* MPSDKLoadingView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15904D5D1E0976C200B3B9FD /* MLSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D4D1E09748C00B3B9FD /* MLSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15904D5E1E0976C500B3B9FD /* MLSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D501E09748C00B3B9FD /* MLSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		15904D5F1E0976D200B3B9FD /* MLSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D4E1E09748C00B3B9FD /* MLSpinner.m */; };
-		15904D601E0976DB00B3B9FD /* MLSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D511E09748C00B3B9FD /* MLSpinnerConfig.m */; };
+		15904D5D1E0976C200B3B9FD /* MLPXSpinner.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D4D1E09748C00B3B9FD /* MLPXSpinner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15904D5E1E0976C500B3B9FD /* MLPXSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D501E09748C00B3B9FD /* MLPXSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15904D5F1E0976D200B3B9FD /* MLPXSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */; };
+		15904D601E0976DB00B3B9FD /* MLPXSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */; };
 		15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18B1C88B2E4007D0C4E /* MockManager.swift */; };
 		15A7B18E1C88BFDF007D0C4E /* CardTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18D1C88BFDF007D0C4E /* CardTest.swift */; };
 		15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */; };
@@ -650,11 +650,11 @@
 		157420F51DF881770041171E /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
 		157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewController.swift; sourceTree = "<group>"; };
 		157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecurityCodeViewController.xib; sourceTree = "<group>"; };
-		15904D4D1E09748C00B3B9FD /* MLSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLSpinner.h; sourceTree = "<group>"; };
-		15904D4E1E09748C00B3B9FD /* MLSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLSpinner.m; sourceTree = "<group>"; };
-		15904D4F1E09748C00B3B9FD /* MLSpinner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLSpinner.xib; sourceTree = "<group>"; };
-		15904D501E09748C00B3B9FD /* MLSpinnerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLSpinnerConfig.h; sourceTree = "<group>"; };
-		15904D511E09748C00B3B9FD /* MLSpinnerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLSpinnerConfig.m; sourceTree = "<group>"; };
+		15904D4D1E09748C00B3B9FD /* MLPXSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPXSpinner.h; sourceTree = "<group>"; };
+		15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPXSpinner.m; sourceTree = "<group>"; };
+		15904D4F1E09748C00B3B9FD /* MLPXSpinner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLPXSpinner.xib; sourceTree = "<group>"; };
+		15904D501E09748C00B3B9FD /* MLPXSpinnerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPXSpinnerConfig.h; sourceTree = "<group>"; };
+		15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPXSpinnerConfig.m; sourceTree = "<group>"; };
 		15904D521E09748C00B3B9FD /* MPSDKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSDKLoadingView.h; sourceTree = "<group>"; };
 		15904D531E09748C00B3B9FD /* MPSDKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSDKLoadingView.m; sourceTree = "<group>"; };
 		15A7B18B1C88B2E4007D0C4E /* MockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockManager.swift; sourceTree = "<group>"; };
@@ -1197,11 +1197,11 @@
 		15904D4C1E09735700B3B9FD /* New Loading */ = {
 			isa = PBXGroup;
 			children = (
-				15904D4D1E09748C00B3B9FD /* MLSpinner.h */,
-				15904D4E1E09748C00B3B9FD /* MLSpinner.m */,
-				15904D4F1E09748C00B3B9FD /* MLSpinner.xib */,
-				15904D501E09748C00B3B9FD /* MLSpinnerConfig.h */,
-				15904D511E09748C00B3B9FD /* MLSpinnerConfig.m */,
+				15904D4D1E09748C00B3B9FD /* MLPXSpinner.h */,
+				15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */,
+				15904D4F1E09748C00B3B9FD /* MLPXSpinner.xib */,
+				15904D501E09748C00B3B9FD /* MLPXSpinnerConfig.h */,
+				15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */,
 				15904D521E09748C00B3B9FD /* MPSDKLoadingView.h */,
 				15904D531E09748C00B3B9FD /* MPSDKLoadingView.m */,
 			);
@@ -1762,10 +1762,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15904D541E09748C00B3B9FD /* MLSpinner.h in Headers */,
+				15904D541E09748C00B3B9FD /* MLPXSpinner.h in Headers */,
 				157420F61DF881770041171E /* UIView+RotateView.h in Headers */,
 				15904D591E09748C00B3B9FD /* MPSDKLoadingView.h in Headers */,
-				15904D571E09748C00B3B9FD /* MLSpinnerConfig.h in Headers */,
+				15904D571E09748C00B3B9FD /* MLPXSpinnerConfig.h in Headers */,
 				0F9883101AD2A97A00F750F0 /* MercadoPagoSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1776,8 +1776,8 @@
 			files = (
 				15904D5C1E0976B100B3B9FD /* MPSDKLoadingView.h in Headers */,
 				7622E3411DF5F64000490C4E /* MercadoPagoSDK.h in Headers */,
-				15904D5D1E0976C200B3B9FD /* MLSpinner.h in Headers */,
-				15904D5E1E0976C500B3B9FD /* MLSpinnerConfig.h in Headers */,
+				15904D5D1E0976C200B3B9FD /* MLPXSpinner.h in Headers */,
+				15904D5E1E0976C500B3B9FD /* MLPXSpinnerConfig.h in Headers */,
 				76CA7C711E01EA73009080B3 /* UIView+RotateView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1887,7 +1887,7 @@
 				765F8E6B1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.xib in Resources */,
 				761B89441C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib in Resources */,
 				4B31AA3B1E5A078B0084C5DB /* InstructionsSubtitleTableViewCell.xib in Resources */,
-				15904D561E09748C00B3B9FD /* MLSpinner.xib in Resources */,
+				15904D561E09748C00B3B9FD /* MLPXSpinner.xib in Resources */,
 				1529D9A51C7DEA4E00880C29 /* CheckoutViewController.xib in Resources */,
 				151A94101DBF8DE300A5557B /* RevampImages.xcassets in Resources */,
 				4B34DC311E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */,
@@ -2017,7 +2017,7 @@
 				7669999B1E675193005FB30F /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				0F9883771AD2AB6000F750F0 /* IdentificationType.swift in Sources */,
 				76743C821C46A21C00120347 /* CheckoutViewController.swift in Sources */,
-				15904D581E09748C00B3B9FD /* MLSpinnerConfig.m in Sources */,
+				15904D581E09748C00B3B9FD /* MLPXSpinnerConfig.m in Sources */,
 				4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */,
 				762B8C241D19752A00A86097 /* MPServicesBuilder.swift in Sources */,
@@ -2153,7 +2153,7 @@
 				76062BD71C4D20C30067A14B /* PaymentVaultViewController.swift in Sources */,
 				0FDB3DAE1B1683610047A4D4 /* MPToolbar.swift in Sources */,
 				0F9883871AD2AB6000F750F0 /* Payment.swift in Sources */,
-				15904D551E09748C00B3B9FD /* MLSpinner.m in Sources */,
+				15904D551E09748C00B3B9FD /* MLPXSpinner.m in Sources */,
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
 				4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				767D8DCF1E5554460004FCA9 /* MPXLoadingViewController.swift in Sources */,
@@ -2174,7 +2174,7 @@
 				4B2823951E2E82B1004C02E9 /* UIImage+Additions.swift in Sources */,
 				4BFAC0FC1E2E8A0D005EB383 /* DecorationPreference.swift in Sources */,
 				7652F43B1D78A2D4006022AF /* TextMaskFormater.swift in Sources */,
-				15904D5F1E0976D200B3B9FD /* MLSpinner.m in Sources */,
+				15904D5F1E0976D200B3B9FD /* MLPXSpinner.m in Sources */,
 				15904D5B1E09769700B3B9FD /* MPSDKLoadingView.m in Sources */,
 				761B89431C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
 				15B8B1BE1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
@@ -2377,7 +2377,7 @@
 				76F41E2E1D3D4B9600B25E5B /* MPFlowController.swift in Sources */,
 				767254721C7CCBDF00EB5EBA /* MockPaymentVaultViewController.swift in Sources */,
 				0F9883921AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
-				15904D601E0976DB00B3B9FD /* MLSpinnerConfig.m in Sources */,
+				15904D601E0976DB00B3B9FD /* MLPXSpinnerConfig.m in Sources */,
 				0FC4FC2E1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				76AA2E351CBD8C38006D0678 /* MPTextView.swift in Sources */,
 				769A73611DF736D30089A1BF /* Utils.swift in Sources */,
