@@ -13,10 +13,8 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     var paymentResult: PaymentResult!
     var callback: ( _ status : MPStepBuilder.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
-    var discount : DiscountCoupon?
     
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference,discount : DiscountCoupon? = nil, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
-        self.discount = discount
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
         self.paymentResult = paymentResult
         self.callback = callback
         self.checkoutPreference = checkoutPreference

@@ -121,7 +121,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         
         self.hideNavBar()
         if let button = self.navigationItem.leftBarButtonItem{
-               self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancel)
+               self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
      
         self.navigationController!.navigationBar.shadowImage = nil
@@ -213,7 +213,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.requestFailure(error, callback: {
                     self.navigationController!.dismiss(animated: true, completion: {})
                 }, callbackCancel: {
-                    self.invokeCallbackCancel()
+                    self.invokeCallbackCancelShowingNavBar()
                 })
             })
             
@@ -353,7 +353,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }else if isCouponSection(section: indexPath.section){
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell",for: indexPath)
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 15)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             return cell

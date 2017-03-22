@@ -177,6 +177,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
             self.executeNextStep()
         })
+        issuerStep.callbackCancel = {
+            self.viewModel.issuers = nil
+            self.viewModel.paymentData.issuer = nil
+        }
         self.navigationController.pushViewController(issuerStep, animated: true)
     }
 
@@ -271,6 +275,10 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
             self.executeNextStep()
         })
+        payerCostStep.callbackCancel = {
+            self.viewModel.installment = nil
+            self.viewModel.paymentData.payerCost = nil
+        }
         self.pushViewController(viewController : payerCostStep, animated: true)
     }
 
@@ -371,7 +379,7 @@ open class MercadoPagoCheckout: NSObject {
 
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, discount: self.viewModel.paymentData.discount, callback: { (state : MPStepBuilder.CongratsState) in
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
                 self.finish()
             })
         } else {
