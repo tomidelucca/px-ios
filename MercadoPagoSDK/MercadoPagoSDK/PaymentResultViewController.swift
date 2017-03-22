@@ -75,9 +75,9 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
 
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, discount: DiscountCoupon? = nil, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping (_ status : MPStepBuilder.CongratsState) -> Void){
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
-        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, discount:discount , callback: callback)
+        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference,  callback: callback)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
