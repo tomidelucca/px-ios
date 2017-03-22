@@ -14,7 +14,7 @@ class DiscountBodyCell: UIView {
     var coupon: DiscountCoupon?
     var amount: Double!
     
-    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double) {
+    init(frame: CGRect, coupon: DiscountCoupon?, amount:Double, addBorder: Bool = true) {
         super.init(frame: frame)
         self.coupon = coupon
         self.amount = amount
@@ -23,7 +23,9 @@ class DiscountBodyCell: UIView {
         }else{
             loadCouponView()
         }
-        self.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.px_grayLight(), thickness: 0.5)
+        if addBorder {
+            self.layer.addBorder(edge: UIRectEdge.bottom, color: UIColor.px_grayLight(), thickness: 0.5)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
