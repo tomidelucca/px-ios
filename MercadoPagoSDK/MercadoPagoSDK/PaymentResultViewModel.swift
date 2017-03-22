@@ -15,7 +15,6 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     var checkoutPreference: CheckoutPreference?
     
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
-        
         self.paymentResult = paymentResult
         self.callback = callback
         self.checkoutPreference = checkoutPreference
@@ -137,7 +136,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     func isFooterCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == 4
     }
-    
+
     func isApprovedBodyCellFor(indexPath: IndexPath) -> Bool {
 		//approved case
 		let precondition = indexPath.section == 1 && approved()
@@ -155,6 +154,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
 		let case2 = indexPath.row == 1;
 		return precondition && (case1 || case2)
     }
+    
     
     func isCallForAuthFor(indexPath: IndexPath) -> Bool {
 		//non approved case

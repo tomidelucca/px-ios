@@ -20,6 +20,7 @@ class ApprovedTableViewCell: UITableViewCell {
     @IBOutlet weak var comprobante: UILabel!
     @IBOutlet weak var idInstallmentConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var discountViewContent: UIView!
     @IBOutlet weak var paymentMethodStatementDescriptionConstraint: NSLayoutConstraint!
     @IBOutlet weak var paymentMethodTotalConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
@@ -65,7 +66,15 @@ class ApprovedTableViewCell: UITableViewCell {
         
         fillStatementDescriptionLabel(description: paymentResult.statementDescription)
         
+        if let discount = paymentResult.paymentData?.discount {
+            let screenSize : CGRect = UIScreen.main.bounds
+            let screenWidth = screenSize.width
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
+            discountViewContent.addSubview(discountBody)
         
+        } else {
+             discountViewContent.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        }
     }
     
     func fillID(id: String?){
