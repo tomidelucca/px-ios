@@ -113,14 +113,27 @@
 "Número"="Number";
 "Tipo"="Type";
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Interest free";//--
 "¿En cuántas cuotas?" = "How many installments?";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "Which is your bank?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "Which type of card is it?";
 "Crédito" = "Credit";
 "Débito" = "Debit";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Which is your entity\'s type?";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Which is your bank?";
+
+
 
 //Instructions
 

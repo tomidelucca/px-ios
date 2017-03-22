@@ -15,17 +15,32 @@
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
+" Sin interés" = " Sem juros";//--
+"¿En cuántas cuotas?" = "Em quantas parcelas?";
+
+//-- Issuers
+"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
+
+//-- Card Type
+"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Qual é o tipo de pessoa?";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Qual é o seu banco?";
+
+
+
+//Installment Cell
 "Cuotas" = "Parcelas";
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
-" Sin interés" = " Sem juros";//--
 "Sin interés" = "Sem juros";
-"¿En cuántas cuotas?" = "Em quantas parcelas?";
-"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
-"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
 
 
 "Medios de pago" = "Meios de pagamento";

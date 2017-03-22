@@ -114,14 +114,27 @@
 
 
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "¿Qué tipo de tarjeta es?";
 "Crédito" = "Crédito";
 "Débito" = "Débito";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "¿Cuál es tu banco?";
+
+
 
 //Instructions
 
