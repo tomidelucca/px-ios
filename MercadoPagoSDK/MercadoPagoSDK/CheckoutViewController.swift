@@ -709,7 +709,7 @@ open class CheckoutViewModel {
     }
     
     func shouldShowTotal() -> Bool {
-        return shouldShowInstallmentSummary() || numberOfSummaryRows() != 1
+        return shouldShowInstallmentSummary() || numberOfSummaryRows() > 1
     }
     
     func shouldShowInstallmentSummary() -> Bool {
