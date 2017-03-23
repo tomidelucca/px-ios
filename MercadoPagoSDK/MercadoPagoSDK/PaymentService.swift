@@ -31,7 +31,11 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 open class PaymentService : MercadoPagoService {
     
     open func getPaymentMethods(_ method: String = "GET", uri : String = ServicePreference.MP_PAYMENT_METHODS_URI, key : String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: uri, params: MercadoPagoContext.keyType() + "=" + key, body: nil, method: method, success: success, failure: failure)
+        self.request(uri: uri, params: MercadoPagoContext.keyType() + "=" + key, body: nil, method: method, success: success, failure: { (error) in
+            if let failure = failure {
+            failure(NSError(domain: "mercadopago.sdk.paymentService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+            }
+            })
     }
 
     open func getInstallments(_ method: String = "GET", uri : String = ServicePreference.MP_INSTALLMENTS_URI, key : String, bin : String?, amount: Double, issuer_id: NSNumber?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
@@ -75,9 +79,12 @@ open class PaymentService : MercadoPagoService {
         if(bin != nil){
             self.request(uri: uri, params: params + "&bin=" + bin!, body: nil, method: method, success: success, failure: failure)
         } else {
-            self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: failure)
+            self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) in
+                if let failure = failure {
+                    failure(NSError(domain: "mercadopago.sdk.paymentService.getIssuers", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+                }
+            })
         }
-        
     }
     
 }

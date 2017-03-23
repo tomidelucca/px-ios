@@ -208,7 +208,7 @@ open class MercadoPagoCheckout: NSObject {
         
         }, failure : { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                self.createCardToken()
+                self.createNewCardToken()
             })
             self.executeNextStep()
         })
@@ -229,8 +229,9 @@ open class MercadoPagoCheckout: NSObject {
             self.dismissLoading()
         }, failure: { (error) in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                self.createCardToken()
+                self.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
             })
+            self.executeNextStep()
         })
     }
     
@@ -244,8 +245,9 @@ open class MercadoPagoCheckout: NSObject {
                 self.dismissLoading()
             }, failure: { (error) in
                 self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                    self.createCardToken()
+                    self.cloneCardToken(cardInformation: cardInformation, securityCode: securityCode)
                 })
+                self.executeNextStep()
             })
         }
     }
@@ -392,13 +394,18 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
-        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: { (Void) -> Void in
-            self.viewModel.errorCallback?()
-        }, callbackCancel: {(Void) -> Void in
-            // Aparte de default callbackCancel
+        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {(Void) -> Void in
+            self.finish()
+
         })
         // Limpiar error anterior
         MercadoPagoCheckoutViewModel.error = nil
+        
+        errorStep.callback = {
+            self.navigationController.dismiss(animated: true, completion: {
+                self.viewModel.errorCallback?()
+            })
+        }
         self.dismissLoading(completion : {
             self.navigationController.present(errorStep, animated: true, completion: {})
         })
