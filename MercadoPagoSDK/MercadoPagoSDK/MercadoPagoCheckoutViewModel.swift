@@ -84,7 +84,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal var errorCallback : ((Void) -> Void)?
     
     private var needLoadPreference : Bool = false
-    private var readyToPay : Bool = false
+    internal var readyToPay : Bool = false
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
     internal var initWithPaymentData = false
@@ -157,6 +157,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentOptionSelected as! CardInformation
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+    }
+    
+    public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
+        let cardInformation = self.paymentData.token
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!)
     }
     
     public func recoverTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -468,6 +473,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cardToken = nil
         self.issuers = nil
         self.installment = nil
+    }
+    
+    func prepareForClone(){
+        self.payment = nil
+        self.paymentResult = nil
+    }
+    func prepareForNewSelection(){
+        self.paymentData.clear()
+        self.readyToPay = false
+        self.payment = nil
+        self.paymentResult = nil
+        self.paymentOptionSelected = nil
+        self.paymentMethodOptions = self.rootPaymentMethodOptions
     }
     
 
