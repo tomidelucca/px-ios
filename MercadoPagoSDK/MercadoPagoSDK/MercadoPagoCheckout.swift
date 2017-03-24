@@ -191,7 +191,10 @@ open class MercadoPagoCheckout: NSObject {
             return
         }
         if cardInfo.canBeClone() {
-            cloneCardToken(token: cardInfo as! Token, securityCode: securityCode!)
+            guard let token = cardInfo as? Token else {
+                return // TODO Refactor : Tenemos unos lios barbaros con CardInformation y CardInformationForm, no entiendo porque hay uno y otr
+            }
+            cloneCardToken(token: token, securityCode: securityCode!)
         
         } else {
             createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode!)
