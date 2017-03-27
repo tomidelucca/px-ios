@@ -89,31 +89,28 @@ class ApprovedTableViewCell: UITableViewCell {
     }
     
     func fillInstallmentLabel(amount: Double, payerCost: PayerCost? = nil, currency: Currency) {
-        var installmentNumber = ""
-        
-        if payerCost != nil && payerCost?.installments != 0 {
-            installmentNumber = "\(payerCost!.installments) x "
-        }
-        
-        let total = payerCost != nil ? payerCost!.installmentAmount : amount
-        
-        if amount != 0 {
-            
-            let totalAmount = Utils.getAttributedAmount(total, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
-            let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
+
+        if payerCost != nil {
+            let attributedInstallment = Utils.getTransactionInstallmentsDescription(String(describing : payerCost!.installments), currency: currency, installmentAmount: payerCost!.installmentAmount, color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
+            self.installments.attributedText  = attributedInstallment
+        } else if amount != 0 {
+            let totalAmount = Utils.getAttributedAmount(amount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, fontSize: 24, centsFontSize: 11, baselineOffset:11)
+            let installmentLabel = NSMutableAttributedString(string: "", attributes: [NSFontAttributeName: Utils.getFont(size: 24)])
             installmentLabel.append(totalAmount)
             self.installments.attributedText =  installmentLabel
+
         }
+        
     }
     
     func fillInterestLabel(payerCost: PayerCost) {
-        if payerCost.installments > 1 && payerCost.installmentRate == 0 {
+        if !payerCost.hasInstallmentsRate() {
             installmentRate.text = "Sin interés".localized
         }
     }
     
     func fillTotalLabel(payerCost: PayerCost, currency: Currency) {
-        if payerCost.totalAmount != 0 && payerCost.installments != 0{
+        if payerCost.totalAmount > 0 && payerCost.hasInstallmentsRate() {
             let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "( ", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color: UIColor.black, fontSize:16, baselineOffset:4))
             attributedTotal.append(NSAttributedString(string: " )", attributes: [NSForegroundColorAttributeName : UIColor.black, NSFontAttributeName: Utils.getFont(size: 16)]))
