@@ -321,7 +321,6 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     fileprivate func getIdentificationTypes(){
         doneNext?.isEnabled = false
         MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (identificationTypes) -> Void in
-            //self.hideLoading()
             self.doneNext?.isEnabled = true
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
