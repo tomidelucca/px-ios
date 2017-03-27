@@ -20,6 +20,7 @@ class ApprovedTableViewCell: UITableViewCell {
     @IBOutlet weak var comprobante: UILabel!
     @IBOutlet weak var idInstallmentConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var discountViewHeight: NSLayoutConstraint!
     @IBOutlet weak var discountViewContent: UIView!
     @IBOutlet weak var paymentMethodStatementDescriptionConstraint: NSLayoutConstraint!
     @IBOutlet weak var paymentMethodTotalConstraint: NSLayoutConstraint!
@@ -73,7 +74,7 @@ class ApprovedTableViewCell: UITableViewCell {
             discountViewContent.addSubview(discountBody)
         
         } else {
-             discountViewContent.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+            discountViewHeight.constant = 0
         }
     }
     
