@@ -90,13 +90,15 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
             } else if viewModel.approved(){
                 return PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
             }
+        } else if viewModel.isCustomSubHeaderCellFor(indexPath: indexPath){
+            return PaymentResultScreenPreference.approvedSubHeaderCells[indexPath.row].getHeight()
         }
         return UITableViewAutomaticDimension
         
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,16 +118,19 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         } else if viewModel.isCallForAuthFor(indexPath: indexPath) {
             return getCallForAuthCell()
             
-        } else if viewModel.isSelectOtherPaymentMethodCellFor(indexPath: indexPath){
+        } else if viewModel.isSelectOtherPaymentMethodCellFor(indexPath: indexPath) {
             if viewModel.callForAuth() {
                 return getOtherPaymentMethodCell(drawLine: true)
             }
             return getOtherPaymentMethodCell(drawLine: false)
             
-        } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
+        } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath) {
             return getAdditionalCustomCell(indexPath: indexPath)
         
-        } else if viewModel.isSecondaryExitButtonCellFor(indexPath: indexPath){
+        } else if viewModel.isCustomSubHeaderCellFor(indexPath: indexPath) {
+            return getCustomSubHeaderCell(indexPath: indexPath)
+        
+        } else if viewModel.isSecondaryExitButtonCellFor(indexPath: indexPath) {
             return getSecondaryExitButtonCell()
         
         } else if viewModel.isFooterCellFor(indexPath: indexPath){
@@ -145,7 +150,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
         footerNib.setCallbackStatus(callback: self.viewModel.callback, status: MPStepBuilder.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult)
-		var isSecondaryButtonDisplayed = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil;
+		let isSecondaryButtonDisplayed = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil;
         if self.viewModel.approved() && !isSecondaryButtonDisplayed {
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
         }
@@ -196,6 +201,18 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
             cell.selectionStyle = .none
             return cell
         }
+    }
+    
+    private func getCustomSubHeaderCell(indexPath: IndexPath) -> UITableViewCell {
+        
+        if self.viewModel.approved(){
+            let customCell = PaymentResultScreenPreference.approvedSubHeaderCells[indexPath.row]
+            customCell.setDelegate(delegate: self)
+            let cell = customCell.getTableViewCell()
+            cell.selectionStyle = .none
+            return cell
+        }
+        return UITableViewCell()
     }
     
     private func getSecondaryExitButtonCell() -> UITableViewCell {
