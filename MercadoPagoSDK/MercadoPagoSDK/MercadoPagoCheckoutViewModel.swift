@@ -172,10 +172,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!)
     }
     
-    public func recoverTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: paymentData.token!)
-    }
-    
+
     public func checkoutViewModel() -> CheckoutViewModel {
         let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount)
         return checkoutViewModel
