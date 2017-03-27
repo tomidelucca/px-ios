@@ -49,11 +49,14 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if let payerCost = payerCost {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments),currency:currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
-            let attributedAmountFinal = NSMutableAttributedString(string : "(")
-            attributedAmountFinal.append(attributedAmount)
-            attributedAmountFinal.append(NSAttributedString(string : ")"))
-            self.totalAmountLabel.attributedText = attributedAmountFinal
-            self.totalAmountLabel.attributedText = attributedAmountFinal
+            
+            if payerCost.installments > 1 {
+                let attributedAmountFinal = NSMutableAttributedString(string : "(")
+                attributedAmountFinal.append(attributedAmount)
+                attributedAmountFinal.append(NSAttributedString(string : ")"))
+                self.totalAmountLabel.attributedText = attributedAmountFinal
+                self.totalAmountLabel.attributedText = attributedAmountFinal
+            }
         } else {
              self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
             self.totalAmountLabel.text = ""
