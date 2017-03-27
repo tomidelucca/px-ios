@@ -709,11 +709,11 @@ open class CheckoutViewModel {
     }
     
     func shouldShowTotal() -> Bool {
-        return shouldShowInstallmentSummary() || numberOfSummaryRows() != 1
+        return shouldShowInstallmentSummary() || numberOfSummaryRows() > 1
     }
     
     func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card"
+        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost!.hasInstallmentsRate()
     }
 }
 
