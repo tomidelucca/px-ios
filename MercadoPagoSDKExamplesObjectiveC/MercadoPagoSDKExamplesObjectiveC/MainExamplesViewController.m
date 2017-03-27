@@ -282,6 +282,8 @@
     
     SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
     
+    [summaryRow disableAmount];
+    
     [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
     
     [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
