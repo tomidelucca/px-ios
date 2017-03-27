@@ -99,7 +99,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
         if let discount = discount {
-            self.paymentData = PaymentData()
+            if paymentData == nil {
+                self.paymentData = PaymentData()
+            }
             self.paymentData.discount = discount
         }
         self.paymentResult = paymentResult
