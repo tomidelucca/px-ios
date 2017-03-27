@@ -168,6 +168,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectIssuers(){
+        self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
         MPServicesBuilder.getIssuers(self.viewModel.paymentData.paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (issuers) -> Void in
             
@@ -177,12 +178,15 @@ open class MercadoPagoCheckout: NSObject {
                 self.viewModel.updateCheckoutModel(issuer: issuers[0])
             }
             self.executeNextStep()
+            self.dismissLoading()
             
         }) { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.collectIssuers()
             })
+            self.executeNextStep()
         }
+        
     }
     
     func startIssuersScreen() {
@@ -266,7 +270,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func collectPayerCosts() {
-        
+        self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.issuer, paymentMethodId: self.viewModel.paymentData.paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(),success: { (installments) -> Void in
             self.viewModel.installment = installments[0]
@@ -277,12 +281,15 @@ open class MercadoPagoCheckout: NSObject {
             }
             
             self.executeNextStep()
+            self.dismissLoading()
             
         }) { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.collectPayerCosts()
             })
+            self.executeNextStep()
         }
+        
     }
     
     func startPayerCostScreen() {
@@ -407,8 +414,12 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
-        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {(Void) -> Void in
-            self.finish()
+        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {[weak self] in
+            
+            guard let object = self else {
+                return
+            }
+            object.finish()
 
         })
         // Limpiar error anterior

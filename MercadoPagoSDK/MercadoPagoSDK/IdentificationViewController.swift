@@ -197,20 +197,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         self.numberTextField.becomeFirstResponder()
     }
-
-    open override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-
-    }
     
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.hideLoading()
-    }
-
-    
-
     open func numberOfComponents(in pickerView: UIPickerView) -> Int{
         return 1
     }
@@ -292,8 +279,6 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
         if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil){
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
-            self.showLoading()
-            self.view.bringSubview(toFront: self.loadingInstance!)
         }else{
             showErrorMessage((cardToken.validateIdentificationNumber(self.identificationType))!)
         }
@@ -336,7 +321,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     fileprivate func getIdentificationTypes(){
         doneNext?.isEnabled = false
         MPServicesBuilder.getIdentificationTypes(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (identificationTypes) -> Void in
-            self.hideLoading()
+            //self.hideLoading()
             self.doneNext?.isEnabled = true
             self.identificationTypes = identificationTypes
             self.typePicker.reloadAllComponents()
