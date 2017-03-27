@@ -17,6 +17,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     @IBOutlet weak var numberTextField: HoshiTextField!
     
     var callback : (( Identification) -> Void)?
+    var errorExitCallback: ((Void) -> Void)?
     var identificationTypes : [IdentificationType]?
     var identificationType : IdentificationType?
     
@@ -39,9 +40,10 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
     
     override open var screenName : String { get { return "IDENTIFICATION_NUMBER" } }
     
-    public init(callback : @escaping (( _ identification: Identification) -> Void)) {
+    public init(callback : @escaping (( _ identification: Identification) -> Void), errorExitCallback: ((Void) -> Void)?) {
         super.init(nibName: "IdentificationViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
+        self.errorExitCallback = errorExitCallback
     }
     
     override func loadMPStyles(){
@@ -349,7 +351,10 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
                     self.dismiss(animated: true, completion: {})
                     self.getIdentificationTypes()
                     }, callbackCancel: {
-                        if self.callbackCancel != nil {
+                        if let errorExitCallback = self.errorExitCallback {
+                            errorExitCallback()
+                        }
+                        else if self.callbackCancel != nil {
                             self.callbackCancel!()
                         }
                     })

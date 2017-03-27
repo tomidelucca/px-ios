@@ -138,11 +138,24 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectIdentification() {
-        let identificationStep = IdentificationViewController { (identification : Identification) in
+        let identificationStep = IdentificationViewController (callback: { (identification : Identification) in
             self.viewModel.updateCheckoutModel(identification : identification)
             self.executeNextStep()
+        }, errorExitCallback: { [weak self] in
+            
+            guard let object = self else {
+                return 
+            }
+            object.finish()
+        })
+        
+        identificationStep.callbackCancel = {[weak self] in
+            
+            guard let object = self else {
+                return
+            }
+            object.navigationController.popViewController(animated: true)
         }
-        identificationStep.callbackCancel = { self.navigationController.popViewController(animated: true)}
         self.pushViewController(viewController : identificationStep, animated: true)
     }
     
