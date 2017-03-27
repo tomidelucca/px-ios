@@ -47,13 +47,13 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         if let color = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.statusBackgroundColor {
             return color;
         } else if approved() {
-            return UIColor(red: 59, green: 194, blue: 128)
+            return UIColor.px_greenCongrats()
         } else if inProcess() {
             return UIColor(red: 255, green: 161, blue: 90)
         } else if callForAuth() {
             return UIColor(red: 58, green: 184, blue: 239)
         } else if rejected(){
-            return UIColor(red: 255, green: 89, blue: 89)
+            return UIColor.px_redCongrats()
         }
         return UIColor(red: 255, green: 89, blue: 89)
     }
