@@ -346,7 +346,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     
     public func updateCheckoutModel(token : Token) {
+        let lastForDigits = self.paymentData.token?.lastFourDigits
         self.paymentData.token = token
+        if lastForDigits != nil {
+           self.paymentData.token?.lastFourDigits = lastForDigits
+        }
         self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
     }
 
