@@ -29,7 +29,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class MPPayment: NSObject {
     
-    open var email : String!
     open var preferenceId : String!
     open var publicKey : String!
     open var paymentMethodId : String!
@@ -52,7 +51,6 @@ open class MPPayment: NSObject {
         self.tokenId = tokenId
         self.transactionDetails = transactionDetails
         self.payer = payer
-        self.email = payer.email
     }
     
     open func toJSONString() -> String {
@@ -98,10 +96,8 @@ open class CustomerPayment: MPPayment {
     }
     
     open override func toJSON() -> [String:Any] {
-        var customerPaymentObj : [String:Any] = super.toJSON()
-        // Override payer object
-        let payer = Payer(_id: customerId, email: self.email)
-        customerPaymentObj["payer"] = payer.toJSON()
+        self.payer?._id = customerId
+        let customerPaymentObj : [String:Any] = super.toJSON()
         return customerPaymentObj
     }
 
@@ -110,10 +106,9 @@ open class CustomerPayment: MPPayment {
 open class BlacklabelPayment: MPPayment {
     
     open override func toJSON() -> [String:Any] {
-        var blacklabelPaymentObj : [String:Any] = super.toJSON()
         // Override payer object with groupsPayer (which includes AT in its body)
-        let payer = GroupsPayer(email: self.email)
-        blacklabelPaymentObj["payer"] = payer.toJSON()
+        self.payer = GroupsPayer(email: (self.payer?.email)!)
+        let blacklabelPaymentObj : [String:Any] = super.toJSON()
         return blacklabelPaymentObj
     }
 }
