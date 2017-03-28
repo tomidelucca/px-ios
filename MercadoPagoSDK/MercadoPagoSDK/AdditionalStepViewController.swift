@@ -80,7 +80,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(viewModel : AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject?)-> Void)) {
+    public init(viewModel : AdditionalStepViewModel, callback: @escaping ((_ callbackData: NSObject)-> Void)) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
         super.init(nibName: "AdditionalStepViewController", bundle: self.bundle)
@@ -200,11 +200,11 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             if self.viewModel.showTotalRow(){
                 if indexPath.row != 0{
                     let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.viewModel.callback!(callbackData)
+                    self.viewModel.callback(callbackData)
                 }
             } else{
                 let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.viewModel.callback!(callbackData)
+                self.viewModel.callback(callbackData)
             }
         }
     }

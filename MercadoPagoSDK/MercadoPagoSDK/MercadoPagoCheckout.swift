@@ -168,7 +168,7 @@ open class MercadoPagoCheckout: NSObject {
                 self.executeNextStep()
             } else {
                 let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
-                    self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution?)!)
+                    self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
                     self.executeNextStep()
                 })
                 self.navigationController.pushViewController(financialInstitutionStep, animated: true)
@@ -207,7 +207,7 @@ open class MercadoPagoCheckout: NSObject {
         }
         
         let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
-            self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType?)!)
+            self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
             self.executeNextStep()
         })
         self.navigationController.pushViewController(entityTypeStep, animated: true)
@@ -234,7 +234,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func startIssuersScreen() {
         let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { (issuer) in
-            self.viewModel.updateCheckoutModel(issuer: issuer as! Issuer?)
+            self.viewModel.updateCheckoutModel(issuer: (issuer as! Issuer))
             self.executeNextStep()
         })
         issuerStep.callbackCancel = {
@@ -317,8 +317,8 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.installment = installments[0]
             
             let defaultPayerCost = self.viewModel.checkoutPreference.paymentPreference?.autoSelectPayerCost(installments[0].payerCosts)
-            if defaultPayerCost != nil {
-                self.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
+            if let defaultPC = defaultPayerCost {
+                self.viewModel.updateCheckoutModel(payerCost: defaultPC)
             }
             
             self.executeNextStep()
@@ -332,7 +332,7 @@ open class MercadoPagoCheckout: NSObject {
     
     func startPayerCostScreen() {
         let payerCostStep = AdditionalStepViewController(viewModel: self.viewModel.payerCostViewModel(), callback: { (payerCost) in
-            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost?)
+            self.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost)
             self.executeNextStep()
         })
         payerCostStep.callbackCancel = {

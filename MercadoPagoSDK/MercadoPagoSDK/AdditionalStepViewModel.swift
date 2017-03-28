@@ -24,7 +24,7 @@ open class AdditionalStepViewModel : NSObject{
     open var dataSource: [Cellable]
     open var defaultTitleCellHeight: CGFloat = 70
     open var defaultRowCellHeight: CGFloat = 80
-    open var callback: ((_ result: NSObject?) -> Void)?
+    open var callback: ((_ result: NSObject) -> Void)!
 
     
     init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){

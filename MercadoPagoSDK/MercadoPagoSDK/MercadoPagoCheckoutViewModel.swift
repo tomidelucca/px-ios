@@ -207,7 +207,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-    public func updateCheckoutModel(issuer: Issuer?){
+    public func updateCheckoutModel(issuer: Issuer){
         self.paymentData.issuer = issuer
     }
     
@@ -222,7 +222,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
     
-    public func updateCheckoutModel(payerCost: PayerCost?){
+    public func updateCheckoutModel(payerCost: PayerCost){
         self.paymentData.payerCost = payerCost
     }
     
