@@ -104,7 +104,11 @@ class DiscountBodyCell: UIView {
         rightArrow.image = MercadoPago.getImage("rightArrow")
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
-        detailLabel.text = "Descuento".localized
+        if let concept = coupon.concept {
+           detailLabel.text = concept
+        }else{
+           detailLabel.text = "Descuento".localized
+        }
         detailLabel.textColor = UIColor.mpGreenishTeal()
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()
@@ -227,7 +231,11 @@ class DiscountToolBar: UIView {
         rightArrow.tintColor = UIColor.white
         let detailLabel = MPLabel()
         detailLabel.textAlignment = .center
-        detailLabel.text = "Descuento".localized
+        if let concept = coupon.concept {
+            detailLabel.text = concept
+        }else{
+            detailLabel.text = "Descuento".localized
+        }
         detailLabel.textColor = UIColor.white
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()
