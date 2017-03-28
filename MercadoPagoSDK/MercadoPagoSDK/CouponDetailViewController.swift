@@ -36,7 +36,8 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.black
+     //   self.view.backgroundColor = UIColor.black
+        self.view?.backgroundColor = UIColor(white: 1, alpha: 0.3)
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
