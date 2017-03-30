@@ -14,7 +14,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     var bundle : Bundle? = MercadoPago.getBundle()
     let viewModel : AdditionalStepViewModel!
-    override var maxFontSize: CGFloat { get { return 21 } }
+    override var maxFontSize: CGFloat { get { return self.viewModel.maxFontSize } }
     
     override open var screenName : String { get{
         return viewModel.getScreenName()

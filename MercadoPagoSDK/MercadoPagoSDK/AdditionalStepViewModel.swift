@@ -25,6 +25,7 @@ open class AdditionalStepViewModel : NSObject{
     open var defaultTitleCellHeight: CGFloat = 70
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject) -> Void)?
+    open var maxFontSize: CGFloat { get { return 24 } }
     
     
     init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil){
@@ -141,6 +142,8 @@ class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 }
 
 class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
+    
+    override var maxFontSize: CGFloat { get { return 21 } }
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
