@@ -200,11 +200,11 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             if self.viewModel.showTotalRow(){
                 if indexPath.row != 0{
                     let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.viewModel.callback(callbackData)
+                    self.viewModel.callback?(callbackData)
                 }
             } else{
                 let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.viewModel.callback(callbackData)
+                self.viewModel.callback?(callbackData)
             }
         }
     }

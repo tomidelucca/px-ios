@@ -184,6 +184,12 @@ open class MercadoPagoCheckout: NSObject {
                     self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
                     self.executeNextStep()
                 })
+                
+                financialInstitutionStep.callbackCancel = {[weak self] in
+                    self?.viewModel.financialInstitutions = nil
+                    self?.viewModel.paymentData.transactionDetails?.financialInstitution = nil
+                }
+                
                 self.navigationController.pushViewController(financialInstitutionStep, animated: true)
             }
         }
@@ -223,6 +229,12 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
             self.executeNextStep()
         })
+        
+        entityTypeStep.callbackCancel = {[weak self] in
+            self?.viewModel.entityTypes = nil
+            self?.viewModel.paymentData.payer.entityType = nil
+        }
+        
         self.navigationController.pushViewController(entityTypeStep, animated: true)
         
     }
