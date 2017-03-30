@@ -29,13 +29,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func fillCell(_ paymentMethod : PaymentMethod, amount : Double, payerCost : PayerCost? = nil, lastFourDigits : String? = "") {
