@@ -9,7 +9,7 @@
 import Foundation
 
 open class FinancialInstitution : NSObject, Cellable {
-    open var _id : NSNumber?
+    open var _id : Int?
     open var _description : String?
     
     open func getCell(width: Double, height: Double) -> UITableViewCell {
@@ -26,7 +26,7 @@ open class FinancialInstitution : NSObject, Cellable {
         let financialInstitution: FinancialInstitution = FinancialInstitution()
         
         if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue{
-            financialInstitution._id = _id
+            financialInstitution._id = _id as Int?
         }
         if let description = JSONHandler.attemptParseToString(json["description"]){
             financialInstitution._description = description

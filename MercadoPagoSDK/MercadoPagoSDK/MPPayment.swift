@@ -91,7 +91,7 @@ open class CustomerPayment: MPPayment {
     open var customerId : String!
     
     init(preferenceId: String, publicKey: String, paymentMethodId: String, installments : Int = 0, issuerId : String = "", tokenId : String = "", customerId : String, transactionDetails: TransactionDetails, payer: Payer){
-        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
+        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
         self.customerId = customerId
     }
     
@@ -107,7 +107,8 @@ open class BlacklabelPayment: MPPayment {
     
     open override func toJSON() -> [String:Any] {
         // Override payer object with groupsPayer (which includes AT in its body)
-        self.payer = GroupsPayer(email: (self.payer?.email)!)
+        self.payer = GroupsPayer(_id: self.payer?._id, email: (self.payer?.email)!, identification: self.payer?.identification, entityType: self.payer?.entityType)
+        //self.payer = GroupsPayer(email: (self.payer?.email)!)
         let blacklabelPaymentObj : [String:Any] = super.toJSON()
         return blacklabelPaymentObj
     }

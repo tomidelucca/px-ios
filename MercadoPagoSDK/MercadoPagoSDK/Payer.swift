@@ -56,12 +56,10 @@ open class Payer : NSObject {
     
     open func toJSON() -> [String:Any] {
         let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
-        let _id : Any = self._id == nil ? JSONHandler.null : self._id
-        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
-        let entityType : Any = self.entityType == nil ? JSONHandler.null : self.entityType!.toJSONString()
+//        let identification : Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
+//        let entityType : Any = self.entityType == nil ? JSONHandler.null : self.entityType!.toJSONString()
         var obj:[String:Any] = [
             "email": email,
-            "_id": _id
         ]
         
         if self._id != nil {
