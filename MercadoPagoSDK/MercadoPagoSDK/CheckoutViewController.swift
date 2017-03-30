@@ -29,7 +29,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
     @IBOutlet weak var checkoutTable: UITableView!
     
-    init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void,  callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
+   public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void,  callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
         self.initCommon()
         self.viewModel = viewModel
@@ -478,7 +478,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     
 }
 
-open class CheckoutViewModel {
+open class CheckoutViewModel: NSObject {
     
     var shippingIncluded = false
     var freeShippingIncluded = false
@@ -494,14 +494,14 @@ open class CheckoutViewModel {
     
     public static var CUSTOMER_ID = ""
     
-    init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
+    public init(checkoutPreference : CheckoutPreference, paymentData : PaymentData, paymentOptionSelected : PaymentMethodOption, discount: DiscountCoupon? = nil) {
         CheckoutViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
         self.paymentData = paymentData
         self.discount = discount
         self.paymentOptionSelected = paymentOptionSelected
-        
-        self.setSummaryRows()
+        super.init()
+        setSummaryRows()
     }
     
     func setSummaryRows() {
