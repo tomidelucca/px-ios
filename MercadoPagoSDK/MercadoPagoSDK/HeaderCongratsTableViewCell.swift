@@ -50,8 +50,8 @@ class HeaderCongratsTableViewCell: UITableViewCell, TimerDelegate {
             }
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
-            let thousandSeparator = String(currency.getThousandsSeparatorOrDefault()) ?? "."
-            let decimalSeparator = String(currency.getDecimalSeparatorOrDefault()) ?? "."
+            let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+            let decimalSeparator = currency.getDecimalSeparatorOrDefault()
             
             let amountRange = titleWithParams.range(of: "%t")
             

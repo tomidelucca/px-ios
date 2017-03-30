@@ -143,11 +143,24 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectIdentification() {
-        let identificationStep = IdentificationViewController { (identification : Identification) in
+        let identificationStep = IdentificationViewController (callback: { (identification : Identification) in
             self.viewModel.updateCheckoutModel(identification : identification)
             self.executeNextStep()
+        }, errorExitCallback: { [weak self] in
+            
+            guard let object = self else {
+                return 
+            }
+            object.finish()
+        })
+        
+        identificationStep.callbackCancel = {[weak self] in
+            
+            guard let object = self else {
+                return
+            }
+            object.navigationController.popViewController(animated: true)
         }
-        identificationStep.callbackCancel = { self.navigationController.popViewController(animated: true)}
         self.pushViewController(viewController : identificationStep, animated: true)
     }
     
@@ -215,6 +228,7 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func collectIssuers(){
+        self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
         MPServicesBuilder.getIssuers(self.viewModel.paymentData.paymentMethod, bin: bin, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: { (issuers) -> Void in
             
@@ -224,12 +238,15 @@ open class MercadoPagoCheckout: NSObject {
                 self.viewModel.updateCheckoutModel(issuer: issuers[0])
             }
             self.executeNextStep()
+            self.dismissLoading()
             
         }) { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.collectIssuers()
             })
+            self.executeNextStep()
         }
+        
     }
     
     func startIssuersScreen() {
@@ -251,7 +268,10 @@ open class MercadoPagoCheckout: NSObject {
             return
         }
         if cardInfo.canBeClone() {
-            cloneCardToken(cardInformation: cardInfo, securityCode: securityCode!)
+            guard let token = cardInfo as? Token else {
+                return // TODO Refactor : Tenemos unos lios barbaros con CardInformation y CardInformationForm, no entiendo porque hay uno y otr
+            }
+            cloneCardToken(token: token, securityCode: securityCode!)
         
         } else {
             createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode!)
@@ -268,7 +288,7 @@ open class MercadoPagoCheckout: NSObject {
         
         }, failure : { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                self.createCardToken()
+                self.createNewCardToken()
             })
             self.executeNextStep()
         })
@@ -289,29 +309,28 @@ open class MercadoPagoCheckout: NSObject {
             self.dismissLoading()
         }, failure: { (error) in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                self.createCardToken()
+                self.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
             })
+            self.executeNextStep()
         })
     }
     
-    func cloneCardToken(cardInformation: CardInformation, securityCode: String) {
+    func cloneCardToken(token: Token, securityCode: String) {
         self.presentLoading()
-        
-        if let token = cardInformation as? Token {
-            MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
+        MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
                 self.viewModel.updateCheckoutModel(token: token)
                 self.executeNextStep()
                 self.dismissLoading()
-            }, failure: { (error) in
+        }, failure: { (error) in
                 self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
-                    self.createCardToken()
+                    self.cloneCardToken(token: token, securityCode: securityCode)
                 })
+                self.executeNextStep()
             })
-        }
     }
 
     func collectPayerCosts() {
-        
+        self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
         MPServicesBuilder.getInstallments(bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.issuer, paymentMethodId: self.viewModel.paymentData.paymentMethod._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(),success: { (installments) -> Void in
             self.viewModel.installment = installments[0]
@@ -322,12 +341,15 @@ open class MercadoPagoCheckout: NSObject {
             }
             
             self.executeNextStep()
+            self.dismissLoading()
             
         }) { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.collectPayerCosts()
             })
+            self.executeNextStep()
         }
+        
     }
     
     func startPayerCostScreen() {
@@ -392,9 +414,18 @@ open class MercadoPagoCheckout: NSObject {
 	}
     
     func collectSecurityCode(){
-        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { (cardInformation: CardInformation, securityCode: String) -> Void in
-            self.createCardToken(cardInformation: cardInformation, securityCode: securityCode)
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { (cardInformation: CardInformationForm, securityCode: String) -> Void in
+            self.createCardToken(cardInformation: cardInformation as! CardInformation, securityCode: securityCode)
 
+        })
+        self.pushViewController(viewController : securityCodeVc, animated: true)
+        
+    }
+    
+    func collectSecurityCodeForRetry(){
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.cloneTokenSecurityCodeViewModel(), collectSecurityCodeCallback: { (cardInformation: CardInformationForm, securityCode: String) -> Void in
+            self.cloneCardToken(token: cardInformation as! Token, securityCode: securityCode)
+            
         })
         self.pushViewController(viewController : securityCodeVc, animated: true)
         
@@ -440,7 +471,19 @@ open class MercadoPagoCheckout: NSObject {
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : MPStepBuilder.CongratsState) in
-                self.finish()
+                if state == MPStepBuilder.CongratsState.call_FOR_AUTH {
+                    self.navigationController.setNavigationBarHidden(false, animated: false)
+                    self.viewModel.prepareForClone()
+                    self.collectSecurityCodeForRetry()
+                } else if state == MPStepBuilder.CongratsState.cancel_RETRY || state == MPStepBuilder.CongratsState.cancel_SELECT_OTHER {
+                    self.navigationController.setNavigationBarHidden(false, animated: false)
+                    self.viewModel.prepareForNewSelection()
+                    self.executeNextStep()
+
+                }else{
+                    self.finish()
+                }
+
             })
         } else {
             congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :MPStepBuilder.CongratsState) in
@@ -452,13 +495,22 @@ open class MercadoPagoCheckout: NSObject {
     
     func error() {
         // Display error
-        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: { (Void) -> Void in
-            self.viewModel.errorCallback?()
-        }, callbackCancel: {(Void) -> Void in
-            // Aparte de default callbackCancel
+        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {[weak self] in
+            
+            guard let object = self else {
+                return
+            }
+            object.finish()
+
         })
         // Limpiar error anterior
         MercadoPagoCheckoutViewModel.error = nil
+        
+        errorStep.callback = {
+            self.navigationController.dismiss(animated: true, completion: {
+                self.viewModel.errorCallback?()
+            })
+        }
         self.dismissLoading(completion : {
             self.navigationController.present(errorStep, animated: true, completion: {})
         })
@@ -531,6 +583,8 @@ open class MercadoPagoCheckout: NSObject {
         }
         self.navigationController.viewControllers = currentViewControllers
     }
+    
+
 }
 
 extension MercadoPagoCheckout {

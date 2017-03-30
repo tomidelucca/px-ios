@@ -18,26 +18,30 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        unitPrice.text = ""
+        titleLabel.text = ""
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark()){
+    internal func fillCell(_ title : String, amount : Double, currency : Currency, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark(), amountEnable: Bool = true){
         
         fillDescription(title: title, color: titleColor)
         
         self.removeFromSuperview()
         
-        fillAmount(amount: amount, color: amountColor, payerCost: payerCost, currency: currency)
+        if amountEnable {
+            fillAmount(amount: amount, color: amountColor, payerCost: payerCost, currency: currency)
+        }
         
         addSeperatorLine(addLine: addSeparatorLine)
     }
     
     internal func fillCell(summaryRow: SummaryRow, currency : Currency, payerCost : PayerCost? = nil){
         
-        fillCell(summaryRow.customDescription, amount: summaryRow.customAmount, currency: currency, addSeparatorLine: summaryRow.separatorLine, titleColor: summaryRow.colorDescription, amountColor: summaryRow.colorAmount)
+        fillCell(summaryRow.customDescription, amount: summaryRow.customAmount, currency: currency, addSeparatorLine: summaryRow.separatorLine, titleColor: summaryRow.colorDescription, amountColor: summaryRow.colorAmount, amountEnable: summaryRow.isAmountEnable())
     }
     
     func fillDescription(title: String, color: UIColor) {

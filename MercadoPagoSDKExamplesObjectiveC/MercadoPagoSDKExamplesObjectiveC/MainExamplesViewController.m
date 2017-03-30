@@ -213,6 +213,7 @@
     [resultPreference setRejectedIconSubtextWithText:@"Uppss..."];
     [resultPreference setRejectedContentTextWithText:@"Vuelve más tarde"];
     [resultPreference setRejectedContentTitleWithTitle:@"¿Qué hago?"];
+    [resultPreference disableApprovedReceipt];
     //    [resultPreference disableRejectedContentTitle];
     //    [resultPreference disableRejectedContentText];
     //    [resultPreference setRejectedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
@@ -240,10 +241,17 @@
     [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
     MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
     self.dineroEnCuentaCell = dineroEnCuentaCustom;
+
+    
+    DineroEnCuentaTableViewCell *header = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
+    [header.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
+    
+    MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
     
     
     [PaymentResultScreenPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
     [PaymentResultScreenPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
+    [PaymentResultScreenPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
     
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
@@ -276,6 +284,8 @@
     //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
     
     SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:YES];
+    
+    [summaryRow disableAmount];
     
     [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
     
