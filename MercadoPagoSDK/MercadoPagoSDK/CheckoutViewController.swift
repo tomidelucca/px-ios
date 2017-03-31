@@ -713,7 +713,7 @@ open class CheckoutViewModel: NSObject {
     }
     
     func shouldShowInstallmentSummary() -> Bool {
-        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost!.hasInstallmentsRate()
+        return isPaymentMethodSelectedCard() && self.paymentData.paymentMethod.paymentTypeId != "debit_card" && paymentData.payerCost != nil && paymentData.payerCost?.installments != 1
     }
 }
 
