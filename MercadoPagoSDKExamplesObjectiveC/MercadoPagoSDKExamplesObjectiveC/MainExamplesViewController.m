@@ -94,7 +94,7 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:nil navigationController:self.navigationController paymentResult:self.paymentResult ] start];
+    [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ] start];
 
     
 }
