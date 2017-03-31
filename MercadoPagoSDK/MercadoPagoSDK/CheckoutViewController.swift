@@ -177,7 +177,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return self.getPurchaseDetailCell(indexPath: indexPath, title : "Pagas".localized, amount : self.viewModel.preference!.getAmount(), payerCost : self.viewModel.paymentData.payerCost, addSeparatorLine: true)
             
         } else if self.viewModel.isTotalCellFor(indexPath: indexPath){
-            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false, height: PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
+            return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
         
         } else if self.viewModel.isConfirmAdditionalInfoFor(indexPath: indexPath){
         return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
@@ -313,7 +313,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
             return purchaseDetailCell
         }
         
-        return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost, addSeparatorLine: addSeparatorLine, height: PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
+        return getPurchaseSimpleDetailCell(indexPath: indexPath, title: title, amount: amount, payerCost : payerCost, addSeparatorLine: addSeparatorLine)
     }
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
@@ -350,10 +350,10 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         return purchaseSimpleDetailTableViewCell
     }
     
-    private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true, height: CGFloat) -> UITableViewCell{
+    private func getPurchaseSimpleDetailCell(indexPath : IndexPath, title : String, amount : Double, payerCost : PayerCost? = nil, addSeparatorLine : Bool = true) -> UITableViewCell{
         let currency = MercadoPagoContext.getCurrency()
         let purchaseSimpleDetailTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseSimpleDetailTableViewCell", for: indexPath) as! PurchaseSimpleDetailTableViewCell
-        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost, addSeparatorLine : addSeparatorLine, height: height)
+        purchaseSimpleDetailTableViewCell.fillCell(title, amount: amount, currency: currency, payerCost: payerCost, addSeparatorLine : addSeparatorLine, height: PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
         return purchaseSimpleDetailTableViewCell
     }
     
