@@ -2,13 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>MPE</key>
-	<dict>
-		<key>individual</key>
-		<string>Natural</string>
-		<key>association</key>
-		<string>Jurídica</string>
-	</dict>
 	<key>MCO</key>
 	<dict>
 		<key>individual</key>
@@ -16,35 +9,7 @@
 		<key>association</key>
 		<string>Jurídica</string>
 	</dict>
-	<key>MLV</key>
-	<dict>
-		<key>individual</key>
-		<string>Natural</string>
-		<key>association</key>
-		<string>Jurídica</string>
-	</dict>
-	<key>MLU</key>
-	<dict>
-		<key>individual</key>
-		<string>Natural</string>
-		<key>association</key>
-		<string>Jurídica</string>
-	</dict>
-	<key>MLB</key>
-	<dict>
-		<key>individual</key>
-		<string>Física</string>
-		<key>association</key>
-		<string>Jurídica</string>
-	</dict>
-	<key>MLA</key>
-	<dict>
-		<key>individual</key>
-		<string>Natural</string>
-		<key>association</key>
-		<string>Jurídica</string>
-	</dict>
-	<key>MLC</key>
+	<key>default</key>
 	<dict>
 		<key>individual</key>
 		<string>Natural</string>

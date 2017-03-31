@@ -144,6 +144,9 @@
 
 //-- EntityType
 "¿Cuál es el tipo de persona?" = "¿Cuál es el tipo de persona?";
+//-----EntityTypes
+"Natural"="Natural";
+"Jurídica"="Jurídica";
 
 //-- Financial Institutions
 "¿Cuál es tu banco?" = "¿Cuál es tu banco?";

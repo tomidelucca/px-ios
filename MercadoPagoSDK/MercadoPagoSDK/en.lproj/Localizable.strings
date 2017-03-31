@@ -130,6 +130,9 @@
 
 //-- EntityType
 "¿Cuál es el tipo de persona?" = "Which is your entity\'s type?";
+//-----EntityTypes
+"Natural"="Individual";
+"Jurídica"="Association";
 
 //-- Financial Institutions
 "¿Cuál es tu banco?" = "Which is your bank?";

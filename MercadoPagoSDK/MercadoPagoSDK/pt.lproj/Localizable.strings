@@ -30,6 +30,9 @@
 
 //-- EntityType
 "¿Cuál es el tipo de persona?" = "Qual é o tipo de pessoa?";
+//-----EntityTypes
+"Natural"="Física";
+"Jurídica"="Jurídica";
 
 //-- Financial Institutions
 "¿Cuál es tu banco?" = "Qual é o seu banco?";
