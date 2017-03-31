@@ -201,6 +201,15 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                 if indexPath.row != 0{
                     let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
                     self.viewModel.callback!(callbackData)
+                }else {
+                    if self.viewModel.showDiscountSection() {
+                        
+                        if let coupon = self.viewModel.discount  {
+                            let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
+                            self.present(step, animated: false, completion: {})
+                        }
+                    }
+
                 }
             } else{
                 let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
