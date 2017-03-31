@@ -659,7 +659,7 @@ open class CheckoutViewModel: NSObject {
     }
     
     func hasPayerCostAddionalInfo() -> Bool {
-        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil
+        return self.paymentData.payerCost != nil && self.paymentData.payerCost!.getCFTValue() != nil && self.paymentData.payerCost?.installments != 1
     }
     
     func isTitleCellFor(indexPath: IndexPath) -> Bool{
