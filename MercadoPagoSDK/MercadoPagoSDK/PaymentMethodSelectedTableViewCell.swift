@@ -86,6 +86,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             TEALabel.text = "TEA " + (payerCost?.getTEAValue())!
         }else{
             CFT.text = ""
+            TEALabel.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
         
