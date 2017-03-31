@@ -11,7 +11,7 @@ import UIKit
 class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
 
     private static let ROW_HEIGHT = CGFloat(58)
-    private static var unlockCardLink: String = ""
+    public static var unlockCardLink: URL!
     
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var unlockCardtextView: MPTextView!
@@ -34,8 +34,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         
         self.unlockCardtextView.linkTextAttributes = URLAttribute
         
-//        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
-//        self.addSubview(separatorLine)
+        self.selectionStyle = .none
         
     }
     
@@ -55,11 +54,11 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         let mutableAttributedString = NSMutableAttributedString(string: unlockCardText, attributes: normalAttributes)
         let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized)
         
-        mutableAttributedString.addAttribute(NSLinkAttributeName, value: self.unlockCardLink, range: unlockCardLinkRange)
+        mutableAttributedString.addAttribute(NSLinkAttributeName, value: self.unlockCardLink!, range: unlockCardLinkRange)
         
         let style = NSMutableParagraphStyle()
         style.alignment = .left
-        style.lineSpacing = CGFloat(6)
+        style.lineSpacing = CGFloat(0.5)
         
         mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
         return mutableAttributedString
@@ -79,10 +78,6 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         let textView = getUnlockCardTextView()
         let textViewHeight = textView.contentSize.height
         return UnlockCardTableViewCell.ROW_HEIGHT + textViewHeight
-    }
-    
-    open func fillCell(link: String) {
-        UnlockCardTableViewCell.unlockCardLink = link
     }
     
 }
