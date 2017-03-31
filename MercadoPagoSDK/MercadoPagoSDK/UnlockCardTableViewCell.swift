@@ -27,11 +27,6 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         self.unlockCardtextView.delegate = self
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
-//        self.unlockCardtextView.backgroundColor = UIColor.red
-        self.unlockCardtextView.textContainer.maximumNumberOfLines = 2
-        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping
-        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byWordWrapping
-//        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byClipping
         
         let URLAttribute = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.primaryColor()]
         
@@ -78,9 +73,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     }
     
     static public func getCellHeight() -> CGFloat {
-        let textView = getUnlockCardTextView()
-        let textViewHeight = textView.contentSize.height
-        return UnlockCardTableViewCell.ROW_HEIGHT + textViewHeight
+        return UnlockCardTableViewCell.ROW_HEIGHT
     }
     
 }
