@@ -119,6 +119,7 @@
 //-- Payer Cost
 " Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas mensualidades?";
+"No incluye intereses bancarios" = "No incluye intereses bancarios";
 
 //-- Issuers
 "¿Quién emitió tu tarjeta?" = "¿Quién emitió tu tarjeta?";
@@ -211,3 +212,7 @@
 "Importe fuera del alcance"="Importe fuera del alcance";
 "La campaña expiró"="La campaña expiró";
 
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Recuerda desbloquear tu tarjeta antes de confirmar el pago.";
+"desbloquear tu tarjeta"="desbloquear tu tarjeta";
+"Desbloqueo de Tarjeta"="Desbloqueo de Tarjeta";

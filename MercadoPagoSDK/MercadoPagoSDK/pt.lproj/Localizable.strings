@@ -20,6 +20,7 @@
 //-- Payer Cost
 " Sin interés" = " Sem juros";//--
 "¿En cuántas cuotas?" = "Em quantas parcelas?";
+"No incluye intereses bancarios" = "Não inclui juros bancários";
 
 //-- Issuers
 "¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
@@ -222,3 +223,7 @@
 "Importe fuera del alcance"="Montante fora do alcance";
 "La campaña expiró"="Campanha expirado";
 
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Lembre-se de desbloquear o seu cartão antes de confirmar o pagamento.";
+"desbloquear tu tarjeta"="desbloquear o seu cartão";
+"Desbloqueo de Tarjeta"="Desbloquear Cartão";

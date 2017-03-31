@@ -25,10 +25,13 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         self.background.layer.cornerRadius = 4
         
         self.unlockCardtextView.delegate = self
-        
         self.unlockCardtextView.isUserInteractionEnabled = true
-        
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
+//        self.unlockCardtextView.backgroundColor = UIColor.red
+        self.unlockCardtextView.textContainer.maximumNumberOfLines = 2
+        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byCharWrapping
+        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byWordWrapping
+//        self.unlockCardtextView.textContainer.lineBreakMode = NSLineBreakMode.byClipping
         
         let URLAttribute = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.primaryColor()]
         
@@ -65,7 +68,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        self.delegate?.openUnlockCard("Desbloquear tu Tarjeta".localized, url : URL)
+        self.delegate?.openUnlockCard("Desbloqueo de Tarjeta".localized, url : URL)
         return false
     }
     

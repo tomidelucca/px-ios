@@ -118,6 +118,7 @@
 //-- Payer Cost
 " Sin interés"=" Interest free";//--
 "¿En cuántas cuotas?" = "How many installments?";
+"No incluye intereses bancarios" = "Doesn't include bank interest";
 
 //-- Issuers
 "¿Quién emitió tu tarjeta?" = "Which is your bank?";
@@ -225,3 +226,9 @@
 "Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
 "Importe fuera del alcance"="Amount out of reach";
 "La campaña expiró"="/Campaign expired";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Remember to unlock your card before you confirm the payment";
+"desbloquear tu tarjeta"="unlock your card";
+"Desbloqueo de Tarjeta"="Card Unlocking";
+

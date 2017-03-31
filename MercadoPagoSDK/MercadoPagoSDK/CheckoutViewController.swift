@@ -437,7 +437,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     internal func openUnlockCard(_ title: String, url : URL){
-        let webVC = WebViewController(url: url, screenName: "UNLOCK_CARD", navigationBarTitle: "Desbloquear tu Tarjeta".localized)
+        let webVC = WebViewController(url: url, screenName: "UNLOCK_CARD", navigationBarTitle: "Desbloqueo de Tarjeta".localized)
         webVC.title = title
         self.navigationController!.pushViewController(webVC, animated: true)
         
