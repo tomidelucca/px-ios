@@ -15,11 +15,11 @@
             <rect key="frame" x="0.0" y="0.0" width="336" height="58"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="336" height="58"/>
+                <rect key="frame" x="0.0" y="0.0" width="336" height="57"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NC9-wi-gCH">
-                        <rect key="frame" x="32" y="-1" width="272" height="59"/>
+                        <rect key="frame" x="20" y="-1" width="296" height="59"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2xk-OZ-Jzy">
                                 <rect key="frame" x="13" y="19" width="19" height="19"/>
@@ -29,7 +29,7 @@
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CX5-Pg-Gcj" customClass="MPTextView" customModule="MercadoPagoSDK" customModuleProvider="target">
-                                <rect key="frame" x="45" y="12" width="210" height="33"/>
+                                <rect key="frame" x="45" y="12" width="234" height="33"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
@@ -78,9 +78,9 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="NC9-wi-gCH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="7Pi-3H-EiK"/>
+                    <constraint firstItem="NC9-wi-gCH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="7Pi-3H-EiK"/>
                     <constraint firstItem="NC9-wi-gCH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9sp-w4-oav"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="NC9-wi-gCH" secondAttribute="trailing" constant="24" id="dqa-vJ-gRD"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="NC9-wi-gCH" secondAttribute="trailing" constant="12" id="dqa-vJ-gRD"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
