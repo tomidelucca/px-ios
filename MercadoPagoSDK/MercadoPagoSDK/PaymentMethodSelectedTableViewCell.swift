@@ -82,13 +82,25 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         TEALabel.textColor = UIColor.px_grayDark()
         
         if let CFTValue = payerCost?.getCFTValue() {
+            if  payerCost?.installments != 1 {
                 CFT.text = "CFT " + CFTValue
+            }else {
+                CFT.text = ""
+                self.changePaymentMethodCFTConstraint.constant = 10
+            }
+            
         } else {
             CFT.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
         if let TEAValue = payerCost?.getTEAValeu() {
-            TEALabel.text = "TEA " + TEAValue
+            
+            if  payerCost?.installments != 1 {
+                TEALabel.text = "TEA " + TEAValue
+            }else {
+                TEALabel.text = ""
+            }
+
         } else {
             TEALabel.text = ""
         }
