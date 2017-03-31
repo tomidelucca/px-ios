@@ -81,27 +81,21 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
         TEALabel.textColor = UIColor.px_grayDark()
         
-        if let CFTValue = payerCost?.getCFTValue() {
-            if  payerCost?.installments != 1 {
+        if setNeedsDisplayCFT(payerCost: payerCost) {
+            if let CFTValue = payerCost?.getCFTValue() {
                 CFT.text = "CFT " + CFTValue
-            }else {
-                CFT.text = ""
-                self.changePaymentMethodCFTConstraint.constant = 10
             }
-            
-        } else {
+        }else{
             CFT.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
-        if let TEAValue = payerCost?.getTEAValeu() {
-            
-            if  payerCost?.installments != 1 {
+       
+        
+        if setNeedsDisplayTEA(payerCost: payerCost) {
+            if let TEAValue = payerCost?.getTEAValeu() {
                 TEALabel.text = "TEA " + TEAValue
-            }else {
-                TEALabel.text = ""
             }
-
-        } else {
+        }else{
             TEALabel.text = ""
         }
         
@@ -110,6 +104,27 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
     }
     
+    func setNeedsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
+        guard let payerCost = payerCost else {
+            return false
+        }
+        if payerCost.getCFTValue() != nil && payerCost.installments != 1 {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func setNeedsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
+        guard let payerCost = payerCost else {
+            return false
+        }
+        if payerCost.getTEAValeu() != nil && payerCost.installments != 1 {
+            return true
+        }else{
+            return false
+        }
+    }
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
 		
 		var cellHeight = DEFAULT_ROW_HEIGHT
