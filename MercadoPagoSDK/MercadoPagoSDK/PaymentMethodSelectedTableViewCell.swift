@@ -81,22 +81,12 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
         TEALabel.textColor = UIColor.px_grayDark()
         
-        if setNeedsDisplayCFT(payerCost: payerCost) {
-            if let CFTValue = payerCost?.getCFTValue() {
-                CFT.text = "CFT " + CFTValue
-            }
+        if needsDisplayAdditionalCost(payerCost: payerCost) {
+            CFT.text = "CFT " + (payerCost?.getCFTValue())!
+            TEALabel.text = "TEA " + (payerCost?.getTEAValue())!
         }else{
             CFT.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
-        }
-       
-        
-        if setNeedsDisplayTEA(payerCost: payerCost) {
-            if let TEAValue = payerCost?.getTEAValeu() {
-                TEALabel.text = "TEA " + TEAValue
-            }
-        }else{
-            TEALabel.text = ""
         }
         
         let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
@@ -104,7 +94,10 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
     }
     
-    func setNeedsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
+    func needsDisplayAdditionalCost(payerCost : PayerCost? = nil) -> Bool {
+        return needsDisplayCFT(payerCost : payerCost) && needsDisplayTEA(payerCost : payerCost)
+    }
+    func needsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
         guard let payerCost = payerCost else {
             return false
         }
@@ -115,11 +108,11 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
     }
     
-    func setNeedsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
+    func needsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
         guard let payerCost = payerCost else {
             return false
         }
-        if payerCost.getTEAValeu() != nil && payerCost.installments != 1 {
+        if payerCost.getTEAValue() != nil && payerCost.installments != 1 {
             return true
         }else{
             return false
