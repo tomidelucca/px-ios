@@ -128,7 +128,7 @@
 //ADDITIONAL STEP
 
 //-- Payer Cost
-" Sin interés"=" No incluye intereses bancarios";//--
+" Sin interés"=" Sin interés";//--
 "¿En cuántas cuotas?" = "¿En cuántas cuotas?";
 "No incluye intereses bancarios" = "No incluye intereses bancarios";
 
