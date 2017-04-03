@@ -112,6 +112,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if !String.isNullOrEmpty(self.checkoutPreference._id) {
             // Cargar información de preferencia en caso que tenga id
             needLoadPreference = true
+        } else {
+            self.paymentData.payer = self.checkoutPreference.getPayer()
         }
     }
     
