@@ -36,6 +36,9 @@ class WalletIntegrationTest: BaseTest {
         XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
         
         step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.VALIDATE_PREFERENCE)
+        
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
         MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
         
@@ -65,6 +68,9 @@ class WalletIntegrationTest: BaseTest {
         let mpCheckoutWithRyC = MercadoPagoCheckout(checkoutPreference: preference, paymentData : localPaymentData, navigationController: UINavigationController())
         step = mpCheckoutWithRyC.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
+        
+        step = mpCheckoutWithRyC.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.VALIDATE_PREFERENCE)
         
         step = mpCheckoutWithRyC.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PAYMENT_METHODS)
