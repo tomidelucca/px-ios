@@ -660,7 +660,7 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.callback = callback
     }
     
-    open class func showPayerCostDescriptionForSite() -> Bool{
+    open class func showPayerCostDescription() -> Bool{
         
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
@@ -675,7 +675,7 @@ extension MercadoPagoCheckout {
         return true
     }
     
-    open class func showBankInterestCell() -> Bool{
+    open class func showBankInterestWarning() -> Bool{
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()

@@ -46,11 +46,11 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func showPayerCostDescription() -> Bool{
-        return MercadoPagoCheckout.showPayerCostDescriptionForSite()
+        return MercadoPagoCheckout.showPayerCostDescription()
     }
     
     func showBankInsterestCell() -> Bool {
-        return MercadoPagoCheckout.showBankInterestCell()
+        return MercadoPagoCheckout.showBankInterestWarning()
     }
     
     func showDiscountSection() -> Bool{

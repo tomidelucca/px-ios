@@ -43,6 +43,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
         let totalRowNib = UINib(nibName: "TotalPayerCostRowTableViewCell", bundle: self.bundle)
         self.tableView.register(totalRowNib, forCellReuseIdentifier: "totalRowNib")
+        let bankInsterestNib = UINib(nibName: "BankInsterestTableViewCell", bundle: self.bundle)
+        self.tableView.register(bankInsterestNib, forCellReuseIdentifier: "bankInsterestNib")
     }
     
     override open func didReceiveMemoryWarning() {
@@ -92,6 +94,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         case 0:
             return self.viewModel.getTitleCellHeight()
         case 1:
+            if indexPath.row == 1{
+                return 35
+            }
             return self.viewModel.getCardSectionCellHeight()
         case 2:
             return self.viewModel.getBodyCellHeight(row: indexPath.row)
@@ -111,12 +116,20 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             if section == 0{
                 return 1
             }else if section == 1{
+                if viewModel.showBankInsterestCell() {
+                    return 1
+                }
                 return 0
             }else{
                 return self.viewModel.numberOfCellsInBody()
             }
         } else{
             if (section == 0 || section == 1){
+                if section == 1{
+                    if viewModel.showBankInsterestCell() {
+                        return 2
+                    }
+                }
                 return 1
             } else {
                 return self.viewModel.numberOfCellsInBody()
@@ -141,20 +154,29 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             return titleCell
             
         } else if (indexPath.section == 1){
-            if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
-                
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.loadCellView(view: cellView as! UIView)
-                cardSectionCell.selectionStyle = .none
-                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-                
-                return cardSectionCell
             
-            }else{
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-                return cardSectionCell
+            if indexPath.row == 0 {
+                
+                if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
+                    
+                    let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+                    cardSectionCell.loadCellView(view: cellView as! UIView)
+                    cardSectionCell.selectionStyle = .none
+                    cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
+                    cardSectionCell.backgroundColor = UIColor.primaryColor()
+                    
+                    return cardSectionCell
+                    
+                }else{
+                    let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+                    cardSectionCell.backgroundColor = UIColor.primaryColor()
+                    return cardSectionCell
+                }
+                
+            } else {
+                let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
+                bankInsterestCell.backgroundColor = UIColor.primaryColor()
+                return bankInsterestCell
             }
             
             
