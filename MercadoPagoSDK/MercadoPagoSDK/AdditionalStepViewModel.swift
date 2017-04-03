@@ -45,6 +45,14 @@ open class AdditionalStepViewModel : NSObject{
         return cardSectionVisible
     }
     
+    func showPayerCostDescription() -> Bool{
+        return MercadoPagoCheckout.showPayerCostDescriptionForSite()
+    }
+    
+    func showBankInsterestCell() -> Bool {
+        return MercadoPagoCheckout.showBankInterestCell()
+    }
+    
     func showDiscountSection() -> Bool{
         return false
     }
