@@ -17,8 +17,9 @@ class BankInsterestTableViewCell: UITableViewCell {
         // Initialization code
         mainLabel.text = "No incluye intereses bancarios".localized
         mainLabel.textAlignment = .center
-        mainLabel.font.withSize(14)
+        mainLabel.font = Utils.getLightFont(size: 14)
         mainLabel.textColor = UIColor.systemFontColor()
+        self.selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
