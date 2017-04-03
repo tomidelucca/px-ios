@@ -48,6 +48,9 @@ class ApprovedTableViewCell: UITableViewCell {
                 fillInterestLabel(payerCost: payerCost)
                 fillTotalLabel(payerCost: payerCost, currency: currency)
                 
+            }else  if let discount = paymentResult.paymentData?.discount {
+                fillInstallmentLabel(amount: discount.newAmount(), currency: currency)
+                paymentMethodTotalConstraint.constant = 0
             } else if let amount = checkoutPreference?.getAmount() {
                 fillInstallmentLabel(amount: amount, currency: currency)
                 paymentMethodTotalConstraint.constant = 0
