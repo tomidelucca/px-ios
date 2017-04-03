@@ -69,22 +69,22 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
  
     static let siteIdsSettings : [String : NSDictionary] = [
         //Argentina
-        "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299"],
+        "MLA" : ["language" : "es", "currency" : "ARS","termsconditions" : "https://www.mercadopago.com.ar/ayuda/terminos-y-condiciones_299", "showPayerCostDescription" : true],
         //Brasil
-        "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300"],
+        "MLB" : ["language" : "pt", "currency" : "BRL","termsconditions" : "https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300", "showPayerCostDescription" : true],
         //Chile
 
-        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.cl/ayuda/terminos-y-condiciones_299"],
+        "MLC" : ["language" : "es", "currency" : "CLP","termsconditions" : "https://www.mercadopago.cl/ayuda/terminos-y-condiciones_299", "showPayerCostDescription" : true],
         //Mexico
-        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715"],
+        "MLM" : ["language" : "es-MX", "currency" : "MXN","termsconditions" : "https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715", "showPayerCostDescription" : true],
         //Peru
-        "MPE" : ["language" : "es", "currency" : "PEN","termsconditions" : "https://www.mercadopago.com.pe/ayuda/terminos-condiciones-uso_2483"],
+        "MPE" : ["language" : "es", "currency" : "PEN","termsconditions" : "https://www.mercadopago.com.pe/ayuda/terminos-condiciones-uso_2483", "showPayerCostDescription" : true],
         //Uruguay
-        "MLU" : ["language" : "es", "currency" : "UYU","termsconditions" : "https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834"],
+        "MLU" : ["language" : "es", "currency" : "UYU","termsconditions" : "https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834", "showPayerCostDescription" : true],
         //Colombia
-        "MCO" : ["language" : "es-CO", "currency" : "COP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
+        "MCO" : ["language" : "es-CO", "currency" : "COP","termsconditions" : "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299", "showPayerCostDescription" : false],
         //Venezuela
-        "MLV" : ["language" : "es", "currency" : "VEF","termsconditions" : "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
+        "MLV" : ["language" : "es", "currency" : "VEF","termsconditions" : "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299", "showPayerCostDescription" : true]
 ]
 
 
@@ -153,6 +153,13 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     open class func getSite() -> String{
         return MercadoPagoContext.sharedInstance.site.rawValue
+    }
+    
+    open class func showPayerCostDescriptionForSite() -> Bool{
+        let site = MercadoPagoContext.getSite()
+        let siteConfig = MercadoPagoContext.siteIdsSettings[site]
+        let flag = siteConfig!["showPayerCostDescription"] as! Bool
+        return flag
     }
     
     open class func setSiteID(_ siteId : String) {

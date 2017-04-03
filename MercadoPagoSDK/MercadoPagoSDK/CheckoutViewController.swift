@@ -691,8 +691,10 @@ open class CheckoutViewModel {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-        let issuerID = self.paymentData.issuer?._id
-        let searchString: String = site + "_" + "\(issuerID!)"
+        guard let issuerID = self.paymentData.issuer?._id else {
+            return nil
+        }
+        let searchString: String = site + "_" + "\(issuerID)"
         
         if let link = dictionary?.value(forKey: searchString) as? String{
             UnlockCardTableViewCell.unlockCardLink = URL(string:link)
