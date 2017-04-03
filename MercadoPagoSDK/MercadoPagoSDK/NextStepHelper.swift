@@ -150,6 +150,10 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
         
+        if self.initWithPaymentData && paymentData.isComplete() {
+            return true
+        }
+        
         if paymentData.isComplete() {
             return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
         }

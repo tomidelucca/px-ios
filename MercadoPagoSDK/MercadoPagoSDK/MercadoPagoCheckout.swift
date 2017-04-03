@@ -512,7 +512,6 @@ open class MercadoPagoCheckout: NSObject {
             })
         }
         
-        MercadoPagoCheckoutViewModel.flowPreference = FlowPreference()
     }
     
     
