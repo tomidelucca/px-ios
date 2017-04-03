@@ -182,7 +182,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{
-        return (discount != nil)
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
     
 }

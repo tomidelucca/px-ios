@@ -266,7 +266,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.loadingGroups {
             return 0
         }
-        return viewModel.discount == nil ? 2 : 3
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 3 : 2
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -277,36 +277,29 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callback!(paymentSearchItemSelected)
         }else if isCouponSection(section: indexPath.section) {
             
-            if let coupon = self.viewModel.discount  {
-               let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
-               self.present(step, animated: false, completion: {})
+            if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() {
+                if let coupon = self.viewModel.discount {
+                    let step = CouponDetailViewController(coupon: coupon)
+                    self.present(step, animated: false, completion: {})
+                } else {
+                    
+                }
             }
         }
     }
     
     func isHeaderSection(section: Int) -> Bool {
-        if (section == 0 ){
-            return true
-        }else{
-            return false
-        }
+        return section == 0
     }
     func isCouponSection(section: Int) -> Bool {
-        guard let _ = viewModel.discount else{
-            return false
-        }
-        return section == 1
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && section == 1
     }
     
     func isGroupSection(section: Int) -> Bool {
-        var sectionGroup = 1
-        if viewModel.discount != nil {
-            sectionGroup = 2
-        }
+        let sectionGroup = MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 2 :1
+
         return sectionGroup == section
     }
-
-    
 
     public func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {

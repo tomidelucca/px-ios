@@ -510,7 +510,7 @@ open class CheckoutViewModel: NSObject {
         
         summaryRows.insert(productsSummary, at: 0)
         
-        if let discount = self.paymentData.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = self.paymentData.discount {
             let discountSummary = SummaryRow(customDescription: discount.getDiscountReviewDescription(), descriptionColor: UIColor.mpGreenishTeal(), customAmount:-Double(discount.coupon_amount)!, amountColor: UIColor.mpGreenishTeal(), separatorLine: false)
             summaryRows.insert(discountSummary, at: 1)
         }
@@ -655,7 +655,7 @@ open class CheckoutViewModel: NSObject {
         if let payerCost = paymentData.payerCost {
             return payerCost.totalAmount
         }
-        if let discount = paymentData.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         }
         return self.preference!.getAmount()
