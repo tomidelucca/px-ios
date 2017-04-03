@@ -66,16 +66,20 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             
             if MercadoPagoCheckout.showPayerCostDescription() {
-                self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
                 
                 if MercadoPagoCheckout.showBankInterestWarning() {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "No incluye intereses bancarios".localized)
+                    self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
+                    self.noRateLabel.textColor = UIColor.px_grayDark()
+                } else {
+                    self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
                 }
             } else {
-                self.noRateLabel.attributedText = NSAttributedString(string : "")
                 
                 if MercadoPagoCheckout.showBankInterestWarning() {
-                    self.noRateLabel.attributedText = NSAttributedString(string : "No incluye intereses bancarios".localized)
+                    self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
+                    self.noRateLabel.textColor = UIColor.px_grayDark()
+                } else {
+                    self.noRateLabel.attributedText = NSAttributedString(string : "")
                 }
             }   
         }

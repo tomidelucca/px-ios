@@ -110,20 +110,22 @@ class ApprovedTableViewCell: UITableViewCell {
         if !payerCost.hasInstallmentsRate() {
             
             if MercadoPagoCheckout.showPayerCostDescription() {
-                installmentRate.text = "Sin interés".localized
                 
                 if MercadoPagoCheckout.showBankInterestWarning() {
                     installmentRate.text = "(" + "No incluye intereses bancarios".localized + ")"
                     installmentRate.font = installmentRate.font.withSize(paymentId.font.pointSize)
-                    installmentRate.textColor = paymentId.textColor
+                    installmentRate.textColor = UIColor.px_grayDark()
+                } else {
+                    installmentRate.text = "Sin interés".localized
                 }
             } else {
-                installmentRate.text = "".localized
                 
                 if MercadoPagoCheckout.showBankInterestWarning() {
                     installmentRate.text = "(" + "No incluye intereses bancarios".localized + ")"
                     installmentRate.font = installmentRate.font.withSize(paymentId.font.pointSize)
-                    installmentRate.textColor = paymentId.textColor
+                    installmentRate.textColor = UIColor.px_grayDark()
+                } else {
+                    installmentRate.text = "".localized
                 }
             }
             

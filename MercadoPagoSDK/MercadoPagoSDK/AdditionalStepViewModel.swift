@@ -77,7 +77,9 @@ open class AdditionalStepViewModel : NSObject{
         if section == Sections.title.rawValue {
             return 1
         } else if section == Sections.card.rawValue {
-            return showCardSection() ? 1 : 0
+            var rows: Int = showCardSection() ? 1 : 0
+            rows = showBankInsterestCell() ? rows + 1 : rows
+            return rows 
         } else if section == Sections.amountDetail.rawValue {
             return showAmountDetailRow() ? 1 : 0
         } else {
@@ -94,7 +96,10 @@ open class AdditionalStepViewModel : NSObject{
         case Sections.title.rawValue:
             return getTitleCellHeight()
         case Sections.card.rawValue:
-            return getCardSectionCellHeight()
+            if indexPath.row == 1{
+                return self.getBankInterestWarningCellHeight()
+            }
+            return self.getCardSectionCellHeight()
         case Sections.amountDetail.rawValue:
             return self.getAmountDetailCellHeight(indexPath: indexPath)
         case Sections.body.rawValue:
@@ -114,6 +119,10 @@ open class AdditionalStepViewModel : NSObject{
     
     func getCardSectionCellHeight() -> CGFloat{
         return UIScreen.main.bounds.width*0.50
+    }
+    
+    func getBankInterestWarningCellHeight() -> CGFloat{
+        return 35
     }
     
     func getAmountDetailCellHeight(indexPath: IndexPath) -> CGFloat{

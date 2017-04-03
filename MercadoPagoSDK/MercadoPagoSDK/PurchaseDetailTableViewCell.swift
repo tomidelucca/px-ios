@@ -47,8 +47,28 @@ open class PurchaseDetailTableViewCell: UITableViewCell {
                 PurchaseDetailTableViewCell.separatorLine!.removeFromSuperview()
             }
             if !payerCost!.hasInstallmentsRate() {
-                self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
-                separatorLineHeight += 26
+                
+                if MercadoPagoCheckout.showPayerCostDescription() {
+                    separatorLineHeight += 26
+                    
+                    if MercadoPagoCheckout.showBankInterestWarning() {
+                        self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
+                        self.noRateLabel.textColor = UIColor.px_grayDark()
+                        self.noRateLabel.font = Utils.getFont(size: 12)
+                    } else {
+                        self.noRateLabel.attributedText = NSAttributedString(string : "Sin interés".localized)
+                    }
+                } else {
+                    
+                    if MercadoPagoCheckout.showBankInterestWarning() {
+                        self.noRateLabel.attributedText = NSAttributedString(string : "(" + "No incluye intereses bancarios".localized + ")")
+                        self.noRateLabel.textColor = UIColor.px_grayDark()
+                        self.noRateLabel.font = Utils.getFont(size: 12)
+                        separatorLineHeight += 26
+                    } else {
+                        self.noRateLabel.attributedText = NSAttributedString(string : "")
+                    }
+                }
             }
             let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: separatorLineHeight, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)

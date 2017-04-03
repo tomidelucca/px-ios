@@ -156,16 +156,10 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if (indexPath.section == 2){
-            if self.viewModel.showTotalRow(){
-                if indexPath.row != 0{
-                    let callbackData: NSObject = self.viewModel.dataSource[indexPath.row - 1] as! NSObject
-                    self.viewModel.callback?(callbackData)
-                }
-            } else{
-                let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
-                self.viewModel.callback?(callbackData)
-            }
+        if indexPath.section == AdditionalStepViewModel.Sections.body.rawValue {
+            let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
+            self.viewModel.callback!(callbackData)
+            
         }
     }
     
