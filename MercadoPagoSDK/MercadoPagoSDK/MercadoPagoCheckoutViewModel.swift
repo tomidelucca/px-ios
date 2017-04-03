@@ -509,10 +509,12 @@ extension MercadoPagoCheckoutViewModel {
     }
     
     func prepareForClone(){
+        self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
     }
     
     func prepareForNewSelection(){
+           self.setIsCheckoutComplete(isCheckoutComplete: false)
         self.cleanPaymentResult()
         self.resetInformation()
         self.resetGroupSelection()
