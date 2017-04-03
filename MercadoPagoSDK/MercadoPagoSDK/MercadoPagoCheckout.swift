@@ -99,7 +99,6 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func validatePreference(){
-        self.presentLoading()
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
             self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, messageDetail: errorMessage!, retry: false), errorCallback : { (Void) -> Void in })
