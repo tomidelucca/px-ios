@@ -152,7 +152,7 @@ class ApprovedTableViewCell: UITableViewCell {
         if let token = token {
             self.lastFourDigits.text = "Terminada en ".localized + String(describing: token.lastFourDigits!)
         } else if let paymentMethod = paymentMethod {
-            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Dinero en cuenta de MercadoPago".localized : ""
+            self.lastFourDigits.text = paymentMethod._id == "account_money" ? "Con dinero en cuenta".localized : ""
         }
     }
     
