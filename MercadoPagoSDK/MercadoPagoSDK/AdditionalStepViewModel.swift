@@ -165,7 +165,18 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
     init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil ){
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, discount: discount)
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+        self.screenName = screenName
+        self.screenTitle = screenTitle
+        self.amount = amount
+        self.token = token
+        self.discount = discount
+        self.paymentMethods = paymentMethods
+        self.cardSectionVisible = cardSectionVisible
+        self.cardSectionView = cardSectionView
+        self.totalRowVisible = totalRowVisible
+        self.dataSource = dataSource
+        self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{
         return (discount != nil)

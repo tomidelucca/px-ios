@@ -15,7 +15,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     var bundle : Bundle? = MercadoPago.getBundle()
     let viewModel : AdditionalStepViewModel!
     override var maxFontSize: CGFloat { get { return self.viewModel.maxFontSize } }
-    
+  
     override open var screenName : String { get { return viewModel.getScreenName()} }
     
     override open func viewDidLoad() {
@@ -81,22 +81,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        switch indexPath.section {
-        case 0:
-            return self.viewModel.getTitleCellHeight()
-        case 1:
-            if indexPath.row == 1{
-                return 35
-            }
-            return self.viewModel.getCardSectionCellHeight()
-        case 2:
-            return self.viewModel.getBodyCellHeight(row: indexPath.row)
-            
-        default:
-            return 60
-        }
-        
+        return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -104,29 +89,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewModel.showCardSection() == false{
-            if section == 0{
-                return 1
-            }else if section == 1{
-                if viewModel.showBankInsterestCell() {
-                    return 1
-                }
-                return 0
-            }else{
-                return self.viewModel.numberOfCellsInBody()
-            }
-        } else{
-            if (section == 0 || section == 1){
-                if section == 1{
-                    if viewModel.showBankInsterestCell() {
-                        return 2
-                    }
-                }
-                return 1
-            } else {
-                return self.viewModel.numberOfCellsInBody()
-            }
-        }
+        return  self.viewModel.numberOfRowsInSection(section: section)
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
