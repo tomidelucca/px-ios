@@ -246,7 +246,7 @@ open class MercadoPagoCheckout: NSObject {
             }
             self.viewModel.updateCheckoutModel(token: token)
             self.executeNextStep()
-            self.dismissLoading()
+            //self.dismissLoading()
         }, failure: { (error) in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                 self.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
@@ -260,7 +260,7 @@ open class MercadoPagoCheckout: NSObject {
         MPServicesBuilder.cloneToken(token,securityCode:securityCode, success: { (token) in
                 self.viewModel.updateCheckoutModel(token: token)
                 self.executeNextStep()
-                self.dismissLoading()
+                //self.dismissLoading()
         }, failure: { (error) in
                 self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
                     self.cloneCardToken(token: token, securityCode: securityCode)
@@ -332,6 +332,7 @@ open class MercadoPagoCheckout: NSObject {
             CATransaction.commit();
         } else {
             // Caso en que RyC esté deshabilitada
+            self.dismissLoading()
             self.executePaymentDataCallback()
         }
 
