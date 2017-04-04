@@ -218,7 +218,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         cardNumberLabel?.text = textMaskFormater.textMasked("")
         nameLabel?.text = "NOMBRE APELLIDO".localized
         expirationDateLabel?.text = "MM/AA".localized
-        cvvLabel?.text = "..."
+        cvvLabel?.text = "•••"
         editingLabel = cardNumberLabel
         
         view.setNeedsUpdateConstraints()
