@@ -47,6 +47,8 @@ open class MercadoPagoCheckout: NSObject {
         switch self.viewModel.nextStep() {
         case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()
+        case .VALIDATE_PREFERENCE :
+            self.validatePreference()
         case .SEARCH_PAYMENT_METHODS :
             self.collectPaymentMethodSearch()
         case .PAYMENT_METHOD_SELECTION :
@@ -88,13 +90,20 @@ open class MercadoPagoCheckout: NSObject {
         MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {(checkoutPreference : CheckoutPreference) -> Void in
             self.viewModel.checkoutPreference = checkoutPreference
             self.executeNextStep()
-           // self.dismissLoading()
         }, failure: {(error : NSError) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) -> Void in
                self.collectCheckoutPreference()
             })
             self.executeNextStep()
         })
+    }
+    
+    func validatePreference(){
+        let errorMessage = self.viewModel.checkoutPreference.validate()
+        if errorMessage != nil {
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, messageDetail: errorMessage!, retry: false), errorCallback : { (Void) -> Void in })
+        }
+        self.executeNextStep()
     }
     
     func collectPaymentMethodSearch() {
