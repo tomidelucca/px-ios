@@ -164,7 +164,7 @@ open class CheckoutPreference : NSObject {
     }
     
     open func itemsValid() -> String? {
-        if(items.isEmpty){
+        if Array.isNullOrEmpty(items) {
             return "No hay items".localized
         }
         let currencyIdAllItems = items[0].currencyId

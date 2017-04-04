@@ -10,6 +10,7 @@ import UIKit
 
 public enum CheckoutStep : String {
     case SEARCH_PREFERENCE
+    case VALIDATE_PREFERENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
     case PAYMENT_METHOD_SELECTION
@@ -83,7 +84,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     static var error : MPSDKError?
     internal var errorCallback : ((Void) -> Void)?
     
-    private var needLoadPreference : Bool = false
+    internal var needLoadPreference : Bool = false
+    internal var preferenceValidated : Bool = false
     internal var readyToPay : Bool = false
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
@@ -233,7 +235,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SEARCH_PREFERENCE
         }
         
-        
         if hasError() {
             return .ERROR
         }
@@ -244,6 +245,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         
         if shouldShowCongrats() {
             return .CONGRATS
+        }
+        
+        if needValidatePreference() {
+            preferenceValidated = true
+            return .VALIDATE_PREFERENCE
         }
         
         if needSearch() {
