@@ -11,8 +11,14 @@ import XCTest
 
 class MercadoPagoCheckoutViewModelTest: BaseTest {
     
+    
     override func setUp() {
         self.continueAfterFailure = false
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        // Habilitar RyC para estos tests en particular
+        let flowPreference = FlowPreference()
+        flowPreference.enableReviewAndConfirmScreen()
+        MercadoPagoCheckout.setFlowPreference(flowPreference)
     }
     
     override func tearDown() {
