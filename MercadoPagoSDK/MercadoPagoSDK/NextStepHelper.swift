@@ -204,4 +204,8 @@ extension MercadoPagoCheckoutViewModel {
             }
         }
     }
+    
+    func needValidatePreference()  -> Bool {
+        return !self.needLoadPreference && !self.preferenceValidated
+    }
 }
