@@ -123,7 +123,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
             let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 84), coupon: self.viewModel.discount, amount:self.viewModel.amount)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : 86), coupon: self.viewModel.discount, amount:self.viewModel.amount)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             cell.selectionStyle = .none
