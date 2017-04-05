@@ -85,7 +85,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             self.totalAmountLabel.text = ""
         }
         
-        if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
+        if paymentData.payerCost != nil && !paymentData.payerCost!.hasInstallmentsRate() && paymentData.payerCost?.installments != 1 {
             
             if MercadoPagoCheckout.showPayerCostDescription() {
                 

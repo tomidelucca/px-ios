@@ -51,10 +51,16 @@ open class PaymentMethod : NSObject , Cellable {
     }
     
     open func isIdentificationRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_number")
+        if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("off_identification_number"){
+            return true
+        }
+        return false
     }
     open func isIdentificationTypeRequired() -> Bool {
-        return isAdditionalInfoNeeded("cardholder_identification_type")
+        if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("off_identification_type") {
+            return true
+        }
+        return false
     }
     
     open func isEntityTypeRequired() -> Bool {
