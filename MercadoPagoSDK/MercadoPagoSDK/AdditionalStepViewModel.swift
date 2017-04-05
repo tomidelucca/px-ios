@@ -82,7 +82,7 @@ open class AdditionalStepViewModel : NSObject{
     func heightForRowAt(indexPath: IndexPath) -> CGFloat {
         
         if isDiscountCellFor(indexPath: indexPath) {
-            return 86
+            return DiscountBodyCell.HEIGHT
         }
         switch indexPath.section {
         case Sections.title.rawValue:

@@ -15,6 +15,8 @@ class DiscountBodyCell: UIView {
     var coupon: DiscountCoupon?
     var amount: Double!
     
+    static let HEIGHT : CGFloat = 86.0
+    
     init(frame: CGRect, coupon: DiscountCoupon?, amount:Double, addBorder: Bool = true, topMargin: CGFloat = 20.0) {
         super.init(frame: frame)
         self.coupon = coupon
