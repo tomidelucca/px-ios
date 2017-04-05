@@ -63,6 +63,10 @@ public class PaymentData: NSObject {
         obj["installments"] = (self.payerCost != nil ) ? self.payerCost!.installments : ""
         obj["card_token_id"] = (self.token != nil ) ? self.token!._id : ""
         obj["issuer_id"] = (self.issuer != nil ) ? self.issuer!._id : ""
+        
+        if self.discount != nil {
+            obj["discount"] = self.discount?.toJSON()
+        }
         return obj
     }
 
