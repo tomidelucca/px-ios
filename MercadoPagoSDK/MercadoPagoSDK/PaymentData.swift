@@ -60,20 +60,20 @@ public class PaymentData: NSObject {
             "payment_method" : self.paymentMethod.toJSON()
        ]
         
-        if self.payerCost != nil {
-            obj["payer_cost"] = self.payerCost!.toJSON()
+        if let payerCost = self.payerCost {
+            obj["payer_cost"] = payerCost.toJSON()
         }
         
-        if self.token != nil {
-            obj["card_token"] = self.token!.toJSON()
+        if let token = self.token {
+            obj["card_token"] = token.toJSON()
         }
         
-        if self.issuer != nil {
-            obj["issuer"] = self.issuer!.toJSON()
+        if let issuer = self.issuer {
+            obj["issuer"] = issuer.toJSON()
         }
         
-        if self.discount != nil {
-            obj["discount"] = self.discount!.toJSON()
+        if let discount = self.discount {
+            obj["discount"] = discount.toJSON()
         }
         return obj
     }

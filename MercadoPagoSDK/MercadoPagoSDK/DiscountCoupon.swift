@@ -50,16 +50,16 @@ open class DiscountCoupon: NSObject {
             "coupon_amount" : self.coupon_amount
         ]
         
-        if self.name != nil {
-            obj["name"] = self.name
+        if let name = self.name {
+            obj["name"] = name
         }
         
-        if self.currency_id != nil {
-            obj["currency_id"] = self.currency_id
+        if let currencyId = self.currency_id {
+            obj["currency_id"] = currencyId
         }
         
-        if self.concept != nil {
-            obj["concept"] = self.concept
+        if let concept = self.concept {
+            obj["concept"] = concept
         }
         
         return obj
