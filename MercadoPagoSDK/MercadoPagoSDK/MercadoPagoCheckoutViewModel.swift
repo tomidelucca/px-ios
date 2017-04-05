@@ -128,7 +128,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func paymentVaultViewModel() -> PaymentVaultViewModel {
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount)
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
     }
     
     public func debitCreditViewModel() -> AdditionalStepViewModel{

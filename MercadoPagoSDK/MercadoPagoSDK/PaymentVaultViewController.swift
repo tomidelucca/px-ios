@@ -282,7 +282,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                     let step = CouponDetailViewController(coupon: coupon)
                     self.present(step, animated: false, completion: {})
                 } else {
-                    
+                    let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, callback: { (coupon) in
+                        self.viewModel.discount = coupon
+                        self.collectionSearch.reloadData()
+                    })
+                    self.present(step, animated: false, completion:{})
                 }
             }
         }
@@ -449,6 +453,7 @@ class PaymentVaultViewModel : NSObject {
 
     var amount : Double
     var paymentPreference : PaymentPreference?
+    var email: String
     
     var paymentMethodOptions : [PaymentMethodOption]
     var customerPaymentOptions : [CardInformation]?
@@ -467,8 +472,9 @@ class PaymentVaultViewModel : NSObject {
     
     internal var isRoot = true
     
-    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, discount: DiscountCoupon? = nil, callbackCancel : ((Void) -> Void)? = nil){
+    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel : ((Void) -> Void)? = nil){
         self.amount = amount
+        self.email = email
         self.discount = discount
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions

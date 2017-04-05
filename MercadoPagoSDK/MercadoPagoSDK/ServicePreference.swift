@@ -19,6 +19,9 @@ open class ServicePreference : NSObject{
     var paymentURL: String = MP_API_BASE_URL
     var paymentURI: String = MP_PAYMENTS_URI + "?api_version=" + API_VERSION
     var paymentAdditionalInfo: NSDictionary?
+    var discountURL: String = MP_API_BASE_URL
+    var discountURI: String = MP_DISCOUNT_URI
+    var discountAdditionalInfo: NSDictionary?
     
     static let MP_ALPHA_ENV = "/gamma"
     static var MP_TEST_ENV = "/beta"
@@ -46,10 +49,12 @@ open class ServicePreference : NSObject{
     static let MP_SEARCH_PAYMENTS_URI = MP_ENVIROMENT + "/payment_methods/search/options"
     static let MP_INSTRUCTIONS_URI = MP_ENVIROMENT + "/payments/${payment_id}/results"
     static let MP_PREFERENCE_URI = MP_ENVIROMENT + "/preferences/"
+    static let MP_DISCOUNT_URI =  "/discount_campaigns/"
     
     private static let kIsProdApiEnvironemnt = "prod_mp_api_environment"
     
     private var useDefaultPaymentSettings = true
+    private var defaultDiscountSettings = true
     
     var baseURL: String = MP_API_BASE_URL
     var gatewayURL: String?
@@ -70,6 +75,13 @@ open class ServicePreference : NSObject{
         paymentURI = URI
         paymentAdditionalInfo = additionalInfo
         self.useDefaultPaymentSettings = false
+    }
+    
+    public func setDiscount(baseURL: String = MP_API_BASE_URL, URI: String = MP_DISCOUNT_URI, additionalInfo: [String:String] = [:]) {
+        discountURL = baseURL
+        discountURI = URI
+        discountAdditionalInfo = additionalInfo as NSDictionary?
+        defaultDiscountSettings = false
     }
     
     public func setCreateCheckoutPreference(baseURL: String, URI: String, additionalInfo: NSDictionary = [:]) {
@@ -110,6 +122,10 @@ open class ServicePreference : NSObject{
         return useDefaultPaymentSettings
     }
     
+    public func isUsingDefaultDiscountSettings() -> Bool {
+        return defaultDiscountSettings
+    }
+    
     public func getCustomerAddionalInfo() -> String {
         if !NSDictionary.isNullOrEmpty(customerAdditionalInfo){
             return customerAdditionalInfo!.parseToQuery()
@@ -128,9 +144,27 @@ open class ServicePreference : NSObject{
         return paymentURI
     }
     
+    public func getDiscountURL() -> String {
+        if discountURL == ServicePreference.MP_API_BASE_URL && baseURL != ServicePreference.MP_API_BASE_URL {
+            return baseURL
+        }
+        return discountURL
+    }
+    
+    public func getDiscountURI() -> String {
+        return discountURI
+    }
+    
     public func getPaymentAddionalInfo() -> String {
         if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo){
             return paymentAdditionalInfo!.toJsonString()
+        }
+        return ""
+    }
+    
+    public func getDiscountAddionalInfo() -> String {
+        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo){
+            return discountAdditionalInfo!.parseToQuery()
         }
         return ""
     }
