@@ -22,7 +22,7 @@ open class AdditionalStepViewModel : NSObject{
     open var cardSectionVisible: Bool
     open var totalRowVisible: Bool
     open var dataSource: [Cellable]
-    open var defaultTitleCellHeight: CGFloat = 70
+    open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject?) -> Void)?
     
