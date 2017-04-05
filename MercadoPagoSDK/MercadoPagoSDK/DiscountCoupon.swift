@@ -42,6 +42,29 @@ open class DiscountCoupon: NSObject {
     
    open var amount: Double = 0
     
+    func toJSON() -> [String:Any] {
+        var obj:[String:Any] = [
+            "id" : self._id,
+            "percent_off" : self.percent_off,
+            "amount_off" : self.amount_off,
+            "coupon_amount" : self.coupon_amount
+        ]
+        
+        if self.name != nil {
+            obj["name"] = self.name
+        }
+        
+        if self.currency_id != nil {
+            obj["currency_id"] = self.currency_id
+        }
+        
+        if self.concept != nil {
+            obj["concept"] = self.concept
+        }
+        
+        return obj
+    }
+    
     open class func fromJSON(_ json : NSDictionary, amount: Double) -> DiscountCoupon? {
         let discount = DiscountCoupon()
         if json["id"] != nil && !(json["id"]! is NSNull) {
