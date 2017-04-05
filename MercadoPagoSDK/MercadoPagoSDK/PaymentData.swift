@@ -57,15 +57,23 @@ public class PaymentData: NSObject {
     
     func toJSON() -> [String:Any] {
        var obj:[String:Any] = [
-            "payment_method_id" : String(describing: self.paymentMethod._id)
+            "payment_method" : self.paymentMethod.toJSON()
        ]
-       
-        obj["installments"] = (self.payerCost != nil ) ? self.payerCost!.installments : ""
-        obj["card_token_id"] = (self.token != nil ) ? self.token!._id : ""
-        obj["issuer_id"] = (self.issuer != nil ) ? self.issuer!._id : ""
+        
+        if self.payerCost != nil {
+            obj["payer_cost"] = self.payerCost!.toJSON()
+        }
+        
+        if self.token != nil {
+            obj["card_token"] = self.token!.toJSON()
+        }
+        
+        if self.issuer != nil {
+            obj["issuer"] = self.issuer!.toJSON()
+        }
         
         if self.discount != nil {
-            obj["discount"] = self.discount?.toJSON()
+            obj["discount"] = self.discount!.toJSON()
         }
         return obj
     }
