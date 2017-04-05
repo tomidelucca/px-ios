@@ -389,7 +389,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     private func getOnlinePaymentMethodSelectedCell(indexPath : IndexPath) ->UITableViewCell {
         let paymentMethodSelectedTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "paymentMethodSelectedTableViewCell", for: indexPath) as! PaymentMethodSelectedTableViewCell
         
-        paymentMethodSelectedTableViewCell.fillCell(self.viewModel.paymentData.paymentMethod!, amount : self.viewModel.getTotalAmount(), payerCost : self.viewModel.paymentData.payerCost, lastFourDigits: self.viewModel.paymentData.token!.lastFourDigits)
+        paymentMethodSelectedTableViewCell.fillCell(paymentData: self.viewModel.paymentData, amount : self.viewModel.getTotalAmount())
         
         paymentMethodSelectedTableViewCell.selectOtherPaymentMethodButton.addTarget(self, action: #selector(changePaymentMethodSelected), for: .touchUpInside)
         return paymentMethodSelectedTableViewCell
@@ -607,7 +607,10 @@ open class CheckoutViewModel: NSObject {
             return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
+            if isPaymentMethodSelectedCard() {
                 return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
+            }
+            return OfflinePaymentMethodCell.ROW_HEIGHT
         
         } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
             return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()

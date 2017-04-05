@@ -20,6 +20,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDelegate {
     
+    @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var cardBackground: UIView!
     var cardView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
@@ -167,7 +168,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         
         if (self.cardFormManager.paymentMethods == nil){
             MPServicesBuilder.getPaymentMethods(baseURL:  MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), { (paymentMethods) -> Void in
@@ -224,6 +225,13 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         view.setNeedsUpdateConstraints()
         cardView.addSubview(cardFront!)
         
+    }
+    func keyboardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.keyboardHeightConstraint.constant = keyboardSize.height - 40
+            self.view.layoutIfNeeded()
+            self.view.setNeedsUpdateConstraints()
+        }
     }
     
     private func getPromos(){

@@ -9,7 +9,7 @@
 import UIKit
 
 class PaymentMethodSelectedTableViewCell: UITableViewCell {
-
+    
     static let DEFAULT_ROW_HEIGHT = CGFloat(313)
     
     @IBOutlet weak var paymentMethodIcon: UIImageView!
@@ -30,21 +30,46 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-
-    func fillCell(_ paymentMethod : PaymentMethod, amount : Double, payerCost : PayerCost? = nil, lastFourDigits : String? = "") {
         self.noRateLabel.text = ""
         self.noRateLabel.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
-        let currency = MercadoPagoContext.getCurrency()
-
-        self.paymentMethodIcon.image = MercadoPago.getImage("MPSDK_review_iconoTarjeta")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func fillCell(paymentData: PaymentData, amount : Double) {
         
-        if let payerCost = payerCost {
+        fillIcon()
+        
+        fillPayerCostAndTotal(paymentData: paymentData, amount: amount)
+        
+        fillPaymentMethodDescription(paymentData: paymentData)
+        
+        fillCFT(payerCost: paymentData.payerCost)
+        
+        fillChangePaymentMethodButton()
+        
+        fillSeparatorLine(payerCost: paymentData.payerCost)
+        
+    }
+    
+    func fillIcon() {
+        self.paymentMethodIcon.image = MercadoPago.getImage("MPSDK_review_iconoTarjeta")
+    }
+    
+    func fillPaymentMethodDescription(paymentData: PaymentData) {
+        let paymentMethodDescription = NSMutableAttributedString(string: paymentData.paymentMethod.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
+        if !String.isNullOrEmpty(paymentData.token?.lastFourDigits) {
+            paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + (paymentData.token?.lastFourDigits)!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
+        }
+        self.paymentMethodDescription.attributedText = paymentMethodDescription
+    }
+    
+    func fillPayerCostAndTotal(paymentData: PaymentData, amount: Double) {
+        let currency = MercadoPagoContext.getCurrency()
+        if let payerCost = paymentData.payerCost {
             self.paymentDescription.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments),currency:currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.black, fontSize : 24, centsFontSize: 12, baselineOffset: 9)
             let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 16, baselineOffset : 4)
             
@@ -56,12 +81,9 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
                 self.totalAmountLabel.attributedText = attributedAmountFinal
             }
         } else {
-             self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
+            self.paymentDescription.attributedText = Utils.getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: UIColor.black, fontSize: 24, centsFontSize: 12, baselineOffset: 9)
             self.totalAmountLabel.text = ""
         }
-        let paymentMethodDescription = NSMutableAttributedString(string: paymentMethod.name.localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)])
-        paymentMethodDescription.append(NSAttributedString(string : " terminada en ".localized + lastFourDigits!, attributes: [NSFontAttributeName: Utils.getFont(size: self.noRateLabel.font.pointSize)]))
-        self.paymentMethodDescription.attributedText = paymentMethodDescription
         
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             
@@ -83,16 +105,24 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
                 }
             }   
         }
-
-		
-		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
-       		self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
-        	self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
-        	self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
-		} else {
-			self.selectOtherPaymentMethodButton.isHidden = true;
-		}
-        
+    }
+    
+    func fillChangePaymentMethodButton() {
+        if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+            self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
+            self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
+            self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
+        } else {
+            self.selectOtherPaymentMethodButton.isHidden = true;
+        }
+    }
+    
+    func fillSeparatorLine(payerCost: PayerCost? = nil) {
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
+    }
+    
+    func fillCFT(payerCost: PayerCost? = nil) {
         CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
         CFT.textColor = UIColor.px_grayDark()
         TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
@@ -106,24 +136,20 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             TEALabel.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
-        
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
-        self.addSubview(separatorLine)
-        
     }
     
     func needsDisplayAdditionalCost(payerCost : PayerCost? = nil) -> Bool {
         return needsDisplayCFT(payerCost : payerCost) && needsDisplayTEA(payerCost : payerCost)
     }
+    
     func needsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
         guard let payerCost = payerCost else {
             return false
         }
         if payerCost.getCFTValue() != nil && payerCost.installments != 1 {
             return true
-        }else{
-            return false
         }
+        return false
     }
     
     func needsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
@@ -132,26 +158,26 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
         if payerCost.getTEAValue() != nil && payerCost.installments != 1 {
             return true
-        }else{
-            return false
         }
+        return false
     }
+    
     public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
-		
-		var cellHeight = DEFAULT_ROW_HEIGHT
-		
+        
+        var cellHeight = DEFAULT_ROW_HEIGHT
+        
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
-			cellHeight += 20
+            cellHeight += 20
         }
-
-		if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
-			cellHeight -= 64
-		}
-
-        if let dic = payerCost?.getCFTValue() {
-            cellHeight += 74
+        
+        if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+            cellHeight -= 64
         }
-
+        
+        if payerCost?.installments != 1, let _ = payerCost?.getCFTValue() {
+            cellHeight += 88
+        }
+        
         return cellHeight
     }
     

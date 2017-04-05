@@ -30,7 +30,7 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class OfflinePaymentMethodCell: UITableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(80)
+    static let ROW_HEIGHT = CGFloat(313)
     
     @IBOutlet weak var iconCash: UIImageView!
     @IBOutlet weak var paymentMethodDescription: MPLabel!
@@ -51,7 +51,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
         
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: nil) - 1, width: UIScreen.main.bounds.width, height: 1)
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.ROW_HEIGHT - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
 
         self.iconCash.image = MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")
