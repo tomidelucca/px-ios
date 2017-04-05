@@ -160,6 +160,7 @@ open class IdentificationViewController: MercadoPagoUIViewController , UITextFie
 
         
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
+        self.tipoDeDocumentoLabel.font = Utils.getIdentificationFont(size: 11)
         self.numberTextField.placeholder = "Número".localized
         self.textField.placeholder = "Tipo".localized
         self.view.backgroundColor = UIColor.primaryColor()
