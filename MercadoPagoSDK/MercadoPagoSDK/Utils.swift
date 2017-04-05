@@ -145,6 +145,10 @@ class Utils {
         return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
     }
     
+    class func getIdentificationFont(size: CGFloat) -> UIFont {
+        return UIFont(name: "KohinoorBangla-Regular", size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
+    
     class func append(firstJSON: String, secondJSON: String) -> String {
         if firstJSON == "" && secondJSON == "" {
             return ""
