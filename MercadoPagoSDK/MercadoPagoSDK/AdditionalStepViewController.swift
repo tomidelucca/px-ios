@@ -149,7 +149,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             return totalCell as UITableViewCell
             
         } else {
-            let cell = self.viewModel.dataSource[indexPath.row].getCell(width: Double(cellWidth), height: Double(viewModel.defaultRowCellHeight))
+            let object = self.viewModel.dataSource[indexPath.row]
+            let cell = AdditionalStepCellFactory.buildCell(object: object, width: Double(cellWidth), height: Double(viewModel.defaultRowCellHeight))
             return cell
         }
     }
