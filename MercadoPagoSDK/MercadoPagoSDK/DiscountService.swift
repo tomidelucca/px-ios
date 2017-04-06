@@ -26,8 +26,12 @@ open class DiscountService: MercadoPagoService {
     }
     
  
-    open func getDiscount(amount : Double, code : String? = nil, payerEmail: String, additionalInfo: String? = nil, success: @escaping (_ discount: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var params = "public_key=" + MercadoPagoContext.publicKey() + "&transaction_amount=" + String(amount) + "&payer_email=" + payerEmail
+    open func getDiscount(amount : Double, code : String? = nil, payerEmail: String?, additionalInfo: String? = nil, success: @escaping (_ discount: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        var params = "public_key=" + MercadoPagoContext.publicKey() + "&transaction_amount=" + String(amount)
+        
+        if !String.isNullOrEmpty(payerEmail) {
+            params += "&payer_email=" + payerEmail!
+        }
         
         if let couponCode = code {
             params = params + "&coupon_code=" + String(couponCode).trimSpaces()

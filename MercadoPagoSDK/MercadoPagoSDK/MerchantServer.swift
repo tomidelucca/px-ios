@@ -99,12 +99,12 @@ open class MerchantServer : NSObject {
         }
     }
     
-    open class func getDirectDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, payerEmail: String, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)){
+    open class func getDirectDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)){
         
         getCodeDiscount(merchantURL: merchantURL, merchantURI: merchantURI, transactionAmount: transactionAmount, discountCode: nil, payerEmail: payerEmail, addtionalInfo: addtionalInfo, success: success, failure: failure)
     }
     
-    open class func getCodeDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, discountCode: String?, payerEmail: String, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)){
+    open class func getCodeDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, discountCode: String?, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)){
         var addInfo: String? = nil
         if !NSDictionary.isNullOrEmpty(addtionalInfo){
             addInfo = addtionalInfo?.parseToQuery()

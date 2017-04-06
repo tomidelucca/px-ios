@@ -26,6 +26,7 @@ class WalletIntegrationTest: BaseTest {
         // Deshabilita RyC
         var fp = FlowPreference()
         fp.disableReviewAndConfirmScreen()
+        fp.disableDiscount()
         MercadoPagoCheckout.setFlowPreference(fp)
 
         // Inicia Checkout con preferencia
