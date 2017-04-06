@@ -12,7 +12,5 @@ public protocol Cellable{
     
     var objectType: String { get set }
     
-    func getCell(width: Double, height: Double)-> UITableViewCell
-
 }
 

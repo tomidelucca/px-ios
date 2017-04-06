@@ -37,16 +37,6 @@ open class PaymentMethod : NSObject , Cellable {
         self.paymentTypeId = paymentTypeId
     }
     
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
-        cell.setPaymentMethod(paymentMethod: self)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
     open func isIssuerRequired() -> Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }

@@ -21,18 +21,6 @@ open class PayerCost : NSObject, Cellable {
     open var totalAmount : Double = 0
     
     
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
-        let showDescription = MercadoPagoCheckout.showPayerCostDescription()
-        cell.fillCell(payerCost: self, showDescription: showDescription)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
-    
     public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],
         minAllowedAmount : Double = 0, maxAllowedAmount : Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
 

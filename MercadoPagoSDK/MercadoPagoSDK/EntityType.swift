@@ -14,16 +14,6 @@ open class EntityType : NSObject, Cellable {
     open var _id : String!
     open var name : String!
     
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: EntityTypeTableViewCell = bundle!.loadNibNamed("EntityTypeTableViewCell", owner: nil, options: nil)?[0] as! EntityTypeTableViewCell
-        cell.fillCell(entityType: self)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
     open class func fromJSON(_ json : NSDictionary) -> EntityType {
         let entityType : EntityType = EntityType()
         

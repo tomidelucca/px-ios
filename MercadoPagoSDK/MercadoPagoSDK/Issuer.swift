@@ -14,16 +14,6 @@ open class Issuer : NSObject, Cellable {
     open var _id : NSNumber?
     open var name : String?
     
-    open func getCell(width: Double, height: Double) -> UITableViewCell {
-        let bundle = MercadoPago.getBundle()
-        let cell: IssuerRowTableViewCell = bundle!.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as! IssuerRowTableViewCell
-        cell.fillCell(issuer: self, bundle: bundle!)
-        cell.addSeparatorLineToBottom(width: width, height: height)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
     open class func fromJSON(_ json : NSDictionary) -> Issuer {
         let issuer : Issuer = Issuer()
         
