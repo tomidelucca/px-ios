@@ -10,9 +10,20 @@ import UIKit
 
 open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
+    @objc
+    public enum CongratsState : Int {
+        case ok = 0
+        case cancel_SELECT_OTHER = 1
+        case cancel_RETRY = 2
+        case cancel_RECOVER = 3
+        case call_FOR_AUTH = 4
+    }
+    
+    
     @IBOutlet weak var tableView: UITableView!
     var paymentResult : PaymentResult!
-    var callback : ( _ status : MPStepBuilder.CongratsState) -> Void
+    var callback : ( _ status : InstructionsRevampViewController.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instructionsInfo: InstructionsInfo?
@@ -62,7 +73,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.tableView.reloadData()
         }
     }
-    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : InstructionsRevampViewController.CongratsState) -> Void) {
         
         self.callback = callback
         super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
@@ -124,7 +135,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                footerNib.setCallbackStatus(callback: callback, status: MPStepBuilder.CongratsState.ok)
+                footerNib.setCallbackStatus(callback: callback, status: InstructionsRevampViewController.CongratsState.ok)
                 footerNib.fillCell(paymentResult: paymentResult)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib

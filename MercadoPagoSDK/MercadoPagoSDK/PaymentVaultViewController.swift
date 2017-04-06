@@ -278,7 +278,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }else if isCouponSection(section: indexPath.section) {
             
             if let coupon = self.viewModel.discount  {
-               let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
+               let step = CouponDetailViewController(coupon: coupon)
                self.present(step, animated: false, completion: {})
             }
         }
