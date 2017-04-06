@@ -24,7 +24,7 @@ open class AdditionalStepViewModel : NSObject{
     open var dataSource: [Cellable]
     open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
-    open var callback: ((_ result: NSObject) -> Void)?
+    open var callback: ((_ result: NSObject) -> Void)!
     open var maxFontSize: CGFloat { get { return 24 } }
     
     
