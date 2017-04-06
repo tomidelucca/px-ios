@@ -107,8 +107,11 @@ open class BlacklabelPayment: MPPayment {
     
     open override func toJSON() -> [String:Any] {
         // Override payer object with groupsPayer (which includes AT in its body)
-        self.payer = GroupsPayer(_id: self.payer?._id, email: (self.payer?.email)!, identification: self.payer?.identification, entityType: self.payer?.entityType)
-        //self.payer = GroupsPayer(email: (self.payer?.email)!)
+        guard let payer = self.payer , let email = self.payer?.email else{
+            return [:]
+        }
+        
+        self.payer = GroupsPayer(_id: payer._id, email: email, identification: payer.identification, entityType: payer.entityType)
         let blacklabelPaymentObj : [String:Any] = super.toJSON()
         return blacklabelPaymentObj
     }
