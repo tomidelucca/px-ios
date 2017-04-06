@@ -9,6 +9,8 @@
 import Foundation
 
 open class PayerCost : NSObject, Cellable {
+    
+    public var objectType: String = "payer_cost"
     open var installments : Int = 0
     open var installmentRate : Double = 0
     open var labels : [String]!

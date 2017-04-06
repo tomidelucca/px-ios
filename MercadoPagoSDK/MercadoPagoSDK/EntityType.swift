@@ -9,6 +9,8 @@
 import Foundation
 
 open class EntityType : NSObject, Cellable {
+    
+    public var objectType: String = "entity_type"
     open var _id : String!
     open var name : String!
     

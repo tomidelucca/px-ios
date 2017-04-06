@@ -9,6 +9,8 @@
 import Foundation
 
 open class Issuer : NSObject, Cellable {
+    
+    public var objectType: String = "issuer"
     open var _id : NSNumber?
     open var name : String?
     

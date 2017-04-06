@@ -9,6 +9,8 @@
 import Foundation
 
 open class FinancialInstitution : NSObject, Cellable {
+    
+    public var objectType: String = "financial_instituions"
     open var _id : Int?
     open var _description : String?
     
