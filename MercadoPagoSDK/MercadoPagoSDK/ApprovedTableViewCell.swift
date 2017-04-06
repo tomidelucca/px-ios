@@ -73,7 +73,7 @@ class ApprovedTableViewCell: UITableViewCell {
         if let discount = paymentResult.paymentData?.discount {
             let screenSize : CGRect = UIScreen.main.bounds
             let screenWidth = screenSize.width
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : 84), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : screenWidth, height : DiscountBodyCell.HEIGHT), coupon:discount, amount:(checkoutPreference?.getAmount())!, addBorder: false)
             discountViewContent.addSubview(discountBody)
         
         } else {

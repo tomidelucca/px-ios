@@ -36,8 +36,11 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     
     var display_default_loading = true
     
-
     var language: String = NSLocale.preferredLanguages[0]
+    
+    
+    
+    static let kSdkVersion = "sdk_version"
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -63,8 +66,10 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     open func framework() -> String!{
         return  "iOS"
     }
+    
     open func sdkVersion() -> String!{
-        return "3.0.0-BETA-16"
+        let sdkVersion : String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion)
+        return sdkVersion
     }
  
     static let siteIdsSettings : [String : NSDictionary] = [
