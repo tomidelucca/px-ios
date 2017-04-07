@@ -10,6 +10,7 @@ import UIKit
 
 public enum CheckoutStep : String {
     case SEARCH_PREFERENCE
+    case SEARCH_DIRECT_DISCOUNT
     case VALIDATE_PREFERENCE
     case SEARCH_PAYMENT_METHODS
     case SEARCH_CUSTOMER_PAYMENT_METHODS
@@ -78,7 +79,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var payment : Payment?
     var paymentResult: PaymentResult?
     
-    open var installment: Installment?
+    //open var installment: Installment?
+    open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     
     static var error : MPSDKError?
@@ -90,6 +92,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var checkoutComplete = false
     internal var reviewAndConfirm = false
     internal var initWithPaymentData = false
+    var directDiscountSearched = false
     
     init(checkoutPreference : CheckoutPreference, paymentData : PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         self.checkoutPreference = checkoutPreference
@@ -128,7 +131,12 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     func paymentVaultViewModel() -> PaymentVaultViewModel {
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount)
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
+            guard let object = self else {
+                return
+            }
+            object.paymentData.discount = discount
+        })
     }
     
     public func debitCreditViewModel() -> AdditionalStepViewModel{
@@ -161,7 +169,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
 
-        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethods: pms, dataSource: (installment?.payerCosts)!, discount: self.paymentData.discount)
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethods: pms, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
     }
     
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
@@ -233,6 +241,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
+        
+        }
+        if needToSearchDirectDiscount() {
+            directDiscountSearched = true
+            return .SEARCH_DIRECT_DISCOUNT
         }
         
         if hasError() {
@@ -402,7 +415,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.rootVC = true
             self.cardToken = nil
             self.issuers = nil
-            self.installment = nil
+            self.payerCosts = nil
             self.initWithPaymentData = false
         } else {
             self.readyToPay = true
@@ -420,7 +433,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     internal func getFinalAmount() -> Double {
-        if let discount = paymentData.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         }else{
             return self.checkoutPreference.getAmount()
@@ -496,7 +509,7 @@ extension MercadoPagoCheckoutViewModel {
         self.paymentData.clear()
         self.cardToken = nil
         self.issuers = nil
-        self.installment = nil
+        self.payerCosts = nil
     }
     
     func cleanPaymentResult(){

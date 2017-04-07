@@ -110,7 +110,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment == nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts == nil {
             return true
         }
         return false
@@ -120,7 +120,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment != nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts != nil {
             return true
         }
         return false
@@ -150,6 +150,10 @@ extension MercadoPagoCheckoutViewModel {
     
     func shouldExitCheckout() -> Bool {
         return self.isCheckoutComplete()
+    }
+    
+    func needToSearchDirectDiscount() -> Bool {
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
     }
     
     func setPaymentOptionSelected(){

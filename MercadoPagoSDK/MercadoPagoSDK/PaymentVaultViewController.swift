@@ -86,6 +86,9 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.showLoading()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
+        
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10;
         upperFrame.size.width = UIScreen.main.bounds.width
@@ -114,6 +117,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
 
        self.collectionSearch.backgroundColor = UIColor.px_white()
+    }
+    
+    func updateCoupon(_ notification: Notification) {
+        if let discount = notification.userInfo?["coupon"] as? DiscountCoupon {
+            self.viewModel.discount = discount
+            self.collectionSearch.reloadData()
+        }
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -266,7 +276,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.loadingGroups {
             return 0
         }
-        return viewModel.discount == nil ? 2 : 3
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 3 : 2
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -275,38 +285,36 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             collectionView.deselectItem(at: indexPath, animated: true)
             collectionView.allowsSelection = false
             self.callback!(paymentSearchItemSelected)
-        }else if isCouponSection(section: indexPath.section) {
             
-            if let coupon = self.viewModel.discount  {
-               let step = MPStepBuilder.startDetailDiscountDetailStep(coupon: coupon)
-               self.present(step, animated: false, completion: {})
+        } else if isCouponSection(section: indexPath.section) {
+            if let coupon = self.viewModel.discount {
+                let step = CouponDetailViewController(coupon: coupon)
+                self.present(step, animated: false, completion: {})
+            } else {
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, callback: { (coupon) in
+                    self.viewModel.discount = coupon
+                    self.collectionSearch.reloadData()
+                    if let updateMercadoPagoCheckout = self.viewModel.couponCallback {
+                        updateMercadoPagoCheckout(coupon)
+                    }
+                })
+                self.present(step, animated: false, completion:{})
             }
         }
     }
     
     func isHeaderSection(section: Int) -> Bool {
-        if (section == 0 ){
-            return true
-        }else{
-            return false
-        }
+        return section == 0
     }
     func isCouponSection(section: Int) -> Bool {
-        guard let _ = viewModel.discount else{
-            return false
-        }
-        return section == 1
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && section == 1
     }
     
     func isGroupSection(section: Int) -> Bool {
-        var sectionGroup = 1
-        if viewModel.discount != nil {
-            sectionGroup = 2
-        }
+        let sectionGroup = MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() ? 2 :1
+
         return sectionGroup == section
     }
-
-    
 
     public func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
@@ -456,6 +464,7 @@ class PaymentVaultViewModel : NSObject {
 
     var amount : Double
     var paymentPreference : PaymentPreference?
+    var email: String
     
     var paymentMethodOptions : [PaymentMethodOption]
     var customerPaymentOptions : [CardInformation]?
@@ -471,16 +480,19 @@ class PaymentVaultViewModel : NSObject {
     
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     var callbackCancel : ((Void) -> Void)? = nil
+    var couponCallback:  ((DiscountCoupon) -> Void)? = nil
     
     internal var isRoot = true
     
-    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, discount: DiscountCoupon? = nil, callbackCancel : ((Void) -> Void)? = nil){
+    init(amount : Double, paymentPrefence : PaymentPreference?, paymentMethodOptions : [PaymentMethodOption], customerPaymentOptions : [CardInformation]?, isRoot : Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel : ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil){
         self.amount = amount
+        self.email = email
         self.discount = discount
         self.paymentPreference = paymentPrefence
         self.paymentMethodOptions = paymentMethodOptions
         self.customerPaymentOptions = customerPaymentOptions
         self.isRoot = isRoot
+        self.couponCallback = couponCallback
     }
     
     func shouldGetCustomerCardsInfo() -> Bool {
