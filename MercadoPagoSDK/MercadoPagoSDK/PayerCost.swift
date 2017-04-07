@@ -10,7 +10,7 @@ import Foundation
 
 open class PayerCost : NSObject, Cellable {
     
-    public var objectType: String = "payer_cost"
+    public var objectType: ObjectTypes = ObjectTypes.payerCost
     open var installments : Int = 0
     open var installmentRate : Double = 0
     open var labels : [String]!

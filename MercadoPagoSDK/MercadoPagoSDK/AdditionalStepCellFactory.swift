@@ -13,7 +13,7 @@ class AdditionalStepCellFactory: NSObject {
     
     open class func buildCell(object: Cellable, width: Double, height: Double) -> UITableViewCell {
         
-        if object.objectType == "payer_cost" {
+        if object.objectType == ObjectTypes.payerCost {
             let bundle = MercadoPago.getBundle()
             let cell: PayerCostRowTableViewCell = bundle!.loadNibNamed("PayerCostRowTableViewCell", owner: nil, options: nil)?[0] as! PayerCostRowTableViewCell
             let showDescription = MercadoPagoCheckout.showPayerCostDescription()
@@ -24,7 +24,7 @@ class AdditionalStepCellFactory: NSObject {
             return cell
         }
         
-        if object.objectType == "issuer" {
+        if object.objectType == ObjectTypes.issuer {
             let bundle = MercadoPago.getBundle()
             let cell: IssuerRowTableViewCell = bundle!.loadNibNamed("IssuerRowTableViewCell", owner: nil, options: nil)?[0] as! IssuerRowTableViewCell
             cell.fillCell(issuer: object as! Issuer, bundle: bundle!)
@@ -34,7 +34,7 @@ class AdditionalStepCellFactory: NSObject {
             return cell
         }
         
-        if object.objectType == "entity_type" {
+        if object.objectType == ObjectTypes.entityType {
             let bundle = MercadoPago.getBundle()
             let cell: EntityTypeTableViewCell = bundle!.loadNibNamed("EntityTypeTableViewCell", owner: nil, options: nil)?[0] as! EntityTypeTableViewCell
             cell.fillCell(entityType: object as! EntityType)
@@ -44,7 +44,7 @@ class AdditionalStepCellFactory: NSObject {
             return cell
         }
         
-        if object.objectType == "financial_instituions" {
+        if object.objectType == ObjectTypes.financialInstitution {
             let bundle = MercadoPago.getBundle()
             let cell: FinancialInstitutionTableViewCell = bundle!.loadNibNamed("FinancialInstitutionTableViewCell", owner: nil, options: nil)?[0] as! FinancialInstitutionTableViewCell
             cell.fillCell(financialInstitution: object as! FinancialInstitution, bundle: bundle!)
@@ -54,7 +54,7 @@ class AdditionalStepCellFactory: NSObject {
             return cell
         }
         
-        if object.objectType == "payment_method" {
+        if object.objectType == ObjectTypes.paymentMethod {
             let bundle = MercadoPago.getBundle()
             let cell: CardTypeTableViewCell = bundle!.loadNibNamed("CardTypeTableViewCell", owner: nil, options: nil)?[0] as! CardTypeTableViewCell
             cell.setPaymentMethod(paymentMethod: object as! PaymentMethod)
@@ -65,9 +65,16 @@ class AdditionalStepCellFactory: NSObject {
         }
         
         let defaultCell = UITableViewCell()
-        defaultCell.textLabel?.text = "Default Cell"
         
         return defaultCell
     }
     
+}
+
+public enum ObjectTypes : String {
+    case payerCost = "payer_cost"
+    case issuer = "issuer"
+    case entityType = "entity_type"
+    case financialInstitution = "financial_instituions"
+    case paymentMethod = "payment_method"
 }

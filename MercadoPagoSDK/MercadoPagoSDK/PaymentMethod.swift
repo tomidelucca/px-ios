@@ -11,7 +11,7 @@ import UIKit
 
 open class PaymentMethod : NSObject , Cellable {
     
-    public var objectType: String = "payment_method"
+    public var objectType: ObjectTypes = ObjectTypes.paymentMethod
     open var _id : String!
 
     open var name : String!

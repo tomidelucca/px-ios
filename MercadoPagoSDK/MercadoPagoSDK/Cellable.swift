@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Cellable{
     
-    var objectType: String { get set }
+    var objectType: ObjectTypes { get set }
     
 }
 
