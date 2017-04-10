@@ -614,7 +614,7 @@ class PaymentVaultViewModelTest: BaseTest {
         
     //let paymentMethodSearch = MockBuilder.buildPaymentMethodSearch(paymentMethods : [paymentMethodOff, paymentMethodCreditCard])
 
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true)
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : nil, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
     }
     
     func testShouldGetCustomerCardsInfo(){
@@ -719,7 +719,7 @@ class PaymentVaultViewModelTest: BaseTest {
         pp.excludedPaymentTypeIds = ["pm1", "pm2", "pm3"]
 
         
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true)
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true , email: "sarasa@hotmail.com")
         paymentTypeIdsExcluded = instance?.getExcludedPaymentTypeIds()
         XCTAssertEqual(pp.excludedPaymentTypeIds, paymentTypeIdsExcluded)
         
@@ -733,7 +733,7 @@ class PaymentVaultViewModelTest: BaseTest {
         let pp = PaymentPreference()
         pp.excludedPaymentMethodIds = ["pmA", "pmB", "pmC"]
         
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true)
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true, email: "sarasa@hotmail.com")
         paymentMethodIdsExcluded = instance!.getExcludedPaymentMethodIds()
         XCTAssertEqual(pp.excludedPaymentMethodIds, paymentMethodIdsExcluded)
         
@@ -747,7 +747,7 @@ class PaymentVaultViewModelTest: BaseTest {
         let pp = PaymentPreference()
         pp.defaultPaymentMethodId = "defaultPaymentMethodId"
         
-        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true)
+        instance = PaymentVaultViewModel(amount: 1.0, paymentPrefence : pp, paymentMethodOptions: [mockPmSearchitem], customerPaymentOptions: nil, isRoot: true , email: "sarasa@hotmail.com")
         defaultPaymentMethodId = instance!.getPaymentPreferenceDefaultPaymentMethodId()
         XCTAssertEqual("defaultPaymentMethodId", defaultPaymentMethodId)
     }

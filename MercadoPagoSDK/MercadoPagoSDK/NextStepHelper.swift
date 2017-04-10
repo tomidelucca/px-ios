@@ -110,7 +110,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment == nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts == nil {
             return true
         }
         return false
@@ -120,7 +120,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        if pm.isCreditCard() && self.paymentData.payerCost == nil && installment != nil {
+        if pm.isCreditCard() && self.paymentData.payerCost == nil && payerCosts != nil {
             return true
         }
         return false
@@ -144,12 +144,37 @@ extension MercadoPagoCheckoutViewModel {
         return self.paymentData.token == nil && pm.isCard()
     }
     
+    func needReviewAndConfirm() -> Bool {
+        
+        guard let _ = self.paymentOptionSelected else {
+            return false
+        }
+        
+        if self.initWithPaymentData && paymentData.isComplete() {
+            return true
+        }
+        
+        if paymentData.isComplete() {
+            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+        }
+        
+        return false
+    }
+    
     func shouldShowCongrats() -> Bool {
-        return self.payment != nil || self.paymentResult != nil
+        if (self.payment != nil || self.paymentResult != nil) {
+            self.setIsCheckoutComplete(isCheckoutComplete: true)
+            return true
+        }
+        return false
     }
     
     func shouldExitCheckout() -> Bool {
         return self.isCheckoutComplete()
+    }
+    
+    func needToSearchDirectDiscount() -> Bool {
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
     }
     
     func setPaymentOptionSelected(){

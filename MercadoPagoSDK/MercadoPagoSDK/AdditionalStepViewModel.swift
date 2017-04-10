@@ -16,6 +16,7 @@ open class AdditionalStepViewModel : NSObject{
     public var screenName: String
     public var screenTitle: String
     open var amount: Double
+    open var email: String?
     open var token: CardInformationForm?
     open var paymentMethods: [PaymentMethod]
     open var cardSectionView: Updatable?
@@ -25,9 +26,10 @@ open class AdditionalStepViewModel : NSObject{
     open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
     open var callback: ((_ result: NSObject?) -> Void)?
+    open var couponCallback: ((DiscountCoupon) -> Void)? = nil
     
     
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
+    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], email: String? = nil){
         self.screenName = screenName
         self.screenTitle = screenTitle
         self.amount = amount
@@ -37,6 +39,7 @@ open class AdditionalStepViewModel : NSObject{
         self.cardSectionView = cardSectionView
         self.totalRowVisible = totalRowVisible
         self.dataSource = dataSource
+        self.email = email
     }
     
     func showCardSection() -> Bool{
@@ -167,8 +170,8 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil ){
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, email: email)
         self.screenName = screenName
         self.screenTitle = screenTitle
         self.amount = amount
@@ -182,7 +185,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
         self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{
-        return (discount != nil)
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
     
 }

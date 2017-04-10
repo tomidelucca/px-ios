@@ -147,8 +147,36 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         if indexPath.section == AdditionalStepViewModel.Sections.body.rawValue {
             let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
             self.viewModel.callback!(callbackData)
+            
+        }
+        if self.viewModel.isDiscountCellFor(indexPath: indexPath){
+            if let coupon = self.viewModel.discount {
+                let step = CouponDetailViewController(coupon: coupon)
+                DispatchQueue.main.async {
+                    self.present(step, animated: false, completion: {})
+                }
+            } else {
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, callback: { (coupon) in
+                    let couponDataDict:[String: DiscountCoupon] = ["coupon": coupon]
+
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil, userInfo: couponDataDict)
+                    
+                    if let updateMercadoPagoCheckout = self.viewModel.couponCallback {
+                        updateMercadoPagoCheckout(coupon)
+                    }
+                })
+                DispatchQueue.main.async {
+                    self.present(step, animated: false, completion: {})
+                }
+            }
 
         }
+        
+    }
+    
+    public func updateDataSource(dataSource: [Cellable]) {
+        self.viewModel.dataSource = dataSource
+        self.tableView.reloadData()
     }
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView){
