@@ -452,7 +452,7 @@ open class MercadoPagoCheckout: NSObject {
 
             })
         } else {
-            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :PaymentResult.CongratsState) in
+            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :PaymentResult.CongratsState) in
                 self.finish()
             })
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+open class InstructionsViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
 
@@ -68,7 +68,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
     public init(paymentResult : PaymentResult, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void) {
         
         self.callback = callback
-        super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
+        super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.paymentResult = paymentResult
     }
     
