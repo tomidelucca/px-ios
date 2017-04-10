@@ -10,32 +10,7 @@ import UIKit
 
 class JSONHandler: NSObject {
 
-    /*
-    class func jsonCoding(jsonDictionary: [String:Any]) -> Any {
-        var result : Any = ""
-        do{
-            let jsonData = try JSONSerialization.data(withJSONObject: jsonArray, options: .prettyPrinted)
-            let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
-            result = decoded
-        }catch{
-            print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
-        }
-        return result
-
-    }
     
-    class func parseToJSON(data:Data) -> Any{
-        var result : Any = []
-        do{
-            result = try JSONSerialization.jsonObject(with: data, options: [])
-        }catch{
-            print("ERROR PARSIBNG JSON, ERROR = \(error)")
-        }
-        return result
-    }
-    */
-    
-    //For compiling porpouse
     class func jsonCoding(_ jsonDictionary: [String:Any]) -> String {
         var result : String = ""
         do{
@@ -46,10 +21,8 @@ class JSONHandler: NSObject {
                 }
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict)
-          //  let decoded = try JSONSerialization.jsonObject(with: jsonData, options: [])
             result = NSString(data: jsonData,
                                        encoding: String.Encoding.ascii.rawValue)  as! String
-          //  result = (decoded as AnyObject).description
         }catch{
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }

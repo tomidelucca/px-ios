@@ -22,7 +22,7 @@ class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
     
     open func fillCell(paymentResult: PaymentResult){
         if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
-            status = MPStepBuilder.CongratsState.cancel_RECOVER
+            status = PaymentResult.CongratsState.cancel_RECOVER
             self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
         }
         if paymentResult.status == "approved"{

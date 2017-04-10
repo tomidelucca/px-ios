@@ -8,6 +8,18 @@
 
 import Foundation
 open class PaymentResult: NSObject {
+    
+    @objc
+    public enum CongratsState : Int {
+        case ok = 0
+        case cancel_SELECT_OTHER = 1
+        case cancel_RETRY = 2
+        case cancel_RECOVER = 3
+        case call_FOR_AUTH = 4
+    }
+    
+    
+    
     open var paymentData: PaymentData?
     open var status: String
     open var statusDetail: String
