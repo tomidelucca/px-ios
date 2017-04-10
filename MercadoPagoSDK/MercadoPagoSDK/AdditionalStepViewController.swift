@@ -169,6 +169,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                     self.present(step, animated: false, completion: {})
                 }
             }
+
         }
         
     }

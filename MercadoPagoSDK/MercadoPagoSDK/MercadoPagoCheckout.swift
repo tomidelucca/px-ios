@@ -36,13 +36,6 @@ open class MercadoPagoCheckout: NSObject {
         executeNextStep()
     }
     
-    public func getRootViewController() -> UIViewController {
-        MercadoPagoCheckout.firstViewControllerPushed = false
-        self.pushRootLoading()
-        self.start()
-        return self.currentLoadingView!
-    }
-    
     func executeNextStep(){
         switch self.viewModel.nextStep() {
         case .SEARCH_PREFERENCE :
@@ -347,7 +340,6 @@ open class MercadoPagoCheckout: NSObject {
 
     
     func collectPaymentData() {
-        if self.viewModel.reviewAndConfirm {
             let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: {(paymentData : PaymentData) -> Void in
                 self.viewModel.updateCheckoutModel(paymentData: paymentData)
                 if paymentData.paymentMethod == nil && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
@@ -365,17 +357,10 @@ open class MercadoPagoCheckout: NSObject {
                     self.executeNextStep()
                 }
             })
-            self.navigationController.pushViewController(checkoutVC, animated: true);
-            CATransaction.begin();
-            CATransaction.setCompletionBlock {
-                self.cleanNavigationStack()
-            }
-            CATransaction.commit();
-        } else {
-            // Caso en que RyC esté deshabilitada
-            self.executePaymentDataCallback()
-        }
-
+        
+        self.pushViewController(viewController: checkoutVC, animated: true, completion: {
+            self.cleanNavigationStack()
+        })
     }
 	
 	func cleanNavigationStack () {
@@ -503,7 +488,12 @@ open class MercadoPagoCheckout: NSObject {
         ReviewScreenPreference.clear()
         PaymentResultScreenPreference.clear()
         DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
-        if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
+        
+        
+        
+        if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
+            MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
+        } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
         } else if let callback = MercadoPagoCheckoutViewModel.callback {
             callback()
@@ -518,6 +508,7 @@ open class MercadoPagoCheckout: NSObject {
                 self.navigationController.setNavigationBarHidden(false, animated: false)
             })
         }
+        
     }
     
     
@@ -554,7 +545,10 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     private func pushViewController(viewController: UIViewController,
-                                   animated: Bool) {
+                                    animated: Bool,
+                                    completion : (() -> Swift.Void)? = nil) {
+        
+        viewController.hidesBottomBarWhenPushed = true
         self.navigationController.pushViewController(viewController, animated: animated)
     }
     
