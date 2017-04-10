@@ -11,10 +11,10 @@ import Foundation
 class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     
     var paymentResult: PaymentResult!
-    var callback: ( _ status : InstructionsRevampViewController.CongratsState) -> Void
+    var callback: ( _ status : PaymentResult.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
     
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : InstructionsRevampViewController.CongratsState) -> Void) {
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void) {
         self.paymentResult = paymentResult
         self.callback = callback
         self.checkoutPreference = checkoutPreference
@@ -100,8 +100,8 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         return paymentResult.status
     }
     
-    func setCallbackWithTracker(cellName: String) -> (_ paymentResult : PaymentResult, _ status : InstructionsRevampViewController.CongratsState) -> Void{
-        let callbackWithTracker : (_ paymentResutl : PaymentResult, _ status : InstructionsRevampViewController.CongratsState) -> Void = {(paymentResult ,status) in
+    func setCallbackWithTracker(cellName: String) -> (_ paymentResult : PaymentResult, _ status : PaymentResult.CongratsState) -> Void{
+        let callbackWithTracker : (_ paymentResutl : PaymentResult, _ status : PaymentResult.CongratsState) -> Void = {(paymentResult ,status) in
             let paymentAction: PaymentActions
             if self.paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
                 paymentAction = PaymentActions.RECOVER_PAYMENT

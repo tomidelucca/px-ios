@@ -436,12 +436,12 @@ open class MercadoPagoCheckout: NSObject {
 
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : InstructionsRevampViewController.CongratsState) in
-                if state == InstructionsRevampViewController.CongratsState.call_FOR_AUTH {
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : PaymentResult.CongratsState) in
+                if state == PaymentResult.CongratsState.call_FOR_AUTH {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForClone()
                     self.collectSecurityCodeForRetry()
-                } else if state == InstructionsRevampViewController.CongratsState.cancel_RETRY || state == InstructionsRevampViewController.CongratsState.cancel_SELECT_OTHER {
+                } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
@@ -452,7 +452,7 @@ open class MercadoPagoCheckout: NSObject {
 
             })
         } else {
-            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :InstructionsRevampViewController.CongratsState) in
+            congratsViewController = InstructionsRevampViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :PaymentResult.CongratsState) in
                 self.finish()
             })
         }

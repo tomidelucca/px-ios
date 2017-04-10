@@ -12,20 +12,20 @@ open class CallbackCancelTableViewCell : UITableViewCell {
 
     var callbackCancel : ((Void) -> Void)?
     var defaultCallback : ((Void) -> Void)?
-    var callbackStatusTracking: ((_ paymentResult : PaymentResult, _ status : InstructionsRevampViewController.CongratsState) -> Void)?
-    var callbackStatus: ((_ status : InstructionsRevampViewController.CongratsState) -> Void)?
+    var callbackStatusTracking: ((_ paymentResult : PaymentResult, _ status : PaymentResult.CongratsState) -> Void)?
+    var callbackStatus: ((_ status : PaymentResult.CongratsState) -> Void)?
     var paymentResult: PaymentResult?
-    var status: InstructionsRevampViewController.CongratsState?
+    var status: PaymentResult.CongratsState?
     
-    func getCallbackStatus() -> (( _ status : InstructionsRevampViewController.CongratsState) -> Void){
+    func getCallbackStatus() -> (( _ status : PaymentResult.CongratsState) -> Void){
         return callbackStatus!
     }
-    func setCallbackStatus(callback: @escaping ( _ status : InstructionsRevampViewController.CongratsState) -> Void, status: InstructionsRevampViewController.CongratsState){
+    func setCallbackStatus(callback: @escaping ( _ status : PaymentResult.CongratsState) -> Void, status: PaymentResult.CongratsState){
         callbackStatus = callback
         self.status = status
     }
     
-    func setCallbackStatusTracking(callback: @escaping (_ paymentResult : PaymentResult, _ status : InstructionsRevampViewController.CongratsState) -> Void, paymentResult: PaymentResult,status: InstructionsRevampViewController.CongratsState){
+    func setCallbackStatusTracking(callback: @escaping (_ paymentResult : PaymentResult, _ status : PaymentResult.CongratsState) -> Void, paymentResult: PaymentResult,status: PaymentResult.CongratsState){
         callbackStatusTracking = callback
         self.paymentResult = paymentResult
         self.status = status
