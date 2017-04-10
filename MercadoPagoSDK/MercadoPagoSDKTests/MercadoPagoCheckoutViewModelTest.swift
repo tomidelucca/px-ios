@@ -739,7 +739,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertNil(mpCheckoutViewModel.paymentOptionSelected)
         XCTAssertNil(mpCheckoutViewModel.search)
         XCTAssertNil(mpCheckoutViewModel.issuers)
-        XCTAssertNil(mpCheckoutViewModel.installment)
         XCTAssertNil(mpCheckoutViewModel.cardToken)
         XCTAssertTrue(mpCheckoutViewModel.rootVC)
         XCTAssertFalse(mpCheckoutViewModel.initWithPaymentData)
