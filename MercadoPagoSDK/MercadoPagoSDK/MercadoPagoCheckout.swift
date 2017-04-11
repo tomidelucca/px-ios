@@ -454,7 +454,7 @@ open class MercadoPagoCheckout: NSObject {
 
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : PaymentResult.CongratsState) in
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { (state : PaymentResult.CongratsState) in
                 if state == PaymentResult.CongratsState.call_FOR_AUTH {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForClone()
@@ -463,16 +463,16 @@ open class MercadoPagoCheckout: NSObject {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
-
+                    
                 }else{
                     self.finish()
                 }
-
+                
             })
         } else {
             congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :PaymentResult.CongratsState) in
                 self.finish()
-            })
+            }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         }
         self.pushViewController(viewController : congratsViewController, animated: true)
     }
@@ -606,8 +606,8 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
-    open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
-        MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
+    open func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
+        self.viewModel.paymentResultScreenPreference = paymentResultScreenPreference
     }
     
     open func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
