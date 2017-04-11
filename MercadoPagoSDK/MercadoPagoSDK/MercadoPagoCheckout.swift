@@ -610,8 +610,8 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
     }
     
-    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
-        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
+    open func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        self.viewModel.reviewScreenPreference = reviewScreenPreference
     }
     
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {

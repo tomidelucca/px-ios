@@ -52,14 +52,10 @@
     // Setear ServicePreference
     [self setServicePreference];
     
-    // Setear PaymentResultScreenPreference
-    [self setPaymentResultScreenPreference];
-    
-    //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+
     
     //Setear flowPreference
-    [self finishFlowBeforeRYC];
+    //[self finishFlowBeforeRYC];
     
     
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
@@ -95,8 +91,14 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ];
+    
+    // Setear PaymentResultScreenPreference
+    [self setPaymentResultScreenPreference];
+    
+    //Setear ReviewScreenPrefernce
+    [self setReviewScreenPreference];
+    
     [self.mpCheckout start];
-
     
 }
 
@@ -116,7 +118,7 @@
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
         //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
         //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //[self.navigationController popToRootViewControllerAnimated:NO];
     }];
@@ -291,7 +293,7 @@
     [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 
     
-    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
+    [self.mpCheckout setReviewScreenPreference:reviewPreference];
 }
 
 -(void)setServicePreference {
@@ -323,7 +325,7 @@
         // Cuando retorna de modal
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
-        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
         
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //
