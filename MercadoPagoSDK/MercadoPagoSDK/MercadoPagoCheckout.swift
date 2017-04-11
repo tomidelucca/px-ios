@@ -499,13 +499,9 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func finish(){
-        
-        ReviewScreenPreference.clear()
-        PaymentResultScreenPreference.clear()
         DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
         
         removeRootLoading()
-        
         
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)

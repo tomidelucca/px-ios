@@ -224,17 +224,17 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(PaymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
-            return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
-        } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
-            return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
+        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
+            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingAdditionalInfoCells.count
+        } else if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
+            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedAdditionalInfoCells.count
         }
         return 0
     }
     
     func numberOfCustomSubHeaderCells() -> Int {
-        if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedSubHeaderCells) && approved() {
-            return PaymentResultScreenPreference.approvedSubHeaderCells.count
+        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSubHeaderCells) && approved() {
+            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSubHeaderCells.count
         }
         return 0
     }

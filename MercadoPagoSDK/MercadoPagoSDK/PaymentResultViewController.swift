@@ -86,12 +86,12 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
             if viewModel.inProcess(){
-                return PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()
+                return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()
             } else if viewModel.approved(){
-                return PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
+                return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
             }
         } else if viewModel.isCustomSubHeaderCellFor(indexPath: indexPath){
-            return PaymentResultScreenPreference.approvedSubHeaderCells[indexPath.row].getHeight()
+            return MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSubHeaderCells[indexPath.row].getHeight()
         }
         return UITableViewAutomaticDimension
         
@@ -189,13 +189,13 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     private func getAdditionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
         
         if self.viewModel.inProcess(){
-            let customCell = PaymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row]
+            let customCell = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row]
             customCell.setDelegate(delegate: self)
             let cell = customCell.getTableViewCell()
             cell.selectionStyle = .none
             return cell
         } else {
-            let customCell = PaymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row]
+            let customCell = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row]
             customCell.setDelegate(delegate: self)
             let cell = customCell.getTableViewCell()
             cell.selectionStyle = .none
@@ -206,7 +206,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     private func getCustomSubHeaderCell(indexPath: IndexPath) -> UITableViewCell {
         
         if self.viewModel.approved(){
-            let customCell = PaymentResultScreenPreference.approvedSubHeaderCells[indexPath.row]
+            let customCell = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSubHeaderCells[indexPath.row]
             customCell.setDelegate(delegate: self)
             let cell = customCell.getTableViewCell()
             cell.selectionStyle = .none

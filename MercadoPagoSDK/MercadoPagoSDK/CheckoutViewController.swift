@@ -317,11 +317,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
     
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell{
-        return makeCellWith(customCell: ReviewScreenPreference.additionalInfoCells[indexPath.row], indentifier: "CustomAppCell")
+        return makeCellWith(customCell: MercadoPagoCheckoutViewModel.reviewScreenPreference.additionalInfoCells[indexPath.row], indentifier: "CustomAppCell")
     }
     
     private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell{
-        return makeCellWith(customCell: ReviewScreenPreference.customItemCells[indexPath.row], indentifier: "CustomItemCell")
+        return makeCellWith(customCell: MercadoPagoCheckoutViewModel.reviewScreenPreference.customItemCells[indexPath.row], indentifier: "CustomItemCell")
     }
     
     private func makeCellWith(customCell : MPCustomCell, indentifier : String) -> UITableViewCell {
@@ -579,7 +579,7 @@ open class CheckoutViewModel: NSObject {
             return ConfirmPaymentTableViewCell.ROW_HEIGHT
             
         } else if self.isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? ReviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return hasCustomItemCells() ? MercadoPagoCheckoutViewModel.reviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
             
         } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
             if isPaymentMethodSelectedCard() {
@@ -588,7 +588,7 @@ open class CheckoutViewModel: NSObject {
             return OfflinePaymentMethodCell.ROW_HEIGHT
         
         } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return ReviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
+            return MercadoPagoCheckoutViewModel.reviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
             
         } else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
             return TermsAndConditionsViewCell.getCellHeight()
@@ -630,21 +630,21 @@ open class CheckoutViewModel: NSObject {
     }
     
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(ReviewScreenPreference.additionalInfoCells) {
-            return ReviewScreenPreference.additionalInfoCells.count
+        if !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.reviewScreenPreference.additionalInfoCells) {
+            return MercadoPagoCheckoutViewModel.reviewScreenPreference.additionalInfoCells.count
         }
         return 0
     }
     
     func numberOfCustomItemCells() -> Int {
         if hasCustomItemCells() {
-            return ReviewScreenPreference.customItemCells.count
+            return MercadoPagoCheckoutViewModel.reviewScreenPreference.customItemCells.count
         }
         return 0
     }
     
     func hasCustomItemCells() -> Bool {
-        return !Array.isNullOrEmpty(ReviewScreenPreference.customItemCells)
+        return !Array.isNullOrEmpty(MercadoPagoCheckoutViewModel.reviewScreenPreference.customItemCells)
     }
     
     func numberOfSummaryRows() -> Int{

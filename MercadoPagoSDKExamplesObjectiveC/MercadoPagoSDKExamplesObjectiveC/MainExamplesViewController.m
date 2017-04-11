@@ -248,9 +248,9 @@
     MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
     
     
-    [PaymentResultScreenPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
-    [PaymentResultScreenPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
-    [PaymentResultScreenPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
+    [resultPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
+    [resultPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
+    [resultPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
     
     [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
     
@@ -288,7 +288,7 @@
     
     [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
     
-    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+    [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 
     
     [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
