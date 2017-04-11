@@ -85,7 +85,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoading()
+        //self.showLoading()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
         
