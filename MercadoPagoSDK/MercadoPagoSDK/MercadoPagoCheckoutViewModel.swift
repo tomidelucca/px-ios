@@ -219,9 +219,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             let TD = TransactionDetails(financialInstitution: financialInstitution)
             self.paymentData.transactionDetails = TD
         }
-        if paymentData.isComplete(){
-            self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
-        }
     }
     
     public func updateCheckoutModel(issuer: Issuer){
@@ -233,9 +230,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.cardToken!.cardholder!.identification = identification
         }else{
             paymentData.payer.identification = identification
-            if paymentData.isComplete(){
-                self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
-            }
         }
     }
     
@@ -245,9 +239,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     
     public func updateCheckoutModel(entityType: EntityType){
         self.paymentData.payer.entityType = entityType
-        if paymentData.isComplete(){
-            self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
-        }
     }
     
     //PAYMENT_METHOD_SELECTION
@@ -263,9 +254,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.findAndCompletePaymentMethodFor(paymentMethodId: paymentOptionSelected.getId())
         } else if !paymentOptionSelected.isCard() && !paymentOptionSelected.hasChildren() {
             self.paymentData.paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected.getId())
-            if paymentData.isComplete(){
-                self.reviewAndConfirm = MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
-            }
         }
         
     }
