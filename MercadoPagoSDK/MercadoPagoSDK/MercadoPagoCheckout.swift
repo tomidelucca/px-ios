@@ -140,6 +140,16 @@ open class MercadoPagoCheckout: NSObject {
     
     func collectPaymentMethods(){
         // Se limpia paymentData antes de ofrecer selección de medio de pago
+
+        
+
+        let paymentMethodSelectionStep = CardsAdminViewController(viewModel: CardsAdminViewModel(cards: nil,extraOptionTitle :"Agregar Tarjeta"), callback : { (cardSelected : Card?) -> Void  in
+           print(cardSelected)
+        })
+        
+        self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
+        
+        /*
         self.viewModel.paymentData.clear()
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
@@ -148,6 +158,7 @@ open class MercadoPagoCheckout: NSObject {
         })
         
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
+         */
     }
     
 

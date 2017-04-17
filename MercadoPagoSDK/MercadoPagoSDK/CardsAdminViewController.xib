@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardsAdminViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
-                <outlet property="collectionSearch" destination="9NB-M1-nl1" id="i9z-Ex-YxB"/>
+                <outlet property="collectionSearch" destination="yjQ-dh-rUW" id="Zo8-tO-H5H"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,24 +19,23 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9NB-M1-nl1">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="yjQ-dh-rUW">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Nsv-Nr-WVN">
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Z0E-qb-VU1">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="a4x-kg-YdK"/>
+                        <outlet property="delegate" destination="-1" id="Gps-Xx-M8h"/>
+                    </connections>
                 </collectionView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="9NB-M1-nl1" secondAttribute="trailing" id="6jz-6G-gcS"/>
-                <constraint firstItem="9NB-M1-nl1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="X66-rD-dz4"/>
-                <constraint firstAttribute="bottom" secondItem="9NB-M1-nl1" secondAttribute="bottom" id="YAl-fb-v9d"/>
-                <constraint firstItem="9NB-M1-nl1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yTs-ti-NOz"/>
-            </constraints>
             <point key="canvasLocation" x="32.5" y="69.5"/>
         </view>
     </objects>

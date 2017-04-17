@@ -31,7 +31,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     var titleSectionReference : PaymentVaultTitleCollectionViewCell!
     
     fileprivate var tintColor = true
-    fileprivate var loadingGroups = true
+    fileprivate var loadingCards = true
     
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     
@@ -40,7 +40,16 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     fileprivate var callback : ((_ selectedCard : Card? ) -> Void)!
 
     
-
+    init(viewModel : CardsAdminViewModel, callback : @escaping (_ selectedCard : Card?) -> Void) {
+        super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
+        self.initCommon()
+        self.viewModel = viewModel
+        self.callback = callback
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -54,9 +63,21 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         self.currency = MercadoPagoContext.getCurrency()
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.hideNavBar()
+        if let button = self.navigationItem.leftBarButtonItem{
+            self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
+        }
+        
+        self.navigationController!.navigationBar.shadowImage = nil
+        self.extendedLayoutIncludesOpaqueBars = true
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.showLoading()
+       // self.showLoading()
         
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10;
@@ -66,7 +87,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
-            self.title = "¿Cómo quiéres pagar?".localized
+            self.title = "Administrador de tarjetas".localized
         }
         
         self.registerAllCells()
@@ -84,10 +105,26 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         } else {
             self.callbackCancel = callbackCancel
         }
-        
         self.collectionSearch.backgroundColor = UIColor.px_white()
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+        self.collectionSearch.allowsSelection = true
+        self.getCustomerCards()
+        self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
+/*
+        if self.loadingCards {
+            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
+            temporalView.backgroundColor?.withAlphaComponent(0)
+            temporalView.isUserInteractionEnabled = false
+            self.view.addSubview(temporalView)
+        }
+  */
+        
+    }
 
     fileprivate func registerAllCells(){
         
@@ -108,7 +145,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if self.loadingGroups {
+        if self.loadingCards {
             return 0
         }
         return 2
@@ -124,21 +161,24 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isCardsSection(section: indexPath.section) {
-            guard let cards = self.viewModel.cards , let callback = self.callback else{
-                collectionView.deselectItem(at: indexPath, animated: true)
-                return
-            }
             collectionView.deselectItem(at: indexPath, animated: true)
-            collectionView.allowsSelection = false
-            let card = cards[indexPath.row]
-            callback(card)
+            if let cards = self.viewModel.cards , let callback = self.callback {
+                if cards.count > indexPath.row {
+                    let card = cards[indexPath.row]
+                    callback(card)
+                }else {
+                    callback(nil)
+                }
+            }else{
+                callback(nil)
+            }
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
         
-        if (loadingGroups) {
+        if (loadingCards) {
             return 0
         }
         
@@ -146,11 +186,8 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
             return 1
         }
  
-        guard let cards = self.viewModel.cards else{
-            return 0
-        }
-        
-        return cards.count
+
+        return self.viewModel.numberOfOptions()
         
     }
     
@@ -164,14 +201,24 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
                                                           
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
+             cell.title.text = "Administrador de tarjetas".localized
             self.titleSectionReference = cell
             titleCell = cell
             return cell
         } else if isCardsSection(section: indexPath.section){
-            guard let card = self.viewModel.cards?[indexPath.row] else {
-                return cell
+            if let cards =  self.viewModel.cards {
+                if cards.count > indexPath.row {
+                    cell.fillCell(drawablePaymentOption: cards[indexPath.row])
+                }else{
+                    if let extraOptionTitle = self.viewModel.extraOptionTitle {
+                        cell.fillCell(optionText:extraOptionTitle)
+                    }
+                }
+            }else {
+                if let extraOptionTitle = self.viewModel.extraOptionTitle {
+                    cell.fillCell(optionText:extraOptionTitle)
+                }
             }
-            cell.fillCell(drawablePaymentOption: card)
         }
         return cell
         
@@ -269,8 +316,32 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         super.viewDidDisappear(animated)
     }
     
+    fileprivate func getCustomerCards(){
+        if self.viewModel!.shouldGetCustomerCardsInfo() {
+            self.showLoading()
+            MerchantServer.getCustomer({ (customer: Customer) -> Void in
+                 self.hideLoading()
+                self.viewModel.customerId = customer._id
+                self.viewModel.cards = customer.cards
+                self.collectionSearch.delegate = self
+                self.collectionSearch.dataSource = self
+                self.loadingCards = false
+                self.collectionSearch.reloadData()
+            }, failure: { (error: NSError?) -> Void in
+                 self.hideLoading()
+                print(error?.description)
+            })
+        }
+    }
 
-    
+    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+        return { Void -> (Void) in
+            if self.titleSectionReference != nil {
+                self.titleSectionReference.fillCell()
+                self.titleSectionReference.title.text = "Administrador de tarjetas".localized
+            }
+        }
+    }
     
 }
 
@@ -280,11 +351,32 @@ class CardsAdminViewModel : NSObject {
     var cards : [Card]?
     var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
     var callbackCancel : ((Void) -> Void)? = nil
+    var customerId : String?
+    var extraOptionTitle : String?
     
-    
-    init(cards : [Card]?, callbackCancel : ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil){
+    init(cards : [Card]? = nil,  extraOptionTitle : String? = nil, callbackCancel : ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil){
         self.cards = cards
+        self.extraOptionTitle = extraOptionTitle
     }
+    func shouldGetCustomerCardsInfo() -> Bool {
+        return cards == nil
+    }
+    func numberOfOptions() -> Int {
+        if let _ = self.extraOptionTitle {
+            if let cards = cards{
+                return cards.count + 1
+            }else{
+                return 1
+            }
+        }else{
+            if let cards = cards{
+                return cards.count
+            }else{
+                return 0
+            }
+        }
+    }
+    
     
     
 }
