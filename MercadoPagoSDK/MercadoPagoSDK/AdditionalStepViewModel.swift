@@ -153,8 +153,17 @@ open class AdditionalStepViewModel : NSObject{
         return indexPath.section == Sections.title.rawValue
     }
     
-    func isCardCellFor(indexPath: IndexPath) -> Bool {
+    func isCardSectionFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.card.rawValue
+    }
+    
+    func isCardCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.card.rawValue
+    }
+    
+    public enum CardSectionCells : Int {
+        case card = 0
+        case bankInterestWarning = 1
     }
     
     public enum Sections : Int {

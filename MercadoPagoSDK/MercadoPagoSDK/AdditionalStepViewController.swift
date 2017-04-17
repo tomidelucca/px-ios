@@ -105,9 +105,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
             return titleCell
             
-        } else if viewModel.isCardCellFor(indexPath: indexPath) {
+        } else if viewModel.isCardSectionFor(indexPath: indexPath) {
             
-            if indexPath.row == 0 {
+            if viewModel.isCardCellFor(indexPath: indexPath) {
             
                 if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
                     
