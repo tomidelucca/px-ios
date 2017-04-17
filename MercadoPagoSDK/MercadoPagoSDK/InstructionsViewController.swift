@@ -8,11 +8,14 @@
 
 import UIKit
 
-open class InstructionsRevampViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+open class InstructionsViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
+
     
     @IBOutlet weak var tableView: UITableView!
     var paymentResult : PaymentResult!
-    var callback : ( _ status : MPStepBuilder.CongratsState) -> Void
+    var callback : ( _ status : PaymentResult.CongratsState) -> Void
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instructionsInfo: InstructionsInfo?
@@ -62,10 +65,10 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             self.tableView.reloadData()
         }
     }
-    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : MPStepBuilder.CongratsState) -> Void) {
+    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void) {
         
         self.callback = callback
-        super.init(nibName: "InstructionsRevampViewController", bundle: bundle)
+        super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.paymentResult = paymentResult
     }
     
@@ -124,7 +127,7 @@ open class InstructionsRevampViewController: MercadoPagoUIViewController, UITabl
             } else {
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
-                footerNib.setCallbackStatus(callback: callback, status: MPStepBuilder.CongratsState.ok)
+                footerNib.setCallbackStatus(callback: callback, status: PaymentResult.CongratsState.ok)
                 footerNib.fillCell(paymentResult: paymentResult)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib

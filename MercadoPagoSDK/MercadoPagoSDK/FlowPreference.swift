@@ -15,6 +15,7 @@ open class FlowPreference : NSObject{
     var showPaymentRejectedScreen = true
     var showPaymentPendingScreen = true
     var showPaymentSearchScreen = true
+    var showDiscount = true
     
     public func disableReviewAndConfirmScreen(){
         showReviewAndConfirmScreen = false
@@ -38,6 +39,10 @@ open class FlowPreference : NSObject{
     
     public func disableDefaultSelection(){
         showPaymentSearchScreen = false
+    }
+    
+    public func disableDiscount() {
+        showDiscount = false
     }
     
     /*public func setCongratsDisplayTime(){
@@ -67,8 +72,11 @@ open class FlowPreference : NSObject{
     public func enableDefaultSelection(){
         showPaymentSearchScreen = true
     }
-
     
+    public func enableDiscount() {
+        showDiscount = true
+    }
+
     public func isReviewAndConfirmScreenEnable() -> Bool{
         return showReviewAndConfirmScreen
     }
@@ -88,7 +96,12 @@ open class FlowPreference : NSObject{
     public func isPaymentPendingScreenEnable() -> Bool{
         return showPaymentPendingScreen
     }
+    
     public func isPaymentSearchScreenEnable() -> Bool{
         return showPaymentSearchScreen
+    }
+    
+    public func isDiscountEnable() -> Bool {
+        return showDiscount
     }
 }

@@ -26,8 +26,10 @@ class WalletIntegrationTest: BaseTest {
         // Deshabilita RyC
         var fp = FlowPreference()
         fp.disableReviewAndConfirmScreen()
+        fp.disableDiscount()
         MercadoPagoCheckout.setFlowPreference(fp)
-
+        MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)
+        
         // Inicia Checkout con preferencia
         let preference = MockBuilder.buildCheckoutPreference()
         let mpCheckout = MercadoPagoCheckout(checkoutPreference: preference, navigationController: UINavigationController())
@@ -55,8 +57,11 @@ class WalletIntegrationTest: BaseTest {
             localPaymentData = paymentData
         }
         
-        mpCheckout.collectPaymentData()
         step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(step, CheckoutStep.FINISH)
+        
+        // Ejecutar finish => paymentDataCallback
+        mpCheckout.executeNextStep()
         waitForExpectations(timeout: 10, handler: nil)
         
         // Se habilita RyC

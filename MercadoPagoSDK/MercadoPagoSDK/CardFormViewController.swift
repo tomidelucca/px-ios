@@ -283,9 +283,15 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     
     open func verPromociones(){
-        self.navigationController?.present(UINavigationController(rootViewController: MPStepBuilder.startPromosStep(promos : self.cardFormManager.promos)), animated: true, completion: {})
+        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : self.cardFormManager.promos)), animated: true, completion: {})
     }
     
+    func startPromosStep(promos : [Promo]? = nil,
+                                    _ callback : ((Void) -> (Void))? = nil) -> PromoViewController {
+        MercadoPagoContext.initFlavor2()
+        return PromoViewController(promos : promos, callback : callback)
+    }
+
     
     open func editingChanged(_ textField:UITextField){
         hideErrorMessage()

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 MercadoPago. All rights reserved.
 //
 
+
+
 import Foundation
 
 open class Promo : NSObject {
