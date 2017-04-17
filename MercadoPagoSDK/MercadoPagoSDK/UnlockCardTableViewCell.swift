@@ -28,7 +28,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
         
-        let URLAttribute = [NSFontAttributeName : UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 14) ?? UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.primaryColor()]
+        let URLAttribute = [NSFontAttributeName : Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14),NSForegroundColorAttributeName: UIColor.primaryColor()]
         
         self.unlockCardtextView.linkTextAttributes = URLAttribute
         
