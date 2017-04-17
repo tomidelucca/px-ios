@@ -52,14 +52,10 @@
     // Setear ServicePreference
     [self setServicePreference];
     
-    // Setear PaymentResultScreenPreference
-    [self setPaymentResultScreenPreference];
-    
-    //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+
     
     //Setear flowPreference
-    [self finishFlowBeforeRYC];
+    //[self finishFlowBeforeRYC];
     
     
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
@@ -98,8 +94,14 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ];
+    
+    // Setear PaymentResultScreenPreference
+    [self setPaymentResultScreenPreference];
+    
+    //Setear ReviewScreenPrefernce
+    [self setReviewScreenPreference];
+    
     [self.mpCheckout start];
-
     
 }
 
@@ -119,7 +121,7 @@
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
         //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
         //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
-        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //[self.navigationController popToRootViewControllerAnimated:NO];
     }];
@@ -223,10 +225,10 @@
     //    } text:@"Ir a mi activdad"];
     //    [resultPreference disablePendingContentText];
     //    [resultPreference disableChangePaymentMethodOptionButton];
-    //    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-    //        NSLog(@"%@", paymentResult.status);
-    //        [self.navigationController popToRootViewControllerAnimated:NO];
-    //    } text:@"Ir a mi actividad"];
+        [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
+            NSLog(@"%@", paymentResult.status);
+            [self.navigationController popToRootViewControllerAnimated:NO];
+        } text:@"Ir a mi actividad"];
     //    [resultPreference setApprovedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
     //        NSLog(@"%@", paymentResult.status);
     //        [self.navigationController popToRootViewControllerAnimated:NO];
@@ -251,11 +253,11 @@
     MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
     
     
-    [PaymentResultScreenPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
-    [PaymentResultScreenPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
-    [PaymentResultScreenPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
+    [resultPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
+    [resultPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
+    [resultPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
     
-    [MercadoPagoCheckout setPaymentResultScreenPreference:resultPreference];
+    [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
     
 }
 
@@ -291,9 +293,9 @@
     
     [reviewPreference setSummaryRowsWithSummaryRows:[NSArray arrayWithObjects:summaryRow, nil]];
     
-    [ReviewScreenPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+    [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
     
-    [MercadoPagoCheckout setReviewScreenPreference:reviewPreference];
+    [self.mpCheckout setReviewScreenPreference:reviewPreference];
 }
 
 -(void)setServicePreference {
@@ -325,7 +327,7 @@
         // Cuando retorna de modal
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
-        [MercadoPagoCheckout setReviewScreenPreference:reviewPreferenceUpdated];
+        [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
         
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //

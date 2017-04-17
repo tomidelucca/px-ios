@@ -19,6 +19,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
     var bundle = MercadoPago.getBundle()
     var color:UIColor?
     var instructionsInfo: InstructionsInfo?
+    var paymentResultScreenPreference: PaymentResultScreenPreference!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -65,11 +66,12 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
             self.tableView.reloadData()
         }
     }
-    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void) {
+    public init(paymentResult : PaymentResult, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         
         self.callback = callback
         super.init(nibName: "InstructionsViewController", bundle: bundle)
         self.paymentResult = paymentResult
+        self.paymentResultScreenPreference = paymentResultScreenPreference
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -128,7 +130,7 @@ open class InstructionsViewController: MercadoPagoUIViewController, UITableViewD
                 let footerNib = self.tableView.dequeueReusableCell(withIdentifier: "footerNib") as! FooterTableViewCell
                 footerNib.selectionStyle = .none
                 footerNib.setCallbackStatus(callback: callback, status: PaymentResult.CongratsState.ok)
-                footerNib.fillCell(paymentResult: paymentResult)
+                footerNib.fillCell(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
                 return footerNib
             }

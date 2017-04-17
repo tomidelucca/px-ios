@@ -32,17 +32,17 @@ class ApprovedTableViewCell: UITableViewCell {
         setFonts()
     }
     
-    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?){
+    func fillCell(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference?, paymentResultScreenPreference: PaymentResultScreenPreference){
         
         let currency = MercadoPagoContext.getCurrency()
         
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentIdDisable(){
+        if !paymentResultScreenPreference.isPaymentIdDisable(){
             fillID(id: paymentResult._id)
         } else {
             idInstallmentConstraint.constant = 0
         }
         
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isAmountDisable(){
+        if !paymentResultScreenPreference.isAmountDisable(){
             if let payerCost = paymentResult.paymentData?.payerCost {
                 fillInstallmentLabel(amount: payerCost.totalAmount, payerCost: payerCost, currency: currency)
                 fillInterestLabel(payerCost: payerCost)
@@ -59,7 +59,7 @@ class ApprovedTableViewCell: UITableViewCell {
             paymentMethodTotalConstraint.constant = 0
         }
         
-        if !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPaymentMethodDisable() {
+        if !paymentResultScreenPreference.isPaymentMethodDisable() {
             
             fillPaymentMethodIcon(paymentMethod: paymentResult.paymentData?.paymentMethod)
             

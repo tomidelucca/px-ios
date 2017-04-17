@@ -39,7 +39,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(paymentData: PaymentData, amount : Double) {
+    func fillCell(paymentData: PaymentData, amount : Double, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         
         fillIcon()
         
@@ -49,7 +49,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
         fillCFT(payerCost: paymentData.payerCost)
         
-        fillChangePaymentMethodButton()
+        fillChangePaymentMethodButton(reviewScreenPreference: reviewScreenPreference)
         
         fillSeparatorLine(payerCost: paymentData.payerCost)
         
@@ -107,8 +107,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
     }
     
-    func fillChangePaymentMethodButton() {
-        if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+    func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {
+        if reviewScreenPreference.isChangeMethodOptionEnabled() {
             self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
             self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
             self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
@@ -162,7 +162,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         return false
     }
     
-    public static func getCellHeight(payerCost : PayerCost? = nil) -> CGFloat {
+    public static func getCellHeight(payerCost : PayerCost? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> CGFloat {
         
         var cellHeight = DEFAULT_ROW_HEIGHT
         
@@ -170,7 +170,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             cellHeight += 20
         }
         
-        if !MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+        if reviewScreenPreference.isChangeMethodOptionEnabled() {
             cellHeight -= 64
         }
         

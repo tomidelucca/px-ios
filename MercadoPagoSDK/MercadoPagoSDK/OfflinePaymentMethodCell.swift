@@ -61,7 +61,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    internal func fillCell(_ paymentMethodOption : PaymentMethodOption, amount : Double, paymentMethod : PaymentMethod, currency : Currency) {
+    internal func fillCell(_ paymentMethodOption : PaymentMethodOption, amount : Double, paymentMethod : PaymentMethod, currency : Currency, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         
         let attributedAmount = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.black)
         var attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.px_grayBaseText()])
@@ -94,7 +94,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         self.paymentMethodDescription.attributedText = attributedTitle
 		
-		if MercadoPagoCheckoutViewModel.reviewScreenPreference.isChangeMethodOptionEnabled() {
+		if reviewScreenPreference.isChangeMethodOptionEnabled() {
    			self.changePaymentButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)			
 			self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
 			self.changePaymentButton.setTitle("Cambiar medio de pago".localized, for: .normal)

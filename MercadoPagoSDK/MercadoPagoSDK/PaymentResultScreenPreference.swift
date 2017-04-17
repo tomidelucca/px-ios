@@ -43,17 +43,17 @@ open class PaymentResultScreenPreference: NSObject {
     
     var exitButtonTitle = "Continuar".localized
 	
-	  var statusBackgroundColor : UIColor?
+    var statusBackgroundColor : UIColor?
 
-	  var hideApprovedPaymentBodyCell = false
+    var hideApprovedPaymentBodyCell = false
     var hideContentCell = false
     var hideAmount = false
     var hidePaymentId = false
     var hidePaymentMethod = false
     
-    internal static var pendingAdditionalInfoCells = [MPCustomCell]()
-    internal static var approvedAdditionalInfoCells = [MPCustomCell]()
-    internal static var approvedSubHeaderCells = [MPCustomCell]()
+    var pendingAdditionalInfoCells = [MPCustomCell]()
+    var approvedAdditionalInfoCells = [MPCustomCell]()
+    var approvedSubHeaderCells = [MPCustomCell]()
     
     // Sets de Approved
     
@@ -218,23 +218,18 @@ open class PaymentResultScreenPreference: NSObject {
     
     //Custom Rows
     
-    open static func setCustomPendingCells(customCells : [MPCustomCell]) {
-        PaymentResultScreenPreference.pendingAdditionalInfoCells = customCells
+    open func setCustomPendingCells(customCells : [MPCustomCell]) {
+        self.pendingAdditionalInfoCells = customCells
     }
     
-    open static func setCustomsApprovedCell(customCells : [MPCustomCell]) {
-        PaymentResultScreenPreference.approvedAdditionalInfoCells = customCells
+    open func setCustomsApprovedCell(customCells : [MPCustomCell]) {
+        self.approvedAdditionalInfoCells = customCells
     }
     
-    open static func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
-        PaymentResultScreenPreference.approvedSubHeaderCells = customCells
+    open func setCustomApprovedSubHeaderCell(customCells: [MPCustomCell]) {
+        self.approvedSubHeaderCells = customCells
     }
     
-    open static func clear() {
-        PaymentResultScreenPreference.approvedAdditionalInfoCells = [MPCustomCell]()
-        PaymentResultScreenPreference.pendingAdditionalInfoCells = [MPCustomCell]()
-        PaymentResultScreenPreference.approvedSubHeaderCells = [MPCustomCell]()
-    }
     
     //Approved
     
