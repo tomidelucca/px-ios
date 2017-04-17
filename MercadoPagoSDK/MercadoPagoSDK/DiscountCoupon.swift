@@ -20,7 +20,8 @@ open class DiscountCoupon: NSObject {
      "percent_off": 10,
      "amount_off": 0,
      "coupon_amount": 11,
-     "currency_id": "ARS"
+     "currency_id": "ARS",
+     "concept": "testConcept"
      }
      {
      "id": 15098,
@@ -28,7 +29,8 @@ open class DiscountCoupon: NSObject {
      "percent_off": 0,
      "amount_off": 15,
      "coupon_amount": 15,
-     "currency_id": "ARS"
+     "currency_id": "ARS",
+     "concept": "testConcept"
      }
      */
     
@@ -48,10 +50,10 @@ open class DiscountCoupon: NSObject {
     
     func toJSON() -> [String:Any] {
         var obj:[String:Any] = [
-            "id" : self._id,
-            "percent_off" : self.percent_off,
-            "amount_off" : self.amount_off,
-            "coupon_amount" : self.coupon_amount
+            "id" : Int(self._id),
+            "percent_off" : Int(self.percent_off),
+            "amount_off" : Int(self.amount_off),
+            "coupon_amount" : Int(self.coupon_amount)
         ]
         
         if let name = self.name {
