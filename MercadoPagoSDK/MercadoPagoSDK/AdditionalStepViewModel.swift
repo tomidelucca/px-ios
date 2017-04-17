@@ -134,7 +134,7 @@ open class AdditionalStepViewModel : NSObject{
     
     func getAmountDetailCellHeight(indexPath: IndexPath) -> CGFloat{
         if isDiscountCellFor(indexPath: indexPath) {
-            return 84
+            return DiscountBodyCell.HEIGHT
         } else if isTotalCellFor(indexPath: indexPath) {
             return 42
         }
