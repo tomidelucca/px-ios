@@ -290,6 +290,16 @@
 &quot;percent_off&quot;: &quot;0&quot;
 }
 </string>
+	<key>DiscountCoupon</key>
+	<string>{
+     &quot;id&quot;: 12572,
+     &quot;name&quot;: &quot;testChoOFF&quot;,
+     &quot;percent_off&quot;: 10,
+     &quot;amount_off&quot;: 0,
+     &quot;coupon_amount&quot;: 11,
+     &quot;currency_id&quot;: &quot;ARS&quot;,
+     &quot;concept&quot;: &quot;testConcept&quot;
+     }</string>
 	<key>FeesDetail</key>
 	<string>{
 &quot;type&quot;: &quot;type&quot;,
