@@ -12,7 +12,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     
     var url : URL?
     var name : String?
-    var navBarTitle : String?
+    var navBarTitle : String!
     @IBOutlet weak var webView: UIWebView!
     init( url : URL, screenName: String, navigationBarTitle: String) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
@@ -42,7 +42,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
 
 
     override func getNavigationBarTitle() -> String {
-        return navBarTitle!
+        return navBarTitle
     }
     
     override func didReceiveMemoryWarning() {
