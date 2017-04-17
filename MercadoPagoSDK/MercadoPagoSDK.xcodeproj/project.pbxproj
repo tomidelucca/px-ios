@@ -2153,6 +2153,7 @@
 				76EC47EA1C8614B20086FA53 /* PaymentTest.swift in Sources */,
 				7622E33B1DF5F1D700490C4E /* ConfirmPaymentTableViewCell.swift in Sources */,
 				7656F5251C9726A60076A14D /* PaymentMethodSearchServiceTest.swift in Sources */,
+				76FB70641E77100C008935DF /* MPCheckoutTestAction.swift in Sources */,
 				7622E3341DF5F04C00490C4E /* RejectedTableViewCell.swift in Sources */,
 				0FC4FC221B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				76EC47EE1C8615330086FA53 /* PaymentTypeTest.swift in Sources */,
