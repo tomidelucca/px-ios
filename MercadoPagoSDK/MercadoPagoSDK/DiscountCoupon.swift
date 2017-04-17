@@ -77,7 +77,7 @@ open class DiscountCoupon: NSObject {
             return nil
         }
         if json["name"] != nil && !(json["name"]! is NSNull) {
-            discount.name = json["name"] as! String
+            discount.name = json["name"] as? String
         }
         if json["percent_off"] != nil && !(json["percent_off"]! is NSNull) {
             discount.percent_off = String( describing: json["percent_off"]  as! NSNumber)
