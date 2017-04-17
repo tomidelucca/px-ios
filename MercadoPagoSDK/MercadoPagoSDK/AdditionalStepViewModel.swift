@@ -129,7 +129,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func getBankInterestWarningCellHeight() -> CGFloat{
-        return 35
+        return BankInsterestTableViewCell.cellHeight
     }
     
     func getAmountDetailCellHeight(indexPath: IndexPath) -> CGFloat{

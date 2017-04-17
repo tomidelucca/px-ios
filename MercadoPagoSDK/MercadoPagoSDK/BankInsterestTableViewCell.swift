@@ -12,6 +12,8 @@ class BankInsterestTableViewCell: UITableViewCell {
 
     @IBOutlet weak var mainLabel: UILabel!
     
+    static let cellHeight: Int = 35
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
