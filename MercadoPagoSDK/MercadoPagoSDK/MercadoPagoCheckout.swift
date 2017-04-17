@@ -656,17 +656,6 @@ open class MercadoPagoCheckout: NSObject {
         self.currentLoadingView = vcLoading
     }
     
-    private func pushRootLoading() {
-        let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = MercadoPagoCheckoutViewModel.decorationPreference.baseColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: MercadoPagoCheckoutViewModel.decorationPreference.baseColor)
-        
-        vcLoading.view.addSubview(loadingInstance)
-        loadingInstance.bringSubview(toFront: vcLoading.view)
-        self.rootViewController = vcLoading
-        self.pushViewController(viewController : self.rootViewController!, animated: true)
-    }
-    
     private func pushViewController(viewController: UIViewController,
                                     animated: Bool,
                                     completion : (() -> Swift.Void)? = nil) {
