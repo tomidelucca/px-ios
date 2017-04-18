@@ -26,7 +26,7 @@ class RejectedTableViewCell: UITableViewCell {
         self.selectionStyle = .none
     }
     
-    func fillCell (paymentResult: PaymentResult){
+    func fillCell (paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference){
         
         if paymentResult.status == "rejected" {
             
@@ -45,34 +45,35 @@ class RejectedTableViewCell: UITableViewCell {
                 let title = (paymentResult.statusDetail + "_subtitle_" + paymentTypeId!)
                 
                 if !title.existsLocalized() {
-                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTitleDisable() {
+                    if paymentResultScreenPreference.isRejectedContentTitleDisable() {
                         self.title.text = ""
                         self .titleSubtitleCoinstraint.constant = 0
-                    } else if String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
-                        self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()
+                    } else if String.isNullOrEmpty(paymentResultScreenPreference.getRejectedContetTitle()) {
+                        self.title.text = paymentResultScreenPreference.getRejectedContetTitle()
                     }
                     
-                    if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTextDisable() {
+                    if paymentResultScreenPreference.isRejectedContentTextDisable() {
                         self.subtitile.text = ""
                         self .titleSubtitleCoinstraint.constant = 0
-                    } else if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()) {
-                        self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContentText()
+                    } else if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedContentText()) {
+                        self.subtitile.text = paymentResultScreenPreference.getRejectedContentText()
                     }
 
                 } else {
-                    self.subtitile.text = title.localized
+                    let paymentMethodName = paymentResult.paymentData!.paymentMethod.name.localized
+                    self.subtitile.text = (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
                 }
             }
         } else if paymentResult.status == "in_process" {
-            self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContetTitle()
+            self.title.text = paymentResultScreenPreference.getPendingContetTitle()
             
-            if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingContentTextDisable() {
+            if paymentResultScreenPreference.isPendingContentTextDisable() {
                 self.subtitile.text = ""
                 self .titleSubtitleCoinstraint.constant = 0
                 
             } else {
-                if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()) {
-                    self.subtitile.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingContentText()
+                if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContentText()) {
+                    self.subtitile.text = paymentResultScreenPreference.getPendingContentText()
                     
                 } else if paymentResult.statusDetail == "pending_contingency"{
                     self.subtitile.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized

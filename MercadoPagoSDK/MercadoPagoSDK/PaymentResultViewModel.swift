@@ -14,10 +14,13 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     var callback: ( _ status : PaymentResult.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
     
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void) {
+    var paymentResultScreenPreference = PaymentResultScreenPreference()
+    
+    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status : PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         self.paymentResult = paymentResult
         self.callback = callback
         self.checkoutPreference = checkoutPreference
+        self.paymentResultScreenPreference = paymentResultScreenPreference
     }
     open func methodId() -> String!{
         return paymentResult.paymentData?.paymentMethod._id ?? ""
@@ -44,7 +47,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     }
     
     func getColor() -> UIColor{
-        if let color = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.statusBackgroundColor {
+        if let color = paymentResultScreenPreference.statusBackgroundColor {
             return color;
         } else if approved() {
             return UIColor.px_greenCongrats()
@@ -141,7 +144,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         //approved case
         let precondition = indexPath.section == 2 && approved()
         //if row at index 0 exists and approved body is not disabled, row 0 should display approved body
-        let case1 = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+        let case1 = !paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
         return precondition && case1
     }
     
@@ -149,7 +152,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         //approved case
         let precondition = indexPath.section == 2 && approved()
         //if row at index 0 exists and approved body is disabled, row 0 should display email row
-        let case1 = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
+        let case1 = paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() && indexPath.row == 0;
         //if row at index 1 exists, row 1 should display email row
         let case2 = indexPath.row == 1;
         return precondition && (case1 || case2)
@@ -198,11 +201,11 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
             return numberOfCustomSubHeaderCells()
             
         } else if isSecondaryExitButtonCellFor(indexPath: IndexPath(row: 0, section: section)){
-            if approved() && MercadoPagoCheckoutViewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
+            if approved() && paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
                 return 1
-            } else if inProcess() && !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
+            } else if inProcess() && !paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
                 return 1
-            } else if rejected() && !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
+            } else if rejected() && !paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
                 return 1
             }
             return 0
@@ -212,29 +215,29 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
     
     func numberOfCellInBody() -> Int {
         if approved() {
-            let approvedBodyAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0;
+            let approvedBodyAdd = !paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0;
             let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0;
             return approvedBodyAdd + emailCellAdd;
             
         } else {
             let callForAuthAdd = callForAuth() ? 1 : 0;
-            let selectAnotherCellAdd = !MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
+            let selectAnotherCellAdd = !paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
             return callForAuthAdd + selectAnotherCellAdd;
         }
     }
     
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(PaymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
-            return PaymentResultScreenPreference.pendingAdditionalInfoCells.count
-        } else if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
-            return PaymentResultScreenPreference.approvedAdditionalInfoCells.count
+        if !Array.isNullOrEmpty(paymentResultScreenPreference.pendingAdditionalInfoCells) && inProcess(){
+            return paymentResultScreenPreference.pendingAdditionalInfoCells.count
+        } else if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedAdditionalInfoCells) && approved() {
+            return paymentResultScreenPreference.approvedAdditionalInfoCells.count
         }
         return 0
     }
     
     func numberOfCustomSubHeaderCells() -> Int {
-        if !Array.isNullOrEmpty(PaymentResultScreenPreference.approvedSubHeaderCells) && approved() {
-            return PaymentResultScreenPreference.approvedSubHeaderCells.count
+        if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedSubHeaderCells) && approved() {
+            return paymentResultScreenPreference.approvedSubHeaderCells.count
         }
         return 0
     }

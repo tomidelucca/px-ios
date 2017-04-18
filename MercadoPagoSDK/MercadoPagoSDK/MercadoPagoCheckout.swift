@@ -457,7 +457,7 @@ open class MercadoPagoCheckout: NSObject {
 
         let congratsViewController : UIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, callback: { (state : PaymentResult.CongratsState) in
+            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { (state : PaymentResult.CongratsState) in
                 if state == PaymentResult.CongratsState.call_FOR_AUTH {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForClone()
@@ -466,16 +466,16 @@ open class MercadoPagoCheckout: NSObject {
                     self.navigationController.setNavigationBarHidden(false, animated: false)
                     self.viewModel.prepareForNewSelection()
                     self.executeNextStep()
-
+                    
                 }else{
                     self.finish()
                 }
-
+                
             })
         } else {
             congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!,  callback: { (state :PaymentResult.CongratsState) in
                 self.finish()
-            })
+            }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         }
         self.pushViewController(viewController : congratsViewController, animated: true)
     }
@@ -502,13 +502,9 @@ open class MercadoPagoCheckout: NSObject {
     }
     
     func finish(){
-        
-        ReviewScreenPreference.clear()
-        PaymentResultScreenPreference.clear()
         DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
         
         removeRootLoading()
-        
         
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
@@ -570,17 +566,6 @@ open class MercadoPagoCheckout: NSObject {
         self.currentLoadingView = vcLoading
     }
     
-    private func pushRootLoading() {
-        let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = MercadoPagoCheckoutViewModel.decorationPreference.baseColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: MercadoPagoCheckoutViewModel.decorationPreference.baseColor)
-        
-        vcLoading.view.addSubview(loadingInstance)
-        loadingInstance.bringSubview(toFront: vcLoading.view)
-        self.rootViewController = vcLoading
-        self.pushViewController(viewController : self.rootViewController!, animated: true)
-    }
-    
     private func pushViewController(viewController: UIViewController,
                                     animated: Bool,
                                     completion : (() -> Swift.Void)? = nil) {
@@ -613,12 +598,12 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.flowPreference = flowPreference
     }
     
-    open static func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
-        MercadoPagoCheckoutViewModel.paymentResultScreenPreference = paymentResultScreenPreference
+    open func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference){
+        self.viewModel.paymentResultScreenPreference = paymentResultScreenPreference
     }
     
-    open static func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
-        MercadoPagoCheckoutViewModel.reviewScreenPreference = reviewScreenPreference
+    open func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference){
+        self.viewModel.reviewScreenPreference = reviewScreenPreference
     }
     
     open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData : PaymentData) -> Void) {

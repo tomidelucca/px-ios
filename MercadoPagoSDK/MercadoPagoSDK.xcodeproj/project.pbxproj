@@ -505,6 +505,7 @@
 		FC114D6C1E6DECEF00640196 /* Cellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC114D6A1E6DECEF00640196 /* Cellable.swift */; };
 		FC190A381E53879F003ACBE0 /* IdentificationTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */; };
 		FC190A391E53879F003ACBE0 /* IdentificationTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */; };
+		FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */; };
 		FCAA97001E6A0E0D000612F6 /* AdditionalStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAA96FF1E6A0E0D000612F6 /* AdditionalStepViewModel.swift */; };
 		FCAA97011E6A0E0D000612F6 /* AdditionalStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAA96FF1E6A0E0D000612F6 /* AdditionalStepViewModel.swift */; };
 		FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBF132C1E71D6A60092B756 /* Updatable.swift */; };
@@ -844,6 +845,7 @@
 		FC1841CC1E7722E100EEBD18 /* es-UY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-UY"; path = "es-UY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC1841CD1E77238500EEBD18 /* es-VE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-VE"; path = "es-VE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IdentificationTypes.plist; path = MercadoPagoSDK/IdentificationTypes.plist; sourceTree = "<group>"; };
+		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC814BF31E54BEE100475474 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-PE"; path = "es-PE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FCAA96FF1E6A0E0D000612F6 /* AdditionalStepViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewModel.swift; sourceTree = "<group>"; };
 		FCBF132C1E71D6A60092B756 /* Updatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updatable.swift; sourceTree = "<group>"; };
@@ -1519,6 +1521,7 @@
 		7672545C1C7CB12800EB5EBA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */,
 				767C9CD51E266C0600BB4662 /* MPPaymentTest.swift */,
 				76EC47C31C85DCA10086FA53 /* AddressTest.swift */,
 				76EC47C51C85E1EA0086FA53 /* BinTest.swift */,
@@ -1538,10 +1541,10 @@
 				76EC47DD1C85E9CC0086FA53 /* IssuerTest.swift */,
 				76EC47DF1C85E9DD0086FA53 /* ItemTest.swift */,
 				76EC47E11C85ED9B0086FA53 /* MerchantPaymentTest.swift */,
-				76EC47E31C85F01D0086FA53 /* OrderTest.swift */,
 				76EC47E51C85F3070086FA53 /* PayerTest.swift */,
 				76EC47E71C8612C40086FA53 /* PayerCostTest.swift */,
 				76EC48031C862AD70086FA53 /* PaymentMethodSearchitemTest.swift */,
+				76EC47E31C85F01D0086FA53 /* OrderTest.swift */,
 				76EC48011C862ABC0086FA53 /* PaymentMethodSearchTest.swift */,
 				76EC47EB1C8614CA0086FA53 /* PaymentMethodTest.swift */,
 				76EC47E91C8614B20086FA53 /* PaymentTest.swift */,
@@ -2184,9 +2187,11 @@
 				76EC47EA1C8614B20086FA53 /* PaymentTest.swift in Sources */,
 				7622E33B1DF5F1D700490C4E /* ConfirmPaymentTableViewCell.swift in Sources */,
 				7656F5251C9726A60076A14D /* PaymentMethodSearchServiceTest.swift in Sources */,
+				76FB70641E77100C008935DF /* MPCheckoutTestAction.swift in Sources */,
 				7622E3341DF5F04C00490C4E /* RejectedTableViewCell.swift in Sources */,
 				0FC4FC221B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				76EC47EE1C8615330086FA53 /* PaymentTypeTest.swift in Sources */,
+				FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */,
 				15B8B1B11E71DE950065DF50 /* DiscountBodyCell.swift in Sources */,
 				769EC35C1E130D860054E940 /* CardViewModelManagerTest.swift in Sources */,
 				15D79A0B1CA9B6B900623A84 /* MPButton.swift in Sources */,
