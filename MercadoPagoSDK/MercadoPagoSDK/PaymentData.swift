@@ -14,7 +14,7 @@ public class PaymentData: NSObject {
     public var issuer : Issuer?
     public var payerCost : PayerCost?
     public var token : Token?
-    public var payer : Payer!
+    public var payer = Payer()
     public var transactionDetails : TransactionDetails?
     public var discount : DiscountCoupon?
     
