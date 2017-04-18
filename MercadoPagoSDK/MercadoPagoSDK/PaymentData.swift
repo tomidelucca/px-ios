@@ -14,7 +14,7 @@ public class PaymentData: NSObject {
     public var issuer : Issuer?
     public var payerCost : PayerCost?
     public var token : Token?
-    public var payer = Payer()
+    public var payer : Payer!
     public var transactionDetails : TransactionDetails?
     public var discount : DiscountCoupon?
     
@@ -69,7 +69,8 @@ public class PaymentData: NSObject {
     
     func toJSON() -> [String:Any] {
        var obj:[String:Any] = [
-            "payment_method" : self.paymentMethod.toJSON()
+            "payment_method" : self.paymentMethod.toJSON(),
+            "payer" : payer.toJSON()
        ]
         
         if let payerCost = self.payerCost {
@@ -87,10 +88,7 @@ public class PaymentData: NSObject {
         if let discount = self.discount {
             obj["discount"] = discount.toJSON()
         }
-      
-        if let payer = self.payer {
-            obj["payer"] = payer.toJSON()
-        }
+        
         return obj
     }
 
