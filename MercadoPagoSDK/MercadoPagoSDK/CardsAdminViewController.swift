@@ -87,7 +87,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         collectionSearch.addSubview(upperView)
         
         if self.title == nil || self.title!.isEmpty {
-            self.title = "Administrador de tarjetas".localized
+            self.title = self.viewModel.titleScreen
         }
         
         self.registerAllCells()
@@ -110,37 +110,16 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
         self.collectionSearch.allowsSelection = true
         self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
-/*
-        if self.loadingCards {
-            let temporalView = UIView.init(frame: CGRect(x: 0, y: navBarHeigth + statusBarHeigth, width: self.view.frame.size.width, height: self.view.frame.size.height))
-            temporalView.backgroundColor?.withAlphaComponent(0)
-            temporalView.isUserInteractionEnabled = false
-            self.view.addSubview(temporalView)
-        }
-  */
-        
     }
 
     fileprivate func registerAllCells(){
-        
         let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
-        
         let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
-
-        
-    }
-    override func getNavigationBarTitle() -> String {
-        if self.titleSectionReference != nil {
-            self.titleSectionReference.title.text = ""
-        }
-        return "Administrador de tarjetas".localized
     }
     
     
@@ -151,16 +130,9 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         return 2
     }
 
-    func isHeaderSection(section: Int) -> Bool {
-        return section == 0
-    }
-    func isCardsSection(section: Int) -> Bool {
-        
-        return section == 1
-    }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isCardsSection(section: indexPath.section) {
+        if self.viewModel.isCardsSection(section: indexPath.section) {
             collectionView.deselectItem(at: indexPath, animated: true)
             if let cards = self.viewModel.cards , let callback = self.callback {
                 if cards.count > indexPath.row {
@@ -177,16 +149,12 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     
     public func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
-        
         if (loadingCards) {
             return 0
         }
-        
-        if (isHeaderSection(section: section)){
+        if (self.viewModel.isHeaderSection(section: section)){
             return 1
         }
- 
-
         return self.viewModel.numberOfOptions()
         
     }
@@ -201,11 +169,11 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
                                                           
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
-             cell.title.text = "Administrador de tarjetas".localized
+             cell.title.text = self.viewModel.titleScreen
             self.titleSectionReference = cell
             titleCell = cell
             return cell
-        } else if isCardsSection(section: indexPath.section){
+        } else if self.viewModel.isCardsSection(section: indexPath.section){
             if let cards =  self.viewModel.cards {
                 if cards.count > indexPath.row {
                     cell.fillCell(drawablePaymentOption: cards[indexPath.row])
@@ -223,9 +191,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         return cell
         
     }
-    fileprivate let itemsPerRow: CGFloat = 2
     
-    var sectionHeight : CGSize?
     
     override func scrollPositionToShowNavBar () -> CGFloat {
         return titleCellHeight - navBarHeigth - statusBarHeigth
@@ -239,60 +205,14 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         let availableWidth = view.frame.width - paddingSpace
         
         titleCellHeight = 82
-        if isHeaderSection(section: indexPath.section) {
+        if self.viewModel.isHeaderSection(section: indexPath.section) {
             return CGSize(width : view.frame.width, height : titleCellHeight)
         }
-        let widthPerItem = availableWidth / itemsPerRow
-        return CGSize(width: widthPerItem, height: maxHegithRow(indexPath:indexPath)  )
+        let widthPerItem = availableWidth / self.viewModel.itemsPerRow
+        return CGSize(width: widthPerItem, height: self.viewModel.maxHegithRow(indexPath:indexPath)  )
     }
     
-    
-    private func maxHegithRow(indexPath: IndexPath) -> CGFloat{
-        guard let cards = self.viewModel.cards else {
-            return 0
-        }
-        return self.calculateHeight(indexPath: indexPath, numberOfCells: cards.count)
-    }
-    
-    private func calculateHeight(indexPath : IndexPath, numberOfCells : Int) -> CGFloat {
-        if numberOfCells == 0 {
-            return 0
-        }
-        
-        let section : Int
-        let row = indexPath.row
-        if row % 2 == 1{
-            section = (row - 1) / 2
-        }else{
-            section = row / 2
-        }
-        let index1 = (section  * 2)
-        let index2 = (section  * 2) + 1
-        
-        if index1 + 1 > numberOfCells {
-            return 0
-        }
-        
-        let height1 = heightOfItem(indexItem: index1)
-        
-        if index2 + 1 > numberOfCells {
-            return height1
-        }
-        
-        let height2 = heightOfItem(indexItem: index2)
-        
-        
-        return height1 > height2 ? height1 : height2
-        
-    }
-    
-    func heightOfItem(indexItem : Int) -> CGFloat {
-        guard let cards = self.viewModel.cards else {
-            return 0
-        }
-        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : cards[indexItem])
-    }
-    
+
     
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
@@ -329,7 +249,6 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
                 self.collectionSearch.reloadData()
             }, failure: { (error: NSError?) -> Void in
                  self.hideLoading()
-                print(error?.description)
             })
         }
     }
@@ -338,9 +257,16 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
         return { Void -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
-                self.titleSectionReference.title.text = "Administrador de tarjetas".localized
+                self.titleSectionReference.title.text = self.viewModel.titleScreen
             }
         }
+    }
+    
+    override func getNavigationBarTitle() -> String {
+        if self.titleSectionReference != nil {
+            self.titleSectionReference.title.text = ""
+        }
+        return self.viewModel.titleScreen
     }
     
 }
@@ -349,18 +275,19 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
 class CardsAdminViewModel : NSObject {
     
     var cards : [Card]?
-    var callback : ((_ paymentMethod: PaymentMethod, _ token:Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
-    var callbackCancel : ((Void) -> Void)? = nil
     var customerId : String?
     var extraOptionTitle : String?
+    var titleScreen = "¿Con qué tarjeta?".localized
     
-    init(cards : [Card]? = nil,  extraOptionTitle : String? = nil, callbackCancel : ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil){
+    init(cards : [Card]? = nil,  extraOptionTitle : String? = nil){
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
     }
+    
     func shouldGetCustomerCardsInfo() -> Bool {
         return cards == nil
     }
+    
     func numberOfOptions() -> Int {
         if let _ = self.extraOptionTitle {
             if let cards = cards{
@@ -377,7 +304,69 @@ class CardsAdminViewModel : NSObject {
         }
     }
     
+    func setTitle(title : String){
+        self.titleScreen = title
+    }
     
+
+
+    func calculateHeight(indexPath : IndexPath, numberOfCells : Int) -> CGFloat {
+        if numberOfCells == 0 {
+            return 0
+        }
+        
+        let section : Int
+        let row = indexPath.row
+        if row % 2 == 1{
+            section = (row - 1) / 2
+        }else{
+            section = row / 2
+        }
+        let index1 = (section  * 2)
+        let index2 = (section  * 2) + 1
+        
+        if index1 + 1 > numberOfCells {
+            return 0
+        }
+        
+        let height1 = heightOfItem(indexItem: index1)
+        
+        if index2 + 1 > numberOfCells {
+            return height1
+        }
+        
+        let height2 = heightOfItem(indexItem: index2)
+        
+        
+        return height1 > height2 ? height1 : height2
+        
+    }
+    
+    func isHeaderSection(section: Int) -> Bool {
+        return section == 0
+    }
+    func isCardsSection(section: Int) -> Bool {
+        
+        return section == 1
+    }
+    fileprivate let itemsPerRow: CGFloat = 2
+    
+    var sectionHeight : CGSize?
+    
+    func maxHegithRow(indexPath: IndexPath) -> CGFloat{
+        guard let cards = self.cards else {
+            return 0
+        }
+        return self.calculateHeight(indexPath: indexPath, numberOfCells: cards.count)
+    }
+    
+    
+    func heightOfItem(indexItem : Int) -> CGFloat {
+        guard let cards = self.cards else {
+            return 0
+        }
+        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : cards[indexItem])
+    }
     
 }
 
