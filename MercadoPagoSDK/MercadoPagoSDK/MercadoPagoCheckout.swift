@@ -91,6 +91,7 @@ open class MercadoPagoCheckout: NSObject {
         MPServicesBuilder.getPreference(self.viewModel.checkoutPreference._id, baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {(checkoutPreference : CheckoutPreference) -> Void in
             self.viewModel.checkoutPreference = checkoutPreference
             self.viewModel.paymentData.payer = checkoutPreference.getPayer()
+            self.dismissLoading()
             self.executeNextStep()
             
         }, failure: {(error : NSError) -> Void in
@@ -150,7 +151,6 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.rootVC = false
             self.executeNextStep()
         })
-        self.dismissLoading()
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
     }
     
