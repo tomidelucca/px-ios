@@ -121,6 +121,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                     
                 }else{
                     let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+                    cardSectionCell.loadCellView(view: nil)
                     cardSectionCell.backgroundColor = UIColor.primaryColor()
                     return cardSectionCell
                 }
@@ -202,7 +203,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                         if 44/tableView.contentOffset.y < 0.265 && !scrollingDown{
                             card.fadeCard()
                         } else{
-                            card.containerView.alpha = 44/tableView.contentOffset.y;
+                            if let container = card.containerView{
+                                container.alpha = 44/tableView.contentOffset.y;
+                            }
                         }
                     }
                 }
