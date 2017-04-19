@@ -21,6 +21,7 @@ class RejectedTableViewCell: UITableViewCell {
         // Initialization code
         self.title.text = "¿Qué puedo hacer?".localized
         self.title.font = Utils.getFont(size: self.title.font.pointSize)
+        self.title.numberOfLines = 0
         self.subtitile.font = Utils.getFont(size: self.subtitile.font.pointSize)
         self.subtitile.text = ""
         self.selectionStyle = .none
@@ -48,7 +49,7 @@ class RejectedTableViewCell: UITableViewCell {
                     if MercadoPagoCheckoutViewModel.paymentResultScreenPreference.isRejectedContentTitleDisable() {
                         self.title.text = ""
                         self .titleSubtitleCoinstraint.constant = 0
-                    } else if String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
+                    } else if !String.isNullOrEmpty(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()) {
                         self.title.text = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedContetTitle()
                     }
                     
