@@ -103,10 +103,12 @@ open class AdditionalStepViewModel : NSObject{
         case Sections.title.rawValue:
             return getTitleCellHeight()
         case Sections.card.rawValue:
-            if indexPath.row == 1{
+            if isCardCellFor(indexPath: indexPath) {
+                return self.getCardCellHeight()
+            } else if isBankInterestCellFor(indexPath: indexPath) {
                 return self.getBankInterestWarningCellHeight()
             }
-            return self.getCardSectionCellHeight()
+            return defaultRowCellHeight
         case Sections.amountDetail.rawValue:
             return self.getAmountDetailCellHeight(indexPath: indexPath)
         case Sections.body.rawValue:
@@ -124,7 +126,7 @@ open class AdditionalStepViewModel : NSObject{
         return defaultTitleCellHeight
     }
     
-    func getCardSectionCellHeight() -> CGFloat{
+    func getCardCellHeight() -> CGFloat{
         return UIScreen.main.bounds.width*0.50
     }
     
@@ -153,12 +155,12 @@ open class AdditionalStepViewModel : NSObject{
         return indexPath.section == Sections.title.rawValue
     }
     
-    func isCardSectionFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.card.rawValue
+    func isCardCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue
     }
     
-    func isCardCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.card.rawValue
+    func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
     }
     
     public enum CardSectionCells : Int {
