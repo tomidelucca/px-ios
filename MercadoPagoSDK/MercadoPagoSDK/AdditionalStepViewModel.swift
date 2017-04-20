@@ -160,7 +160,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
+        return false
     }
     
     public enum CardSectionCells : Int {
@@ -207,6 +207,10 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
     override func showDiscountSection() -> Bool{
         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
+    }
+    
+    override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
     }
     
 }
