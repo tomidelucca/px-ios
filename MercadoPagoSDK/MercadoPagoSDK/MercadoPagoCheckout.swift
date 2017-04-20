@@ -220,41 +220,8 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
     
-    func entityTypesFinder(inDict: NSDictionary,forKey: String) -> [EntityType]? {
-        
-        if let siteETsDictionary = inDict.value(forKey: forKey) as? NSDictionary {
-            let entityTypesKeys = siteETsDictionary.allKeys
-            var entityTypes = [EntityType]()
-            
-            for ET in entityTypesKeys{
-                let entityType = EntityType()
-                entityType._id = ET as! String
-                entityType.name = (siteETsDictionary.value(forKey: ET as! String) as! String!).localized
-                
-                entityTypes.append(entityType)
-            }
-            
-            return entityTypes
-        }
-        
-        return nil
-    }
-    
-    func getEntityTypes() -> [EntityType]{
-        let path = MercadoPago.getBundle()!.path(forResource: "EntityTypes", ofType: "plist")
-        let dictET = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
-        
-        if let siteETs = entityTypesFinder(inDict: dictET!, forKey: site) {
-            return siteETs
-        } else {
-           let siteETs = entityTypesFinder(inDict: dictET!, forKey: "default")
-            return siteETs!
-        }
-    }
-    
     func collectEntityTypes(){
-        let entityTypes = getEntityTypes()
+        let entityTypes = viewModel.getEntityTypes()
         
         self.viewModel.entityTypes = entityTypes
         
