@@ -179,12 +179,11 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         } else if self.viewModel.isTotalCellFor(indexPath: indexPath){
             return self.getPurchaseSimpleDetailCell(indexPath: indexPath, title : "Total".localized, amount : self.viewModel.getTotalAmount(), addSeparatorLine: false)
         
-        } else if self.viewModel.isConfirmAdditionalInfoFor(indexPath: indexPath){
-            if self.viewModel.needUnlockCardCell() {
-                return self.getUnlockCardCell(indexPath: indexPath)
-            } else {
-                return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
-            }
+        } else if self.viewModel.isPayerCostAdditionalInfoFor(indexPath: indexPath){
+            return self.getConfirmAddtionalInfo(indexPath: indexPath, payerCost: self.viewModel.paymentData.payerCost)
+
+        } else if self.viewModel.isUnlockCardCellFor(indexPath: indexPath){
+            return self.getUnlockCardCell(indexPath: indexPath)
             
         } else if self.viewModel.isConfirmButtonCellFor(indexPath: indexPath){
             return self.getConfirmPaymentButtonCell(indexPath: indexPath)
@@ -595,13 +594,12 @@ open class CheckoutViewModel: NSObject {
         } else if self.isTotalCellFor(indexPath: indexPath) {
             return PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT
             
-        } else if self.isConfirmAdditionalInfoFor(indexPath: indexPath) {
-            if self.needUnlockCardCell() {
-                return UnlockCardTableViewCell.getCellHeight()
-            } else {
-                return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
-            }
-        
+        } else if self.isPayerCostAdditionalInfoFor(indexPath: indexPath) {
+            return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
+            
+        } else if self.isUnlockCardCellFor(indexPath: indexPath) {
+            return UnlockCardTableViewCell.getCellHeight()
+            
         } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
             return ConfirmPaymentTableViewCell.ROW_HEIGHT
             
@@ -752,9 +750,14 @@ open class CheckoutViewModel: NSObject {
         return indexPath.section == 2
     }
     
-    func isConfirmAdditionalInfoFor(indexPath: IndexPath) -> Bool {
+    func isPayerCostAdditionalInfoFor(indexPath: IndexPath) -> Bool {
         let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
-        return hasPayerCostAddionalInfo() && indexPath.section == 1 && indexPath.row == numberOfRows ||  needUnlockCardCell() && indexPath.section == 1 && indexPath.row == numberOfRows
+        return hasPayerCostAddionalInfo() && indexPath.section == 1 && indexPath.row == numberOfRows
+    }
+    
+    func isUnlockCardCellFor(indexPath: IndexPath) -> Bool {
+        let numberOfRows = numberOfSummaryRows() + (shouldShowTotal() ? 1 : 0) + (shouldShowInstallmentSummary() ? 1 : 0)
+        return needUnlockCardCell() && indexPath.section == 1 && indexPath.row == numberOfRows
     }
     
     func isAddtionalCustomCellsFor(indexPath: IndexPath) -> Bool {
