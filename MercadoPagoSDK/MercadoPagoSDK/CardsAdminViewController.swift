@@ -131,14 +131,10 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.viewModel.isCardsSection(section: indexPath.section) {
             collectionView.deselectItem(at: indexPath, animated: true)
-            if let cards = self.viewModel.cards , let callback = self.callback {
-                if cards.count > indexPath.row {
-                    let card = cards[indexPath.row]
-                    callback(card)
-                }else {
-                    callback(nil)
-                }
-            }else{
+            if self.viewModel.isCardItemFor(indexPath: indexPath){
+                let card = self.viewModel.cards![indexPath.row]
+                callback(card)
+            }else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath){
                 callback(nil)
             }
         }
@@ -168,10 +164,6 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
             cell.fillCell(drawablePaymentOption: self.viewModel.cards![indexPath.row])
         }else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath){
             cell.fillCell(optionText:self.viewModel.extraOptionTitle!)
-        }else {
-            if let extraOptionTitle = self.viewModel.extraOptionTitle {
-                cell.fillCell(optionText:extraOptionTitle)
-            }
         }
 
         return cell
