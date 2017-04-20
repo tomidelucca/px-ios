@@ -36,6 +36,9 @@ class RejectedTableViewCell: UITableViewCell {
                 self.title.text = title.localized
                 self.subtitile.text = ""
             } else {
+                if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+                    paymentResult.statusDetail = "cc_rejected_bad_filled_other"
+                }
                 
                 if let paymentTypeId = paymentResult.paymentData?.paymentMethod.paymentTypeId{
                     self.paymentTypeId = paymentTypeId
