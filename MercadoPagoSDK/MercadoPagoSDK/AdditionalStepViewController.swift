@@ -107,23 +107,17 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
         } else if viewModel.isCardCellFor(indexPath: indexPath) {
             
+            let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+            cardSectionCell.selectionStyle = .none
+            cardSectionCell.backgroundColor = UIColor.primaryColor()
+            
             if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
                 cardSectionCell.loadCellView(view: cellView as? UIView)
-                cardSectionCell.selectionStyle = .none
                 cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-                
-                return cardSectionCell
-                
-            }else{
-                
-                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                cardSectionCell.loadCellView(view: nil)
-                cardSectionCell.backgroundColor = UIColor.primaryColor()
-                return cardSectionCell
             }
             
+            return cardSectionCell
+
         } else if viewModel.isBankInterestCellFor(indexPath: indexPath){
             
                 let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
