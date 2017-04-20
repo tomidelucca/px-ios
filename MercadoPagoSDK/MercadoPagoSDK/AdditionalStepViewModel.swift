@@ -103,12 +103,14 @@ open class AdditionalStepViewModel : NSObject{
         case Sections.title.rawValue:
             return getTitleCellHeight()
         case Sections.card.rawValue:
-            if isCardCellFor(indexPath: indexPath) {
-                return self.getCardCellHeight()
-            } else if isBankInterestCellFor(indexPath: indexPath) {
-                return self.getBankInterestWarningCellHeight()
+            if self.showCardSection() {
+                if isCardCellFor(indexPath: indexPath) {
+                    return self.getCardCellHeight()
+                } else if isBankInterestCellFor(indexPath: indexPath) {
+                    return self.getBankInterestWarningCellHeight()
+                }
             }
-            return defaultRowCellHeight
+            return 0
         case Sections.amountDetail.rawValue:
             return self.getAmountDetailCellHeight(indexPath: indexPath)
         case Sections.body.rawValue:
