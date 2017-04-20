@@ -148,6 +148,7 @@
 		1563DCAA1E9C11CB00A7E5C8 /* CardsAdminViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1563DCA61E9C11CB00A7E5C8 /* CardsAdminViewController.xib */; };
 		1565B1311CBFD7F100181998 /* GuessingFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565B1301CBFD7F100181998 /* GuessingFormTest.swift */; };
 		156F25B31EA927430073D3AA /* CardsAdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F25B21EA927430073D3AA /* CardsAdminViewModel.swift */; };
+		156F25B41EA933040073D3AA /* CardsAdminViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F25B21EA927430073D3AA /* CardsAdminViewModel.swift */; };
 		157420F61DF881770041171E /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
 		157420F71DF881770041171E /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
 		157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */; };
@@ -2181,6 +2182,7 @@
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				766012E81CEBA19700897F9D /* ErrorViewController.swift in Sources */,
+				156F25B41EA933040073D3AA /* CardsAdminViewModel.swift in Sources */,
 				76EC47CE1C85E4930086FA53 /* CardNumberTest.swift in Sources */,
 				76EC47E01C85E9DD0086FA53 /* ItemTest.swift in Sources */,
 				76EC47D81C85E8740086FA53 /* FeedDetailTest.swift in Sources */,
