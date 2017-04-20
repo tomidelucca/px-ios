@@ -105,32 +105,30 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             
             return titleCell
             
-        } else if viewModel.isCardSectionFor(indexPath: indexPath) {
+        } else if viewModel.isCardCellFor(indexPath: indexPath) {
             
-            if viewModel.isCardCellFor(indexPath: indexPath) {
-            
-                if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
-                    
-                    let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                    cardSectionCell.loadCellView(view: cellView as! UIView)
-                    cardSectionCell.selectionStyle = .none
-                    cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
-                    cardSectionCell.backgroundColor = UIColor.primaryColor()
-                    
-                    return cardSectionCell
-                    
-                }else{
-                    let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
-                    cardSectionCell.loadCellView(view: nil)
-                    cardSectionCell.backgroundColor = UIColor.primaryColor()
-                    return cardSectionCell
-                }
+            if viewModel.showCardSection(), let cellView = viewModel.getCardSectionView() {
+                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+                cardSectionCell.loadCellView(view: cellView as? UIView)
+                cardSectionCell.selectionStyle = .none
+                cardSectionCell.updateCardSkin(token: self.viewModel.token, paymentMethod: self.viewModel.paymentMethods[0], view: cellView)
+                cardSectionCell.backgroundColor = UIColor.primaryColor()
                 
-            } else {
+                return cardSectionCell
+                
+            }else{
+                
+                let cardSectionCell = tableView.dequeueReusableCell(withIdentifier: "cardNib", for: indexPath as IndexPath) as! AdditionalStepCardTableViewCell
+                cardSectionCell.loadCellView(view: nil)
+                cardSectionCell.backgroundColor = UIColor.primaryColor()
+                return cardSectionCell
+            }
+            
+        } else if viewModel.isBankInterestCellFor(indexPath: indexPath){
+            
                 let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
                 bankInsterestCell.backgroundColor = UIColor.primaryColor()
                 return bankInsterestCell
-        }
             
         } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
             let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
