@@ -146,12 +146,14 @@ open class MercadoPagoCheckout: NSObject {
     func collectPaymentMethods(){
         // Se limpia paymentData antes de ofrecer selección de medio de pago
         self.viewModel.paymentData.clearCollectedData()
+
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { (paymentOptionSelected : PaymentMethodOption) -> Void  in
             self.viewModel.updateCheckoutModel(paymentOptionSelected : paymentOptionSelected)
             self.viewModel.rootVC = false
             self.executeNextStep()
         })
         self.pushViewController(viewController : paymentMethodSelectionStep, animated: true)
+      
     }
     
 
