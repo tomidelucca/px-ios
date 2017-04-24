@@ -494,7 +494,7 @@ class CheckoutViewModelTest : BaseTest {
         XCTAssertTrue(self.instanceWithCoupon!.isTotalCellFor(indexPath: IndexPath(row: 3, section: 1)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 3, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
         
-        XCTAssertTrue(self.instanceWithCoupon!.isConfirmAdditionalInfoFor(indexPath: IndexPath(row: 4, section: 1)))
+        XCTAssertTrue(self.instanceWithCoupon!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 4, section: 1)))
         XCTAssertEqual(self.instanceWithCoupon!.heightForRow(IndexPath(row: 4, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
         
         XCTAssertTrue(self.instanceWithCoupon!.isConfirmButtonCellFor(indexPath: IndexPath(row: 5, section: 1)))
@@ -540,7 +540,7 @@ class CheckoutViewModelTest : BaseTest {
         XCTAssertTrue(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 2, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 1)), PurchaseSimpleDetailTableViewCell.TOTAL_ROW_HEIGHT)
         
-        XCTAssertTrue(self.instance!.isConfirmAdditionalInfoFor(indexPath: IndexPath(row: 3, section: 1)))
+        XCTAssertTrue(self.instance!.isPayerCostAdditionalInfoFor(indexPath: IndexPath(row: 3, section: 1)))
         XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 3, section: 1)), ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT)
         
         XCTAssertTrue(self.instance!.isConfirmButtonCellFor(indexPath: IndexPath(row: 4, section: 1)))
