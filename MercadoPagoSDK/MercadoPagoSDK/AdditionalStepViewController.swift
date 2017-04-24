@@ -141,11 +141,12 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             totalCell.selectionStyle = .none
             return totalCell as UITableViewCell
             
-        } else {
+        } else if viewModel.isBodyCellFor(indexPath: indexPath) {
             let object = self.viewModel.dataSource[indexPath.row]
             let cell = AdditionalStepCellFactory.buildCell(object: object, width: Double(cellWidth), height: Double(viewModel.defaultRowCellHeight))
             return cell
         }
+        return UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

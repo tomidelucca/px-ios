@@ -77,16 +77,20 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func numberOfRowsInSection(section: Int) -> Int {
-        if section == Sections.title.rawValue {
+        switch section {
+        
+        case Sections.title.rawValue:
             return 1
-        } else if section == Sections.card.rawValue {
+        case Sections.card.rawValue:
             var rows: Int = showCardSection() ? 1 : 0
             rows = showBankInsterestCell() ? rows + 1 : rows
-            return rows 
-        } else if section == Sections.amountDetail.rawValue {
+            return rows
+        case Sections.amountDetail.rawValue:
             return showAmountDetailRow() ? 1 : 0
-        } else {
+        case Sections.body.rawValue:
             return numberOfCellsInBody()
+        default:
+            return 0
         }
     }
     
@@ -96,28 +100,22 @@ open class AdditionalStepViewModel : NSObject{
     
     func heightForRowAt(indexPath: IndexPath) -> CGFloat {
         
-        if isDiscountCellFor(indexPath: indexPath) {
-            return DiscountBodyCell.HEIGHT
-        }
-        switch indexPath.section {
-        case Sections.title.rawValue:
+        if isTitleCellFor(indexPath: indexPath){
             return getTitleCellHeight()
-        case Sections.card.rawValue:
-            if self.showCardSection() {
-                if isCardCellFor(indexPath: indexPath) {
-                    return self.getCardCellHeight()
-                } else if isBankInterestCellFor(indexPath: indexPath) {
-                    return self.getBankInterestWarningCellHeight()
-                }
-            }
-            return 0
-        case Sections.amountDetail.rawValue:
+        
+        } else if isCardCellFor(indexPath: indexPath) {
+            return self.getCardCellHeight()
+        
+        } else if isBankInterestCellFor(indexPath: indexPath) {
+            return self.getBankInterestWarningCellHeight()
+        
+        } else if isDiscountCellFor(indexPath: indexPath) || isTotalCellFor(indexPath: indexPath){
             return self.getAmountDetailCellHeight(indexPath: indexPath)
-        case Sections.body.rawValue:
+        
+        } else if isBodyCellFor(indexPath: indexPath) {
             return defaultRowCellHeight
-        default:
-            return 60
         }
+         return 0
     }
     
     func getCardSectionView() -> Updatable?{
@@ -163,6 +161,10 @@ open class AdditionalStepViewModel : NSObject{
     
     func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+    func isBodyCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == Sections.body.rawValue && indexPath.row < numberOfCellsInBody()
     }
     
     public enum CardSectionCells : Int {
@@ -212,7 +214,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
     
     override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue && showBankInsterestCell()
     }
     
 }
