@@ -76,6 +76,10 @@ open class AdditionalStepViewModel : NSObject{
         return screenTitle
     }
     
+    func numberOfSections() -> Int {
+        return 4
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
         switch section {
         

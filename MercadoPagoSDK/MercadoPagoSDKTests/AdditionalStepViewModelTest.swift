@@ -9,8 +9,6 @@
 import XCTest
 @testable import MercadoPagoSDK
 
-
-
 class PayerCostAdditionalStepViewModelTest : BaseTest {
     var instance: PayerCostAdditionalStepViewModel!
     
@@ -24,11 +22,20 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
     
     func testTitle(){
         XCTAssertEqual(self.instance!.getTitle(), "¿En cuántas cuotas?".localized)
+        XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
     
     func testScreenName() {
         XCTAssertEqual(self.instance!.getScreenName(), "PAYER_COST")
     }
+    
+    func testNumberOfSections() {
+        XCTAssertEqual(self.instance!.numberOfSections(), 4)
+    }
+    func testCardSectionView() {
+        XCTAssertTrue(self.instance.getCardSectionView() is CardFrontView)
+    }
+    
     
     func testRowsWithDiscount() {
         /// Screen:
@@ -101,7 +108,7 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 6), 0)
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 6)), 0)
         
-       
+        
         // Title Cell
         XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 0)), 40)
@@ -176,6 +183,82 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         XCTAssertTrue(self.instance!.showPayerCostDescription())
         XCTAssertTrue(self.instance!.isBodyCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 3)), 60)
+        
+    }
+}
+
+class IssuerAdditionalStepViewModelTest : BaseTest {
+    var instance: IssuerAdditionalStepViewModel!
+    
+    override func setUp() {
+        super.setUp()
+        let issuer = MockBuilder.buildIssuer()
+        let cardToken = MockBuilder.buildCardToken()
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        self.instance = IssuerAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethods: [paymentMethod], dataSource: [issuer])
+    }
+    
+    func testTitle(){
+        XCTAssertEqual(self.instance!.getTitle(), "¿Quién emitió tu tarjeta?".localized)
+        XCTAssertEqual(self.instance!.maxFontSize, 24)
+    }
+    
+    func testScreenName() {
+        XCTAssertEqual(self.instance!.getScreenName(), "ISSUER")
+    }
+    
+    func testNumberOfSections() {
+        XCTAssertEqual(self.instance!.numberOfSections(), 4)
+    }
+    
+    func testCardSectionView() {
+        XCTAssertTrue(self.instance.getCardSectionView() is CardFrontView)
+    }
+    
+    func testRows() {
+        /// Screen:
+        /// ¿Cual es tu banco?
+        /// (Tarjeta)
+        /// (Bancos)
+        
+        
+        // Title
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 0), 1)
+        // Card
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 1), 1)
+        // Total
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), 0)
+        // Issuers
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 3), self.instance!.numberOfCellsInBody())
+        
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 6), 0)
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 6)), 0)
+        
+        
+        // Title Cell
+        XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 0)), 40)
+        
+        // Card Cell
+        XCTAssertTrue(self.instance!.isCardCellFor(indexPath: IndexPath(row: 0, section: 1)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 1)), UIScreen.main.bounds.width * 0.50)
+        XCTAssertTrue(self.instance!.showCardSection())
+        XCTAssertFalse(self.instance!.isBankInterestCellFor(indexPath: IndexPath(row: 1, section: 1)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 1, section: 1)), 0)
+        
+        // Total Cell
+        XCTAssertFalse(self.instance!.showAmountDetailRow())
+        XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
+        XCTAssertFalse(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), 42)
+        XCTAssertEqual(self.instance!.getAmountDetailCellHeight(indexPath: IndexPath(row: 0, section: 2)), 0)
+        
+        // Issuers
+        XCTAssertTrue(self.instance!.showPayerCostDescription())
+        XCTAssertTrue(self.instance!.isBodyCellFor(indexPath: IndexPath(row: 0, section: 3)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 3)), 80)
         
     }
 }
