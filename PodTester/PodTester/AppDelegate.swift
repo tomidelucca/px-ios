@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
