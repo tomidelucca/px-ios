@@ -61,7 +61,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func showTotalRow() -> Bool{
-        return totalRowVisible
+        return totalRowVisible && !showDiscountSection()
     }
     
     func showAmountDetailRow() -> Bool {
@@ -160,7 +160,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func isCardCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue
+        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue && showCardSection()
     }
     
     func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
@@ -189,8 +189,8 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
-        super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
+        super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
     
 }
@@ -199,18 +199,8 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, email: email)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
-        self.amount = amount
-        self.token = token
-        self.discount = discount
-        self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
-        self.dataSource = dataSource
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email)
         self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{

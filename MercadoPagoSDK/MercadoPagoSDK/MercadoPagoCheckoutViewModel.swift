@@ -160,18 +160,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
     
     public func issuerViewModel() -> AdditionalStepViewModel{
-        var pms : [PaymentMethod] = []
+        var paymentMethod: PaymentMethod = PaymentMethod()
         if let pm = self.paymentData.paymentMethod {
-            pms = [pm]
+            paymentMethod = pm
         }
 
-        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethods: pms, dataSource: self.issuers!)
+        return IssuerAdditionalStepViewModel(amount: self.getAmount(), token: self.cardToken, paymentMethod: paymentMethod, dataSource: self.issuers!)
     }
     
     public func payerCostViewModel() -> AdditionalStepViewModel{
-        var pms : [PaymentMethod] = []
+        var paymentMethod: PaymentMethod = PaymentMethod()
         if let pm = self.paymentData.paymentMethod {
-            pms = [pm]
+            paymentMethod = pm
         }
         var cardInformation: CardInformationForm? = self.cardToken
         if cardInformation == nil {
@@ -180,7 +180,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             }
         }
 
-        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethods: pms, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email)
     }
     
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {

@@ -17,7 +17,7 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         let payerCosts = MockBuilder.buildInstallment().payerCosts
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
-        self.instance = PayerCostAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethods: [paymentMethod], dataSource: payerCosts!, discount: nil, email: nil)
+        self.instance = PayerCostAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: nil, email: nil)
     }
     
     func testTitle(){
@@ -35,7 +35,6 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
     func testCardSectionView() {
         XCTAssertTrue(self.instance.getCardSectionView() is CardFrontView)
     }
-    
     
     func testRowsWithDiscount() {
         /// Screen:
@@ -74,6 +73,7 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         // Discount Cell
         XCTAssertTrue(self.instance!.showAmountDetailRow())
         XCTAssertTrue(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
         XCTAssertTrue(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
         
@@ -123,6 +123,7 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         // Discount Cell
         XCTAssertTrue(self.instance!.showAmountDetailRow())
         XCTAssertTrue(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
         XCTAssertTrue(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
         
@@ -174,6 +175,7 @@ class PayerCostAdditionalStepViewModelTest : BaseTest {
         // Total Cell
         XCTAssertTrue(self.instance!.showAmountDetailRow())
         XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertTrue(self.instance!.showTotalRow())
         XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
         XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
         XCTAssertTrue(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
@@ -195,7 +197,7 @@ class IssuerAdditionalStepViewModelTest : BaseTest {
         let issuer = MockBuilder.buildIssuer()
         let cardToken = MockBuilder.buildCardToken()
         let paymentMethod = MockBuilder.buildPaymentMethod("visa")
-        self.instance = IssuerAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethods: [paymentMethod], dataSource: [issuer])
+        self.instance = IssuerAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [issuer])
     }
     
     func testTitle(){
@@ -249,6 +251,7 @@ class IssuerAdditionalStepViewModelTest : BaseTest {
         // Total Cell
         XCTAssertFalse(self.instance!.showAmountDetailRow())
         XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
         XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
         XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
         XCTAssertFalse(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
@@ -309,7 +312,6 @@ class CardTypeAdditionalStepViewModelTest : BaseTest {
         XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 6), 0)
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 6)), 0)
         
-        
         // Title Cell
         XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
         XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 0)), 40)
@@ -324,6 +326,7 @@ class CardTypeAdditionalStepViewModelTest : BaseTest {
         // Total Cell
         XCTAssertFalse(self.instance!.showAmountDetailRow())
         XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
         XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
         XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
         XCTAssertFalse(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
@@ -337,3 +340,159 @@ class CardTypeAdditionalStepViewModelTest : BaseTest {
         
     }
 }
+
+class FinancialInstitutionAdditionalStepViewModelTest : BaseTest {
+    var instance: FinancialInstitutionAdditionalStepViewModel!
+    
+    override func setUp() {
+        super.setUp()
+        let cardToken = MockBuilder.buildCardToken()
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let financialInstitution = FinancialInstitution()
+        financialInstitution._id = 1232
+        financialInstitution._description = "sarasa"
+        paymentMethod.financialInstitutions = [financialInstitution, financialInstitution]
+        self.instance = FinancialInstitutionAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: paymentMethod.financialInstitutions)
+    }
+    
+    func testTitle(){
+        XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es tu banco?".localized)
+        XCTAssertEqual(self.instance!.maxFontSize, 24)
+    }
+    
+    func testScreenName() {
+        XCTAssertEqual(self.instance!.getScreenName(), "FINANCIAL_INSTITUTION")
+    }
+    
+    func testNumberOfSections() {
+        XCTAssertEqual(self.instance!.numberOfSections(), 4)
+    }
+    
+    func testCardSectionView() {
+        XCTAssertTrue(self.instance.getCardSectionView() == nil)
+    }
+    
+    func testRows() {
+        /// Screen:
+        /// "¿Cuál es tu banco?"
+        /// Bancos
+        
+        // Title
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 0), 1)
+        // Card
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 1), 0)
+        // Total
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), 0)
+        // Bancos
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 3), self.instance!.numberOfCellsInBody())
+        
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 6), 0)
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 6)), 0)
+        
+        
+        // Title Cell
+        XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 0)), 40)
+        
+        // Card Cell
+        XCTAssertFalse(self.instance!.showCardSection())
+        XCTAssertFalse(self.instance!.isCardCellFor(indexPath: IndexPath(row: 0, section: 1)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 1)), UIScreen.main.bounds.width * 0.50)
+        XCTAssertFalse(self.instance!.isBankInterestCellFor(indexPath: IndexPath(row: 1, section: 1)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 1, section: 1)), 0)
+        
+        // Total Cell
+        XCTAssertFalse(self.instance!.showAmountDetailRow())
+        XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
+        XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
+        XCTAssertFalse(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), 42)
+        XCTAssertEqual(self.instance!.getAmountDetailCellHeight(indexPath: IndexPath(row: 0, section: 2)), 0)
+        
+        // Bancos
+        XCTAssertTrue(self.instance!.showPayerCostDescription())
+        XCTAssertTrue(self.instance!.isBodyCellFor(indexPath: IndexPath(row: 0, section: 3)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 3)), 80)
+        
+    }
+}
+
+class EntityTypeAdditionalStepViewModelTest : BaseTest {
+    var instance: EntityTypeAdditionalStepViewModel!
+    
+    override func setUp() {
+        super.setUp()
+        let cardToken = MockBuilder.buildCardToken()
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let entityType = EntityType()
+        entityType._id = "1232"
+        entityType.name = "sarasa"
+        self.instance = EntityTypeAdditionalStepViewModel(amount: 20.0, token: cardToken, paymentMethod: paymentMethod, dataSource: [entityType, entityType])
+    }
+    
+    func testTitle(){
+        XCTAssertEqual(self.instance!.getTitle(),"¿Cuál es el tipo de persona?".localized)
+        XCTAssertEqual(self.instance!.maxFontSize, 21)
+    }
+    
+    func testScreenName() {
+        XCTAssertEqual(self.instance!.getScreenName(), "ENTITY_TYPE")
+    }
+    
+    func testNumberOfSections() {
+        XCTAssertEqual(self.instance!.numberOfSections(), 4)
+    }
+    
+    func testCardSectionView() {
+        XCTAssertTrue(self.instance.getCardSectionView() is IdentificationCardView)
+    }
+    
+    func testRows() {
+        /// Screen:
+        /// "¿Cuál es el tipo de persona?"
+        /// (tarjeta)
+        /// (Tipos de persona)
+        
+        // Title
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 0), 1)
+        // Card
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 1), 1)
+        // Total
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), 0)
+        // Tipos de persona
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 3), self.instance!.numberOfCellsInBody())
+        
+        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 6), 0)
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 6)), 0)
+        
+        // Title Cell
+        XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 0)), 40)
+        
+        // Card Cell
+        XCTAssertTrue(self.instance!.showCardSection())
+        XCTAssertTrue(self.instance!.isCardCellFor(indexPath: IndexPath(row: 0, section: 1)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 1)), UIScreen.main.bounds.width * 0.50)
+        XCTAssertFalse(self.instance!.isBankInterestCellFor(indexPath: IndexPath(row: 1, section: 1)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 1, section: 1)), 0)
+        
+        // Total Cell
+        XCTAssertFalse(self.instance!.showAmountDetailRow())
+        XCTAssertFalse(self.instance!.showDiscountSection())
+        XCTAssertFalse(self.instance!.showTotalRow())
+        XCTAssertFalse(self.instance!.isDiscountCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), DiscountBodyCell.HEIGHT)
+        XCTAssertFalse(self.instance!.isTotalCellFor(indexPath: IndexPath(row: 0, section: 2)))
+        XCTAssertNotEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), 42)
+        XCTAssertEqual(self.instance!.getAmountDetailCellHeight(indexPath: IndexPath(row: 0, section: 2)), 0)
+        
+        // Tipos de persona
+        XCTAssertTrue(self.instance!.showPayerCostDescription())
+        XCTAssertTrue(self.instance!.isBodyCellFor(indexPath: IndexPath(row: 0, section: 3)))
+        XCTAssertEqual(self.instance!.heightForRowAt(indexPath: IndexPath(row: 0, section: 3)), 80)
+        
+    }
+}
+
