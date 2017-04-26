@@ -94,22 +94,24 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         return paymentResult.status
     }
     
-    func setCallbackWithTracker(cellName: String) -> (_ paymentResult : PaymentResult, _ status : PaymentResult.CongratsState) -> Void{
+    func setCallbackWithTracker() -> (_ paymentResult : PaymentResult, _ status : PaymentResult.CongratsState) -> Void{
         let callbackWithTracker : (_ paymentResutl : PaymentResult, _ status : PaymentResult.CongratsState) -> Void = {(paymentResult ,status) in
-            let paymentAction: PaymentActions
-            if self.paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
-                paymentAction = PaymentActions.RECOVER_PAYMENT
-            } else if paymentResult.status == PaymentStatus.REJECTED.rawValue{
-                paymentAction = PaymentActions.SELECTED_OTHER_PM
-            } else if cellName == "rejected" {
-                paymentAction = PaymentActions.RECOVER_PAYMENT
-            } else {
-                paymentAction = PaymentActions.RECOVER_TOKEN
-            }
-            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: paymentAction.rawValue, result: nil)
+            MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getLayoutName(), action: self.getPaymentAction(), result: nil)
             self.callback(status)
         }
         return callbackWithTracker
+    }
+    
+    func getPaymentAction() -> PaymentActions.RawValue{
+        if self.paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+            return PaymentActions.RECOVER_PAYMENT.rawValue
+        } else if isCallForAuth(){
+            return PaymentActions.RECOVER_TOKEN.rawValue
+        } else if isRejected() {
+            return PaymentActions.SELECTED_OTHER_PM.rawValue
+        } else {
+            return PaymentActions.RECOVER_PAYMENT.rawValue
+        }
     }
     
     func numberOfSections() -> Int {
@@ -158,7 +160,7 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
         let case1 = !isCallForAuth() && indexPath.row == 0;
         //if row at index 1 exists, row 1 should display select another payment row
         let case2 = indexPath.row == 1;
-        return precondition && (case1 || case2)
+        return precondition && (case1 || case2) && !self.paymentResultScreenPreference.isContentCellDisable()
     }
     
     func isApprovedAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
@@ -212,11 +214,10 @@ class PaymentResultViewModel : NSObject, MPPaymentTrackInformer {
             let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0;
             return approvedBodyAdd + emailCellAdd;
             
-        } else {
-            let callForAuthAdd = isCallForAuth() ? 1 : 0;
-            let selectAnotherCellAdd = !paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
-            return callForAuthAdd + selectAnotherCellAdd;
         }
+        let callForAuthAdd = isCallForAuth() ? 1 : 0;
+        let selectAnotherCellAdd = !paymentResultScreenPreference.isContentCellDisable() ? 1 : 0
+        return callForAuthAdd + selectAnotherCellAdd;
     }
     
     func numberOfCustomAdditionalCells() -> Int {

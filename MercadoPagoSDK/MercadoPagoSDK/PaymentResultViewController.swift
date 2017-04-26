@@ -174,7 +174,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     
     private func getCallForAuthCell() -> UITableViewCell {
         let callFAuthCell = self.tableView.dequeueReusableCell(withIdentifier: "callFAuthNib") as! CallForAuthTableViewCell
-        callFAuthCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "call"), paymentResult: self.viewModel.paymentResult, status: PaymentResult.CongratsState.call_FOR_AUTH)
+        callFAuthCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(), paymentResult: self.viewModel.paymentResult, status: PaymentResult.CongratsState.call_FOR_AUTH)
         callFAuthCell.fillCell(paymentMehtod: self.viewModel.paymentResult.paymentData?.paymentMethod)
         return callFAuthCell
     }
@@ -212,7 +212,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     private func getSecondaryExitButtonCell() -> UITableViewCell {
         let secondaryButtonCell = self.tableView.dequeueReusableCell(withIdentifier: "secondaryButtonNib") as! SecondaryExitButtonTableViewCell
         secondaryButtonCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
-        secondaryButtonCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(cellName: "rejected"), paymentResult: self.viewModel.paymentResult, status: PaymentResult.CongratsState.cancel_RETRY)
+        secondaryButtonCell.setCallbackStatusTracking(callback: self.viewModel.setCallbackWithTracker(), paymentResult: self.viewModel.paymentResult, status: PaymentResult.CongratsState.cancel_RETRY)
         return secondaryButtonCell
     }
     
