@@ -279,9 +279,9 @@ open class MercadoPagoCheckout: NSObject {
             if defaultPayerCost != nil {
                 self.viewModel.updateCheckoutModel(payerCost: defaultPayerCost)
             }
-            
-            self.executeNextStep()
+           
             self.dismissLoading()
+            self.executeNextStep()
             
         }) { (error) -> Void in
             self.viewModel.errorInputs(error: MPSDKError.convertFrom(error), errorCallback: { (Void) in
