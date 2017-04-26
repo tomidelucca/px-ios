@@ -290,8 +290,8 @@ open class MockBuilder: NSObject {
         return bin
     }
     
-    class func buildPayerCost(installments: Int = 1, hasCFT: Bool = false) -> PayerCost {
-        let payerCost = PayerCost(installments: installments, installmentRate: 10, labels: ["label"], minAllowedAmount: 10, maxAllowedAmount: 100, recommendedMessage: "", installmentAmount: 10, totalAmount: 10)
+    class func buildPayerCost(installments: Int = 1, installmentRate: Double = 10, hasCFT: Bool = false) -> PayerCost {
+        let payerCost = PayerCost(installments: installments, installmentRate: installmentRate, labels: ["label"], minAllowedAmount: 10, maxAllowedAmount: 100, recommendedMessage: "", installmentAmount: 10, totalAmount: 10)
         
         if hasCFT {
             payerCost.labels = ["CFT_0,00%|TEA_0,00%"]
@@ -329,6 +329,15 @@ open class MockBuilder: NSObject {
     class func buildPaymentData(paymentMethodId: String, paymentMethodName: String?, paymentMethodTypeId : String?) -> PaymentData {
         let paymentData = PaymentData()
         paymentData.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId, name: paymentMethodName, paymentTypeId: paymentMethodTypeId, multipleSettings: false)
+        return paymentData
+    }
+    
+    class func buildPaymentData(paymentMethodId: String = "visa", installments: Int = 0, installmentRate: Double = 0) -> PaymentData {
+        let paymentData = PaymentData()
+        paymentData.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId)
+        paymentData.issuer = MockBuilder.buildIssuer()
+        paymentData.payerCost = MockBuilder.buildPayerCost(installments: installments, installmentRate: installmentRate)
+        paymentData.token = MockBuilder.buildToken()
         return paymentData
     }
     

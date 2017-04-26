@@ -49,8 +49,8 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         let approvedNib = UINib(nibName: "ApprovedTableViewCell", bundle: self.bundle)
         self.tableView.register(approvedNib, forCellReuseIdentifier: "approvedNib")
         
-        let rejectedNib = UINib(nibName: "RejectedTableViewCell", bundle: self.bundle)
-        self.tableView.register(rejectedNib, forCellReuseIdentifier: "rejectedNib")
+        let rejectedNib = UINib(nibName: "ContentTableViewCell", bundle: self.bundle)
+        self.tableView.register(rejectedNib, forCellReuseIdentifier: "contentCell")
         
         let callFAuthNib = UINib(nibName: "CallForAuthTableViewCell", bundle: self.bundle)
         self.tableView.register(callFAuthNib, forCellReuseIdentifier: "callFAuthNib")
@@ -84,21 +84,11 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     }
     
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if viewModel.isAdditionalCustomCellFor(indexPath: indexPath){
-            if viewModel.inProcess(){
-                return viewModel.paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()
-            } else if viewModel.approved(){
-                return viewModel.paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
-            }
-        } else if viewModel.isCustomSubHeaderCellFor(indexPath: indexPath){
-            return viewModel.paymentResultScreenPreference.approvedSubHeaderCells[indexPath.row].getHeight()
-        }
-        return UITableViewAutomaticDimension
-        
+        return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
     
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 6
+        return self.viewModel.numberOfSections()
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,17 +108,20 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         } else if viewModel.isCallForAuthFor(indexPath: indexPath) {
             return getCallForAuthCell()
             
-        } else if viewModel.isSelectOtherPaymentMethodCellFor(indexPath: indexPath) {
-            if viewModel.callForAuth() {
-                return getOtherPaymentMethodCell(drawLine: true)
+        } else if viewModel.isContentCellFor(indexPath: indexPath) {
+            if viewModel.isCallForAuth() {
+                return getContentCell(drawLine: true)
             }
-            return getOtherPaymentMethodCell(drawLine: false)
+            return getContentCell(drawLine: false)
             
-        } else if viewModel.isAdditionalCustomCellFor(indexPath: indexPath) {
-            return getAdditionalCustomCell(indexPath: indexPath)
+        } else if viewModel.isApprovedAdditionalCustomCellFor(indexPath: indexPath) {
+            return getApprovedAddtionalCustomCell(indexPath: indexPath)
         
-        } else if viewModel.isCustomSubHeaderCellFor(indexPath: indexPath) {
-            return getCustomSubHeaderCell(indexPath: indexPath)
+        } else if viewModel.isPendingAdditionalCustomCellFor(indexPath: indexPath) {
+            return getPendingAddtionalCustomCell(indexPath: indexPath)
+            
+        }else if viewModel.isApprovedCustomSubHeaderCellFor(indexPath: indexPath) {
+            return getApprovedCustomSubHeaderCell(indexPath: indexPath)
         
         } else if viewModel.isSecondaryExitButtonCellFor(indexPath: indexPath) {
             return getSecondaryExitButtonCell()
@@ -151,7 +144,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         footerNib.setCallbackStatus(callback: self.viewModel.callback, status: PaymentResult.CongratsState.ok)
         footerNib.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
 		let isSecondaryButtonDisplayed = viewModel.paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil;
-        if self.viewModel.approved() && !isSecondaryButtonDisplayed {
+        if self.viewModel.isApproved() && !isSecondaryButtonDisplayed {
             ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
         }
         return footerNib
@@ -170,13 +163,13 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         return confirmEmailCell
     }
     
-    private func getOtherPaymentMethodCell(drawLine: Bool) -> UITableViewCell {
-        let rejectedCell = self.tableView.dequeueReusableCell(withIdentifier: "rejectedNib") as! RejectedTableViewCell
-        rejectedCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+    private func getContentCell(drawLine: Bool) -> UITableViewCell {
+        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "contentCell") as! ContentTableViewCell
+        contentCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         if drawLine {
-            ViewUtils.drawBottomLine(y: rejectedCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: rejectedCell.contentView)
+            ViewUtils.drawBottomLine(y: contentCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell.contentView)
         }
-        return rejectedCell
+        return contentCell
     }
     
     private func getCallForAuthCell() -> UITableViewCell {
@@ -186,33 +179,34 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         return callFAuthCell
     }
     
-    private func getAdditionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
-        
-        if self.viewModel.inProcess(){
-            let customCell = viewModel.paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row]
-            customCell.setDelegate(delegate: self)
-            let cell = customCell.getTableViewCell()
-            cell.selectionStyle = .none
-            return cell
-        } else {
-            let customCell = viewModel.paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row]
-            customCell.setDelegate(delegate: self)
-            let cell = customCell.getTableViewCell()
-            cell.selectionStyle = .none
-            return cell
-        }
+    private func getApprovedAddtionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
+        return makeCellWith(customCell: self.viewModel.paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row], indentifier: "ApprovedAdditionalCell")
     }
     
-    private func getCustomSubHeaderCell(indexPath: IndexPath) -> UITableViewCell {
-        
-        if self.viewModel.approved(){
-            let customCell = viewModel.paymentResultScreenPreference.approvedSubHeaderCells[indexPath.row]
-            customCell.setDelegate(delegate: self)
-            let cell = customCell.getTableViewCell()
-            cell.selectionStyle = .none
-            return cell
-        }
-        return UITableViewCell()
+    private func getPendingAddtionalCustomCell(indexPath: IndexPath) -> UITableViewCell {
+        return makeCellWith(customCell: self.viewModel.paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row], indentifier: "PendingAdditionalCell")
+    }
+    
+    private func getApprovedCustomSubHeaderCell(indexPath: IndexPath) -> UITableViewCell {
+        return makeCellWith(customCell: self.viewModel.paymentResultScreenPreference.approvedSubHeaderCells[indexPath.row], indentifier: "ApprovedSubHeaderCell")
+    }
+    
+    private func makeCellWith(customCell : MPCustomCell, indentifier : String) -> UITableViewCell {
+        let screenSize : CGRect = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let customView = customCell.getTableViewCell().contentView
+        customCell.setDelegate(delegate: self)
+        let frame = customView.frame
+        customView.frame = CGRect(x: (screenWidth - frame.size.width) / 2, y: 0, width: frame.size.width, height: customCell.getHeight())
+        let cell = UITableViewCell(style: .default, reuseIdentifier: indentifier)
+        cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
+        cell.contentView.addSubview(customView)
+        cell.selectionStyle = .none
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: customCell.getHeight()-1, width: screenWidth, height: 1)
+        cell.addSubview(separatorLine)
+        cell.contentView.backgroundColor = customView.backgroundColor
+        cell.clipsToBounds = true
+        return cell
     }
     
     private func getSecondaryExitButtonCell() -> UITableViewCell {
