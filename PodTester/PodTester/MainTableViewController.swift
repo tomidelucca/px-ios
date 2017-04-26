@@ -11,6 +11,7 @@ import MercadoPagoSDK
 
 enum OptionAction {
     case startCheckout
+    case startWalletCheckout
     case startPaymentVault
     case startCreditCardFlow
     case startCreditCardForm
@@ -59,7 +60,7 @@ class MainTableViewController: UITableViewController {
     
     let itemID : String = "id1"
     
-    let itemTitle : String = "Bicibleta"
+    let itemTitle : String = "Bicicleta"
     
     let itemQuantity : Int = 1
     
@@ -79,7 +80,7 @@ class MainTableViewController: UITableViewController {
     
     var installmentsSelected : PayerCost?
     
-    var opcionesPpal : [Option] = [Option(name: "Nuestro Checkout", action:OptionAction.startCheckout), Option(name: "Componentes UI", suboptions: [Option(name: "Selección de medio de pago completa", action: OptionAction.startPaymentVault), Option(name: "Cobra con tarjeta en cuotas",action: OptionAction.startCreditCardFlow), Option(name: "Cobra con tarjeta sin cuotas",action: OptionAction.startCreditCardForm), Option(name: "Selección de medio de pago simple",action: OptionAction.startPaymentMethod), Option(name: "Selección de Banco",action: OptionAction.startIssuer), Option(name: "Selección de Cuotas",action: OptionAction.startPayerCost), Option(name: "Crear Pago",action: OptionAction.startCreatePayment)]), Option(name: "Servicios", suboptions: [Option(name: "Formulario Simple"), Option(name: "Tarjetas Guardadas"), Option(name: "Pago en Cuotas"), Option(name: "Pago con medios Offline")])]
+    var opcionesPpal : [Option] = [Option(name: "Nuestro Checkout", action:OptionAction.startCheckout), Option(name: "Wallet Checkout", action: OptionAction.startWalletCheckout), Option(name: "Componentes UI", suboptions: [Option(name: "Selección de medio de pago completa", action: OptionAction.startPaymentVault), Option(name: "Cobra con tarjeta en cuotas",action: OptionAction.startCreditCardFlow), Option(name: "Cobra con tarjeta sin cuotas",action: OptionAction.startCreditCardForm), Option(name: "Selección de medio de pago simple",action: OptionAction.startPaymentMethod), Option(name: "Selección de Banco",action: OptionAction.startIssuer), Option(name: "Selección de Cuotas",action: OptionAction.startPayerCost), Option(name: "Crear Pago",action: OptionAction.startCreatePayment)]), Option(name: "Servicios", suboptions: [Option(name: "Formulario Simple"), Option(name: "Tarjetas Guardadas"), Option(name: "Pago en Cuotas"), Option(name: "Pago con medios Offline")])]
    
     var dataSource : [Option]!
     
@@ -129,6 +130,8 @@ class MainTableViewController: UITableViewController {
         
         }else if dataSource[indexPath.row].action == OptionAction.startCheckout{
             startCheckout()
+        }else if dataSource[indexPath.row].action == OptionAction.startWalletCheckout{
+            startWalletCheckout()
         }else if dataSource[indexPath.row].action == OptionAction.startPaymentVault{
             startPaymentVault()
         }else if dataSource[indexPath.row].action == OptionAction.startCreditCardFlow{
@@ -146,13 +149,85 @@ class MainTableViewController: UITableViewController {
         }
     }
     
-    /// F3
-    func startCheckout(){
+    var paymentData = PaymentData()
+    var payment = Payment()
+    
+    /// Wallet Steps
+    public enum walletSteps: String {
+        case ryc = "review_and_confirm"
+        case congrats = "congrats"
+    }
+    
+    func buttonViewControllerCreator(title: String, walletStep: walletSteps) {
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = UIColor.white
+        
+        let button = UIButton(frame: CGRect(x: 10, y: 20, width: 250, height: 60))
+        button.center = viewController.view.center
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.backgroundColor = self.color
+        button.layer.cornerRadius = 10
+        
+        switch walletStep {
+        case walletSteps.ryc:
+            button.addTarget(self, action: #selector(self.startWalletReviewAndConfirm), for: .touchUpInside)
+        case walletSteps.congrats:
+            button.addTarget(self, action: #selector(self.startWalletCongrats), for: .touchUpInside)
+        }
+        
+        viewController.view.addSubview(button)
+        
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    
+    /// Load Checkout
+    func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = CheckoutPreference(_id: self.prefID)
-        let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, navigationController: self.navigationController!)
+        let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, paymentData: paymentData ,navigationController: self.navigationController!, paymentResult: paymentResult)
+        
         let decorationPref : DecorationPreference = DecorationPreference(baseColor: self.color, fontName: "", fontLightName: "")
         MercadoPagoCheckout.setDecorationPreference(decorationPref)
+        
+        let flowPref : FlowPreference = FlowPreference()
+        showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
+        MercadoPagoCheckout.setFlowPreference(flowPref)
+        
+        if setPaymentDataCallback {
+            MercadoPagoCheckout.setPaymentDataCallback { (PaymentData) in
+                self.paymentData = PaymentData
+                self.buttonViewControllerCreator(title: "Ir a Revisa y Confirma", walletStep: walletSteps.ryc)
+            }
+        }
+        
+        if setPaymentDataConfirmCallback {
+            MercadoPagoCheckout.setPaymentDataConfirmCallback { (PaymentData) in
+                self.paymentData = PaymentData
+                self.buttonViewControllerCreator(title: "Ir a Congrats", walletStep: walletSteps.congrats)
+            }
+        }
+        
         checkout.start()
+    }
+    
+    /// Wallet Checkout
+    func startWalletCheckout(){
+        loadCheckout(showRyC: false, setPaymentDataCallback: true)
+    }
+    
+    func startWalletReviewAndConfirm(){
+        loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+    }
+    
+    func startWalletCongrats(){
+        let PR = PaymentResult(payment: self.payment, paymentData: self.paymentData)
+        loadCheckout(paymentResult: PR)
+    }
+    
+    /// F3
+    func startCheckout(){
+        loadCheckout()
     }
     
     /// F2
