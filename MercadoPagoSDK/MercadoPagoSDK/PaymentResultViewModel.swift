@@ -235,7 +235,9 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
     }
 
     func heightForRowAt(indexPath: IndexPath) -> CGFloat {
-        if self.isApprovedAdditionalCustomCellFor(indexPath: indexPath) {
+        if self.isContentCellFor(indexPath: indexPath){
+            return ContentCellRefactor.HEIGHT
+        } else if self.isApprovedAdditionalCustomCellFor(indexPath: indexPath){
             return paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
         } else if self.isPendingAdditionalCustomCellFor(indexPath: indexPath) {
             return paymentResultScreenPreference.pendingAdditionalInfoCells[indexPath.row].getHeight()

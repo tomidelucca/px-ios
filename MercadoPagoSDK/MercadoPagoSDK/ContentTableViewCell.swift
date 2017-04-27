@@ -30,8 +30,8 @@ class ContentTableViewCell: UITableViewCell {
     func fillCell (paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
 
         if paymentResult.status == "rejected" {
-
-            if paymentResult.statusDetail == "cc_rejected_call_for_authorize"{
+            
+            if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
                 let title = (paymentResult.statusDetail + "_title")
                 self.title.text = title.localized
                 self.subtitile.text = ""
@@ -39,7 +39,6 @@ class ContentTableViewCell: UITableViewCell {
                 if paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
                     paymentResult.statusDetail = "cc_rejected_bad_filled_other"
                 }
-
                 if let paymentTypeId = paymentResult.paymentData?.paymentMethod.paymentTypeId {
                     self.paymentTypeId = paymentTypeId
                 } else {
