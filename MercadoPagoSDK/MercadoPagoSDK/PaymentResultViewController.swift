@@ -164,12 +164,20 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     }
 
     private func getContentCell(drawLine: Bool) -> UITableViewCell {
-        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "contentCell") as! ContentTableViewCell
-        contentCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
-        if drawLine {
-            ViewUtils.drawBottomLine(y: contentCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell.contentView)
-        }
-        return contentCell
+//        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "contentCell") as! ContentTableViewCell
+//        contentCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+//        if drawLine {
+//            ViewUtils.drawBottomLine(y: contentCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell.contentView)
+//        }
+//        return contentCell
+        
+        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "ContentCell")
+        cell.contentView.viewWithTag(2)?.removeFromSuperview()
+        let contentCell = ContentCellRefactor(frame: CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : ContentCellRefactor.HEIGHT), paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+        contentCell.tag = 2
+        cell.contentView.addSubview(contentCell)
+        cell.selectionStyle = .none
+        return cell
     }
 
     private func getCallForAuthCell() -> UITableViewCell {
