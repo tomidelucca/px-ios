@@ -12,11 +12,15 @@ PODS:
   - MercadoPagoSDK/Localization/pt (3.0.0-BETA-20)
 
 DEPENDENCIES:
-  - MercadoPagoSDK (= 3.0.0-BETA-20)
+  - MercadoPagoSDK (from `../`)
+
+EXTERNAL SOURCES:
+  MercadoPagoSDK:
+    :path: ../
 
 SPEC CHECKSUMS:
   MercadoPagoSDK: cfae10f1bbd30ce1b428b5fb42f6e24f555093f9
 
-PODFILE CHECKSUM: 6578583050030b4117548e25df9e6069086b3cf9
+PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
 
 COCOAPODS: 1.1.1
