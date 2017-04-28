@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
-    static let DEFAULT_ROW_HEIGHT = CGFloat(313)
+    static let DEFAULT_ROW_HEIGHT = CGFloat(280)
     
     @IBOutlet weak var paymentMethodIcon: UIImageView!
     
@@ -20,7 +20,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
     
-    @IBOutlet weak var TEALabel: UILabel!
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
     
@@ -51,7 +50,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
         fillChangePaymentMethodButton(reviewScreenPreference: reviewScreenPreference)
         
-        fillSeparatorLine(payerCost: paymentData.payerCost)
+        fillSeparatorLine(payerCost: paymentData.payerCost, reviewScreenPreference: reviewScreenPreference)
         
     }
     
@@ -117,29 +116,25 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
     }
     
-    func fillSeparatorLine(payerCost: PayerCost? = nil) {
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+    func fillSeparatorLine(payerCost: PayerCost? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
     }
     
     func fillCFT(payerCost: PayerCost? = nil) {
         CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
         CFT.textColor = UIColor.px_grayDark()
-        TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
-        TEALabel.textColor = UIColor.px_grayDark()
         
         if needsDisplayAdditionalCost(payerCost: payerCost) {
             CFT.text = "CFT " + (payerCost?.getCFTValue())!
-            TEALabel.text = "TEA " + (payerCost?.getTEAValue())!
         }else{
             CFT.text = ""
-            TEALabel.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
     }
     
     func needsDisplayAdditionalCost(payerCost : PayerCost? = nil) -> Bool {
-        return needsDisplayCFT(payerCost : payerCost) && needsDisplayTEA(payerCost : payerCost)
+        return needsDisplayCFT(payerCost : payerCost)
     }
     
     func needsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
@@ -152,30 +147,25 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         return false
     }
     
-    func needsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
-        guard let payerCost = payerCost else {
-            return false
-        }
-        if payerCost.getTEAValue() != nil && payerCost.installments != 1 {
-            return true
-        }
-        return false
-    }
-    
     public static func getCellHeight(payerCost : PayerCost? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> CGFloat {
         
         var cellHeight = DEFAULT_ROW_HEIGHT
+        
+        if payerCost != nil && payerCost?.installments == 1{
+            cellHeight -= 30
+        }
         
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             cellHeight += 20
         }
         
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
-            cellHeight -= 64
+            cellHeight += 58
         }
         
         if payerCost?.installments != 1, let _ = payerCost?.getCFTValue() {
-            cellHeight += 88
+            cellHeight += 50
+
         }
         
         return cellHeight
