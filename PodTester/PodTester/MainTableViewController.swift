@@ -187,8 +187,13 @@ class MainTableViewController: UITableViewController {
         let pref = CheckoutPreference(_id: self.prefID)
         let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, paymentData: paymentData ,navigationController: self.navigationController!, paymentResult: paymentResult)
         
-        let decorationPref : DecorationPreference = DecorationPreference(baseColor: self.color, fontName: "", fontLightName: "")
-        MercadoPagoCheckout.setDecorationPreference(decorationPref)
+        if let color = self.color{
+            let decorationPref : DecorationPreference = DecorationPreference(baseColor: color, fontName: "", fontLightName: "")
+            MercadoPagoCheckout.setDecorationPreference(decorationPref)
+        } else {
+            let decorationPref : DecorationPreference = DecorationPreference(baseColor: UIColor.mpDefaultColor(), fontName: "", fontLightName: "")
+            MercadoPagoCheckout.setDecorationPreference(decorationPref)
+        }
         
         let flowPref : FlowPreference = FlowPreference()
         showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()

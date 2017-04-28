@@ -96,7 +96,7 @@ open class SettingsViewModel: NSObject {
     func setSite(sender: UISegmentedControl) {
         let siteID = self.sites[sender.selectedSegmentIndex].ID
         self.selectedSite = getSitefromID(siteID: siteID)
-        self.selectedColor = selectedSite.getColor()
+//        self.selectedColor = selectedSite.getColor()
     }
     //Site Selector Logic--
     
@@ -205,7 +205,11 @@ open class SettingsViewModel: NSObject {
     
     
     func setSelectedColor(sender: UITextField) {
-        selectedColor = UIColor.fromHex(sender.text!)
+        if let text = sender.text, text.isNotEmpty {
+            selectedColor = UIColor.fromHex(sender.text!)
+        } else {
+            selectedColor = nil
+        }
     }
     //Color Picker Logic--
     
