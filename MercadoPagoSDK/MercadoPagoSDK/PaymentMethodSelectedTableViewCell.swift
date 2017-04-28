@@ -20,7 +20,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
     
-    @IBOutlet weak var TEALabel: UILabel!
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
     
@@ -125,21 +124,17 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     func fillCFT(payerCost: PayerCost? = nil) {
         CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
         CFT.textColor = UIColor.px_grayDark()
-        TEALabel.font = Utils.getLightFont(size: TEALabel.font.pointSize)
-        TEALabel.textColor = UIColor.px_grayDark()
         
         if needsDisplayAdditionalCost(payerCost: payerCost) {
             CFT.text = "CFT " + (payerCost?.getCFTValue())!
-            TEALabel.text = "TEA " + (payerCost?.getTEAValue())!
         }else{
             CFT.text = ""
-            TEALabel.text = ""
             self.changePaymentMethodCFTConstraint.constant = 10
         }
     }
     
     func needsDisplayAdditionalCost(payerCost : PayerCost? = nil) -> Bool {
-        return needsDisplayCFT(payerCost : payerCost) && needsDisplayTEA(payerCost : payerCost)
+        return needsDisplayCFT(payerCost : payerCost)
     }
     
     func needsDisplayCFT(payerCost : PayerCost? = nil) -> Bool{
@@ -147,16 +142,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
             return false
         }
         if payerCost.getCFTValue() != nil && payerCost.installments != 1 {
-            return true
-        }
-        return false
-    }
-    
-    func needsDisplayTEA(payerCost : PayerCost? = nil) -> Bool{
-        guard let payerCost = payerCost else {
-            return false
-        }
-        if payerCost.getTEAValue() != nil && payerCost.installments != 1 {
             return true
         }
         return false
@@ -179,7 +164,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
         
         if payerCost?.installments != 1, let _ = payerCost?.getCFTValue() {
-            cellHeight += 60
+            cellHeight += 50
+
         }
         
         return cellHeight
