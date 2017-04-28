@@ -10,45 +10,66 @@ import Foundation
 
 class ContentCellRefactor: UIView {
     var viewModel: ContentCellRefactorViewModel!
-    
-    static let HEIGHT: CGFloat = 200
+
     var height: CGFloat = 0
+    var rect =  CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : 0)
     
-    init(frame: CGRect, paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
-        super.init(frame: frame)
+    init(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
+        super.init(frame: rect)
         
         self.viewModel = ContentCellRefactorViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
         
         height = self.viewModel.topMargin
         
-        if self.viewModel.getTitle() != "" {
-            let title = MPLabel()
-            title.text = self.viewModel.getTitle()
-            title.font = Utils.getFont(size: 22)
-            title.textColor = UIColor.px_grayDark()
-            title.textAlignment = .center
-            let frameLabel = CGRect(x: self.viewModel.leftMargin , y: height, width: frame.size.width - (2 * self.viewModel.leftMargin), height: title.requiredHeight())
-            title.frame = frameLabel
-            self.addSubview(title)
-            height += title.requiredHeight()
+        if self.viewModel.hasTitle() {
+            makeLabel(text: self.viewModel.getTitle(), fontSize: 22)
         }
         
-        height += self.viewModel.titleSubtitleMargin
-        
-        let subtitle = MPLabel()
-        subtitle.text = "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
-        subtitle.font = Utils.getFont(size: 18)
-        subtitle.textColor = UIColor.px_grayDark()
-        subtitle.textAlignment = .center
-        subtitle.frame = CGRect(x: self.viewModel.leftMargin, y: height , width: frame.size.width - (2 * self.viewModel.leftMargin), height: 0)
-        let frameSubtitle = CGRect(x: self.viewModel.leftMargin, y: height , width: frame.size.width - (2 * self.viewModel.leftMargin), height: subtitle.requiredHeight())
-        subtitle.frame = frameSubtitle
-        subtitle.numberOfLines = 0
-        self.addSubview(subtitle)
+        if self.viewModel.hasSubtitle() {
+            height += self.viewModel.titleSubtitleMargin
+            makeLabel(text: self.viewModel.getSubtitle(), fontSize: 18)
+        }
+        self.frame = CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : height + viewModel.topMargin)
+    }
+    
+    func makeLabel(text: String, fontSize: CGFloat, color: UIColor = UIColor.px_grayDark()) {
+        let label = MPLabel()
+        label.text = text
+        label.font = Utils.getFont(size: fontSize)
+        label.textColor = color
+        label.textAlignment = .center
+        label.frame = CGRect(x: self.viewModel.leftMargin, y: height , width: frame.size.width - (2 * self.viewModel.leftMargin), height: 0)
+        let frameLabel = CGRect(x: self.viewModel.leftMargin , y: height, width: frame.size.width - (2 * self.viewModel.leftMargin), height: label.requiredHeight())
+        label.frame = frameLabel
+        label.numberOfLines = 0
+        height += label.requiredHeight()
+        self.addSubview(label)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func getHeight(frameWidth: CGFloat = UIScreen.main.bounds.width, paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) -> CGFloat {
+        
+        let viewModel = ContentCellRefactorViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
+        var height = viewModel.topMargin
+        
+        if viewModel.hasTitle() {
+            let label = MPLabel()
+            label.text = viewModel.getTitle()
+            label.frame = CGRect(x: viewModel.leftMargin, y: height , width: frameWidth - (2 * viewModel.leftMargin), height: 0)
+            height += label.requiredHeight()
+        }
+        
+        if viewModel.hasSubtitle() {
+            height += viewModel.titleSubtitleMargin
+            let label = MPLabel()
+            label.text = viewModel.getSubtitle()
+            label.frame = CGRect(x: viewModel.leftMargin, y: height , width: frameWidth - (2 * viewModel.leftMargin), height: 0)
+            height += label.requiredHeight()
+        }
+        return height + viewModel.topMargin
     }
 }
 
@@ -67,6 +88,14 @@ class ContentCellRefactorViewModel: NSObject {
         self.paymentResultScreenPreference = paymentResultScreenPreference
     }
     
+    func hasTitle() -> Bool {
+        return !paymentResultScreenPreference.isRejectedContentTitleDisable() && getTitle() != ""
+    }
+    
+    func hasSubtitle() -> Bool {
+        return ((!paymentResultScreenPreference.isRejectedContentTextDisable() && paymentResult.status == "rejected") || (!paymentResultScreenPreference.isPendingContentTextDisable() && paymentResult.status == PaymentResultViewModel.PaymentStatus.IN_PROCESS.rawValue)) && getSubtitle() != ""
+    }
+    
     func getTitle() -> String {
         if paymentResult.status == PaymentResultViewModel.PaymentStatus.REJECTED.rawValue {
             return getRejectedTitle()
@@ -77,9 +106,7 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getRejectedTitle() -> String {
-        if paymentResultScreenPreference.isRejectedContentTitleDisable(){
-            return ""
-        } else if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
+        if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
             return (paymentResult.statusDetail + "_title").localized
         } else if paymentResult.statusDetail != "" {
             return defaultTitle
@@ -90,9 +117,48 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getPendingTitle() -> String {
-        if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContetTitle()) {
+        if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContetTitle()) && paymentResult.statusDetail == ""{
             return paymentResultScreenPreference.getPendingContetTitle()
         }
         return defaultTitle
+    }
+    
+    func getSubtitle() -> String {
+        if paymentResult.status == PaymentResultViewModel.PaymentStatus.REJECTED.rawValue {
+            return getRejectedSubtitle()
+        } else if paymentResult.status == PaymentResultViewModel.PaymentStatus.IN_PROCESS.rawValue {
+            return getPendingSubtitle()
+        }
+        return ""
+    }
+    
+    func getRejectedSubtitle() -> String {
+        if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
+            return ""
+        } else if paymentResult.statusDetail != "" {
+            
+            let paymentTypeID = paymentResult.paymentData?.paymentMethod.paymentTypeId ?? "credit_card"
+            let subtitle = (paymentResult.statusDetail + "_subtitle_" + paymentTypeID)
+            
+            if subtitle.existsLocalized() {
+                let paymentMethodName = paymentResult.paymentData?.paymentMethod.name.localized ?? ""
+                return (subtitle.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+            }
+        }  else if !String.isNullOrEmpty(paymentResultScreenPreference.getRejectedContentText()) {
+            return paymentResultScreenPreference.getRejectedContentText()
+        }
+        return ""
+    }
+    
+    func getPendingSubtitle() -> String {
+        if paymentResult.statusDetail == "pending_contingency"{
+            return "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
+            
+        } else if paymentResult.statusDetail == "pending_review_manual"{
+            return "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+        } else if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContentText()) {
+            return paymentResultScreenPreference.getPendingContentText()
+        }
+        return ""
     }
 }

@@ -13,8 +13,10 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
-
-    override open var screenName: String { get {
+    
+    var contentCell: ContentCellRefactor!
+    
+    override open var screenName : String { get {
         return "RESULT"
     } }
 
@@ -77,14 +79,17 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
 
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
-        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
+
+        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference,  callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
+        
+        self.contentCell = ContentCellRefactor(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.viewModel.heightForRowAt(indexPath: indexPath)
+        return self.viewModel.heightForRowAt(indexPath: indexPath, contentCell: contentCell)
     }
 
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -164,19 +169,14 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     }
 
     private func getContentCell(drawLine: Bool) -> UITableViewCell {
-//        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "contentCell") as! ContentTableViewCell
-//        contentCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
-//        if drawLine {
-//            ViewUtils.drawBottomLine(y: contentCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell.contentView)
-//        }
-//        return contentCell
-        
         let cell = UITableViewCell.init(style: .default, reuseIdentifier: "ContentCell")
         cell.contentView.viewWithTag(2)?.removeFromSuperview()
-        let contentCell = ContentCellRefactor(frame: CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : ContentCellRefactor.HEIGHT), paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
         contentCell.tag = 2
         cell.contentView.addSubview(contentCell)
         cell.selectionStyle = .none
+        if drawLine {
+            ViewUtils.drawBottomLine(y: contentCell.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell)
+        }
         return cell
     }
 
