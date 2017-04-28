@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentMethodSelectedTableViewCell: UITableViewCell {
     
-    static let DEFAULT_ROW_HEIGHT = CGFloat(313)
+    static let DEFAULT_ROW_HEIGHT = CGFloat(280)
     
     @IBOutlet weak var paymentMethodIcon: UIImageView!
     
@@ -51,7 +51,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
         fillChangePaymentMethodButton(reviewScreenPreference: reviewScreenPreference)
         
-        fillSeparatorLine(payerCost: paymentData.payerCost)
+        fillSeparatorLine(payerCost: paymentData.payerCost, reviewScreenPreference: reviewScreenPreference)
         
     }
     
@@ -117,8 +117,8 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         }
     }
     
-    func fillSeparatorLine(payerCost: PayerCost? = nil) {
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost) - 1, width: UIScreen.main.bounds.width, height: 1)
+    func fillSeparatorLine(payerCost: PayerCost? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
     }
     
@@ -166,16 +166,20 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         
         var cellHeight = DEFAULT_ROW_HEIGHT
         
+        if payerCost != nil && payerCost?.installments == 1{
+            cellHeight -= 30
+        }
+        
         if payerCost != nil && !payerCost!.hasInstallmentsRate() && payerCost?.installments != 1 {
             cellHeight += 20
         }
         
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
-            cellHeight -= 64
+            cellHeight += 58
         }
         
         if payerCost?.installments != 1, let _ = payerCost?.getCFTValue() {
-            cellHeight += 88
+            cellHeight += 60
         }
         
         return cellHeight
