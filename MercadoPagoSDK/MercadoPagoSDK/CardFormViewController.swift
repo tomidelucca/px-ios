@@ -635,11 +635,18 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
     
     func clearCardSkin(){
         
-        UIView.animate(withDuration: 0.7, animations: { () -> Void in
-            self.cardFront?.cardLogo.alpha =  0
-            self.cardView.backgroundColor = UIColor.cardDefaultColor()
-        })
-        self.cardFront?.cardLogo.image =  nil
+        if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != MercadoPago.getCardDefaultLogo() {
+            self.cardFront?.cardLogo.alpha = 0
+            self.cardFront?.cardLogo.image =  MercadoPago.getCardDefaultLogo()
+            UIView.animate(withDuration: 0.7, animations: { () -> Void in
+                self.cardView.backgroundColor = UIColor.cardDefaultColor()
+                self.cardFront?.cardLogo.alpha = 1
+            })
+        } else {
+            self.cardFront?.cardLogo.image =  MercadoPago.getCardDefaultLogo()
+             self.cardView.backgroundColor = UIColor.cardDefaultColor()
+        }
+        
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
         
@@ -667,11 +674,19 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
             if let paymentMethod = cardFormManager.getGuessedPM(){
-                self.cardFront?.cardLogo.image =  paymentMethod.getImage()
-                UIView.animate(withDuration: 0.7, animations: { () -> Void in
+                
+                if self.cardFront?.cardLogo.image == MercadoPago.getCardDefaultLogo() {
+                    self.cardFront?.cardLogo.alpha = 0
+                    self.cardFront?.cardLogo.image =  paymentMethod.getImage()
+                    UIView.animate(withDuration: 0.7, animations: { () -> Void in
+                        self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
+                        self.cardFront?.cardLogo.alpha = 1
+                    })
+                } else {
+                    self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
-                    self.cardFront?.cardLogo.alpha = 1
-                })
+                }
+                
                 let labelMask = paymentMethod.getLabelMask(bin: bin)
                 let editTextMask = paymentMethod.getEditTextMask(bin: bin)
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
