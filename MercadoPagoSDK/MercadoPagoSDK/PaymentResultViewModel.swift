@@ -234,8 +234,7 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
         return 0
     }
     
-    func heightForRowAt(indexPath: IndexPath, contentCell: ContentCellRefactor) -> CGFloat {
-
+    func heightForRowAt(indexPath: IndexPath, contentCell: ContentCellRefactor = ContentCellRefactor(frame: CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : 0))) -> CGFloat {
         if self.isContentCellFor(indexPath: indexPath){
             return contentCell.frame.height
         } else if self.isApprovedAdditionalCustomCellFor(indexPath: indexPath){

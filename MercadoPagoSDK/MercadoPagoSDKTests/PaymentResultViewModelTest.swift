@@ -354,12 +354,14 @@ class PendingPaymentResultViewModelTest: BaseTest {
     var instance: PaymentResultViewModel!
     var paymentData: PaymentData!
     var paymentResult: PaymentResult!
+    var contentCell: ContentCellRefactor!
     override func setUp() {
         super.setUp()
 
         self.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", installments: 1, installmentRate: 0)
         self.paymentResult = PaymentResult(status: "in_process", statusDetail: "pending_contingency", paymentData: paymentData, payerEmail: "sarsa@sarasita.com", id: "123", statementDescription: "mercadopago")
-        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (_) in})
+        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (state) in})
+        self.contentCell = ContentCellRefactor(paymentResult: self.paymentResult, paymentResultScreenPreference: self.instance.paymentResultScreenPreference)
     }
 
     func testStatus() {
@@ -411,8 +413,8 @@ class PendingPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), UITableViewAutomaticDimension)
-
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
 
@@ -557,8 +559,8 @@ class PendingPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), UITableViewAutomaticDimension)
-
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        
         // Additional Cells
         XCTAssertTrue(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
         XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 3)), 0)
@@ -583,12 +585,14 @@ class CallForAuthPaymentResultViewModelTest: BaseTest {
     var instance: PaymentResultViewModel!
     var paymentData: PaymentData!
     var paymentResult: PaymentResult!
+    var contentCell: ContentCellRefactor!
     override func setUp() {
         super.setUp()
 
         self.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", installments: 1, installmentRate: 0)
         self.paymentResult = PaymentResult(status: "rejected", statusDetail: "cc_rejected_call_for_authorize", paymentData: paymentData, payerEmail: "sarsa@sarasita.com", id: "123", statementDescription: "mercadopago")
-        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (_) in})
+        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (state) in})
+        self.contentCell = ContentCellRefactor(paymentResult: self.paymentResult, paymentResultScreenPreference: self.instance.paymentResultScreenPreference)
     }
 
     func testStatus() {
@@ -645,8 +649,8 @@ class CallForAuthPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 1, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 1, section: 2)), UITableViewAutomaticDimension)
-
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 1, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
 
@@ -773,12 +777,15 @@ class RejectedPaymentResultViewModelTest: BaseTest {
     var instance: PaymentResultViewModel!
     var paymentData: PaymentData!
     var paymentResult: PaymentResult!
+    var contentCell: ContentCellRefactor!
     override func setUp() {
         super.setUp()
 
         self.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", installments: 1, installmentRate: 0)
         self.paymentResult = PaymentResult(status: "rejected", statusDetail: "lala", paymentData: paymentData, payerEmail: "sarsa@sarasita.com", id: "123", statementDescription: "mercadopago")
-        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (_) in})
+
+        self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (state) in})
+        self.contentCell = ContentCellRefactor(paymentResult: self.paymentResult, paymentResultScreenPreference: self.instance.paymentResultScreenPreference)
     }
 
     func testStatus() {
@@ -830,8 +837,8 @@ class RejectedPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), UITableViewAutomaticDimension)
-
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
 
