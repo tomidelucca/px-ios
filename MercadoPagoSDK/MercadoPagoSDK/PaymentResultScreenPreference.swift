@@ -25,6 +25,7 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingIconBundle = MercadoPago.getBundle()!
     var hidePendingSecondaryButton = false
     var hidePendingContentText = false
+    var hidePendingContentTitle = false
     var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
@@ -105,8 +106,12 @@ open class PaymentResultScreenPreference: NSObject {
     open func disablePendingContentText() {
         self.hidePendingContentText = true
     }
-
-    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
+    
+    open func disablePendingContentTitle() {
+        self.hidePendingContentTitle = true
+    }
+    
+    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)? ,text: String) {
         self.pendingSecondaryExitButtonText = text
         self.pendingSecondaryExitButtonCallback = callback
     }
@@ -210,7 +215,11 @@ open class PaymentResultScreenPreference: NSObject {
     open func enablePaymentContentText() {
         self.hidePendingContentText = false
     }
-
+    
+    open func enablePaymentContentTitle() {
+        self.hidePendingContentTitle = false
+    }
+    
     open func enableApprovedPaymentMethodInfo() {
         self.hidePaymentMethod = false
     }
@@ -286,6 +295,10 @@ open class PaymentResultScreenPreference: NSObject {
 
     open func isPendingContentTextDisable() -> Bool {
         return hidePendingContentText
+    }
+    
+    open func isPendingContentTitleDisable() -> Bool {
+        return hidePendingContentTitle
     }
 
     // Rejected

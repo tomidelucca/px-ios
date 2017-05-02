@@ -53,28 +53,6 @@ class ContentCellRefactor: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    static func getHeight(frameWidth: CGFloat = UIScreen.main.bounds.width, paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) -> CGFloat {
-        
-        let viewModel = ContentCellRefactorViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
-        var height = viewModel.topMargin
-        
-        if viewModel.hasTitle() {
-            let label = MPLabel()
-            label.text = viewModel.getTitle()
-            label.frame = CGRect(x: viewModel.leftMargin, y: height , width: frameWidth - (2 * viewModel.leftMargin), height: 0)
-            height += label.requiredHeight()
-        }
-        
-        if viewModel.hasSubtitle() {
-            height += viewModel.titleSubtitleMargin
-            let label = MPLabel()
-            label.text = viewModel.getSubtitle()
-            label.frame = CGRect(x: viewModel.leftMargin, y: height , width: frameWidth - (2 * viewModel.leftMargin), height: 0)
-            height += label.requiredHeight()
-        }
-        return height + viewModel.topMargin
-    }
 }
 
 class ContentCellRefactorViewModel: NSObject {
@@ -83,7 +61,7 @@ class ContentCellRefactorViewModel: NSObject {
     let titleSubtitleMargin: CGFloat = 20
     
     let paymentResult: PaymentResult
-    let paymentResultScreenPreference: PaymentResultScreenPreference
+    var paymentResultScreenPreference: PaymentResultScreenPreference
     
     let defaultTitle = "¿Qué puedo hacer?".localized
     
@@ -97,24 +75,46 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func hasTitle() -> Bool {
-        return !paymentResultScreenPreference.isRejectedContentTitleDisable() && getTitle() != ""
+        // If there is a statusDetail, the preference is ignore
+        let caseNoPrefernece = getTitle() != "" && hasStatusDetail()
+        let caseRejectedPreference = !paymentResultScreenPreference.isRejectedContentTitleDisable() && paymentResult.statusDetail == ""  && getTitle() != "" && isPaymentRejected()
+        let casePendingPreference = !paymentResultScreenPreference.isPendingContentTitleDisable() && paymentResult.statusDetail == ""  && getTitle() != "" && isPaymentPending()
+        
+        return caseNoPrefernece || caseRejectedPreference || casePendingPreference
+    }
+    
+    func hasStatusDetail() -> Bool {
+        return paymentResult.statusDetail != ""
+    }
+    
+    func isPaymentRejected() -> Bool {
+        return paymentResult.status == PaymentStatus.REJECTED.rawValue
+    }
+    
+    func isPaymentPending() -> Bool {
+        return  paymentResult.status == PaymentStatus.IN_PROCESS.rawValue
     }
     
     func hasSubtitle() -> Bool {
-        return ((!paymentResultScreenPreference.isRejectedContentTextDisable() && paymentResult.status == "rejected") || (!paymentResultScreenPreference.isPendingContentTextDisable() && paymentResult.status == PaymentResultViewModel.PaymentStatus.IN_PROCESS.rawValue)) && getSubtitle() != ""
+        // If there is a statusDetail, the preference is ignore
+        let caseNoPreference = getSubtitle() != "" && hasStatusDetail()
+        let caseRejectedPreferene = !paymentResultScreenPreference.isRejectedContentTextDisable() && !hasStatusDetail() && isPaymentRejected() && getSubtitle() != ""
+        let casePendingPreference = !paymentResultScreenPreference.isPendingContentTextDisable() && !hasStatusDetail() && isPaymentPending() && getSubtitle() != ""
+        
+        return caseNoPreference || caseRejectedPreferene || casePendingPreference
     }
     
     func getTitle() -> String {
-        if paymentResult.status == PaymentResultViewModel.PaymentStatus.REJECTED.rawValue {
+        if isPaymentRejected() {
             return getRejectedTitle()
-        } else if paymentResult.status == PaymentResultViewModel.PaymentStatus.IN_PROCESS.rawValue {
+        } else if isPaymentPending() {
             return getPendingTitle()
         }
         return defaultTitle
     }
     
     func getRejectedTitle() -> String {
-        if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
+        if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH.rawValue {
             return (paymentResult.statusDetail + "_title").localized
         } else if paymentResult.statusDetail != "" {
             return defaultTitle
@@ -132,16 +132,16 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getSubtitle() -> String {
-        if paymentResult.status == PaymentResultViewModel.PaymentStatus.REJECTED.rawValue {
+        if isPaymentRejected() {
             return getRejectedSubtitle()
-        } else if paymentResult.status == PaymentResultViewModel.PaymentStatus.IN_PROCESS.rawValue {
+        } else if isPaymentPending() {
             return getPendingSubtitle()
         }
         return ""
     }
     
     func getRejectedSubtitle() -> String {
-        if paymentResult.statusDetail == "cc_rejected_call_for_authorize" {
+        if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH.rawValue {
             return ""
         } else if paymentResult.statusDetail != "" {
             

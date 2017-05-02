@@ -413,7 +413,7 @@ class PendingPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), self.instance.getContentCell().frame.height)
         
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
@@ -559,7 +559,7 @@ class PendingPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), self.instance.getContentCell().frame.height)
         
         // Additional Cells
         XCTAssertTrue(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
@@ -649,7 +649,7 @@ class CallForAuthPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 1, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 1, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 1, section: 2)), self.instance.getContentCell().frame.height)
         
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))
@@ -837,7 +837,7 @@ class RejectedPaymentResultViewModelTest: BaseTest {
 
         // ContentCell
         XCTAssertTrue(self.instance.isContentCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2), contentCell: self.contentCell), contentCell.frame.height)
+        XCTAssertEqual(self.instance.heightForRowAt(indexPath: IndexPath(row: 0, section: 2)), self.instance.getContentCell().frame.height)
         
         // Additional Cells
         XCTAssertFalse(self.instance.isPendingAdditionalCustomCellFor(indexPath: IndexPath(row: 0, section: 3)))

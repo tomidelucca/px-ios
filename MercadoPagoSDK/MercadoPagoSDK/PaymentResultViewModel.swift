@@ -13,7 +13,9 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
     var paymentResult: PaymentResult!
     var callback: ( _ status: PaymentResult.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
-
+    
+    var contentCell: ContentCellRefactor?
+    
     var paymentResultScreenPreference = PaymentResultScreenPreference()
 
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
@@ -48,8 +50,15 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
     open func getIssuerId() -> String! {
         return String(describing: paymentResult.paymentData?.issuer?._id)
     }
-
-    func getColor() -> UIColor {
+    
+    open func getContentCell() -> ContentCellRefactor {
+        if contentCell == nil {
+            contentCell = ContentCellRefactor(paymentResult: self.paymentResult, paymentResultScreenPreference: self.paymentResultScreenPreference)
+        }
+        return contentCell!
+    }
+    
+    func getColor() -> UIColor{
         if let color = paymentResultScreenPreference.statusBackgroundColor {
             return color
         } else if isApproved() {
@@ -234,9 +243,9 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
         return 0
     }
     
-    func heightForRowAt(indexPath: IndexPath, contentCell: ContentCellRefactor = ContentCellRefactor(frame: CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : 0))) -> CGFloat {
+    func heightForRowAt(indexPath: IndexPath) -> CGFloat {
         if self.isContentCellFor(indexPath: indexPath){
-            return contentCell.frame.height
+            return getContentCell().frame.height
         } else if self.isApprovedAdditionalCustomCellFor(indexPath: indexPath){
             return paymentResultScreenPreference.approvedAdditionalInfoCells[indexPath.row].getHeight()
         } else if self.isPendingAdditionalCustomCellFor(indexPath: indexPath) {
@@ -246,14 +255,8 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
         }
         return UITableViewAutomaticDimension
     }
-
-    enum PaymentStatus: String {
-        case APPROVED = "approved"
-        case REJECTED = "rejected"
-        case RECOVERY = "recovery"
-        case IN_PROCESS = "in_process"
-    }
-    enum PaymentActions: String {
+    
+    enum PaymentActions : String {
         case RECOVER_PAYMENT = "RECOVER_PAYMENT"
         case RECOVER_TOKEN = "RECOVER_TOKEN"
         case SELECTED_OTHER_PM = "SELECT_OTHER_PAYMENT_METHOD"
@@ -275,3 +278,24 @@ enum PaymentStatus: String {
     case RECOVERY = "recovery"
     case IN_PROCESS = "in_process"
 }
+
+enum RejectedStatusDetail : String {
+    case HIGH_RISK = "rejected_high_risk"
+    case OTHER_REASON = "cc_rejected_other_reason"
+    case MAX_ATTEMPTS = "cc_rejected_max_attempts"
+    case CARD_DISABLE = "cc_rejected_card_disabled"
+    case BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
+    case BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
+    case BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
+    case BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
+    case CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
+    case DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
+    case INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+}
+
+enum PendingStatusDetail : String {
+    case CONTINGENCY = "pending_contingency"
+    case REVIEW_MANUAL = "pending_review_manual"
+
+}
+
