@@ -667,7 +667,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
             if let paymentMethod = cardFormManager.getGuessedPM(){
-                self.cardFront?.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
+                self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                 UIView.animate(withDuration: 0.7, animations: { () -> Void in
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                     self.cardFront?.cardLogo.alpha = 1
