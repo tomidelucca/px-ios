@@ -85,7 +85,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return self.viewModel.numberOfSections()
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -119,10 +119,9 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             return cardSectionCell
 
         } else if viewModel.isBankInterestCellFor(indexPath: indexPath){
-            
-                let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
+            let bankInsterestCell = tableView.dequeueReusableCell(withIdentifier: "bankInsterestNib", for: indexPath as IndexPath) as! BankInsterestTableViewCell
                 bankInsterestCell.backgroundColor = UIColor.primaryColor()
-                return bankInsterestCell
+            return bankInsterestCell
             
         } else if viewModel.isDiscountCellFor(indexPath: indexPath) {
             let cell = UITableViewCell.init(style: .default, reuseIdentifier: "CouponCell")
@@ -141,16 +140,17 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
             totalCell.selectionStyle = .none
             return totalCell as UITableViewCell
             
-        } else {
+        } else if viewModel.isBodyCellFor(indexPath: indexPath) {
             let object = self.viewModel.dataSource[indexPath.row]
             let cell = AdditionalStepCellFactory.buildCell(object: object, width: Double(cellWidth), height: Double(viewModel.defaultRowCellHeight))
             return cell
         }
+        return UITableViewCell()
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == AdditionalStepViewModel.Sections.body.rawValue {
+        if viewModel.isBodyCellFor(indexPath: indexPath) {
             let callbackData: NSObject = self.viewModel.dataSource[indexPath.row] as! NSObject
             self.viewModel.callback!(callbackData)
             
