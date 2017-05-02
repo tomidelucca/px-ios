@@ -346,7 +346,7 @@ open class PaymentMethod : NSObject , Cellable {
     
     
     // IMAGE
-    open func getImage(bin: String?)-> UIImage? {
+    open func getImage()-> UIImage? {
         return MercadoPago.getImageFor(self)
     }
     

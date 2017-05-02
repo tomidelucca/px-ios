@@ -165,7 +165,7 @@ class PaymentMethodTest: BaseTest {
         let paymentMethod = MockBuilder.buildPaymentMethod("visa", name: "Visa", paymentTypeId : "credit_card", multipleSettings: false)
         let cardNumber = "4242424242424242"
         let bin = cardNumber.substring(to: (cardNumber.characters.index(cardNumber.startIndex, offsetBy: 6)))
-        let image = paymentMethod.getImage(bin: bin)
+        let image = paymentMethod.getImage()
         XCTAssertEqual(image, MercadoPago.getImageFor(paymentMethod))
 
     }
