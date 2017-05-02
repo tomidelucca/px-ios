@@ -86,6 +86,10 @@ class ContentCellRefactorViewModel: NSObject {
     init(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
         self.paymentResult = paymentResult
         self.paymentResultScreenPreference = paymentResultScreenPreference
+        
+        if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+            paymentResult.statusDetail = "cc_rejected_bad_filled_other"
+        }
     }
     
     func hasTitle() -> Bool {
