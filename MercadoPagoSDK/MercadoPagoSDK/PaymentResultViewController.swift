@@ -14,8 +14,6 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
     
-    var contentCell: ContentCellRefactor!
-    
     override open var screenName : String { get {
         return "RESULT"
     } }
@@ -81,15 +79,13 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
 
         self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference,  callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
-        
-        self.contentCell = ContentCellRefactor(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.viewModel.heightForRowAt(indexPath: indexPath, contentCell: contentCell)
+        return self.viewModel.heightForRowAt(indexPath: indexPath)
     }
 
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -171,11 +167,11 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     private func getContentCell(drawLine: Bool) -> UITableViewCell {
         let cell = UITableViewCell.init(style: .default, reuseIdentifier: "ContentCell")
         cell.contentView.viewWithTag(2)?.removeFromSuperview()
-        contentCell.tag = 2
-        cell.contentView.addSubview(contentCell)
+        self.viewModel.getContentCell().tag = 2
+        cell.contentView.addSubview(self.viewModel.getContentCell())
         cell.selectionStyle = .none
         if drawLine {
-            ViewUtils.drawBottomLine(y: contentCell.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell)
+            ViewUtils.drawBottomLine(y: self.viewModel.getContentCell().frame.minY, width: UIScreen.main.bounds.width, inView: self.viewModel.getContentCell())
         }
         return cell
     }
