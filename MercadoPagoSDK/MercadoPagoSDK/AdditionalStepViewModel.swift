@@ -22,6 +22,7 @@ open class AdditionalStepViewModel : NSObject{
     open var cardSectionView: Updatable?
     open var cardSectionVisible: Bool
     open var totalRowVisible: Bool
+    open var bankInterestWarningCellVisible: Bool
     open var dataSource: [Cellable]
     open var defaultTitleCellHeight: CGFloat = 40
     open var defaultRowCellHeight: CGFloat = 80
@@ -29,7 +30,7 @@ open class AdditionalStepViewModel : NSObject{
     open var maxFontSize: CGFloat { get { return 24 } }
     open var couponCallback: ((DiscountCoupon) -> Void)? = nil
 
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
+    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
     
         self.screenName = screenName
         self.screenTitle = screenTitle
@@ -39,6 +40,7 @@ open class AdditionalStepViewModel : NSObject{
         self.cardSectionVisible = cardSectionVisible
         self.cardSectionView = cardSectionView
         self.totalRowVisible = totalRowVisible
+        self.bankInterestWarningCellVisible = showBankInsterestWarning
         self.dataSource = dataSource
         self.discount = discount
         self.email = email
@@ -53,7 +55,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func showBankInsterestCell() -> Bool {
-        return MercadoPagoCheckout.showBankInterestWarning()
+        return self.bankInterestWarningCellVisible && MercadoPagoCheckout.showBankInterestWarning()
     }
     
     func showDiscountSection() -> Bool{
@@ -200,7 +202,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
     init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email)
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true, showBankInsterestWarning: true, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email)
         self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{
