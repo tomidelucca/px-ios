@@ -32,6 +32,10 @@ class ContentCellRefactor: UIView {
         self.frame = CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : height + viewModel.topMargin)
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: rect)
+    }
+    
     func makeLabel(text: String, fontSize: CGFloat, color: UIColor = UIColor.px_grayDark()) {
         let label = MPLabel()
         label.text = text
