@@ -9,7 +9,7 @@
 import Foundation
 
 
-class CardsAdminViewModel : NSObject {
+open class CardsAdminViewModel : NSObject {
     
     var cards : [Card]?
     var customerId : String?
