@@ -40,7 +40,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     fileprivate var callback : ((_ selectedCard : Card? ) -> Void)!
 
     
-    init(viewModel : CardsAdminViewModel, callback : @escaping (_ selectedCard : Card?) -> Void) {
+    public init(viewModel : CardsAdminViewModel, callback : @escaping (_ selectedCard : Card?) -> Void) {
         super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
