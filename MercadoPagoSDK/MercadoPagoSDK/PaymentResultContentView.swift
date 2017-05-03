@@ -1,5 +1,5 @@
 //
-//  ContentCellRefactor.swift
+//  PaymentResultContentView.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 4/27/17.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-class ContentCellRefactor: UIView {
-    var viewModel: ContentCellRefactorViewModel!
+class PaymentResultContentView: UIView {
+    var viewModel: PaymentResultContentViewModel!
     
     var height: CGFloat = 0
     var rect =  CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : 0)
@@ -17,7 +17,7 @@ class ContentCellRefactor: UIView {
     init(paymentResult: PaymentResult, paymentResultScreenPreference: PaymentResultScreenPreference) {
         super.init(frame: rect)
         
-        self.viewModel = ContentCellRefactorViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
+        self.viewModel = PaymentResultContentViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultScreenPreference)
         
         height = self.viewModel.topMargin
         
@@ -60,7 +60,7 @@ class ContentCellRefactor: UIView {
     }
 }
 
-class ContentCellRefactorViewModel: NSObject {
+class PaymentResultContentViewModel: NSObject {
     let topMargin: CGFloat = 50
     let leftMargin: CGFloat = 15
     let titleSubtitleMargin: CGFloat = 20
@@ -83,6 +83,25 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getHeight() -> CGFloat {
+        var height = getMargingHeight()
+        
+        // Title Height
+        if hasTitle () {
+            height += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.titleFontSize), text: self.getTitle())
+        }
+        
+        // Subtitle Height
+        if hasSubtitle() {
+            height += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.subtitleFontSize), text: self.getSubtitle())
+        }
+        
+        return height
+    }
+    
+    func getMargingHeight() -> CGFloat {
+        if !hasTitle() && !hasSubtitle(){
+            return 0
+        }
         // Top and bottom Margin
         var heigth = 2 * self.topMargin
         
@@ -90,12 +109,6 @@ class ContentCellRefactorViewModel: NSObject {
         if self.hasTitle() && self.hasSubtitle() {
             heigth += self.titleSubtitleMargin
         }
-        // Title Height
-        heigth += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.titleFontSize), text: self.getTitle())
-        
-        // Subtitle Height
-        heigth += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.subtitleFontSize), text: self.getSubtitle())
-        
         return heigth
     }
     

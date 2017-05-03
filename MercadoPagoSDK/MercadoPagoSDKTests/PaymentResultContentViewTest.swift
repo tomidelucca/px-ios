@@ -1,5 +1,5 @@
 //
-//  ContentCellViewModelTest.swift
+//  PaymentResultContentViewTest.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 4/29/17.
@@ -7,8 +7,8 @@
 //
 import XCTest
 @testable import MercadoPagoSDK
-class ContentCellViewModelTest : BaseTest {
-    var instance: ContentCellRefactorViewModel!
+class PaymentResultContentViewModelTest : BaseTest {
+    var instance: PaymentResultContentViewModel!
     var paymentData: PaymentData!
     var paymentResult: PaymentResult!
     var paymentResultPreference = PaymentResultScreenPreference()
@@ -17,7 +17,7 @@ class ContentCellViewModelTest : BaseTest {
         super.setUp()
         self.paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", installments: 1, installmentRate: 0)
         self.paymentResult = PaymentResult(status: "rejected", statusDetail: "cc_rejected_bad_filled_securityCode", paymentData: paymentData, payerEmail: "sarsa@sarasita.com", id: "123", statementDescription: "mercadopago")
-        self.instance = ContentCellRefactorViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultPreference)
+        self.instance = PaymentResultContentViewModel(paymentResult: paymentResult, paymentResultScreenPreference: paymentResultPreference)
     }
     
     func testStatusDetail(){
@@ -36,6 +36,132 @@ class ContentCellViewModelTest : BaseTest {
         self.instance.paymentResult.status = "in_process"
         XCTAssertTrue(self.instance.isPaymentPending())
         XCTAssertFalse(self.instance.isPaymentRejected())
+    }
+    
+    func testHeight() {
+        var titleHeight: CGFloat = 0
+        var subtitleHeight: CGFloat = 0
+        /// Status : Rejected
+        
+        // StatusDetail: other_reason
+        // Titulo
+        // Subtitulo
+        self.instance.paymentResult.status = "rejected"
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
+        
+        titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
+        subtitleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.subtitleFontSize), text: self.instance.getSubtitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + titleHeight + subtitleHeight)
+        
+        
+        // StatusDetail: bad_filled
+        // Titulo
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER.rawValue
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+        titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + titleHeight)
+        
+        // StatusDetail: call_for_auth
+        // Titulo
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_OTHER.rawValue
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+        // StatusDetail: ""
+        // Subtitulo
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.rejectedContentText = "Sarasa"
+        self.instance.paymentResultScreenPreference.hideRejectedContentTitle = true
+        self.instance.paymentResultScreenPreference.hideRejectedContentText = false
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+
+        subtitleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.subtitleFontSize), text: self.instance.getSubtitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + subtitleHeight)
+        
+        // StatusDetail: ""
+        // Titulo
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.rejectedContentTitle = "Sarasa"
+        self.instance.paymentResultScreenPreference.hideRejectedContentText = true
+        self.instance.paymentResultScreenPreference.hideRejectedContentTitle = false
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+        // StatusDetail: ""
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.hideRejectedContentTitle = true
+        self.instance.paymentResultScreenPreference.hideRejectedContentText = true
+        XCTAssertEqual(self.instance.getMargingHeight(), 0)
+        XCTAssertEqual(self.instance.getHeight(), 0)
+        
+        // StatusDetail: other_reason con paymentPreference
+        // Titulo
+        // Subtitlo
+        self.instance.paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON.rawValue
+        self.instance.paymentResultScreenPreference.hideRejectedContentTitle = true
+        self.instance.paymentResultScreenPreference.hideRejectedContentText = true
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
+        
+        
+        /// Status : Pending
+        
+        self.instance.paymentResult.status = "in_process"
+        
+        // Con statusDetail = "CONTINGENCY"
+        // Titulo
+        // Subtitilo
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
+        
+        titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
+        subtitleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.subtitleFontSize), text: self.instance.getSubtitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + titleHeight + subtitleHeight)
+        
+        // Con statusDetail = "REVIEW_MANUAL"
+        // Titulo
+        // Subtitilo
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL.rawValue
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
+        
+        // StatusDetail: ""
+        // Subtitulo
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.pendingContentText = "Sarasa"
+        self.instance.paymentResultScreenPreference.hidePendingContentTitle = true
+        self.instance.paymentResultScreenPreference.hidePendingContentText = false
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+
+        subtitleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.subtitleFontSize), text: self.instance.getSubtitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + subtitleHeight)
+        
+        // StatusDetail: ""
+        // Titulo
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.pendingContentTitle = "Sarasa"
+        self.instance.paymentResultScreenPreference.hidePendingContentText = true
+        self.instance.paymentResultScreenPreference.hidePendingContentTitle = false
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2)
+        
+        titleHeight = UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.instance.titleFontSize), text: self.instance.getTitle())
+        XCTAssertEqual(self.instance.getHeight(), self.instance.getMargingHeight() + titleHeight)
+        
+        // StatusDetail: ""
+        self.instance.paymentResult.statusDetail = ""
+        self.instance.paymentResultScreenPreference.hidePendingContentTitle = true
+        self.instance.paymentResultScreenPreference.hidePendingContentText = true
+        XCTAssertEqual(self.instance.getMargingHeight(), 0)
+        XCTAssertEqual(self.instance.getHeight(), 0)
+        
+        // Con statusDetail = "CONTINGENCY" con paymentPreference
+        // Titulo
+        // Subtitilo
+        self.instance.paymentResult.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
+        self.instance.paymentResultScreenPreference.hidePendingContentTitle = true
+        self.instance.paymentResultScreenPreference.hidePendingContentText = true
+        XCTAssertEqual(self.instance.getMargingHeight(), self.instance.topMargin * 2 + self.instance.titleSubtitleMargin)
+        
     }
     
     //*********************
