@@ -14,7 +14,7 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
     var callback: ( _ status: PaymentResult.CongratsState) -> Void
     var checkoutPreference: CheckoutPreference?
     
-    var contentCell: ContentCellRefactor?
+    var contentCell: PaymentResultContentView?
     
     var paymentResultScreenPreference = PaymentResultScreenPreference()
 
@@ -51,9 +51,9 @@ class PaymentResultViewModel: NSObject, MPPaymentTrackInformer {
         return String(describing: paymentResult.paymentData?.issuer?._id)
     }
     
-    open func getContentCell() -> ContentCellRefactor {
+    open func getContentCell() -> PaymentResultContentView {
         if contentCell == nil {
-            contentCell = ContentCellRefactor(paymentResult: self.paymentResult, paymentResultScreenPreference: self.paymentResultScreenPreference)
+            contentCell = PaymentResultContentView(paymentResult: self.paymentResult, paymentResultScreenPreference: self.paymentResultScreenPreference)
         }
         return contentCell!
     }
