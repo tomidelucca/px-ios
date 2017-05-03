@@ -69,6 +69,7 @@
 "cc_rejected_max_attempts_subtitle_credit_card"= "Elige otra tarjeta u otro medio de pago.";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Si necesitas volver a pagar usa otra tarjeta u otro medio de pago.";
 "cc_rejected_card_disabled_subtitle_credit_card"="El teléfono está al dorso de tu tarjeta.";
+"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
 
 
 
@@ -81,6 +82,7 @@
 "cc_rejected_bad_filled_card_number_subtitle_debit_card"="El número de tu %0 es incorrecto.";
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="El código de seguridad no es el correcto.";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="La fecha de vencimiento no es la correcta.";
+"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Algo salió mal… " = "Algo salió mal… ";

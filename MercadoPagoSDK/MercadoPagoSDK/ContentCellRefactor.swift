@@ -10,7 +10,7 @@ import Foundation
 
 class ContentCellRefactor: UIView {
     var viewModel: ContentCellRefactorViewModel!
-
+    
     var height: CGFloat = 0
     var rect =  CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : 0)
     
@@ -22,14 +22,19 @@ class ContentCellRefactor: UIView {
         height = self.viewModel.topMargin
         
         if self.viewModel.hasTitle() {
-            makeLabel(text: self.viewModel.getTitle(), fontSize: 22)
+            makeLabel(text: self.viewModel.getTitle(), fontSize: self.viewModel.titleFontSize)
+        }
+        
+        if self.viewModel.hasSubtitle() && self.viewModel.hasTitle() {
+            height += self.viewModel.titleSubtitleMargin
         }
         
         if self.viewModel.hasSubtitle() {
-            height += self.viewModel.titleSubtitleMargin
-            makeLabel(text: self.viewModel.getSubtitle(), fontSize: 18)
+            makeLabel(text: self.viewModel.getSubtitle(), fontSize: self.viewModel.subtitleFontSize)
         }
-        self.frame = CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : height + viewModel.topMargin)
+        
+        
+        self.frame = CGRect(x: 0, y: 0, width : UIScreen.main.bounds.width, height : self.viewModel.getHeight())
     }
     
     override init(frame: CGRect) {
@@ -60,6 +65,9 @@ class ContentCellRefactorViewModel: NSObject {
     let leftMargin: CGFloat = 15
     let titleSubtitleMargin: CGFloat = 20
     
+    let titleFontSize: CGFloat = 22
+    let subtitleFontSize: CGFloat = 18
+    
     let paymentResult: PaymentResult
     var paymentResultScreenPreference: PaymentResultScreenPreference
     
@@ -72,6 +80,23 @@ class ContentCellRefactorViewModel: NSObject {
         if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
             paymentResult.statusDetail = "cc_rejected_bad_filled_other"
         }
+    }
+    
+    func getHeight() -> CGFloat {
+        // Top and bottom Margin
+        var heigth = 2 * self.topMargin
+        
+        // Title and Subtitle Margin
+        if self.hasTitle() && self.hasSubtitle() {
+            heigth += self.titleSubtitleMargin
+        }
+        // Title Height
+        heigth += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.titleFontSize), text: self.getTitle())
+        
+        // Subtitle Height
+        heigth += UILabel.getHeight(width: UIScreen.main.bounds.width, font: Utils.getFont(size: self.subtitleFontSize), text: self.getSubtitle())
+        
+        return heigth
     }
     
     func hasTitle() -> Bool {
@@ -141,9 +166,7 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getRejectedSubtitle() -> String {
-        if paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH.rawValue {
-            return ""
-        } else if paymentResult.statusDetail != "" {
+        if paymentResult.statusDetail != "" {
             
             let paymentTypeID = paymentResult.paymentData?.paymentMethod.paymentTypeId ?? "credit_card"
             let subtitle = (paymentResult.statusDetail + "_subtitle_" + paymentTypeID)
@@ -159,11 +182,12 @@ class ContentCellRefactorViewModel: NSObject {
     }
     
     func getPendingSubtitle() -> String {
-        if paymentResult.statusDetail == "pending_contingency"{
+        if paymentResult.statusDetail == PendingStatusDetail.CONTINGENCY.rawValue {
             return "En menos de 1 hora te enviaremos por e-mail el resultado.".localized
             
-        } else if paymentResult.statusDetail == "pending_review_manual"{
+        } else if paymentResult.statusDetail == PendingStatusDetail.REVIEW_MANUAL.rawValue {
             return "En menos de 2 días hábiles te diremos por e-mail si se acreditó o si necesitamos más información.".localized
+        
         } else if !String.isNullOrEmpty(paymentResultScreenPreference.getPendingContentText()) {
             return paymentResultScreenPreference.getPendingContentText()
         }
