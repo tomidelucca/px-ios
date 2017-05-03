@@ -55,12 +55,12 @@ public protocol MPTrackListener   {
 public protocol MPPaymentTrackInformer {
 
     
-    func methodId() -> String!
-    func status() -> String!
-    func statusDetail() -> String!
-    func typeId() -> String!
-    func installments() -> String!
-    func issuerId() -> String!
+    func getMethodId() -> String!
+    func getStatus() -> String!
+    func getStatusDetail() -> String!
+    func getTypeId() -> String!
+    func getInstallments() -> String!
+    func getIssuerId() -> String!
     
     
 }

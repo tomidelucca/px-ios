@@ -61,7 +61,7 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func showTotalRow() -> Bool{
-        return totalRowVisible
+        return totalRowVisible && !showDiscountSection()
     }
     
     func showAmountDetailRow() -> Bool {
@@ -76,17 +76,25 @@ open class AdditionalStepViewModel : NSObject{
         return screenTitle
     }
     
+    func numberOfSections() -> Int {
+        return 4
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
-        if section == Sections.title.rawValue {
+        switch section {
+        
+        case Sections.title.rawValue:
             return 1
-        } else if section == Sections.card.rawValue {
+        case Sections.card.rawValue:
             var rows: Int = showCardSection() ? 1 : 0
             rows = showBankInsterestCell() ? rows + 1 : rows
-            return rows 
-        } else if section == Sections.amountDetail.rawValue {
+            return rows
+        case Sections.amountDetail.rawValue:
             return showAmountDetailRow() ? 1 : 0
-        } else {
+        case Sections.body.rawValue:
             return numberOfCellsInBody()
+        default:
+            return 0
         }
     }
     
@@ -96,28 +104,22 @@ open class AdditionalStepViewModel : NSObject{
     
     func heightForRowAt(indexPath: IndexPath) -> CGFloat {
         
-        if isDiscountCellFor(indexPath: indexPath) {
-            return DiscountBodyCell.HEIGHT
-        }
-        switch indexPath.section {
-        case Sections.title.rawValue:
+        if isTitleCellFor(indexPath: indexPath){
             return getTitleCellHeight()
-        case Sections.card.rawValue:
-            if self.showCardSection() {
-                if isCardCellFor(indexPath: indexPath) {
-                    return self.getCardCellHeight()
-                } else if isBankInterestCellFor(indexPath: indexPath) {
-                    return self.getBankInterestWarningCellHeight()
-                }
-            }
-            return 0
-        case Sections.amountDetail.rawValue:
+        
+        } else if isCardCellFor(indexPath: indexPath) {
+            return self.getCardCellHeight()
+        
+        } else if isBankInterestCellFor(indexPath: indexPath) {
+            return self.getBankInterestWarningCellHeight()
+        
+        } else if isDiscountCellFor(indexPath: indexPath) || isTotalCellFor(indexPath: indexPath){
             return self.getAmountDetailCellHeight(indexPath: indexPath)
-        case Sections.body.rawValue:
+        
+        } else if isBodyCellFor(indexPath: indexPath) {
             return defaultRowCellHeight
-        default:
-            return 60
         }
+         return 0
     }
     
     func getCardSectionView() -> Updatable?{
@@ -158,11 +160,15 @@ open class AdditionalStepViewModel : NSObject{
     }
     
     func isCardCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue
+        return indexPath.row == CardSectionCells.card.rawValue && indexPath.section == Sections.card.rawValue && showCardSection()
     }
     
     func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+    func isBodyCellFor(indexPath: IndexPath) -> Bool {
+        return indexPath.section == Sections.body.rawValue && indexPath.row < numberOfCellsInBody()
     }
     
     public enum CardSectionCells : Int {
@@ -183,8 +189,8 @@ class IssuerAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable] ){
-        super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource)
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable] ){
+        super.init(screenName: "ISSUER", screenTitle: "¿Quién emitió tu tarjeta?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: false, amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource)
     }
     
 }
@@ -193,18 +199,8 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     
     let cardViewRect = CGRect(x: 0, y: 0, width: 100, height: 30)
     
-    init(amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
-        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: paymentMethods, dataSource: dataSource, email: email)
-        self.screenName = screenName
-        self.screenTitle = screenTitle
-        self.amount = amount
-        self.token = token
-        self.discount = discount
-        self.paymentMethods = paymentMethods
-        self.cardSectionVisible = cardSectionVisible
-        self.cardSectionView = cardSectionView
-        self.totalRowVisible = totalRowVisible
-        self.dataSource = dataSource
+    init(amount: Double, token: CardInformationForm?, paymentMethod: PaymentMethod, dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
+        super.init(screenName: "PAYER_COST", screenTitle: "¿En cuántas cuotas?".localized, cardSectionVisible: true, cardSectionView: CardFrontView(frame: self.cardViewRect), totalRowVisible: true,  amount: amount, token: token, paymentMethods: [paymentMethod], dataSource: dataSource, email: email)
         self.defaultRowCellHeight = 60
     }
     override func showDiscountSection() -> Bool{
@@ -212,7 +208,7 @@ class PayerCostAdditionalStepViewModel: AdditionalStepViewModel {
     }
     
     override func isBankInterestCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue
+        return indexPath.row == CardSectionCells.bankInterestWarning.rawValue && indexPath.section == Sections.card.rawValue && showBankInsterestCell()
     }
     
 }
