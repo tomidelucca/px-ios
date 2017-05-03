@@ -75,12 +75,12 @@ open class PayerCost : NSObject, Cellable {
     open func toJSON() -> [String:Any] {
         let obj:[String:Any] = [
             "installments": self.installments,
-            "installmentRate" : self.installmentRate,
-            "minAllowedAmount" : self.installmentRate,
-            "maxAllowedAmount" : self.installmentRate,
-            "recommendedMessage" : self.recommendedMessage,
-            "installmentAmount" : self.installmentAmount,
-            "totalAmount" : self.totalAmount,
+            "installment_rate" : self.installmentRate,
+            "min_allowed_amount" : self.minAllowedAmount,
+            "max_allowed_amount" : self.maxAllowedAmount,
+            "recommended_message" : self.recommendedMessage,
+            "installment_amount" : self.installmentAmount,
+            "total_amount" : self.totalAmount
             ]
         return obj
     }
