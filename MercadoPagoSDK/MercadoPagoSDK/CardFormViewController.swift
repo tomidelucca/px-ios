@@ -642,9 +642,9 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                 self.cardView.backgroundColor = UIColor.cardDefaultColor()
                 self.cardFront?.cardLogo.alpha = 1
             })
-        } else {
-            self.cardFront?.cardLogo.image =  MercadoPago.getCardDefaultLogo()
-             self.cardView.backgroundColor = UIColor.cardDefaultColor()
+        } else if self.cardFront?.cardLogo.image == nil {
+            self.cardFront?.cardLogo.image = MercadoPago.getCardDefaultLogo()
+            self.cardView.backgroundColor = UIColor.cardDefaultColor()
         }
         
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
@@ -682,7 +682,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
                         self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                         self.cardFront?.cardLogo.alpha = 1
                     })
-                } else {
+                } else if self.cardFront?.cardLogo.image == nil {
                     self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                 }
