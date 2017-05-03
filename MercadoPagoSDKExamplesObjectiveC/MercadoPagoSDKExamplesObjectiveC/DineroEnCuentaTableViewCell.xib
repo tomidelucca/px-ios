@@ -32,6 +32,9 @@
                     <constraint firstItem="Ni4-ir-WsY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="cMS-b0-PVy"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="label" destination="Ni4-ir-WsY" id="YjD-H6-S7t"/>
+            </connections>
             <point key="canvasLocation" x="9.5" y="131.5"/>
         </tableViewCell>
     </objects>

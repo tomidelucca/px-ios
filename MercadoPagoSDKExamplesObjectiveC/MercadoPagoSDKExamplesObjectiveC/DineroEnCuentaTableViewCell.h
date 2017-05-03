@@ -11,6 +11,7 @@
 
 @interface DineroEnCuentaTableViewCell : UITableViewCell<MPCellContentProvider>
 @property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UILabel *label;
 
 
 @end

@@ -248,8 +248,7 @@
 
     
     DineroEnCuentaTableViewCell *header = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
-    [header.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
-    
+    header.label.text = @"AXION";
     MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
     
     

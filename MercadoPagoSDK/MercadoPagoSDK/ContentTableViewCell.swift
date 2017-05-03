@@ -1,5 +1,5 @@
 //
-//  RejectedTableViewCell.swift
+//  ContentTableViewCell.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 10/28/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RejectedTableViewCell: UITableViewCell {
+class ContentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleSubtitleCoinstraint: NSLayoutConstraint!
     @IBOutlet weak var title: UILabel!
