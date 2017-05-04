@@ -208,10 +208,15 @@ import UIKit
     open class func getImageFor(_ paymentMethod: PaymentMethod, forCell: Bool? = false) -> UIImage? {
         if (forCell == true) {
             return MercadoPago.getImage(paymentMethod._id.lowercased())
-        } else {
-            return MercadoPago.getImage("icoTc_"+paymentMethod._id.lowercased())
+        }else if let pmImage = MercadoPago.getImage("icoTc_"+paymentMethod._id.lowercased()) {
+            return pmImage
+        }else {
+            return MercadoPago.getCardDefaultLogo()
         }
-
+    }
+    
+    open class func getCardDefaultLogo() -> UIImage?{
+        return MercadoPago.getImage("icoTc_default")
     }
 
     open class func getColorFor(_ paymentMethod: PaymentMethod, settings: [Setting]?) -> UIColor {
