@@ -12,26 +12,26 @@ import UIKit
 public protocol PaymentOptionDrawable {
 
     func getImageDescription() -> String
-    
+
     func getTitle() -> String
-    
+
     func getSubtitle() -> String?
 }
 
 @objc
 public protocol PaymentMethodOption {
-    
+
     func getId() -> String
-    
+
     func getDescription() -> String
-    
+
     func getComment() -> String
-    
+
     func hasChildren() -> Bool
-    
+
     func getChildren() -> [PaymentMethodOption]?
-    
+
     func isCard() -> Bool
-    
+
     func isCustomerPaymentMethod() -> Bool
 }

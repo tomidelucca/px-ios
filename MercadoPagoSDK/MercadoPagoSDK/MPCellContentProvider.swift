@@ -8,8 +8,8 @@
 
 import Foundation
 @objc
-public protocol MPCellContentProvider : NSObjectProtocol {
-    
+public protocol MPCellContentProvider: NSObjectProtocol {
+
     func getHeight() -> CGFloat
-    
+
 }
