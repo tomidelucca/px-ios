@@ -30,9 +30,8 @@ open class AdditionalStepViewModel: NSObject {
     open var maxFontSize: CGFloat { get { return 24 } }
     open var couponCallback: ((DiscountCoupon) -> Void)?
 
-    
-    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil){
-        
+    init(screenName: String, screenTitle: String, cardSectionVisible: Bool, cardSectionView: Updatable? = nil, totalRowVisible: Bool, showBankInsterestWarning: Bool = false, amount: Double, token: CardInformationForm?, paymentMethods: [PaymentMethod], dataSource: [Cellable], discount: DiscountCoupon? = nil, email: String? = nil) {
+
         self.screenName = screenName
         self.screenTitle = screenTitle
         self.amount = amount
