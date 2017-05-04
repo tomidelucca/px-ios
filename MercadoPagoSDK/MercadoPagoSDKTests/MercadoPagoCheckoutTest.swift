@@ -287,6 +287,52 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertTrue(lastVC.isKind(of: InstructionsViewController.self))
 
     }
+
+    func testShowBankInterestWarning() {
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
+                XCTAssertEqual(bankInsterestCell, MercadoPagoCheckout.showBankInterestWarning())
+            }
+        }
+
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
+                XCTAssertEqual(bankInsterestCell, MercadoPagoCheckout.showBankInterestWarning())
+            }
+        }
+    }
+    
+    func testShowPayerCostDescription() {
+        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
+        let dictionary = NSDictionary(contentsOfFile: path!)
+        
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+        
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
+                XCTAssertEqual(payerCostDescription, MercadoPagoCheckout.showPayerCostDescription())
+            }
+        }
+        
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+        
+        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
+            if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
+                XCTAssertEqual(payerCostDescription, MercadoPagoCheckout.showPayerCostDescription())
+            }
+        }
+    }
 }
 
 open class MercadoPagoCheckoutMock: MercadoPagoCheckout {
