@@ -246,6 +246,7 @@
 		4B53C5FA1E4B3FDD00D6190A /* PaymentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AB4DB11E424BB10015EA3B /* PaymentData.swift */; };
 		4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59F02A1E36676100B5837B /* FlowPreference.swift */; };
 		4B59F02C1E36676800B5837B /* FlowPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B59F02A1E36676100B5837B /* FlowPreference.swift */; };
+		4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */; };
 		4B762E9C1DCFAF4700694336 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsViewController.xib */; };
 		4B88E2411E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */; };
@@ -258,6 +259,7 @@
 		4B9FEFCB1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */; };
 		4B9FEFCC1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */; };
 		4B9FEFCF1EA64E12002B78A2 /* CheckoutViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCD1EA64E12002B78A2 /* CheckoutViewModelTest.swift */; };
+		4B9FEFD11EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */; };
 		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
 		4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */; };
 		4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */; };
@@ -281,8 +283,8 @@
 		4BAE1D471DCBE8FF0000ED5C /* FooterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3D1DCBE8FF0000ED5C /* FooterTableViewCell.xib */; };
 		4BAE1D481DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3E1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift */; };
 		4BAE1D491DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3F1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib */; };
-		4BAE1D4A1DCBE8FF0000ED5C /* RejectedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D401DCBE8FF0000ED5C /* RejectedTableViewCell.swift */; };
-		4BAE1D4B1DCBE8FF0000ED5C /* RejectedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */; };
+		4BAE1D4A1DCBE8FF0000ED5C /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D401DCBE8FF0000ED5C /* ContentTableViewCell.swift */; };
+		4BAE1D4B1DCBE8FF0000ED5C /* ContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D411DCBE8FF0000ED5C /* ContentTableViewCell.xib */; };
 		4BAE1D521DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */; };
 		4BAE1D531DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */; };
 		4BAE1D541DCBE9340000ED5C /* PaymentResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */; };
@@ -341,7 +343,7 @@
 		7622E3311DF5F03E00490C4E /* HeaderCongratsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3E1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift */; };
 		7622E3321DF5F04200490C4E /* ConfirmEmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */; };
 		7622E3331DF5F04700490C4E /* CallForAuthTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3A1DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift */; };
-		7622E3341DF5F04C00490C4E /* RejectedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D401DCBE8FF0000ED5C /* RejectedTableViewCell.swift */; };
+		7622E3341DF5F04C00490C4E /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D401DCBE8FF0000ED5C /* ContentTableViewCell.swift */; };
 		7622E3351DF5F05700490C4E /* FooterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAE1D3C1DCBE8FF0000ED5C /* FooterTableViewCell.swift */; };
 		7622E3381DF5F0B100490C4E /* IssuerRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55FD1DB503E600501061 /* IssuerRowTableViewCell.swift */; };
 		7622E33A1DF5F1D200490C4E /* PurchaseSimpleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765F8E681DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift */; };
@@ -696,6 +698,7 @@
 		4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreferenceTest.swift; sourceTree = "<group>"; };
 		4B53C5EA1E4A2D0200D6190A /* MPCellContentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCellContentProvider.swift; sourceTree = "<group>"; };
 		4B59F02A1E36676100B5837B /* FlowPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreference.swift; sourceTree = "<group>"; };
+		4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModelTest.swift; sourceTree = "<group>"; };
 		4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
 		4B762E9B1DCFAF4700694336 /* InstructionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsViewController.xib; sourceTree = "<group>"; };
 		4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmInstallmentsTableViewCell.swift; sourceTree = "<group>"; };
@@ -704,6 +707,7 @@
 		4B8D73501E780F8F009C1209 /* SummaryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryRow.swift; sourceTree = "<group>"; };
 		4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
 		4B9FEFCD1EA64E12002B78A2 /* CheckoutViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModelTest.swift; sourceTree = "<group>"; };
+		4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewModelTest.swift; sourceTree = "<group>"; };
 		4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmAdditionalInfoTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* AdditionalStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewController.swift; sourceTree = "<group>"; };
@@ -727,8 +731,8 @@
 		4BAE1D3D1DCBE8FF0000ED5C /* FooterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D3E1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCongratsTableViewCell.swift; sourceTree = "<group>"; };
 		4BAE1D3F1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderCongratsTableViewCell.xib; sourceTree = "<group>"; };
-		4BAE1D401DCBE8FF0000ED5C /* RejectedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectedTableViewCell.swift; sourceTree = "<group>"; };
-		4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RejectedTableViewCell.xib; sourceTree = "<group>"; };
+		4BAE1D401DCBE8FF0000ED5C /* ContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTableViewCell.swift; sourceTree = "<group>"; };
+		4BAE1D411DCBE8FF0000ED5C /* ContentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailTableViewCell.swift; sourceTree = "<group>"; };
 		4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmEmailTableViewCell.xib; sourceTree = "<group>"; };
 		4BAE1D501DCBE9340000ED5C /* PaymentResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewController.swift; sourceTree = "<group>"; };
@@ -980,6 +984,7 @@
 				0F98831C1AD2A97A00F750F0 /* MercadoPagoSDKTests.swift */,
 				0F98831A1AD2A97A00F750F0 /* Supporting Files */,
 				767254591C7CB0EC00EB5EBA /* BaseTest.swift */,
+				4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */,
 			);
 			path = MercadoPagoSDKTests;
 			sourceTree = "<group>";
@@ -1436,8 +1441,8 @@
 				4BAE1D3D1DCBE8FF0000ED5C /* FooterTableViewCell.xib */,
 				4BAE1D3E1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.swift */,
 				4BAE1D3F1DCBE8FF0000ED5C /* HeaderCongratsTableViewCell.xib */,
-				4BAE1D401DCBE8FF0000ED5C /* RejectedTableViewCell.swift */,
-				4BAE1D411DCBE8FF0000ED5C /* RejectedTableViewCell.xib */,
+				4BAE1D401DCBE8FF0000ED5C /* ContentTableViewCell.swift */,
+				4BAE1D411DCBE8FF0000ED5C /* ContentTableViewCell.xib */,
 				4BAE1D4E1DCBE9340000ED5C /* ConfirmEmailTableViewCell.swift */,
 				4BAE1D4F1DCBE9340000ED5C /* ConfirmEmailTableViewCell.xib */,
 				4B34DC2D1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift */,
@@ -1621,6 +1626,7 @@
 				4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */,
 				4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */,
 				4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */,
+				4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1810,6 +1816,7 @@
 				0F9883071AD2A97A00F750F0 /* Headers */,
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
+				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -1936,7 +1943,7 @@
 				0FC4FC351B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.xib in Resources */,
 				4BAE1D451DCBE8FF0000ED5C /* CallForAuthTableViewCell.xib in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
-				4BAE1D4B1DCBE8FF0000ED5C /* RejectedTableViewCell.xib in Resources */,
+				4BAE1D4B1DCBE8FF0000ED5C /* ContentTableViewCell.xib in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				FCEB90831EB8F3FA0096B1A2 /* mpsdk_settings.plist in Resources */,
 				FCEB90851EB8F3FA0096B1A2 /* UnlockCardLinks.plist in Resources */,
@@ -1977,6 +1984,7 @@
 				76B085321CE51C6200C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
 				FCBF134C1E7204C30092B756 /* FinancialInstitutionTableViewCell.xib in Resources */,
+				4B9FEFD51EAE40A3002B78A2 /* EntityTypes.plist in Resources */,
 				760BD1F21C99ADE300FDA170 /* MockedResponse.plist in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
 				15B8B1B51E71DE950065DF50 /* DiscountDetailView.xib in Resources */,
@@ -1985,6 +1993,7 @@
 				4B88E2441E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib in Resources */,
 				157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */,
 				FC190A391E53879F003ACBE0 /* IdentificationTypes.plist in Resources */,
+				4B9FEFD31EAE409D002B78A2 /* PayerCostPreferences.plist in Resources */,
 				761B89451C637DBD0015D0BE /* PurchaseDetailTableViewCell.xib in Resources */,
 				15B8B1C41E71DEBD0065DF50 /* CouponDetailViewController.xib in Resources */,
 				76134ABB1C5BED2300A1BAF1 /* OfflinePaymentMethodCell.xib in Resources */,
@@ -2003,6 +2012,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4BCA62FA1EBA48D8006D8131 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0F9883051AD2A97A00F750F0 /* Sources */ = {
@@ -2077,7 +2103,7 @@
 				4BEF81001E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,
 				4BAE1D441DCBE8FF0000ED5C /* CallForAuthTableViewCell.swift in Sources */,
 				0F9883A11AD2AB8000F750F0 /* GatewayService.swift in Sources */,
-				4BAE1D4A1DCBE8FF0000ED5C /* RejectedTableViewCell.swift in Sources */,
+				4BAE1D4A1DCBE8FF0000ED5C /* ContentTableViewCell.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
 				0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				0F98837D1AD2AB6000F750F0 /* Item.swift in Sources */,
@@ -2269,7 +2295,7 @@
 				7622E33B1DF5F1D700490C4E /* ConfirmPaymentTableViewCell.swift in Sources */,
 				7656F5251C9726A60076A14D /* PaymentMethodSearchServiceTest.swift in Sources */,
 				FCAD2BE61E96E1370087D943 /* AdditionalStepCellFactory.swift in Sources */,
-				7622E3341DF5F04C00490C4E /* RejectedTableViewCell.swift in Sources */,
+				7622E3341DF5F04C00490C4E /* ContentTableViewCell.swift in Sources */,
 				0FC4FC221B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				76EC47EE1C8615330086FA53 /* PaymentTypeTest.swift in Sources */,
 				FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */,
@@ -2367,6 +2393,7 @@
 				150786A41CD7CD1E0034C5B1 /* IdentificationCardView.swift in Sources */,
 				157AA6831C970C0100CC9B43 /* TermsAndConditionsViewCell.swift in Sources */,
 				0F9883741AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
+				4B9FEFD11EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift in Sources */,
 				4B34DC301E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */,
 				761B893B1C625C130015D0BE /* MercadoPagoUIViewController.swift in Sources */,
 				0F9883961AD2AB6000F750F0 /* Setting.swift in Sources */,
@@ -2379,6 +2406,7 @@
 				7622E33E1DF5F2B400490C4E /* PurchaseItemDetailTableViewCell.swift in Sources */,
 				76EC47E41C85F01D0086FA53 /* OrderTest.swift in Sources */,
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
+				4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */,
 				7652F43E1D78ADEE006022AF /* MPStepBuilderTest.swift in Sources */,
 				76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */,
 				4B34DC371E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,

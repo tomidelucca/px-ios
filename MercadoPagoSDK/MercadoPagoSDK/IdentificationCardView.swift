@@ -9,27 +9,26 @@
 import UIKit
 
 open class IdentificationCardView: UIView, Updatable {
-var view:UIView!;
-    
+var view: UIView!
+
     @IBOutlet weak var tipoDeDocumentoLabel: UILabel!
     @IBOutlet weak var numberDocLabel: UILabel!
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib ()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         loadViewFromNib ()
     }
-    
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
-       
+
+    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
+
     }
-    
+
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "IdentificationCardView", bundle: bundle)

@@ -10,9 +10,8 @@ import UIKit
 
 open class DiscountCoupon: NSObject {
 
-    
-    open static var activeCoupon : DiscountCoupon!
-    
+    open static var activeCoupon: DiscountCoupon!
+
     /*  JSON EXAMPLE
      {
      "id": 12572,
@@ -33,49 +32,49 @@ open class DiscountCoupon: NSObject {
      "concept": "testConcept"
      }
      */
-    
-   open var _id : String!
-   open var name : String?
-   open var percent_off : String = "0"
-   open var amount_off : String = "0"
-   open var coupon_amount : String = "0"
-   open var currency_id : String?
-   open var concept : String?
-    
+
+   open var _id: String!
+   open var name: String?
+   open var percent_off: String = "0"
+   open var amount_off: String = "0"
+   open var coupon_amount: String = "0"
+   open var currency_id: String?
+   open var concept: String?
+
    open var amount: Double = 0
-    
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-    
+
     func toJSON() -> [String:Any] {
-        var obj:[String:Any] = [
-            "id" : Int(self._id),
-            "percent_off" : Int(self.percent_off),
-            "amount_off" : Int(self.amount_off),
-            "coupon_amount" : Int(self.coupon_amount)
+        var obj: [String:Any] = [
+            "id": Int(self._id),
+            "percent_off": Int(self.percent_off),
+            "amount_off": Int(self.amount_off),
+            "coupon_amount": Int(self.coupon_amount)
         ]
-        
+
         if let name = self.name {
             obj["name"] = name
         }
-        
+
         if let currencyId = self.currency_id {
             obj["currency_id"] = currencyId
         }
-        
+
         if let concept = self.concept {
             obj["concept"] = concept
         }
-        
+
         return obj
     }
-    
-    open class func fromJSON(_ json : NSDictionary, amount: Double) -> DiscountCoupon? {
+
+    open class func fromJSON(_ json: NSDictionary, amount: Double) -> DiscountCoupon? {
         let discount = DiscountCoupon()
         if json["id"] != nil && !(json["id"]! is NSNull) {
             discount._id = String( describing: json["id"] as! NSNumber)
-        }else{
+        } else {
             return nil
         }
         if json["name"] != nil && !(json["name"]! is NSNull) {
@@ -99,22 +98,22 @@ open class DiscountCoupon: NSObject {
         discount.amount = amount
         return discount
     }
-    
+
     open func getDescription() -> String {
-        if (getDiscountDescription() != ""){
+        if (getDiscountDescription() != "") {
             return getDiscountDescription() + " de descuento".localized
-        } else{
+        } else {
             return ""
         }
     }
-    
+
     open func getDiscountDescription() -> String {
         let currency = MercadoPagoContext.getCurrency()
-        if (percent_off != "0"){
+        if (percent_off != "0") {
             return percent_off + " %"
-        }else if (amount_off != "0"){
+        } else if (amount_off != "0") {
             return currency.symbol + amount_off
-        }else{
+        } else {
             return ""
         }
     }
@@ -126,22 +125,21 @@ open class DiscountCoupon: NSObject {
         }
         return nil
     }
-    
+
     open func getDiscountReviewDescription() -> String {
         var text = ""
         if let concept = self.concept {
             text = concept
-        }else{
+        } else {
            text  = "Descuento"
         }
-            
-        
+
         if percent_off != "0" {
             return text + " " + percent_off + " %"
         }
         return text
     }
-    
+
     open func newAmount() -> Double {
         return (amount - Double(coupon_amount)!)
     }

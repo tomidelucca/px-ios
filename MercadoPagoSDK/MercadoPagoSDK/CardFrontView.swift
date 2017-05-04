@@ -9,54 +9,54 @@
 import Foundation
 import UIKit
 
-@IBDesignable open class CardFrontView : UIView, Updatable {
-  var view:UIView!;
-    
+@IBDesignable open class CardFrontView: UIView, Updatable {
+  var view: UIView!
+
     @IBOutlet var backgroundView: UIView!
     @IBOutlet weak var cardLogo: UIImageView!
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
-   @IBOutlet weak var cardNumber: UILabel!
+    @IBOutlet weak var cardNumber: UILabel!
     @IBOutlet weak var cardCVV: UILabel!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib ()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         loadViewFromNib ()
     }
     
     public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
         
-        self.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
+        self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1
         let fontColor = paymentMethod.getFontColor(bin: token?.getCardBin())
-        if let token = token{
+        if let token = token {
             //  cardFront?.cardNumber.text =  "•••• •••• •••• " + (token.getCardLastForDigits())!
             let mask = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: token.getCardBin()), completeEmptySpaces: true, leftToRight: false)
             self.cardNumber.text = mask.textMasked(token.getCardLastForDigits())
         }
-        
+
         cardName.text = ""
         cardExpirationDate.text = ""
         cardNumber.alpha = 0.8
         cardNumber.textColor =  fontColor
         backgroundView.backgroundColor = paymentMethod.getColor(bin: token?.getCardBin())
-        
+
     }
-    
+
     func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CardFrontView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         view.frame = bounds
 
-        self.addSubview(view);
-        
+        self.addSubview(view)
+
         cardNumber.numberOfLines = 0
         cardName.numberOfLines = 0
         cardName.font = UIFont.systemFont(ofSize: cardName.font.pointSize)
@@ -65,14 +65,13 @@ import UIKit
         cardCVV.numberOfLines = 0
         cardCVV.font = UIFont.systemFont(ofSize: cardCVV.font.pointSize)
     }
-    
-    open func finishLoad(){
-     
+
+    open func finishLoad() {
+
      // var context = NSStringDrawingContext().actualScaleFactor
-        
+
    //     let actualFontSize : CGFloat = self.cardNumber.font.pointSize * ;
 
-        
      //   let size = cardNumber.sizeThatFits(CGSize(width: cardNumber.bounds.width, height: cardNumber.bounds.height))
         cardNumber.adjustsFontSizeToFitWidth = false
         cardName.adjustsFontSizeToFitWidth = false
@@ -80,12 +79,11 @@ import UIKit
         cardExpirationDate.adjustsFontSizeToFitWidth = false
 
     }
-       
-    
+
 }
 
 extension UIView {
-    class func loadFromNibNamed(_ nibNamed: String, bundle : Bundle? = nil) -> UIView? {
+    class func loadFromNibNamed(_ nibNamed: String, bundle: Bundle? = nil) -> UIView? {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
@@ -94,7 +92,7 @@ extension UIView {
 }
 
 extension String {
-    func insert(_ string:String,ind:Int) -> String {
+    func insert(_ string: String, ind: Int) -> String {
         return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
     }
 }
