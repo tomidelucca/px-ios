@@ -9,55 +9,54 @@
 import UIKit
 
 class PayerCostRowTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var interestDescription: UILabel!
     @IBOutlet weak var installmentDescription: UILabel!
-    
-    func fillCell(payerCost : PayerCost, showDescription: Bool? = true) {
+
+    func fillCell(payerCost: PayerCost, showDescription: Bool? = true) {
         let currency = MercadoPagoContext.getCurrency()
         if payerCost.installments == 1 {
             self.interestDescription.clearAttributedText()
-            
-        } else if (payerCost.hasInstallmentsRate()){
-            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSForegroundColorAttributeName : UIColor.px_grayLight()]))
+
+        } else if (payerCost.hasInstallmentsRate()) {
+            let attributedTotal = NSMutableAttributedString(attributedString: NSAttributedString(string: "(", attributes: [NSForegroundColorAttributeName: UIColor.px_grayLight()]))
             attributedTotal.append(Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.px_grayLight(), fontSize: 15, baselineOffset:3))
-            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSForegroundColorAttributeName : UIColor.px_grayLight()]))
-            
+            attributedTotal.append(NSAttributedString(string: ")", attributes: [NSForegroundColorAttributeName: UIColor.px_grayLight()]))
+
             if showDescription == false {
                 interestDescription.attributedText = NSAttributedString(string : "")
-            }else {
+            } else {
                 interestDescription.attributedText = attributedTotal
             }
-            
+
         } else {
-            
+
             if showDescription == false {
                 interestDescription.attributedText = NSAttributedString(string : "")
-            }else {
+            } else {
                 interestDescription.attributedText = NSAttributedString(string : "Sin interés".localized)
             }
-            
+
         }
         var installmentNumber = String(format:"%i", payerCost.installments)
         installmentNumber = "\(installmentNumber) x "
         let totalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: String(currency.thousandsSeparator), decimalSeparator: String(currency.decimalSeparator), currencySymbol: String(currency.symbol), color:UIColor.black, centsFontSize: 14, baselineOffset:5)
-        
-        let atribute = [NSFontAttributeName : Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.black]
+
+        let atribute = [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: UIColor.black]
         let installmentLabel = NSMutableAttributedString(string: installmentNumber, attributes: atribute)
-                                                         
-            
+
         installmentLabel.append(totalAmount)
         installmentDescription.attributedText =  installmentLabel
     }
-    
-    func addSeparatorLineToBottom(width: Double, height: Double){
-        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(height)), size: CGSize(width: width, height: 0.5))
+
+    func addSeparatorLineToBottom(width: Double, height: Double) {
+        let lineFrame = CGRect(origin: CGPoint(x: 0, y :Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()
         addSubview(line)
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -68,5 +67,5 @@ class PayerCostRowTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

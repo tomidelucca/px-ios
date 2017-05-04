@@ -11,11 +11,11 @@ import UIKit
 class IssuerRowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var issuerImage: UIImageView!
-    
-    func fillCell(issuer: Issuer, bundle: Bundle){
-        if let image = UIImage(named: "issuer_\(issuer._id!)", in: bundle, compatibleWith: nil){
+
+    func fillCell(issuer: Issuer, bundle: Bundle) {
+        if let image = UIImage(named: "issuer_\(issuer._id!)", in: bundle, compatibleWith: nil) {
             issuerImage.image = image
-        }else {
+        } else {
             issuerImage.image = nil
             textLabel?.text = issuer.name
             textLabel?.textAlignment = .center
@@ -23,11 +23,11 @@ class IssuerRowTableViewCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         // Initialization code
     }
-    func addSeparatorLineToBottom(width: Double, height: Double){
-        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(height)), size: CGSize(width: width, height: 0.5))
+    func addSeparatorLineToBottom(width: Double, height: Double) {
+        let lineFrame = CGRect(origin: CGPoint(x: 0, y :Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()
@@ -39,5 +39,5 @@ class IssuerRowTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

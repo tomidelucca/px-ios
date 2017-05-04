@@ -8,21 +8,20 @@
 
 import Foundation
 
-open class PayerCost : NSObject, Cellable {
-    
+open class PayerCost: NSObject, Cellable {
+
     public var objectType: ObjectTypes = ObjectTypes.payerCost
-    open var installments : Int = 0
-    open var installmentRate : Double = 0
-    open var labels : [String]!
-    open var minAllowedAmount : Double = 0
-    open var maxAllowedAmount : Double = 0
-    open var recommendedMessage : String!
-    open var installmentAmount : Double = 0
-    open var totalAmount : Double = 0
-    
-    
-    public init (installments : Int = 0, installmentRate : Double = 0, labels : [String] = [],
-        minAllowedAmount : Double = 0, maxAllowedAmount : Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
+    open var installments: Int = 0
+    open var installmentRate: Double = 0
+    open var labels: [String]!
+    open var minAllowedAmount: Double = 0
+    open var maxAllowedAmount: Double = 0
+    open var recommendedMessage: String!
+    open var installmentAmount: Double = 0
+    open var totalAmount: Double = 0
+
+    public init (installments: Int = 0, installmentRate: Double = 0, labels: [String] = [],
+        minAllowedAmount: Double = 0, maxAllowedAmount: Double = 0, recommendedMessage: String! = nil, installmentAmount: Double = 0, totalAmount: Double = 0) {
 
         self.installments = installments
         self.installmentRate = installmentRate
@@ -33,10 +32,9 @@ open class PayerCost : NSObject, Cellable {
         self.installmentAmount = installmentAmount
         self.totalAmount = totalAmount
     }
-    
-  
-    open class func fromJSON(_ json : NSDictionary) -> PayerCost {
-        let payerCost : PayerCost = PayerCost()
+
+    open class func fromJSON(_ json: NSDictionary) -> PayerCost {
+        let payerCost: PayerCost = PayerCost()
         if let installments = JSONHandler.attemptParseToInt(json["installments"]) {
             payerCost.installments = installments
         }
@@ -67,20 +65,20 @@ open class PayerCost : NSObject, Cellable {
         }
         return payerCost
     }
-    
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
-    
+
     open func toJSON() -> [String:Any] {
-        let obj:[String:Any] = [
+        let obj: [String:Any] = [
             "installments": self.installments,
-            "installment_rate" : self.installmentRate,
-            "min_allowed_amount" : self.minAllowedAmount,
-            "max_allowed_amount" : self.maxAllowedAmount,
-            "recommended_message" : self.recommendedMessage,
-            "installment_amount" : self.installmentAmount,
-            "total_amount" : self.totalAmount
+            "installment_rate": self.installmentRate,
+            "min_allowed_amount": self.minAllowedAmount,
+            "max_allowed_amount": self.maxAllowedAmount,
+            "recommended_message": self.recommendedMessage,
+            "installment_amount": self.installmentAmount,
+            "total_amount": self.totalAmount
             ]
         return obj
     }
@@ -88,25 +86,25 @@ open class PayerCost : NSObject, Cellable {
     public func hasInstallmentsRate() -> Bool {
         return (self.installmentRate > 0 && self.installments > 1)
     }
-    
+
     public func getCFTValue() -> String? {
         for label in labels {
             let values = label.components(separatedBy: "|")
             for value in values {
-                if let range = value.range(of: "CFT_"){
+                if let range = value.range(of: "CFT_") {
                     return value.substring(from: range.upperBound)
                 }
             }
         }
         return nil
     }
-    
+
     public func getTEAValue() -> String? {
-        
+
         for label in labels {
             let values = label.components(separatedBy: "|")
             for value in values {
-                if let range = value.range(of: "TEA_"){
+                if let range = value.range(of: "TEA_") {
                     return value.substring(from: range.upperBound)
                 }
             }
@@ -115,9 +113,8 @@ open class PayerCost : NSObject, Cellable {
     }
 }
 
-
 public func ==(obj1: PayerCost, obj2: PayerCost) -> Bool {
-    
+
     let areEqual =
     obj1.installments == obj2.installments &&
         obj1.installmentRate == obj2.installmentRate &&
@@ -127,7 +124,6 @@ public func ==(obj1: PayerCost, obj2: PayerCost) -> Bool {
         obj1.recommendedMessage == obj2.recommendedMessage &&
         obj1.installmentAmount == obj2.installmentAmount &&
         obj1.totalAmount == obj2.totalAmount
-    
+
     return areEqual
 }
-

@@ -8,27 +8,25 @@
 
 import UIKit
 
-open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDelegate {
+open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
-    override open var screenName : String { get { return "DISCOUNT_INPUT_CODE" } }
-    var toolbar : UIToolbar?
-    var errorLabel : MPLabel?
-    var viewModel : AddCouponViewModel!
+    override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
+    var toolbar: UIToolbar?
+    var errorLabel: MPLabel?
+    var viewModel: AddCouponViewModel!
 
     var callback : ((_ coupon: DiscountCoupon) -> Void)?
-    
-    
-    init(amount: Double, email: String, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
+
+    init(amount: Double, email: String, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
         super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
         self.viewModel = AddCouponViewModel(amount: amount, email: email)
     }
-    
-    
-    init (viewModel : AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel : ((Void) -> Void)? = nil) {
+
+    init (viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
       super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
@@ -40,7 +38,7 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         textBox.placeholder = "Código de descuento".localized
-        
+
     }
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -53,56 +51,51 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         textBox.becomeFirstResponder()
     }
 
-    var buttonNext : UIBarButtonItem!
-    var buttonPrev : UIBarButtonItem!
-    
+    var buttonNext: UIBarButtonItem!
+    var buttonPrev: UIBarButtonItem!
+
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
         let toolbar = UIToolbar(frame: frame)
-        
-        toolbar.barStyle = UIBarStyle.default;
+
+        toolbar.barStyle = UIBarStyle.default
         toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1;
+        toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
-        
+
         buttonNext = UIBarButtonItem(title: "Canejar".localized, style: .done, target: self, action: #selector(AddCouponViewController.rightArrowKeyTapped))
         buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
-        
-        
+
          let font = Utils.getFont(size: 14)
         buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        
+
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
-        
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
+
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.items = [flexibleSpace, buttonPrev, flexibleSpace, buttonNext, flexibleSpace]
-        
+
         textBox.delegate = self
         self.toolbar = toolbar
         textBox.inputAccessoryView = toolbar
         buttonNext.isEnabled = false
-        
+
     }
-    
-    
-    
-    func leftArrowKeyTapped(){
+
+    func leftArrowKeyTapped() {
         self.exit()
     }
-    
-    
-    func rightArrowKeyTapped(){
-        guard let couponCode = textBox.text else{
+
+    func rightArrowKeyTapped() {
+        guard let couponCode = textBox.text else {
             return
         }
         self.showLoading()
         self.textBox.resignFirstResponder()
         self.viewModel.getCoupon(code: couponCode, success: { () in
             self.hideLoading()
-            if let coupon = self.viewModel.coupon{
+            if let coupon = self.viewModel.coupon {
                 let couponDetailVC =  CouponDetailViewController(coupon: coupon, callbackCancel: { () in
                     self.callbackAndExit()
                 })
@@ -113,8 +106,8 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
              self.showErrorMessage(errorMessage)
         }
     }
-    
-    @IBAction func exit(){
+
+    @IBAction func exit() {
         self.textBox.resignFirstResponder()
         guard let callbackCancel = self.callbackCancel else {
             self.dismiss(animated: false, completion: nil)
@@ -123,27 +116,24 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         self.dismiss(animated: false) {
             callbackCancel()
         }
-        
 
     }
-    
-    
-    func executeCallback(){
+
+    func executeCallback() {
         if let callback = self.callback {
             if let coupon = self.viewModel.coupon {
                 callback(coupon)
             }
         }
     }
-    
-    
+
     func callbackAndExit() {
         self.textBox.resignFirstResponder()
         self.executeCallback()
         self.dismiss(animated: false, completion: nil)
     }
 
-    func showErrorMessage(_ errorMessage:String){
+    func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.mpLightGray()
         self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
@@ -157,19 +147,18 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         textBox.resignFirstResponder()
         textBox.becomeFirstResponder()
     }
-    
-    
-    open func editingChanged(_ textField:UITextField){
-        if ((textBox.text?.characters.count)! > 0){
+
+    open func editingChanged(_ textField: UITextField) {
+        if ((textBox.text?.characters.count)! > 0) {
             buttonNext.isEnabled = true
-        }else{
+        } else {
             buttonNext.isEnabled = false
         }
         hideErrorMessage()
-    
+
     }
-    
-    func hideErrorMessage(){
+
+    func hideErrorMessage() {
         self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
         self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
         self.textBox.inputAccessoryView = self.toolbar
@@ -177,5 +166,5 @@ open class AddCouponViewController: MercadoPagoUIViewController , UITextFieldDel
         self.textBox.resignFirstResponder()
         self.textBox.becomeFirstResponder()
     }
-    
+
 }

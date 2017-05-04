@@ -261,8 +261,8 @@
 		4B9FEFCB1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */; };
 		4B9FEFCC1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */; };
 		4B9FEFCF1EA64E12002B78A2 /* CheckoutViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFCD1EA64E12002B78A2 /* CheckoutViewModelTest.swift */; };
-		4B9FEFD21EAE38A2002B78A2 /* UnlockCardLinks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC33CE3B1E8C78C1002F46BB /* UnlockCardLinks.plist */; };
 		4B9FEFD11EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */; };
+		4B9FEFD21EAE38A2002B78A2 /* UnlockCardLinks.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC33CE3B1E8C78C1002F46BB /* UnlockCardLinks.plist */; };
 		4B9FEFD31EAE409D002B78A2 /* PayerCostPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCA47E4E1E929A4D003DB787 /* PayerCostPreferences.plist */; };
 		4B9FEFD51EAE40A3002B78A2 /* EntityTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FCA653831E79CFD700E8D9C0 /* EntityTypes.plist */; };
 		4BA4DB071E425C6700B70550 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
@@ -714,7 +714,6 @@
 		4B9FEFCA1EA64DC6002B78A2 /* CheckoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
 		4B9FEFCD1EA64E12002B78A2 /* CheckoutViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutViewModelTest.swift; sourceTree = "<group>"; };
 		4B9FEFD01EAE35D0002B78A2 /* AdditionalStepViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewModelTest.swift; sourceTree = "<group>"; };
-
 		4BA4DB081E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmAdditionalInfoTableViewCell.swift; sourceTree = "<group>"; };
 		4BA4DB091E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmAdditionalInfoTableViewCell.xib; sourceTree = "<group>"; };
 		4BAA55E51DB0012300501061 /* AdditionalStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalStepViewController.swift; sourceTree = "<group>"; };
@@ -1822,6 +1821,7 @@
 				0F9883071AD2A97A00F750F0 /* Headers */,
 				0F9883081AD2A97A00F750F0 /* Resources */,
 				157FAE9C1D1C161C00AB13B0 /* CopyFiles */,
+				4BCA62FA1EBA48D8006D8131 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -2020,6 +2020,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4BCA62FA1EBA48D8006D8131 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0F9883051AD2A97A00F750F0 /* Sources */ = {
