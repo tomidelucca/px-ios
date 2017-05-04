@@ -11,9 +11,9 @@ import UIKit
 class BankInsterestTableViewCell: UITableViewCell {
 
     @IBOutlet weak var mainLabel: UILabel!
-    
+
     static let cellHeight: CGFloat = 35
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -29,5 +29,5 @@ class BankInsterestTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

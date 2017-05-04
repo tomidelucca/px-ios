@@ -9,13 +9,13 @@
 import XCTest
 
 class PayerCostTest: BaseTest {
-    
+
     let labels = ["label1", "label2"]
-    
-    func testPayerCost(){
-    
+
+    func testPayerCost() {
+
         let payerCost = PayerCost(installments: 6, installmentRate: 1.2, labels: labels, minAllowedAmount: 5, maxAllowedAmount: 500, recommendedMessage: "message", installmentAmount: 5.0, totalAmount: 30.0)
-        
+
         XCTAssertEqual(payerCost.installments, 6)
         XCTAssertEqual(payerCost.installmentRate, 1.2)
         XCTAssertEqual(payerCost.labels, labels)
@@ -25,13 +25,13 @@ class PayerCostTest: BaseTest {
         XCTAssertEqual(payerCost.installmentAmount, 5.0)
         XCTAssertEqual(payerCost.totalAmount, 30.0)
     }
-    
-    func testFromJSON(){
-        let json : NSDictionary = MockManager.getMockFor("PayerCost")!
+
+    func testFromJSON() {
+        let json: NSDictionary = MockManager.getMockFor("PayerCost")!
         let payerCostFromJSON = PayerCost.fromJSON(json)
         XCTAssertEqual(payerCostFromJSON, payerCostFromJSON)
     }
-    
+
     func testGetCFT() {
     let payerCost = PayerCost(installments: 6, installmentRate: 1.2, labels: labels, minAllowedAmount: 5, maxAllowedAmount: 500, recommendedMessage: "message", installmentAmount: 5.0, totalAmount: 30.0)
         payerCost.labels = ["CFT_89,38%|TEA_71,14%"]
@@ -40,12 +40,12 @@ class PayerCostTest: BaseTest {
         payerCost.labels = ["CFT_89,23%|TEA_70,74%"]
         XCTAssertEqual(payerCost.getCFTValue(), "89,23%")
         XCTAssertEqual(payerCost.getTEAValue(), "70,74%")
-        payerCost.labels = ["CFT_88,33%|TEA_69,73%" , "recommended_interest_installment_with_some_banks"]
+        payerCost.labels = ["CFT_88,33%|TEA_69,73%", "recommended_interest_installment_with_some_banks"]
         XCTAssertEqual(payerCost.getCFTValue(), "88,33%")
         XCTAssertEqual(payerCost.getTEAValue(), "69,73%")
         payerCost.labels = []
         XCTAssertEqual(payerCost.getCFTValue(), nil)
         XCTAssertEqual(payerCost.getTEAValue(), nil)
     }
-    
+
 }
