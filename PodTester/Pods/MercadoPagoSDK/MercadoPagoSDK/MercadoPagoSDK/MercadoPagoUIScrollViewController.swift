@@ -17,23 +17,23 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
     let statusBarHeigth: CGFloat = 20
     var titleCellHeight: CGFloat = 70
     var titleCell: TitleCellScrollable?
-    
+
     func scrollPositionToShowNavBar () -> CGFloat {
         return titleCellHeight - statusBarHeigth
     }
-    
+
     func didScrollInTable(_ scrollView: UIScrollView) {
         navBarFontSize = 18
-        
+
         if let titleCell = titleCell {
             let fontSize = 18 - (scrollView.contentOffset.y + scrollPositionToShowNavBar())/(CGFloat(64) - scrollPositionToShowNavBar())*4
-            
+
             if fontSize<24 {
                 titleCell.updateTitleFontSize(toSize: fontSize)
             } else {
                 titleCell.updateTitleFontSize(toSize: 24)
             }
-            
+
         }
 
         if self.shouldShowNavBar(scrollView) {
@@ -42,18 +42,17 @@ open class MercadoPagoUIScrollViewController: MercadoPagoUIViewController {
             hideNavBar()
         }
     }
-    
-    
+
     override func getNavigationBarTitle() -> String {
         return ""
     }
-    
+
     internal func shouldShowNavBar(_ scrollView: UIScrollView) -> Bool {
         return scrollView.contentOffset.y > -scrollPositionToShowNavBar()
     }
-  
+
 }
-protocol TitleCellScrollable{
-    func updateTitleFontSize(toSize: CGFloat);
-    
+protocol TitleCellScrollable {
+    func updateTitleFontSize(toSize: CGFloat)
+
 }

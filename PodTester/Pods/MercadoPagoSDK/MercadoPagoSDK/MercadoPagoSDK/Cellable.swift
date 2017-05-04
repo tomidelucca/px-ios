@@ -8,9 +8,8 @@
 
 import Foundation
 
-public protocol Cellable{
-    
-    func getCell(width: Double, height: Double)-> UITableViewCell
+public protocol Cellable {
+
+    func getCell(width: Double, height: Double) -> UITableViewCell
 
 }
-

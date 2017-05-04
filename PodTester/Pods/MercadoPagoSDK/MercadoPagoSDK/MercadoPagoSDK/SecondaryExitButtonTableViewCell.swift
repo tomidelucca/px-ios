@@ -9,9 +9,9 @@
 import UIKit
 
 class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
-    
+
     @IBOutlet weak var button: UIButton!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,9 +19,9 @@ class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
         self.button.titleLabel?.font = Utils.getFont(size: 16)
         self.selectionStyle = .none
     }
-    
-    open func fillCell(paymentResult: PaymentResult){
-        if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+
+    open func fillCell(paymentResult: PaymentResult) {
+        if paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
             status = MPStepBuilder.CongratsState.cancel_RECOVER
             self.button.setTitle("Ingresalo nuevamente".localized, for: UIControlState.normal)
         }
@@ -35,35 +35,35 @@ class SecondaryExitButtonTableViewCell: CallbackCancelTableViewCell {
             self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSecondaryButtonText(), for: .normal)
                 self.button.addTarget(self, action: #selector(pendingCallback), for: .touchUpInside)
         }
-        
+
     }
-    
-    func rejectedCallback(){
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedSecondaryButtonCallback(){
+
+    func rejectedCallback() {
+        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getRejectedSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()
         }
     }
-    func pendingCallback(){
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback(){
+    func pendingCallback() {
+        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()
         }
     }
-    func approvedCallback(){
-        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSecondaryButtonCallback(){
+    func approvedCallback() {
+        if let paymentResult = paymentResult, let customCallback = MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getApprovedSecondaryButtonCallback() {
             customCallback(paymentResult)
         } else {
             invokeCallback()
         }
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         // Configure the view for the selected state
     }
-    
+
 }
