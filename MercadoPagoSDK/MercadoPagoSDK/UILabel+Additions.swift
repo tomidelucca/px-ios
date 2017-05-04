@@ -23,21 +23,21 @@ extension UILabel {
 
         return label.frame.height
     }
-    
-    open static func getHeight(width: CGFloat, font: UIFont, text: String) -> CGFloat{
-        
+
+    open static func getHeight(width: CGFloat, font: UIFont, text: String) -> CGFloat {
+
         let label: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.font = font
-        
+
         label.text = text
-        
+
         label.sizeToFit()
-        
+
         return label.frame.height
     }
-    
+
     open func clearAttributedText() {
         self.attributedText = NSAttributedString(string : "")
     }
