@@ -13,8 +13,8 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
     var viewModel: PaymentResultViewModel!
-    
-    override open var screenName : String { get {
+
+    override open var screenName: String { get {
         return "RESULT"
     } }
 
@@ -78,7 +78,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
 
-        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference,  callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
+        self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
     }
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

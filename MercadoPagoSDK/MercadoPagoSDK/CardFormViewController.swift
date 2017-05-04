@@ -598,9 +598,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.resignFirstResponder()
         delightedLabels()
     }
-    
-    func clearCardSkin(){
-        
+
+    func clearCardSkin() {
+
         if self.cardFront?.cardLogo.image != nil, self.cardFront?.cardLogo.image != MercadoPago.getCardDefaultLogo() {
             self.cardFront?.cardLogo.alpha = 0
             self.cardFront?.cardLogo.image =  MercadoPago.getCardDefaultLogo()
@@ -612,7 +612,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.cardFront?.cardLogo.image = MercadoPago.getCardDefaultLogo()
             self.cardView.backgroundColor = UIColor.cardDefaultColor()
         }
-        
+
         let textMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
         let textEditMaskFormaterAux = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
 
@@ -639,8 +639,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             let pmMatched = self.cardFormManager.matchedPaymentMethod(self.cardNumberLabel!.text!)
             cardFormManager.guessedPMS = pmMatched
             let bin = cardFormManager.getBIN(self.cardNumberLabel!.text!)
-            if let paymentMethod = cardFormManager.getGuessedPM(){
-                
+            if let paymentMethod = cardFormManager.getGuessedPM() {
+
                 if self.cardFront?.cardLogo.image == MercadoPago.getCardDefaultLogo() {
                     self.cardFront?.cardLogo.alpha = 0
                     self.cardFront?.cardLogo.image =  paymentMethod.getImage()
@@ -652,7 +652,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
                     self.cardFront?.cardLogo.image =  paymentMethod.getImage()
                     self.cardView.backgroundColor = (paymentMethod.getColor(bin: bin))
                 }
-                
+
                 let labelMask = paymentMethod.getLabelMask(bin: bin)
                 let editTextMask = paymentMethod.getEditTextMask(bin: bin)
                 let textMaskFormaterAux = TextMaskFormater(mask: labelMask)
