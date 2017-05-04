@@ -29,10 +29,10 @@ import UIKit
 
         loadViewFromNib ()
     }
-
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
-
-        self.cardLogo.image =  MercadoPago.getImageFor(paymentMethod)
+    
+    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
+        
+        self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1
         let fontColor = paymentMethod.getFontColor(bin: token?.getCardBin())
         if let token = token {
