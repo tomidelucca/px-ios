@@ -352,9 +352,10 @@ extension UINavigationController {
         return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate)
     }
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return self.viewControllers.last!.supportedInterfaceOrientations
-    }
+ //   override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        
+ //       return self.viewControllers.last!.supportedInterfaceOrientations
+  //  }
 
 }
 
