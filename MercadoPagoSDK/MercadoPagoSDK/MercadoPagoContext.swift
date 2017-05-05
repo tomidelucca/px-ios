@@ -252,6 +252,9 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
     }
+    open class func setMerchantAccessToken(merchantAT : String)  {
+        sharedInstance.merchant_access_token = merchantAT
+    }
 
     open class func publicKey() -> String {
         return sharedInstance.public_key
