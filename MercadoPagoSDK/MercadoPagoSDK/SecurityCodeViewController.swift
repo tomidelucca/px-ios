@@ -109,7 +109,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         if viewModel.showFrontCard() {
             if let paymentMethod = paymentMethod {
                 self.cardFront.cardLogo.alpha = 1
-                if let token = cardInformation{
+                if let token = cardInformation {
                     self.cardFront.cardLogo.image =  paymentMethod.getImage()
                     self.cardFront.backgroundColor = paymentMethod.getColor(bin: cardInformation?.getCardBin())
                     self.textMaskFormater = TextMaskFormater(mask: paymentMethod.getLabelMask(bin: cardInformation?.getCardBin()), completeEmptySpaces: true, leftToRight: false)

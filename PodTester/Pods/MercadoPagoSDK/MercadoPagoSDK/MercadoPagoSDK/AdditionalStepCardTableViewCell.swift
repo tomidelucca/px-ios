@@ -9,47 +9,46 @@
 import UIKit
 
 class AdditionalStepCardTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var cell: UIView!
     var containerView: UIView!
-    var cardFront : CardFrontView!
-    
-    func loadCellView(view: UIView){
-        
+    var cardFront: CardFrontView!
+
+    func loadCellView(view: UIView) {
+
         self.containerView = UIView()
-        
+
         let containerHeight = getCardHeight()
         let containerWidht = getCardWidth()
         let xMargin = (UIScreen.main.bounds.size.width  - containerWidht) / 2
         let yMargin = (UIScreen.main.bounds.size.width*0.5 - containerHeight ) / 2
-        
+
         let rectBackground = CGRect(x: xMargin, y: yMargin, width: containerWidht, height: containerHeight)
         let rect = CGRect(x: 0, y: 0, width: containerWidht, height: containerHeight)
-        
+
         self.containerView.frame = rectBackground
         self.containerView.layer.cornerRadius = 8
         self.containerView.layer.masksToBounds = true
         self.addSubview(self.containerView)
-        
+
         view.frame = rect
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+
         containerView.addSubview(view)
         self.cell.backgroundColor = UIColor.primaryColor()
-        
-        
+
     }
     func updateCardSkin(token: CardInformationForm?, paymentMethod: PaymentMethod, view: Updatable) {
-        
+
         view.updateCard(token: token, paymentMethod: paymentMethod)
-        
+
     }
-    func fadeCard(){
+    func fadeCard() {
         UIView.animate(withDuration: 0.80) {
             self.containerView?.alpha = 0
         }
     }
-    func showCard(){
+    func showCard() {
         UIView.animate(withDuration: 1.50) {
             self.containerView?.alpha = 1
         }
@@ -67,18 +66,18 @@ class AdditionalStepCardTableViewCell: UITableViewCell {
     func getCardWidth() -> CGFloat {
         let widthTotal = UIScreen.main.bounds.size.width * 0.70
         if widthTotal < 512 {
-            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.width*0.50 - 10)){
+            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.width*0.50 - 10)) {
                 return widthTotal * 0.8
-            }else{
+            } else {
                 return (UIScreen.main.bounds.size.width*0.50 - 10) / 0.63 * 0.8
             }
-            
-        }else{
+
+        } else {
             return 512 * 0.8
         }
-        
+
     }
-    
+
     func getCardHeight() -> CGFloat {
         return ( getCardWidth() * 0.63 )
     }

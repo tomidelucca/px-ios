@@ -9,22 +9,22 @@
 import Foundation
 
 extension NSDictionary {
-    
-    public func toJsonString() -> String{
+
+    public func toJsonString() -> String {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
-            
-            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
+
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8) {
                 return jsonString
             }
             return ""
-            
+
         } catch {
             return error.localizedDescription
         }
     }
     public func parseToQuery() -> String {
-        if !NSDictionary.isNullOrEmpty(self){
+        if !NSDictionary.isNullOrEmpty(self) {
             var parametersString = ""
             for (key, value) in self {
                 if let key = key as? String,
@@ -38,19 +38,18 @@ extension NSDictionary {
             return ""
         }
     }
-    
+
     func parseToLiteral() -> [String:Any] {
-        
+
         var anyDict = [String: Any]()
-        
+
         for (key, value) in self {
             anyDict[key as! String] = value
         }
         return anyDict
     }
-    static public func isNullOrEmpty(_ value: NSDictionary?) -> Bool
-    {
+    static public func isNullOrEmpty(_ value: NSDictionary?) -> Bool {
         return value == nil || value?.count == 0
     }
-    
+
 }

@@ -7,15 +7,15 @@
 //
 
 import Foundation
-open class IdentificationService : MercadoPagoService {
-    open func getIdentificationTypes(_ method: String = "GET", uri : String = ServicePreference.MP_IDENTIFICATION_URI, key : String?, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params : String? = nil
+open class IdentificationService: MercadoPagoService {
+    open func getIdentificationTypes(_ method: String = "GET", uri: String = ServicePreference.MP_IDENTIFICATION_URI, key: String?, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        var params: String? = nil
         if key != nil {
             params = MercadoPagoContext.keyType() + "=" + key!
         }
         self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) -> Void in
             if let failure = failure {
-                failure(NSError(domain: "mercadopago.sdk.IdentificationService.getIdentificationTypes", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+                failure(NSError(domain: "mercadopago.sdk.IdentificationService.getIdentificationTypes", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }
         })
     }
