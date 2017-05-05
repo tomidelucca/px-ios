@@ -29,9 +29,9 @@ import UIKit
 
         loadViewFromNib ()
     }
-    
-    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod){
-        
+
+    public func updateCard(token: CardInformationForm?, paymentMethod: PaymentMethod) {
+
         self.cardLogo.image =  paymentMethod.getImage()
         self.cardLogo.alpha = 1
         let fontColor = paymentMethod.getFontColor(bin: token?.getCardBin())

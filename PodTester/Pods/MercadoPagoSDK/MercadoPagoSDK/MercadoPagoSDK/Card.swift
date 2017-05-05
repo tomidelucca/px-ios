@@ -9,30 +9,27 @@
 import Foundation
 import UIKit
 
-open class Card : NSObject, CardInformation, PaymentMethodOption {
+open class Card: NSObject, CardInformation, PaymentMethodOption {
 
-    
-    open var cardHolder : Cardholder?
-    open var customerId : String?
-    open var dateCreated : Date?
-    open var dateLastUpdated : Date?
-    open var expirationMonth : Int = 0
-    open var expirationYear : Int = 0
-    open var firstSixDigits : String?
-    open var idCard : NSNumber = 0
-    open var lastFourDigits : String?
-    open var paymentMethod : PaymentMethod?
-    open var issuer : Issuer?
-    open var securityCode : SecurityCode?
-    
-    
+    open var cardHolder: Cardholder?
+    open var customerId: String?
+    open var dateCreated: Date?
+    open var dateLastUpdated: Date?
+    open var expirationMonth: Int = 0
+    open var expirationYear: Int = 0
+    open var firstSixDigits: String?
+    open var idCard: NSNumber = 0
+    open var lastFourDigits: String?
+    open var paymentMethod: PaymentMethod?
+    open var issuer: Issuer?
+    open var securityCode: SecurityCode?
+
     public func getIssuer() -> Issuer? {
         return self.issuer
     }
-    
 
-   open class func fromJSON(_ json : NSDictionary) -> Card {
-        let card : Card = Card()
+   open class func fromJSON(_ json: NSDictionary) -> Card {
+        let card: Card = Card()
         if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
             card.customerId = customerId
         }
@@ -74,8 +71,8 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
-    
-    open func toJSON() -> [String:Any]  {
+
+    open func toJSON() -> [String:Any] {
         let cardHolder : Any = self.cardHolder == nil ? JSONHandler.null : self.cardHolder!.toJSONString()
         let customer_id : Any = self.customerId == nil ? JSONHandler.null : self.customerId!
         let dateCreated : Any = self.dateCreated == nil ? JSONHandler.null : String(describing: self.dateCreated!)
@@ -86,23 +83,23 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
         let issuer : Any = self.issuer == nil ? JSONHandler.null : self.issuer!.toJSONString()
         let securityCode : Any = self.securityCode == nil ? JSONHandler.null : self.securityCode
 
-        let obj:[String:Any] = [
-            "cardHolder" : cardHolder,
+        let obj: [String:Any] = [
+            "cardHolder": cardHolder,
             "customer_id": customer_id,
-            "dateCreated" : dateCreated,
-            "dateLastUpdated" : dateLastUpdated,
-            "expirationMonth" : self.expirationMonth,
-            "expirationYear" : self.expirationYear,
-            "firstSixDigits" : firstSixDigits,
-            "idCard" : self.idCard,
-            "lastFourDigits" : lastFourDigits,
-            "paymentMethod" : paymentMethod,
-            "issuer" : issuer,
-            "securityCode" : securityCode
+            "dateCreated": dateCreated,
+            "dateLastUpdated": dateLastUpdated,
+            "expirationMonth": self.expirationMonth,
+            "expirationYear": self.expirationYear,
+            "firstSixDigits": firstSixDigits,
+            "idCard": self.idCard,
+            "lastFourDigits": lastFourDigits,
+            "paymentMethod": paymentMethod,
+            "issuer": issuer,
+            "securityCode": securityCode
         ]
         return obj
     }
-    
+
     open func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {
@@ -121,23 +118,23 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
     open func getCardDescription() -> String {
         return "terminada en " + lastFourDigits! //TODO: Make it localizable
     }
-    
+
     open func getPaymentMethod() -> PaymentMethod {
         return self.paymentMethod!
     }
-    
+
     open func getCardId() -> String {
         return self.idCard.stringValue
     }
-    
+
     open func getPaymentMethodId() -> String {
         return (self.paymentMethod?._id)!
     }
-    
+
     open func getCardSecurityCode() -> SecurityCode {
         return self.securityCode!
     }
-    
+
     open func getCardBin() -> String? {
         return self.firstSixDigits
     }
@@ -145,73 +142,71 @@ open class Card : NSObject, CardInformation, PaymentMethodOption {
     open func getCardLastForDigits() -> String? {
         return self.lastFourDigits!
     }
-    
+
     open func setupPaymentMethodSettings(_ settings: [Setting]) {
         self.paymentMethod?.settings = settings
     }
-    
+
     open func setupPaymentMethod(_ paymentMethod: PaymentMethod) {
         self.paymentMethod = paymentMethod
     }
-    
+
     public func isIssuerRequired() -> Bool {
         return self.issuer == nil
     }
-    
+
     public func canBeClone() -> Bool {
         return false
     }
-    
+
     /** PaymentOptionDrawable implementation */
-    
+
     public func getTitle() -> String {
         return getCardDescription()
     }
-    
+
     public func getSubtitle() -> String? {
         return nil
     }
-    
+
     public func getImageDescription() -> String {
         return self.getPaymentMethodId()
     }
 
     /** PaymentMethodOption implementation */
-    
+
     public func getId() -> String {
         return String(describing : self.idCard)
     }
-    
+
     public func getChildren() -> [PaymentMethodOption]? {
         return nil
     }
-    
+
     public func hasChildren() -> Bool {
         return false
     }
-    
+
     public func isCard() -> Bool {
         return true
     }
-    
+
     public func isCustomerPaymentMethod() -> Bool {
         return true
     }
-    
+
     public func getDescription() -> String {
         return ""
     }
-    
+
     public func getComment() -> String {
         return ""
     }
-    
+
 }
 
-
-
 public func ==(obj1: Card, obj2: Card) -> Bool {
-    
+
     let areEqual =
         obj1.cardHolder == obj2.cardHolder &&
         obj1.customerId == obj2.customerId &&
@@ -226,4 +221,3 @@ public func ==(obj1: Card, obj2: Card) -> Bool {
         obj1.securityCode == obj2.securityCode
     return areEqual
 }
-

@@ -9,7 +9,7 @@
 import UIKit
 
 class DiscountDetailView: UIView {
-    
+
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productAmount: UILabel!
@@ -17,13 +17,13 @@ class DiscountDetailView: UIView {
     @IBOutlet weak var discountAmount: UILabel!
     @IBOutlet weak var totalTitle: UILabel!
     @IBOutlet weak var totalAmount: UILabel!
-    
-    let fontSize : CGFloat = 18.0
-    let baselineOffSet : Int = 6
-    
+
+    let fontSize: CGFloat = 18.0
+    let baselineOffSet: Int = 6
+
     var coupon: DiscountCoupon!
     var amount: Double!
-    
+
     init(frame: CGRect, coupon: DiscountCoupon, amount: Double) {
         super.init(frame: frame)
         self.coupon = coupon
@@ -35,7 +35,7 @@ class DiscountDetailView: UIView {
         super.init(coder: aDecoder)
         loadViewFromNib ()
     }
-    
+
     func loadViewFromNib() {
         let currency = MercadoPagoContext.getCurrency()
         let bundle = Bundle(for: type(of: self))
