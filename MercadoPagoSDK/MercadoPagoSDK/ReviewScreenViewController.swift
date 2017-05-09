@@ -1,5 +1,5 @@
 //
-//  CheckoutViewController.swift
+//  ReviewScreenViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 13/1/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
+open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
     static let kNavBarOffset = CGFloat(-64.0)
     static let kDefaultNavBarOffset = CGFloat(0.0)
@@ -29,7 +29,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     @IBOutlet weak var checkoutTable: UITableView!
 
    public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
-        super.init(nibName: "CheckoutViewController", bundle: MercadoPago.getBundle())
+        super.init(nibName: "ReviewScreenViewController", bundle: MercadoPago.getBundle())
         self.initCommon()
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
@@ -73,7 +73,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.navBarTextColor = UIColor.primaryColor()
 
         self.displayBackButton()
-        self.navigationItem.leftBarButtonItem!.action = #selector(CheckoutViewController.exitCheckoutFlow)
+        self.navigationItem.leftBarButtonItem!.action = #selector(ReviewScreenViewController.exitCheckoutFlow)
 
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
@@ -364,7 +364,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
         let exitButtonTitle = viewModel.reviewScreenPreference.getCancelButtonTitle()
         exitButtonCell.exitButton.setTitle(exitButtonTitle, for: .normal)
-        exitButtonCell.exitButton.addTarget(self, action: #selector(CheckoutViewController.exitCheckoutFlow), for: .touchUpInside)
+        exitButtonCell.exitButton.addTarget(self, action: #selector(ReviewScreenViewController.exitCheckoutFlow), for: .touchUpInside)
         return exitButtonCell
     }
 
@@ -405,7 +405,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
     }
 
     override func getNavigationBarTitle() -> String {
-        if (self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == CheckoutViewController.kNavBarOffset) {
+        if (self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset) {
             return ""
         }
         return viewModel.reviewScreenPreference.getTitle()

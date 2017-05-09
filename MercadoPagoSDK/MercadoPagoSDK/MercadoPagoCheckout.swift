@@ -27,7 +27,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
-            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self)
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -504,7 +504,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func collectPaymentData() {
-        let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in
+        let checkoutVC = ReviewScreenViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -544,7 +544,7 @@ open class MercadoPagoCheckout: NSObject {
     func cleanNavigationStack () {
 
         // TODO WALLET
-        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self)
+        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
         }
         self.navigationController.viewControllers = newNavigationStack
 
@@ -576,7 +576,7 @@ open class MercadoPagoCheckout: NSObject {
 
     public func updateReviewAndConfirm() {
         let currentViewController = self.navigationController.viewControllers
-        if let checkoutVC = currentViewController.last as? CheckoutViewController {
+        if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
             checkoutVC.showNavBar()
             checkoutVC.checkoutTable.reloadData()
         }
