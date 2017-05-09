@@ -26,11 +26,13 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
     }
 
     func testBankInterestCell() {
-        if MercadoPagoCheckout.showBankInterestWarning() {
-            XCTAssertEqual(self.instance!.showBankInsterestCell(), true)
-        } else {
-            XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
-        }
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), true)
+
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
     }
 
     func testScreenName() {
