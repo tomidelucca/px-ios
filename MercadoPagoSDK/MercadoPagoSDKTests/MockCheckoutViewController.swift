@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MockCheckoutViewController: CheckoutViewController {
+class MockCheckoutViewController: ReviewScreenViewController {
 
     var startPaymentVaultInvoked = false
 

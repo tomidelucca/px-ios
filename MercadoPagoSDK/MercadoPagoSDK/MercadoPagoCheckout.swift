@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    static var currentCheckout : MercadoPagoCheckout?
+    static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
@@ -21,15 +21,22 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
+    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
-            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self)
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
             }
             viewControllerBase = newNavigationStack.last
+        }
+
+        MercadoPagoContext.setPublicKey(publicKey)
+        if let at = accessToken {
+            MercadoPagoContext.setPayerAccessToken(at)
+        } else {
+            MercadoPagoContext.setPayerAccessToken("")
         }
     }
 
@@ -497,7 +504,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func collectPaymentData() {
-        let checkoutVC = CheckoutViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in
+        let checkoutVC = ReviewScreenViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -537,7 +544,7 @@ open class MercadoPagoCheckout: NSObject {
     func cleanNavigationStack () {
 
         // TODO WALLET
-        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:CheckoutViewController.self)
+        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
         }
         self.navigationController.viewControllers = newNavigationStack
 
@@ -569,7 +576,7 @@ open class MercadoPagoCheckout: NSObject {
 
     public func updateReviewAndConfirm() {
         let currentViewController = self.navigationController.viewControllers
-        if let checkoutVC = currentViewController.last as? CheckoutViewController {
+        if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
             checkoutVC.showNavBar()
             checkoutVC.checkoutTable.reloadData()
         }
@@ -785,6 +792,14 @@ extension MercadoPagoCheckout {
 
     open static func setCallback(callback : @escaping (Void) -> Void) {
         MercadoPagoCheckoutViewModel.callback = callback
+    }
+
+    open static func setSite(siteID: String) {
+        MercadoPagoContext.setSiteID(siteID)
+    }
+
+    open static func setLanguage(language: Languages) {
+        MercadoPagoContext.setLanguage(language: language)
     }
 
     open class func showPayerCostDescription() -> Bool {

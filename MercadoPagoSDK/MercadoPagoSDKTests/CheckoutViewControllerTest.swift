@@ -9,7 +9,7 @@
 import XCTest
 @testable import MercadoPagoSDK
 
-class CheckoutViewControllerTest: BaseTest {
+class ReviewScreenViewControllerTest: BaseTest {
 
     var checkoutViewController: MockCheckoutViewController?
     var preference: CheckoutPreference?
