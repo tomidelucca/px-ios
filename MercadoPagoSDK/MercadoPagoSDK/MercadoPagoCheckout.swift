@@ -803,7 +803,6 @@ extension MercadoPagoCheckout {
     }
 
     open class func showPayerCostDescription() -> Bool {
-
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
