@@ -43,6 +43,8 @@ open class SettingsViewController: UIViewController, UITableViewDataSource, UITa
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let NewView = storyboard.instantiateViewController(withIdentifier: "MainTableViewController") as! MainTableViewController
         self.viewModel.update()
+        NewView.publicKey = self.viewModel.selectedSite.pk
+        NewView.accessToken = ""
         NewView.prefID = self.viewModel.selectedSite.getPrefID()
         NewView.color = self.viewModel.selectedColor
         NewView.title = "Options"

@@ -43,8 +43,10 @@ class Option: NSObject {
 }
 
 class MainTableViewController: UITableViewController {
-
-    open var prefID: String = ""
+    
+    open var publicKey: String!
+    open var accessToken: String!
+    open var prefID: String!
     open var color: UIColor!
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
@@ -178,7 +180,7 @@ class MainTableViewController: UITableViewController {
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = CheckoutPreference(_id: self.prefID)
-        let checkout = MercadoPagoCheckout.init(checkoutPreference: pref, paymentData: paymentData, navigationController: self.navigationController!, paymentResult: paymentResult)
+        let checkout = MercadoPagoCheckout.init(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref, paymentData: paymentData, navigationController: self.navigationController!, paymentResult: paymentResult)
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color, fontName: "", fontLightName: "")
