@@ -1,15 +1,15 @@
 PODS:
-  - MercadoPagoSDK (3.0.0-DEVELOP):
-    - MercadoPagoSDK/Localization (= 3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization (3.0.0-DEVELOP):
-    - MercadoPagoSDK/Localization/es (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-CO (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/es-MX (= 3.0.0-DEVELOP)
-    - MercadoPagoSDK/Localization/pt (= 3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-CO (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/es-MX (3.0.0-DEVELOP)
-  - MercadoPagoSDK/Localization/pt (3.0.0-DEVELOP)
+  - MercadoPagoSDK (3.0.0-BETA-26):
+    - MercadoPagoSDK/Localization (= 3.0.0-BETA-26)
+  - MercadoPagoSDK/Localization (3.0.0-BETA-26):
+    - MercadoPagoSDK/Localization/es (= 3.0.0-BETA-26)
+    - MercadoPagoSDK/Localization/es-CO (= 3.0.0-BETA-26)
+    - MercadoPagoSDK/Localization/es-MX (= 3.0.0-BETA-26)
+    - MercadoPagoSDK/Localization/pt (= 3.0.0-BETA-26)
+  - MercadoPagoSDK/Localization/es (3.0.0-BETA-26)
+  - MercadoPagoSDK/Localization/es-CO (3.0.0-BETA-26)
+  - MercadoPagoSDK/Localization/es-MX (3.0.0-BETA-26)
+  - MercadoPagoSDK/Localization/pt (3.0.0-BETA-26)
 
 DEPENDENCIES:
   - MercadoPagoSDK (from `../`)
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  MercadoPagoSDK: cc27d0dde146e2642e7dc3e7d62e4d68d1b84544
+  MercadoPagoSDK: 215720f46bc1e35a1f7ff05faa3a4b693535d464
 
 PODFILE CHECKSUM: 0992ca2f8d7c2acabf817b7477463fa790adf87b
 
