@@ -292,12 +292,12 @@ class MercadoPagoCheckoutTest: BaseTest {
         var site = "MCO"
         MercadoPagoContext.setSiteID(site)
         XCTAssertEqual(true, MercadoPagoCheckout.showBankInterestWarning())
-        
+
         site = "MLA"
         MercadoPagoContext.setSiteID(site)
         XCTAssertEqual(false, MercadoPagoCheckout.showBankInterestWarning())
     }
-    
+
     func testShowPayerCostDescription() {
         var site = "MCO"
         MercadoPagoContext.setSiteID(site)
