@@ -16,7 +16,7 @@ open class CardsAdminViewModel: NSObject {
     var titleScreen = "¿Con qué tarjeta?".localized
     var loadingCards = true
 
-   public  init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
+   public init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
     }
@@ -41,7 +41,7 @@ open class CardsAdminViewModel: NSObject {
         }
     }
 
-    func setTitle(title: String) {
+    public func setTitle(title: String) {
         self.titleScreen = title
     }
 
