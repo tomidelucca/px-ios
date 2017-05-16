@@ -13,12 +13,14 @@ open class CardsAdminViewModel: NSObject {
     var cards: [Card]?
     var customerId: String?
     var extraOptionTitle: String?
+    var confirmPromptText: String?
     var titleScreen = "¿Con qué tarjeta?".localized
     var loadingCards = true
 
-   public init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
+    public init(cards: [Card]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
+        self.confirmPromptText = confirmPromptText
     }
 
     func shouldGetCustomerCardsInfo() -> Bool {
