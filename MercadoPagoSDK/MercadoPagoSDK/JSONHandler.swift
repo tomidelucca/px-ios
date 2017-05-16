@@ -20,8 +20,7 @@ class JSONHandler: NSObject {
                 }
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict)
-            result = NSString(data: jsonData,
-                                       encoding: String.Encoding.ascii.rawValue)  as! String
+            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
         } catch {
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
