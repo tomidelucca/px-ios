@@ -31,7 +31,7 @@ open class Customer: NSObject {
         customer._id = json["id"] as! String!
         customer.liveMode = json["live_mode"] as? Bool
         customer.email = json["email"] as? String
-        customer.firstName = json["last_name"] as? String
+        customer.firstName = json["first_name"] as? String
         customer.lastName = json["last_name"] as? String
         customer._description = json["description"] as? String
 
