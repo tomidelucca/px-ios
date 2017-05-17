@@ -127,7 +127,11 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             collectionView.deselectItem(at: indexPath, animated: true)
             if self.viewModel.isCardItemFor(indexPath: indexPath) {
                 let card = self.viewModel.cards![indexPath.row]
-                deleteCardAlertView(card: card, message: self.viewModel.confirmPromptText!)
+                if let confirmPromptText = self.viewModel.confirmPromptText, (self.viewModel.confirmPromptText?.isNotEmpty)!{
+                    deleteCardAlertView(card: card, message: confirmPromptText)
+                } else {
+                    self.callback(card)
+                }
             } else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath) {
                 callback(nil)
             }
@@ -137,8 +141,8 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     func deleteCardAlertView(card: Card, message: String) {
         let title = (card.paymentMethod?.name)! + " " + card.getTitle()
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Si", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (action) -> Void in
             self.callback(card)
         }))
         

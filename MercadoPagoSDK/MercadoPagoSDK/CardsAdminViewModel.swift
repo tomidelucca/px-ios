@@ -28,7 +28,7 @@ open class CardsAdminViewModel: NSObject {
     }
 
     func numberOfOptions() -> Int {
-        if let _ = self.extraOptionTitle {
+        if let _ = self.extraOptionTitle, (self.extraOptionTitle?.isNotEmpty)! {
             if let cards = cards {
                 return cards.count + 1
             } else {
@@ -150,7 +150,7 @@ open class CardsAdminViewModel: NSObject {
 
     func isExtraOptionItemFor(indexPath: IndexPath) -> Bool {
         guard let cards = cards else {
-            return ( (self.isCardsSection(section: indexPath.section)) && (self.extraOptionTitle != nil) )
+            return ( (self.isCardsSection(section: indexPath.section)) && (self.extraOptionTitle != nil) && (self.extraOptionTitle?.isNotEmpty)!)
         }
 
         if !self.isCardsSection(section: indexPath.section) {
@@ -158,7 +158,7 @@ open class CardsAdminViewModel: NSObject {
         } else if cards.count > indexPath.row {
             return false
         } else {
-            return (self.extraOptionTitle != nil)
+            return (self.extraOptionTitle != nil) && (self.extraOptionTitle?.isNotEmpty)!
         }
     }
 
