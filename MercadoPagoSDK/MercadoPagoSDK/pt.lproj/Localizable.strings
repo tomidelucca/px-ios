@@ -15,6 +15,11 @@
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
 
+
+"Si" = "Sim";
+"No" = "Não";
+
+
 //ADDITIONAL STEP
 
 //-- Payer Cost
