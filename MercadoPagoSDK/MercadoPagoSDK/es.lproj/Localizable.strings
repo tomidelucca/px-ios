@@ -10,7 +10,6 @@
 "No" = "No";
 
 "Cargando..." = "Cargando...";
-
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Revisa este dato";
 "invalid_card_length" = "Ingresa los %1$s números de la tarjeta";
@@ -24,13 +23,11 @@
 "NOT_INSTALLMENTS_FOUND" = "No se encontraron cuotas disponibles para un monto de $";
 "PAYMENT_ERROR" = "No se pudo realizar el pago.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "No se ha podido obtener los métodos de pago con esta preferencia";
-
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
 
 //INSTRUCCIONES
-
 
 //CONGRATS
 
