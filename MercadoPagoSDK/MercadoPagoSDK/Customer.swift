@@ -67,6 +67,7 @@ open class Customer: NSObject {
         let firstName : Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
         let lastName : Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
         let id : Any =   self._id == nil ? JSONHandler.null : self._id!
+        let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSONString()
 
         var obj: [String:Any] = [
             "default_card": defaultCard,
@@ -75,7 +76,8 @@ open class Customer: NSObject {
             "email": email,
             "first_name": firstName,
             "last_name": lastName,
-            "id": id
+            "id": id,
+            "identification": identification
         ]
 
         var cardsJson: [[String:Any]] = [[:]]
