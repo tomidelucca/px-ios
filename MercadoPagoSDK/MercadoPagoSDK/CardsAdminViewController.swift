@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
@@ -36,18 +36,18 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
 
     fileprivate var callback : ((_ selectedCard: Card? ) -> Void)!
 
-    init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: Card?) -> Void) {
+    public init(viewModel: CardsAdminViewModel, callback : @escaping (_ selectedCard: Card?) -> Void) {
         super.init(nibName: CardsAdminViewController.VIEW_CONTROLLER_NIB_NAME, bundle: bundle)
         self.initCommon()
         self.viewModel = viewModel
         self.callback = callback
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -178,7 +178,7 @@ class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollectionV
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        return UIEdgeInsetsMake(8, 8, 8, 8)
 
     }
 

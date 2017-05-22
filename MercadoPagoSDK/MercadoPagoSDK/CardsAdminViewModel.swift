@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CardsAdminViewModel: NSObject {
+open class CardsAdminViewModel: NSObject {
 
     var cards: [Card]?
     var customerId: String?
@@ -16,7 +16,7 @@ class CardsAdminViewModel: NSObject {
     var titleScreen = "¿Con qué tarjeta?".localized
     var loadingCards = true
 
-    init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
+   public  init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
     }

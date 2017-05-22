@@ -18,6 +18,5 @@ class MPXLoadingViewController: MercadoPagoUIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 
 }

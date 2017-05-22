@@ -25,6 +25,16 @@ class PayerCostAdditionalStepViewModelTest: BaseTest {
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
+    func testBankInterestCell() {
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), true)
+
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
+    }
+
     func testScreenName() {
         XCTAssertEqual(self.instance!.getScreenName(), "PAYER_COST")
     }
@@ -202,6 +212,10 @@ class IssuerAdditionalStepViewModelTest: BaseTest {
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
+    func testBankInterestCell() {
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
+    }
+
     func testScreenName() {
         XCTAssertEqual(self.instance!.getScreenName(), "ISSUER")
     }
@@ -274,6 +288,10 @@ class CardTypeAdditionalStepViewModelTest: BaseTest {
     func testTitle() {
         XCTAssertEqual(self.instance!.getTitle(), "¿Qué tipo de tarjeta es?".localized)
         XCTAssertEqual(self.instance!.maxFontSize, 24)
+    }
+
+    func testBankInterestCell() {
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
     }
 
     func testScreenName() {
@@ -354,6 +372,10 @@ class FinancialInstitutionAdditionalStepViewModelTest: BaseTest {
         XCTAssertEqual(self.instance!.maxFontSize, 24)
     }
 
+    func testBankInterestCell() {
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
+    }
+
     func testScreenName() {
         XCTAssertEqual(self.instance!.getScreenName(), "FINANCIAL_INSTITUTION")
     }
@@ -428,6 +450,10 @@ class EntityTypeAdditionalStepViewModelTest: BaseTest {
     func testTitle() {
         XCTAssertEqual(self.instance!.getTitle(), "¿Cuál es el tipo de persona?".localized)
         XCTAssertEqual(self.instance!.maxFontSize, 21)
+    }
+
+    func testBankInterestCell() {
+        XCTAssertEqual(self.instance!.showBankInsterestCell(), false)
     }
 
     func testScreenName() {

@@ -100,34 +100,6 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
         case MCO = "MCO"
     }
 
-    @objc public enum Languages: Int {
-        case _SPANISH
-        case _SPANISH_MEXICO
-        case _SPANISH_COLOMBIA
-        case _SPANISH_URUGUAY
-        case _SPANISH_PERU
-        case _SPANISH_VENEZUELA
-//        case _SPANISH_CHILE
-        case _PORTUGUESE
-        case _ENGLISH
-
-        func langPrefix() -> String {
-            switch self {
-            case ._SPANISH : return "es"
-            case ._SPANISH_MEXICO : return "es-MX"
-            case ._SPANISH_COLOMBIA : return "es-CO"
-            case ._SPANISH_URUGUAY : return "es-UY"
-            case ._SPANISH_PERU : return "es-PE"
-            case ._SPANISH_VENEZUELA : return "es-VE"
-//            case ._SPANISH_CHILE : return "es-CH"
-
-            case ._PORTUGUESE : return "pt"
-            case ._ENGLISH : return "en"
-            }
-        }
-
-    }
-
     open func siteId() -> String! {
         return site.rawValue
     }
@@ -252,6 +224,9 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
     open class func merchantAccessToken() -> String {
         return sharedInstance.merchant_access_token
     }
+    open class func setMerchantAccessToken(merchantAT: String) {
+        sharedInstance.merchant_access_token = merchantAT
+    }
 
     open class func publicKey() -> String {
         return sharedInstance.public_key
@@ -293,6 +268,34 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
             return MercadoPagoContext.payerAccessToken()
         } else {
             return MercadoPagoContext.publicKey()
+        }
+    }
+
+}
+
+@objc public enum Languages: Int {
+    case _SPANISH
+    case _SPANISH_MEXICO
+    case _SPANISH_COLOMBIA
+    case _SPANISH_URUGUAY
+    case _SPANISH_PERU
+    case _SPANISH_VENEZUELA
+    //        case _SPANISH_CHILE
+    case _PORTUGUESE
+    case _ENGLISH
+
+    func langPrefix() -> String {
+        switch self {
+        case ._SPANISH : return "es"
+        case ._SPANISH_MEXICO : return "es-MX"
+        case ._SPANISH_COLOMBIA : return "es-CO"
+        case ._SPANISH_URUGUAY : return "es-UY"
+        case ._SPANISH_PERU : return "es-PE"
+        case ._SPANISH_VENEZUELA : return "es-VE"
+            //            case ._SPANISH_CHILE : return "es-CH"
+
+        case ._PORTUGUESE : return "pt"
+        case ._ENGLISH : return "en"
         }
     }
 

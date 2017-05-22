@@ -38,7 +38,7 @@ open class CardViewModelManager: NSObject {
 
     var promos: [Promo]?
 
-    init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
+    public init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
         self.amount = amount
         self.paymentMethods = paymentMethods
         self.guessedPMS = paymentMethod

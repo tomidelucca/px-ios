@@ -18,10 +18,10 @@ class FooterTableViewCell: CallbackCancelTableViewCell {
         self.button.titleLabel?.font = Utils.getFont(size: 16)
         self.selectionStyle = .none
     }
-    func fillCell(paymentResult: PaymentResult){
-        if paymentResult.statusDetail.contains("cc_rejected_bad_filled"){
+    func fillCell(paymentResult: PaymentResult) {
+        if paymentResult.statusDetail.contains("cc_rejected_bad_filled") {
             self.button.setTitle("Cancelar pago".localized, for: UIControlState.normal)
-        } else{
+        } else {
             self.button.setTitle(MercadoPagoCheckoutViewModel.paymentResultScreenPreference.getExitButtonTitle(), for: UIControlState.normal)
         }
     }
