@@ -794,10 +794,6 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.callback = callback
     }
 
-    open static func setSite(siteID: String) {
-        MercadoPagoContext.setSiteID(siteID)
-    }
-
     open static func setLanguage(language: Languages) {
         MercadoPagoContext.setLanguage(language: language)
     }
