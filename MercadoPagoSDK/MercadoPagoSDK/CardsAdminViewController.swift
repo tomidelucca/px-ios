@@ -224,7 +224,9 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
                 self.viewModel.loadingCards = false
                 self.collectionSearch.reloadData()
             }, failure: { (_: NSError?) -> Void in
+                self.viewModel.loadingCards = false
                  self.hideLoading()
+                 self.collectionSearch.reloadData()
             })
         } else {
             self.collectionSearch.delegate = self
