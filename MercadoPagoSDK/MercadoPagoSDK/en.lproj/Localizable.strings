@@ -5,8 +5,11 @@
  Created by Matias Gualino on 26/4/15.
  Copyright (c) 2015 MercadoPago. All rights reserved.
  */
-"Cargando..." = "Loading...";
 
+"Si" = "Yes";
+"No" = "No";
+
+"Cargando..." = "Loading...";
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Check this information";
 "invalid_card_length" = "Enter the %1$s card numbers";
@@ -17,12 +20,9 @@
 "NOT_INSTALLMENTS_FOUND" = "No interest were found available for an amount of $";
 "PAYMENT_ERROR" = "Payment failed.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "Payment methods could not be obtained with this preference";
-
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
-
-
 
 //CONGRATS
 
