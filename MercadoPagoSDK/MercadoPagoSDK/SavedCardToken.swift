@@ -47,7 +47,7 @@ open class SavedCardToken: CardToken {
         let obj: [String:Any] = [
             "card_id": String.isNullOrEmpty(self.cardId!) ? JSONHandler.null : self.cardId!,
             "security_code": String.isNullOrEmpty(self.securityCode!) ? JSONHandler.null : self.securityCode!,
-            "device": self.device == nil ? JSONHandler.null : self.device!.toJSONString()
+            "device": self.device == nil ? JSONHandler.null : self.device!.toJSON()
         ]
         return JSONHandler.jsonCoding(obj)
     }
