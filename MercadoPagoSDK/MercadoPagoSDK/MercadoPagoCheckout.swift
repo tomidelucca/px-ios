@@ -24,8 +24,7 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-
-    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
+    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
@@ -37,11 +36,33 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         MercadoPagoContext.setPublicKey(publicKey)
-        if let at = accessToken {
-            MercadoPagoContext.setPayerAccessToken(at)
-        } else {
-            MercadoPagoContext.setPayerAccessToken("")
-        }
+
+        MercadoPagoContext.setPayerAccessToken(accessToken)
+
+    }
+
+    public convenience init(publicKey: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentResult: PaymentResult, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+        self.init(publicKey: publicKey, accessToken: "", checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount: discount, navigationController: navigationController)
+    }
+
+    // Basic inits
+
+    public convenience init(publicKey: String, checkoutPreference: CheckoutPreference, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+        self.init(publicKey: publicKey, accessToken: "", checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil, navigationController: navigationController)
+    }
+
+    public convenience init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+        self.init(publicKey: publicKey, accessToken: accessToken, checkoutPreference: checkoutPreference, paymentData: nil, paymentResult: nil, discount: nil, navigationController: navigationController)
+    }
+
+    // Inits with paymentData
+
+    public convenience init(publicKey: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+        self.init(publicKey: publicKey, accessToken: "", checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: nil, discount: nil, navigationController: navigationController)
+    }
+
+    public convenience init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+        self.init(publicKey: publicKey, accessToken: accessToken, checkoutPreference: checkoutPreference, paymentData: paymentData, paymentResult: nil, discount: nil, navigationController: navigationController)
     }
 
     public func start() {
