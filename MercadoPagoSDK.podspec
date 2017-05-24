@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #s.dependency 'MercadoPagoTracker'
 
   s.subspec 'Localization' do |t|
-    %w|pt es es-MX es-CO|.map {|localename|
+    %w|pt es es-MX es-CO en es-PE es-VE es-UY|.map {|localename|
       t.subspec localename do |u|
         u.ios.resources = "MercadoPagoSDK/MercadoPagoSDK/#{localename}.lproj"
         u.ios.preserve_paths = "MercadoPagoSDK/MercadoPagoSDK/#{localename}.lproj"
