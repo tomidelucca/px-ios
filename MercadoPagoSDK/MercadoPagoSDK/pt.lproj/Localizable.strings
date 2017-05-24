@@ -6,6 +6,9 @@
   Copyright (c) 2015 MercadoPago. All rights reserved.
 */
 
+"Si" = "Sim";
+"No" = "Não";
+
 "Cargando..." = "Carregando...";
 "invalid_cvv_length" = "Digite os %1$s números do código de segurança";
 "invalid_field" = "Verifique este dado";
