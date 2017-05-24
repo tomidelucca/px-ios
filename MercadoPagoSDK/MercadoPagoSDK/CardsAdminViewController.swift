@@ -139,7 +139,13 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     }
     
     func deleteCardAlertView(card: Card, message: String) {
-        let title = (card.paymentMethod?.name)! + " " + card.getTitle()
+        var title : String
+        if let name = card.paymentMethod?.name {
+           title = name + " " + card.getTitle()
+        }else{
+            title = card.getTitle()
+        }
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertActionStyle.cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (action) -> Void in

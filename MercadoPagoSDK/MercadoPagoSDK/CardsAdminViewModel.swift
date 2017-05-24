@@ -158,7 +158,10 @@ open class CardsAdminViewModel: NSObject {
         } else if cards.count > indexPath.row {
             return false
         } else {
-            return (self.extraOptionTitle != nil) && (self.extraOptionTitle?.isNotEmpty)!
+            guard let extraOpt = self.extraOptionTitle else{
+                return false
+            }
+            return extraOpt.isNotEmpty
         }
     }
 
