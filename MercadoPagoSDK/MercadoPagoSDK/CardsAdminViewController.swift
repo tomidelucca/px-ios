@@ -127,8 +127,12 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             collectionView.deselectItem(at: indexPath, animated: true)
             if self.viewModel.isCardItemFor(indexPath: indexPath) {
                 let card = self.viewModel.cards![indexPath.row]
-                if let confirmPromptText = self.viewModel.confirmPromptText, (self.viewModel.confirmPromptText?.isNotEmpty)!{
-                    deleteCardAlertView(card: card, message: confirmPromptText)
+                if let confirmPromptText = self.viewModel.confirmPromptText {
+                    if confirmPromptText.isNotEmpty {
+                       deleteCardAlertView(card: card, message: confirmPromptText)
+                    }else{
+                       self.callback(card)
+                    }
                 } else {
                     self.callback(card)
                 }
