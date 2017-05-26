@@ -9,7 +9,7 @@
 import Foundation
 
 open class SecurityCode: NSObject {
-    open var length: Int!
+    open var length: Int = 0
     open var cardLocation: String!
     open var mode: String!
 
@@ -38,8 +38,8 @@ open class SecurityCode: NSObject {
     open func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
             "length": self.length,
-            "cardLocation": self.cardLocation,
-            "mode": self.mode
+            "cardLocation": self.cardLocation == nil ? "" : self.cardLocation!,
+            "mode": self.mode == nil ? "" : self.mode!
         ]
 
         return obj
