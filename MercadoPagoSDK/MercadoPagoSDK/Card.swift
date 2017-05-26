@@ -90,7 +90,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
             "expiration_month": self.expirationMonth,
             "expiration_year": self.expirationYear,
             "first_six_digits": firstSixDigits,
-            "id_card": self.idCard,
+            "id": self.idCard,
             "last_four_digits": lastFourDigits,
             "payment_method": paymentMethod,
             "issuer": issuer,
