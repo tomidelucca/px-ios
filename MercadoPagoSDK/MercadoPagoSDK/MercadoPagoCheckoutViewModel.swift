@@ -95,7 +95,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = paymentData {
             if pm.isComplete() {
                 self.paymentData = pm
-                self.initWithPaymentData = true
+                if paymentResult == nil {
+                    self.initWithPaymentData = true
+                }
             }
         }
         if let discount = discount {
@@ -582,6 +584,7 @@ extension MercadoPagoCheckoutViewModel {
         self.payment = nil
         self.paymentResult = nil
         self.readyToPay = false
+        self.setIsCheckoutComplete(isCheckoutComplete: false)
     }
 
     func prepareForClone() {

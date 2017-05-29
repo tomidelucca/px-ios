@@ -261,11 +261,28 @@
 }
 ,
 &quot;payment_method&quot;:{
-&quot;id&quot;: &quot;id&quot;,
+&quot;id&quot;: &quot;visa&quot;,
 &quot;name&quot;: &quot;name&quot;,
 &quot;payment_type_id&quot;: &quot;debit_card&quot;,
 &quot;additional_info_needed&quot;: &quot;additional_info_needed&quot;,
-&quot;settings&quot;: &quot;settings&quot;,
+&quot;settings&quot;: [
+        {
+          &quot;card_number&quot;: {
+            &quot;validation&quot;: &quot;standard&quot;,
+            &quot;length&quot;: 16
+          },
+          &quot;bin&quot;: {
+            &quot;pattern&quot;: &quot;^(501105)&quot;,
+            &quot;installments_pattern&quot;: &quot;^(501105)&quot;,
+            &quot;exclusion_pattern&quot;: &quot;^((589562)|(527571)|(527572))&quot;
+          },
+          &quot;security_code&quot;: {
+            &quot;length&quot;: 3,
+            &quot;card_location&quot;: &quot;back&quot;,
+            &quot;mode&quot;: &quot;mandatory&quot;
+          }
+        }
+      ],
 &quot;additional_info_needed&quot;: [&quot;additional_info_needed 1&quot;,&quot;additional_info_needed 2&quot;]
 }
 ,
