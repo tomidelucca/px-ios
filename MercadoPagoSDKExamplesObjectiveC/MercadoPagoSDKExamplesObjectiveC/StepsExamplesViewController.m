@@ -132,6 +132,7 @@ CheckoutPreference *pref;
 
     PaymentData *pd = [[PaymentData alloc] init];
     pd.paymentMethod = pm;
+    pd.paymentMethod.name = @"Visa";
     
     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
@@ -139,8 +140,22 @@ CheckoutPreference *pref;
     //pd.payerCost = nil;//[[PayerCost alloc] initWithInstallments:3 installmentRate:10 labels:nil minAllowedAmount:10 maxAllowedAmount:200 recommendedMessage:@"sarsa" installmentAmount:100 totalAmount:200];
     
     pd.issuer = nil;//[[Issuer alloc] init];
-     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"approved" statusDetail:@"approved" paymentData:pd payerEmail:nil id:nil statementDescription:nil];
-    
+     PaymentResult *paymentResult = [[PaymentResult alloc] initWithStatus:@"rejected" statusDetail:@"cc_rejected_bad_filled_othe" paymentData:pd payerEmail:nil id:nil statementDescription:nil];
+
+    FlowPreference *flowPreference = [[FlowPreference alloc]init];
+    [flowPreference disableReviewAndConfirmScreen];
+    [MercadoPagoCheckout setFlowPreference:flowPreference];
+
+
+    [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
+        NSLog(@"Payment Data callback");
+    }];
+
+    [MercadoPagoCheckout setCallbackWithCallback:^{
+        NSLog(@"Callback cancel");
+    }];
+
+
     [[[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: @"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489" checkoutPreference:self.pref paymentData:pd discount:nil navigationController:self.navigationController paymentResult:paymentResult] start];
 
 }
