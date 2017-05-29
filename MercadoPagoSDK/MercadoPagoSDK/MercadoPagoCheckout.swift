@@ -10,6 +10,9 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
+    open var callbackCancel: ((Void) -> Void)?
+    
+    
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
@@ -20,6 +23,7 @@ open class MercadoPagoCheckout: NSObject {
 
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
+
 
     public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
@@ -621,7 +625,7 @@ open class MercadoPagoCheckout: NSObject {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
 
-        let congratsViewController: UIViewController
+        let congratsViewController: MercadoPagoUIViewController
         if (PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId)) {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 
@@ -676,7 +680,7 @@ open class MercadoPagoCheckout: NSObject {
 
         removeRootLoading()
 
-        if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil {
+        if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             return
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
@@ -735,11 +739,14 @@ open class MercadoPagoCheckout: NSObject {
         self.currentLoadingView = vcLoading
     }
 
-    private func pushViewController(viewController: UIViewController,
+    private func pushViewController(viewController: MercadoPagoUIViewController,
                                     animated: Bool,
                                     completion : (() -> Swift.Void)? = nil) {
 
         viewController.hidesBottomBarWhenPushed = true
+        if self.navigationController.viewControllers.count == 0 {
+            viewController.callbackCancel = self.callbackCancel
+        }
         self.navigationController.pushViewController(viewController, animated: animated)
     }
 

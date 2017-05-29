@@ -21,7 +21,8 @@
   "resources": [
     "MercadoPagoSDK/MercadoPagoSDK/*.xcassets",
     "MercadoPagoSDK/*.xcassets",
-    "MercadoPagoSDK/MercadoPagoSDK/*.ttf"
+    "MercadoPagoSDK/MercadoPagoSDK/*.ttf",
+    "MercadoPagoSDK/*.plist"
   ],
   "source_files": [
     "MercadoPagoSDK/MercadoPagoSDK/*",

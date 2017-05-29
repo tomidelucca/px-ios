@@ -76,9 +76,9 @@ open class PaymentMethod: NSObject, Cellable {
     open func isSecurityCodeRequired(_ bin: String) -> Bool {
         let settings: [Setting]? = Setting.getSettingByBin(self.settings, bin: bin)
         if let settings = settings {
-                if settings[0].securityCode.length != 0 {
-                    return true
-                }
+            if settings[0].securityCode.length != 0 {
+                return true
+            }
         }
         return false
     }
@@ -122,23 +122,25 @@ open class PaymentMethod: NSObject, Cellable {
             "accreditation_time": accreditationTime
         ]
 
-       var additionalInfoJson = ""
+        var additionalInfoJson = ""
         for info in self.additionalInfoNeeded {
             additionalInfoJson.append(info + ",")
         }
         obj["additional_info_needed"] = String(additionalInfoJson.characters.dropLast())
 
-        var settingsJson = ""
-        for setting in self.settings {
-            settingsJson.append(setting.toJSONString() + ",")
+        var settingsJson: [[String:Any]] = [[:]]
+        for (index, setting) in self.settings.enumerated() {
+            settingsJson[index] = setting.toJSON()
         }
-        obj["settings"] = String(settingsJson.characters.dropLast())
+        obj["settings"] = settingsJson
 
-        var financialInstitutionsJson = ""
-        for financialInstitution in self.financialInstitutions {
-            financialInstitutionsJson.append(financialInstitution.toJSONString() + ",")
+        var financialInstitutionsJson: [[String:Any]] = [[:]]
+        if self.financialInstitutions != nil {
+            for (index, financialInstitution) in self.financialInstitutions.enumerated() {
+                financialInstitutionsJson[index] = financialInstitution.toJSON()
+            }
+            obj["financial_institutions"] = financialInstitutionsJson
         }
-        obj["financial_institutions"] = String(financialInstitutionsJson.characters.dropLast())
 
         return obj
 
@@ -149,9 +151,9 @@ open class PaymentMethod: NSObject, Cellable {
         paymentMethod._id = json["id"] as? String
         paymentMethod.name = json["name"] as? String
 
-		if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
-			paymentMethod.paymentTypeId = json["payment_type_id"] as! String
-		}
+        if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
+            paymentMethod.paymentTypeId = json["payment_type_id"] as! String
+        }
 
         if json["status"] != nil && !(json["status"]! is NSNull) {
             paymentMethod.status = json["status"] as! String
@@ -343,7 +345,7 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     // COLORS
-        // First Color
+    // First Color
     open func getColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -353,7 +355,7 @@ open class PaymentMethod: NSObject, Cellable {
 
         return MercadoPago.getColorFor(self, settings: settings)
     }
-        // Font Color
+    // Font Color
     open func getFontColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -363,7 +365,7 @@ open class PaymentMethod: NSObject, Cellable {
 
         return MercadoPago.getFontColorFor(self, settings: settings)
     }
-        // Edit Font Color
+    // Edit Font Color
     open func getEditingFontColor(bin: String?) -> UIColor {
         var settings: [Setting]? = nil
 
@@ -375,7 +377,7 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     // MASKS
-        // Label Mask
+    // Label Mask
     open func getLabelMask(bin: String?) -> String {
         var settings: [Setting]? = nil
 
@@ -384,7 +386,7 @@ open class PaymentMethod: NSObject, Cellable {
         }
         return MercadoPago.getLabelMaskFor(self, settings: settings)
     }
-        // Edit Text Mask
+    // Edit Text Mask
     open func getEditTextMask(bin: String?) -> String {
         var settings: [Setting]? = nil
 
@@ -399,12 +401,12 @@ open class PaymentMethod: NSObject, Cellable {
 public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
 
     let areEqual =
-    obj1._id == obj2._id &&
-    obj1.name == obj2.name &&
-    obj1.paymentTypeId == obj2.paymentTypeId &&
-    obj1.settings == obj2.settings &&
-    obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
-    obj1.financialInstitutions == obj2.financialInstitutions
+        obj1._id == obj2._id &&
+            obj1.name == obj2.name &&
+            obj1.paymentTypeId == obj2.paymentTypeId &&
+            obj1.settings == obj2.settings &&
+            obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
+            obj1.financialInstitutions == obj2.financialInstitutions
 
     return areEqual
 }

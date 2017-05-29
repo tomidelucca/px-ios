@@ -14,6 +14,15 @@ class CustomerTest: BaseTest {
         let json: NSDictionary = MockManager.getMockFor("Customer")!
         let customerFromJSON = Customer.fromJSON(json)
         XCTAssertEqual(customerFromJSON, customerFromJSON)
+
+        let customerJson = customerFromJSON.toJSONString()
+        do {
+            let dic = try MockManager.convertStringToDictionary(customerJson)
+            let customer2 = Customer.fromJSON(dic as NSDictionary!)
+
+        } catch {
+
+        }
     }
 
 }

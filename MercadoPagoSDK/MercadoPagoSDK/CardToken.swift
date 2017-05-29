@@ -311,7 +311,7 @@ open class CardToken: NSObject, CardInformationForm {
         let card_number : Any = String.isNullOrEmpty(self.cardNumber) ? JSONHandler.null : self.cardNumber!
         let cardholder : Any = (self.cardholder == nil) ? JSONHandler.null : self.cardholder!.toJSON()
         let security_code : Any = String.isNullOrEmpty(self.securityCode) ? JSONHandler.null : self.securityCode!
-        let device : Any = self.device == nil ? JSONHandler.null : self.device!.toJSONString()
+        let device : Any = self.device == nil ? JSONHandler.null : self.device!.toJSON()
         let obj: [String:Any] = [
             "card_number": card_number,
             "cardholder": cardholder,
