@@ -75,7 +75,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         MPTracker.trackPaymentEvent(self.viewModel.paymentResult.paymentData?.token?._id, mpDelegate: MercadoPagoContext.sharedInstance, paymentInformer: self.viewModel, flavor: Flavor(rawValue: "3"), action: "CREATE_PAYMENT", result:nil)
     }
 
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
+    public init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
 
         self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)

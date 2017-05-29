@@ -54,14 +54,14 @@ class Utils {
         return dateFormatter.date(from: dateArr[0])
     }
 
-    class func getStringFromDate(_ date: Date!) -> String! {
+    class func getStringFromDate(_ date: Date?) -> Any! {
 
         if date == nil {
-            return nil
+            return JSONHandler.null
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: date)
+        return dateFormatter.string(from: date!)
     }
 
     class func getAttributedAmount(_ formattedString: String, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
