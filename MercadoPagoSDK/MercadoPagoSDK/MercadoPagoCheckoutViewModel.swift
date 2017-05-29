@@ -112,6 +112,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             needLoadPreference = true
         } else {
             self.paymentData.payer = self.checkoutPreference.getPayer()
+            MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
     }
 

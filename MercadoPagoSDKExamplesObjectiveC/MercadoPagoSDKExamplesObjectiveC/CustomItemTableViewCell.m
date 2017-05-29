@@ -22,7 +22,7 @@
 }
 
 -(CGFloat)getHeight {
-    return (CGFloat)50;
+    return (CGFloat)0;
 }
 
 - (UINib * _Nonnull)getNib {
