@@ -178,11 +178,17 @@ class PaymentResultScreenPreferenceTest: BaseTest {
 
     func testDisableContentTitle() {
         XCTAssertFalse(self.mpCheckout.viewModel.paymentResultScreenPreference.isRejectedContentTitleDisable())
+        XCTAssertFalse(self.mpCheckout.viewModel.paymentResultScreenPreference.isPendingContentTitleDisable())
 
         paymentResultScreenPreference.disableRejectedContentTitle()
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
 
         XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.isRejectedContentTitleDisable())
+
+        paymentResultScreenPreference.disablePendingContentTitle()
+        self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
+
+        XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.isPendingContentTitleDisable())
     }
 
     func testSetExitTitle() {

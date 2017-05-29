@@ -794,16 +794,11 @@ extension MercadoPagoCheckout {
         MercadoPagoCheckoutViewModel.callback = callback
     }
 
-    open static func setSite(siteID: String) {
-        MercadoPagoContext.setSiteID(siteID)
-    }
-
     open static func setLanguage(language: Languages) {
         MercadoPagoContext.setLanguage(language: language)
     }
 
     open class func showPayerCostDescription() -> Bool {
-
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()

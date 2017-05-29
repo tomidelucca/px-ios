@@ -42,13 +42,13 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func isIdentificationRequired() -> Bool {
-        if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("off_identification_number") {
+        if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("identification_number") || isEntityTypeRequired() {
             return true
         }
         return false
     }
     open func isIdentificationTypeRequired() -> Bool {
-        if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("off_identification_type") {
+        if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("identification_type") || isEntityTypeRequired() {
             return true
         }
         return false

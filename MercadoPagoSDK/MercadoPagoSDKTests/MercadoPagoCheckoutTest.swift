@@ -287,6 +287,26 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertTrue(lastVC.isKind(of: InstructionsViewController.self))
 
     }
+
+    func testShowBankInterestWarning() {
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(true, MercadoPagoCheckout.showBankInterestWarning())
+        
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(false, MercadoPagoCheckout.showBankInterestWarning())
+    }
+    
+    func testShowPayerCostDescription() {
+        var site = "MCO"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(false, MercadoPagoCheckout.showPayerCostDescription())
+
+        site = "MLA"
+        MercadoPagoContext.setSiteID(site)
+        XCTAssertEqual(true, MercadoPagoCheckout.showPayerCostDescription())
+    }
 }
 
 open class MercadoPagoCheckoutMock: MercadoPagoCheckout {

@@ -77,6 +77,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
 
     init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
+
         self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)
     }
     required public init?(coder aDecoder: NSCoder) {
@@ -164,12 +165,15 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
     }
 
     private func getContentCell(drawLine: Bool) -> UITableViewCell {
-        let contentCell = self.tableView.dequeueReusableCell(withIdentifier: "contentCell") as! ContentTableViewCell
-        contentCell.fillCell(paymentResult: self.viewModel.paymentResult, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+        let cell = UITableViewCell.init(style: .default, reuseIdentifier: "ContentCell")
+        cell.contentView.viewWithTag(2)?.removeFromSuperview()
+        self.viewModel.getContentCell().tag = 2
+        cell.contentView.addSubview(self.viewModel.getContentCell())
+        cell.selectionStyle = .none
         if drawLine {
-            ViewUtils.drawBottomLine(y: contentCell.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: contentCell.contentView)
+            ViewUtils.drawBottomLine(y: self.viewModel.getContentCell().frame.minY, width: UIScreen.main.bounds.width, inView: self.viewModel.getContentCell())
         }
-        return contentCell
+        return cell
     }
 
     private func getCallForAuthCell() -> UITableViewCell {
