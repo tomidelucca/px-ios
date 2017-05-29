@@ -205,7 +205,6 @@ open class SettingsViewModel: NSObject {
     open func update() {
         MercadoPagoContext.setSiteID(selectedSite.ID)
         selectedSite.pk = getPublicKey(site: selectedSite.ID)
-        MercadoPagoContext.setPublicKey(selectedSite.pk)
         selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
     }
 

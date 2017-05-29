@@ -49,9 +49,6 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
 
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.ROW_HEIGHT - 1, width: UIScreen.main.bounds.width, height: 1)
-        self.addSubview(separatorLine)
-
         self.iconCash.image = MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")
     }
 
@@ -107,8 +104,29 @@ class OfflinePaymentMethodCell: UITableViewCell {
 		} else {
 			self.changePaymentButton.isHidden = true
 		}
+
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: paymentMethodOption, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
+        self.addSubview(separatorLine)
+
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
+    }
+
+    public static func getCellHeight(paymentMethodOption: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> CGFloat {
+
+        var cellHeight = OfflinePaymentMethodCell.ROW_HEIGHT
+        var buttonHeight: CGFloat = 48
+
+        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+            cellHeight = 290
+            buttonHeight = 80
+        }
+
+        if !reviewScreenPreference.isChangeMethodOptionEnabled() {
+            cellHeight -= buttonHeight
+        }
+
+        return cellHeight
     }
 
   }

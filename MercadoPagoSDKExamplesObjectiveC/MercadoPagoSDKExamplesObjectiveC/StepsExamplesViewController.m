@@ -132,6 +132,7 @@ CheckoutPreference *pref;
 
     PaymentData *pd = [[PaymentData alloc] init];
     pd.paymentMethod = pm;
+    pd.paymentMethod.name = @"Visa";
     
     pd.token = [[Token alloc] initWith_id:@"id" publicKey:@"pk" cardId:@"" luhnValidation:nil status:nil usedDate:nil cardNumberLength:nil creationDate:nil lastFourDigits:nil firstSixDigit:@"123456" securityCodeLength:3 expirationMonth:11 expirationYear:2012 lastModifiedDate:nil dueDate:nil cardHolder:nil];
     pd.token.lastFourDigits = @"7890";
