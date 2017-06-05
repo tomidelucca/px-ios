@@ -18,6 +18,7 @@ open class MercadoPagoCheckout: NSObject {
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
     var countLoadings: Int = 0
+    var binaryMode: Bool = false
 
     private var currentLoadingView: UIViewController?
 
@@ -25,10 +26,11 @@ open class MercadoPagoCheckout: NSObject {
     private var rootViewController: UIViewController?
 
 
-    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
+    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil, binaryMode: Bool) {
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
+        self.binaryMode = binaryMode
 
         if self.navigationController.viewControllers.count > 0 {
             let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
@@ -591,7 +593,7 @@ open class MercadoPagoCheckout: NSObject {
 
         var paymentBody: [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, self.binaryMode)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
