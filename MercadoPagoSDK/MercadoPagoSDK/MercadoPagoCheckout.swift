@@ -593,7 +593,7 @@ open class MercadoPagoCheckout: NSObject {
 
         var paymentBody: [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, self.binaryMode)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, binaryMode: self.binaryMode)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
