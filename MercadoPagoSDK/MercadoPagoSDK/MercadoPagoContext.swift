@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject, MPTrackerDelegate {
+open class MercadoPagoContext: NSObject, MPTrackerDelegate , MPXTracker {
 
     static let sharedInstance = MercadoPagoContext()
 
@@ -59,7 +59,15 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate {
         }
 
     }
-
+    
+    
+    static var mpxPublicKey : String {return sharedInstance.publicKey()}
+    static var mpxCheckoutVersion : String {return sharedInstance.sdkVersion()}
+    static var mpxPlatform : String {return sharedInstance.framework()}
+    
+    
+    
+    
     open func framework() -> String! {
         return  "iOS"
     }
