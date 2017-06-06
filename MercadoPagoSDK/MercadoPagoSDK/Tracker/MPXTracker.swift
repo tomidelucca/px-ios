@@ -32,7 +32,7 @@ extension MPXTracker {
         let stringScreenTrack = JSONHandler.jsonCoding(obj)
         print("TRACK = \(stringScreenTrack)")
         
-        self.request(url: "http://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
+        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
             print(result)
         }) { (error) -> Void in
             print(error)
@@ -53,7 +53,7 @@ extension MPXTracker {
         ]
         let stringEventTrack = JSONHandler.jsonCoding(obj)
         print("TRACK = \(stringEventTrack)")
-        self.request(url: "http://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
+        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
             print(result)
         }) { (error) -> Void in
             print(error)
