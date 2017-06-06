@@ -71,43 +71,39 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         self.extendedLayoutIncludesOpaqueBars = true
     }
 
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-       // self.showLoading()
-
+    func addTopHeader() {
         var upperFrame = self.collectionSearch.bounds
         upperFrame.origin.y = -upperFrame.size.height + 10
         upperFrame.size.width = UIScreen.main.bounds.width
         let upperView = UIView(frame: upperFrame)
         upperView.backgroundColor = UIColor.primaryColor()
         collectionSearch.addSubview(upperView)
+    }
 
-        if self.title == nil || self.title!.isEmpty {
+    func setTitle() {
+        if String.isNullOrEmpty(title) {
             self.title = self.viewModel.titleScreen
         }
+    }
 
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        self.addCallbackCancel()
+
+        self.addTopHeader()
+        self.collectionSearch.backgroundColor = UIColor.px_white()
+        self.setTitle()
         self.registerAllCells()
 
-        if callbackCancel == nil {
-            self.callbackCancel = {() -> Void in
-                if self.navigationController?.viewControllers[0] == self {
-                    self.dismiss(animated: true, completion: {
-
-                    })
-                } else {
-                    self.navigationController!.popViewController(animated: true)
-                }
-            }
-        } else {
-            self.callbackCancel = callbackCancel
-        }
-        self.collectionSearch.backgroundColor = UIColor.px_white()
+        self.collectionSearch.delegate = self
+        self.collectionSearch.dataSource = self
+        self.collectionSearch.reloadData()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.collectionSearch.allowsSelection = true
-        self.getCustomerCards()
         self.hideNavBarCallback = self.hideNavBarCallbackDisplayTitle()
     }
 
@@ -116,6 +112,20 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
         let paymentVaultTitleCollectionViewCell = UINib(nibName: "PaymentVaultTitleCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(paymentVaultTitleCollectionViewCell, forCellWithReuseIdentifier: "paymentVaultTitleCollectionViewCell")
+    }
+
+    func addCallbackCancel() {
+        if callbackCancel == nil {
+            self.callbackCancel = {(Void) -> Void in
+                if self.navigationController?.viewControllers[0] == self {
+                    self.dismiss(animated: true, completion: {})
+                } else {
+                    self.navigationController!.popViewController(animated: true)
+                }}
+
+        } else {
+            self.callbackCancel = callbackCancel
+        }
     }
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -222,31 +232,8 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         super.viewDidDisappear(animated)
     }
 
-    fileprivate func getCustomerCards() {
-        if self.viewModel!.shouldGetCustomerCardsInfo() {
-            self.showLoading()
-            MerchantServer.getCustomer({ (customer: Customer) -> Void in
-                 self.hideLoading()
-                self.viewModel.customerId = customer._id
-                self.viewModel.cards = customer.cards
-                self.collectionSearch.delegate = self
-                self.collectionSearch.dataSource = self
-                self.viewModel.loadingCards = false
-                self.collectionSearch.reloadData()
-            }, failure: { (_: NSError?) -> Void in
-                self.viewModel.loadingCards = false
-                 self.hideLoading()
-                 self.collectionSearch.reloadData()
-            })
-        } else {
-            self.collectionSearch.delegate = self
-            self.collectionSearch.dataSource = self
-            self.viewModel.loadingCards = false
-            self.collectionSearch.reloadData()
-        }
-    }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
         return { () -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
