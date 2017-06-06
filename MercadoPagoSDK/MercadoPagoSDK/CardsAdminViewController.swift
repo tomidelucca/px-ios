@@ -73,7 +73,6 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         }
     }
 
-
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.addCallbackCancel()

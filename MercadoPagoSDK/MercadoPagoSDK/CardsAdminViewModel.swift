@@ -28,8 +28,8 @@ open class CardsAdminViewModel: NSObject {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
         self.confirmPromptText = confirmPromptText
-    }
 
+    }
     func numberOfOptions() -> Int {
         var count = 0
 
@@ -99,7 +99,7 @@ open class CardsAdminViewModel: NSObject {
             return CGSize(width : screenWidth, height : titleCellHeight)
 
         } else if self.isCardItemFor(indexPath: indexPath) || self.isExtraOptionItemFor(indexPath: indexPath) {
-            return CGSize(width: widthPerItem, height: calculateHeight2(indexPath: indexPath))
+            return CGSize(width: widthPerItem, height: calculateHeight(indexPath: indexPath))
         }
         return CGSize.zero
     }
@@ -143,10 +143,10 @@ open class CardsAdminViewModel: NSObject {
     func isExtraOptionItemFor(indexPath: IndexPath) -> Bool {
         if isCardItemFor(indexPath: indexPath) {
             return false
-
         } else if isCardsSection(section: indexPath.section) && hasExtraOption() {
             return true
         }
         return false
     }
+
 }
