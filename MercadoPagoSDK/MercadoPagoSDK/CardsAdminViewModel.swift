@@ -15,33 +15,34 @@ open class CardsAdminViewModel: NSObject {
     var extraOptionTitle: String?
     var confirmPromptText: String?
     var titleScreen = "¿Con qué tarjeta?".localized
-    var loadingCards = true
+    var extaOptionNode: ExtraOptionNode?
+    fileprivate let itemsPerRow: CGFloat = 2
 
     public init(cards: [Card]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
         self.confirmPromptText = confirmPromptText
-    }
 
-    func shouldGetCustomerCardsInfo() -> Bool {
-        return cards == nil
+        if let extraOptionTitle = extraOptionTitle {
+            self.extaOptionNode = ExtraOptionNode(extraOptionTitle: extraOptionTitle)
+        }
     }
 
     func numberOfOptions() -> Int {
-        
-        if !String.isNullOrEmpty(self.extraOptionTitle) {
-            if let cards = cards {
-                return cards.count + 1
-            } else {
-                return 1
-            }
-        } else {
-            if let cards = cards {
-                return cards.count
-            } else {
-                return 0
-            }
+        var count = 0
+
+        if hasCards() {
+            count += cards!.count
         }
+        return hasExtraOption() ? count + 1 : count
+    }
+
+    func hasExtraOption() -> Bool {
+        return !String.isNullOrEmpty(extraOptionTitle)
+    }
+
+    func hasCards() -> Bool {
+        return !Array.isNullOrEmpty(cards)
     }
 
     public func setTitle(title: String) {
@@ -82,46 +83,40 @@ open class CardsAdminViewModel: NSObject {
     func isHeaderSection(section: Int) -> Bool {
         return section == 0
     }
-    func isCardsSection(section: Int) -> Bool {
 
+    func isCardsSection(section: Int) -> Bool {
         return section == 1
     }
-    fileprivate let itemsPerRow: CGFloat = 2
 
     var sectionHeight: CGSize?
 
     func maxHegithRow(indexPath: IndexPath) -> CGFloat {
-        guard let cards = self.cards else {
-            return 0
+        if hasCards() || hasExtraOption(){
+            return self.calculateHeight(indexPath: indexPath, numberOfCells: numberOfOptions())
         }
-        return self.calculateHeight(indexPath: indexPath, numberOfCells: cards.count)
+        return 0
     }
 
     func heightOfItem(indexItem: Int) -> CGFloat {
-        guard let cards = self.cards else {
-            return 0
+        if isCardItemFor(indexPath: IndexPath(row: indexItem, section: 1)) {
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : cards![indexItem])
+        } else if isExtraOptionItemFor(indexPath: IndexPath(row: indexItem, section: 1)) {
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : extaOptionNode!)
         }
-        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : cards[indexItem])
+        return 0
     }
     func numberOfSections() -> Int {
-        if self.loadingCards {
-            return 0
-        }
         return 2
     }
 
     public func numberOfItemsInSection (section: Int) -> Int {
-        if (self.loadingCards) {
-            return 0
-        }
-        if (self.isHeaderSection(section: section)) {
+        if self.isHeaderSection(section: section) {
             return 1
         }
         return self.numberOfOptions()
-
     }
 
-    public func sizeForItemAt (indexPath: IndexPath) -> CGSize {
+    public func sizeForItemAt(indexPath: IndexPath) -> CGSize {
 
         let paddingSpace = CGFloat(32.0)
         let screenSize: CGRect = UIScreen.main.bounds
@@ -137,33 +132,40 @@ open class CardsAdminViewModel: NSObject {
     }
 
     func isCardItemFor(indexPath: IndexPath) -> Bool {
-        guard let cards = cards else {
+        if !hasCards() {
             return false
-        }
-        if !self.isCardsSection(section: indexPath.section) {
-            return false
-        } else if cards.count > indexPath.row {
+        } else if self.isCardsSection(section: indexPath.section) && cards!.count > indexPath.row{
             return true
-        } else {
-            return false
         }
+        return false
     }
 
     func isExtraOptionItemFor(indexPath: IndexPath) -> Bool {
-        guard let cards = cards else {
-            return ( (self.isCardsSection(section: indexPath.section)) && !(String.isNullOrEmpty(self.extraOptionTitle)))
+        if isCardItemFor(indexPath: indexPath){
+            return false
+        } else if isCardsSection(section: indexPath.section) && hasExtraOption() {
+            return true
         }
+        return false
+    }
+}
 
-        if !self.isCardsSection(section: indexPath.section) {
-            return false
-        } else if cards.count > indexPath.row {
-            return false
-        } else {
-            guard let extraOpt = self.extraOptionTitle else{
-                return false
-            }
-            return extraOpt.isNotEmpty
-        }
+public class ExtraOptionNode: NSObject, PaymentOptionDrawable{
+    let title: String
+
+    init (extraOptionTitle: String){
+        title = extraOptionTitle
     }
 
+    public func getTitle() -> String {
+        return title
+    }
+
+    public func getSubtitle() -> String? {
+        return nil
+    }
+
+    public func getImageDescription() -> String {
+        return ""
+    }
 }
