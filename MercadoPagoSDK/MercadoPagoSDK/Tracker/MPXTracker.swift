@@ -12,6 +12,8 @@ protocol MPXTracker {
     static var mpxPublicKey: String {get}
     static var mpxCheckoutVersion: String {get}
     static var mpxPlatform: String {get}
+    static var mpxSiteId: String {get}
+    static var mpxPlatformType: String {get}
 }
 
 extension MPXTracker {

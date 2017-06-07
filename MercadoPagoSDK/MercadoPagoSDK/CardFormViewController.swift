@@ -274,7 +274,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     func startPromosStep(promos: [Promo]? = nil,
                                     _ callback: ((Void) -> (Void))? = nil) -> PromoViewController {
-        MercadoPagoContext.initFlavor2()
         return PromoViewController(promos : promos, callback : callback)
     }
 
@@ -334,7 +333,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     /* Metodos para preparar los diferentes labels del formulario para ser editados */
     fileprivate func prepareNumberLabelForEdit() {
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_NUMBER")
         editingLabel = cardNumberLabel
         cardFormManager.cardToken = nil
         textBox.resignFirstResponder()
@@ -344,7 +342,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.placeholder = "Número de tarjeta".localized
     }
     fileprivate func prepareNameLabelForEdit() {
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_HOLDER")
         editingLabel = nameLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.alphabet
@@ -354,7 +351,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
     fileprivate func prepareExpirationLabelForEdit() {
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_EXPIRY_DATE")
         editingLabel = expirationDateLabel
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
@@ -363,7 +359,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.placeholder = "Fecha de expiración".localized
     }
     fileprivate func prepareCVVLabelForEdit() {
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: "CARD_SECURITY_CODE")
 
         if(!self.cardFormManager.isAmexCard(self.cardNumberLabel!.text!)) {
             UIView.transition(from: self.cardFront!, to: self.cardBack!, duration: cardFormManager.animationDuration, options: UIViewAnimationOptions.transitionFlipFromLeft, completion: { (_) -> Void in

@@ -9,19 +9,15 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject, MPTrackerDelegate , MPXTracker {
+open class MercadoPagoContext: NSObject , MPXTracker {
 
     static let sharedInstance = MercadoPagoContext()
-
-    var trackListener: MPTrackListener?
 
     var public_key: String = ""
 
     var payer_access_token: String = ""
 
     var merchant_access_token: String = ""
-
-    var initialFlavor: Flavor?
 
     var payment_key: String = ""
 
@@ -50,21 +46,13 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate , MPXTracker {
     open class func isAuthenticatedUser() -> Bool {
         return !sharedInstance.payer_access_token.isEmpty
     }
-
-    public func flavor() -> Flavor! {
-        if (initialFlavor == nil) {
-        return Flavor.Flavor_3
-    } else {
-                return initialFlavor
-        }
-
-    }
     
     
     static var mpxPublicKey : String {return sharedInstance.publicKey()}
     static var mpxCheckoutVersion : String {return sharedInstance.sdkVersion()}
     static var mpxPlatform : String {return sharedInstance.framework()}
-    
+    static var mpxSiteId: String {return sharedInstance.siteId()}
+    static var mpxPlatformType: String {return "Native"}
     
     
     
@@ -138,14 +126,6 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate , MPXTracker {
             MercadoPagoContext.setSite(site!)
         }
     }
-
-    open class func setTrack(listener: MPTrackListener) {
-        MercadoPagoContext.sharedInstance.trackListener = listener
-    }
-
-    open static func getTrackListener() -> MPTrackListener? {
-        return sharedInstance.trackListener
-    }
     open static func setLanguage(language: Languages) {
         sharedInstance.language = language.langPrefix()
     }
@@ -198,27 +178,6 @@ open class MercadoPagoContext: NSObject, MPTrackerDelegate , MPXTracker {
        _ = CardFrontView()
        _ = CardBackView()
 
-    }
-
-    public class func initFlavor1() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_1
-    }
-
-    public class func initFlavor2() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_2
-    }
-
-    public class func initFlavor3() {
-        if (MercadoPagoContext.sharedInstance.initialFlavor != nil) {
-            return
-        }
-        MercadoPagoContext.sharedInstance.initialFlavor = Flavor.Flavor_3
     }
 
     open class func setAccountMoneyAvailable(accountMoneyAvailable: Bool) {
