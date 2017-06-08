@@ -69,7 +69,6 @@ open class CardsAdminViewModel: NSObject {
         if numberOfOptions() == 0 {
             return 0
         }
-
         let firstCardIndex = indexOfFirsCardInSection(indexPath: indexPath)
         let secondCardIndex = firstCardIndex + 1
 
