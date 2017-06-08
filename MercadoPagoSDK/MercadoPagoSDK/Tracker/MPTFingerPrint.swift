@@ -8,42 +8,12 @@
 
 import UIKit
 
-/*
-class MPTFingerPrint: NSObject{
-    var clientId : String!
-
-    init(publicKey : String, checkoutVersion: String, platform: String) {
-        self.clientId = UIDevice.current.identifierForVendor!.uuidString
-    }
-    
-    open func toJSON() -> [String:Any] {
-        let exclusionPattern : Any = String.isNullOrEmpty(self.exclusionPattern) ?  JSONHandler.null : self.exclusionPattern!
-        let installmentsPattern : Any = self.installmentsPattern == nil ?  JSONHandler.null : self.installmentsPattern
-        let pattern : Any = self.pattern == nil ? JSONHandler.null : self.pattern
-        
-        let obj: [String:Any] = [
-            "pattern": pattern,
-            "installments_pattern": installmentsPattern,
-            "exclusion_pattern": exclusionPattern
-        ]
-        return obj
-    }
-    
-    open func toJSONString() -> String {
-        return JSONHandler.jsonCoding(self.toJSON())
-    }
-    
-}
- */
-
-class MPTDevice : NSObject {
-    
-    var model : String
-    var os : String
-    var systemVersion : String
-    var screenSize : String
-    var resolution : String
-    
+class MPTDevice: NSObject {
+    var model: String
+    var os: String
+    var systemVersion: String
+    var screenSize: String
+    var resolution: String
     override init() {
         self.model = UIDevice.current.model
         self.os =  "iOS"
@@ -54,8 +24,6 @@ class MPTDevice : NSObject {
         self.screenSize = String(describing: screenWidth) + "x" + String(describing: screenHeight)
         self.resolution = String(describing: UIScreen.main.scale)
     }
-    
-    
     open func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
             "model": model,
@@ -66,24 +34,21 @@ class MPTDevice : NSObject {
         ]
         return obj
     }
-    
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-    
 }
 
 class MPTApplication : NSObject {
-    var publicKey : String
-    var checkoutVersion : String
-    var platform : String
+    var publicKey: String
+    var checkoutVersion: String
+    var platform: String
     
-    init(publicKey : String, checkoutVersion: String, platform : String) {
+    init(publicKey: String, checkoutVersion: String, platform: String) {
         self.publicKey = publicKey
         self.checkoutVersion = checkoutVersion
         self.platform = platform
     }
-    
     open func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
             "public_key": publicKey,
@@ -92,10 +57,7 @@ class MPTApplication : NSObject {
         ]
         return obj
     }
-    
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-    
 }
-
