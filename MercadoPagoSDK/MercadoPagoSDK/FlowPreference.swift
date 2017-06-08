@@ -45,6 +45,10 @@ open class FlowPreference: NSObject {
         showDiscount = false
     }
 
+    public func disableBankDeals() {
+        CardFormViewController.showBankDeals = false
+    }
+
     /*public func setCongratsDisplayTime(){
     
      }*/
@@ -75,6 +79,10 @@ open class FlowPreference: NSObject {
 
     public func enableDiscount() {
         showDiscount = true
+    }
+
+    public func enableBankDeals() {
+        CardFormViewController.showBankDeals = true
     }
 
     public func isReviewAndConfirmScreenEnable() -> Bool {
