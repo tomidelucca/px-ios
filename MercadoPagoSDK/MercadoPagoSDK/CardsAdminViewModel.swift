@@ -69,7 +69,6 @@ open class CardsAdminViewModel: NSObject {
         if numberOfOptions() == 0 {
             return 0
         }
-
         let firstCardIndex = indexOfFirsCardInSection(indexPath: indexPath)
         let secondCardIndex = firstCardIndex + 1
 
@@ -99,7 +98,7 @@ open class CardsAdminViewModel: NSObject {
             return CGSize(width : screenWidth, height : titleCellHeight)
 
         } else if self.isCardItemFor(indexPath: indexPath) || self.isExtraOptionItemFor(indexPath: indexPath) {
-            return CGSize(width: widthPerItem, height: calculateHeight2(indexPath: indexPath))
+            return CGSize(width: widthPerItem, height: calculateHeight(indexPath: indexPath))
         }
         return CGSize.zero
     }
