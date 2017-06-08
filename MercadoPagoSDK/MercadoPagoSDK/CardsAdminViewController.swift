@@ -127,11 +127,36 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             collectionView.deselectItem(at: indexPath, animated: true)
             if self.viewModel.isCardItemFor(indexPath: indexPath) {
                 let card = self.viewModel.cards![indexPath.row]
-                callback(card)
+                if let confirmPromptText = self.viewModel.confirmPromptText {
+                    if confirmPromptText.isNotEmpty {
+                       deleteCardAlertView(card: card, message: confirmPromptText)
+                    }else{
+                       self.callback(card)
+                    }
+                } else {
+                    self.callback(card)
+                }
             } else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath) {
                 callback(nil)
             }
         }
+    }
+    
+    func deleteCardAlertView(card: Card, message: String) {
+        var title : String
+        if let name = card.paymentMethod?.name {
+           title = name + " " + card.getTitle()
+        }else{
+            title = card.getTitle()
+        }
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertActionStyle.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (action) -> Void in
+            self.callback(card)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 
     public func collectionView(_ collectionView: UICollectionView,
@@ -209,8 +234,15 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
                 self.viewModel.loadingCards = false
                 self.collectionSearch.reloadData()
             }, failure: { (_: NSError?) -> Void in
+                self.viewModel.loadingCards = false
                  self.hideLoading()
+                 self.collectionSearch.reloadData()
             })
+        } else {
+            self.collectionSearch.delegate = self
+            self.collectionSearch.dataSource = self
+            self.viewModel.loadingCards = false
+            self.collectionSearch.reloadData()
         }
     }
 

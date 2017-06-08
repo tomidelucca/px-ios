@@ -74,7 +74,7 @@ open class PaymentResultViewController: MercadoPagoUIViewController, UITableView
         super.viewDidAppear(animated)
     }
 
-    init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
+    public init(paymentResult: PaymentResult, checkoutPreference: CheckoutPreference, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference(), callback : @escaping (_ status: PaymentResult.CongratsState) -> Void) {
         super.init(nibName: "PaymentResultViewController", bundle : bundle)
 
         self.viewModel = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: checkoutPreference, callback: callback, paymentResultScreenPreference: paymentResultScreenPreference)

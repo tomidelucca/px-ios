@@ -112,6 +112,16 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         updateLabelsFontColors()
 
+        if let navigation = self.navigationController {
+            if navigation.viewControllers.first == self {
+                self.callbackCancel = {
+                    self.dismiss(animated: true, completion: {
+                        
+                    })
+                }
+            }
+        }
+        
         if(callbackCancel != nil) {
             self.navigationItem.leftBarButtonItem?.target = self
             self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)

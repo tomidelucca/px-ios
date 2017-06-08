@@ -83,7 +83,7 @@ class UtilsTest: BaseTest {
         var date = NSCalendar.current.date(from: dateComponents)
         var resultDate = Utils.getStringFromDate(date)
 
-        XCTAssertEqual("2022-06-11", resultDate)
+        XCTAssertEqual("2022-06-11", resultDate as! String)
 
         dateComponents.year = 2022
         dateComponents.month = 12
@@ -92,13 +92,13 @@ class UtilsTest: BaseTest {
         date = NSCalendar.current.date(from: dateComponents)
         resultDate = Utils.getStringFromDate(date)
 
-        XCTAssertEqual("2022-12-01", resultDate)
+        XCTAssertEqual("2022-12-01", resultDate as! String)
 
     }
 
     func testgGetStringFromDateInvalidInput() {
         let resultDate = Utils.getStringFromDate(nil)
-        XCTAssertNil(resultDate)
+        XCTAssertTrue(resultDate is NSNull)
     }
 
     /**

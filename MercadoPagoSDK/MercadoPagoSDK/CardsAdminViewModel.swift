@@ -13,12 +13,14 @@ open class CardsAdminViewModel: NSObject {
     var cards: [Card]?
     var customerId: String?
     var extraOptionTitle: String?
+    var confirmPromptText: String?
     var titleScreen = "¿Con qué tarjeta?".localized
     var loadingCards = true
 
-   public  init(cards: [Card]? = nil, extraOptionTitle: String? = nil) {
+    public init(cards: [Card]? = nil, extraOptionTitle: String? = nil, confirmPromptText: String? = nil) {
         self.cards = cards
         self.extraOptionTitle = extraOptionTitle
+        self.confirmPromptText = confirmPromptText
     }
 
     func shouldGetCustomerCardsInfo() -> Bool {
@@ -26,7 +28,8 @@ open class CardsAdminViewModel: NSObject {
     }
 
     func numberOfOptions() -> Int {
-        if let _ = self.extraOptionTitle {
+        
+        if !String.isNullOrEmpty(self.extraOptionTitle) {
             if let cards = cards {
                 return cards.count + 1
             } else {
@@ -41,7 +44,7 @@ open class CardsAdminViewModel: NSObject {
         }
     }
 
-    func setTitle(title: String) {
+    public func setTitle(title: String) {
         self.titleScreen = title
     }
 
@@ -148,7 +151,7 @@ open class CardsAdminViewModel: NSObject {
 
     func isExtraOptionItemFor(indexPath: IndexPath) -> Bool {
         guard let cards = cards else {
-            return ( (self.isCardsSection(section: indexPath.section)) && (self.extraOptionTitle != nil) )
+            return ( (self.isCardsSection(section: indexPath.section)) && !(String.isNullOrEmpty(self.extraOptionTitle)))
         }
 
         if !self.isCardsSection(section: indexPath.section) {
@@ -156,7 +159,10 @@ open class CardsAdminViewModel: NSObject {
         } else if cards.count > indexPath.row {
             return false
         } else {
-            return (self.extraOptionTitle != nil)
+            guard let extraOpt = self.extraOptionTitle else{
+                return false
+            }
+            return extraOpt.isNotEmpty
         }
     }
 
