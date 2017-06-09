@@ -35,7 +35,7 @@ extension MPXTracker {
             print(error)
         }
     }
-    static func trackEvent(screenId: String, screenName: String, action: String, category: String, label:String, value:String) {
+    static func trackEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
         let deviceJSON = MPTDevice().toJSON()
         let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
@@ -54,7 +54,7 @@ extension MPXTracker {
             print(error)
         }
     }
-    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label:String, value:String) -> [String:Any]{
+    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any]{
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"

@@ -9,8 +9,6 @@
 import UIKit
 
 extension MPXTracker {
-
-
     public static func trackToken(token: String) {
 
         let obj: [String:Any] = ["public_key": mpxPublicKey, "token": token, "sdk_flavor": "3", "sdk_platform": "iOS", "sdk_type": mpxPlatformType, "sdk_version": mpxCheckoutVersion, "sdk_framework": "", "site_id": mpxSiteId ]
@@ -33,7 +31,4 @@ extension MPXTracker {
 
         }
     }
-
- 
-
 }

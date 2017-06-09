@@ -174,8 +174,6 @@
 		15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */; };
 		15ABAD591DB5489D00481E8E /* PaymentTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */; };
 		15ABAD5A1DB5489D00481E8E /* PaymentTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */; };
-		15ABAD5B1DB5489D00481E8E /* PaymentTrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4F1DB5489D00481E8E /* PaymentTrackInfo.swift */; };
-		15ABAD5C1DB5489D00481E8E /* PaymentTrackInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ABAD4F1DB5489D00481E8E /* PaymentTrackInfo.swift */; };
 		15B8B1AB1E71DE750065DF50 /* DiscountCoupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B8B1AA1E71DE750065DF50 /* DiscountCoupon.swift */; };
 		15B8B1AC1E71DE750065DF50 /* DiscountCoupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B8B1AA1E71DE750065DF50 /* DiscountCoupon.swift */; };
 		15B8B1B01E71DE950065DF50 /* DiscountBodyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B8B1AD1E71DE950065DF50 /* DiscountBodyCell.swift */; };
@@ -657,7 +655,6 @@
 		15A7B18B1C88B2E4007D0C4E /* MockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockManager.swift; sourceTree = "<group>"; };
 		15A7B18D1C88BFDF007D0C4E /* CardTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTest.swift; sourceTree = "<group>"; };
 		15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTracker.swift; sourceTree = "<group>"; };
-		15ABAD4F1DB5489D00481E8E /* PaymentTrackInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentTrackInfo.swift; sourceTree = "<group>"; };
 		15B8B1AA1E71DE750065DF50 /* DiscountCoupon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCoupon.swift; sourceTree = "<group>"; };
 		15B8B1AD1E71DE950065DF50 /* DiscountBodyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountBodyCell.swift; sourceTree = "<group>"; };
 		15B8B1AE1E71DE950065DF50 /* DiscountDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountDetailView.swift; sourceTree = "<group>"; };
@@ -1225,8 +1222,6 @@
 			isa = PBXGroup;
 			children = (
 				15C422BF1EE072330039B80F /* New Tracker */,
-				15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */,
-				15ABAD4F1DB5489D00481E8E /* PaymentTrackInfo.swift */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -1283,6 +1278,7 @@
 		15C422BF1EE072330039B80F /* New Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */,
 				15C422C01EE072650039B80F /* MPXTracker.swift */,
 				15C422C31EE072D10039B80F /* MPTFingerPrint.swift */,
 			);
@@ -2039,7 +2035,6 @@
 				15ABAD591DB5489D00481E8E /* PaymentTracker.swift in Sources */,
 				765F8E6A1DCA7C9600943FAC /* PurchaseSimpleDetailTableViewCell.swift in Sources */,
 				FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */,
-				15ABAD5B1DB5489D00481E8E /* PaymentTrackInfo.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
 				4BAE1D461DCBE8FF0000ED5C /* FooterTableViewCell.swift in Sources */,
 				15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */,
@@ -2329,7 +2324,6 @@
 				76FB70661E783D00008935DF /* MPCheckoutTestAction.swift in Sources */,
 				76EC48041C862AD70086FA53 /* PaymentMethodSearchitemTest.swift in Sources */,
 				766012F01CF284A600897F9D /* WebViewController.swift in Sources */,
-				15ABAD5C1DB5489D00481E8E /* PaymentTrackInfo.swift in Sources */,
 				76D00A081CA3397B00F52BC6 /* MercadoPagoService.swift in Sources */,
 				0F98838A1AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
 				0F9883721AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
