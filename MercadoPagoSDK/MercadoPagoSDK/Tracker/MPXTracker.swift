@@ -18,6 +18,13 @@ protocol MPXTracker {
 
 extension MPXTracker {
     static func trackScreen(screenId: String, screenName: String) {
+        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(generateJSONScreen(screenId: screenId, screenName: screenName)), method: "POST", headers: nil, success: { (result) -> Void in
+            print(result)
+        }) { (error) -> Void in
+            print(error)
+        }
+    }
+    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
         let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
         let deviceJSON = MPTDevice().toJSON()
@@ -27,34 +34,29 @@ extension MPXTracker {
             "application": applicationJSON,
             "device": deviceJSON,
             "events": [screenJSON]        ]
-        let stringScreenTrack = JSONHandler.jsonCoding(obj)
-        print("TRACK = \(stringScreenTrack)")
-        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
+        return obj
+    }
+    static func trackEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) {
+        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body:JSONHandler.jsonCoding(generateJSONEvent(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)), method: "POST", headers: nil, success: { (result) -> Void in
             print(result)
         }) { (error) -> Void in
             print(error)
         }
     }
-    static func trackEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) {
+    static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
         let deviceJSON = MPTDevice().toJSON()
         let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
-         let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
+        let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
         let obj: [String:Any] = [
             "client_id": clientId,
             "application": applicationJSON,
             "device": deviceJSON,
             "events": [eventJSON]
         ]
-        let stringEventTrack = JSONHandler.jsonCoding(obj)
-        print("TRACK = \(stringEventTrack)")
-        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(obj), method: "POST", headers: nil, success: { (result) -> Void in
-            print(result)
-        }) { (error) -> Void in
-            print(error)
-        }
+        return obj
     }
-    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any]{
+    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -71,7 +73,7 @@ extension MPXTracker {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String) -> [String:Any]{
+    static func screenJSON(screenId: String, screenName: String) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
@@ -116,7 +118,6 @@ extension MPXTracker {
                     failure!(e)
                 }
             } else {
-                let response = String(describing: error)
                 if failure != nil {
                     failure!(error! as NSError)
                 }
