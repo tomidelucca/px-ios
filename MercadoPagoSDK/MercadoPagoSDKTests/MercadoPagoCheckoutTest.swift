@@ -69,7 +69,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         let paymentResult = MockBuilder.buildPaymentResult(paymentMethodId: "visa")
 
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance, paymentResult : paymentResult)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, paymentResult : paymentResult, navigationController: navControllerInstance)
 
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
@@ -292,12 +292,12 @@ class MercadoPagoCheckoutTest: BaseTest {
         var site = "MCO"
         MercadoPagoContext.setSiteID(site)
         XCTAssertEqual(true, MercadoPagoCheckout.showBankInterestWarning())
-        
+
         site = "MLA"
         MercadoPagoContext.setSiteID(site)
         XCTAssertEqual(false, MercadoPagoCheckout.showBankInterestWarning())
     }
-    
+
     func testShowPayerCostDescription() {
         var site = "MCO"
         MercadoPagoContext.setSiteID(site)

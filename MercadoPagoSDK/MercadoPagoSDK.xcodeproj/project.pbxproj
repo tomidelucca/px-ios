@@ -247,6 +247,8 @@
 		4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */; };
 		4B762E9C1DCFAF4700694336 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */; };
 		4B762E9D1DCFAF4700694336 /* InstructionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B762E9B1DCFAF4700694336 /* InstructionsViewController.xib */; };
+		4B8705041EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8705031EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift */; };
+		4B8705051EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8705031EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift */; };
 		4B88E2411E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */; };
 		4B88E2421E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */; };
 		4B88E2431E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */; };
@@ -699,6 +701,7 @@
 		4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultViewModelTest.swift; sourceTree = "<group>"; };
 		4B762E9A1DCFAF4700694336 /* InstructionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
 		4B762E9B1DCFAF4700694336 /* InstructionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsViewController.xib; sourceTree = "<group>"; };
+		4B8705031EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutExtension.swift; sourceTree = "<group>"; };
 		4B88E23F1E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmInstallmentsTableViewCell.swift; sourceTree = "<group>"; };
 		4B88E2401E489B3D00D52527 /* ConfirmInstallmentsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmInstallmentsTableViewCell.xib; sourceTree = "<group>"; };
 		4B88E2561E48CC5C00D52527 /* MPCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCustomCell.swift; sourceTree = "<group>"; };
@@ -1191,6 +1194,7 @@
 				155F3D341E4533D8003F6DD6 /* NextStepHelper.swift */,
 				1553AF321E36454B00E36C62 /* MercadoPagoCheckout.swift */,
 				1553AF351E36457F00E36C62 /* MercadoPagoCheckoutViewModel.swift */,
+				4B8705031EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift */,
 			);
 			name = MercadoPagoCheckout;
 			sourceTree = "<group>";
@@ -2130,6 +2134,7 @@
 				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
 				4B34DC2F1E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
+				4B8705041EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */,
 				15B8B1B01E71DE950065DF50 /* DiscountBodyCell.swift in Sources */,
 				0F9883571AD2AB6000F750F0 /* Address.swift in Sources */,
 				76062BCA1C4D1F450067A14B /* PaymentMethodSearchService.swift in Sources */,
@@ -2226,6 +2231,7 @@
 				7652F43B1D78A2D4006022AF /* TextMaskFormater.swift in Sources */,
 				15904D5F1E0976D200B3B9FD /* MLPXSpinner.m in Sources */,
 				15904D5B1E09769700B3B9FD /* MPSDKLoadingView.m in Sources */,
+				4B8705051EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */,
 				761B89431C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
 				15B8B1BE1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
 				76294CF11E721BC600CEAE6D /* MercadoPagoCheckoutViewModelTest.swift in Sources */,

@@ -93,7 +93,8 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: nil checkoutPreference:self.pref paymentData:self.paymentData discount:dc navigationController:self.navigationController paymentResult:self.paymentResult ];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:TEST_PUBLIC_KEY checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+
     
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -309,7 +310,7 @@
 }
 
 -(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"] fontName:@"fontName" fontLightName:@"fontName"];
+    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"]];
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 
