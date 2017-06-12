@@ -218,7 +218,7 @@ open class MPServicesBuilder: NSObject {
      
      MercadoPagoContext.initFlavor1()
      MPTracker.trackEvent(MercadoPagoContext.sharedInstance, action: "CREATE_PAYMENT", result: nil)
-     let service : MerchantService = MerchantService()
+     let service : CustomService = CustomService()
      service.createPayment(payment: payment, success: {(jsonResult: AnyObject?) -> Void in
      var payment : Payment? = nil
      

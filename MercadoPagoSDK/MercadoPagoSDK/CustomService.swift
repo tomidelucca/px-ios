@@ -1,5 +1,5 @@
 //
-//  MerchantService.swift
+//  CustomService.swift
 //  MercadoPagoSDK
 //
 //  Created by Matias Gualino on 31/12/14.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MerchantService: MercadoPagoService {
+open class CustomService: MercadoPagoService {
 
     open var data: NSMutableData = NSMutableData()
 
@@ -33,7 +33,7 @@ open class MerchantService: MercadoPagoService {
 
         self.request(uri: self.URI, params: nil, body: body as AnyObject?, method: method, headers : headers, cache: false, success: success, failure: { (error) -> Void in
             if let failure = failure {
-                failure(NSError(domain: "mercadopago.sdk.MerchantService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+                failure(NSError(domain: "mercadopago.sdk.CustomService.createPayment", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
             }
         })
     }

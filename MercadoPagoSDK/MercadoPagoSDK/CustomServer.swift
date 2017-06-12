@@ -14,7 +14,7 @@ open class CustomServer: NSObject {
     open class func getCustomer(_ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
         if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
 
-            let service: MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI())
+            let service: CustomService = CustomService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI())
             let params = MercadoPagoCheckoutViewModel.servicePreference.getCustomerAddionalInfo()
 
             service.getCustomer(params: params, success: {(jsonResult: AnyObject?) -> Void in
@@ -42,7 +42,7 @@ open class CustomServer: NSObject {
     }
 
     open class func createPayment(paymentUrl: String, paymentUri: String, paymentBody: NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service: MerchantService = MerchantService(baseURL: paymentUrl, URI: paymentUri)
+        let service: CustomService = CustomService(baseURL: paymentUrl, URI: paymentUri)
 
         var body = ""
         if !NSDictionary.isNullOrEmpty(paymentBody) {
@@ -77,7 +77,7 @@ open class CustomServer: NSObject {
     open class func createPreference(success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURL() {
-            let service: MerchantService = MerchantService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURI())
+            let service: CustomService = CustomService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURI())
 
             service.createPreference(body: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutAddionalInfo(), success: { (jsonResult) in
                 var checkoutPreference : CheckoutPreference? = nil
