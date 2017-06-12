@@ -64,6 +64,7 @@ open class MPPayment: NSObject {
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,
             "pref_id": self.preferenceId,
+            "binary_mode": self.binaryMode
             ]
 
         if self.tokenId != nil && self.tokenId?.characters.count > 0 {
@@ -83,8 +84,6 @@ open class MPPayment: NSObject {
         if self.transactionDetails != nil {
             obj["transaction_details"] = self.transactionDetails?.toJSON()
         }
-        
-        obj["binary_mode"] = self.binaryMode
 
         return obj
     }
