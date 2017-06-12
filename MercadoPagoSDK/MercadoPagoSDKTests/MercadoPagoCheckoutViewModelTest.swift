@@ -311,7 +311,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let paymentResult = PaymentResult(status: "status", statusDetail: "statusDetail", paymentData: paymentDataVisa, payerEmail: "payerEmail", id: "id", statementDescription: "description")
 
-        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController(), paymentResult : paymentResult)
+        let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult : paymentResult, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
         // 1. Search preference
