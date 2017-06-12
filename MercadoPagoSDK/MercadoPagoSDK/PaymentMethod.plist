@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>codensa</key>
+	<dict>
+		<key>first_color</key>
+		<string>D3B21D</string>
+		<key>image_name</key>
+		<string>icoTc_codensa</string>
+		<key>font_color</key>
+		<string>FFFFFF</string>
+		<key>editing_font_color</key>
+		<string>FFFFFF</string>
+		<key>label_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+		<key>editText_mask</key>
+		<string>XXXX XXXX XXXX XXXX</string>
+	</dict>
 	<key>mercadopagocard</key>
 	<dict>
 		<key>first_color</key>
