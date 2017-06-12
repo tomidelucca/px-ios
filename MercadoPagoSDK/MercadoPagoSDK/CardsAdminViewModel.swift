@@ -45,7 +45,6 @@ open class CardsAdminViewModel: NSObject {
 
     func hasCards() -> Bool {
         return !Array.isNullOrEmpty(cards)
-    }
 
     func hasConfirmPromptText() -> Bool {
         return !String.isNullOrEmpty(confirmPromptText)
@@ -125,6 +124,7 @@ open class CardsAdminViewModel: NSObject {
         return section == 1
     }
 
+
     func numberOfSections() -> Int {
         return 2
     }
@@ -147,6 +147,7 @@ open class CardsAdminViewModel: NSObject {
         if isCardItemFor(indexPath: indexPath) {
             return false
         } else if isCardsSection(section: indexPath.section) && hasExtraOption() && indexPath.row < numberOfOptions() {
+
             return true
         }
         return false
