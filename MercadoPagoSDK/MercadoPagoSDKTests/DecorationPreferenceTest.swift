@@ -10,52 +10,72 @@ import XCTest
 
 class DecorationPreferenceTest: BaseTest {
 
-    func testSetBaseColor() {
-        let decoration = DecorationPreference()
+    var decoration: DecorationPreference!
+
+    override func setUp() {
+        super.setUp()
+        self.decoration = DecorationPreference()
+    }
+
+    func testInits() {
+        let decorationPreference = DecorationPreference(baseColor: UIColor.brown)
+        XCTAssertEqual(decorationPreference.baseColor, UIColor.brown)
+    }
+
+    func testDefaultValues() {
         XCTAssertEqual(decoration.getBaseColor(), UIColor.px_blueMercadoPago())
-//        decoration.setBaseColor(color: UIColor())
-//        XCTAssertEqual(decoration.getBaseColor(), UIColor.px_blueMercadoPago())
+        XCTAssertEqual(decoration.fontName, ".SFUIDisplay-Regular")
+        XCTAssertEqual(decoration.fontLightName, ".SFUIDisplay-Light")
+    }
+
+    func testSetBaseColor() {
         decoration.setBaseColor(color: UIColor.brown)
         XCTAssertEqual(decoration.getBaseColor(), UIColor.brown)
     }
 
     func testEnableDarkFont() {
-        let decoration = DecorationPreference()
         decoration.enableDarkFont()
         XCTAssertEqual(decoration.getFontColor(), UIColor.black)
     }
 
     func testEnableLightFont() {
-        let decoration = DecorationPreference()
         decoration.enableLightFont()
         XCTAssertEqual(decoration.getFontColor(), UIColor.white)
     }
 
     func testSetMercadoPagoBaseColor() {
-        let decoration = DecorationPreference()
         decoration.setMercadoPagoBaseColor()
         XCTAssertEqual(decoration.getBaseColor(), UIColor.px_blueMercadoPago())
         decoration.setBaseColor(color: UIColor.purple)
         decoration.setMercadoPagoBaseColor()
         XCTAssertEqual(decoration.getBaseColor(), UIColor.px_blueMercadoPago())
     }
+
     func testSetBaseColorHexa() {
-        let decoration = DecorationPreference()
         decoration.setBaseColor(hexColor: "#B34C42")
         XCTAssertEqual(decoration.getBaseColor(), UIColor.errorCellColor())
     }
+
     func testSetMercadoPagoFont() {
-        let decoration = DecorationPreference()
         decoration.setCustomFontWith(name: "sarasa")
         decoration.setMercadoPagoFont()
         XCTAssertEqual(decoration.getFontName(), ".SFUIDisplay-Regular")
     }
 
     func testSetFontName() {
-        let decoration = DecorationPreference()
-        XCTAssertEqual(decoration.getFontName(), ".SFUIDisplay-Regular")
         decoration.setCustomFontWith(name: "Comic")
         XCTAssertEqual(decoration.getFontName(), "Comic")
+    }
+
+    func testSetMercadoPagoLightFont() {
+        decoration.setLightCustomFontWith(name: "sarasa")
+        decoration.setMercadoPagoLightFont()
+        XCTAssertEqual(decoration.getLightFontName(), ".SFUIDisplay-Light")
+    }
+
+    func testSetLightFontName() {
+        decoration.setLightCustomFontWith(name: "Comic")
+        XCTAssertEqual(decoration.getLightFontName(), "Comic")
     }
 
 }
