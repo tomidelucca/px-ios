@@ -26,7 +26,7 @@ class AddCouponViewModel: NSObject {
 
     func getCoupon(code: String, success: @escaping (Void) -> Void, failure: @escaping ((_ errorMessage: String) -> Void)) {
 
-        MerchantServer.getCodeDiscount(transactionAmount: self.amount, discountCode: code, payerEmail: self.email, addtionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { (coupon) in
+        CustomServer.getCodeDiscount(transactionAmount: self.amount, discountCode: code, payerEmail: self.email, addtionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { (coupon) in
             if let coupon = coupon {
                 self.coupon = coupon
                 success()

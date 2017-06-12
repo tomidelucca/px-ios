@@ -225,7 +225,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     fileprivate func getCustomerCards() {
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             self.showLoading()
-            MerchantServer.getCustomer({ (customer: Customer) -> Void in
+            CustomServer.getCustomer({ (customer: Customer) -> Void in
                  self.hideLoading()
                 self.viewModel.customerId = customer._id
                 self.viewModel.cards = customer.cards

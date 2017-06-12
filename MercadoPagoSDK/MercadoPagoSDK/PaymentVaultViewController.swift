@@ -171,7 +171,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate func getCustomerCards() {
         if self.viewModel!.shouldGetCustomerCardsInfo() {
-            MerchantServer.getCustomer({ (customer: Customer) -> Void in
+            CustomServer.getCustomer({ (customer: Customer) -> Void in
                 self.viewModel.customerId = customer._id
                 self.viewModel.customerPaymentOptions = customer.cards
                 self.loadPaymentMethodSearch()

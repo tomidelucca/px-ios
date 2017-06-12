@@ -1,5 +1,5 @@
 //
-//  MerchantServer.swift
+//  CustomServer.swift
 //  MercadoPagoSDK
 //
 //  Created by Matias Gualino on 31/12/14.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MerchantServer: NSObject {
+open class CustomServer: NSObject {
 
     open class func getCustomer(_ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
         if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
@@ -22,7 +22,7 @@ open class MerchantServer: NSObject {
                 if let custDic = jsonResult as? NSDictionary {
                     if custDic["error"] != nil {
                         if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
+                            failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                         }
                     } else {
                         cust = Customer.fromJSON(custDic)
@@ -30,13 +30,13 @@ open class MerchantServer: NSObject {
                     }
                 } else {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                     }
                 }
             }, failure: failure)
         } else {
             if failure != nil {
-                failure!(NSError(domain: "mercadopago.sdk.merchantServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
             }
         }
     }
@@ -55,20 +55,20 @@ open class MerchantServer: NSObject {
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
                     if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
                         payment = Payment.fromJSON(paymentDic)
                         success(payment!)
                     } else {
-                        failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
                     }
 
                 }
             } else {
                 if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                    failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
                 }
             }
         }, failure: failure)
@@ -84,7 +84,7 @@ open class MerchantServer: NSObject {
 
                 if let preferenceDic = jsonResult as? NSDictionary {
                     if preferenceDic["error"] != nil && failure != nil {
-                        failure!(NSError(domain: "mercadopago.merchantServer.createPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
+                        failure!(NSError(domain: "mercadopago.customServer.createPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
                     } else {
                         if preferenceDic.allKeys.count > 0 {
                             checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
@@ -92,7 +92,7 @@ open class MerchantServer: NSObject {
                         }
                     }
                 } else {
-                    failure?(NSError(domain: "mercadopago.sdk.merchantServer.createPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                    failure?(NSError(domain: "mercadopago.sdk.customServer.createPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
 
                 }
             }, failure: failure)
