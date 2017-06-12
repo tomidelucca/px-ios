@@ -69,7 +69,7 @@ class WalletIntegrationTest: BaseTest {
         MercadoPagoCheckout.setFlowPreference(fp)
 
         // Se vuelve a llamar a Checkout para que muestre RyC
-        let mpCheckoutWithRyC = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, paymentData : localPaymentData, navigationController: UINavigationController())
+        let mpCheckoutWithRyC = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: preference, paymentData : localPaymentData!, navigationController: UINavigationController())
         step = mpCheckoutWithRyC.viewModel.nextStep()
         XCTAssertEqual(step, CheckoutStep.SEARCH_PREFERENCE)
 
