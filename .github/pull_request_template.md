@@ -4,12 +4,15 @@ Fix #{issueNumber}
 - Cambio 1
 - Cambio 2
 
+##  Snippet de Código o Screenshot : 
+
 ### Revisión
 - [ ] Todos los textos se encuentran localizables
 - [ ] No se introducen warnings al proyecto
 - [ ] Se incluyen cambios de UX ? se verificó que se vean bien tanto en iPhone SE y S6 : NA
 - [ ] No se agregan logs / prints innecesarios
 - [ ] No se agregan comentarios basura
+- [ ] Correr Swiftlint
 
 ### Testeo
 - [ ] Testeado en BETA con emulador
