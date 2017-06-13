@@ -180,7 +180,7 @@ open class MockBuilder: NSObject {
         payment.transactionDetails.installmentAmount = MockBuilder.INSTALLMENT_AMOUNT
         payment.statusDetail = statusDetail
         payment.feesDetails = [FeesDetail]()
-        if (includeFinancingFee != nil && includeFinancingFee!) {
+        if includeFinancingFee != nil && includeFinancingFee! {
             let feesDetail = FeesDetail()
             feesDetail.type = "financing_fee"
             payment.feesDetails.append(feesDetail)

@@ -86,7 +86,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if (string.characters.count < 1) {
+        if string.characters.count < 1 {
             return true
         }
         guard let identificationType = identificationType else {
@@ -164,7 +164,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     func getCardWidth() -> CGFloat {
         let widthTotal = UIScreen.main.bounds.size.width * 0.70
         if widthTotal < 512 {
-            if ((0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394)) {
+            if (0.63 * widthTotal) < (UIScreen.main.bounds.size.height - 394) {
                 return widthTotal
             } else {
                 return (UIScreen.main.bounds.size.height - 394) / 0.63
@@ -192,7 +192,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
    open
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if(self.identificationTypes == nil) {
+        if self.identificationTypes == nil {
             return 0
         }
 
@@ -258,7 +258,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
         let cardToken = CardToken(cardNumber: "", expirationMonth: 10, expirationYear: 10, securityCode: "", cardholderName: "", docType: (self.identificationType?.type)!, docNumber:  defaultEditTextMask.textUnmasked(numberTextField.text))
 
-        if ((cardToken.validateIdentificationNumber(self.identificationType)) == nil) {
+        if (cardToken.validateIdentificationNumber(self.identificationType)) == nil {
             self.numberTextField.resignFirstResponder()
             self.callback!(idnt)
         } else {
