@@ -91,5 +91,45 @@ class FlowPreferenceTest: BaseTest {
         flowPreference.enableBankDeals()
         XCTAssert(CardFormViewController.showBankDeals)
     }
+    
+    func testDefaultMaxSavedCards() {
+        XCTAssertEqual(3, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCards() {
+        flowPreference.setMaxSavedCardsToShow(fromInt: 5)
+        XCTAssertEqual(5, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCardsWithInvalidInt() {
+        flowPreference.setMaxSavedCardsToShow(fromInt: 0)
+        XCTAssertEqual(3, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCardsWithNegativeInt() {
+        flowPreference.setMaxSavedCardsToShow(fromInt: -1)
+        XCTAssertEqual(3, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCardsWithEmptyString() {
+        flowPreference.setMaxSavedCardsToShow(fromString: "")
+        XCTAssertEqual(3, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCardsWithInvalidString() {
+        flowPreference.setMaxSavedCardsToShow(fromString: "invalid")
+        XCTAssertEqual(3, flowPreference.getMaxSavedCardsToShow())
+        XCTAssertFalse(flowPreference.isShowAllSavedCardsEnabled())
+    }
+    
+    func testSetMaxSavedCardsToShowAll() {
+        flowPreference.setMaxSavedCardsToShow(fromString: FlowPreference.showAllSavedCardsCode)
+        XCTAssertTrue(flowPreference.isShowAllSavedCardsEnabled())
+    }
 
 }

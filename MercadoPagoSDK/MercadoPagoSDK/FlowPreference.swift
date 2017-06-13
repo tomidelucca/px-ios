@@ -92,7 +92,7 @@ open class FlowPreference: NSObject {
     }
     
     public func setMaxSavedCardsToShow(fromInt: Int) {
-        if (fromInt > 0) {
+        if fromInt > 0 {
             maxSavedCardsToShow = fromInt
         } else {
             maxSavedCardsToShow = FlowPreference.defaultMaxSavedCardsToShow
@@ -100,7 +100,7 @@ open class FlowPreference: NSObject {
     }
     
     public func setMaxSavedCardsToShow(fromString: String) {
-        if (fromString == FlowPreference.showAllSavedCardsCode) {
+        if fromString == FlowPreference.showAllSavedCardsCode {
             showAllSavedCards = true
         } else {
             showAllSavedCards = false
