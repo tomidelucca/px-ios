@@ -74,29 +74,31 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func createCheckoutPreference(success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func createCheckoutPreference(url: String, uri: String, bodyInfo: [String:AnyObject]? = nil, success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
-        if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURL() {
-            let service: CustomService = CustomService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutPreferenceURI())
-
-            service.createPreference(body: MercadoPagoCheckoutViewModel.servicePreference.getCheckoutAddionalInfo(), success: { (jsonResult) in
-                var checkoutPreference : CheckoutPreference? = nil
-
-                if let preferenceDic = jsonResult as? NSDictionary {
-                    if preferenceDic["error"] != nil && failure != nil {
-                        failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
-                    } else {
-                        if preferenceDic.allKeys.count > 0 {
-                            checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
-                            success(checkoutPreference!)
-                        }
-                    }
-                } else {
-                    failure?(NSError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-
-                }
-            }, failure: failure)
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
+        
+        var bodyString: String = ""
+        if let body = bodyInfo {
+            bodyString = JSONHandler.jsonCoding(body)
         }
+
+        service.createPreference(body: bodyString, success: { (jsonResult) in
+            var checkoutPreference : CheckoutPreference? = nil
+
+            if let preferenceDic = jsonResult as? NSDictionary {
+                if preferenceDic["error"] != nil && failure != nil {
+                    failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
+                } else {
+                    if preferenceDic.allKeys.count > 0 {
+                        checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
+                        success(checkoutPreference!)
+                    }
+                }
+            } else {
+                failure?(NSError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+            }
+        }, failure: failure)
     }
 
     open class func getDirectDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
