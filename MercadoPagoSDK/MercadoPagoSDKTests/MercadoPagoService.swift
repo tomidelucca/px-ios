@@ -51,7 +51,7 @@ open class MercadoPagoService: NSObject {
         do {
             let jsonResponse = try MockManager.getMockResponseFor(finalUri, method: method)
 
-            if (jsonResponse != nil) {
+            if jsonResponse != nil {
                 if let _ = jsonResponse!["error"]! {
                     failure!(NSError(domain: uri, code: 400, userInfo: nil))
                     return

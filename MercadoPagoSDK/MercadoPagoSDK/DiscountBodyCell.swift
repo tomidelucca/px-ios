@@ -24,7 +24,7 @@ class DiscountBodyCell: UIView {
         self.amount = amount
         self.topMargin = topMargin
         self.hideArrow = hideArrow
-        if (self.coupon == nil) {
+        if self.coupon == nil {
             loadNoCouponView()
         } else {
             loadCouponView()
@@ -198,7 +198,7 @@ class DiscountToolBar: UIView {
 
         self.margin = (frame.size.height - 18 ) / 2
         self.backgroundColor = UIColor.mpGreenishTeal()
-        if (self.coupon == nil) {
+        if self.coupon == nil {
             loadNoCouponView()
         } else {
             loadCouponView()

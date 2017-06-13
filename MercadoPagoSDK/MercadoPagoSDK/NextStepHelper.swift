@@ -197,7 +197,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func shouldShowCongrats() -> Bool {
-        if (self.payment != nil || self.paymentResult != nil) {
+        if self.payment != nil || self.paymentResult != nil {
             self.setIsCheckoutComplete(isCheckoutComplete: true)
             return true
         }
