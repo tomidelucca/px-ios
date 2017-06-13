@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 class ExamplesUtils {
-    
+
 //    
 //    
 //    static var preferenceSelectedID : String = ExamplesUtils.PREF_ID_NO_EXCLUSIONS
@@ -195,5 +195,5 @@ class ExamplesUtils {
 //        
 //        return preference
 //    }
-    
+
 }
