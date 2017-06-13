@@ -69,7 +69,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var customPaymentOptions: [CardInformation]?
 
     var rootVC = true
-    
+
     var binaryMode: Bool = false
     var paymentData = PaymentData()
     var payment: Payment?

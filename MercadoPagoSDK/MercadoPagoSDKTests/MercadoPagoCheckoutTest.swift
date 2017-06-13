@@ -321,7 +321,7 @@ class MercadoPagoCheckoutTest: BaseTest {
 
         //Test Default Binary Mode
         XCTAssertEqual(false, self.mpCheckout?.viewModel.binaryMode)
-        
+
         //Test setBinaryMode Method
         self.mpCheckout?.setBinaryMode(true)
         XCTAssertEqual(true, self.mpCheckout?.viewModel.binaryMode)

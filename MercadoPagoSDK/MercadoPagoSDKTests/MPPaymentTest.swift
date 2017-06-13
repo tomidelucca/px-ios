@@ -38,7 +38,7 @@ class MPPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
-        
+
         XCTAssertEqual(jsonResult["binary_mode"] as? Bool, true)
 
         self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments: 3, issuerId: "issuerId", tokenId: "123", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
@@ -58,7 +58,7 @@ class MPPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
-        
+
         XCTAssertEqual(jsonResult["binary_mode"] as? Bool, false)
 
     }
@@ -95,7 +95,7 @@ class CustomerPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "customerId")
         XCTAssertEqual(payer?["email"] as? String, "email")
-        
+
         XCTAssertEqual(customerPaymentResult["binary_mode"] as? Bool, true)
 
         self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "", paymentMethodId: "pmId", installments : 3, issuerId : "issuerId", tokenId : "123", customerId : "111", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
@@ -115,7 +115,7 @@ class CustomerPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "111")
         XCTAssertEqual(payer?["email"] as? String, "email")
-        
+
         XCTAssertEqual(customerPaymentResult["binary_mode"] as? Bool, false)
 
     }
@@ -154,7 +154,7 @@ class BlacklabelPaymentTest: BaseTest {
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
         XCTAssertEqual(payer?["access_token"] as? String, "payerAccessToken")
-        
+
         XCTAssertEqual(jsonResult["binary_mode"] as? Bool, false)
 
     }
