@@ -23,12 +23,12 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, paymentResult: PaymentResult? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
       
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
-        
+
         if self.navigationController.viewControllers.count > 0 {
             let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
             }
