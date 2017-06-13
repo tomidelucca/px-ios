@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoSDK
 
-class FinalVaultViewController : AdvancedVaultViewController {
+class FinalVaultViewController: AdvancedVaultViewController {
 //
 //    var finalCallback : ((_ paymentMethod: PaymentMethod, _ token: String?, _ issuer: Issuer?, _ installments: Int) -> Void)?
 // 

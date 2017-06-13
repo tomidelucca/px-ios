@@ -155,7 +155,7 @@ open class CheckoutPreference: NSObject {
         if isExpired() {
             return "La preferencia esta expirada".localized
         }
-        if (self.getAmount() < 0) {
+        if self.getAmount() < 0 {
             return "El monto de la compra no es válido".localized
         }
         return nil
@@ -168,7 +168,7 @@ open class CheckoutPreference: NSObject {
         let currencyIdAllItems = items[0].currencyId
 
         for (_, value) in items.enumerated() {
-            if(value.currencyId != currencyIdAllItems) {
+            if value.currencyId != currencyIdAllItems {
                 return "Los items tienen diferente moneda".localized
             }
 

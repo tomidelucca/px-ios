@@ -39,7 +39,7 @@ open class PaymentService: MercadoPagoService {
 
     open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, key: String, bin: String?, amount: Double, issuer_id: NSNumber?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var params: String = MercadoPagoContext.keyType() + "=" + key
-        if(bin != nil) {
+        if bin != nil {
                     params = params + "&bin=" + bin!
         }
 

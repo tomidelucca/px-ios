@@ -111,10 +111,10 @@ open class CardsAdminViewModel: NSObject {
     }
 
     public func numberOfItemsInSection (section: Int) -> Int {
-        if (self.loadingCards) {
+        if self.loadingCards {
             return 0
         }
-        if (self.isHeaderSection(section: section)) {
+        if self.isHeaderSection(section: section) {
             return 1
         }
         return self.numberOfOptions()

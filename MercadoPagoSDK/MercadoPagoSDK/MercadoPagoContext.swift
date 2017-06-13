@@ -46,8 +46,6 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     open class func isAuthenticatedUser() -> Bool {
         return !sharedInstance.payer_access_token.isEmpty
     }
-    
-    
     static var mpxPublicKey : String {return sharedInstance.publicKey()}
     static var mpxCheckoutVersion : String {return sharedInstance.sdkVersion()}
     static var mpxPlatform : String {return sharedInstance.framework()}
@@ -55,7 +53,7 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     static var mpxPlatformType: String {return "Native"}
     
     
-    
+   
     open func framework() -> String! {
         return  "iOS"
     }
@@ -83,7 +81,7 @@ open class MercadoPagoContext: NSObject , MPXTracker {
         "MCO": ["language": "es-CO", "currency": "COP", "termsconditions": "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
         //Venezuela
         "MLV": ["language": "es", "currency": "VEF", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
-]
+    ]
 
     public enum Site: String {
         case MLA = "MLA"
@@ -167,16 +165,16 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     open class func setPayerAccessToken(_ payerAccessToken: String) {
 
         sharedInstance.payer_access_token = payerAccessToken.trimSpaces()
-      _ = CardFrontView()
-      _ = CardBackView()
+        _ = CardFrontView()
+        _ = CardBackView()
 
     }
 
     open class func setPublicKey(_ public_key: String) {
 
-       sharedInstance.public_key = public_key.trimSpaces()
-       _ = CardFrontView()
-       _ = CardBackView()
+        sharedInstance.public_key = public_key.trimSpaces()
+        _ = CardFrontView()
+        _ = CardBackView()
 
     }
 
@@ -223,7 +221,7 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     }
 
     open class func keyType() -> String {
-        if(MercadoPagoContext.isAuthenticatedUser()) {
+        if MercadoPagoContext.isAuthenticatedUser() {
             return MercadoPagoContext.PRIVATE_KEY
         } else {
             return MercadoPagoContext.PUBLIC_KEY
@@ -231,7 +229,7 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     }
 
     open class func keyValue() -> String {
-        if(MercadoPagoContext.isAuthenticatedUser()) {
+        if MercadoPagoContext.isAuthenticatedUser() {
             return MercadoPagoContext.payerAccessToken()
         } else {
             return MercadoPagoContext.publicKey()
