@@ -11,34 +11,32 @@ import UIKit
 
 open class CustomServer: NSObject {
 
-    open class func getCustomer(_ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        if let baseURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
-
-            let service: CustomService = CustomService(baseURL: baseURL, URI: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI())
-            let params = MercadoPagoCheckoutViewModel.servicePreference.getCustomerAddionalInfo()
-
-            service.getCustomer(params: params, success: {(jsonResult: AnyObject?) -> Void in
-                var cust : Customer? = nil
-                if let custDic = jsonResult as? NSDictionary {
-                    if custDic["error"] != nil {
-                        if failure != nil {
-                            failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
-                        }
-                    } else {
-                        cust = Customer.fromJSON(custDic)
-                        success(cust!)
+    open class func getCustomer(url: String, uri: String, additionalInfo: [String:AnyObject]? = nil, _ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
+        
+        var additionalInfoString: String = ""
+        if let additional = additionalInfo {
+            additionalInfoString = JSONHandler.jsonCoding(additional)
+        }
+        
+        service.getCustomer(params: additionalInfoString, success: {(jsonResult: AnyObject?) -> Void in
+            var cust : Customer? = nil
+            if let custDic = jsonResult as? NSDictionary {
+                if custDic["error"] != nil {
+                    if failure != nil {
+                        failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
-                    if failure != nil {
-                        failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-                    }
+                    cust = Customer.fromJSON(custDic)
+                    success(cust!)
                 }
-            }, failure: failure)
-        } else {
-            if failure != nil {
-                failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+            } else {
+                if failure != nil {
+                    failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
+                }
             }
-        }
+        }, failure: failure)
     }
 
     open class func createPayment(paymentUrl: String, paymentUri: String, paymentBody: NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
