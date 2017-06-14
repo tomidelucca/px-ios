@@ -1209,5 +1209,10 @@ class PaymentVaultViewModelTest: BaseTest {
         //instance!.optionSelected(customerCard as PaymentMethodOption as! PaymentMethodSearchItem, navigationController: currentNavigationController, cancelPaymentCallback: nil)
 
     }
+    
+    override func tearDown() {
+        // Restore default value
+        MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = FlowPreference.defaultMaxSavedCardsToShow
+    }
 
 }
