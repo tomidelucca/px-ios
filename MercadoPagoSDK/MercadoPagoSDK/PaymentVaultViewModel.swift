@@ -49,13 +49,13 @@ class PaymentVaultViewModel: NSObject {
     
     func getCustomerPaymentMethodsToDisplayCount() -> Int {
         if !Array.isNullOrEmpty(customerPaymentOptions) && self.isRoot {
-            let realCount : Int = self.customerPaymentOptions!.count
+            let realCount = self.customerPaymentOptions!.count
             
             if MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled() {
                 return realCount
             } else {
-                var maxChosenCount : Int = MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow()
-                let hasAccountMoney : Bool = hasAccountMoneyIn(customerOptions: self.customerPaymentOptions!)
+                var maxChosenCount = MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow()
+                let hasAccountMoney = hasAccountMoneyIn(customerOptions: self.customerPaymentOptions!)
                 if hasAccountMoney {
                     maxChosenCount += 1
                 }
