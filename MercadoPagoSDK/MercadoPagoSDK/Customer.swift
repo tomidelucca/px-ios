@@ -12,7 +12,7 @@ import UIKit
 open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?
-    open var defaultCard: NSNumber?
+    open var defaultCard: String?
     open var _description: String?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?
@@ -44,6 +44,9 @@ open class Customer: NSObject {
         if let addressDic = json["address"] as? NSDictionary {
             customer.address = Address.fromJSON(addressDic)
         }
+        if let defaultCard = json["default_card"] as? String {
+            customer.defaultCard = defaultCard
+        }
         customer.metadata = json["metadata"] as? NSDictionary
         customer.dateCreated = Utils.getDateFromString(json["date_created"] as? String)
         customer.dateLastUpdated = Utils.getDateFromString(json["date_last_updated"] as? String)
@@ -68,6 +71,8 @@ open class Customer: NSObject {
         let lastName : Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
         let id : Any =   self._id == nil ? JSONHandler.null : self._id!
         let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
+        let address: Any = self.address == nil ? JSONHandler.null : self.address!.toJSON()
+        let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
 
         var obj: [String:Any] = [
             "default_card": defaultCard,
@@ -77,7 +82,9 @@ open class Customer: NSObject {
             "first_name": firstName,
             "last_name": lastName,
             "id": id,
-            "identification": identification
+            "identification": identification,
+            "live_mode": liveMode,
+            "address": address
         ]
 
         var cardsJson: [[String:Any]] = [[:]]
@@ -96,7 +103,6 @@ open class Customer: NSObject {
 }
 
 public func ==(obj1: Customer, obj2: Customer) -> Bool {
-
     let areEqual =
         obj1.address! == obj2.address! &&
             obj1.cards! == obj2.cards! &&
