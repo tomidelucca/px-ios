@@ -222,6 +222,7 @@
 		15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* AdditionalStepTitleTableViewCell.swift */; };
 		23ECADC51EF1C7CC003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */; };
 		23ECADC61EF1D7E0003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */; };
+		23ECADD21EF1DF66003E4539 /* MerchantServerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADD11EF1DF66003E4539 /* MerchantServerTest.swift */; };
 		4B077D4B1EB4400E001B0D69 /* PaymentResultContentViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B077D4A1EB4400E001B0D69 /* PaymentResultContentViewTest.swift */; };
 		4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */; };
 		4B277F671E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */; };
@@ -691,6 +692,7 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewModelTest.swift; sourceTree = "<group>"; };
 		23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiUtil.swift; sourceTree = "<group>"; };
+		23ECADD11EF1DF66003E4539 /* MerchantServerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantServerTest.swift; sourceTree = "<group>"; };
 		4B077D4A1EB4400E001B0D69 /* PaymentResultContentViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultContentViewTest.swift; sourceTree = "<group>"; };
 		4B241A991E01A7E00059640C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B277F651E38DD7700AF5DF8 /* NSDictionary+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Additions.swift"; sourceTree = "<group>"; };
@@ -1486,6 +1488,7 @@
 				76DA64611C8F5D8B004F9A7C /* MercadoPagoService.swift */,
 				7656F5241C9726A60076A14D /* PaymentMethodSearchServiceTest.swift */,
 				76EA639F1C9B3B9700808E11 /* InstructionsServiceTest.swift */,
+				23ECADD11EF1DF66003E4539 /* MerchantServerTest.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -2356,6 +2359,7 @@
 				0F9883641AD2AB6000F750F0 /* CardNumber.swift in Sources */,
 				76EA63A01C9B3B9700808E11 /* InstructionsServiceTest.swift in Sources */,
 				0F9883761AD2AB6000F750F0 /* Identification.swift in Sources */,
+				23ECADD21EF1DF66003E4539 /* MerchantServerTest.swift in Sources */,
 				15E19C7D1D6F281700D49D7B /* MaskElementTest.swift in Sources */,
 				76EC47E81C8612C40086FA53 /* PayerCostTest.swift in Sources */,
 				76062BC81C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
