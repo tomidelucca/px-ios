@@ -41,7 +41,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
-
+    var searchDiscount = true
     internal static var paymentDataCallback: ((PaymentData) -> Void)?
     internal static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     internal static var paymentCallback: ((Payment) -> Void)?
@@ -255,7 +255,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
     }
-
     public func nextStep() -> CheckoutStep {
 
         if needLoadPreference {
@@ -263,6 +262,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return .SEARCH_PREFERENCE
 
         }
+        
         if needToSearchDirectDiscount() {
             directDiscountSearched = true
             return .SEARCH_DIRECT_DISCOUNT
