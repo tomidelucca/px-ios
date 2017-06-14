@@ -61,7 +61,6 @@ disabled_rules:
   - large_tuple
   - force_cast
   - identifier_name
-  - control_statement
 
 
 # Hay que ir agregando:
