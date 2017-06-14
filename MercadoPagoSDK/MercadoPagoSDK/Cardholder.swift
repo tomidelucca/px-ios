@@ -19,7 +19,7 @@ open class Cardholder: NSObject {
             cardholder.name = name
         }
 
-        let identificationDic: NSDictionary = JSONHandler.getValue(of: NSDictionary.self , key: "identification", from: json)
+        let identificationDic: NSDictionary = JSONHandler.getValue(of: NSDictionary.self, key: "identification", from: json)
         cardholder.identification = Identification.fromJSON(identificationDic)
 
         return cardholder

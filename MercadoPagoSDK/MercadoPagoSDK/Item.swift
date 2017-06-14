@@ -84,7 +84,7 @@ open class Item: NSObject {
         if let description = JSONHandler.attemptParseToString(json["description"]) {
             item._description = description
         }
-        
+
         item.currencyId = JSONHandler.getValue(of: String.self, key: "currency_id", from: json)
 
         if let categoryId = JSONHandler.attemptParseToString(json["category_id"]) {

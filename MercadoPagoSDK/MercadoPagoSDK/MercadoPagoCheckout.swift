@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    open var callbackCancel: ((Void) -> Void)?
+    open var callbackCancel: (() -> Void)?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -435,7 +435,7 @@ open class MercadoPagoCheckout: NSObject {
         })
     }
 
-    func collectPayerCosts(updateCallback: ((Void) -> Void)? = nil) {
+    func collectPayerCosts(updateCallback: (() -> Void)? = nil) {
         self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
 
