@@ -56,8 +56,9 @@ open class MercadoPagoService: NSObject {
                 // if dic["error"] == nil {...}. See MerchantServer or MPServicesBuilder methods as an example.
                 success(jsonResponse)
                 //MercadoPagoTestContext.fulfillExpectation(BaseTest.WAIT_FOR_REQUEST_EXPECTATION_DESCRIPTION + uri)
+            } else {
+                failure!(NSError(domain: uri, code: 400, userInfo: nil))
             }
-
         } catch {
             failure!(NSError(domain: uri, code: 400, userInfo: nil))
         }
