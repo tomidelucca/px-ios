@@ -75,7 +75,7 @@ class PaymentVaultViewModel: NSObject {
     }
 
     func getPaymentMethodOption(row: Int) -> PaymentOptionDrawable {
-        if (self.getCustomerPaymentMethodsToDisplayCount() > row) {
+        if self.getCustomerPaymentMethodsToDisplayCount() > row {
             return self.customerPaymentOptions![row]
         }
         let indexInPaymentMethods = Array.isNullOrEmpty(self.customerPaymentOptions) ? row : (row - self.getCustomerPaymentMethodsToDisplayCount())
@@ -104,7 +104,7 @@ class PaymentVaultViewModel: NSObject {
     }
 
     func isCustomerPaymentMethodOptionSelected(_ row: Int) -> Bool {
-        if (Array.isNullOrEmpty(self.customerPaymentOptions)) {
+        if Array.isNullOrEmpty(self.customerPaymentOptions) {
             return false
         }
         return (row < self.getCustomerPaymentMethodsToDisplayCount())
