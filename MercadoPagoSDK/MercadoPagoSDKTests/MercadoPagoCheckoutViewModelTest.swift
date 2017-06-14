@@ -81,15 +81,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
     }
     func testPayerCostWithDiscount() {
-        let dc = DiscountCoupon()
-        dc._id = "123"
-        dc.name = "Patito Off"
-        dc.coupon_amount = "30"
-        dc.amount_off = "30"
-        dc.currency_id = "ARS"
-        dc.concept = "Descuento de patito"
-        dc.amount = 300
-        let viewModel = PayerCostAdditionalStepViewModel(amount: 1000, token: nil, paymentMethod: PaymentMethod(), dataSource: [Cellable](), discount: dc, email: "dummy@mail.com")
+        let viewModel = PayerCostAdditionalStepViewModel(amount: 1000, token: nil, paymentMethod: PaymentMethod(), dataSource: [Cellable](), discount: MockBuilder.buildDiscount(), email: "dummy@mail.com")
         let payerCostStep = AdditionalStepViewController(viewModel: viewModel, callback: {_ in })
         XCTAssertNotNil(payerCostStep.viewModel.discount)
     }
