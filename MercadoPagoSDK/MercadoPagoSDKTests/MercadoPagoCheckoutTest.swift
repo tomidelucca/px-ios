@@ -32,12 +32,14 @@ class MercadoPagoCheckoutTest: BaseTest {
     func testInit_withCheckoutPreference() {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let navControllerInstance = UINavigationController()
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
         XCTAssertFalse(self.mpCheckout!.viewModel.paymentData.isComplete())
         XCTAssertNil(self.mpCheckout!.viewModel.paymentResult)
         XCTAssertEqual(self.mpCheckout!.navigationController, navControllerInstance)
+        XCTAssertEqual(MercadoPagoContext.publicKey(), "PK_MLA")
+        XCTAssertEqual(MercadoPagoContext.payerAccessToken(), "")
 
     }
 
@@ -49,15 +51,39 @@ class MercadoPagoCheckoutTest: BaseTest {
         paymentData.token = MockBuilder.buildToken()
         let navControllerInstance = UINavigationController()
 
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance)
 
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
         XCTAssertEqual(self.mpCheckout!.viewModel.paymentData.paymentMethod, paymentMethod)
         XCTAssertNil(self.mpCheckout!.viewModel.paymentResult)
         XCTAssertEqual(self.mpCheckout!.navigationController, navControllerInstance)
+        XCTAssertEqual(MercadoPagoContext.publicKey(), "PK_MLA")
+        XCTAssertEqual(MercadoPagoContext.payerAccessToken(), "")
     }
 
+    func testUpdateReviewScreen() {
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let paymentMethod = MockBuilder.buildPaymentMethod("visa")
+        let paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
+        paymentData.payerCost = MockBuilder.buildPayerCost()
+        paymentData.token = MockBuilder.buildToken()
+        let navControllerInstance = UINavigationController()
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, navigationController: navControllerInstance)
+        let reviewScreenPreference = ReviewScreenPreference()
+        reviewScreenPreference.setTitle(title: "Title 1")
+        self.mpCheckout?.setReviewScreenPreference(reviewScreenPreference)
+        self.mpCheckout?.start()
+        let currentViewController = self.mpCheckout?.navigationController.viewControllers
+        var reviewVC = currentViewController?.last as! ReviewScreenViewController
+        XCTAssertEqual(reviewVC.viewModel.reviewScreenPreference.getTitle(), reviewScreenPreference.getTitle())
+        let updatedReviewScreenPreference = ReviewScreenPreference()
+        updatedReviewScreenPreference.setTitle(title: "Title 2")
+        self.mpCheckout?.setReviewScreenPreference(updatedReviewScreenPreference)
+        self.mpCheckout?.updateReviewAndConfirm()
+        XCTAssertEqual(reviewVC.viewModel.reviewScreenPreference.getTitle(), updatedReviewScreenPreference.getTitle())
+    }
+    
     func testInit_withPaymentResult() {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
@@ -69,13 +95,15 @@ class MercadoPagoCheckoutTest: BaseTest {
         let navControllerInstance = UINavigationController()
         let paymentResult = MockBuilder.buildPaymentResult(paymentMethodId: "visa")
 
-        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, paymentData : paymentData, paymentResult : paymentResult, navigationController: navControllerInstance)
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "lala", checkoutPreference: checkoutPreference, paymentData : paymentData, paymentResult : paymentResult, navigationController: navControllerInstance)
 
         XCTAssertNotNil(self.mpCheckout!.viewModel)
         XCTAssertNotNil(self.mpCheckout!.viewModel.checkoutPreference)
         XCTAssertEqual(self.mpCheckout!.viewModel.paymentData.paymentMethod, paymentMethod)
         XCTAssertNotNil(self.mpCheckout!.viewModel.paymentResult)
         XCTAssertEqual(self.mpCheckout!.navigationController, navControllerInstance)
+        XCTAssertEqual(MercadoPagoContext.publicKey(), "PK_MLA")
+        XCTAssertEqual(MercadoPagoContext.payerAccessToken(), "lala")
     }
 
     /*******************************************/
