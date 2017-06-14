@@ -229,9 +229,9 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymen
     internal func getLayoutName(_ payment : Payment) -> String! {
     
         if payment.status == PaymentStatus.REJECTED.rawValue {
-            if payment.statusDetail != nil && payment.statusDetail == "cc_rejected_call_for_authorize" {
+            if payment.statusDetail != nil && payment.statusDetail == PaymentStatusDetails.REJECTED_CALL_FOR_AUTHORIZE.rawValue {
                 return "authorize" //C4A
-            }else if payment.statusDetail != nil && payment.statusDetail.contains("cc_rejected_bad_filled")  {
+            }else if payment.statusDetail != nil && payment.statusDetail.contains(PaymentStatusDetails.REJECTED_GENERIC_BAD_FILLED.rawValue)  {
                  return "recovery" //bad fill something
             }
         }
@@ -260,13 +260,13 @@ open class PaymentCongratsViewController: MercadoPagoUIViewController , MPPaymen
         return {
             var status = MPStepBuilder.CongratsState.ok
             if self.payment.status == PaymentStatus.REJECTED.rawValue {
-                if self.payment.statusDetail == "cc_rejected_call_for_authorize" {
+                if self.payment.statusDetail == PaymentStatusDetails.REJECTED_CALL_FOR_AUTHORIZE.rawValue {
                     MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_SELECT_OTHER
-                }else if self.payment.statusDetail != nil && self.payment.statusDetail.contains("cc_rejected_bad_filled"){
+                } else if self.payment.statusDetail != nil && self.payment.statusDetail.contains(PaymentStatusDetails.REJECTED_GENERIC_BAD_FILLED.rawValue){
                     MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "RECOVER_PAYMENT", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_RECOVER
-                }else {
+                } else {
                     MPTracker.trackEvent(MercadoPagoContext.sharedInstance, screen: self.getScreenName(), action: "SELECT_OTHER_PAYMENT_METHOD", result: nil)
                     status = MPStepBuilder.CongratsState.cancel_SELECT_OTHER
                 }
@@ -287,4 +287,22 @@ enum PaymentStatus : String {
     case REJECTED = "rejected"
     case RECOVERY = "recovery"
     case IN_PROCESS = "in_process"
+}
+
+enum PaymentStatusDetails : String {
+    case ACCREDITED = "accredited"
+    case REJECTED_CALL_FOR_AUTHORIZE = "cc_rejected_call_for_authorize"
+    case PENDING_CONTINGENCY = "pending_contingency"
+    case PENDING_REVIEW_MANUAL = "pending_review_manual"
+    case REJECTED_OTHER_REASON = "cc_rejected_other_reason"
+    case REJECTED_GENERIC_BAD_FILLED = "cc_rejected_bad_filled"
+    case REJECTED_BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
+    case REJECTED_BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
+    case REJECTED_BAD_FILLED_SECURITY_CODE = "cc_rejected_bad_filled_security_code"
+    case REJECTED_BAD_FILLED_DATE = "cc_rejected_bad_filled_date"
+    case REJECTED_HIGH_RISK = "rejected_high_risk"
+    case REJECTED_INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+    case REJECTED_MAX_ATTEMPTS = "cc_rejected_max_attempts"
+    case REJECTED_DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
+    case REJECTED_CARD_DISABLED = "cc_rejected_card_disabled"
 }

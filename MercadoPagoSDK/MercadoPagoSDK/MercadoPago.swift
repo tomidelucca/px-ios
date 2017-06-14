@@ -504,9 +504,15 @@ import UIKit
         service.createMPPayment(payment: mpPayment, success: { (jsonResult) in
             var payment : Payment? = nil
             
+            
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
-                    if failure != nil {
+                    if paymentDic["status"] as? Int == ApiUtil.StatusCodes.PROCESSING.rawValue {
+                        let inProcessPayment = Payment()
+                        inProcessPayment.status = PaymentStatus.IN_PROCESS.rawValue
+                        inProcessPayment.statusDetail = PaymentStatusDetails.PENDING_CONTINGENCY.rawValue
+                        success(inProcessPayment)
+                    } else if failure != nil {
                         failure!(NSError(domain: "mercadopago.sdk.mercadoPago.createMPPayment", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey : "No se ha podido procesar el pago".localized, NSLocalizedFailureReasonErrorKey : paymentDic["error"] as! String]))
                     }
                 } else {
