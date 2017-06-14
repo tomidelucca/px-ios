@@ -100,11 +100,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             //TODO : OJO TOKEN RECUPERABLE
             if self.viewModel.paymentData.paymentMethod != nil {
               //  self.checkoutTable.reloadData()
-                if (recover) {
+                if recover {
                     recover = false
                     //self.startRecoverCard()
                 }
-                if (auth) {
+                if auth {
                     auth = false
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }

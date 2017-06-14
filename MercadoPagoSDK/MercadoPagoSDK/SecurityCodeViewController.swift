@@ -35,7 +35,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         self.view.backgroundColor = UIColor.primaryColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
         self.cardBack = CardBackView.init(frame: viewModel.getCardBounds())
-        if (viewModel.showFrontCard()) {
+        if viewModel.showFrontCard() {
             self.view.addSubview(cardFront)
             self.securityCodeLabel = cardFront.cardCVV
         } else {
@@ -138,7 +138,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if (((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght()) {
+        if ((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght() {
             return false
         }
         return true
@@ -161,11 +161,11 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     }
 
     func completeCvvLabel() {
-        if (self.ccvLabelEmpty) {
+        if self.ccvLabelEmpty {
             securityCodeLabel!.text = ""
         }
 
-        while (addCvvDot() != false) {
+        while addCvvDot() != false {
 
         }
         securityCodeLabel.textColor = UIColor.black

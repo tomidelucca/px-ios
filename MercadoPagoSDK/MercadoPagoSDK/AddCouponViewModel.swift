@@ -31,13 +31,13 @@ class AddCouponViewModel: NSObject {
                 self.coupon = coupon
                 success()
             }}, failure: { (error) in
-                if (error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_DOESNT_MATCH) {
+                if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_DOESNT_MATCH {
                     failure("Vendedor sin descuento disponible".localized)
-                } else if (error.localizedDescription == self.DISCOUNT_ERROR_RUN_OUT_OF_USES) {
+                } else if error.localizedDescription == self.DISCOUNT_ERROR_RUN_OUT_OF_USES {
                     failure("Se agotó la cantidad de usos".localized)
-                } else if (error.localizedDescription == self.DISCOUNT_ERROR_AMOUNT_DOESNT_MATCH) {
+                } else if error.localizedDescription == self.DISCOUNT_ERROR_AMOUNT_DOESNT_MATCH {
                     failure("Importe fuera del alcance".localized)
-                } else if (error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_EXPIRED) {
+                } else if error.localizedDescription == self.DISCOUNT_ERROR_CAMPAIGN_EXPIRED {
                     failure("La campaña expiró".localized)
                 } else {
                     failure("Algo salió mal… ".localized)
