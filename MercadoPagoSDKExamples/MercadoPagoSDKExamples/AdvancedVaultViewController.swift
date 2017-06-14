@@ -9,7 +9,7 @@
 import Foundation
 import MercadoPagoSDK
 
-class AdvancedVaultViewController : SimpleVaultViewController {
+class AdvancedVaultViewController: SimpleVaultViewController {
 //    
 //    @IBOutlet weak var installmentsCell : MPInstallmentsTableViewCell!
 //    var payerCosts : [PayerCost]?

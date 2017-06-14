@@ -100,11 +100,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             //TODO : OJO TOKEN RECUPERABLE
             if self.viewModel.paymentData.paymentMethod != nil {
               //  self.checkoutTable.reloadData()
-                if (recover) {
+                if recover {
                     recover = false
                     //self.startRecoverCard()
                 }
-                if (auth) {
+                if auth {
                     auth = false
                     //self.startAuthCard(self.viewModel.paymentData.token!)
                 }
@@ -405,10 +405,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     override func getNavigationBarTitle() -> String {
-        if (self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset) {
-            return ""
+        if self.checkoutTable != nil {
+            if (self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset) {
+                return ""
+            }
+            return viewModel.reviewScreenPreference.getTitle()
         }
-        return viewModel.reviewScreenPreference.getTitle()
+        return ""
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {

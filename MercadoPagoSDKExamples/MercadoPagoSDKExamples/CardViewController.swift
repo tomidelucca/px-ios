@@ -9,8 +9,8 @@
 import UIKit
 import MercadoPagoSDK
 
-class CardViewController: UIViewController{
-    
+class CardViewController: UIViewController {
+
 //    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        
 //    }
@@ -419,6 +419,5 @@ class CardViewController: UIViewController{
 //			self.callback?(token)
 //			}, failure: nil)
 //	}
-    
 
 }
