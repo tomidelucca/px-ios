@@ -75,8 +75,8 @@ class JSONHandler: NSObject {
         return Int(string) ?? defaultReturn
     }
 
-    class func getValue<T>(of type: T.Type, key : String, from json: NSDictionary)-> T {
-        guard let value = json[key] as? T else{
+    class func getValue<T>(of type: T.Type, key: String, from json: NSDictionary) -> T {
+        guard let value = json[key] as? T else {
             let errorPlace: String = "Error in class: \(#file) , function:  \(#function), line: \(#line)"
             fatalError("Could not get value for key: \(key). " + errorPlace )
         }
