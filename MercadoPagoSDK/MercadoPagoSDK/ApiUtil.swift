@@ -8,7 +8,7 @@
 
 import Foundation
 open class ApiUtil {
-    enum StatusCodes : Int {
+    enum StatusCodes: Int {
         case INTERNAL_SERVER_ERROR = 500
         case PROCESSING = 499
         case BAD_REQUEST = 400
