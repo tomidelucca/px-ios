@@ -405,10 +405,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     override func getNavigationBarTitle() -> String {
-        if self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset {
-            return ""
+        if self.checkoutTable != nil {
+            if (self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset) {
+                return ""
+            }
+            return viewModel.reviewScreenPreference.getTitle()
         }
-        return viewModel.reviewScreenPreference.getTitle()
+        return ""
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
