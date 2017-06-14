@@ -642,153 +642,153 @@ class PaymentVaultViewModelTest: BaseTest {
 //        XCTAssertFalse(instance!.shouldGetCustomerCardsInfo())
 
     }
-    
+
     func testSetMaxSavedCardsInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromInt: 5)
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), 5)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetMoreMaxSavedCardsThanWeHaveInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromInt: 8)
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         //Show the cards we have
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), 8)
         XCTAssertEqual(customerCardsToDisplay, 6)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetMaxSavedCardsWithInvalidIntInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromInt: 0)
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), FlowPreference.defaultMaxSavedCardsToShow)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetDefaultSavedCardsInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), FlowPreference.defaultMaxSavedCardsToShow)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetDefaultSavedCardsWithoutFlowPreference() {
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), FlowPreference.defaultMaxSavedCardsToShow)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetAllSavedCardsInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromString: FlowPreference.showAllSavedCardsCode)
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(customerCardsToDisplay, 6)
         XCTAssertTrue(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetAllSavedCardsWithInvalidStringInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromString: "invalid")
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(customerCardsToDisplay, FlowPreference.defaultMaxSavedCardsToShow)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetAllSavedCardsWithEmptyStringInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromString: "")
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(customerCardsToDisplay, FlowPreference.defaultMaxSavedCardsToShow)
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
         XCTAssertFalse(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
-    
+
     func testSetAllSavedCardsAndAccountMoneyInFlowPreference() {
-        
+
         //Initialize Flow Preference
         let flowPreference = FlowPreference()
         flowPreference.setMaxSavedCardsToShow(fromString: FlowPreference.showAllSavedCardsCode)
         MercadoPagoCheckout.setFlowPreference(flowPreference)
-        
+
         //Load saved cards
         let cardMock = MockBuilder.buildCard()
         let mockAccountMoney = MockBuilder.buildCustomerPaymentMethod(paymentMethodId: "account_money", paymentTypeId: "account_money")
-        
-        let customerCards : [CardInformation] = [mockAccountMoney, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
+
+        let customerCards: [CardInformation] = [mockAccountMoney, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock]
         instance!.customerPaymentOptions = customerCards
-        
+
         let customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
-        
+
         XCTAssertEqual(customerCardsToDisplay, 7)
         XCTAssertTrue(MercadoPagoCheckoutViewModel.flowPreference.isShowAllSavedCardsEnabled())
     }
@@ -815,15 +815,15 @@ class PaymentVaultViewModelTest: BaseTest {
         customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
 
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
-        
+
         // Verify custom MaxSavedCardsToShow
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = 5
-        
+
         customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
         XCTAssertEqual(MercadoPagoCheckoutViewModel.flowPreference.getMaxSavedCardsToShow(), customerCardsToDisplay)
-        
+
     }
-    
+
     func testGetDisplayedPaymentMethodsCount() {
 
         // Payment methods not loaded
@@ -851,7 +851,7 @@ class PaymentVaultViewModelTest: BaseTest {
         instance!.customerPaymentOptions = [cardMock, cardMock, cardMock, cardMock]
         paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
         XCTAssertEqual(6, paymentMethodCount)
-        
+
         // Verify custom MaxSavedCardsToShow
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = 4
         paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
@@ -1096,7 +1096,7 @@ class PaymentVaultViewModelTest: BaseTest {
 
         //Change MaxSavedCardsToShow
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = 5
-        
+
         result = instance!.getPaymentMethodOption(row : 3)
         XCTAssertEqual("elo", result.getImageDescription())
 
@@ -1209,7 +1209,7 @@ class PaymentVaultViewModelTest: BaseTest {
         //instance!.optionSelected(customerCard as PaymentMethodOption as! PaymentMethodSearchItem, navigationController: currentNavigationController, cancelPaymentCallback: nil)
 
     }
-    
+
     override func tearDown() {
         // Restore default value
         MercadoPagoCheckoutViewModel.flowPreference.maxSavedCardsToShow = FlowPreference.defaultMaxSavedCardsToShow
