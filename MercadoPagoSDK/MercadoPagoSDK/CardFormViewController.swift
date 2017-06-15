@@ -54,7 +54,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     override open var screenName: String { get { return "CARD_NUMBER" } }
 
-    public init(cardFormManager: CardViewModelManager, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
+    public init(cardFormManager: CardViewModelManager, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
        super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = cardFormManager
         self.callback = callback
@@ -95,7 +95,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod]? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod]? = nil, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
         self.cardFormManager = CardViewModelManager(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, paymentSettings: paymentSettings)
         self.callbackCancel = callbackCancel
@@ -281,7 +281,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func startPromosStep(promos: [Promo]? = nil,
-                                    _ callback: ((Void) -> (Void))? = nil) -> PromoViewController {
+                                    _ callback: (() -> (Void))? = nil) -> PromoViewController {
         MercadoPagoContext.initFlavor2()
         return PromoViewController(promos : promos, callback : callback)
     }

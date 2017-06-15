@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    open var callbackCancel: ((Void) -> Void)?
+    open var callbackCancel: (() -> Void)?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -438,7 +438,7 @@ open class MercadoPagoCheckout: NSObject {
         })
     }
 
-    func collectPayerCosts(updateCallback: ((Void) -> Void)? = nil) {
+    func collectPayerCosts(updateCallback: (() -> Void)? = nil) {
         self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
 
@@ -582,6 +582,7 @@ open class MercadoPagoCheckout: NSObject {
         let currentViewController = self.navigationController.viewControllers
         if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
             checkoutVC.showNavBar()
+            checkoutVC.viewModel = viewModel.checkoutViewModel()
             checkoutVC.checkoutTable.reloadData()
         }
     }
