@@ -24,7 +24,7 @@ class MPPaymentTest: BaseTest {
 
         self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
 
-        self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "pmId", transactionDetails: self.transactionDetails!, payer: self.payer!)
+        self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "pmId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
         var jsonResult = mpPayment!.toJSON()
 
         XCTAssertEqual(jsonResult["pref_id"] as? String, "prefId")
@@ -39,7 +39,9 @@ class MPPaymentTest: BaseTest {
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
 
-        self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments: 3, issuerId: "issuerId", tokenId: "123", transactionDetails: self.transactionDetails!, payer: self.payer!)
+        XCTAssertEqual(jsonResult["binary_mode"] as? Bool, true)
+
+        self.mpPayment = MPPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments: 3, issuerId: "issuerId", tokenId: "123", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
         jsonResult = self.mpPayment!.toJSON()
 
         XCTAssertEqual(jsonResult["pref_id"] as? String, "prefId")
@@ -56,6 +58,8 @@ class MPPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
+
+        XCTAssertEqual(jsonResult["binary_mode"] as? Bool, false)
 
     }
 }
@@ -74,7 +78,7 @@ class CustomerPaymentTest: BaseTest {
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
         self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
 
-        self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", customerId: "customerId", transactionDetails: self.transactionDetails!, payer: self.payer!)
+        self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", customerId: "customerId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
         var customerPaymentResult = self.customerPayment!.toJSON()
 
         XCTAssertEqual(customerPaymentResult["pref_id"] as? String, "prefId")
@@ -92,7 +96,9 @@ class CustomerPaymentTest: BaseTest {
         XCTAssertEqual(payer?["id"] as? String, "customerId")
         XCTAssertEqual(payer?["email"] as? String, "email")
 
-        self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "", paymentMethodId: "pmId", installments : 3, issuerId : "issuerId", tokenId : "123", customerId : "111", transactionDetails: self.transactionDetails!, payer: self.payer!)
+        XCTAssertEqual(customerPaymentResult["binary_mode"] as? Bool, true)
+
+        self.customerPayment = CustomerPayment(preferenceId: "prefId", publicKey: "", paymentMethodId: "pmId", installments : 3, issuerId : "issuerId", tokenId : "123", customerId : "111", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
         customerPaymentResult = self.customerPayment!.toJSON()
 
         XCTAssertEqual(customerPaymentResult["pref_id"] as? String, "prefId")
@@ -109,6 +115,8 @@ class CustomerPaymentTest: BaseTest {
         XCTAssertNotNil(payer)
         XCTAssertEqual(payer?["id"] as? String, "111")
         XCTAssertEqual(payer?["email"] as? String, "email")
+
+        XCTAssertEqual(customerPaymentResult["binary_mode"] as? Bool, false)
 
     }
 
@@ -129,7 +137,7 @@ class BlacklabelPaymentTest: BaseTest {
         self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
 
         MercadoPagoContext.setPayerAccessToken("payerAccessToken")
-        self.blacklabelPayment = BlacklabelPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments : 2, issuerId : "310", tokenId : "tokenId", transactionDetails: self.transactionDetails!, payer: self.payer!)
+        self.blacklabelPayment = BlacklabelPayment(preferenceId: "prefId", publicKey: "pk_test", paymentMethodId: "pmId", installments : 2, issuerId : "310", tokenId : "tokenId", transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: false)
         let jsonResult = self.blacklabelPayment!.toJSON()
 
         XCTAssertEqual(jsonResult["pref_id"] as? String, "prefId")
@@ -146,6 +154,8 @@ class BlacklabelPaymentTest: BaseTest {
         XCTAssertEqual(payer?["id"] as? String, "id")
         XCTAssertEqual(payer?["email"] as? String, "email")
         XCTAssertEqual(payer?["access_token"] as? String, "payerAccessToken")
+
+        XCTAssertEqual(jsonResult["binary_mode"] as? Bool, false)
 
     }
 
@@ -164,15 +174,15 @@ class MPPaymentFactoryTest: BaseTest {
         self.transactionDetails = TransactionDetails(financialInstitution: self.financialInstitution)
         self.payer = Payer(_id: "id", email: "email", type: "type", identification: nil, entityType: nil)
 
-        let regularPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "rapipago", isBlacklabelPayment : false, transactionDetails: self.transactionDetails!, payer: self.payer!)
+        let regularPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "rapipago", isBlacklabelPayment : false, transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
 
         XCTAssertEqual(String(describing: regularPayment.classForCoder), String(describing: MPPayment.classForCoder()))
 
-        let blacklabelPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "master", isBlacklabelPayment : true, transactionDetails: self.transactionDetails!, payer: self.payer!)
+        let blacklabelPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "master", isBlacklabelPayment : true, transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
 
         XCTAssertEqual(String(describing: blacklabelPayment.classForCoder), String(describing:BlacklabelPayment.classForCoder()))
 
-        let customerPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "visa", customerId : "customerId", isBlacklabelPayment : false, transactionDetails: self.transactionDetails!, payer: self.payer!)
+        let customerPayment = MPPaymentFactory.createMPPayment(preferenceId: "prefId", publicKey: "pk", paymentMethodId: "visa", customerId : "customerId", isBlacklabelPayment : false, transactionDetails: self.transactionDetails!, payer: self.payer!, binaryMode: true)
 
         XCTAssertEqual(String(describing: customerPayment.classForCoder), String(describing: CustomerPayment.classForCoder()))
 

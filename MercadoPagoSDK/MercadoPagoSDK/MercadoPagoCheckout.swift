@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    open var callbackCancel: ((Void) -> Void)?
+    open var callbackCancel: (() -> Void)?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -38,6 +38,10 @@ open class MercadoPagoCheckout: NSObject {
 
         MercadoPagoContext.setPayerAccessToken(accessToken)
 
+    }
+
+    public func setBinaryMode(_ binaryMode: Bool) {
+        self.viewModel.binaryMode = binaryMode
     }
 
     public func start() {
@@ -434,7 +438,7 @@ open class MercadoPagoCheckout: NSObject {
         })
     }
 
-    func collectPayerCosts(updateCallback: ((Void) -> Void)? = nil) {
+    func collectPayerCosts(updateCallback: (() -> Void)? = nil) {
         self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
 
@@ -588,7 +592,7 @@ open class MercadoPagoCheckout: NSObject {
 
         var paymentBody: [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
