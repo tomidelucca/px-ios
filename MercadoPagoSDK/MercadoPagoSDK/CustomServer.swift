@@ -79,7 +79,7 @@ open class CustomServer: NSObject {
         let body: String = bodyInfo.toJsonString()
 
         service.createPreference(body: body, success: { (jsonResult) in
-            var checkoutPreference : CheckoutPreference? = nil
+            var checkoutPreference : CheckoutPreference
 
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil && failure != nil {
@@ -87,7 +87,7 @@ open class CustomServer: NSObject {
                 } else {
                     if preferenceDic.allKeys.count > 0 {
                         checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
-                        success(checkoutPreference!)
+                        success(checkoutPreference)
                     }
                 }
             } else {
