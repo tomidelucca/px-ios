@@ -79,7 +79,6 @@ CheckoutPreference *pref;
     [MercadoPagoContext setPublicKey:@"APP_USR-5bd14fdd-3807-446f-babd-095788d5ed4d"];
     [MercadoPagoContext setAccountMoneyAvailableWithAccountMoneyAvailable:YES];
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
-    PaymentVaultViewController.maxCustomerPaymentMethods = 100;
     [CardFormViewController setShowBankDeals:NO];
     
     PaymentMethod *pm = [[PaymentMethod alloc] init];

@@ -89,7 +89,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         self.registerAllCells()
 
         if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
+            self.callbackCancel = {() -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {
 
@@ -246,7 +246,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         }
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
