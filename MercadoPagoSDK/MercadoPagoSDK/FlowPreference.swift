@@ -9,6 +9,10 @@
 import Foundation
 
 open class FlowPreference: NSObject {
+
+    static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
+    static let SHOW_ALL_SAVED_CARDS_CODE = "all"
+
     var showReviewAndConfirmScreen = true
     var showPaymentResultScreen = true
     var showPaymentApprovedScreen = true
@@ -16,6 +20,8 @@ open class FlowPreference: NSObject {
     var showPaymentPendingScreen = true
     var showPaymentSearchScreen = true
     var showDiscount = true
+    var showAllSavedCards = false
+    var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -85,6 +91,23 @@ open class FlowPreference: NSObject {
         CardFormViewController.showBankDeals = true
     }
 
+    public func setMaxSavedCardsToShow(fromInt: Int) {
+        if fromInt > 0 {
+            maxSavedCardsToShow = fromInt
+        } else {
+            maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+        }
+    }
+
+    public func setMaxSavedCardsToShow(fromString: String) {
+        if fromString == FlowPreference.SHOW_ALL_SAVED_CARDS_CODE {
+            showAllSavedCards = true
+        } else {
+            showAllSavedCards = false
+            maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
+        }
+    }
+
     public func isReviewAndConfirmScreenEnable() -> Bool {
         return showReviewAndConfirmScreen
     }
@@ -112,4 +135,13 @@ open class FlowPreference: NSObject {
     public func isDiscountEnable() -> Bool {
         return showDiscount
     }
+
+    public func isShowAllSavedCardsEnabled() -> Bool {
+        return showAllSavedCards
+    }
+
+    public func getMaxSavedCardsToShow() -> Int {
+        return maxSavedCardsToShow
+    }
+
 }
