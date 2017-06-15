@@ -97,7 +97,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.registerAllCells()
 
         if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
+            self.callbackCancel = {() -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {
 
@@ -157,7 +157,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewWillDisappear(animated)
     }
 
-    fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
+    fileprivate func cardFormCallbackCancel() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
@@ -185,7 +185,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
@@ -462,12 +462,12 @@ class PaymentVaultViewModel: NSObject {
     var customerId: String?
 
     var callback : ((_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
-    var callbackCancel: ((Void) -> Void)?
+    var callbackCancel: (() -> Void)?
     var couponCallback: ((DiscountCoupon) -> Void)?
 
     internal var isRoot = true
 
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
+    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: (() -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
         self.amount = amount
         self.email = email
         self.discount = discount

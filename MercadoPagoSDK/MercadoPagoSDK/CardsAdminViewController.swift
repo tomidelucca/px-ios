@@ -69,7 +69,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
 
     func setTitle() {
         if String.isNullOrEmpty(title) {
-            self.title = self.viewModel.titleScreen
+            self.title = self.viewModel.getScreenTitle()
         }
     }
 
@@ -99,7 +99,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
 
     func addCallbackCancel() {
         if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
+            self.callbackCancel = {() -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {})
                 } else {
@@ -158,7 +158,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
 
                                                           for: indexPath) as! PaymentVaultTitleCollectionViewCell
-            cell.title.text = self.viewModel.titleScreen
+            cell.title.text = self.viewModel.getScreenTitle()
             self.titleSectionReference = cell
             titleCell = cell
             return cell
@@ -200,11 +200,11 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         self.didScrollInTable(scrollView)
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
         return {
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
-                self.titleSectionReference.title.text = self.viewModel.titleScreen
+                self.titleSectionReference.title.text = self.viewModel.getScreenTitle()
             }
         }
     }
@@ -213,7 +213,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         if self.titleSectionReference != nil {
             self.titleSectionReference.title.text = ""
         }
-        return self.viewModel.titleScreen
+        return self.viewModel.getScreenTitle()
     }
 
 }

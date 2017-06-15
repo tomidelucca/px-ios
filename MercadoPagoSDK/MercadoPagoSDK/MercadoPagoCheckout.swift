@@ -10,7 +10,7 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    open var callbackCancel: ((Void) -> Void)?
+    open var callbackCancel: (() -> Void)?
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
@@ -23,7 +23,8 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    public init(publicKey: String, accessToken: String?, checkoutPreference: CheckoutPreference, paymentData: PaymentData? = nil, discount: DiscountCoupon? = nil, navigationController: UINavigationController, paymentResult: PaymentResult? = nil) {
+    public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
+
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
         self.navigationController = navigationController
@@ -35,11 +36,9 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         MercadoPagoContext.setPublicKey(publicKey)
-        if let at = accessToken {
-            MercadoPagoContext.setPayerAccessToken(at)
-        } else {
-            MercadoPagoContext.setPayerAccessToken("")
-        }
+
+        MercadoPagoContext.setPayerAccessToken(accessToken)
+
     }
 
     public func start() {
@@ -436,7 +435,7 @@ open class MercadoPagoCheckout: NSObject {
         })
     }
 
-    func collectPayerCosts(updateCallback: ((Void) -> Void)? = nil) {
+    func collectPayerCosts(updateCallback: (() -> Void)? = nil) {
         self.presentLoading()
         let bin = self.viewModel.cardToken?.getBin()
 
@@ -755,79 +754,4 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.viewControllers = currentViewControllers
     }
 
-}
-
-extension MercadoPagoCheckout {
-
-    open static func setDecorationPreference(_ decorationPreference: DecorationPreference) {
-        MercadoPagoCheckoutViewModel.decorationPreference = decorationPreference
-    }
-
-    open static func setServicePreference(_ servicePreference: ServicePreference) {
-        MercadoPagoCheckoutViewModel.servicePreference = servicePreference
-    }
-
-    open static func setFlowPreference(_ flowPreference: FlowPreference) {
-        MercadoPagoCheckoutViewModel.flowPreference = flowPreference
-    }
-
-    open func setPaymentResultScreenPreference(_ paymentResultScreenPreference: PaymentResultScreenPreference) {
-        self.viewModel.paymentResultScreenPreference = paymentResultScreenPreference
-    }
-
-    open func setReviewScreenPreference(_ reviewScreenPreference: ReviewScreenPreference) {
-        self.viewModel.reviewScreenPreference = reviewScreenPreference
-    }
-
-    open static func setPaymentDataCallback(paymentDataCallback : @escaping (_ paymentData: PaymentData) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentDataCallback = paymentDataCallback
-    }
-
-    open static func setChangePaymentMethodCallback(changePaymentMethodCallback : @escaping (Void) -> Void) {
-        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = changePaymentMethodCallback
-    }
-
-    open static func setPaymentCallback(paymentCallback : @escaping (_ payment: Payment) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentCallback = paymentCallback
-    }
-
-    open static func setPaymentDataConfirmCallback(paymentDataConfirmCallback : @escaping (_ paymentData: PaymentData) -> Void) {
-        MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = paymentDataConfirmCallback
-    }
-
-    open static func setCallback(callback : @escaping (Void) -> Void) {
-        MercadoPagoCheckoutViewModel.callback = callback
-    }
-
-    open static func setLanguage(language: Languages) {
-        MercadoPagoContext.setLanguage(language: language)
-    }
-
-    open class func showPayerCostDescription() -> Bool {
-        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
-
-        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
-            if let payerCostDescription = siteDic.value(forKey: "payerCostDescription") as? Bool {
-                return payerCostDescription
-            }
-        }
-
-        return true
-    }
-
-    open class func showBankInterestWarning() -> Bool {
-        let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-        let site = MercadoPagoContext.getSite()
-
-        if let siteDic = dictionary?.value(forKey: site) as? NSDictionary {
-            if let bankInsterestCell = siteDic.value(forKey: "bankInsterestCell") as? Bool {
-                return bankInsterestCell
-            }
-        }
-
-        return false
-    }
 }

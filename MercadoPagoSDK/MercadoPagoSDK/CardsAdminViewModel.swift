@@ -51,14 +51,18 @@ open class CardsAdminViewModel: NSObject {
         return !String.isNullOrEmpty(confirmPromptText)
     }
 
-    public func setTitle(title: String) {
+    public func setScreenTitle(title: String) {
         self.titleScreen = title
+    }
+
+    public func getScreenTitle() -> String {
+        return titleScreen
     }
 
     public func getAlertCardTitle(card: Card) -> String {
         var title: String = ""
-        if let name = card.paymentMethod?.name {
-            title = name + " "
+        if !String.isNullOrEmpty(card.paymentMethod?.name) {
+            title = card.paymentMethod!.name! + " "
         }
         return title.appending(card.getTitle())
     }
@@ -69,8 +73,7 @@ open class CardsAdminViewModel: NSObject {
         if numberOfOptions() == 0 {
             return 0
         }
-
-        let firstCardIndex = indexOfFirsCardInSection(indexPath: indexPath)
+        let firstCardIndex = indexOfFirsCardInSection(row: indexPath.row)
         let secondCardIndex = firstCardIndex + 1
 
         let firstCardHeight = heightOfItem(indexItem: firstCardIndex)
@@ -79,9 +82,9 @@ open class CardsAdminViewModel: NSObject {
             let secondCardHeight = heightOfItem(indexItem: secondCardIndex)
             return CGFloat.maximum(firstCardHeight, secondCardHeight)
 
-        } else {
-            return firstCardHeight
         }
+        return firstCardHeight
+
     }
 
     func heightOfItem(indexItem: Int) -> CGFloat {
@@ -99,15 +102,15 @@ open class CardsAdminViewModel: NSObject {
             return CGSize(width : screenWidth, height : titleCellHeight)
 
         } else if self.isCardItemFor(indexPath: indexPath) || self.isExtraOptionItemFor(indexPath: indexPath) {
-            return CGSize(width: widthPerItem, height: calculateHeight2(indexPath: indexPath))
+            return CGSize(width: widthPerItem, height: calculateHeight(indexPath: indexPath))
         }
         return CGSize.zero
     }
 
     // Sections and Index Functions
 
-    func indexOfFirsCardInSection(indexPath: IndexPath) -> Int {
-        var row = indexPath.row
+    func indexOfFirsCardInSection(row: Int) -> Int {
+        var row = row
         if row % itemsPerRow == 1 {
             row -= 1
         }
@@ -143,7 +146,8 @@ open class CardsAdminViewModel: NSObject {
     func isExtraOptionItemFor(indexPath: IndexPath) -> Bool {
         if isCardItemFor(indexPath: indexPath) {
             return false
-        } else if isCardsSection(section: indexPath.section) && hasExtraOption() {
+        } else if isCardsSection(section: indexPath.section) && hasExtraOption() && indexPath.row < numberOfOptions() {
+
             return true
         }
         return false
