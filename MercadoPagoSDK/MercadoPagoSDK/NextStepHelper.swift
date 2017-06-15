@@ -208,8 +208,6 @@ extension MercadoPagoCheckoutViewModel {
         return self.isCheckoutComplete()
     }
     
-
-
     func needToSearchDirectDiscount() -> Bool {
         if !searchDiscount {
             return false
