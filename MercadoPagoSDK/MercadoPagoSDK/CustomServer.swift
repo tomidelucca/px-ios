@@ -60,9 +60,10 @@ open class CustomServer: NSObject {
                         payment = Payment.fromJSON(paymentDic)
                         success(payment!)
                     } else {
-                        failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        if failure != nil {
+                            failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
+                        }
                     }
-
                 }
             } else {
                 if failure != nil {
