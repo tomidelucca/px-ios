@@ -43,7 +43,7 @@ class Option: NSObject {
 }
 
 class MainTableViewController: UITableViewController {
-    
+
     open var publicKey: String!
     open var accessToken: String!
     open var prefID: String!
