@@ -83,7 +83,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout?.updateReviewAndConfirm()
         XCTAssertEqual(reviewVC.viewModel.reviewScreenPreference.getTitle(), updatedReviewScreenPreference.getTitle())
     }
-    
+
     func testInit_withPaymentResult() {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
