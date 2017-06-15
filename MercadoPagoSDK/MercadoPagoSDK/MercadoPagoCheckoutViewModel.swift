@@ -261,7 +261,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
-
         }
         if needToSearchDirectDiscount() {
             directDiscountSearched = true
