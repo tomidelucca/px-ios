@@ -225,19 +225,24 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
     fileprivate func getCustomerCards() {
         if self.viewModel!.shouldGetCustomerCardsInfo() {
             self.showLoading()
-            CustomServer.getCustomer({ (customer: Customer) -> Void in
-                 self.hideLoading()
-                self.viewModel.customerId = customer._id
-                self.viewModel.cards = customer.cards
-                self.collectionSearch.delegate = self
-                self.collectionSearch.dataSource = self
-                self.viewModel.loadingCards = false
-                self.collectionSearch.reloadData()
-            }, failure: { (_: NSError?) -> Void in
-                self.viewModel.loadingCards = false
-                 self.hideLoading()
-                 self.collectionSearch.reloadData()
-            })
+            
+            if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
+                
+                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), { (customer: Customer) -> Void in
+                    self.hideLoading()
+                    self.viewModel.customerId = customer._id
+                    self.viewModel.cards = customer.cards
+                    self.collectionSearch.delegate = self
+                    self.collectionSearch.dataSource = self
+                    self.viewModel.loadingCards = false
+                    self.collectionSearch.reloadData()
+                }, failure: { (_: NSError?) -> Void in
+                    self.viewModel.loadingCards = false
+                    self.hideLoading()
+                    self.collectionSearch.reloadData()
+                })
+            }
+
         } else {
             self.collectionSearch.delegate = self
             self.collectionSearch.dataSource = self
