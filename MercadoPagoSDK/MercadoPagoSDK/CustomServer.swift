@@ -104,15 +104,15 @@ open class CustomServer: NSObject {
 
     open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        getCodeDiscount(merchantURL: url, merchantURI: uri, transactionAmount: transactionAmount, discountCode: nil, payerEmail: payerEmail, addtionalInfo: discountAdditionalInfo, success: success, failure: failure)
+        getCodeDiscount(discountCode: nil, transactionAmount: transactionAmount, payerEmail: payerEmail, url: url, uri: uri, discountAdditionalInfo: discountAdditionalInfo, success: success, failure: failure)
     }
 
-    open class func getCodeDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, discountCode: String?, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getCodeDiscount(discountCode: String?, transactionAmount: Double, payerEmail: String?, url: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var addInfo: String? = nil
-        if !NSDictionary.isNullOrEmpty(addtionalInfo) {
-            addInfo = addtionalInfo?.parseToQuery()
+        if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
+            addInfo = discountAdditionalInfo?.parseToQuery()
         }
-        let discountService = DiscountService(baseURL: merchantURL, URI: merchantURI)
+        let discountService = DiscountService(baseURL: url, URI: uri)
 
         discountService.getDiscount(amount: transactionAmount, code: discountCode, payerEmail: payerEmail, additionalInfo: addInfo, success: success, failure: failure)
     }
