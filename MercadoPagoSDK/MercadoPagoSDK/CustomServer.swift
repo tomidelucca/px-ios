@@ -102,9 +102,9 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func getDirectDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
-        getCodeDiscount(merchantURL: merchantURL, merchantURI: merchantURI, transactionAmount: transactionAmount, discountCode: nil, payerEmail: payerEmail, addtionalInfo: addtionalInfo, success: success, failure: failure)
+        getCodeDiscount(merchantURL: url, merchantURI: uri, transactionAmount: transactionAmount, discountCode: nil, payerEmail: payerEmail, addtionalInfo: discountAdditionalInfo, success: success, failure: failure)
     }
 
     open class func getCodeDiscount(merchantURL: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), merchantURI: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), transactionAmount: Double, discountCode: String?, payerEmail: String?, addtionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
