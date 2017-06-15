@@ -11,16 +11,16 @@ import UIKit
 
 open class CustomServer: NSObject {
 
-    open class func getCustomer(url: String, uri: String, additionalInfo: [String:AnyObject]? = nil, _ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func getCustomer(url: String, uri: String, additionalInfo: NSDictionary? = nil, _ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
         
         let service: CustomService = CustomService(baseURL: url, URI: uri)
         
-        var additionalInfoString: String = ""
-        if let additional = additionalInfo {
-            additionalInfoString = JSONHandler.jsonCoding(additional)
+        var addInfo: String = ""
+        if !NSDictionary.isNullOrEmpty(additionalInfo), let addInfoDict = additionalInfo {
+            addInfo = addInfoDict.parseToQuery()
         }
         
-        service.getCustomer(params: additionalInfoString, success: {(jsonResult: AnyObject?) -> Void in
+        service.getCustomer(params: addInfo, success: {(jsonResult: AnyObject?) -> Void in
             var cust : Customer? = nil
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
