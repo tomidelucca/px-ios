@@ -72,16 +72,13 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func createCheckoutPreference(url: String, uri: String, bodyInfo: [String:AnyObject]? = nil, success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
+    open class func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary, success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let service: CustomService = CustomService(baseURL: url, URI: uri)
         
-        var bodyString: String = ""
-        if let body = bodyInfo {
-            bodyString = JSONHandler.jsonCoding(body)
-        }
+        let body: String = bodyInfo.toJsonString()
 
-        service.createPreference(body: bodyString, success: { (jsonResult) in
+        service.createPreference(body: body, success: { (jsonResult) in
             var checkoutPreference : CheckoutPreference? = nil
 
             if let preferenceDic = jsonResult as? NSDictionary {
