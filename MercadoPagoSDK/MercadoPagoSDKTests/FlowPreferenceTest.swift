@@ -128,7 +128,7 @@ class FlowPreferenceTest: BaseTest {
     }
 
     func testSetMaxSavedCardsToShowAll() {
-        flowPreference.setMaxSavedCardsToShow(fromString: FlowPreference.showAllSavedCardsCode)
+        flowPreference.setMaxSavedCardsToShow(fromString: FlowPreference.SHOW_ALL_SAVED_CARDS_CODE)
         XCTAssertTrue(flowPreference.isShowAllSavedCardsEnabled())
     }
 

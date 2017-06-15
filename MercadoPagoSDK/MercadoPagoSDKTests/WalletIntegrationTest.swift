@@ -28,7 +28,7 @@ class WalletIntegrationTest: BaseTest {
         // Deshabilita descuentos
         fp.disableDiscount()
         // Habilita todas las tarjetas guardadas
-        fp.setMaxSavedCardsToShow(fromString: FlowPreference.showAllSavedCardsCode)
+        fp.setMaxSavedCardsToShow(fromString: FlowPreference.SHOW_ALL_SAVED_CARDS_CODE)
 
         MercadoPagoCheckout.setFlowPreference(fp)
         MercadoPagoContext.setAccountMoneyAvailable(accountMoneyAvailable: true)

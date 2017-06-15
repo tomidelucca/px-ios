@@ -10,8 +10,8 @@ import Foundation
 
 open class FlowPreference: NSObject {
 
-    static let defaultMaxSavedCardsToShow: Int = 3
-    static let showAllSavedCardsCode: String = "all"
+    static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3
+    static let SHOW_ALL_SAVED_CARDS_CODE = "all"
 
     var showReviewAndConfirmScreen = true
     var showPaymentResultScreen = true
@@ -21,7 +21,7 @@ open class FlowPreference: NSObject {
     var showPaymentSearchScreen = true
     var showDiscount = true
     var showAllSavedCards = false
-    var maxSavedCardsToShow: Int = FlowPreference.defaultMaxSavedCardsToShow
+    var maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
 
     public func disableReviewAndConfirmScreen() {
         showReviewAndConfirmScreen = false
@@ -95,16 +95,16 @@ open class FlowPreference: NSObject {
         if fromInt > 0 {
             maxSavedCardsToShow = fromInt
         } else {
-            maxSavedCardsToShow = FlowPreference.defaultMaxSavedCardsToShow
+            maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
         }
     }
 
     public func setMaxSavedCardsToShow(fromString: String) {
-        if fromString == FlowPreference.showAllSavedCardsCode {
+        if fromString == FlowPreference.SHOW_ALL_SAVED_CARDS_CODE {
             showAllSavedCards = true
         } else {
             showAllSavedCards = false
-            maxSavedCardsToShow = FlowPreference.defaultMaxSavedCardsToShow
+            maxSavedCardsToShow = FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW
         }
     }
 
