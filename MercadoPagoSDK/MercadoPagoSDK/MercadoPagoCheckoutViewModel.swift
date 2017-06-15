@@ -41,7 +41,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
-    var searchDiscount = true
     internal static var paymentDataCallback: ((PaymentData) -> Void)?
     internal static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     internal static var paymentCallback: ((Payment) -> Void)?
@@ -96,6 +95,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = paymentData {
             if pm.isComplete() {
                 self.paymentData = pm
+                self.directDiscountSearched = true
                 if paymentResult == nil {
                     self.initWithPaymentData = true
                 }
@@ -132,7 +132,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return CardViewModelManager(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
     }
 
-    func paymentVaultViewModel() -> PaymentVaultViewModel {
+    func paymentVaultViewModel() -> PaymentVaultViewModel{
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
@@ -261,11 +261,9 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
-
         }
-        
         if needToSearchDirectDiscount() {
-            directDiscountSearched = true
+            self.directDiscountSearched = true
             return .SEARCH_DIRECT_DISCOUNT
         }
 

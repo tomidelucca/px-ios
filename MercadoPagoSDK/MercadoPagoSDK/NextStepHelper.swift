@@ -211,11 +211,7 @@ extension MercadoPagoCheckoutViewModel {
 
 
     func needToSearchDirectDiscount() -> Bool {
-        if !searchDiscount {
-            return false
-        }
-        searchDiscount = false
-        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
+        return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete()
     }
 
     func setPaymentOptionSelected() {
