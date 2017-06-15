@@ -28,7 +28,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     @IBOutlet weak var checkoutTable: UITableView!
 
-   public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackCancel : @escaping ((Void) -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
+   public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackCancel : @escaping (() -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "ReviewScreenViewController", bundle: MercadoPago.getBundle())
         self.initCommon()
         self.viewModel = viewModel
@@ -405,10 +405,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     override func getNavigationBarTitle() -> String {
-        if self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset {
-            return ""
+        if self.checkoutTable != nil {
+            if self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset {
+                return ""
+            }
+            return viewModel.reviewScreenPreference.getTitle()
         }
-        return viewModel.reviewScreenPreference.getTitle()
+        return ""
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
