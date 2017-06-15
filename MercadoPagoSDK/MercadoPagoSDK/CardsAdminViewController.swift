@@ -89,7 +89,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         self.registerAllCells()
 
         if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
+            self.callbackCancel = {() -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {
 
@@ -130,7 +130,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
                 if let confirmPromptText = self.viewModel.confirmPromptText {
                     if confirmPromptText.isNotEmpty {
                        deleteCardAlertView(card: card, message: confirmPromptText)
-                    }else{
+                    } else {
                        self.callback(card)
                     }
                 } else {
@@ -141,21 +141,21 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             }
         }
     }
-    
+
     func deleteCardAlertView(card: Card, message: String) {
-        var title : String
+        var title: String
         if let name = card.paymentMethod?.name {
            title = name + " " + card.getTitle()
-        }else{
+        } else {
             title = card.getTitle()
         }
 
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "No".localized, style: UIAlertActionStyle.cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "Si".localized, style: UIAlertActionStyle.default, handler: { (_) -> Void in
             self.callback(card)
         }))
-        
+
         self.present(alert, animated: true, completion: nil)
     }
 
@@ -246,7 +246,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
         }
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()

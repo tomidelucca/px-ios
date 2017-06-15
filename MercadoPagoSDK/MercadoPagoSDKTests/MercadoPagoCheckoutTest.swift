@@ -83,7 +83,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout?.updateReviewAndConfirm()
         XCTAssertEqual(reviewVC.viewModel.reviewScreenPreference.getTitle(), updatedReviewScreenPreference.getTitle())
     }
-    
+
     func testInit_withPaymentResult() {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
@@ -334,6 +334,22 @@ class MercadoPagoCheckoutTest: BaseTest {
         site = "MLA"
         MercadoPagoContext.setSiteID(site)
         XCTAssertEqual(true, MercadoPagoCheckout.showPayerCostDescription())
+    }
+
+    func testSetBinaryMode() {
+        let checkoutPreference = MockBuilder.buildCheckoutPreference()
+        let navControllerInstance = UINavigationController()
+        self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
+
+        //Test Default Binary Mode
+        XCTAssertEqual(false, self.mpCheckout?.viewModel.binaryMode)
+
+        //Test setBinaryMode Method
+        self.mpCheckout?.setBinaryMode(true)
+        XCTAssertEqual(true, self.mpCheckout?.viewModel.binaryMode)
+
+        self.mpCheckout?.setBinaryMode(false)
+        XCTAssertEqual(false, self.mpCheckout?.viewModel.binaryMode)
     }
 }
 

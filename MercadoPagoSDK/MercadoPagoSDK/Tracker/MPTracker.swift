@@ -68,7 +68,7 @@ open class MPTracker: NSObject {
 
     static var flavor: Flavor?
 
-    static let kGenericScreenName = "NO_SCREEN_DEFINED" 
+    static let kGenericScreenName = "NO_SCREEN_DEFINED"
 
     fileprivate class func initialize (_ mpDelegate: MPTrackerDelegate!) {
         MPTracker.initialized = true

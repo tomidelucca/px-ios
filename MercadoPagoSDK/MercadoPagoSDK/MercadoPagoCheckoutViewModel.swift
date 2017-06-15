@@ -45,8 +45,8 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var paymentDataCallback: ((PaymentData) -> Void)?
     internal static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     internal static var paymentCallback: ((Payment) -> Void)?
-    internal static var callback: ((Void) -> Void)?
-    internal static var changePaymentMethodCallback: ((Void) -> Void)?
+    internal static var callback: (() -> Void)?
+    internal static var changePaymentMethodCallback: (() -> Void)?
 
     var checkoutPreference: CheckoutPreference!
 
@@ -70,6 +70,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     var rootVC = true
 
+    var binaryMode: Bool = false
     var paymentData = PaymentData()
     var payment: Payment?
     var paymentResult: PaymentResult?
@@ -81,7 +82,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var financialInstitutions: [FinancialInstitution]?
 
     static var error: MPSDKError?
-    internal var errorCallback: ((Void) -> Void)?
+    internal var errorCallback: (() -> Void)?
 
     internal var needLoadPreference: Bool = false
     internal var preferenceValidated: Bool = false
@@ -397,7 +398,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
 
-    public class func createMPPayment(preferenceId: String, paymentData: PaymentData, customerId: String? = nil) -> MPPayment {
+    public class func createMPPayment(preferenceId: String, paymentData: PaymentData, customerId: String? = nil, binaryMode: Bool) -> MPPayment {
 
         var issuerId = ""
         if paymentData.issuer != nil {
@@ -425,7 +426,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         let isBlacklabelPayment = paymentData.token != nil && paymentData.token!.cardId != nil && String.isNullOrEmpty(customerId)
 
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.paymentMethod!._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer)
+        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.paymentMethod!._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         return mpPayment
     }
 
@@ -558,7 +559,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
     }
 
-    func errorInputs(error: MPSDKError, errorCallback: ((Void) -> Void)?) {
+    func errorInputs(error: MPSDKError, errorCallback: (() -> Void)?) {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
     }
