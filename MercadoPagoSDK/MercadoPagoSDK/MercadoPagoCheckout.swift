@@ -40,6 +40,10 @@ open class MercadoPagoCheckout: NSObject {
 
     }
 
+    public func setBinaryMode(_ binaryMode: Bool) {
+        self.viewModel.binaryMode = binaryMode
+    }
+
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
@@ -588,7 +592,7 @@ open class MercadoPagoCheckout: NSObject {
 
         var paymentBody: [String:Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()
