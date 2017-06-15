@@ -598,7 +598,9 @@ open class MercadoPagoCheckout: NSObject {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
 
-        CustomServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: { [weak self] (payment : Payment) -> Void in
+        let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
+
+        CustomServer.createPayment(baseUrl: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
             guard let strongSelf = self else {
                 return
             }

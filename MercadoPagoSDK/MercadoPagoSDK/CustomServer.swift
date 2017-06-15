@@ -39,12 +39,17 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func createPayment(paymentUrl: String, paymentUri: String, paymentBody: NSDictionary, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service: CustomService = CustomService(baseURL: paymentUrl, URI: paymentUri)
+    open class func createPayment(baseUrl: String, uri: String, paymentData: NSDictionary, query: String?, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        let service: CustomService = CustomService(baseURL: baseUrl, URI: uri)
+
+        var queryString = ""
+        if let q = query {
+            queryString = q
+        }
 
         var body = ""
-        if !NSDictionary.isNullOrEmpty(paymentBody) {
-            body = Utils.append(firstJSON: paymentBody.toJsonString(), secondJSON: MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo())
+        if !NSDictionary.isNullOrEmpty(paymentData) {
+            body = Utils.append(firstJSON: paymentData.toJsonString(), secondJSON: queryString)
         }
 
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
