@@ -58,11 +58,6 @@ open class MerchantServer: NSObject {
                         let inProcessPayment = Payment()
                         inProcessPayment.status = PaymentStatus.IN_PROCESS.rawValue
                         inProcessPayment.statusDetail = PendingStatusDetail.CONTINGENCY.rawValue
-                        let dicPayer = paymentBody["payer"] as? NSDictionary
-                        if dicPayer != nil {
-                            let payer = Payer.fromJSON(dicPayer!)
-                            inProcessPayment.payer = payer
-                        }
                         success(inProcessPayment)
                     } else if failure != nil {
                         failure!(NSError(domain: "mercadopago.sdk.merchantServer.createPayment", code: MercadoPago.ERROR_API_CODE, userInfo: paymentDic as! [AnyHashable: AnyObject]))
