@@ -220,6 +220,7 @@
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
 		15F3D7591EA65B3B00DC57AA /* CardsAdminViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */; };
 		15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* AdditionalStepTitleTableViewCell.swift */; };
+		236251CC1EF2D518005589AB /* PaymentResultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236251CB1EF2D518005589AB /* PaymentResultTest.swift */; };
 		23ECADC51EF1C7CC003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */; };
 		23ECADC61EF1D7E0003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */; };
 		23ECADD21EF1DF66003E4539 /* MerchantServerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADD11EF1DF66003E4539 /* MerchantServerTest.swift */; };
@@ -691,6 +692,7 @@
 		15E7D6E71C87164E00101872 /* MockedData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MockedData.plist; sourceTree = "<group>"; };
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewModelTest.swift; sourceTree = "<group>"; };
+		236251CB1EF2D518005589AB /* PaymentResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultTest.swift; sourceTree = "<group>"; };
 		23ECADC41EF1C7CC003E4539 /* ApiUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiUtil.swift; sourceTree = "<group>"; };
 		23ECADD11EF1DF66003E4539 /* MerchantServerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantServerTest.swift; sourceTree = "<group>"; };
 		4B077D4A1EB4400E001B0D69 /* PaymentResultContentViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultContentViewTest.swift; sourceTree = "<group>"; };
@@ -1634,6 +1636,7 @@
 				4BCDAC3A1E6849EA007ADD46 /* ReviewScreenPreferenceTest.swift */,
 				4B68FFDB1EAFBB200048B62D /* PaymentResultViewModelTest.swift */,
 				4B077D4A1EB4400E001B0D69 /* PaymentResultContentViewTest.swift */,
+				236251CB1EF2D518005589AB /* PaymentResultTest.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2357,6 +2360,7 @@
 				76EC47DA1C85E8D20086FA53 /* IdentificationTest.swift in Sources */,
 				76EC47FE1C862A600086FA53 /* TransactionDetailsTest.swift in Sources */,
 				0F9883641AD2AB6000F750F0 /* CardNumber.swift in Sources */,
+				236251CC1EF2D518005589AB /* PaymentResultTest.swift in Sources */,
 				76EA63A01C9B3B9700808E11 /* InstructionsServiceTest.swift in Sources */,
 				0F9883761AD2AB6000F750F0 /* Identification.swift in Sources */,
 				23ECADD21EF1DF66003E4539 /* MerchantServerTest.swift in Sources */,
