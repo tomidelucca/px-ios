@@ -39,9 +39,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
         if let expirationYear = JSONHandler.attemptParseToInt(json["expiration_year"]) {
             card.expirationYear = expirationYear
         }
-        if let idCard = JSONHandler.attemptParseToString(json["id"]) {
-            card.idCard = idCard
-        }
+        card.idCard = JSONHandler.attemptParseToString(json["id"], defaultReturn: "")!
         if let lastFourDigits = JSONHandler.attemptParseToString(json["last_four_digits"]) {
             card.lastFourDigits = lastFourDigits
         }
