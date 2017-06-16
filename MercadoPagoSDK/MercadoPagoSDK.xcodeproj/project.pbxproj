@@ -319,6 +319,9 @@
 		15EEE1D91D89D477004D3A19 /* CardViewModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */; };
 		15FCA7901C84993B00D9E8CE /* PaymentMethodImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */; };
 		15FCA7911C84993B00D9E8CE /* PaymentMethodImageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */; };
+		23ECADBB1EF1B3BD003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADBA1EF1B3BD003E4539 /* ApiUtil.swift */; };
+		23ECADCB1EF1D9C1003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADBA1EF1B3BD003E4539 /* ApiUtil.swift */; };
+		23ECADCC1EF1D9C1003E4539 /* ApiUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ECADBA1EF1B3BD003E4539 /* ApiUtil.swift */; };
 		4B2823941E2E4536004C02E9 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */; };
 		4B2823951E2E82B1004C02E9 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */; };
 		4B2AF4101EEABC6C00925644 /* UIImage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */; };
@@ -1174,6 +1177,7 @@
 		15EEE1D81D89D477004D3A19 /* CardViewModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManager.swift; sourceTree = "<group>"; };
 		15FCA78E1C84993B00D9E8CE /* PaymentMethodImageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentMethodImageViewCell.swift; sourceTree = "<group>"; };
 		15FCA78F1C84993B00D9E8CE /* PaymentMethodImageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentMethodImageViewCell.xib; sourceTree = "<group>"; };
+		23ECADBA1EF1B3BD003E4539 /* ApiUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiUtil.swift; sourceTree = "<group>"; };
 		4B241A991E01A7E00059640C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4B2823931E2E4536004C02E9 /* UIImage+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Additions.swift"; sourceTree = "<group>"; };
 		4B2AF4011EEABB9600925644 /* MercadoPagoSDKTestsRelease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MercadoPagoSDKTestsRelease.swift; sourceTree = "<group>"; };
@@ -1562,6 +1566,7 @@
 				0F9883AD1AD2ACF400F750F0 /* Additions */,
 				0F9883AC1AD2ABBC00F750F0 /* Frameworks */,
 				0FE3E38C1AE7174600C27B97 /* Serializable.swift */,
+				23ECADBA1EF1B3BD003E4539 /* ApiUtil.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -3093,6 +3098,7 @@
 				76743C7B1C46951100120347 /* PaymentType.swift in Sources */,
 				0F9883591AD2AB6000F750F0 /* ApiException.swift in Sources */,
 				4BAA55EF1DB0019200501061 /* PayerCostRowTableViewCell.swift in Sources */,
+				23ECADBB1EF1B3BD003E4539 /* ApiUtil.swift in Sources */,
 				76445AD41CC6BDDD008EE68E /* CALayer+Additions.swift in Sources */,
 				0FC4FC331B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
 				0F9883811AD2AB6000F750F0 /* Order.swift in Sources */,
@@ -3221,6 +3227,7 @@
 				76151B901C74C8DA007DF0E3 /* SimpleInstructionsViewCell.swift in Sources */,
 				76EC47F81C8629E10086FA53 /* SecurityCodeTest.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
+				23ECADCB1EF1D9C1003E4539 /* ApiUtil.swift in Sources */,
 				76CD12121D6F3ADD0052350D /* CustomerPaymentMethodCell.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				7656C9FA1C761A8F0043BDB2 /* InstructionsFooterWithTertiaryInfoViewCell.swift in Sources */,
@@ -3612,6 +3619,7 @@
 				4B2AF4FF1EEABC6C00925644 /* UIColor+Additions.swift in Sources */,
 				4B2AF5001EEABC6C00925644 /* IdentificationService.swift in Sources */,
 				4B2AF5011EEABC6C00925644 /* ApiException.swift in Sources */,
+				23ECADCC1EF1D9C1003E4539 /* ApiUtil.swift in Sources */,
 				4B2AF5021EEABC6C00925644 /* InstructionsHeaderViewCell.swift in Sources */,
 				4B2AF5031EEABC6C00925644 /* InstructionBodyTableViewCell.swift in Sources */,
 				4B2AF5041EEABC6C00925644 /* Regex.swift in Sources */,
