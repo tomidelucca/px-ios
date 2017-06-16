@@ -12,14 +12,14 @@ import UIKit
 open class CustomServer: NSObject {
 
     open class func getCustomer(url: String, uri: String, additionalInfo: NSDictionary? = nil, _ success: @escaping (_ customer: Customer) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        
+
         let service: CustomService = CustomService(baseURL: url, URI: uri)
-        
+
         var addInfo: String = ""
         if !NSDictionary.isNullOrEmpty(additionalInfo), let addInfoDict = additionalInfo {
             addInfo = addInfoDict.parseToQuery()
         }
-        
+
         service.getCustomer(params: addInfo, success: {(jsonResult: AnyObject?) -> Void in
             var cust : Customer? = nil
             if let custDic = jsonResult as? NSDictionary {
@@ -86,7 +86,7 @@ open class CustomServer: NSObject {
     open class func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary, success: @escaping (_ checkoutPreference: CheckoutPreference) -> Void, failure: ((_ error: NSError) -> Void)?) {
 
         let service: CustomService = CustomService(baseURL: url, URI: uri)
-        
+
         let body: String = bodyInfo.toJsonString()
 
         service.createPreference(body: body, success: { (jsonResult) in
