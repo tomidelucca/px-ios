@@ -20,7 +20,7 @@ class MerchantServerTest: BaseTest {
         paymentBodyDict.setValue(payerDict, forKey: "payer")
         MerchantServer.createPayment(paymentUrl: "http://api.mercadopago.com", paymentUri: "/v1/checkout/payments?public_key=PK-PROCESSING-TEST&payment_method_id=visa", paymentBody: paymentBodyDict, success: { (payment: Payment) -> Void in
             XCTAssertEqual(payment.status, PaymentStatus.IN_PROCESS.rawValue)
-        }, failure: { (error: NSError) -> Void in
+        }, failure: { (_: NSError) -> Void in
             XCTFail()
         })
     }
