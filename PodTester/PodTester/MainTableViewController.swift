@@ -228,7 +228,7 @@ class MainTableViewController: UITableViewController {
       //  self.payment.payer.email = "as@asd.com"
         self.payment.statementDescriptor = "description"
         let PR = PaymentResult(payment: self.payment, paymentData: self.paymentData)
-        loadCheckout( paymentData: self.paymentData,  paymentResult: PR)
+        loadCheckout( paymentData: self.paymentData, paymentResult: PR)
     }
 
     /// F3

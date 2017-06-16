@@ -132,7 +132,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         return CardViewModelManager(amount : self.getAmount(), paymentMethods: search?.paymentMethods, paymentSettings : paymentPreference)
     }
 
-    func paymentVaultViewModel() -> PaymentVaultViewModel{
+    func paymentVaultViewModel() -> PaymentVaultViewModel {
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
