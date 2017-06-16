@@ -1,5 +1,5 @@
 //
-//  MerchantServerTest.swift
+//  CustomServerTest.swift
 //  MercadoPagoSDK
 //
 //  Created by Mauro Reverter on 6/14/17.
@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class MerchantServerTest: BaseTest {
+class CustomServerTest: BaseTest {
     override func setUp() {
         super.setUp()
     }
