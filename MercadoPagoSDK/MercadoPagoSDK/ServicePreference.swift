@@ -155,11 +155,11 @@ open class ServicePreference: NSObject {
         return discountURI
     }
 
-    public func getPaymentAddionalInfo() -> String {
-        if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo) {
-            return paymentAdditionalInfo!.toJsonString()
+    public func getPaymentAddionalInfo() -> NSDictionary {
+        if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo), let paymentAdditionalInfoDict = paymentAdditionalInfo {
+            return paymentAdditionalInfoDict
         }
-        return ""
+        return NSDictionary()
     }
 
     public func getDiscountAddionalInfo() -> String {

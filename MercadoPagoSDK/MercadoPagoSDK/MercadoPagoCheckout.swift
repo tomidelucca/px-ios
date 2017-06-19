@@ -133,7 +133,7 @@ open class MercadoPagoCheckout: NSObject {
 
     func collectDirectDiscount() {
         self.presentLoading()
-        CustomServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
+        CustomServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, url: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
@@ -600,7 +600,7 @@ open class MercadoPagoCheckout: NSObject {
 
         let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
 
-        CustomServer.createPayment(baseUrl: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
+        CustomServer.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
             guard let strongSelf = self else {
                 return
             }

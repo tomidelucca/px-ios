@@ -38,12 +38,12 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func createPayment(baseUrl: String, uri: String, paymentData: NSDictionary, query: String?, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let service: CustomService = CustomService(baseURL: baseUrl, URI: uri)
+    open class func createPayment(url: String, uri: String, paymentData: NSDictionary, query: NSDictionary?, success: @escaping (_ payment: Payment) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        let service: CustomService = CustomService(baseURL: url, URI: uri)
 
         var queryString = ""
-        if let q = query {
-            queryString = q
+        if let q = query, !NSDictionary.isNullOrEmpty(query) {
+            queryString = q.toJsonString()
         }
 
         var body = ""
@@ -104,12 +104,12 @@ open class CustomServer: NSObject {
         }, failure: failure)
     }
 
-    open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getDirectDiscount(transactionAmount: Double, payerEmail: String?, url: String, uri: String, discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         getCodeDiscount(discountCode: nil, transactionAmount: transactionAmount, payerEmail: payerEmail, url: url, uri: uri, discountAdditionalInfo: discountAdditionalInfo, success: success, failure: failure)
     }
 
-    open class func getCodeDiscount(discountCode: String?, transactionAmount: Double, payerEmail: String?, url: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: String = MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open class func getCodeDiscount(discountCode: String?, transactionAmount: Double, payerEmail: String?, url: String, uri: String, discountAdditionalInfo: NSDictionary?, success: @escaping (_ discountCoupon: DiscountCoupon?) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         var addInfo: String? = nil
         if !NSDictionary.isNullOrEmpty(discountAdditionalInfo) {
             addInfo = discountAdditionalInfo?.parseToQuery()
