@@ -85,15 +85,13 @@ open class CustomServer: NSObject {
         let body: String = bodyInfo.toJsonString()
 
         service.createPreference(body: body, success: { (jsonResult) in
-            var checkoutPreference : CheckoutPreference
 
             if let preferenceDic = jsonResult as? NSDictionary {
                 if preferenceDic["error"] != nil && failure != nil {
                     failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_API_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
                 } else {
                     if preferenceDic.allKeys.count > 0 {
-                        checkoutPreference = CheckoutPreference.fromJSON(preferenceDic)
-                        success(checkoutPreference)
+                        success(CheckoutPreference.fromJSON(preferenceDic))
                     }
                 }
             } else {
