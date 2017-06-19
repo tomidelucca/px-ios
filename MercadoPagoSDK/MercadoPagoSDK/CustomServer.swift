@@ -21,15 +21,14 @@ open class CustomServer: NSObject {
         }
 
         service.getCustomer(params: addInfo, success: {(jsonResult: AnyObject?) -> Void in
-            var cust : Customer? = nil
+
             if let custDic = jsonResult as? NSDictionary {
                 if custDic["error"] != nil {
                     if failure != nil {
                         failure!(NSError(domain: "mercadopago.sdk.customServer.getCustomer", code: MercadoPago.ERROR_API_CODE, userInfo: custDic as! [AnyHashable: AnyObject]))
                     }
                 } else {
-                    cust = Customer.fromJSON(custDic)
-                    success(cust!)
+                    success(Customer.fromJSON(custDic))
                 }
             } else {
                 if failure != nil {
@@ -53,7 +52,6 @@ open class CustomServer: NSObject {
         }
 
         service.createPayment(body: body, success: {(jsonResult: AnyObject?) -> Void in
-            var payment : Payment? = nil
 
             if let paymentDic = jsonResult as? NSDictionary {
                 if paymentDic["error"] != nil {
@@ -67,8 +65,7 @@ open class CustomServer: NSObject {
                     }
                 } else {
                     if paymentDic.allKeys.count > 0 {
-                        payment = Payment.fromJSON(paymentDic)
-                        success(payment!)
+                        success(Payment.fromJSON(paymentDic))
                     } else {
                         if failure != nil {
                             failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_PAYMENT, userInfo: ["message": "PAYMENT_ERROR".localized]))
