@@ -72,10 +72,8 @@ open class CustomServer: NSObject {
                         }
                     }
                 }
-            } else {
-                if failure != nil {
-                    failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
-                }
+            } else if failure != nil {
+                failure!(NSError(domain: "mercadopago.sdk.customServer.createPayment", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "Response cannot be decoded"]))
             }
         }, failure: failure)
     }
