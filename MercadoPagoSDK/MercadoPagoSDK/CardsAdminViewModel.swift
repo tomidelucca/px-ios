@@ -29,7 +29,7 @@ open class CardsAdminViewModel: NSObject {
         self.extraOptionTitle = extraOptionTitle
         self.confirmPromptText = confirmPromptText
     }
-    
+
     func numberOfOptions() -> Int {
         var count = 0
 

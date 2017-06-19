@@ -18,7 +18,6 @@ class CardsAdminViewModelTest: BaseTest {
     let SECOND_ITEM_OPTION_ROW = 1
     let THIRD_ITEM_OPTION_ROW = 2
 
-
     let dummyCard = [MockBuilder.buildCard()]
     let dummyCards = [MockBuilder.buildCard(), MockBuilder.buildCard()]
 
@@ -103,7 +102,7 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssertEqual(cardAdminViewModel.getAlertCardTitle(card: dummyCard[0]), "visa " + dummyCard[0].getTitle())
     }
 
-    func testNumberOfSections(){
+    func testNumberOfSections() {
         XCTAssertEqual(cardAdminViewModel.numberOfSections(), 2)
     }
 
@@ -132,7 +131,7 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssertEqual(cardAdminViewModel.numberOfItemsInSection(section: CARDS_SECTION_NUMBER), 1)
     }
 
-    func testIsCardItemAndHeight(){
+    func testIsCardItemAndHeight() {
         let firstNode = IndexPath(row: 0, section: CARDS_SECTION_NUMBER)
         let secondNode = IndexPath(row: 1, section: CARDS_SECTION_NUMBER)
         let thirdNode = IndexPath(row: 2, section: CARDS_SECTION_NUMBER)
@@ -172,7 +171,7 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssertEqual(cardAdminViewModel.sizeForItemAt(indexPath: thirdNode), CGSize.zero)
     }
 
-    func testIsExtraItem(){
+    func testIsExtraItem() {
         let firstNode = IndexPath(row: 0, section: CARDS_SECTION_NUMBER)
         let secondNode = IndexPath(row: 1, section: CARDS_SECTION_NUMBER)
         let thirdNode = IndexPath(row: 2, section: CARDS_SECTION_NUMBER)
@@ -217,14 +216,14 @@ class CardsAdminViewModelTest: BaseTest {
         XCTAssertEqual(cardAdminViewModel.sizeForItemAt(indexPath: forthNode), CGSize.zero)
     }
 
-    func testIndexOfFirsCardInSection(){
+    func testIndexOfFirsCardInSection() {
         XCTAssertEqual(cardAdminViewModel.indexOfFirsCardInSection(row: 0), 0)
         XCTAssertEqual(cardAdminViewModel.indexOfFirsCardInSection(row: 1), 0)
         XCTAssertEqual(cardAdminViewModel.indexOfFirsCardInSection(row: 2), 2)
         XCTAssertEqual(cardAdminViewModel.indexOfFirsCardInSection(row: 3), 2)
     }
 
-    func testCalculateHeight(){
+    func testCalculateHeight() {
         let firstNode = IndexPath(row: 0, section: CARDS_SECTION_NUMBER)
         let secondNode = IndexPath(row: 1, section: CARDS_SECTION_NUMBER)
         let thirdNode = IndexPath(row: 2, section: CARDS_SECTION_NUMBER)

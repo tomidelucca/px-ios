@@ -21,7 +21,7 @@ class CardsAdminViewControllerTest: BaseTest {
 
     override func setUp() {
         super.setUp()
-        cardsAdminViewController = CardsAdminViewController(viewModel: cardAdminViewModel, callback: { (card) in
+        cardsAdminViewController = CardsAdminViewController(viewModel: cardAdminViewModel, callback: { (_) in
 
         })
         _ = cardsAdminViewController.view
@@ -51,7 +51,7 @@ class CardsAdminViewControllerTest: BaseTest {
         XCTAssert(CardsAdminViewController.conforms(to :UICollectionViewDelegate.self))
     }
 
-    func testNumberOfItems(){
+    func testNumberOfItems() {
         XCTAssertEqual(cardsAdminViewController.numberOfSections(in: cardsAdminViewController.collectionSearch), cardsAdminViewController.viewModel.numberOfSections())
     }
 

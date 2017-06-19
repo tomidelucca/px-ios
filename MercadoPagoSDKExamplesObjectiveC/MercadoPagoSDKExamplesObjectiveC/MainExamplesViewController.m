@@ -129,7 +129,7 @@
 }
 
 
-+(void)setPaymentDataCallback {
+-(void)setPaymentDataCallback {
 
     [MercadoPagoCheckout setPaymentDataCallbackWithPaymentDataCallback:^(PaymentData * paymentData) {
         NSLog(@"PaymentMethod: %@", paymentData.paymentMethod._id);
@@ -319,7 +319,7 @@
     [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 
--(void)setCardManager {
+-(IBAction)startCardManager:(id)sender  {
 
     NSString *customerSinTarjetas = @"{\"cards\":null,\"identification\":{\"type\":null,\"number\":null},\"id\":\"239785138-ZJ25PFw7cYGu7L\",\"last_name\":null,\"default_card\":null,\"email\":\"palazzogcba@gmail.com\",\"date_created\":\"2017-01-30\",\"description\":null,\"first_name\":null}";
 
