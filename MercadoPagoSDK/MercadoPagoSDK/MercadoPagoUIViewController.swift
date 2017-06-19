@@ -10,13 +10,13 @@ import UIKit
 
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
 
-    open var callbackCancel: ((Void) -> Void)?
+    open var callbackCancel: (() -> Void)?
     public var timer: CountdownTimer?
     var navBarTextColor = UIColor.systemFontColor()
     private var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
 
-    var hideNavBarCallback: ((Void) -> Void)?
+    var hideNavBarCallback: (() -> Void)?
 
     open var screenName: String { get { return "NO NAME" } }
 
@@ -61,10 +61,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 let cfdata = CFDataCreate(nil, (inData as NSData).bytes.bindMemory(to: UInt8.self, capacity: inData.count), inData.count)
                 if let provider = CGDataProvider(data: cfdata!) {
                     let font = CGFont(provider)
-                        if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-                            print("Failed to load font: \(error)")
-                        }
-                        return true
+                    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+                        print("Failed to load font: \(error)")
+                    }
+                    return true
 
                 }
             }
@@ -137,7 +137,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func invokeCallbackCancelShowingNavBar() {
-        if(self.callbackCancel != nil) {
+        if self.callbackCancel != nil {
             self.showNavBar()
             self.callbackCancel!()
         }
@@ -233,14 +233,14 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             // }
         }
         for subview in view.subviews {
-            if (hideKeyboard(subview)) {
+            if hideKeyboard(subview) {
                 return true
             }
         }
         return false
     }
     internal func showKeyboard() {
-        if (fistResponder != nil) {
+        if fistResponder != nil {
             fistResponder?.becomeFirstResponder()
         }
         fistResponder = nil
@@ -254,13 +254,13 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 
         //En caso de que el vc no sea root
-        if(navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self) {
-                return true
+        if navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self {
+            return true
         }
         return false
     }
 
-    internal func requestFailure(_ error: NSError, callback: ((Void) -> Void)? = nil, callbackCancel: ((Void) -> Void)? = nil) {
+    internal func requestFailure(_ error: NSError, callback: (() -> Void)? = nil, callbackCancel: (() -> Void)? = nil) {
         let errorVC = ErrorViewController(error: MPSDKError.convertFrom(error), callback: callback, callbackCancel: callbackCancel)
         if self.navigationController != nil {
             self.navigationController?.present(errorVC, animated: true, completion: {})
@@ -292,7 +292,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
-           // self.navigationController?.navigationBar.isHidden = false
+            // self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = nil
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
@@ -352,10 +352,10 @@ extension UINavigationController {
         return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate)
     }
 
- //   override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    //   override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 
- //       return self.viewControllers.last!.supportedInterfaceOrientations
-  //  }
+    //       return self.viewControllers.last!.supportedInterfaceOrientations
+    //  }
 
 }
 

@@ -36,13 +36,14 @@ open class MPPayment: NSObject {
     open var issuerId: String?
     open var tokenId: String?
     open var payer: Payer?
+    open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
 
     override init() {
         super.init()
     }
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer) {
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) {
         self.preferenceId = preferenceId
         self.publicKey = publicKey
         self.paymentMethodId = paymentMethodId
@@ -51,6 +52,7 @@ open class MPPayment: NSObject {
         self.tokenId = tokenId
         self.transactionDetails = transactionDetails
         self.payer = payer
+        self.binaryMode = binaryMode
     }
 
     open func toJSONString() -> String {
@@ -62,6 +64,7 @@ open class MPPayment: NSObject {
             "public_key": self.publicKey,
             "payment_method_id": self.paymentMethodId,
             "pref_id": self.preferenceId,
+            "binary_mode": self.binaryMode
             ]
 
         if self.tokenId != nil && self.tokenId?.characters.count > 0 {
@@ -90,8 +93,8 @@ open class CustomerPayment: MPPayment {
 
     open var customerId: String!
 
-    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: TransactionDetails, payer: Payer) {
-        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
+    init(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) {
+        super.init(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId: issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         self.customerId = customerId
     }
 
@@ -119,15 +122,15 @@ open class BlacklabelPayment: MPPayment {
 
 open class MPPaymentFactory {
 
-    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer) -> MPPayment {
+    open class func createMPPayment(preferenceId: String, publicKey: String, paymentMethodId: String, installments: Int = 0, issuerId: String = "", tokenId: String = "", customerId: String? = nil, isBlacklabelPayment: Bool, transactionDetails: TransactionDetails, payer: Payer, binaryMode: Bool) -> MPPayment {
 
         if !String.isNullOrEmpty(customerId) {
-            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer)
-        } else if (isBlacklabelPayment) {
-            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
+            return CustomerPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, customerId: customerId!, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
+        } else if isBlacklabelPayment {
+            return BlacklabelPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         }
 
-        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer)
+        return MPPayment(preferenceId: preferenceId, publicKey: publicKey, paymentMethodId: paymentMethodId, installments: installments, issuerId : issuerId, tokenId : tokenId, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
 
     }
 

@@ -31,8 +31,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     @IBOutlet weak var collectionSearch: UICollectionView!
 
-    static public var maxCustomerPaymentMethods = 3
-
     override open var screenName: String { get { return "PAYMENT_METHOD_SEARCH" } }
 
     static let VIEW_CONTROLLER_NIB_NAME: String = "PaymentVaultViewController"
@@ -97,7 +95,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.registerAllCells()
 
         if callbackCancel == nil {
-            self.callbackCancel = {(Void) -> Void in
+            self.callbackCancel = {() -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {
 
@@ -157,7 +155,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewWillDisappear(animated)
     }
 
-    fileprivate func cardFormCallbackCancel() -> ((Void) -> (Void)) {
+    fileprivate func cardFormCallbackCancel() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {
                 self.navigationController!.popToViewController(self, animated: true)
@@ -185,7 +183,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         }
     }
 
-    fileprivate func hideNavBarCallbackDisplayTitle() -> ((Void) -> (Void)) {
+    fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> (Void)) {
         return { () -> (Void) in
             if self.titleSectionReference != nil {
                 self.titleSectionReference.fillCell()
@@ -218,7 +216,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.collectionSearch.reloadData()
             self.loadingGroups = false
 
-            if (self.viewModel.getDisplayedPaymentMethodsCount() == 1) {
+            if self.viewModel.getDisplayedPaymentMethodsCount() == 1 {
                 let paymentOptionDefault = self.viewModel.getPaymentMethodOption(row: 0) as! PaymentMethodOption
                 self.callback(paymentOptionDefault)
             }
@@ -307,14 +305,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     public func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
 
-            if (loadingGroups) {
+            if loadingGroups {
                 return 0
             }
-
-            if (isHeaderSection(section: section)) {
+            if isHeaderSection(section: section) {
                 return 1
             }
-            if (isCouponSection(section: section)) {
+            if isCouponSection(section: section) {
                 return 1
             }
 
@@ -442,97 +439,3 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
  }
-
-class PaymentVaultViewModel: NSObject {
-
-    var amount: Double
-    var paymentPreference: PaymentPreference?
-    var email: String
-
-    var paymentMethodOptions: [PaymentMethodOption]
-    var customerPaymentOptions: [CardInformation]?
-    var paymentMethods: [PaymentMethod]!
-    var defaultPaymentOption: PaymentMethodSearchItem?
-   // var cards : [Card]?
-
-    var discount: DiscountCoupon?
-
-    weak var controller: PaymentVaultViewController?
-
-    var customerId: String?
-
-    var callback : ((_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void)!
-    var callbackCancel: ((Void) -> Void)?
-    var couponCallback: ((DiscountCoupon) -> Void)?
-
-    internal var isRoot = true
-
-    init(amount: Double, paymentPrefence: PaymentPreference?, paymentMethodOptions: [PaymentMethodOption], customerPaymentOptions: [CardInformation]?, isRoot: Bool, discount: DiscountCoupon? = nil, email: String, callbackCancel: ((Void) -> Void)? = nil, couponCallback: ((DiscountCoupon) -> Void)? = nil) {
-        self.amount = amount
-        self.email = email
-        self.discount = discount
-        self.paymentPreference = paymentPrefence
-        self.paymentMethodOptions = paymentMethodOptions
-        self.customerPaymentOptions = customerPaymentOptions
-        self.isRoot = isRoot
-        self.couponCallback = couponCallback
-    }
-
-    func shouldGetCustomerCardsInfo() -> Bool {
-        return MercadoPagoCheckoutViewModel.servicePreference.isCustomerInfoAvailable() && self.isRoot && (self.customerPaymentOptions == nil || self.customerPaymentOptions?.count == 0)
-
-    }
-
-    func getCustomerPaymentMethodsToDisplayCount() -> Int {
-        if (self.customerPaymentOptions != nil && self.customerPaymentOptions?.count > 0 && self.isRoot) {
-            return (self.customerPaymentOptions!.count <= PaymentVaultViewController.maxCustomerPaymentMethods ? self.customerPaymentOptions!.count : PaymentVaultViewController.maxCustomerPaymentMethods)
-        }
-        return 0
-
-    }
-
-    func getPaymentMethodOption(row: Int) -> PaymentOptionDrawable {
-        if (self.getCustomerPaymentMethodsToDisplayCount() > row) {
-            return self.customerPaymentOptions![row]
-        }
-        let indexInPaymentMethods = Array.isNullOrEmpty(self.customerPaymentOptions) ? row : (row - self.getCustomerPaymentMethodsToDisplayCount())
-        return self.paymentMethodOptions[indexInPaymentMethods] as! PaymentOptionDrawable
-    }
-
-    func getDisplayedPaymentMethodsCount() -> Int {
-        let currentPaymentMethodSearchCount = self.paymentMethodOptions.count
-        return self.getCustomerPaymentMethodsToDisplayCount() + currentPaymentMethodSearchCount
-    }
-
-//    func getCustomerCardRowHeight() -> CGFloat {
-//        return self.getCustomerPaymentMethodsToDisplayCount() > 0 ? CustomerPaymentMethodCell.ROW_HEIGHT : 0
-//    }
-
-    func getExcludedPaymentTypeIds() -> Set<String>? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentTypeIds : nil
-    }
-
-    func getExcludedPaymentMethodIds() -> Set<String>? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.excludedPaymentMethodIds : nil
-    }
-
-    func getPaymentPreferenceDefaultPaymentMethodId() -> String? {
-        return (self.paymentPreference != nil) ? self.paymentPreference!.defaultPaymentMethodId : nil
-    }
-
-    func isCustomerPaymentMethodOptionSelected(_ row: Int) -> Bool {
-        if (Array.isNullOrEmpty(self.customerPaymentOptions)) {
-            return false
-        }
-        return (row < self.getCustomerPaymentMethodsToDisplayCount())
-    }
-
-    func hasOnlyGroupsPaymentMethodAvailable() -> Bool {
-        return (self.paymentMethodOptions.count == 1 && Array.isNullOrEmpty(self.customerPaymentOptions))
-    }
-
-    func hasOnlyCustomerPaymentMethodAvailable() -> Bool {
-        return Array.isNullOrEmpty(self.paymentMethodOptions) && !Array.isNullOrEmpty(self.customerPaymentOptions) && self.customerPaymentOptions?.count == 1
-    }
-
-}

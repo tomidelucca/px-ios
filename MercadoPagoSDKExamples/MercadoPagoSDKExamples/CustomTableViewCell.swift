@@ -17,8 +17,8 @@ open class CustomTableViewCell: MPCustomTableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-    
-    func fillCell(text: String){
+
+    func fillCell(text: String) {
         title.text = text
     }
 
@@ -27,5 +27,5 @@ open class CustomTableViewCell: MPCustomTableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
 }

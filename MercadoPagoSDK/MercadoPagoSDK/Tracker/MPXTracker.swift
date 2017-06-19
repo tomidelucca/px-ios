@@ -18,42 +18,38 @@ protocol MPXTracker {
 
 extension MPXTracker {
     static func trackScreen(screenId: String, screenName: String) {
-        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body: JSONHandler.jsonCoding(generateJSONScreen(screenId: screenId, screenName: screenName)), method: "POST", headers: nil, success: { (result) -> Void in
-            print(result)
+        let body = JSONHandler.jsonCoding(generateJSONScreen(screenId: screenId, screenName: screenName))
+        self.request(url: "https://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
         }) { (error) -> Void in
-            print(error)
         }
     }
-    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
+    static private func generateJSONDefault() -> [String:Any] {
         let clientId = UIDevice.current.identifierForVendor!.uuidString
-        let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
         let deviceJSON = MPTDevice().toJSON()
-        let screenJSON = Self.screenJSON(screenId: screenId, screenName: screenName)
+        let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
         let obj: [String:Any] = [
             "client_id": clientId,
             "application": applicationJSON,
             "device": deviceJSON,
-            "events": [screenJSON]        ]
+            ]
+        return obj
+    }
+    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
+        var obj = Self.generateJSONDefault()
+        let screenJSON = Self.screenJSON(screenId: screenId, screenName: screenName)
+        obj["events"] = [screenJSON]
         return obj
     }
     static func trackEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) {
-        self.request(url: "https://apis.mercadopago.com/beta/checkout/tracking/events", params: nil, body:JSONHandler.jsonCoding(generateJSONEvent(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)), method: "POST", headers: nil, success: { (result) -> Void in
-            print(result)
+        let body = JSONHandler.jsonCoding(generateJSONEvent(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value))
+        self.request(url: "https://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
         }) { (error) -> Void in
-            print(error)
         }
     }
     static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
-        let clientId = UIDevice.current.identifierForVendor!.uuidString
-        let deviceJSON = MPTDevice().toJSON()
-        let applicationJSON = MPTApplication(publicKey: mpxPublicKey, checkoutVersion: mpxCheckoutVersion, platform: mpxPlatform).toJSON()
+        var obj = Self.generateJSONDefault()
         let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
-        let obj: [String:Any] = [
-            "client_id": clientId,
-            "application": applicationJSON,
-            "device": deviceJSON,
-            "events": [eventJSON]
-        ]
+        obj["events"] = [eventJSON]
         return obj
     }
     static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
@@ -86,10 +82,10 @@ extension MPXTracker {
         ]
         return obj
     }
-    static func request(url: String, params: String?, body: Any, method: String, headers: NSDictionary? = nil, success: @escaping (Any) -> Void,
+    static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String:String]? = nil, success: @escaping (Any) -> Void,
                               failure: ((NSError) -> Void)?) {
         var requesturl = url
-        if params != nil {
+        if params != nil && !(params?.isEmpty)! {
             requesturl += "?" + params!
         }
         let finalURL: NSURL = NSURL(string: url)!
@@ -100,12 +96,32 @@ extension MPXTracker {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if headers !=  nil && headers!.count > 0 {
             for header in headers! {
-                request.setValue(header.value as? String, forHTTPHeaderField: header.key as! String)
+                request.setValue(header.value, forHTTPHeaderField: header.key)
             }
         }
-        if body != nil {
-            request.httpBody = (body as! NSString).data(using: String.Encoding.utf8.rawValue)
+        if let body = body {
+            request.httpBody = body.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
         }
+        var session = URLSession.shared
+        var task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            if error == nil {
+                do {
+                    let responseJson = try JSONSerialization.jsonObject(with: data!,
+                                                                        options:JSONSerialization.ReadingOptions.allowFragments)
+                    success(responseJson as Any)
+                } catch {
+                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                    failure?(e)
+                }
+            } else {
+                if failure != nil {
+                    failure!(error! as NSError)
+                }
+            }})
+        
+        task.resume()
+        /*
         NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if error == nil {
@@ -123,5 +139,6 @@ extension MPXTracker {
                 }
             }
         }
+    */
     }
 }

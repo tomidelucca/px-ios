@@ -19,14 +19,14 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     var callback : ((_ coupon: DiscountCoupon) -> Void)?
 
-    init(amount: Double, email: String, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
+    init(amount: Double, email: String, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
         self.viewModel = AddCouponViewModel(amount: amount, email: email)
     }
 
-    init (viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: ((Void) -> Void)? = nil) {
+    init (viewModel: AddCouponViewModel, callback : @escaping ((_ coupon: DiscountCoupon) -> Void), callbackCancel: (() -> Void)? = nil) {
       super.init(nibName: "AddCouponViewController", bundle: MercadoPago.getBundle())
         self.callback = callback
         self.callbackCancel = callbackCancel
@@ -149,7 +149,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     open func editingChanged(_ textField: UITextField) {
-        if ((textBox.text?.characters.count)! > 0) {
+        if (textBox.text?.characters.count)! > 0 {
             buttonNext.isEnabled = true
         } else {
             buttonNext.isEnabled = false

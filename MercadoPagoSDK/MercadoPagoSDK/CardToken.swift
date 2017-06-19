@@ -55,7 +55,7 @@ open class CardToken: NSObject, CardInformationForm {
 
     open func validate(_ includeSecurityCode: Bool) -> Bool {
         var result: Bool = validateCardNumber() == nil  && validateExpiryDate() == nil && validateIdentification() == nil && validateCardholderName() == nil
-        if (includeSecurityCode) {
+        if includeSecurityCode {
             result = result && validateSecurityCode() == nil
         }
         return result
@@ -156,7 +156,7 @@ open class CardToken: NSObject, CardInformationForm {
         let setting: [Setting]? = Setting.getSettingByBin(paymentMethod.settings, bin: getBin())
         if let settings = setting {
                 let cvvLength = settings[0].securityCode.length
-                if ((cvvLength != 0) && (securityCode.characters.count != cvvLength)) {
+                if (cvvLength != 0) && (securityCode.characters.count != cvvLength) {
                     return ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")
                     // return NSError(domain: "mercadopago.sdk.card.error", code: 1, userInfo: ["securityCode" : ("invalid_cvv_length".localized as NSString).replacingOccurrences(of: "%1$s", with: "\(cvvLength)")])
                 } else {
