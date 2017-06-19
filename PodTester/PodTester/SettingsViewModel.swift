@@ -18,6 +18,7 @@ open class SettingsViewModel: NSObject {
     var selectedSite: Site!
     var selectedEnvironment: Environments = Environments.sandbox
     var selectedColor: UIColor!
+    var configurationJSON: String!
     var includeOnlinePMS: Bool = true
     var includeOfflinePMS: Bool = true
 
@@ -27,7 +28,7 @@ open class SettingsViewModel: NSObject {
 
     //--TableView Build Logic
     open func getNumberOfRowsInSection(section: Int) -> Int {
-        return 5
+        return 6
     }
 
     open func getCellFor(indexPath: IndexPath) -> UITableViewCell {
@@ -42,6 +43,8 @@ open class SettingsViewModel: NSObject {
             return getSwitchCellFor(forSwitch: Switches.OfflinePaymentMethods)
         case Cells.colorPicker.rawValue:
             return getColorPickerCell()
+        case Cells.jsonInput.rawValue:
+            return getJsonInputCell()
         default:
             let defaultCell = UITableViewCell()
             return defaultCell
@@ -91,7 +94,6 @@ open class SettingsViewModel: NSObject {
     func setSite(sender: UISegmentedControl) {
         let siteID = self.sites[sender.selectedSegmentIndex].ID
         self.selectedSite = getSitefromID(siteID: siteID)
-//        self.selectedColor = selectedSite.getColor()
     }
     //Site Selector Logic--
 
@@ -200,7 +202,39 @@ open class SettingsViewModel: NSObject {
         }
     }
     //Color Picker Logic--
-
+    
+    //--Json Input Logic
+    func getJsonInputCell() -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.frame.size.height = 40
+        cell.frame.size.width = Mainframe.width
+        cell.selectionStyle = .none
+        cell.textLabel?.textColor = UIColor.black
+        cell.textLabel?.text = "Config. JSON"
+        
+        let cellFrame = cell.bounds
+        
+        let cellTextfield = UITextField()
+        cellTextfield.frame = CGRect(x: cellFrame.midX + marginSpace/2, y: cellFrame.minY + marginSpace/2, width: cellFrame.width/2 - marginSpace, height: cellFrame.height - marginSpace)
+        cellTextfield.layer.borderWidth = 1
+        cellTextfield.layer.cornerRadius = 5
+        cellTextfield.placeholder = "{JSON}"
+        cellTextfield.autocapitalizationType = .allCharacters
+        cellTextfield.addTarget(self, action: #selector(setConfigurationJSON(sender: )), for: UIControlEvents.allEditingEvents)
+        cell.addSubview(cellTextfield)
+        
+        return cell
+    }
+    
+    func setConfigurationJSON(sender: UITextField) {
+        if let text = sender.text, text.isNotEmpty {
+            configurationJSON = sender.text
+        } else {
+            configurationJSON = nil
+        }
+    }
+    //Json Input Logic--
+    
     //Updates build settings bearing in mind the customization factors
     open func update() {
         MercadoPagoContext.setSiteID(selectedSite.ID)
@@ -351,6 +385,7 @@ open class SettingsViewModel: NSObject {
         case onlinePMs = 2
         case offlinePMS = 3
         case colorPicker = 4
+        case jsonInput = 5
     }
 
     public enum Environments: String {
