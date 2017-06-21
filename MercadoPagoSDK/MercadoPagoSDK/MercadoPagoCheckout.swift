@@ -48,8 +48,6 @@ open class MercadoPagoCheckout: NSObject {
 
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
-        MercadoPagoContext.trackScreen(screenId: "CARD_FORM", screenName: "Card Form")
-        MercadoPagoContext.trackEvent(screenId: "CARD_FORM", screenName: "Card Form", action: "card_number_input", category: "pagos", label: "Ingreso de número de tarjeta", value: "visa")
         executeNextStep()
     }
 
