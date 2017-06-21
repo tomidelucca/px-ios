@@ -50,7 +50,7 @@ class ServicePreferenceTest: BaseTest {
         servicePreference.setCreatePayment(baseURL: "sarasa", URI: "sa")
         XCTAssertEqual(servicePreference.getPaymentURL(), "sarasa")
         XCTAssertEqual(servicePreference.getPaymentURI(), "sa")
-        XCTAssertEqual(servicePreference.getPaymentAddionalInfo(), NSDictionary())
+        XCTAssertEqual(servicePreference.getPaymentAddionalInfo(), nil)
 
         servicePreference.setCreatePayment(baseURL: "", URI: "sa")
         XCTAssertFalse(servicePreference.isCreatePaymentSet())

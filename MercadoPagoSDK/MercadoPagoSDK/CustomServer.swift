@@ -92,6 +92,10 @@ open class CustomServer: NSObject {
                 } else {
                     if preferenceDic.allKeys.count > 0 {
                         success(CheckoutPreference.fromJSON(preferenceDic))
+                    } else {
+                        if failure != nil {
+                            failure!(NSError(domain: "mercadopago.customServer.createCheckoutPreference", code: MercadoPago.ERROR_UNKNOWN_CODE, userInfo: ["message": "PREFERENCE_ERROR".localized]))
+                        }
                     }
                 }
             } else {
