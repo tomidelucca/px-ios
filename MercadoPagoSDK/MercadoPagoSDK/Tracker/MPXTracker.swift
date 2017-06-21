@@ -56,7 +56,7 @@ extension MPXTracker {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let timestamp = formatter.string(from: date)
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "action",
@@ -73,7 +73,7 @@ extension MPXTracker {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let timestamp = formatter.string(from: date)
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "screenview",
@@ -109,6 +109,13 @@ extension MPXTracker {
                 do {
                     let responseJson = try JSONSerialization.jsonObject(with: data!,
                                                                         options:JSONSerialization.ReadingOptions.allowFragments)
+                    if let paymentDic = responseJson as? NSDictionary { 
+                        if paymentDic["status"] as? Int == 200 {
+                            print("200!")
+                        }else{
+                            print("Codigo = \(paymentDic["status"])")
+                        }
+                    }
                     success(responseJson as Any)
                 } catch {
                     let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
