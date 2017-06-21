@@ -52,6 +52,7 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     static var mpxSiteId: String {return sharedInstance.siteId()}
     static var mpxPlatformType: String {return "Native"}
     
+
     open func framework() -> String! {
         return  "iOS"
     }
