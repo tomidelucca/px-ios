@@ -48,6 +48,7 @@ class MainTableViewController: UITableViewController {
     open var accessToken: String!
     open var prefID: String!
     open var color: UIColor!
+    open var configJSON: String!
 
     let prefIdNoExlusions = "150216849-a0d75d14-af2e-4f03-bba4-d2f0ec75e301"
 
@@ -233,7 +234,26 @@ class MainTableViewController: UITableViewController {
 
     /// F3
     func startCheckout() {
-        loadCheckout()
+        if let JSONString = self.configJSON {
+            do {
+                let JSON = try convertStringToDictionary(JSONString)
+                self.publicKey = JSON?["public_key"] as! String
+                self.prefID = JSON?["pref_id"] as! String
+            } catch {
+            }
+            loadCheckout()
+        } else {
+            loadCheckout()
+        }
+    }
+    
+    
+    func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
+        if let data = text.data(using: String.Encoding.utf8) {
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
+            return json
+        }
+        return nil
     }
 
     /// F2
