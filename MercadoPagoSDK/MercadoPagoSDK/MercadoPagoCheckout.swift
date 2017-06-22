@@ -634,12 +634,12 @@ open class MercadoPagoCheckout: NSObject {
                     guard let strongSelf = self else {
                         return
                     }
+
+                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
                     if state == PaymentResult.CongratsState.call_FOR_AUTH {
-                        strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
                         strongSelf.viewModel.prepareForClone()
                         strongSelf.collectSecurityCodeForRetry()
                     } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                        strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
                         strongSelf.viewModel.prepareForNewSelection()
                         strongSelf.executeNextStep()
 
@@ -649,8 +649,12 @@ open class MercadoPagoCheckout: NSObject {
 
                 })
             } else {
-                congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { (_ :PaymentResult.CongratsState) in
-                    self.finish()
+                congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
+                    strongSelf.finish()
                 }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
             }
             self.pushViewController(viewController : congratsViewController, animated: true)
