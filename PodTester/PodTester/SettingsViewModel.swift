@@ -266,11 +266,11 @@ open class SettingsViewModel: NSObject {
         selectedSite.pk = getPublicKey(site: selectedSite.ID)
         selectedSite.pref_ID = getPrefID(site: selectedSite.ID)
         
-        if selectedApiEnvironment == ApiEnvironment.Beta {
-            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_TEST_ENV
-        } else {
-            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_PROD_ENV
-        }
+//        if selectedApiEnvironment == ApiEnvironment.Beta {
+//            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_TEST_ENV
+//        } else {
+//            ServicePreference.MP_SELECTED_ENV = ServicePreference.MP_PROD_ENV
+//        }
         
     }
 
