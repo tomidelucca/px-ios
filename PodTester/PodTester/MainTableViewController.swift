@@ -88,7 +88,7 @@ class MainTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        issuer._id = 303
+        issuer._id = "303"
         paymentMethod._id = "visa"
         installmentsSelected?.installments = 2
 
