@@ -795,7 +795,7 @@ class PaymentVaultViewModelTest: BaseTest {
 
     func testGetCustomerPaymentMethodsToDisplayCount() {
 
-        MercadoPagoCheckoutViewModel.clearEnviroment()
+
         //No customerCards loaded
         var customerCardsToDisplay = instance!.getCustomerPaymentMethodsToDisplayCount()
         XCTAssertEqual(0, customerCardsToDisplay)
@@ -826,7 +826,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
 
     func testGetDisplayedPaymentMethodsCount() {
-        MercadoPagoCheckoutViewModel.clearEnviroment()
+
         // Payment methods not loaded
         var paymentMethodCount = instance!.getDisplayedPaymentMethodsCount()
 //        XCTAssertEqual(0, paymentMethodCount)
@@ -901,7 +901,7 @@ class PaymentVaultViewModelTest: BaseTest {
     }
 
     func testIsCustomerPaymentMethodOptionSelected() {
-        MercadoPagoCheckoutViewModel.clearEnviroment()
+
         // No customer cards available
         var wasCustomerCardSelected = instance!.isCustomerPaymentMethodOptionSelected(2)
         XCTAssertFalse(wasCustomerCardSelected)
