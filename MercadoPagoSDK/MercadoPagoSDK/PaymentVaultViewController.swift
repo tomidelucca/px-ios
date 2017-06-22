@@ -171,7 +171,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.viewModel!.shouldGetCustomerCardsInfo() {
 
             if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
-                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), {[weak self] (customer: Customer) -> Void in
+                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), additionalInfo: MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, {[weak self] (customer: Customer) -> Void in
                     self?.viewModel.customerId = customer._id
                     self?.viewModel.customerPaymentOptions = customer.cards
                     self?.loadPaymentMethodSearch()

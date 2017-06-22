@@ -228,7 +228,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
 
             if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
 
-                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), { (customer: Customer) -> Void in
+                CustomServer.getCustomer(url: customerURL, uri: MercadoPagoCheckoutViewModel.servicePreference.getCustomerURI(), additionalInfo: MercadoPagoCheckoutViewModel.servicePreference.customerAdditionalInfo, { (customer: Customer) -> Void in
                     self.hideLoading()
                     self.viewModel.customerId = customer._id
                     self.viewModel.cards = customer.cards
