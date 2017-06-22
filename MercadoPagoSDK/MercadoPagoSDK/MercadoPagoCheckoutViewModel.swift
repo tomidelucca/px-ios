@@ -41,7 +41,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
-
     internal static var paymentDataCallback: ((PaymentData) -> Void)?
     internal static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     internal static var paymentCallback: ((Payment) -> Void)?
@@ -109,6 +108,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if let pm = paymentData {
             if pm.isComplete() {
                 self.paymentData = pm
+                self.directDiscountSearched = true
                 if paymentResult == nil {
                     self.initWithPaymentData = true
                 }
@@ -269,16 +269,14 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
 
     }
-
     public func nextStep() -> CheckoutStep {
 
         if needLoadPreference {
             needLoadPreference = false
             return .SEARCH_PREFERENCE
-
         }
         if needToSearchDirectDiscount() {
-            directDiscountSearched = true
+            self.directDiscountSearched = true
             return .SEARCH_DIRECT_DISCOUNT
         }
 
@@ -415,7 +413,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         var issuerId = ""
         if paymentData.issuer != nil {
-            issuerId = String(paymentData.issuer!._id!.intValue)
+            issuerId = paymentData.issuer!._id!
         }
         var tokenId = ""
         if paymentData.token != nil {
@@ -575,6 +573,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     func errorInputs(error: MPSDKError, errorCallback: (() -> Void)?) {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
+    }
+
+    func shouldDisplayPaymentResult() -> Bool {
+        if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentResultScreenEnable() {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && self.paymentResult?.status == PaymentStatus.APPROVED.rawValue {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && self.paymentResult?.status == PaymentStatus.IN_PROCESS.rawValue {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && self.paymentResult?.status == PaymentStatus.REJECTED.rawValue {
+            return false
+        }
+        return true
     }
 
 }

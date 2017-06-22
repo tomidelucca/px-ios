@@ -1,5 +1,5 @@
 excluded: # paths to ignore during linting. Takes precedence over `included`.
-  #- MercadoPagoSDKTests
+  - MercadoPagoSDKTests
   - Pods
 force_cast: warning # implicitly
 force_unwrapping: error
@@ -65,6 +65,7 @@ disabled_rules:
 
 # Hay que ir agregando:
   # - control_statement
+  # - variable_name
   - unused_optional_binding
   - implicit_getter
   - type_name
@@ -95,10 +96,9 @@ disabled_rules:
   - conditional_returns_on_newline
   - function_parameter_count
   - object_literal
-
-
-
-
+  - empty_parameters
+  - statement_position
+  - unused_closure_parameter
 
 # disabled_rules:
 #     - trailing_newline
