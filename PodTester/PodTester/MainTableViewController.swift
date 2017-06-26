@@ -48,6 +48,7 @@ class MainTableViewController: UITableViewController {
     open var accessToken: String!
     open var prefID: String!
     open var customCheckoutPref: CheckoutPreference!
+    open var showMaxCards: Int!
     open var color: UIColor!
     open var configJSON: String!
 
@@ -193,6 +194,7 @@ class MainTableViewController: UITableViewController {
         }
 
         let flowPref: FlowPreference = FlowPreference()
+        flowPref.setMaxSavedCardsToShow(fromInt: self.showMaxCards)
         showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
         MercadoPagoCheckout.setFlowPreference(flowPref)
 
@@ -277,16 +279,19 @@ class MainTableViewController: UITableViewController {
         let site : String = json["site_id"] != nil ?  json["site_id"] as! String : ""
         let payerEmail : String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
         let items : [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
+        let maxCards : Int = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as! Int : 3
 
         switch startFor {
         case startForOptions.payment.rawValue:
             self.publicKey = PK
             self.prefID = prefID
+            self.showMaxCards = maxCards
         case startForOptions.paymentData.rawValue:
             self.publicKey = PK
             MercadoPagoContext.setSiteID(site)
             let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
             self.customCheckoutPref = pref
+            self.showMaxCards = maxCards
         default: break
         }
     }
