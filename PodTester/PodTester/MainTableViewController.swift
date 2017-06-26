@@ -223,11 +223,23 @@ class MainTableViewController: UITableViewController {
 
     /// Wallet Checkout
     func startWalletCheckout() {
-        loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        if !String.isNullOrEmpty(self.configJSON) {
+            
+            tryConvertStringtoDictionary(String: self.configJSON)
+            loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        } else {
+            loadCheckout(showRyC: false, setPaymentDataCallback: true)
+        }
     }
 
     func startWalletReviewAndConfirm() {
-        loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        if !String.isNullOrEmpty(self.configJSON) {
+            
+            tryConvertStringtoDictionary(String: self.configJSON)
+            loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        } else {
+            loadCheckout(paymentData: self.paymentData, setPaymentDataConfirmCallback: true)
+        }
     }
 
     func startWalletCongrats() {
@@ -245,12 +257,7 @@ class MainTableViewController: UITableViewController {
     func startCheckout() {
         if !String.isNullOrEmpty(self.configJSON) {
             
-            do {
-                let JSON = try convertStringToDictionary(self.configJSON)
-                useJSONConfig(json: JSON!)
-            } catch {
-                print("Error")
-            }
+            tryConvertStringtoDictionary(String: self.configJSON)
             loadCheckout()
         } else {
             loadCheckout()
@@ -281,6 +288,15 @@ class MainTableViewController: UITableViewController {
             let pref = createCheckoutPreference(payerEmail: payerEmail, site: site, itemsDictArray: items)
             self.customCheckoutPref = pref
         default: break
+        }
+    }
+    
+    func tryConvertStringtoDictionary(String: String) {
+        do {
+            let JSON = try convertStringToDictionary(String)
+            useJSONConfig(json: JSON!)
+        } catch {
+            print("Error")
         }
     }
     
