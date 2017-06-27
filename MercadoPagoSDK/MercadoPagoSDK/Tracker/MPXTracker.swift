@@ -18,6 +18,8 @@ protocol MPXTracker {
 
 extension MPXTracker {
     static func trackScreen(screenId: String, screenName: String) {
+        let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
+        TrackStorageManager.persist(screenTrackInfo: screenTrack)
         let body = JSONHandler.jsonCoding(generateJSONScreen(screenId: screenId, screenName: screenName))
         self.request(url: "https://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
         }) { (error) -> Void in
@@ -36,7 +38,11 @@ extension MPXTracker {
     }
     static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
         var obj = Self.generateJSONDefault()
-        let screenJSON = Self.screenJSON(screenId: screenId, screenName: screenName)
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let screenJSON = Self.screenJSON(screenId: screenId, screenName: screenName, timestamp:timestamp)
         obj["events"] = [screenJSON]
         return obj
     }
@@ -48,15 +54,16 @@ extension MPXTracker {
     }
     static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
         var obj = Self.generateJSONDefault()
-        let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
-        obj["events"] = [eventJSON]
-        return obj
-    }
-    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value, timestamp:timestamp)
+        obj["events"] = [eventJSON]
+        return obj
+    }
+    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String, timestamp : String) -> [String:Any] {
+
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "action",
@@ -69,11 +76,7 @@ extension MPXTracker {
         ]
         return obj
     }
-    static func screenJSON(screenId: String, screenName: String) -> [String:Any] {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+    static func screenJSON(screenId: String, screenName: String, timestamp : String) -> [String:Any] {
         let obj: [String:Any] = [
             "timestamp": timestamp,
             "type": "screenview",
@@ -128,24 +131,5 @@ extension MPXTracker {
             }})
         
         task.resume()
-        /*
-        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            if error == nil {
-                do {
-                    let responseJson = try JSONSerialization.jsonObject(with: data!,
-                                                                        options:JSONSerialization.ReadingOptions.allowFragments)
-                    success(responseJson as Any)
-                } catch {
-                    let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
-                    failure!(e)
-                }
-            } else {
-                if failure != nil {
-                    failure!(error! as NSError)
-                }
-            }
-        }
-    */
     }
 }

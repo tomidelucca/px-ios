@@ -43,7 +43,6 @@ class MPTApplication : NSObject {
     var publicKey: String
     var checkoutVersion: String
     var platform: String
-    
     init(publicKey: String, checkoutVersion: String, platform: String) {
         self.publicKey = publicKey
         self.checkoutVersion = checkoutVersion
@@ -61,3 +60,39 @@ class MPTApplication : NSObject {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 }
+
+class ScreenTrackInfo {
+
+    var screenName: String
+    var screenId: String
+    var timestamp: String
+    init(screenName: String, screenId: String) {
+        self.screenName = screenName
+        self.screenId = screenId
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        self.timestamp = timestamp
+    }
+    func toJSON() -> [String:Any] {
+        let obj: [String:Any] = [
+            "timestamp": self.timestamp,
+            "type": "screenview",
+            "screen_id": self.screenId,
+            "screen_name": self.screenName
+        ]
+        return obj
+    }
+    func toJSONString() -> String {
+        return JSONHandler.jsonCoding(self.toJSON())
+    }
+}
+
+
+
+
+
+
+
+

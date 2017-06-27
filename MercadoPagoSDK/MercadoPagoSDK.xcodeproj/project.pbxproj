@@ -129,6 +129,7 @@
 		151A941B1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */; };
 		1529D9A51C7DEA4E00880C29 /* ReviewScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* ReviewScreenViewController.xib */; };
 		1529D9A61C7DEA4E00880C29 /* ReviewScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1529D9A41C7DEA4E00880C29 /* ReviewScreenViewController.xib */; };
+		152B48E91F02D57B00600D21 /* TrackStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152B48E81F02D57B00600D21 /* TrackStorageManager.swift */; };
 		153AEB2D1D382983008A3338 /* PaymentVaultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76062BD51C4D20C30067A14B /* PaymentVaultViewController.swift */; };
 		153E7EF61EEB0FCF00F58A1A /* TrackerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153E7EF51EEB0FCF00F58A1A /* TrackerTest.swift */; };
 		15521E381E60A0B000148979 /* AppDecorationKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15521E371E60A0B000148979 /* AppDecorationKeeper.swift */; };
@@ -641,6 +642,7 @@
 		151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentSearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		151A94171DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentSearchCollectionViewCell.xib; sourceTree = "<group>"; };
 		1529D9A41C7DEA4E00880C29 /* ReviewScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewScreenViewController.xib; sourceTree = "<group>"; };
+		152B48E81F02D57B00600D21 /* TrackStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackStorageManager.swift; sourceTree = "<group>"; };
 		153E7EF51EEB0FCF00F58A1A /* TrackerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerTest.swift; sourceTree = "<group>"; };
 		15521E371E60A0B000148979 /* AppDecorationKeeper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDecorationKeeper.swift; sourceTree = "<group>"; };
 		1553AF321E36454B00E36C62 /* MercadoPagoCheckout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckout.swift; sourceTree = "<group>"; };
@@ -1307,6 +1309,7 @@
 				15ABAD4E1DB5489D00481E8E /* PaymentTracker.swift */,
 				15C422C01EE072650039B80F /* MPXTracker.swift */,
 				15C422C31EE072D10039B80F /* MPTFingerPrint.swift */,
+				152B48E81F02D57B00600D21 /* TrackStorageManager.swift */,
 			);
 			name = "New Tracker";
 			sourceTree = "<group>";
@@ -2092,6 +2095,7 @@
 				15904D581E09748C00B3B9FD /* MLPXSpinnerConfig.m in Sources */,
 				4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */,
+				152B48E91F02D57B00600D21 /* TrackStorageManager.swift in Sources */,
 				156F25B31EA927430073D3AA /* CardsAdminViewModel.swift in Sources */,
 				762B8C241D19752A00A86097 /* MPServicesBuilder.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
