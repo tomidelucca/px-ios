@@ -194,7 +194,11 @@ class MainTableViewController: UITableViewController {
         }
 
         let flowPref: FlowPreference = FlowPreference()
-        flowPref.setMaxSavedCardsToShow(fromInt: self.showMaxCards)
+        
+        if let maxShowCards = self.showMaxCards {
+            flowPref.setMaxSavedCardsToShow(fromInt: maxShowCards)
+        }
+        
         showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
         MercadoPagoCheckout.setFlowPreference(flowPref)
 
