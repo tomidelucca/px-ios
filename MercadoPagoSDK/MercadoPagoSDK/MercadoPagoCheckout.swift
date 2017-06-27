@@ -10,8 +10,6 @@ import UIKit
 
 open class MercadoPagoCheckout: NSObject {
 
-    open var callbackCancel: (() -> Void)?
-
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
     var navigationController: UINavigationController!
@@ -136,7 +134,7 @@ open class MercadoPagoCheckout: NSObject {
 
     func collectDirectDiscount() {
         self.presentLoading()
-        MerchantServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, addtionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
+        CustomServer.getDirectDiscount(transactionAmount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, url: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getDiscountURI(), discountAdditionalInfo: MercadoPagoCheckoutViewModel.servicePreference.discountAdditionalInfo, success: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
@@ -159,15 +157,15 @@ open class MercadoPagoCheckout: NSObject {
     func collectPaymentMethodSearch() {
         self.presentLoading()
         MPServicesBuilder.searchPaymentMethods(self.viewModel.getFinalAmount(), defaultPaymenMethodId: self.viewModel.getDefaultPaymentMethodId(), excludedPaymentTypeIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodIds: self.viewModel.getExcludedPaymentMethodsIds(),
-             baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
+                                               baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL(), success: {  [weak self](paymentMethodSearchResponse: PaymentMethodSearch) -> Void in
 
-                   guard let strongSelf = self else {
-                        return
-                   }
+                                                guard let strongSelf = self else {
+                                                    return
+                                                }
 
-                   strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
-                   strongSelf.dismissLoading()
-                   strongSelf.executeNextStep()
+                                                strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearchResponse)
+                                                strongSelf.dismissLoading()
+                                                strongSelf.executeNextStep()
 
             }, failure: { [weak self] (error) -> Void in
                 guard let strongSelf = self else {
@@ -522,13 +520,12 @@ open class MercadoPagoCheckout: NSObject {
             }
             strongSelf.executeNextStep()
 
-            }, callbackCancel : { [weak self] () -> Void in
+            }, callbackExit : { [weak self] () -> Void in
                 guard let strongSelf = self else {
                     return
                 }
 
-                strongSelf.viewModel.setIsCheckoutComplete(isCheckoutComplete: true)
-                strongSelf.executeNextStep()
+                strongSelf.cancel()
 
             }, callbackConfirm : {[weak self] (paymentData: PaymentData) -> Void in
                 guard let strongSelf = self else {
@@ -601,7 +598,9 @@ open class MercadoPagoCheckout: NSObject {
             paymentBody = self.viewModel.paymentData.toJSON()
         }
 
-        MerchantServer.createPayment(paymentUrl : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), paymentUri : MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentBody : paymentBody as NSDictionary, success: { [weak self] (payment : Payment) -> Void in
+        let createPaymentQuery = MercadoPagoCheckoutViewModel.servicePreference.getPaymentAddionalInfo()
+
+        CustomServer.createPayment(url: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURL(), uri: MercadoPagoCheckoutViewModel.servicePreference.getPaymentURI(), paymentData: paymentBody as NSDictionary, query: createPaymentQuery, success: { [weak self] (payment : Payment) -> Void in
             guard let strongSelf = self else {
                 return
             }
@@ -624,38 +623,46 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func displayPaymentResult() {
-        // TODO : por que dos? esta bien? no hay view models, ver que onda
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
 
-        let congratsViewController: MercadoPagoUIViewController
-        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId) {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
+        if viewModel.shouldDisplayPaymentResult() {
 
-            guard let strongSelf = self else {
-                return
-            }
-                if state == PaymentResult.CongratsState.call_FOR_AUTH {
-                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
-                    strongSelf.viewModel.prepareForClone()
-                    strongSelf.collectSecurityCodeForRetry()
-                } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
-                    strongSelf.viewModel.prepareForNewSelection()
-                    strongSelf.executeNextStep()
+            let congratsViewController: MercadoPagoUIViewController
+            if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.paymentMethod.paymentTypeId) {
+                congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 
-                } else {
+                    guard let strongSelf = self else {
+                        return
+                    }
+
+                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
+                    if state == PaymentResult.CongratsState.call_FOR_AUTH {
+                        strongSelf.viewModel.prepareForClone()
+                        strongSelf.collectSecurityCodeForRetry()
+                    } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+                        strongSelf.viewModel.prepareForNewSelection()
+                        strongSelf.executeNextStep()
+
+                    } else {
+                        strongSelf.finish()
+                    }
+
+                })
+            } else {
+                congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
                     strongSelf.finish()
-                }
-
-            })
+                    }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+            }
+            self.pushViewController(viewController : congratsViewController, animated: true)
         } else {
-            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, callback: { (_ :PaymentResult.CongratsState) in
-                self.finish()
-            }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
+            finish()
         }
-        self.pushViewController(viewController : congratsViewController, animated: true)
     }
 
     func error() {
@@ -687,9 +694,20 @@ open class MercadoPagoCheckout: NSObject {
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
             return
+
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
-        } else if let callback = MercadoPagoCheckoutViewModel.callback {
+            return
+
+        }
+
+        goToRootViewController()
+    }
+
+    func cancel() {
+        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
+
+        if let callback = viewModel.callbackCancel {
             callback()
             return
         }
@@ -748,8 +766,9 @@ open class MercadoPagoCheckout: NSObject {
                                     completion : (() -> Swift.Void)? = nil) {
 
         viewController.hidesBottomBarWhenPushed = true
-        if self.navigationController.viewControllers.count == 0 {
-            viewController.callbackCancel = self.callbackCancel
+        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
+        if mercadoPagoViewControllers.count == 0 {
+            viewController.callbackCancel = { self.cancel() }
         }
         self.navigationController.pushViewController(viewController, animated: animated)
     }

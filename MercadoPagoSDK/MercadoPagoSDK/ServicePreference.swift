@@ -24,11 +24,13 @@ open class ServicePreference: NSObject {
     var discountAdditionalInfo: NSDictionary?
 
     static let MP_ALPHA_ENV = "/gamma"
-    static var MP_TEST_ENV = "/beta"
-    static let MP_PROD_ENV = "/v1"
+    open static var MP_TEST_ENV = "/beta"
+    open static let MP_PROD_ENV = "/v1"
+    open static var MP_SELECTED_ENV = MP_PROD_ENV
+
     static var API_VERSION = "1.3.X"
 
-    static var MP_ENVIROMENT = MP_PROD_ENV  + "/checkout"
+    static var MP_ENVIROMENT = MP_SELECTED_ENV  + "/checkout"
 
     static let MP_OP_ENVIROMENT = "/v1"
 
@@ -155,11 +157,11 @@ open class ServicePreference: NSObject {
         return discountURI
     }
 
-    public func getPaymentAddionalInfo() -> String {
+    public func getPaymentAddionalInfo() -> NSDictionary? {
         if !NSDictionary.isNullOrEmpty(paymentAdditionalInfo) {
-            return paymentAdditionalInfo!.toJsonString()
+            return paymentAdditionalInfo!
         }
-        return ""
+        return nil
     }
 
     public func getDiscountAddionalInfo() -> String {
@@ -197,7 +199,7 @@ open class ServicePreference: NSObject {
     }
 
     public func isCustomerInfoAvailable() -> Bool {
-        return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI) && customerAdditionalInfo != nil
+        return !String.isNullOrEmpty(self.customerURL) && !String.isNullOrEmpty(self.customerURI)
     }
 
     static public func setupMPEnvironment() {

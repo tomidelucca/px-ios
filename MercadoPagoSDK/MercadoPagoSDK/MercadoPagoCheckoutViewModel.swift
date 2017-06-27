@@ -44,7 +44,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     internal static var paymentDataCallback: ((PaymentData) -> Void)?
     internal static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     internal static var paymentCallback: ((Payment) -> Void)?
-    internal static var callback: (() -> Void)?
+    var callbackCancel: (() -> Void)?
     internal static var changePaymentMethodCallback: (() -> Void)?
 
     var checkoutPreference: CheckoutPreference!
@@ -89,6 +89,18 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     private var checkoutComplete = false
     internal var initWithPaymentData = false
     var directDiscountSearched = false
+
+    static internal func clearEnviroment() {
+        MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
+        MercadoPagoCheckoutViewModel.decorationPreference = DecorationPreference()
+        MercadoPagoCheckoutViewModel.flowPreference = FlowPreference()
+
+        MercadoPagoCheckoutViewModel.paymentDataCallback = nil
+        MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil
+        MercadoPagoCheckoutViewModel.paymentCallback = nil
+        MercadoPagoCheckoutViewModel.changePaymentMethodCallback = nil
+
+    }
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         self.checkoutPreference = checkoutPreference
@@ -242,11 +254,13 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     //PAYMENT_METHOD_SELECTION
     public func updateCheckoutModel(paymentOptionSelected: PaymentMethodOption) {
+        if !self.initWithPaymentData {
+            resetInformation()
+        }
+
         self.paymentOptionSelected = paymentOptionSelected
         if paymentOptionSelected.hasChildren() {
             self.paymentMethodOptions =  paymentOptionSelected.getChildren()
-        } else if !self.initWithPaymentData {
-            resetInformation()
         }
 
         if self.paymentOptionSelected!.isCustomerPaymentMethod() {
@@ -400,7 +414,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         var issuerId = ""
         if paymentData.issuer != nil {
-            issuerId = String(paymentData.issuer!._id!.intValue)
+            issuerId = paymentData.issuer!._id!
         }
         var tokenId = ""
         if paymentData.token != nil {
@@ -560,6 +574,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     func errorInputs(error: MPSDKError, errorCallback: (() -> Void)?) {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
+    }
+
+    func shouldDisplayPaymentResult() -> Bool {
+        if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentResultScreenEnable() {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && self.paymentResult?.status == PaymentStatus.APPROVED.rawValue {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && self.paymentResult?.status == PaymentStatus.IN_PROCESS.rawValue {
+            return false
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && self.paymentResult?.status == PaymentStatus.REJECTED.rawValue {
+            return false
+        }
+        return true
     }
 
 }

@@ -20,6 +20,16 @@ class MockManager: NSObject {
         }
         return nil
     }
+
+    internal class func getDictionaryFor(string: String) -> NSDictionary? {
+        do {
+            let mockObj = try MockManager.convertStringToDictionary(string)!
+            return mockObj as NSDictionary?
+        } catch {
+        }
+        return nil
+    }
+
     internal class func getMockResponseFor(_ uri: String, method: String) throws ->AnyObject? {
         let path = Bundle(for:MockManager.self).path(forResource: "MockedResponse", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
