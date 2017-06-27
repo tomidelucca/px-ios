@@ -381,9 +381,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
 	func changePaymentMethodSelected() {
-        let pm = PaymentData()
-        pm.discount = self.viewModel.paymentData.discount
-		self.callbackPaymentData(pm)
+        self.callbackPaymentData(self.viewModel.getClearPaymentData())
 	}
 
     internal func openTermsAndConditions(_ title: String, url: URL) {
