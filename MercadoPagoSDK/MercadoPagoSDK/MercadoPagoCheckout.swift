@@ -765,7 +765,7 @@ open class MercadoPagoCheckout: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         if mercadoPagoViewControllers.count == 0 {
-            viewController.callbackCancel = viewModel.callbackCancel
+            viewController.callbackCancel = { self.cancel() }
         }
         self.navigationController.pushViewController(viewController, animated: animated)
     }
