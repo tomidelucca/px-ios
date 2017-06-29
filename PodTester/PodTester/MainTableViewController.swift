@@ -288,7 +288,7 @@ class MainTableViewController: UITableViewController {
         let site : String = json["site_id"] != nil ?  json["site_id"] as! String : ""
         let payerEmail : String = json["payer_email"] != nil ?  json["payer_email"] as! String : ""
         let items : [NSDictionary] = json["items"] != nil ?  json["items"] as! [NSDictionary] : []
-        let maxCards : Int = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as! Int : 3
+        let maxCards = json["show_max_saved_cards"] != nil ? json["show_max_saved_cards"] as? Int : nil
 
         switch startFor {
         case startForOptions.payment.rawValue:
