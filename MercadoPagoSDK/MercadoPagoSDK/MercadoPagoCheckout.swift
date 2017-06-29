@@ -47,10 +47,11 @@ open class MercadoPagoCheckout: NSObject {
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
+        MercadoPagoContext.trackScreen(screenId:self.viewModel.nextStep().rawValue, screenName: self.viewModel.nextStep().rawValue)
     }
 
     func executeNextStep() {
-        MercadoPagoContext.trackScreen(screenId:self.viewModel.nextStep().rawValue, screenName: self.viewModel.nextStep().rawValue)
+
         switch self.viewModel.nextStep() {
         case .SEARCH_PREFERENCE :
             self.collectCheckoutPreference()

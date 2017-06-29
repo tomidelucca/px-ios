@@ -20,6 +20,8 @@ extension MPXTracker {
     static func trackScreen(screenId: String, screenName: String) {
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
+        let array = TrackStorageManager.getBatchScreenTracks()
+        return
         let body = JSONHandler.jsonCoding(generateJSONScreen(screenId: screenId, screenName: screenName))
         self.request(url: "https://api.mercadopago.com/beta/checkout/tracking/events", params: nil, body: body, method: "POST", headers: nil, success: { (result) -> Void in
         }) { (error) -> Void in
