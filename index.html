@@ -67,7 +67,8 @@
              <p>Otherwise <a href="https://github.com/mercadopago/px-ios/releases" target="_blank">download Mercado Pago SDK</a></p>
              <p>
                 <pre class="snippet">
-                   <code class="line-numbers language-java"> source 'https://github.com/CocoaPods/Specs.git'
+                   <code class="line-numbers language-java">
+source 'https://github.com/CocoaPods/Specs.git'
 # Se necesita este parámetro por ser una SDK en swift
 use_frameworks!
 platform :ios, '8.2'
@@ -107,19 +108,22 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
               </div>
             <pre class="snippet">
               <code id="get-pref" class="line-numbers language-swift">
+                 let preferenceBody : [String : Any] = ["item_id" : "id", "quantity" : 1]
+
                  let servicePreference = ServicePreference()
                  servicePreference.setCreateCheckoutPreference(baseURL: "https://your-base-URL.com/", URI: "your_create_preference_URI",
-                     additionalInfo: ["item_id" : "id", "quantity" : 1])
+                     additionalInfo: preferenceBody as NSDictionary)
 
                  MercadoPagoCheckout.setServicePreference(servicePreference)
 
-                 MerchantServer.createPreference(success: { (checkoutPreference) in
+                 CustomServer.createCheckoutPreference(success: { (checkoutPreference) in
                      startMercadoPagoCheckout(checkoutPreference)
 
                  }) { (error) in
 
                      // Handle error
                  }
+
                  </code>
                  <button class="copy-button">
                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -143,6 +147,7 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
 
                         checkout.start()
                   }
+
                  </code>
                  <button class="copy-button">
                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -187,7 +192,7 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
             <pre class="snippet">
               <code id="create-local-pref" class="line-numbers language-swift">
                  let item = Item(_id: "Item_Id", title: "Remeras", quantity: 1, unitPrice: 50, description: nil, currencyId: "ARS")
-                 let payer = Payer(_id: "Payer_Id", email: "sarasa@gmail.com", type: nil, identification: nil, entityType: nil)
+                 let payer = Payer(_id: "Payer_Id", email: "example@gmail.com", type: nil, identification: nil, entityType: nil)
 
                  let checkoutPreference = CheckoutPreference()
                  checkoutPreference.items = [item]
@@ -291,7 +296,8 @@ public func startMercadoPagoCheckout(_ checkoutPreference CheckoutPreference) {
 
    checkout.start()
 }
-              </code>
+
+            </code>
               <button class="copy-button">
                  <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
              </button>
