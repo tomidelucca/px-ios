@@ -976,7 +976,6 @@
 - Colores BlueMercadoPago difieren en apps [\#432](https://github.com/mercadopago/px-ios/issues/432)
 - Automatizar buildeo y tests en gitHub con Travis [\#281](https://github.com/mercadopago/px-ios/issues/281)
 - Se carga mal la tarjeta [\#215](https://github.com/mercadopago/px-ios/issues/215)
-- Pay with Account money [\#134](https://github.com/mercadopago/px-ios/issues/134)
 
 **Merged pull requests:**
 

@@ -72,9 +72,7 @@
     //Setear PaymentCallback
 
     [self setPaymentCallback];
-    
-    //Setear Void Callback
-    [self setVoidCallback];
+
 
     DiscountCoupon* dc = [[DiscountCoupon alloc] init];
     dc._id = @"123";
@@ -85,9 +83,13 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:TEST_PUBLIC_KEY checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
-    
+
+    //Setear Callback Cancel
+    [self setVoidCallback];
+
     //Setear ReviewScreenPrefernce
     [self setReviewScreenPreference];
     
@@ -119,8 +121,7 @@
 
         ReviewScreenPreference *reviewPreferenceUpdated = [[ReviewScreenPreference alloc] init];
         [reviewPreferenceUpdated setTitleWithTitle:@"Updated"];
-        //[ReviewScreenP
-        reference addCustomItemCellWithCustomCell:customCargaSube];
+        //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
         //[ReviewScreenPreference addAddionalInfoCellWithCustomCell:customCargaSube];
         [self.mpCheckout setReviewScreenPreference:reviewPreferenceUpdated];
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
@@ -150,7 +151,7 @@
 }
 
 -(void)setVoidCallback {
-    [MercadoPagoCheckout setCallbackWithCallback:^{
+    [self.mpCheckout setCallbackCancelWithCallback:^{
         NSLog(@"Se termino el flujo");
         [self.navigationController popToRootViewControllerAnimated:NO];
     }];
