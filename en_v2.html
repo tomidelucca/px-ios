@@ -9,13 +9,6 @@
       <title>Soluciones de pago para el negocio que quieras - MercadoPago</title>
       <link href="./css/site.css" rel="stylesheet">
       <link href="./css/prism.css" rel="stylesheet" />
-      <script src="./js/jquery.min.js"></script>
-      <script src="./js/bootstrap.min.js"></script>
-      <script src="./js/site.js"></script>
-      <script src="./js/cookies.min.js"></script>
-      <script src="./js/prism.js"></script>
-      <script src="./js/clipboard.js"></script>
-      <script src="./js/version.js"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.4/gist-embed.min.js"></script>
 
       <link rel="stylesheet" type="text/css" href="./css/lato.css" />
@@ -34,9 +27,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right" style="color: white;">
-                  <li><a class="getting-started-nav nav-link" href="en_index.html">Our checkout</a></li>
-                  <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
-                  <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developer Forum</a></li>
+                 <li><a class="getting-started-nav nav-link" href="en_v2.html">Our checkout</a></li>
+                <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
+                <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers forum</a></li>
+                <li><a class="nav-link" href="index.html">Version <span class="newV3Version"></span></a></li>
                </ul>
             </div>
          </div>
@@ -45,8 +39,9 @@
          <div class="container" style="padding-top: 110px;">
             <h3>MercadoPago iOS SDK</h3>
             <h4>The quickest way to receive in-app payments with the best experience.</h4>
+            <h6>Version <span class="oldV2Version"></span></h6>
          </div>
-         
+
       </div>
       <div id="mati_header" style="height: 450px; margin: 0 auto; padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing.jpg');background-size: cover;">
          <div style="background: rgba(0,0,0,0.5); height: 500px;" ></div>
@@ -54,13 +49,27 @@
       <div class="container content-container" style="margin-top: -300px;">
          <div id="getting-started">
             <div class="text-center">
+              <h3>This documentation belongs to the Android SDK version <span class="oldV2Version"></span>.
+              <br>You can integrate the <a href="index.html">new version <span class="newV3Version"></span>!</a> </h3>
+              <div class="advanced-panel text-center">
+                <p class="sub-heading">
+                  Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil and Colombia<sup>*</sup></b>.
+                  <br />
+                  If you are trying to integrate our solution in other of the countries in which Mercado Pago is available, you can check which ones are supported in the <a href="index.html">new version</a>.
+                  <br />
+                </p>
+                <p>
+                  <sup>*</sup></b>In Colombia we only support credit card payments, therefore you have to exclude the rest of the payment types.
+                </p>
+              </div>
+              <br>
                <h2>Integrate yourself in 6 steps of less than 1 minute each</h2>
                <p class="sub-heading">
-                  Too fast? Our solution is so complete than we dare to make that statement. 
+                  Too fast? Our solution is so complete than we dare to make that statement.
                   <br />
-                  Also, we did the math. Each step takes 50 seconds. 
+                  Also, we did the math. Each step takes 50 seconds.
                   <br />
-                 Some developers friends have already accomplished it. Amazing! Just tell us what you want to charge and we'll take care of the rest.  
+                 Some developers friends have already accomplished it. Amazing! Just tell us what you want to charge and we'll take care of the rest.
                   <br />
                   <a href="" target="_blank">Step to step video</a>.
                </p>
@@ -69,7 +78,7 @@
 <!-- Version -->
 <div class="row" style="padding :0px; margin: 0px">
 
-  <a style="float:right" href="#versiones" class="btn btn-default" data-toggle="collapse">Versions <span class="caret"></span></a>
+  <a style="float:right" href="#versiones" class="btn btn-default" data-toggle="collapse">Versions<span class="caret"></span></a>
   <div id="versiones" class="collapse" style ="overflow: hidden;">
     <br>
       <div class="btn-group" role="group">
@@ -81,16 +90,16 @@
         <li id ="2.0.3.2"><a href="#2.0.3.2">Pod 2.0.3.2</a></li>
         <li id ="workshop"><a href="#workshop">Pod Workshop</a></li>
       </ul>
-    </div> 
+    </div>
 
-<div style="text-align:center;" id="content" value="2.0.3.2">
+    <div style="text-align:center;" id="content" value="2.0.3.2">
       <h3>¿What's new?</h3>
     </div>
     <hr>
     <h5>Version of Xcode: <i id="versionXcode">8.0+</i></h5>
     <h5>Version of Swift: <i id="versionSwift">3.0.1</i></h5>
     <h4 style="visibility: hidden;"><center>Changes:</center></h4>
-    <h6> 
+    <h6>
       <ul id="changes" style="visibility: hidden;">
       <li>New Visual Redising</li>
       </ul>
@@ -101,10 +110,10 @@
   </div>
 </div>
   <!-- Swift/Objective-C -->
-<div class ="row">
+<div class ="row" >
   <ul class="nav nav-tabs">
-    <li role="presentation" ><a href="en_index.html">Swift</a></li>
-    <li role="presentation" class="active"><a href="en_indexObc.html">Objective-C</a></li>
+    <li role="presentation" class="active"><a href="en_index.html">Swift</a></li>
+    <li role="presentation"><a href="en_v2Obc.html">Objective-C</a></li>
   </ul>
 </div>
 
@@ -116,7 +125,7 @@
                      <h3>1. Add our dependency to your project</h3>
 
                      <p>If you use CocoaPods in your project, you can add the dependency in the Podfile.</p>
-                     
+
                      <p>If you don't use CocoaPods, download MercadoPago's SDK in <a href="https://github.com/mercadopago/px-ios/releases" target="_blank">this link</a> and add this in your project.</p>
                   </div>
                </div>
@@ -134,13 +143,13 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                         <img src="./img/clippy.svg" width="13">
                     </button>
                   </pre>
-                  
+
                </div>
             </div>
 
 
 <!-- Step 2 - Setea clave publica -->
-        <div class="row" id="step-two"> 
+        <div class="row" id="step-two">
           <div class="col-md-6 step-desc">
             <div class="desc">
                <h3>2.   Set your public key </h3>
@@ -154,28 +163,22 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_2" class="line-numbers language-objectivec">
-                  #import "AppDelegate.h"
-                  
-                  @import MercadoPagoSDK;
+               <code id="flavor_3_step_2" class="line-numbers language-swift">
+               import MercadoPagoSDK
+                  class AppDelegate: UIResponder, UIApplicationDelegate {
 
-                  @interface AppDelegate ()
+                    var window: UIWindow?
+                    // 1 - Publick Key
+                    let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 
-                  @end
-
-                  @implementation AppDelegate
-                      // Set your public key
-                      NSString *publicKey =  @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a";
-
-                      - (BOOL)application:(UIApplication *)application 
-                          didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-                            [MercadoPagoContext setPublicKey: publicKey];
-                            // Set your country
-                            [MercadoPagoContext setSiteID:@"MLA"];
-                            return YES;
-                      }
-
-                  @end
+                    func application(_ application: UIApplication,
+                      didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)
+                        MercadoPagoContext.setPublicKey(publicKey)
+                         // Set your country
+                        MercadoPagoContext.setSite(MercadoPagoContext.Site.MLA)
+                        return true
+                    }
+                  }
                </code>
                <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -198,7 +201,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                         Also add a UILabel (we are going to call it paymentResult) to show the payment Results
                      </p>
                      <p>
-                        Paste this code in <u>MainViewController.swift</u>. 
+                        Paste this code in <u>MainViewController.swift</u>.
                      </p>
                      <p>
                         In the next step, you will be working in the event associated to the button (startCheckout).
@@ -208,27 +211,26 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
 
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_3" class="line-numbers language-objectivec">
-               @import MercadoPagoSDK;
-               
-                @interface MainExamplesViewController()
-                @property (weak, nonatomic) IBOutlet UIButton *button;
-                @property (weak, nonatomic) IBOutlet UILabel *label;
+               <code id="flavor_3_step_3" class="line-numbers language-swift">
+                 import UIKit
+                 import MercadoPagoSDK
 
-                @end
-                @implementation MainExamplesViewController
+                    class MainViewController: UIViewController {
 
+                      @IBOutlet weak var payButton: UIButton!
 
-                  - (void)viewDidLoad {
-                      [super viewDidLoad];
+                      @IBOutlet weak var paymentResult: UITextField!
 
-                      [_button addTarget:self action:@selector(startCheckout:)
-                          forControlEvents:UIControlEventTouchUpInside];
-                  }
-                @end
+                      override func viewDidLoad() {
+                        super.viewDidLoad()
 
+                        self.payButton.addTarget(self,
+                          action: #selector(MainViewController.startCheckout),
+                          for: .touchUpInside)
+                      }
+                    }
                </code>
-   
+
                <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
@@ -247,9 +249,9 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                 <p class="advanced-panel">
                   <b>Try it out with our info:  </b>
                   <br />
-                  Use this code with our info to see a quick trial of the full experience. 
+                  Use this code with our info to see a quick trial of the full experience.
                   <br />
-                  When you want to go into <a href="#step-six">production</a>, you'll just have to use your info. 
+                  When you want to go into <a href="#step-six">production</a>, you'll just have to use your info.
                 </p>
                 <p>
                   To start our checkout you just need:
@@ -274,20 +276,25 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
           </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_4" class="line-numbers language-objectivec">
-               -(void)startCheckout{
-                    // Preference Id
-                    NSString *prefId =  @"150216849-e131b785-10d3-48c0-a58b-2910935512e0";
+               <code id="flavor_3_step_4" class="line-numbers language-swift">
+                        // Preference Id
+                        let prefId = "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f"
 
-                    // Method execute when button pressed
-                    UINavigationController *checkoutFlow = [MPFlowBuilder startCheckoutViewController:prefId callback:^(Payment *payment) {
-                      // Done! The payment was processed by MercadoPago
-                      [self displayPaymentInfo:payment];
-                    } callbackCancel:nil];
-                    [self presentViewController:checkoutFlow animated:YES completion:^{}];
-                }
+                        // Método ejecutado al hacer clic en el botón
+                        func startCheckout(){
+                          let checkout = MPFlowBuilder.startCheckoutViewController(prefId,
+                          callback: { (payment: Payment) in
+                              // Done! The payment was processed by MercadoPago
+                              self.displayPaymentInfo(payment)
+
+                          }, callbackCancel: {
+                              // User didn't finish the payment process
+                          })
+
+                          self.presentViewController(checkout, animated: true, completion: {})
+                        }
                </code>
-   
+
                <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
@@ -327,12 +334,13 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
 
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_5" class="line-numbers language-objectivec">
-                -(void)displayPaymentInfo:(Payment *)payment{
-                    _label.text = [NSString stringWithFormat:@"%ld",(long)payment._id];
-                }
+               <code id="flavor_3_step_5" class="line-numbers language-swift">
+                  func displayPaymentInfo(payment : Payment){
+                      let paymentInfo = "id : " + String(payment._id) + ", status : " + payment.status + ", status detail : " + payment.statusDetail
+                      self.paymentResult.text = paymentInfo
+                  }
                </code>
-   
+
                <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
               </button>
@@ -349,7 +357,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                   <div class="desc">
                      <h3>6.   Try our Checkout</h3>
                      <p>
-                        Use these test cards to try different payment results. 
+                        Use these test cards to try different payment results.
                       </p>
                       <p>
                         Then, you can use our <a href="" target="_blank">payment preference tool</a> to work with different configurations:
@@ -395,7 +403,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
         <div class="row" id="step-four">
           <div class="col-md-6 step-desc">
             <div class="desc">
-               <h3>7.  Go into production</h3>                     
+               <h3>7.  Go into production</h3>
                   <p>
                           <b>First:</b>
                         </p>
@@ -424,34 +432,31 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                         <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/core/MerchantServer.java" target="_blank">MerchantServer</a> will turn your service's response (the same from MercadoPago services) into a <a href="https://github.com/mercadopago/px-android/blob/master/sdk/src/main/java/com/mercadopago/model/CheckoutPreference.java" target="_blank">CheckoutPreference</a> object, which ID is the entry point to our checkout.
                       </p>
                   </div>
-          </div>
+               </div>
           <div class="container col-md-6 code">
             <pre class="snippet">
-               <code id="flavor_3_step_7" class="line-numbers language-objectivec">
-- (void)createPayment:(PaymentMethod *)paymentMethod
- cardIssuer:(Issuer *)issuer
- installments:(NSInteger)instalments
- tokenId:(NSString *)tokenId {
+               <code id="flavor_3_step_7" class="line-numbers language-swift">
+                  let preferenceBody : [String : Any] = ["amount" : 12,
+                                        "itemId" : 29334, "customerId": 207,
+                                        "payer_email" : "customermail@test.com"]
 
-    [MercadoPagoContext setBaseURL:@"http://tunombre.com"];
-    [MercadoPagoContext setPaymentURI:@"/checkout/create_payment"];
+                  // Set URL and preferenceUri
+                  MercadoPagoContext.setBaseURL("https://api.tunombre.com")
+                  MercadoPagoContext.setPreferenceURI("/create_preference")
 
-    MerchantPayment *merchantPayment = [[MerchantPayment alloc]
-    initWithItems:items installments:installmentsSelected
-    cardIssuer:selectedIssuer tokenId:[currentToken _id]
-    paymentMethod:paymentMethod campaignId:0];
+                  MerchantServer.createPreference(preferenceBody as NSDictionary,
+                    success: { (checkoutPreference) in
+                        // The preference was succesfully set
+                        // Now you can start the checkout
+                        let choFlow = MPFlowBuilder.startCheckoutViewController( ExamplesUtils.preferenceSelectedID, callback: { (payment: Payment) in
 
+                        }, callbackCancel: {
+                        })
 
-    [MerchantServer createPayment:merchantPayment
-       success:^(Payment *payment) {
-        // Depending of the paymentTypeId, show
-        // Congrats
-        // Instructions
-    } failure:^(NSError *error) {
+                  }, failure: { (error) in
+                      // Ups, ocurrió un error
+                  })
 
-    }];
-
- }
                </code>
                 <button class="copy-button">
                   <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -483,7 +488,14 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
          </div>
          </div>
       </footer>
-
+      <script src="./js/jquery.min.js"></script>
+      <script src="./js/bootstrap.min.js"></script>
+      <script src="./js/site.js"></script>
+      <script src="./js/cookies.min.js"></script>
+      <script src="./js/prism.js"></script>
+      <script src="./js/clipboard.js"></script>
+      <script src="./js/version.js"></script>
+      <script src="./js/versions.js"></script>
    <script>
 
    (function() {
@@ -504,7 +516,7 @@ var copyCode = new Clipboard('.copy-button', {
         return trigger.previousElementSibling;
     }
 });
-    
+
 })();
 </script>
 

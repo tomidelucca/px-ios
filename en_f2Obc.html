@@ -10,11 +10,11 @@
       <link href="./css/site.css" rel="stylesheet">
       <link href="./css/prism.css" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="./css/lato.css" />
-      
+
       <script src="./js/jquery.min.js"></script>
       <script src="./js/bootstrap.min.js"></script>
       <script src="./js/version.js"></script>
-      
+
    </head>
    <body class="docs docs-page docs-css">
       <nav class="navbar navbar-default" role="navigation">
@@ -29,9 +29,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right" style="color: white;">
-                  <li><a class="getting-started-nav nav-link" href="en_index.html">Our checkout</a></li>
-                  <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
-                  <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers Forum</a></li>
+                 <li><a class="getting-started-nav nav-link" href="en_v2.html">Our checkout</a></li>
+                <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
+                <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers forum</a></li>
+                <li><a class="nav-link" href="index.html">Version <span class="newV3Version"></span></a></li>
                </ul>
             </div>
          </div>
@@ -42,13 +43,26 @@
 ">
             <h3>MercadoPago iOS SDK</h3>
             <h4>The quickest way to receive in-app payments with the best experience.</h4>
+            <h6>Version <span class="oldV2Version"></span></h6>
          </div>
-         
+
       </div>
       <div id="mati_header" style="height: 500px;margin: 0 auto;padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing_f2.jpg');background-size: cover;background-position-x: 0px;background-position-y: -100px;">
          <div style="background: rgba(0,0,0,0.5);height: 500px;"></div>
       </div>
       <div class="container content-container" style="margin-top: -280px;">
+        <div class="advanced-panel text-center">
+          <p class="sub-heading">
+            Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil and Colombia<sup>*</sup></b>.
+            <br />
+            If you are trying to integrate our solution in other of the countries in which Mercado Pago is available, you can check which ones are supported in the <a href="index.html">new version</a>.
+            <br />
+          </p>
+          <p>
+            <sup>*</sup></b>In Colombia we only support credit card payments, therefore you have to exclude the rest of the payment types.
+          </p>
+        </div>
+        <br>
          <div class="row">
             <div style="float:right;">
                <div class="dropdown ">
@@ -137,7 +151,7 @@
                      </div>
                   </div>
                </div>
- 
+
 <section class="docs-section" id="f2_payment_vault">
                   <h3 class="title">Our visual components in your checkout</h3>
                   <p>If you use CocoaPods in your project, you can add the dependency in the Podfile.</p>
@@ -165,7 +179,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
             <section class="docs-section" id="f2_payment_vault">
                   <h3 class="title">Data collection UI</h3>
                   <p>
-                     Our most complete visual component is <b>PaymentVault</b>. By using it, you will get all the information that needs to be sent to your server: the selected payment method (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a>) and if your user chose a card payment method, the issuer (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a>), installments (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PayerCost.swift" target="_blank">PayerCost</a>) and the encrypted card information (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a>). 
+                     Our most complete visual component is <b>PaymentVault</b>. By using it, you will get all the information that needs to be sent to your server: the selected payment method (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a>) and if your user chose a card payment method, the issuer (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a>), installments (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/PayerCost.swift" target="_blank">PayerCost</a>) and the encrypted card information (<a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a>).
                      <br />
                      To use it, add a button:
                   </p>
@@ -185,15 +199,15 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                                        [self startPaymentVault];
                                     }
                                     </code>
-                     
+
                                     <button class="copy-button">
                                        <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
                                     </button>
                                  </pre>
                                  <div class="doc-example ionic">
                                     <img src="./img/phone/payment_vault.gif" class="img-phone-case"></img>
-                                 </div> 
-                  
+                                 </div>
+
 </div>
 
                   <p>
@@ -216,21 +230,21 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
                                  </button>
                               </pre>
-                  </div>                 
+                  </div>
                </section>
-<!--  ----------------------------------------- -->   
+<!--  ----------------------------------------- -->
 
 <!-- -------------- f2_card_section -------------- -->
                <section class="docs-section" id="f2_card_form">
                   <h3 class="title">Charging cards</h3>
                   <p>
-                     To collect only cards data from your user, we offer a component that solves the interaction intuitively and in a secure way. Just start our component and wait for its response: <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a> (Card Band), <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a> (Card Issuer) and <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a> (card encrypted data). 
+                     To collect only cards data from your user, we offer a component that solves the interaction intuitively and in a secure way. Just start our component and wait for its response: <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/PaymentMethod.swift" target="_blank">PaymentMethod</a> (Card Band), <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/Issuer.swift" target="_blank">Issuer</a> (Card Issuer) and <a href="https://github.com/mercadopago/px-ios/blob/development/MercadoPagoSDK/MercadoPagoSDK/Token.swift" target="_blank">Token</a> (card encrypted data).
                      <br />
                      <b>Keep navigating to know how to offer payments in installments.</b>
                   </p>
 
 <div class="container">
-                  
+
                               <pre class="snippet">
                                  <code class="line-numbers language-swift">
                                  UINavigationController *cf =
@@ -335,14 +349,14 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                <section class="docs-section" id="f2_payment_methods">
                   <h3 class="title">Payment methods</h3>
                   <p>
-                     It's the entity participating in the payment. Could be a card brand, an entity that receives payments in cash or even a place where an user can find an ATM to make the payment. 
+                     It's the entity participating in the payment. Could be a card brand, an entity that receives payments in cash or even a place where an user can find an ATM to make the payment.
                      <br />
                      If the payment method is a <b>card</b> we will give you the information you need to build a card form and validate the inputs. For example, the card number length, whether the security code belongs to the front or the back of the card, its length, and more. Also, the payment method can be <b>offline</b>. In this case we provide, among others, the accreditation time, since the payment will be in a "pending" state until the user finishes the payment in the corresponding entity.
                   </p>
-                  
+
 
   <div class="container">
-                     
+
                                     <pre class="snippet">
                                        <code class="line-numbers language-swift">
                                        [MPStepBuilder startPaymentMethodsStep:nil
@@ -362,7 +376,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                      <img src="./img/phone/f2_payment_methods.png" class="img-phone-case"></img>
                   </div>
                </section>
-<! --------Issuers section --------->               
+<! --------Issuers section --------->
                <section class="docs-section" id="f2_card_issuers">
                   <h3 class="title">Bank</h3>
                   <p>
@@ -385,14 +399,14 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                                        </button>
                                     </pre>
 
-                        </div>      
+                        </div>
                   <div class="doc-example ionic">
                      <img src="./img/phone/f2_card_issuers.png" class="img-phone-case"></img>
                   </div>
                </section>
 <!---------------------------------->
 
-<! --------Payer costs section --------->                   
+<! --------Payer costs section --------->
                <section class="docs-section" id="f2_payer_costs">
                   <h3 class="title">Installments</h3>
                   <p>
@@ -497,7 +511,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                                              <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
                                           </button>
                                        </pre>
-                                    
+
                   </div>
 
                   <div class="doc-example ionic">
@@ -527,7 +541,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
-                        
+
                         UINavigationController *navPaymentResult = [MPStepBuilder startPaymentResultStep:payment paymentMethod:paymentMethod callback:^(Payment * _Nonnull payment, enum CongratsState status) {
                              // CongratsState lets you know if the user
                              // chose another paymentMethod if it was rejected
@@ -546,7 +560,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                   </div>
                </section>
 
-               
+
                <!-- <section class="docs-section" id="f2_payment_recovery">
                   <h3 class="title">Payment recovery</h3>
 <p>
@@ -673,7 +687,7 @@ Our SDK has a "DecorationPreference" object which can be sent to our components.
       </div>
          </div>
       </div>
-      
+
             <div class="row pre-footer">
             <div class="dropup col-md-10">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -698,7 +712,7 @@ Our SDK has a "DecorationPreference" object which can be sent to our components.
       <script src="./js/cookies.min.js"></script>
       <script src="./js/prism.js"></script>
       <script src="./js/clipboard.js"></script>
-      
+      <script src="./js/versions.js"></script>
    <script>
 
    (function() {
@@ -719,8 +733,8 @@ var copyCode = new Clipboard('.copy-button', {
         return trigger.previousElementSibling;
     }
 });
-    
-   
+
+
 })();
 </script>
    </body>
