@@ -25,7 +25,6 @@ class PaymentResultViewModel: NSObject {
         self.paymentResultScreenPreference = paymentResultScreenPreference
     }
 
-    
     /* TODO CLEAN
     // MPPaymentTrackInformer Implementation
 

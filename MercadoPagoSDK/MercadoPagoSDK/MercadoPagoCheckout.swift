@@ -18,8 +18,6 @@ open class MercadoPagoCheckout: NSObject {
 
     private var currentLoadingView: UIViewController?
 
-    
-
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 

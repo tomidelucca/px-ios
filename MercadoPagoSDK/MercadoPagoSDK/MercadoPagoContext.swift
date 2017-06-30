@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject , MPXTracker {
+open class MercadoPagoContext: NSObject, MPXTracker {
 
     static let sharedInstance = MercadoPagoContext()
 
@@ -46,12 +46,11 @@ open class MercadoPagoContext: NSObject , MPXTracker {
     open class func isAuthenticatedUser() -> Bool {
         return !sharedInstance.payer_access_token.isEmpty
     }
-    static var mpxPublicKey : String {return sharedInstance.publicKey()}
-    static var mpxCheckoutVersion : String {return sharedInstance.sdkVersion()}
-    static var mpxPlatform : String {return sharedInstance.framework()}
+    static var mpxPublicKey: String {return sharedInstance.publicKey()}
+    static var mpxCheckoutVersion: String {return sharedInstance.sdkVersion()}
+    static var mpxPlatform: String {return sharedInstance.framework()}
     static var mpxSiteId: String {return sharedInstance.siteId()}
     static var mpxPlatformType: String {return "Native"}
-    
 
     open func framework() -> String! {
         return  "iOS"

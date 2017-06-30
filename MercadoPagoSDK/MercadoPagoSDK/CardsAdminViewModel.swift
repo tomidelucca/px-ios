@@ -55,7 +55,6 @@ open class CardsAdminViewModel: NSObject {
         self.titleScreen = title
     }
 
-
     public func getScreenTitle() -> String {
         return titleScreen
     }

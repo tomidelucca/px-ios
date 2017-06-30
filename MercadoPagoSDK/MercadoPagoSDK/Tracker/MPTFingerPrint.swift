@@ -39,7 +39,7 @@ class MPTDevice: NSObject {
     }
 }
 
-class MPTApplication : NSObject {
+class MPTApplication: NSObject {
     var publicKey: String
     var checkoutVersion: String
     var platform: String
@@ -66,6 +66,7 @@ class ScreenTrackInfo {
     var screenName: String
     var screenId: String
     var timestamp: String
+    var type: String
     init(screenName: String, screenId: String) {
         self.screenName = screenName
         self.screenId = screenId
@@ -74,25 +75,26 @@ class ScreenTrackInfo {
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
         self.timestamp = timestamp
+        self.type = "screenview"
     }
     func toJSON() -> [String:Any] {
         let obj: [String:Any] = [
-            "timestamp": self.timestamp,
-            "type": "screenview",
+            "timestamp": self.timestamp.replacingOccurrences(of: " ", with: "T"),
+            "type": self.type,
             "screen_id": self.screenId,
             "screen_name": self.screenName
         ]
         return obj
     }
+    init(from json: [String:Any]) {
+        self.screenName = json["screen_name"] as! String
+        self.screenId = json["screen_id"] as! String
+        self.timestamp = json["timestamp"] as! String
+        self.timestamp = self.timestamp .replacingOccurrences(of: "T", with: " ")
+        self.type = json["type"] as! String
+    }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
+
 }
-
-
-
-
-
-
-
-

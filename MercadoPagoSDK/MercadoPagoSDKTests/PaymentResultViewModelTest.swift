@@ -25,7 +25,6 @@ class PaymentResultViewModelTest: BaseTest {
         self.instance = PaymentResultViewModel(paymentResult: paymentResult, checkoutPreference: CheckoutPreference(), callback: { (_) in})
     }
 
-
     func testColor() {
         paymentResult.status = "lala"
         XCTAssertEqual(self.instance.getColor(), UIColor(red: 255, green: 89, blue: 89))
