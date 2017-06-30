@@ -97,6 +97,10 @@ open class PayerCost : NSObject {
         }
         return nil
     }
+
+    public func hasCFTValue() -> Bool {
+        return !String.isNullOrEmpty(getCFTValue())
+    }
     
     public func getTEAValeu() -> String? {
         
