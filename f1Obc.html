@@ -44,12 +44,24 @@
             <h3>MercadoPago iOS SDK</h3>
             <h4>La manera más rápida de cobrar en una app con la mejor experiencia.</h4>
          </div>
-         
+
       </div>
       <div id="mati_header" style="height: 500px;margin: 0 auto;padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing_f2.jpg');background-size: cover;background-position-x: 0px;background-position-y: -100px;">
          <div style="background: rgba(0,0,0,0.5);height: 500px;"></div>
       </div>
       <div class="container content-container" style="margin-top: -250px;">
+        <div class="advanced-panel text-center">
+          <p class="sub-heading">
+            Antes de comenzar, ten en cuenta que en esta versión sólo puedes integrar el SDK mobile para <b>Argentina, México, Brasil y Colombia<sup>*</sup></b>.
+            <br />
+            Si necesitas integrarte desde otro lugar, puedes ver qué países soportamos en la <a href="index.html">nueva versión</a>.
+            <br />
+          </p>
+          <p>
+            <sup>*</sup></b>En Colombia sólo soportamos pagos con tarjetas de crédito, por lo que deberás excluir los demás medios de pago.
+          </p>
+        </div>
+        <br>
       <div class="row">
             <div style="float:right;">
                <div class="dropdown ">
@@ -157,7 +169,7 @@ pod 'MercadoPagoSDK', '<text class="podVersion"></text>'
                <section class="docs-section" id="f1_payment_methods">
                   <h3 class="title">Medios de pago</h3>
                   <p>
-                     Es la entidad participante del pago en sí misma. Desde la marca de la tarjeta, pasando por la entidad de cobro en efectivo hasta el lugar dónde se encuentra el cajero automático para que el usuario realice el pago. 
+                     Es la entidad participante del pago en sí misma. Desde la marca de la tarjeta, pasando por la entidad de cobro en efectivo hasta el lugar dónde se encuentra el cajero automático para que el usuario realice el pago.
                      <br />
                      Si el medio de pago pertenece a una <b>tarjeta</b> te brindamos la información necesaria para armar tu formulario de tarjeta y sus validaciones, por ejemplo la longitud del número de tarjeta, si el código de seguridad está al frente o al dorso de la tarjeta, su longitud, entre otros. Pero también, el medio de pago puede ser <b>offline</b>. En este caso te indicamos, entre otros, el tiempo de acreditación ya que el pago quedará en un estado pendiente que cambiará cuando el usuario se acerque a la entidad correspondiente a finalizar el pago en efectivo.
                      <br />
@@ -405,7 +417,7 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                      <pre class="snippet">
                         <code class="line-numbers language-objectivec">
    [MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
-    
+
     [MPServicesBuilder getPromos:^(NSArray<Promo *> * promo) {
       // Listo, arma tu UI para el listado de promociones
     } failure:^(NSError * error) {
@@ -428,7 +440,7 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                         <code class="line-numbers language-objectivec">
     [MercadoPagoContext setPublicKey:@"TU_PUBLIC_KEY"];
     int paymentID = 123456;
-    
+
     [MPServicesBuilder getInstructions:payment paymentTypeId:@"ticket" success:^(InstructionsInfo * instruction) {
       // Listo, aquí ya tienes las instrucciones para
       // contarle a tu usuario cómo finalizar el pago.
@@ -457,7 +469,7 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                      <br />
                      Junto con el token creado necesitas enviar también el medio de pago, cuotas y banco seleccionados por el usuario, además de un identificador del artículo o servicio que se está pagando y del usuario que está presente en tu aplicación.
                      <br />
-                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantPayment.swift">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago. 
+                     En este caso, el método <b>createPayment</b> hace un POST y envía como cuerpo del mensaje el objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantPayment.swift">MerchantPayment</a> que agrupa toda la información que precisas tener en tu servidor para conectarte con el nuestro. Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_payment) donde esperas los datos para crear el pago.
                      <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/Payment.swift" target="_blank">Payment</a>.
                   </p>
                   <p>
@@ -516,7 +528,7 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                      </ul>
                   </p>
                   <p>
-                     En este caso, el método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_preference) donde esperas los datos para crear la preferencia. 
+                     En este caso, el método <b>createPreference</b> hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Por eso debes indicarnos tu URL base (https://api.tunombre.com) y la uri (/create_preference) donde esperas los datos para crear la preferencia.
                      <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/MerchantServer.swift" target="_blank">MerchantServer</a> transformará la respuesta de tu servicio (la misma que los servicios de MercadoPago) en un objeto <a href="https://github.com/mercadopago/px-ios/blob/master/MercadoPagoSDK/MercadoPagoSDK/CheckoutPreference.swift" target="_blank">CheckoutPreference</a> cuyo ID es el punto de entrada a nuestro checkout.
                   </p>
                   <p>
@@ -525,19 +537,19 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
-let preferenceBody = ["amount" : 12, 
-  "itemId" : 29334, "customerId": 207, 
+let preferenceBody = ["amount" : 12,
+  "itemId" : 29334, "customerId": 207,
   "payer_email" : "customermail@test.com"]
-        
+
 // Seteo de URL y preferenceUri
 MercadoPagoContext.setBaseURL("https://api.tunombre.com")
 MercadoPagoContext.setPreferenceURI("/create_preference")
 
-MerchantServer.createPreference(preferenceBody, 
+MerchantServer.createPreference(preferenceBody,
   success: { (checkoutPreference) in
     // La preferencia se creó correctamente.
     // Aquí puedes iniciar el Checkout de MercadoPago.
-    MPFlowBuilder.startCheckoutViewController(checkoutPreference._id, 
+    MPFlowBuilder.startCheckoutViewController(checkoutPreference._id,
       callback: { (payment : Payment) in
 
     })
@@ -571,7 +583,7 @@ MerchantServer.createPreference(preferenceBody,
     [MerchantServer getCustomer:^(Customer * customer) {
         //Aquí ya tienen la información del customer
     } failure:^(NSError * error) {
-        
+
     }];
                         </code>
                         <button class="copy-button">
@@ -583,7 +595,7 @@ MerchantServer.createPreference(preferenceBody,
       </div>
          </div>
       </div>
-      
+
             <div class="row pre-footer">
             <div class="dropup col-md-10">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
