@@ -30,9 +30,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right" style="color: white;">
-                  <li><a class="getting-started-nav nav-link" href="en_index.html">Our checkout</a></li>
-                  <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
-                  <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers Forum</a></li>
+                 <li><a class="getting-started-nav nav-link" href="en_v2.html">Our checkout</a></li>
+                <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
+                <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers forum</a></li>
+                <li><a class="nav-link" href="index.html">Version <span class="newV3Version"></span></a></li>
                </ul>
             </div>
          </div>
@@ -43,13 +44,26 @@
 ">
             <h3>MercadoPago iOS SDK</h3>
             <h4>The quickest way to receive in-app payments with the best experience.</h4>
+            <h6>Version <span class="oldV2Version"></span></h6>
          </div>
-         
+
       </div>
       <div id="mati_header" style="height: 500px;margin: 0 auto;padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing_f2.jpg');background-size: cover;background-position-x: 0px;background-position-y: -100px;">
          <div style="background: rgba(0,0,0,0.5);height: 500px;"></div>
       </div>
       <div class="container content-container" style="margin-top: -250px;">
+        <div class="advanced-panel text-center">
+          <p class="sub-heading">
+            Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil and Colombia<sup>*</sup></b>.
+            <br />
+            If you are trying to integrate our solution in other of the countries in which Mercado Pago is available, you can check which ones are supported in the <a href="index.html">new version</a>.
+            <br />
+          </p>
+          <p>
+            <sup>*</sup></b>In Colombia we only support credit card payments, therefore you have to exclude the rest of the payment types.
+          </p>
+        </div>
+        <br>
       <div class="row">
             <div style="float:right;">
                <div class="dropdown ">
@@ -309,7 +323,7 @@ MPServicesBuilder.getIdentificationTypes({ (identificationTypes) -> Void in
    cardToken.cardholder.identification = [[Identification alloc] init];
    cardToken.cardholder.identification.type = @"DNI";
    cardToken.cardholder.identification.number = @"12.123.234";
-   
+
    // Validate the information provided by your user
    if ([ self validateCardToken:cardToken paymentMethod:paymentMethod]) {
        // Get a one-use token for the card
@@ -570,7 +584,7 @@ MerchantServer.createPreference(preferenceBody,
     [MerchantServer getCustomer:^(Customer * customer) {
         //Aquí ya tienen la información del customer
     } failure:^(NSError * error) {
-        
+
     }];
                         </code>
                         <button class="copy-button">
@@ -582,7 +596,7 @@ MerchantServer.createPreference(preferenceBody,
       </div>
          </div>
       </div>
-      
+
             <div class="row pre-footer">
             <div class="dropup col-md-10">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -607,6 +621,7 @@ MerchantServer.createPreference(preferenceBody,
       <script src="./js/site.js"></script>
       <script src="./js/cookies.min.js"></script>
       <script src="./js/clipboard.js"></script>
+      <script src="./js/versions.js"></script>
    <script>
 
    (function() {

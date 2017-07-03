@@ -30,9 +30,10 @@
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                <ul class="nav navbar-nav navbar-right" style="color: white;">
-                  <li><a class="getting-started-nav nav-link" href="en_index.html">Our checkout</a></li>
-                  <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
-                  <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers Forum</a></li>
+                 <li><a class="getting-started-nav nav-link" href="en_v2.html">Our checkout</a></li>
+                <li><a class="docs-nav nav-link" href="en_checkout_custom.html">Your checkout</a></li>
+                <li><a class="nav-link" href="https://www.mercadopago.com.ar/developers/es/community/forum/">Developers forum</a></li>
+                <li><a class="nav-link" href="index.html">Version <span class="newV3Version"></span></a></li>
                </ul>
             </div>
          </div>
@@ -43,13 +44,26 @@
 ">
             <h3>MercadoPago iOS SDK</h3>
             <h4>The quickest way to receive in-app payments with the best experience.</h4>
+            <h6>Version <span class="oldV2Version"></span></h6>
          </div>
-         
+
       </div>
       <div id="mati_header" style="height: 500px;margin: 0 auto;padding: 0;position: relative;width: 100%;top: -276px;overflow-x: hidden;OVERFLOW-Y: hidden;z-index: -100;background: url('./img/landing_f2.jpg');background-size: cover;background-position-x: 0px;background-position-y: -100px;">
          <div style="background: rgba(0,0,0,0.5);height: 500px;"></div>
       </div>
       <div class="container content-container" style="margin-top: -250px;">
+        <div class="advanced-panel text-center">
+          <p class="sub-heading">
+            Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil and Colombia<sup>*</sup></b>.
+            <br />
+            If you are trying to integrate our solution in other of the countries in which Mercado Pago is available, you can check which ones are supported in the <a href="index.html">new version</a>.
+            <br />
+          </p>
+          <p>
+            <sup>*</sup></b>In Colombia we only support credit card payments, therefore you have to exclude the rest of the payment types.
+          </p>
+        </div>
+        <br>
       <div class="row">
             <div style="float:right;">
                <div class="dropdown ">
@@ -169,7 +183,7 @@ MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
 
 MPServicesBuilder.getPaymentMethods(success: { (paymentMethods) -> Void in
       // Done! Build your UI for the payment methods
-}) { (error) -> Void in      
+}) { (error) -> Void in
       // Oops! Something went wrong
 }
                         </code>
@@ -193,14 +207,14 @@ MPServicesBuilder.getPaymentMethods(success: { (paymentMethods) -> Void in
                         <code class="line-numbers language-swift">
 MercadoPagoContext.setPublicKey(TU_PUBLIC_KEY)
 
-// Selected Payment Methods 
+// Selected Payment Methods
 let paymentMethod : PaymentMethod!
 
 // If you have it, first six digits of the card
 let bin = nil
 
-MPServicesBuilder.getIssuers(paymentMethod: paymentMethod, bin: bin, 
-   success: { (issuers) -> Void in   
+MPServicesBuilder.getIssuers(paymentMethod: paymentMethod, bin: bin,
+   success: { (issuers) -> Void in
       // Done! Build your UI for the issuers
 }) { (error) -> Void in
       // Oops! Something went wrong
@@ -245,7 +259,7 @@ let amount = 10000
 
 let paymentMethodId = "master"
 
-MPServicesBuilder.getInstallments(bin, amount: amount, issuer: issuer, 
+MPServicesBuilder.getInstallments(bin, amount: amount, issuer: issuer,
    paymentMethod: paymentMethod, success: { (installments) -> Void in
       // Done! Build your UI for installments
 }) { (error) -> Void in
@@ -300,8 +314,8 @@ let paymentMethod : PaymentMethod!
 
 /* Create a CardToken with the data provided by your user.
 *  This is an example with testing-purposes information */
-let cardToken = CardToken(cardNumber: "5031755734530604", expirationMonth: "11", 
-   expirationYear: "19", securityCode: "123", cardholderName: "APROJuan Perez", 
+let cardToken = CardToken(cardNumber: "5031755734530604", expirationMonth: "11",
+   expirationYear: "19", securityCode: "123", cardholderName: "APROJuan Perez",
    docType: "DNI", docNumber: "12.123.234")
 
 // Validate the information provided by your user
@@ -321,35 +335,35 @@ if validateCardToken(cardToken, paymentMethod: paymentMethod) {
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
 func validateCardToken(cardToken: CardToken, paymentMethod: PaymentMethod) -> Bool {
-        
+
         /* In this function you can set the error for each field.
         *  We recommend you to give focus to the first field in
         *  which an error was found. */
-        
+
         var result = true
-        
+
          /* The two following methods validate that the card
          *  number and the security code satisfy
          *  the particularities of the payment method. */
-        
+
         if let error = cardToken.validateCardNumber(paymentMethod) {
             result = false
         }
-        
+
         if let error = cardToken.validateSecurityCodeWithPaymentMethod(paymentMethod) {
             result = false
         }
-        
+
         // Validate that the expiration date is after today's
         if let error = cardToken.validateExpiryDate() {
             result = false
         }
-        
+
         // Validate that the card holder name is not empty
         if let error = cardToken.validateCardholderName() {
             result = false
         }
-        
+
         /* If an identification type was selected,
          *  we validate that its configurations are satisfied */
         if let error = cardToken.validateIdentification(){
@@ -423,7 +437,7 @@ let paymentId = 123456
 let paymentMethodId = "pagofacil"
 let paymentTypeId = "ticket"
 
-MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId, 
+MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId,
    paymentTypeId : paymentTypeId, success: { (instruction) -> Void in
       // Done! here you already got the instructions to
       // tell your users how to end the payment.
@@ -463,17 +477,17 @@ MPServicesBuilder.getInstructions(paymentId, paymentMethodId: paymentMethodId,
                   <p>
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
-func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?, 
+func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?,
   installments: Int?, tokenId: String) {
 
   MercadoPagoContext.setBaseURL("http://tunombre.com")
   MercadoPagoContext.setPaymentURI("/checkout/create_payment")
 
-  let merchantPayment = MerchantPayment(items: items, installments: installments, 
-    cardIssuer: cardIssuer, tokenId: tokenId, paymentMethod: paymentMethod, 
+  let merchantPayment = MerchantPayment(items: items, installments: installments,
+    cardIssuer: cardIssuer, tokenId: tokenId, paymentMethod: paymentMethod,
     campaignId: nil)
 
-  MerchantServer.createPayment(payment: merchantPayment, 
+  MerchantServer.createPayment(payment: merchantPayment,
     success: {
       (payment: Payment) -> Void in
 
@@ -524,19 +538,19 @@ func createPayment(paymentMethod: PaymentMethod, cardIssuer: Issuer?,
                      <pre class="snippet">
                         <code class="line-numbers language-swift">
 // Create a map with purchase data and your client's email.
-let preferenceBody = ["amount" : 12, 
-  "itemId" : 29334, "customerId": 207, 
+let preferenceBody = ["amount" : 12,
+  "itemId" : 29334, "customerId": 207,
   "payer_email" : "customermail@test.com"]
-        
+
 // Send the information to your server
 MercadoPagoContext.setBaseURL("https://api.tunombre.com")
 MercadoPagoContext.setPreferenceURI("/create_preference")
 
-MerchantServer.createPreference(preferenceBody, 
+MerchantServer.createPreference(preferenceBody,
   success: { (checkoutPreference) in
       // The preference was created!
       // Here you can start MercadoPago Checkout
-    MPFlowBuilder.startCheckoutViewController(checkoutPreference._id, 
+    MPFlowBuilder.startCheckoutViewController(checkoutPreference._id,
       callback: { (payment : Payment) in
 
     })
@@ -590,7 +604,7 @@ public func getCustomer(){
       </div>
          </div>
       </div>
-      
+
             <div class="row pre-footer">
             <div class="dropup col-md-10">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -615,6 +629,7 @@ public func getCustomer(){
       <script src="./js/site.js"></script>
       <script src="./js/cookies.min.js"></script>
       <script src="./js/clipboard.js"></script>
+      <script src="./js/versions.js"></script>
    <script>
 
    (function() {
