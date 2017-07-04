@@ -49,6 +49,8 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
         self.tableView.register(cardNib, forCellReuseIdentifier: "cardNib")
         let rowInstallmentNib = UINib(nibName: "PayerCostRowTableViewCell", bundle: self.bundle)
         self.tableView.register(rowInstallmentNib, forCellReuseIdentifier: "rowInstallmentNib")
+        let rowInstallmentCFTNib = UINib(nibName: "PayerCostCFTTableViewCell", bundle: self.bundle)
+        self.tableView.register(rowInstallmentCFTNib, forCellReuseIdentifier: "rowInstallmentCFTNib")
         let rowIssuerNib = UINib(nibName: "IssuerRowTableViewCell", bundle: self.bundle)
         self.tableView.register(rowIssuerNib, forCellReuseIdentifier: "rowIssuerNib")
         let cardTypeNib = UINib(nibName: "CardTypeTableViewCell", bundle: self.bundle)
@@ -178,12 +180,20 @@ open class CardAdditionalStep: MercadoPagoUIScrollViewController, UITableViewDel
                     return totalCell
                 }
                 let payerCost : PayerCost = self.viewModel.payerCosts![indexPath.row - 1]
-                let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath) as! PayerCostRowTableViewCell
+                if payerCost.hasCFTValue() {
+                let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentCFTNib", for: indexPath) as! PayerCostCFTTableViewCell
                 installmentCell.fillCell(payerCost: payerCost)
                 installmentCell.selectionStyle = .none
                 installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width), y:Float(installmentCell.contentView.bounds.maxY))
                 
                 return installmentCell
+                } else {
+                    let installmentCell = tableView.dequeueReusableCell(withIdentifier: "rowInstallmentNib", for: indexPath) as! PayerCostRowTableViewCell
+                    installmentCell.fillCell(payerCost: payerCost)
+                    installmentCell.selectionStyle = .none
+                    installmentCell.addSeparatorLineToTop(width: Double(installmentCell.contentView.frame.width), y:Float(installmentCell.contentView.bounds.maxY))
+                     return installmentCell
+                }
                 
             } else  if self.viewModel.hasPaymentMethod(){
                 let issuer : Issuer = self.viewModel.issuersList![indexPath.row]
@@ -338,7 +348,7 @@ class CardAdditionalStepViewModel : NSObject {
             if row == 0 {
                 return 42
             } else {
-                return 60
+                return !Array.isNullOrEmpty(payerCosts) && payerCosts![0].hasCFTValue() ? 86 : 60
             }
         } else {
             return 80
