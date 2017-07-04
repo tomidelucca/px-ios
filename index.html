@@ -118,21 +118,14 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
               </div>
             <pre class="snippet">
               <code id="get-pref" class="line-numbers language-swift">
-                 let preferenceBody : [String : Any] = ["item_id" : "id", "quantity" : 1]
+                        let preferenceBody : [String : Any] = ["item_id" : "id", "quantity" : 1]
 
-                 let servicePreference = ServicePreference()
-                 servicePreference.setCreateCheckoutPreference(baseURL: "https://your-base-URL.com/", URI: "your_create_preference_URI",
-                     additionalInfo: preferenceBody as NSDictionary)
-
-                 MercadoPagoCheckout.setServicePreference(servicePreference)
-
-                 CustomServer.createCheckoutPreference(success: { (checkoutPreference) in
-                     startMercadoPagoCheckout(checkoutPreference)
-
-                 }) { (error) in
-
-                     // Handle error
-                 }
+                        CustomServer.createCheckoutPreference(url: "https://your-base-URL.com/", uri: "your_create_preference_URI", bodyInfo: preferenceBody as NSDictionary, 
+                          success: { (checkoutPrefernece) in
+                            startMercadoPagoCheckout(checkoutPreference)
+                        }) { (error) in
+                            // Handle error
+                        }
 
                  </code>
                  <button class="copy-button">
@@ -171,12 +164,14 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
             <pre class="snippet">
               <code id="get-result" class="line-numbers language-swift">
                  MercadoPagoCheckout.setPaymentCallback { (payment) in
-                     self.payment = payment
+                    self.payment = payment
                  }
 
-                 MercadoPagoCheckout.setCallback { (Void) in
-                     // Resolved cancel checkout
-                 }
+                checkout.setCallbackCancel {
+                    // Resolved cancel checkout
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+
 
                  </code>
                  <button class="copy-button">
@@ -250,11 +245,13 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
             <pre class="snippet">
               <code id="start_pref" class="line-numbers language-swift">
                  MercadoPagoCheckout.setPaymentDataConfirmCallback { (PaymentData) in
-                     self.paymentData = PaymentData
+                    self.paymentData = PaymentData
                  }
-                 MercadoPagoCheckout.setCallback { (Void) in
+
+                checkout.setCallbackCancel {
                     // Resolved cancel checkout
-                 }
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
                  </code>
                  <button class="copy-button">
                     <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
@@ -295,8 +292,6 @@ public func startMercadoPagoCheckout(_ checkoutPreference CheckoutPreference) {
 
    let decorationPreference: DecorationPreference = DecorationPreference()
    decorationPreference.setBaseColor(color: UIColor.purple)
-   decorationPreference.setCustomFontWith(name: "FontName")
-   decorationPreference.setLightCustomFontWith(name: "FontName-Light")
    MercadoPagoCheckout.setDecorationPreference(decorationPreference)
 
    let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
