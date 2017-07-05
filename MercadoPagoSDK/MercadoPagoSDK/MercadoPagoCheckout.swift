@@ -45,7 +45,7 @@ open class MercadoPagoCheckout: NSObject {
     public func start() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
-        MercadoPagoContext.trackScreen(screenId:self.viewModel.nextStep().rawValue, screenName: self.viewModel.nextStep().rawValue)
+
     }
 
     func executeNextStep() {

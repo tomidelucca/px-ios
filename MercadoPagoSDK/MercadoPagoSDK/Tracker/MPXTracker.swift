@@ -17,12 +17,13 @@ protocol MPXTracker {
 }
 
 extension MPXTracker {
-    static func trackScreen(screenId: String, screenName: String) {
+
+    static func trackScreen(screenId: String, screenName: String, attemptSend: Bool = false) {
         let screenTrack = ScreenTrackInfo(screenName: screenName, screenId: screenId)
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            attemptToTrack()
-        })
+        if attemptSend {
+            attemptSendTrackInfo()
+        }
     }
     static func canSendTrack() -> Bool {
         let status = Reach().connectionStatus()
@@ -32,20 +33,17 @@ extension MPXTracker {
         return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
     }
 
-    static func attemptToTrack() {
-        let array = TrackStorageManager.getBatchScreenTracks()
-        if array.count == 0 {
-            return
-        }
+    static func attemptSendTrackInfo() {
         if canSendTrack() {
-           send(trackList: TrackStorageManager.getBatchScreenTracks())
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                attemptToTrack()
-            })
-
-        }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                attemptToTrack()
+            let array = TrackStorageManager.getBatchScreenTracks()
+            guard let batch = array else {
+                return
+            }
+           send(trackList: batch)
+           attemptSendTrackInfo()
+        }else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+                attemptSendTrackInfo()
             })
         }
     }
@@ -72,6 +70,48 @@ extension MPXTracker {
             "application": applicationJSON,
             "device": deviceJSON,
             ]
+        return obj
+    }
+    static func generateJSONScreen(screenId: String, screenName: String) -> [String:Any] {
+        var obj = Self.generateJSONDefault()
+        let screenJSON = Self.screenJSON(screenId: screenId, screenName: screenName)
+        obj["events"] = [screenJSON]
+        return obj
+    }
+    static func generateJSONEvent(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
+        var obj = Self.generateJSONDefault()
+        let eventJSON = Self.eventJSON(screenId: screenId, screenName: screenName, action: action, category: category, label: label, value: value)
+        obj["events"] = [eventJSON]
+        return obj
+    }
+    static func eventJSON(screenId: String, screenName: String, action: String, category: String, label: String, value: String) -> [String:Any] {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let obj: [String:Any] = [
+            "timestamp": timestamp,
+            "type": "action",
+            "screen_id": screenId,
+            "screen_name": screenName,
+            "action": action,
+            "category": category,
+            "label": label,
+            "value": value
+        ]
+        return obj
+    }
+    static func screenJSON(screenId: String, screenName: String) -> [String:Any] {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
+        let obj: [String:Any] = [
+            "timestamp": timestamp,
+            "type": "screenview",
+            "screen_id": screenId,
+            "screen_name": screenName
+        ]
         return obj
     }
     static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String:String]? = nil, success: @escaping (Any) -> Void,
@@ -105,7 +145,7 @@ extension MPXTracker {
                         if paymentDic["status"] as? Int == 200 {
                             print("200!")
                         }else {
-                            print("Codigo = \(paymentDic["status"])")
+                            failure!(NSError())
                         }
                     }
                     success(responseJson as Any)
