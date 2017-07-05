@@ -4,8 +4,6 @@ Fix #{issueNumber}
 - Cambio 1
 - Cambio 2
 
-##  Snippet de Código o Screenshot : 
-
 ### Revisión
 - [ ] Todos los textos se encuentran localizables
 - [ ] No se introducen warnings al proyecto

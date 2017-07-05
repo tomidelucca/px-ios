@@ -9,11 +9,13 @@
 import XCTest
 
 class IssuerTest: BaseTest {
-    
-    func testFromJSON(){
-        let json : NSDictionary = MockManager.getMockFor("Issuer")!
+
+    func testFromJSON() {
+        let json: NSDictionary = MockManager.getMockFor("Issuer")!
         let issuerFromJSON = Issuer.fromJSON(json)
-        XCTAssertEqual(issuerFromJSON, issuerFromJSON)
-    }    
-    
+        let issuer = MockBuilder.buildIssuer()
+        XCTAssertEqual(issuerFromJSON._id, issuer._id)
+        XCTAssertEqual(issuerFromJSON.name, issuer.name)
+    }
+
 }

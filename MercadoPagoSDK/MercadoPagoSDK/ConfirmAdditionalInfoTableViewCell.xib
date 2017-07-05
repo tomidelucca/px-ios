@@ -18,15 +18,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CFT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ke-yg-Qam">
-                        <rect key="frame" x="138" y="5" width="44" height="29"/>
+                        <rect key="frame" x="139" y="5" width="43.5" height="29"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="4Ke-yg-Qam" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Ls8-Ph-bN3"/>
                     <constraint firstItem="4Ke-yg-Qam" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="UxP-el-Oe9"/>
+                    <constraint firstItem="4Ke-yg-Qam" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="xCv-4U-Mcd"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

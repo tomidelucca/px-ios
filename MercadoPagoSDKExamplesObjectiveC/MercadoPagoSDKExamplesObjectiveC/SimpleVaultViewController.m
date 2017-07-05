@@ -24,14 +24,14 @@
 NSArray<PaymentMethod *> *currentPaymentMethods;
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
-        currentPaymentMethods = paymentMethods;
-        [[self tableView] reloadData];
-        
-    } failure:^(NSError *error) {
-        
-    }];
+//    [super viewDidLoad];
+//    [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
+//        currentPaymentMethods = paymentMethods;
+//        [[self tableView] reloadData];
+//        
+//    } failure:^(NSError *error) {
+//        
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,7 +50,7 @@ NSArray<PaymentMethod *> *currentPaymentMethods;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MPPaymentMethodSelection"];
     
     UIImageView* pmIcon = [cell viewWithTag:1];
-    pmIcon.image = [MercadoPago getImage:pm._id];
+    pmIcon.image = [MercadoPago getImage:pm._id bundle: [MercadoPago getBundle]];
     
     UILabel *pmTitle = [cell viewWithTag:2];
     pmTitle.text = pm.name;

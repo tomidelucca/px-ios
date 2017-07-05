@@ -5,8 +5,11 @@
  Created by Matias Gualino on 26/4/15.
  Copyright (c) 2015 MercadoPago. All rights reserved.
  */
-"Cargando..." = "Loading...";
 
+"Si" = "Yes";
+"No" = "No";
+
+"Cargando..." = "Loading...";
 "invalid_cvv_length" = "Ingresa los %1$s números del código de seguridad";
 "invalid_field" = "Check this information";
 "invalid_card_length" = "Enter the %1$s card numbers";
@@ -17,12 +20,9 @@
 "NOT_INSTALLMENTS_FOUND" = "No interest were found available for an amount of $";
 "PAYMENT_ERROR" = "Payment failed.";
 "No se ha podido obtener los métodos de pago con esta preferencia" = "Payment methods could not be obtained with this preference";
-
 "visa"="Visa";
 "master"="Mastercard";
 "amex"="Amex";
-
-
 
 //CONGRATS
 
@@ -73,6 +73,7 @@
 "cc_rejected_max_attempts_subtitle_credit_card"= "Choose another card or another payment method";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="If you need to repay, use another card or other payment method.";
 "cc_rejected_card_disabled_subtitle_credit_card"="The phone number is on the back of your card.";
+"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
 
 
 
@@ -82,10 +83,10 @@
 "cc_rejected_max_attempts_subtitle_debit_card"= "Choose another card or another payment method.";
 "cc_rejected_duplicated_payment_subtitle_debit_card"="If you need to repay, use another card or other payment method.";
 "cc_rejected_card_disabled_subtitle_debit_card"="The phone number is on the back of your card.";
-"cc_rejected_bad_filled_other_subtitle_debit_card"="Some number of your %0 is incorrect.";
 "cc_rejected_bad_filled_card_number_subtitle_debit_card"="The number of your %0 is incorrect.";
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="The security code is not correct";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="The expiration date is not correct.";
+"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Ingresalo nuevamente" = "Enter again";
 
@@ -113,14 +114,31 @@
 "Número"="Number";
 "Tipo"="Type";
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
 " Sin interés"=" Interest free";//--
 "¿En cuántas cuotas?" = "How many installments?";
+"No incluye intereses bancarios" = "Doesn't include bank interest";
+
+//-- Issuers
 "¿Quién emitió tu tarjeta?" = "Which is your bank?";
+
+//-- Card Type
 "¿Qué tipo de tarjeta es?" = "Which type of card is it?";
 "Crédito" = "Credit";
 "Débito" = "Debit";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Which is your entity\'s type?";
+//-----EntityTypes
+"Natural"="Individual";
+"Jurídica"="Association";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Which is your bank?";
+
+
 
 //Instructions
 
@@ -152,6 +170,7 @@
 "Debes autorizar ante %1$s el pago de " = "You must authorize with %1$s the payment of";
 " a MercadoPago" = " to MercadoPago";
 "Ya hablé con %1$s y me autorizó" = "Already talked with %0 and I am authorized";
+"En tu estado de cuenta verás el cargo como %0" = "In your account yo will see the charge as %0";
 
 
 "Total"="Total";
@@ -165,7 +184,7 @@
 "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago"="By paying, I claim to be an adult and that I accept the Terms and Conditions";
 
 "¿Cómo quiéres pagar?"="How do you want to pay?";
-"Términos y Condiciones"="Terms and conditions";
+"Términos y Condiciones"="Terms and Conditions";
 "Confirma tu compra" = "Confirm your purchase";
 "Total" = "Total";
 "Cantidad : " = "Quantity: ";
@@ -180,6 +199,7 @@
 "Fecha" = "Date";
 "Cancelar Pago"="Cancel Payment";
 "Pagáras " = "You will pay ";
+"Con dinero en cuenta" = "With account money";
 
 
 
@@ -197,3 +217,27 @@
 "ryc_complementary_banamex_bank_transfer"="Home Banking of ";
 "ryc_complementary_banamex_atm"="ATM of ";
 "ryc_complementary_redlink_atm"="ATM of ";
+
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
+
+//Discount
+"Código de descuento"="Discount code";
+"Canejar"="Exchange";
+"Código inválido"="Invalid code";
+"de descuento"="of discount";
+"Tengo un descuento"="I have a discount";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Merchant without discount available";
+"Se agotó la cantidad de usos"="Ran out of quantity uses of discount";
+"Importe fuera del alcance"="Amount out of reach";
+"La campaña expiró"="/Campaign expired";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Remember to unlock your card before you confirm the payment";
+"desbloquear tu tarjeta"="unlock your card";
+"Desbloqueo de Tarjeta"="Card Unlocking";
+
+//Administrador de tarjetas
+"¿Con qué tarjeta?"="Which card?";

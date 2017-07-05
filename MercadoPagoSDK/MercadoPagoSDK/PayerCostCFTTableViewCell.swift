@@ -32,7 +32,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
 
         if !payerCost.hasInstallmentsRate() && payerCost.installments != 1 {
             self.totalLabel.attributedText = NSAttributedString(string : "Sin interés".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 14)])
-            self.totalLabel.textColor = UIColor.px_greenNoInterestColor()
+            self.totalLabel.textColor = UIColor.mpGreenishTeal()
 
         } else if payerCost.installments != 1 {
             let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color : UIColor.px_grayBaseText(), fontSize : 14, baselineOffset : 4)
@@ -45,7 +45,8 @@ class PayerCostCFTTableViewCell: UITableViewCell {
     }
 
     func fillInstallmentsLabel(payerCost: PayerCost) {
-        self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.px_grayBaseText(), fontSize : 20, centsFontSize: 12, baselineOffset: 6)
+        let currency = MercadoPagoContext.getCurrency()
+        self.installmentsLabel.attributedText = Utils.getTransactionInstallmentsDescription(String(payerCost.installments), currency: currency, installmentAmount: payerCost.installmentAmount, additionalString: NSAttributedString(string : ""), color: UIColor.px_grayBaseText(), fontSize : 20, centsFontSize: 12, baselineOffset: 6)
     }
 
     func fillCFTLabel(payerCost: PayerCost) {
@@ -53,8 +54,8 @@ class PayerCostCFTTableViewCell: UITableViewCell {
         CFTLabel.text = payerCost.hasCFTValue() ? "CFT " + payerCost.getCFTValue()! : ""
     }
 
-    func addSeparatorLineToTop(width: Double, y: Float){
-        let lineFrame = CGRect(origin: CGPoint(x: 0,y :Int(y)), size: CGSize(width: width, height: 0.5))
+    func addSeparatorLineToBottom(width: Double, height: Double) {
+        let lineFrame = CGRect(origin: CGPoint(x: 0, y :Int(height)), size: CGSize(width: width, height: 0.5))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
         line.backgroundColor = UIColor.px_grayLight()

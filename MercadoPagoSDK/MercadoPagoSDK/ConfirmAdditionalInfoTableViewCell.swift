@@ -9,25 +9,25 @@
 import UIKit
 
 class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
-    static let ROW_HEIGHT = CGFloat(35)
+    static let ROW_HEIGHT = CGFloat(33)
     @IBOutlet weak var CFT: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.selectionStyle = .none
         // Initialization code
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         // Configure the view for the selected state
     }
-    func fillCell(payerCost: PayerCost?){
+    func fillCell(payerCost: PayerCost?) {
         if let payerCost = payerCost {
-            //CFT.font = Utils.getFont(size: CFT.font.pointSize)
-            //TEALabel.font = Utils.getFont(size: TEALabel.font.pointSize)
-            
+
+            CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
             CFT.textColor = UIColor.px_grayDark()
-            
+
             if let CFTValue = payerCost.getCFTValue() {
                 CFT.text = "CFT " + CFTValue
             } else {
@@ -35,5 +35,5 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
 }

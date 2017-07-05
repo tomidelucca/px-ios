@@ -10,7 +10,7 @@ import Foundation
 
 class MockManager: NSObject {
 
-    internal class func getMockFor(_ name : String) -> NSDictionary? {
+    internal class func getMockFor(_ name: String) -> NSDictionary? {
         let path = Bundle(for:MockManager.self).path(forResource: "MockedData", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         do {
@@ -21,7 +21,16 @@ class MockManager: NSObject {
         return nil
     }
 
-    internal class func getMockResponseFor(_ uri : String, method: String) throws ->AnyObject?{
+    internal class func getDictionaryFor(string: String) -> NSDictionary? {
+        do {
+            let mockObj = try MockManager.convertStringToDictionary(string)!
+            return mockObj as NSDictionary?
+        } catch {
+        }
+        return nil
+    }
+
+    internal class func getMockResponseFor(_ uri: String, method: String) throws ->AnyObject? {
         let path = Bundle(for:MockManager.self).path(forResource: "MockedResponse", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         let valueOfKey = dictPM?.value(forKey: method + uri) as! String
@@ -30,9 +39,9 @@ class MockManager: NSObject {
             return json
         }
         return nil
-        
+
     }
-    
+
     internal class func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
         if let data = text.data(using: String.Encoding.utf8) {
             let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
@@ -48,7 +57,5 @@ class MockManager: NSObject {
         }
         return nil
     }
-
-
 
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l < r
@@ -18,7 +18,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
     return l > r
@@ -27,16 +27,19 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+open class PaymentService: MercadoPagoService {
 
-open class PaymentService : MercadoPagoService {
-    
-    open func getPaymentMethods(_ method: String = "GET", uri : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods", public_key : String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        self.request(uri: uri, params: "public_key=" + public_key, body: nil, method: method, success: success, failure: failure)
+    open func getPaymentMethods(_ method: String = "GET", uri: String = ServicePreference.MP_PAYMENT_METHODS_URI, key: String, success: @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        self.request(uri: uri, params: MercadoPagoContext.keyType() + "=" + key, body: nil, method: method, success: success, failure: { (error) in
+            if let failure = failure {
+            failure(NSError(domain: "mercadopago.sdk.paymentService.getPaymentMethods", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+            }
+            })
     }
 
-    open func getInstallments(_ method: String = "GET", uri : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods/installments", public_key : String, bin : String?, amount: Double, issuer_id: NSNumber?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        var params : String = "public_key=" + public_key
-        if(bin != nil){
+    open func getInstallments(_ method: String = "GET", uri: String = ServicePreference.MP_INSTALLMENTS_URI, key: String, bin: String?, amount: Double, issuer_id: String?, payment_method_id: String, success: @escaping ([Installment]) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        var params: String = MercadoPagoContext.keyType() + "=" + key
+        if bin != nil {
                     params = params + "&bin=" + bin!
         }
 
@@ -46,11 +49,10 @@ open class PaymentService : MercadoPagoService {
         }
         params = params + "&payment_method_id=" + payment_method_id
         self.request( uri: uri, params:params, body: nil, method: method, success: {(jsonResult: AnyObject?) -> Void in
-            
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
-                    failure(NSError(domain: "mercadopago.sdk.paymentService.getInstallments", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : errorDic["error"] as! String]))
-                
+                    failure(NSError(domain: "mercadopago.sdk.paymentService.getInstallments", code: MercadoPago.ERROR_API_CODE, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: errorDic["error"] as? String ?? "Unknowed Error"]))
+
                 }
             } else {
                 let paymentMethods = jsonResult as? NSArray
@@ -66,18 +68,26 @@ open class PaymentService : MercadoPagoService {
                 }
             }
             }, failure: { (error) in
-                failure(NSError(domain: "mercadopago.sdk.paymentService.getInstallments", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey : "Verifique su conexión a internet e intente nuevamente".localized]))
+                failure(NSError(domain: "mercadopago.sdk.paymentService.getInstallments", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
 
         })
     }
-    
-    open func getIssuers(_ method: String = "GET", uri : String = MercadoPago.MP_OP_ENVIROMENT + "/payment_methods/card_issuers", public_key : String, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        if(bin != nil){
-            self.request(uri: uri, params: "public_key=" + public_key + "&payment_method_id=" + payment_method_id + "&bin=" + bin!, body: nil, method: method, success: success, failure: failure)
-        }else{
-            self.request(uri: uri, params: "public_key=" + public_key + "&payment_method_id=" + payment_method_id, body: nil, method: method, success: success, failure: failure)
+
+    open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, key: String, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
+        let params = MercadoPagoContext.keyType() + "=" + key + "&payment_method_id=" + payment_method_id
+        if bin != nil {
+            self.request(uri: uri, params: params + "&bin=" + bin!, body: nil, method: method, success: success, failure: { (error) in
+                if let failure = failure {
+                    failure(NSError(domain: "mercadopago.sdk.paymentService.getIssuers", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+                }
+            })
+        } else {
+            self.request(uri: uri, params: params, body: nil, method: method, success: success, failure: { (error) in
+                if let failure = failure {
+                    failure(NSError(domain: "mercadopago.sdk.paymentService.getIssuers", code: error.code, userInfo: [NSLocalizedDescriptionKey: "Hubo un error".localized, NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente".localized]))
+                }
+            })
         }
-        
     }
-    
+
 }

@@ -7,6 +7,7 @@
 //
 
 #import "MediosOffTableViewController.h"
+@import MercadoPagoSDK;
 
 
 @implementation MediosOffTableViewController
@@ -22,20 +23,20 @@
 
     
     
-   
-    [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
-        self.mediosOffArray = [[NSMutableArray alloc]init];
-        
-        [paymentMethods enumerateObjectsUsingBlock:^(PaymentMethod * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSLog(obj.paymentTypeId);
-            if (![conjunto containsObject:obj.paymentTypeId]){
-                [self.mediosOffArray addObject:obj];
-            }
-        }];
-        [[self tableView] reloadData];
-    } failure:^(NSError *error) {
-        
-    }];
+//   
+//    [MPServicesBuilder getPaymentMethods:^(NSArray<PaymentMethod *> *paymentMethods) {
+//        self.mediosOffArray = [[NSMutableArray alloc]init];
+//        
+//        [paymentMethods enumerateObjectsUsingBlock:^(PaymentMethod * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            NSLog(obj.paymentTypeId);
+//            if (![conjunto containsObject:obj.paymentTypeId]){
+//                [self.mediosOffArray addObject:obj];
+//            }
+//        }];
+//        [[self tableView] reloadData];
+//    } failure:^(NSError *error) {
+//        
+//    }];
     
 }
 
@@ -63,7 +64,7 @@
     UILabel* label = [cell viewWithTag:2];
     
     label.text = [[self.mediosOffArray objectAtIndex:indexPath.row] name];
-    image.image = [MercadoPago getImage:[self.mediosOffArray objectAtIndex:indexPath.row]._id];
+    image.image = [MercadoPago getImage:[self.mediosOffArray objectAtIndex:indexPath.row]._id bundle: [MercadoPago getBundle]];
     
     return cell;
 }

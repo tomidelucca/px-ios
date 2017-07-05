@@ -9,14 +9,13 @@
 import Foundation
 import UIKit
 
-class MockCheckoutViewController: CheckoutViewController {
-    
+class MockCheckoutViewController: ReviewScreenViewController {
 
     var startPaymentVaultInvoked = false
-    
+
     /*override internal func startPaymentVault(animated : Bool = false){
         self.startPaymentVaultInvoked = true
         super.startPaymentVault()
     }*/
-    
+
 }

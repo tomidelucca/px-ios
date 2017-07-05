@@ -89,9 +89,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CFT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9H-cX-bxB">
-                        <rect key="frame" x="227" y="251" width="43.5" height="29"/>
+                        <rect key="frame" x="226" y="251" width="44" height="29"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -105,8 +105,8 @@
                     <constraint firstItem="Tw3-3X-flB" firstAttribute="top" secondItem="Zf5-PV-8ZU" secondAttribute="bottom" constant="3" id="Bdz-a2-4ed"/>
                     <constraint firstItem="Tw3-3X-flB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="EUo-02-mVy"/>
                     <constraint firstItem="e6B-2G-k5B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="25" id="Ite-rd-d5O"/>
+                    <constraint firstItem="B9H-cX-bxB" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="TFA-6o-ovz"/>
                     <constraint firstAttribute="trailingMargin" secondItem="e6B-2G-k5B" secondAttribute="trailing" constant="25" id="YnC-19-XIk"/>
-                    <constraint firstItem="B9H-cX-bxB" firstAttribute="top" secondItem="aDj-L7-Gmd" secondAttribute="bottom" constant="20" id="bhh-kd-Qez"/>
                     <constraint firstItem="B9H-cX-bxB" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="cdQ-be-wBj"/>
                     <constraint firstItem="7IM-bU-WwN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="50" id="dtD-fe-40W"/>
                     <constraint firstItem="7IM-bU-WwN" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hfj-ol-X0h"/>
@@ -119,6 +119,7 @@
             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="CFT" destination="B9H-cX-bxB" id="Voe-vt-JFl"/>
+                <outlet property="changePaymentMethodCFTConstraint" destination="1MJ-vX-PPV" id="pLw-5y-5dw"/>
                 <outlet property="noRateLabel" destination="Zf5-PV-8ZU" id="KuN-lT-dB9"/>
                 <outlet property="paymentDescription" destination="e6B-2G-k5B" id="D8F-XV-nTU"/>
                 <outlet property="paymentMethodDescription" destination="aDj-L7-Gmd" id="Ohc-6W-Sh4"/>

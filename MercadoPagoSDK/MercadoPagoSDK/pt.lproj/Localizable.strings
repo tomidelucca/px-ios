@@ -6,6 +6,9 @@
   Copyright (c) 2015 MercadoPago. All rights reserved.
 */
 
+"Si" = "Sim";
+"No" = "Não";
+
 "Cargando..." = "Carregando...";
 "invalid_cvv_length" = "Digite os %1$s números do código de segurança";
 "invalid_field" = "Verifique este dado";
@@ -15,17 +18,36 @@
 "cod_seg_desc" = "Últimos %1$s dígitos do verso do cartão de crédito";
 "cod_seg_desc_amex" = "%1$s dígitos da frente do cartão de crédito";
 
-//Installment Cell
+//ADDITIONAL STEP
 
+//-- Payer Cost
+" Sin interés" = " Sem juros";//--
+"¿En cuántas cuotas?" = "Em quantas parcelas?";
+"No incluye intereses bancarios" = "Não inclui juros bancários";
+
+//-- Issuers
+"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
+
+//-- Card Type
+"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
+
+//-- EntityType
+"¿Cuál es el tipo de persona?" = "Qual é o tipo de pessoa?";
+//-----EntityTypes
+"Natural"="Física";
+"Jurídica"="Jurídica";
+
+//-- Financial Institutions
+"¿Cuál es tu banco?" = "Qual é o seu banco?";
+
+
+
+//Installment Cell
 "Cuotas" = "Parcelas";
 "cuotas sin interés" = "parcelas sem juros";
 "Selecciona la cantidad de cuotas" = "Escolha o número de parcelas";
 "Selecciona un medio de pago..." = "Escolha o meio de pagamento ...";
-" Sin interés" = " Sem juros";//--
 "Sin interés" = "Sem juros";
-"¿En cuántas cuotas?" = "Em quantas parcelas?";
-"¿Quién emitió tu tarjeta?" = "Qual é o seu banco?";
-"¿Qué tipo de tarjeta es?" = "Qual é o tipo do cartão?";
 
 
 "Medios de pago" = "Meios de pagamento";
@@ -134,6 +156,9 @@
 "cc_rejected_max_attempts_subtitle_credit_card"= "Use outro cartão ou outro meio de pagamento.";
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Se você precisar pagar novamente, use outro cartão ou outro meio de pagamento.";
 "cc_rejected_card_disabled_subtitle_credit_card"="O telefone do banco está no verso do seu cartão.";
+"cc_rejected_call_for_authorize_subtitle_credit_card" = "";
+
+"cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
@@ -153,11 +178,12 @@
 "Cantidad : " = "Quantidade: ";
 "Precio Unitario : " = "Preço unitário: ";
 "Pagas" = "Você paga";
-"Cambiar pago" = "Alterar pagamento";
+"Cambiar medio de pago" = "Alterar meio de pagamento";
 
 "Medio de pago" = "Meio de pagamento";
 "Operación" = "Operação";
 "Fecha" = "Data";
+"Con dinero en cuenta" = "Com dinheiro em conta";
 
 
 "Revisa si está todo bien..." = "Verifique para ver se está tudo bem...";
@@ -170,6 +196,13 @@
 "Términos y Condiciones"="Termos e Condições";
 "Verifique su conexión a internet e intente nuevamente"="Sem conexão";
 
+
+//Errores
+
+"El título del item esta vacio" = "O título do artigo é vazia";
+"La currency del item esta vacia" = "A moeda do item está vazia";
+"La preferencia no esta activa" = "A preferência não ativa";
+"La preferencia esta expirada" = "A preferência é expirado";
 "Pagáras " = "Você pagará ";
 
 "ryc_title_default"=" no ";
@@ -185,3 +218,27 @@
 "ryc_complementary_banamex_bank_transfer"="Internet Banking de ";
 "ryc_complementary_banamex_atm"="caixa eletrônico de ";
 "ryc_complementary_redlink_atm"="caixa eletrônico de ";
+
+"ryc_payment_method_redlink_atm" = "Red Link";
+"ryc_payment_method_redlink_bank_transfer" = "Red Link";
+
+
+//Discount
+"Código de descuento"="Código de desconto";
+"Canejar"="Aplicar";
+"Código inválido"="Código inválido";
+"de descuento"="de desconto";
+"Tengo un descuento"="Tenho um desconto";
+"Total: "="Total: ";
+"Vendedor sin descuento disponible"="Vendedor não tem desconto disponíveis";
+"Se agotó la cantidad de usos"="O número de pedidos esgotados";
+"Importe fuera del alcance"="Montante fora do alcance";
+"La campaña expiró"="Campanha expirado";
+
+// Unlock Card
+"Recuerda desbloquear tu tarjeta antes de confirmar el pago."="Lembre-se de desbloquear o seu cartão antes de confirmar o pagamento.";
+"desbloquear tu tarjeta"="desbloquear o seu cartão";
+"Desbloqueo de Tarjeta"="Desbloquear Cartão";
+
+//Administrador de tarjetas
+"¿Con qué tarjeta?"="Com qual cartão?";

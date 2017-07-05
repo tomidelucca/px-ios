@@ -9,12 +9,15 @@
 import XCTest
 
 class SecurityCodeTest: BaseTest {
-    
-    
-    func testFromJSON(){
-        let json : NSDictionary = MockManager.getMockFor("SecurityCode")!
+
+    func testFromJSON() {
+        let json: NSDictionary = MockManager.getMockFor("SecurityCode")!
         let securityCodeFromJSON = SecurityCode.fromJSON(json)
-        XCTAssertEqual(securityCodeFromJSON, securityCodeFromJSON)
+        let securityCode = MockBuilder.buildSecurityCode()
+
+        XCTAssertEqual(securityCodeFromJSON.cardLocation, securityCode.cardLocation)
+        XCTAssertEqual(securityCodeFromJSON.length, securityCode.length)
+        XCTAssertEqual(securityCodeFromJSON.mode, securityCode.mode)
     }
-    
+
 }
