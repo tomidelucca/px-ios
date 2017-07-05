@@ -10,7 +10,7 @@
 
 @interface ExampleUtils : NSObject
 
-#define TEST_PUBLIC_KEY @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a" //Descuento por codigo "PRUEBA"
+#define TEST_PUBLIC_KEY @"TEST-b3d856f6-375e-4f8c-9573-ad28ab8fac95" //Descuento por codigo "PRUEBA"
 #define TEST_PUBLIC_KEY_DISCOUNT @"TEST-85a140f5-10ce-4d3a-ba7a-a743e066840f"
 #define MERCHANT_PUBLIC_KEY @"TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 //#define TEST_PUBLIC_KEY @"6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2"

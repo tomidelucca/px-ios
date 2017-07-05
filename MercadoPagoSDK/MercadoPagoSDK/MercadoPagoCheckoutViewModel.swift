@@ -81,6 +81,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     open var financialInstitutions: [FinancialInstitution]?
 
     static var error: MPSDKError?
+    
     internal var errorCallback: (() -> Void)?
 
     internal var needLoadPreference: Bool = false
@@ -128,7 +129,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
     }
-
+    
     func hasError() -> Bool {
         return MercadoPagoCheckoutViewModel.error != nil
     }
@@ -280,11 +281,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.directDiscountSearched = true
             return .SEARCH_DIRECT_DISCOUNT
         }
-
+        
         if hasError() {
             return .ERROR
         }
-
+        
         if shouldExitCheckout() {
             return .FINISH
         }
@@ -318,10 +319,19 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if needCompleteCard() {
             return .CARD_FORM
         }
+        
         if needGetIdentification() {
             return .IDENTIFICATION
         }
-
+        
+        if needSecurityCode() {
+            return .SECURITY_CODE_ONLY
+        }
+        
+        if needCreateToken() {
+            return .CREATE_CARD_TOKEN
+        }
+        
         if needGetEntityTypes() {
             return .ENTITY_TYPE
         }
@@ -348,14 +358,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if needPayerCostSelectionScreen() {
             return .PAYER_COST_SCREEN
-        }
-
-        if needSecurityCode() {
-            return .SECURITY_CODE_ONLY
-        }
-
-        if needCreateToken() {
-            return .CREATE_CARD_TOKEN
         }
 
         return .FINISH
@@ -575,7 +577,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         MercadoPagoCheckoutViewModel.error = error
         self.errorCallback = errorCallback
     }
-
+    
     func shouldDisplayPaymentResult() -> Bool {
         if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentResultScreenEnable() {
             return false

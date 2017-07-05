@@ -207,7 +207,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"150216849-68645cbb-dfe6-4410-bfd6-6e5aa33d8a33"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"242626852-79b4f503-1cf4-44ec-8f82-b5cd3cca8891"];
 }
 
 -(void)setPaymentResultScreenPreference {
