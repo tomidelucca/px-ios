@@ -13,7 +13,7 @@ class TrackStorageTest: BaseTest {
     override func setUp() {
         super.setUp()
         UserDefaults.standard.setValue([String](), forKey: TrackStorageManager.SCREEN_TRACK_INFO_ARRAY_KEY)
-        TrackStorageManager.MAX_DAYS_IN_STORAGE = 7.0
+        TrackStorageManager.MAX_DAYS_IN_STORAGE = 7
         MPXTracker.sharedInstance.trackingStrategy = PersistAndTrack(attemptSendEachTrack: false)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -51,7 +51,7 @@ class TrackStorageTest: BaseTest {
         var batchArray = TrackStorageManager.getBatchScreenTracks()
         XCTAssert(batchArray?.count == TrackStorageManager.MIN_TRACKS_PER_REQUEST)
         TrackStorageManager.persist(screenTrackInfoArray: batchArray!)
-        TrackStorageManager.MAX_DAYS_IN_STORAGE = 1 / 24 / 60 / 60
+        TrackStorageManager.MAX_DAYS_IN_STORAGE = Double(1 / 24 / 60 / 60)
         sleep(1)
         batchArray = TrackStorageManager.getBatchScreenTracks()
         XCTAssert(batchArray == nil)
