@@ -63,9 +63,9 @@ class TrackerTest: XCTestCase {
     }
     func applicationJSON() -> [String:Any] {
         let obj: [String:Any] = [
-            "public_key": DummyContext.mpxPublicKey,
-            "checkout_version": DummyContext.mpxCheckoutVersion,
-            "platform": DummyContext.mpxPlatform
+            "public_key": MercadoPagoContext.sharedInstance.publicKey(),
+            "checkout_version": MercadoPagoContext.sharedInstance.sdkVersion(),
+            "platform": "Native"
         ]
         return obj
     }

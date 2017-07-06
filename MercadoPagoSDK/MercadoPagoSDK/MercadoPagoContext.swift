@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class MercadoPagoContext: NSObject, MPXTracker {
+open class MercadoPagoContext: NSObject {
 
     static let sharedInstance = MercadoPagoContext()
 
@@ -50,7 +50,7 @@ open class MercadoPagoContext: NSObject, MPXTracker {
     static var mpxCheckoutVersion: String {return sharedInstance.sdkVersion()}
     static var mpxPlatform: String {return sharedInstance.framework()}
     static var mpxSiteId: String {return sharedInstance.siteId()}
-    static var mpxPlatformType: String {return "Native"}
+    static var platformType: String {return "Native"}
 
     open func framework() -> String! {
         return  "iOS"

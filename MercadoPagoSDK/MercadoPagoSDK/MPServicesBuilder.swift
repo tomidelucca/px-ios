@@ -23,7 +23,7 @@ open class MPServicesBuilder: NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MercadoPagoContext.trackToken(token: token._id)
+                    MPXTracker.trackToken(token: token._id)
                     success(token)
                 } else {
                     if failure != nil {
@@ -45,7 +45,7 @@ open class MPServicesBuilder: NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MercadoPagoContext.trackToken(token: token._id)
+                    MPXTracker.trackToken(token: token._id)
                     success(token)
                 } else {
                     if failure != nil {
@@ -68,7 +68,7 @@ open class MPServicesBuilder: NSObject {
             if let tokenDic = jsonResult as? NSDictionary {
                 if tokenDic["error"] == nil {
                     token = Token.fromJSON(tokenDic)
-                    MercadoPagoContext.trackToken(token: token._id)
+                    MPXTracker.trackToken(token: token._id)
                     success(token)
                 } else {
                     if failure != nil {
