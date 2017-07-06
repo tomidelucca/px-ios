@@ -10,16 +10,20 @@ import Foundation
 
 protocol TrackingStrategy {
     func trackScreen(screenTrack: ScreenTrackInfo)
+    func trackLastCheckoutScreen(screenTrack: ScreenTrackInfo)
 }
 
 class PersistAndTrack: TrackingStrategy {
 
-    var attemptSendForEachTrack = true
+    var attemptSendForEachTrack = false
 
     init(attemptSendEachTrack: Bool = true) {
         self.attemptSendForEachTrack = attemptSendEachTrack
     }
-
+    func trackLastCheckoutScreen(screenTrack: ScreenTrackInfo) {
+        TrackStorageManager.persist(screenTrackInfo: screenTrack)
+        attemptSendTrackInfo()
+    }
     func trackScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
         if attemptSendForEachTrack {
@@ -35,9 +39,9 @@ class PersistAndTrack: TrackingStrategy {
         return status.description == "Online (WiFi)" || UIApplication.shared.applicationState == UIApplicationState.background
     }
 
-    func attemptSendTrackInfo() {
+    func attemptSendTrackInfo(force: Bool = false) {
         if canSendTrack() {
-            let array = TrackStorageManager.getBatchScreenTracks()
+            let array = TrackStorageManager.getBatchScreenTracks(force: force)
             guard let batch = array else {
                 return
             }
@@ -45,7 +49,7 @@ class PersistAndTrack: TrackingStrategy {
             attemptSendTrackInfo()
         }else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-                self.attemptSendTrackInfo()
+                self.attemptSendTrackInfo(force: force)
             })
         }
     }

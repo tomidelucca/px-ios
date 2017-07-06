@@ -13,7 +13,7 @@ class TrackStorageTest: BaseTest {
     override func setUp() {
         super.setUp()
         UserDefaults.standard.setValue([String](), forKey: TrackStorageManager.SCREEN_TRACK_INFO_ARRAY_KEY)
-        TrackStorageManager.MAX_DAYS_IN_STORAGE = 7
+        TrackStorageManager.MAX_DAYS_IN_STORAGE = 7.0
         MPXTracker.sharedInstance.trackingStrategy = PersistAndTrack(attemptSendEachTrack: false)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }

@@ -57,13 +57,13 @@ class TrackStorageManager: NSObject {
     }
 
     //Devuevle un array con los MAX_TRACKS_PER_REQUEST ultimos screenstrackinfo
-    static func getBatchScreenTracks() -> [ScreenTrackInfo]? {
+    static func getBatchScreenTracks(force: Bool = false) -> [ScreenTrackInfo]? {
         cleanStorage()
         let array = UserDefaults.standard.array(forKey: SCREEN_TRACK_INFO_ARRAY_KEY)
         guard let arrayScreen = array as? [String] else {
             return nil
         }
-        if arrayScreen.count < MIN_TRACKS_PER_REQUEST {
+        if arrayScreen.count < MIN_TRACKS_PER_REQUEST && !force {
             return nil
         }
         var screenTrackArray = [ScreenTrackInfo]()
