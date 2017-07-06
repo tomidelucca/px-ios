@@ -177,6 +177,8 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
+        //Note: this is being used only for new cards, saved cards tokenization is
+        //made in MercadoPagoCheckout#collectSecurityCode().
         return self.paymentData.token == nil && pm.isCard() && self.cardToken != nil
     }
 
