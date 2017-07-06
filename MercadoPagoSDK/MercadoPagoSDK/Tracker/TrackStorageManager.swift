@@ -25,11 +25,9 @@ class TrackStorageManager: NSObject {
         if let array = UserDefaults.standard.array(forKey: SCREEN_TRACK_INFO_ARRAY_KEY) as? [String] {
             newArray.append(contentsOf: array)
         }
-        var screenTrackJSONArray = [String]()
         for trackScreen in screenTrackInfoArray {
-            screenTrackJSONArray.append(trackScreen.toJSONString())
+            newArray.append(trackScreen.toJSONString())
         }
-        newArray.append(contentsOf: screenTrackJSONArray)
         UserDefaults.standard.setValue(newArray, forKey: SCREEN_TRACK_INFO_ARRAY_KEY)
     }
 
@@ -40,7 +38,7 @@ class TrackStorageManager: NSObject {
         }
         var screenTrackArray = [ScreenTrackInfo]()
         for trackScreenJSON in arrayScreen {
-        screenTrackArray.append(ScreenTrackInfo(from: JSONHandler.convertToDictionary(text: trackScreenJSON)!))
+            screenTrackArray.append(ScreenTrackInfo(from: JSONHandler.convertToDictionary(text: trackScreenJSON)!))
         }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"

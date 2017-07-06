@@ -36,15 +36,16 @@ class TrackingServices: NSObject {
             if error == nil {
                 do {
                     let responseJson = try JSONSerialization.jsonObject(with: data!,
-                                                                        options:JSONSerialization.ReadingOptions.allowFragments)
+                                                                         options:JSONSerialization.ReadingOptions.allowFragments)
                     if let paymentDic = responseJson as? NSDictionary {
                         if paymentDic["status"] as? Int == 200 {
-                            print("200!")
+                            success(responseJson as Any)
                         }else {
-                            failure!(NSError())
+                            let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
+                            failure?(e)
                         }
                     }
-                    success(responseJson as Any)
+
                 } catch {
                     let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
                     failure?(e)
