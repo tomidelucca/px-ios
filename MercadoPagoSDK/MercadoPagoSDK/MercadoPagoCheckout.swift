@@ -372,20 +372,20 @@ open class MercadoPagoCheckout: NSObject {
                 guard let strongSelf = self else {
                     return
                 }
-                
-                var error = MPSDKError.convertFrom(error)
+                let error = MPSDKError.convertFrom(error)
 
                 if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
                     if let identificationViewController = self?.navigationController.viewControllers.last as? IdentificationViewController {
                         identificationViewController.showErrorMessage("Revisa este dato".localized)
                     }
+                    strongSelf.dismissLoading()
                 } else {
                     strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
                         self?.createNewCardToken()
                     })
+                    strongSelf.dismissLoading()
+                    strongSelf.executeNextStep()
                 }
-                
-                strongSelf.dismissLoading()
         })
     }
 

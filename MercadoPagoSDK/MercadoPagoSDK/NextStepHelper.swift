@@ -166,7 +166,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pmSelected = self.paymentOptionSelected else {
             return false
         }
-        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if pmSelected.isCustomerPaymentMethod() && self.paymentData.token == nil && pmSelected.getId() != PaymentTypeId.ACCOUNT_MONEY.rawValue && self.paymentData.payerCost != nil {
             return true
         }
         return false
@@ -177,7 +177,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.paymentMethod else {
             return false
         }
-        return self.paymentData.token == nil && pm.isCard()
+        return self.paymentData.token == nil && pm.isCard() && self.cardToken != nil
     }
 
     func needReviewAndConfirm() -> Bool {

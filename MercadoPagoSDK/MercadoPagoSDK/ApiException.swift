@@ -36,7 +36,6 @@ open class ApiException: NSObject {
 
         return apiException
     }
-    
     func containsCause(code: String?) -> Bool {
         if self.cause != nil && code != nil {
             for currentCause in self.cause {
@@ -45,8 +44,6 @@ open class ApiException: NSObject {
                 }
             }
         }
-        return false;
+        return false
     }
 }
-
-
