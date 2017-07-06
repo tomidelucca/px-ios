@@ -214,7 +214,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     //SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
-        self.paymentData.token = nil
         self.paymentMethods = paymentMethods
         self.paymentData.paymentMethod = self.paymentMethods?[0] // Ver si son mas de uno
         self.cardToken = cardToken
@@ -239,9 +238,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     public func updateCheckoutModel(identification: Identification) {
-        //TODO BORRAR LIMPADA!
-        self.paymentData.token = nil
-        //
         if paymentData.paymentMethod.isCard() {
             self.cardToken!.cardholder!.identification = identification
         } else {
