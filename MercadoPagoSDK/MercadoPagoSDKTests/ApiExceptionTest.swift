@@ -15,7 +15,7 @@ class ApiExceptionTest: XCTestCase {
         let apiExceptionFromJSON = ApiException.fromJSON(json)
         let apiException = MockBuilder.buildApiException(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue)
         
-        XCTAssertEqual(apiExceptionFromJSON.cause[0].code, apiException?.cause[0].code)
+        XCTAssertEqual(apiExceptionFromJSON.cause?[0].code, apiException?.cause?[0].code)
         XCTAssertEqual(apiExceptionFromJSON.error, apiException?.error)
         XCTAssertEqual(apiExceptionFromJSON.message, apiException?.message)
         XCTAssertEqual(apiExceptionFromJSON.status, apiException?.status)
@@ -29,11 +29,6 @@ class ApiExceptionTest: XCTestCase {
     func testWhenCauseDoesNotContainCodeThenContainsCauseShouldReturnFalse() {
         let apiException = MockBuilder.buildApiException(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue)
         XCTAssertFalse((apiException?.containsCause(code: "132312"))!)
-    }
-    
-    func testWhenCauseCodeIsNilThenContainsCauseShouldReturnFalse() {
-        let apiException = MockBuilder.buildApiException(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue)
-        XCTAssertFalse((apiException?.containsCause(code: nil))!)
     }
 
     func testWhenApiExceptionCauseIsNilThenContainsCauseShouldReturnFalse() {

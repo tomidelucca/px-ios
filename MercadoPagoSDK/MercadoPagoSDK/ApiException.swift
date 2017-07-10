@@ -9,9 +9,9 @@
 import Foundation
 
 open class ApiException: NSObject {
-    open var cause: [Cause]!
-    open var error: String!
-    open var message: String!
+    open var cause: [Cause]?
+    open var error: String?
+    open var message: String?
     open var status: Int = 0
     open class func fromJSON(_ json: NSDictionary) -> ApiException {
         let apiException: ApiException = ApiException()
@@ -36,9 +36,9 @@ open class ApiException: NSObject {
 
         return apiException
     }
-    func containsCause(code: String?) -> Bool {
-        if self.cause != nil && code != nil {
-            for currentCause in self.cause {
+    func containsCause(code: String) -> Bool {
+        if self.cause != nil {
+            for currentCause in self.cause! {
                 if code == currentCause.code {
                     return true
                 }

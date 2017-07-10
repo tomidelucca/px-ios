@@ -377,7 +377,7 @@ open class MercadoPagoCheckout: NSObject {
                 let error = MPSDKError.convertFrom(error)
 
                 if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
-                    if let identificationViewController = self?.navigationController.viewControllers.last as? IdentificationViewController {
+                    if let identificationViewController = strongSelf.navigationController.viewControllers.last as? IdentificationViewController {
                         identificationViewController.showErrorMessage("Revisa este dato".localized)
                     }
                     strongSelf.dismissLoading()
