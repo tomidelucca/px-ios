@@ -603,7 +603,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 extension MercadoPagoCheckoutViewModel {
     func resetGroupSelection() {
         self.paymentOptionSelected = nil
-        self.paymentMethodOptions = self.rootPaymentMethodOptions
+        guard let search = self.search else {
+            return
+        }
+        self.updateCheckoutModel(paymentMethodSearch: search)
     }
 
     func resetInformation() {
