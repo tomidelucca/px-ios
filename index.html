@@ -51,7 +51,7 @@
                <br />
                <div class="advanced-panel text-center">
                  <p class="sub-heading">
-                   Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil and Colombia<sup>*</sup></b>.
+                   Before starting, take into account that our mobile SDK solution is only available in <b>Argentina, Mexico, Brazil, Colombia, Venezuela, Perú and Chile.<sup>*</sup></b>
                    <br />
                  </p>
                  <p>
@@ -120,7 +120,7 @@ pod 'MercadoPagoSDK', '<span class="newV3Version"></span>'
               <code id="get-pref" class="line-numbers language-swift">
                         let preferenceBody : [String : Any] = ["item_id" : "id", "quantity" : 1]
 
-                        CustomServer.createCheckoutPreference(url: "https://your-base-URL.com/", uri: "your_create_preference_URI", bodyInfo: preferenceBody as NSDictionary, 
+                        CustomServer.createCheckoutPreference(url: "https://your-base-URL.com/", uri: "your_create_preference_URI", bodyInfo: preferenceBody as NSDictionary,
                           success: { (checkoutPrefernece) in
                             startMercadoPagoCheckout(checkoutPreference)
                         }) { (error) in

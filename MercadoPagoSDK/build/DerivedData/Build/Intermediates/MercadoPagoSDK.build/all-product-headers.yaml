@@ -1,0 +1,48 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/build/DerivedData/Build/Products/Release-iphonesimulator/MercadoPagoSDK.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "MLPXSpinner.h",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoSDK/MLPXSpinner.h"
+        },
+        {
+          'type': 'file',
+          'name': "MLPXSpinnerConfig.h",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoSDK/MLPXSpinnerConfig.h"
+        },
+        {
+          'type': 'file',
+          'name': "MPSDKLoadingView.h",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoSDK/MPSDKLoadingView.h"
+        },
+        {
+          'type': 'file',
+          'name': "MercadoPagoSDK-Swift.h",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/build/DerivedData/Build/Products/Release-iphonesimulator/MercadoPagoSDK.framework/Headers/MercadoPagoSDK-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "MercadoPagoSDK.h",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoSDK/MercadoPagoSDK.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/build/DerivedData/Build/Products/Release-iphonesimulator/MercadoPagoSDK.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/dtejo/Documents/Projects/MercadoPagoSDK/MercadoPagoSDK/build/DerivedData/Build/Intermediates/MercadoPagoSDK.build/Release-iphonesimulator/MercadoPagoSDK.build/module.modulemap"
+        }
+      ]
+    }
+  ]
+}
