@@ -51,9 +51,15 @@ open class MercadoPagoCheckout: NSObject {
 
     }
 
+    func initialize() {
+        MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
+        executeNextStep()
+    }
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
+        case .START :
+            self.initialize()
         case .SERVICE_GET_PREFERENCE:
             self.getCheckoutPreference()
         case .ACTION_VALIDATE_PREFERENCE:
@@ -97,14 +103,13 @@ open class MercadoPagoCheckout: NSObject {
         case .SCREEN_ERROR:
             self.showErrorScreen()
         default: break
-
         }
     }
 
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, messageDetail: errorMessage!, retry: false), errorCallback : { (_) -> Void in })
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback : { (_) -> Void in })
         }
         self.executeNextStep()
     }
@@ -224,7 +229,7 @@ open class MercadoPagoCheckout: NSObject {
         }
         self.navigationController.viewControllers = currentViewControllers
     }
-    
+
     public func popToWhenFinish(viewController: UIViewController) {
         if self.navigationController.viewControllers.contains(viewController) {
             self.viewControllerBase = viewController

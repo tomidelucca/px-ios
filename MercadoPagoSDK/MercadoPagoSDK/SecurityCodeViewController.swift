@@ -13,7 +13,6 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var securityCodeLabel: UILabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
-
     @IBOutlet weak var panelView: UIView!
     var viewModel: SecurityCodeViewModel!
     @IBOutlet weak var cardCvvThumbnail: UIImageView!
@@ -22,7 +21,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var ccvLabelEmpty: Bool = true
     var toolbar: UIToolbar?
 
-    override open var screenName: String { get { return "SECURITY_CODE" } }
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
 
     override open func viewDidLoad() {
         super.viewDidLoad()

@@ -28,8 +28,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -112,8 +116,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -196,8 +204,12 @@ class ESCFlowsTests: BaseTest {
     func testEntireFlowWithCustomerCardWithESErrorInTokenCreation() {
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -287,8 +299,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -397,8 +413,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount
@@ -504,8 +524,12 @@ class ESCFlowsTests: BaseTest {
 
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 1. Search preference
+        // 1. Start
         var step = mpCheckout.viewModel.nextStep()
+        XCTAssertEqual(CheckoutStep.START, step)
+
+        // 1. Search preference
+        step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
         //2. Buscar DirectDiscount

@@ -12,7 +12,7 @@ class FlowPreferenceTest: BaseTest {
 
     let flowPreference = FlowPreference()
 
-    func testDefaultState(){
+    func testDefaultState() {
         XCTAssertFalse(flowPreference.isESCEnable())
         XCTAssert(flowPreference.isReviewAndConfirmScreenEnable())
         XCTAssert(flowPreference.isPaymentResultScreenEnable())
