@@ -67,6 +67,8 @@ open class PaymentMethodSearchService: MercadoPagoService {
         params = params + "&site_id=" + MercadoPagoContext.getSite()
 
         params = params + "&api_version=" + ServicePreference.API_VERSION
+        
+        params = params + "&processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
 
         var groupsPayerBody: String = ""
         if !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken()) {

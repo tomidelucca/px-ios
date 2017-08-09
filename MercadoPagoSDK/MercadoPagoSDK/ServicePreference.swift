@@ -22,6 +22,7 @@ open class ServicePreference: NSObject {
     var discountURL: String = MP_API_BASE_URL
     var discountURI: String = MP_DISCOUNT_URI
     var discountAdditionalInfo: NSDictionary?
+    var processingMode: ProcessingMode = ProcessingMode.aggregator
 
     static let MP_ALPHA_ENV = "/gamma"
     open static var MP_TEST_ENV = "/beta"
@@ -215,5 +216,29 @@ open class ServicePreference: NSObject {
             }
         }
     }
+    
+    public func getProcessingModeString() -> String {
+        return self.processingMode.rawValue
+    }
+    
+    public func setAggregatorAsProcessingMode() {
+        self.processingMode = ProcessingMode.aggregator
+    }
+    
+    public func setGatewayAsProcessingMode() {
+        self.processingMode = ProcessingMode.gateway
+    }
+    
+    //Turn on when hybrid is available
+    /*
+    public func setHybridAsProcessingMode() {
+        self.processingMode = ProcessingModes.hybrid
+    }
+    */
+}
 
+public enum ProcessingMode: String {
+    case gateway = "gateway"
+    case aggregator = "aggregator"
+    case hybrid = "hybrid"
 }
