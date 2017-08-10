@@ -26,6 +26,7 @@ open class PaymentMethod: NSObject, Cellable {
     open var deferredCapture: String!
     open var minAllowedAmount: Double = 0
     open var maxAllowedAmount: Double!
+    open var merchantAccountId: String?
 
     public override init() {
         super.init()
@@ -149,6 +150,10 @@ open class PaymentMethod: NSObject, Cellable {
                 }
                 obj["financial_institutions"] = financialInstitutionsJson
         }
+        
+        if let merchantAccountID = self.merchantAccountId {
+            obj["merchant_account_id"] = merchantAccountID
+        }
 
         return obj
 
@@ -189,6 +194,10 @@ open class PaymentMethod: NSObject, Cellable {
 
         if json["min_allowed_amount"] != nil && !(json["min_allowed_amount"]! is NSNull) {
             paymentMethod.minAllowedAmount = json["min_allowed_amount"] as! Double
+        }
+        
+        if json["merchant_account_id"] != nil && !(json["merchant_account_id"]! is NSNull) {
+            paymentMethod.merchantAccountId = json["merchant_account_id"] as? String
         }
 
         var settings: [Setting] = [Setting]()
@@ -415,7 +424,8 @@ public func ==(obj1: PaymentMethod, obj2: PaymentMethod) -> Bool {
             obj1.paymentTypeId == obj2.paymentTypeId &&
             obj1.settings == obj2.settings &&
             obj1.additionalInfoNeeded == obj2.additionalInfoNeeded &&
-            obj1.financialInstitutions == obj2.financialInstitutions
+            obj1.financialInstitutions == obj2.financialInstitutions &&
+            obj1.merchantAccountId == obj2.merchantAccountId
 
     return areEqual
 }
