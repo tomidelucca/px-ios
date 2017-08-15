@@ -96,8 +96,6 @@ open class CheckoutViewModel: NSObject {
 
         numberOfRows += shouldShowTotal() ? 1 : 0
 
-        // Boton de confirmar
-        numberOfRows += 1
         return numberOfRows
 
     }
@@ -107,7 +105,7 @@ open class CheckoutViewModel: NSObject {
             return 60
 
         } else if self.isProductlCellFor(indexPath: indexPath) {
-            return PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
+            return numberOfRowsInMainSection() == 1 ? PurchaseSimpleDetailTableViewCell.PRODUCT_ONLY_ROW_HEIGHT : PurchaseSimpleDetailTableViewCell.PRODUCT_ROW_HEIGHT
 
         } else if self.isInstallmentsCellFor(indexPath: indexPath) {
             return PurchaseDetailTableViewCell.getCellHeight(payerCost : self.paymentData.payerCost)
@@ -118,7 +116,7 @@ open class CheckoutViewModel: NSObject {
         } else if self.isPayerCostAdditionalInfoFor(indexPath: indexPath) || self.isUnlockCardCellFor(indexPath: indexPath) {
             return ConfirmAdditionalInfoTableViewCell.ROW_HEIGHT
 
-        } else if self.isConfirmButtonCellFor(indexPath: indexPath) || isSecondaryConfirmButton(indexPath: indexPath) {
+        } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
             return ConfirmPaymentTableViewCell.ROW_HEIGHT
 
         } else if self.isItemCellFor(indexPath: indexPath) {
@@ -145,9 +143,6 @@ open class CheckoutViewModel: NSObject {
 
     func isTermsAndConditionsViewCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.footer.rawValue && (indexPath.row == 0 && !isUserLogged())
-    }
-    func isSecondaryConfirmButton(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.footer.rawValue && ( (indexPath.row == 1 && !isUserLogged()) || (indexPath.row == 0 && isUserLogged()) )
     }
     func isExitButtonTableViewCellFor(indexPath: IndexPath) -> Bool {
         return indexPath.section == Sections.footer.rawValue && ( (indexPath.row == 2 && !isUserLogged()) || (indexPath.row == 1 && isUserLogged()) )
@@ -237,11 +232,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func isConfirmButtonCellFor(indexPath: IndexPath) -> Bool {
-        var numberOfRows = numberOfSummaryRows()
-        numberOfRows += shouldShowTotal() ? 1 : 0
-        numberOfRows += shouldShowInstallmentSummary() ? 1 : 0
-        numberOfRows += hasConfirmAdditionalInfo() ? 1 : 0
-        return indexPath.section == Sections.summary.rawValue && indexPath.row == numberOfRows
+        return indexPath.section == Sections.footer.rawValue && ( (indexPath.row == 1 && !isUserLogged()) || (indexPath.row == 0 && isUserLogged()) )
     }
 
     func hasConfirmAdditionalInfo() -> Bool {
@@ -282,6 +273,24 @@ open class CheckoutViewModel: NSObject {
         let newPaymentData: PaymentData = paymentData
         newPaymentData.clearCollectedData()
         return newPaymentData
+    }
+
+    func getFloatingConfirmButtonHeight() -> CGFloat {
+        return 80
+    }
+
+    func getFloatingConfirmButtonViewFrame() -> CGRect {
+        let height = self.getFloatingConfirmButtonHeight()
+        let width = UIScreen.main.bounds.width
+        let frame = CGRect(x: 0, y: UIScreen.main.bounds.maxY - height, width: width, height: height)
+        return frame
+    }
+
+    func getFloatingConfirmButtonCellFrame() -> CGRect {
+        let height = self.getFloatingConfirmButtonHeight()
+        let width = UIScreen.main.bounds.width
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        return frame
     }
 
     public enum Sections: Int {

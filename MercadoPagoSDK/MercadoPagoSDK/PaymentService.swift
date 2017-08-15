@@ -48,6 +48,9 @@ open class PaymentService: MercadoPagoService {
             params = params + "&issuer.id=" + String(describing: issuer_id!)
         }
         params = params + "&payment_method_id=" + payment_method_id
+
+        params = params + "&processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
+        
         self.request( uri: uri, params:params, body: nil, method: method, success: {(jsonResult: AnyObject?) -> Void in
             if let errorDic = jsonResult as? NSDictionary {
                 if errorDic["error"] != nil {
@@ -74,7 +77,10 @@ open class PaymentService: MercadoPagoService {
     }
 
     open func getIssuers(_ method: String = "GET", uri: String = ServicePreference.MP_ISSUERS_URI, key: String, payment_method_id: String, bin: String? = nil, success:  @escaping (_ jsonResult: AnyObject?) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        let params = MercadoPagoContext.keyType() + "=" + key + "&payment_method_id=" + payment_method_id
+        var params = MercadoPagoContext.keyType() + "=" + key + "&payment_method_id=" + payment_method_id
+        
+        params = params + "&processing_mode=" + MercadoPagoCheckoutViewModel.servicePreference.getProcessingModeString()
+
         if bin != nil {
             self.request(uri: uri, params: params + "&bin=" + bin!, body: nil, method: method, success: success, failure: { (error) in
                 if let failure = failure {
