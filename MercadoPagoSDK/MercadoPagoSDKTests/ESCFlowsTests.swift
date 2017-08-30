@@ -628,12 +628,12 @@ open class MercadoPagoESCImplementationTest: NSObject, MercadoPagoESC {
         }
         return false
     }
-    
+
     public func deleteESC(cardId: String) {
-        
+
     }
-    
+
     public func deleteAllESC() {
-        
+
     }
 }

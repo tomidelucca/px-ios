@@ -38,7 +38,6 @@ open class ApiUtil {
         case GET_BANK_DEALS = "GET_BANK_DEALS"
         case GET_INSTRUCTIONS = "GET_INSTRUCTIONS"
     }
-
 }
 
 open class ApiParams: NSObject {
