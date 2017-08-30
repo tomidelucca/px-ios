@@ -234,9 +234,16 @@ class MainTableViewController: UITableViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
 
+        var shoppingDecoration = ShoppingReviewPreference()
+        shoppingDecoration.setOneWordDescription(oneWordDescription: "Entradas")
+        shoppingDecoration.setAmountTitle(amountTitle: "Valor de las entradas: ")
+        shoppingDecoration.setQuantityTitle(quantityTitle: "Cantidad de entradas:  ")
+        checkout.setShoppingReviewPreference(shoppingDecoration)
+
         checkout.start()
     }
 
+    static var pase = false
     /// Wallet Checkout
     func startWalletCheckout() {
         if !String.isNullOrEmpty(self.configJSON) {
@@ -331,7 +338,9 @@ class MainTableViewController: UITableViewController {
             items.append(item)
         }
 
-        return CheckoutPreference(items: items, payer: payer)
+        let checkoutPreference = CheckoutPreference(items: items, payer: payer)
+        checkoutPreference.siteId = site
+        return checkoutPreference
     }
 
     func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {

@@ -12,7 +12,7 @@ class PaymentResultViewModel: NSObject {
 
     var paymentResult: PaymentResult!
     var callback: ( _ status: PaymentResult.CongratsState) -> Void
-    var checkoutPreference: CheckoutPreference?
+    var checkoutPreference: CheckoutPreference!
 
     var contentCell: PaymentResultContentView?
 
@@ -175,7 +175,7 @@ class PaymentResultViewModel: NSObject {
     func numberOfCellInBody() -> Int {
         if paymentResult.isApproved() {
             let approvedBodyAdd = !paymentResultScreenPreference.isApprovedPaymentBodyDisableCell() ? 1 : 0
-            let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) ? 1 : 0
+            let emailCellAdd = !String.isNullOrEmpty(paymentResult.payerEmail) && MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell() ? 1 : 0
             return approvedBodyAdd + emailCellAdd
 
         }

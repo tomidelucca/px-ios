@@ -81,13 +81,13 @@ class ScreenTrackInfo {
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd hh:mm:ss a"
-        let timestamp = formatter.string(from: date).replacingOccurrences(of: " ", with: "T")
-        self.timestamp = timestamp
+        var timestampStr = formatter.string(from: date)
+        self.timestamp = ScreenTrackInfo.formatTimestampString(timestamp:timestampStr)
         self.type = "screenview"
     }
     func toJSON() -> [String:Any] {
         var obj: [String:Any] = [
-            "timestamp": self.timestamp.replacingOccurrences(of: " ", with: "T"),
+            "timestamp": ScreenTrackInfo.formatTimestampString(timestamp: self.timestamp),
             "type": self.type,
             "screen_id": self.screenId,
             "screen_name": self.screenName,
@@ -105,6 +105,15 @@ class ScreenTrackInfo {
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
+    }
+
+    static func formatTimestampString(timestamp: String) -> String {
+        var timestampResult = timestamp.replacingOccurrences(of: " AM", with: "X1")
+        timestampResult = timestampResult.replacingOccurrences(of: " PM", with: "X2")
+        timestampResult = timestampResult.replacingOccurrences(of: " ", with: "T")
+        timestampResult = timestampResult.replacingOccurrences(of: "X1", with: " AM")
+        timestampResult = timestampResult.replacingOccurrences(of: "X2", with: " PM")
+        return timestampResult
     }
 
 }

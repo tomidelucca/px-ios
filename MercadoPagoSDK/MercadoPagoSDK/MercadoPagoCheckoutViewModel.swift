@@ -39,6 +39,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     var startedCheckout = false
     static var servicePreference = ServicePreference()
     static var decorationPreference = DecorationPreference()
+    var shoppingReviewPreference = ShoppingReviewPreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
@@ -122,6 +123,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             self.paymentData.payer = self.checkoutPreference.getPayer()
             MercadoPagoContext.setSiteID(self.checkoutPreference.getSiteId())
         }
+        self.shoppingReviewPreference = ShoppingReviewPreference()
     }
 
     func hasError() -> Bool {
@@ -197,16 +199,23 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentOptionSelected as! CardInformation
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation)
+        var reason: SecurityCodeViewModel.Reason
+        if paymentResult != nil && paymentResult!.isInvalidESC() {
+            reason = SecurityCodeViewModel.Reason.INVALID_ESC
+        } else {
+            reason = SecurityCodeViewModel.Reason.SAVED_CARD
+        }
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
     }
 
     public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentData.token
-        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!)
+        var reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 
     public func checkoutViewModel() -> CheckoutViewModel {
-        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference, shoppingPreference: self.shoppingReviewPreference)
         return checkoutViewModel
     }
 
@@ -280,6 +289,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if hasError() {
             return .SCREEN_ERROR
         }
+
         if needLoadPreference {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
@@ -379,7 +389,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if search?.getPaymentOptionsCount() == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
-
             })
         }
 

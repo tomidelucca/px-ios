@@ -36,13 +36,13 @@ open class InstructionsService: MercadoPagoService {
     }
 
     open func getInstructions(for paymentId: String, paymentTypeId: String? = "", success : @escaping (_ instructionsInfo: InstructionsInfo) -> Void, failure: ((_ error: NSError) -> Void)?) {
-        var params =  "public_key=" + MercadoPagoContext.publicKey()
-        if paymentTypeId != nil && paymentTypeId?.characters.count > 0 {
-            params = params + "&payment_type=" + paymentTypeId!
-        }
-        params = params + "&api_version=" + ServicePreference.API_VERSION
+        var params =  MPServicesBuilder.getParamsPublicKey()
 
-        let headers = [MercadoPagoContext.getLanguage(): "Accept-Language"]
+        params.paramsAppend(key: ApiParams.PAYMENT_TYPE, value: paymentTypeId)
+
+        params.paramsAppend(key: ApiParams.API_VERSION, value : ServicePreference.API_VERSION)
+
+        let headers = ["Accept-Language": MercadoPagoContext.getLanguage()]
 
         self.request(uri: ServicePreference.MP_INSTRUCTIONS_URI.replacingOccurrences(of: "${payment_id}", with: String(paymentId)), params: params, body: nil, method: "GET", headers: headers, cache: false, success: { (jsonResult) -> Void in
 

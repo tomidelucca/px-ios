@@ -325,7 +325,6 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payment: payment)
             strongSelf.dismissLoading()
             strongSelf.executeNextStep()
-
             }, failure: {[weak self] (error: NSError) -> Void in
                 guard let strongSelf = self else {
                     return
@@ -340,7 +339,6 @@ extension MercadoPagoCheckout {
                     strongSelf.viewModel.errorInputs(error: mpError, errorCallback: { [weak self] (_) in
                         self?.createPayment()
                     })
-
                 }
                 strongSelf.executeNextStep()
         })
