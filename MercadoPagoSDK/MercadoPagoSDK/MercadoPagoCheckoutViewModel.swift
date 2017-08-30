@@ -43,7 +43,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
-
     static var paymentDataCallback: ((PaymentData) -> Void)?
     static var paymentDataConfirmCallback: ((PaymentData) -> Void)?
     static var paymentCallback: ((Payment) -> Void)?

@@ -28,7 +28,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.loadMPStyles()
     }
 
-    var tracked : Bool = false;
+    var tracked: Bool = false
+
     func trackInfo() {
          MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }

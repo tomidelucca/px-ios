@@ -29,10 +29,6 @@ fileprivate func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class PaymentMethodSearchService: MercadoPagoService {
 
-//    public override init(){
-//        super.init(baseURL: MercadoPagoCheckoutViewModel.servicePreference.getDefaultBaseURL())
-//    }
-
     open func getPaymentMethods(_ amount: Double, customerEmail: String? = nil, customerId: String? = nil, defaultPaymenMethodId: String?, excludedPaymentTypeIds: Set<String>?, excludedPaymentMethodIds: Set<String>?, success: @escaping (_ paymentMethodSearch: PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
 
         var params =  MPServicesBuilder.getParamsPublicKey()

@@ -22,6 +22,7 @@ class SecurityCodeViewModelTest: BaseTest {
         let reason = SecurityCodeViewModel.Reason.SAVED_CARD
 
         securityCodeViewModel = SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInfo, reason: reason)
+
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
