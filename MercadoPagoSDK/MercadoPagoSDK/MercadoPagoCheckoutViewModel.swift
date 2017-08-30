@@ -290,6 +290,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         if hasError() {
             return .SCREEN_ERROR
         }
+
         if needLoadPreference {
             needLoadPreference = false
             return .SERVICE_GET_PREFERENCE
@@ -389,7 +390,6 @@ open class MercadoPagoCheckoutViewModel: NSObject {
 
         if search?.getPaymentOptionsCount() == 0 {
             self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
-
             })
         }
 
