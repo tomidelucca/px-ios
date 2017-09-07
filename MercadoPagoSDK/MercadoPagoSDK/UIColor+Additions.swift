@@ -121,6 +121,10 @@ extension UIColor {
         return UIColorFromRGB(0xEEEEEE)
     }
 
+    class public func mpRedPinkErrorMessage() -> UIColor {
+        return UIColorFromRGB(0xF04449)
+    }
+
     class public func mpRedErrorMessage() -> UIColor {
         return UIColorFromRGB(0xf04449)
     }

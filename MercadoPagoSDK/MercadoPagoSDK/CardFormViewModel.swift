@@ -1,5 +1,5 @@
 //
-//  CardViewModelManager.swift
+//  CardFormViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by Maria cristina rodriguez on 9/8/16.
@@ -18,9 +18,9 @@ fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-open class CardViewModelManager: NSObject {
+open class CardFormViewModel: NSObject {
 
-    var paymentMethods: [PaymentMethod]?
+    private var paymentMethods: [PaymentMethod]?
     var guessedPMS: [PaymentMethod]?
     var customerCard: CardInformation?
     var token: Token?
@@ -38,10 +38,10 @@ open class CardViewModelManager: NSObject {
 
     var promos: [Promo]?
 
-    public init(amount: Double, paymentMethods: [PaymentMethod]?, paymentMethod: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
+    public init(amount: Double, paymentMethods: [PaymentMethod]?, guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, paymentSettings: PaymentPreference?) {
         self.amount = amount
         self.paymentMethods = paymentMethods
-        self.guessedPMS = paymentMethod
+        self.guessedPMS = guessedPaymentMethods
 
         if customerCard != nil {
             self.customerCard = customerCard
@@ -201,18 +201,37 @@ open class CardViewModelManager: NSObject {
         var paymentMethods = [PaymentMethod]()
 
         for (_, value) in self.paymentMethods!.enumerated() {
-
-            if value.conformsPaymentPreferences(self.paymentSettings) {
                 if value.conformsToBIN(getBIN(cardNumber)!) {
                     paymentMethods.append(value.cloneWithBIN(getBIN(cardNumber)!)!)
                 }
-            }
-
         }
         if paymentMethods.isEmpty {
             return nil
         } else {
             return paymentMethods
+        }
+
+    }
+
+    func getPaymentMethods() -> [PaymentMethod]? {
+
+        return self.paymentMethods
+    }
+
+    func setPaymentMethods(paymentMethods: [PaymentMethod]?) {
+        guard let pms = paymentMethods else {
+            return
+        }
+        var pMs = [PaymentMethod]()
+        for (_, value) in pms.enumerated() {
+            if value.conformsPaymentPreferences(self.paymentSettings) {
+                pMs.append(value)
+            }
+        }
+        if pMs.isEmpty {
+            self.paymentMethods = nil
+        } else {
+            self.paymentMethods = pMs
         }
 
     }
@@ -249,5 +268,24 @@ open class CardViewModelManager: NSObject {
 
     func showBankDeals() -> Bool {
         return !Array.isNullOrEmpty(self.promos) && CardFormViewController.showBankDeals && MercadoPagoCheckoutViewModel.servicePreference.shouldShowBankDeals()
+    }
+
+    func shoudShowOnlyOneCardMessage() -> Bool {
+        return getPaymentMethods()?.count == 1
+    }
+
+    func getOnlyOneCardAvailableMessage() -> String {
+        let defaultMessage = "Método de pago no soportado".localized
+
+        guard let paymentMethods = getPaymentMethods() else {
+            return defaultMessage
+        }
+
+        if !String.isNullOrEmpty(paymentMethods[0].name) {
+            return "Solo puedes pagar con ".localized + paymentMethods[0].name
+        }
+        else {
+            return defaultMessage
+        }
     }
 }
