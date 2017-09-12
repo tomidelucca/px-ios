@@ -277,24 +277,19 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open func secCodeLenght(_ bin: String? = nil) -> Int {
-        
         if let bin = bin {
-            var settings: [Setting]? = nil
-            settings = Setting.getSettingByBin(self.settings, bin: bin)
-            if let settings = settings {
-                return settings[0].securityCode.length
+            var binSettings: [Setting]? = nil
+            binSettings = Setting.getSettingByBin(self.settings, bin: bin)
+            if !Array.isNullOrEmpty(binSettings) {
+                return binSettings![0].securityCode.length
             }
         }
-        if self.settings != nil && self.settings.count == 0 || self.settings == nil {
-            return 3 //Si no tiene settings la longitud es cero
+        if self.settings != nil && !self.settings.isEmpty {
+            return settings[0].securityCode.length
         }
-        let filterList = self.settings.filter({ return $0.securityCode.length == self.settings[0].securityCode.length })
-        if filterList.count == self.settings.count {
-            return self.settings[0].securityCode.length
-        } else {
-            return 0 //si la longitud de sus codigos, en sus settings no es siempre la misma entonces responde 0
-        }
+        return 3
     }
+    
     open func cardNumberLenght() -> Int {
         if self.settings.count == 0 {
             return 0 //Si no tiene settings la longitud es cero
