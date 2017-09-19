@@ -209,8 +209,9 @@ class MainTableViewController: UITableViewController {
         }
 
         if setPaymentDataCallback {
-            MercadoPagoCheckout.setPaymentDataCallback { (PaymentData) in
-                self.paymentData = PaymentData
+            MercadoPagoCheckout.setPaymentDataCallback { (paymentData) in
+                self.paymentData = paymentData
+                let pm = PaymentMethod.fromJSON(paymentData.paymentMethod?.toJSON() as! NSDictionary)
                 self.buttonViewControllerCreator(title: "Ir a Revisa y Confirma", walletStep: walletSteps.ryc)
             }
         }
