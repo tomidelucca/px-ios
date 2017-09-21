@@ -222,7 +222,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         // Setear paymentDataCallback
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData: PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            XCTAssertEqual(paymentData.paymentMethod!._id, "account_money")
             XCTAssertNil(paymentData.issuer)
             XCTAssertNil(paymentData.payerCost)
             XCTAssertNil(paymentData.token)
@@ -620,7 +620,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         let cardFormManager = mpCheckout.viewModel.cardFormManager()
-        XCTAssertTrue(cardFormManager.isKind(of: CardViewModelManager.self))
+        XCTAssertTrue(cardFormManager.isKind(of: CardFormViewModel.self))
         XCTAssertEqual(cardFormManager.amount, checkoutPreference.getAmount())
     }
 
@@ -636,19 +636,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         XCTAssertEqual(paymentVaultVM.amount, checkoutPreference.getAmount())
         XCTAssertEqual(paymentVaultVM.paymentPreference, checkoutPreference.paymentPreference)
         XCTAssertEqual(paymentVaultVM.paymentPreference, checkoutPreference.paymentPreference)
-    }
-
-    func testDebitCreditViewModel() {
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
-
-        MPCheckoutTestAction.loadGroupsInViewModel(mpCheckout: mpCheckout)
-
-        let debitCreditVM = mpCheckout.viewModel.debitCreditViewModel()
-
-        XCTAssertTrue(debitCreditVM.isKind(of: CardTypeAdditionalStepViewModel.self))
-        XCTAssertEqual(debitCreditVM.amount, checkoutPreference.getAmount())
-
     }
 
     func testIssuerViewModel() {
@@ -713,12 +700,12 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         mpCheckoutViewModel.updateCheckoutModel(paymentMethods: paymentMethods, cardToken: nil)
 
-        XCTAssertEqual(mpCheckoutViewModel.paymentMethods!, paymentMethods)
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod, paymentMethods[0])
         XCTAssertNil(mpCheckoutViewModel.cardToken)
 
         let cardToken = MockBuilder.buildCardToken()
         mpCheckoutViewModel.updateCheckoutModel(paymentMethods: paymentMethods, cardToken: cardToken)
-        XCTAssertEqual(mpCheckoutViewModel.paymentMethods!, paymentMethods)
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod, paymentMethods[0])
         XCTAssertEqual(mpCheckoutViewModel.cardToken, cardToken)
 
     }
@@ -806,13 +793,13 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         mpCheckoutViewModel.handleCustomerPaymentMethod()
 
-        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "account_money")
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!._id, "account_money")
 
         MPCheckoutTestAction.selectCustomerCardOption(mpCheckoutViewModel: mpCheckoutViewModel)
 
         mpCheckoutViewModel.handleCustomerPaymentMethod()
 
-        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod._id, "visa")
+        XCTAssertEqual(mpCheckoutViewModel.paymentData.paymentMethod!._id, "visa")
     }
 
     func testResetGroupSelection() {
@@ -891,39 +878,39 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
         let paymentResult = MockBuilder.buildPaymentResult("status", paymentMethodId: "paymentMethodId")
         let mpCheckoutViewModel  = MercadoPagoCheckoutViewModel(checkoutPreference: checkoutPreference, paymentData : nil, paymentResult : paymentResult, discount : nil)
-        
+
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.disablePaymentResultScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.disablePaymentApprovedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "approved"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.disablePaymentPendingScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "in_process"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         flowPreference.enablePaymentResultScreen()
         flowPreference.enablePaymentApprovedScreen()
         flowPreference.enablePaymentPendingScreen()
         flowPreference.disablePaymentRejectedScreen()
         MercadoPagoCheckout.setFlowPreference(flowPreference)
         XCTAssert(mpCheckoutViewModel.shouldDisplayPaymentResult())
-        
+
         mpCheckoutViewModel.paymentResult!.status = "rejected"
         XCTAssertFalse(mpCheckoutViewModel.shouldDisplayPaymentResult())
     }
-    
+
 }

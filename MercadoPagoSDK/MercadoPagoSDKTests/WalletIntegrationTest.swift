@@ -58,7 +58,7 @@ class WalletIntegrationTest: BaseTest {
         var localPaymentData: PaymentData?
         let expectPaymentDataCallback = expectation(description: "paymentDataCallback")
         MercadoPagoCheckout.setPaymentDataCallback { (paymentData: PaymentData) in
-            XCTAssertEqual(paymentData.paymentMethod._id, "account_money")
+            XCTAssertEqual(paymentData.paymentMethod!._id, "account_money")
             expectPaymentDataCallback.fulfill()
             localPaymentData = paymentData
         }
@@ -131,9 +131,9 @@ class WalletIntegrationTest: BaseTest {
 
         // Se modifica medio de pago => se llama a changePaymentMethodCallback y se desactiva nuevamente RyC
         // Se reinicia checkout automaticamente
-        
+
         // Se vuelve a llama a paymentDataCallback. Dentro llama a Checkout con paymentData => RyC
-        
+
         // Se realiza pago, se llama a confirmPaymentCallback
         // Se llama a congrats con paymentResult
     }
