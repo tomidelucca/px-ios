@@ -152,6 +152,11 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         return paymentMethods
     }
+    
+    func payerInfoFlow() -> PayerInfoViewModel {
+        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
+        return viewModel
+    }
 
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         var groupName: String?
@@ -265,7 +270,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
 
-        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard() {
+        if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard {
             self.cardToken!.cardholder!.identification = identification
         } else {
             paymentData.payer.identification = identification
