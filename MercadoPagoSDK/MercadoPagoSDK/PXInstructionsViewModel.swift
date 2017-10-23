@@ -12,12 +12,11 @@ class PXInstructionsViewModel: NSObject {
 
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
-    var callback : (PaymentResult.CongratsState) -> Void
+
     
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil,  callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
+    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil)  {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
-        self.callback = callback
     }
     
 }
