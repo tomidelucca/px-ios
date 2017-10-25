@@ -37,7 +37,7 @@ class PaymentResultViewModel: NSObject {
             return color
         } else if paymentResult.isApproved() {
             return UIColor.px_greenCongrats()
-        } else if paymentResult.isPending() {
+        } else if paymentResult.isInProcess() {
             return UIColor(red: 255, green: 161, blue: 90)
         } else if paymentResult.isCallForAuth() {
             return UIColor(red: 58, green: 184, blue: 239)
@@ -131,7 +131,7 @@ class PaymentResultViewModel: NSObject {
         return indexPath.section == Sections.additionaCells.rawValue && paymentResult.isApproved() && numberOfCustomAdditionalCells() > indexPath.row
     }
     func isPendingAdditionalCustomCellFor(indexPath: IndexPath) -> Bool {
-        return indexPath.section == Sections.additionaCells.rawValue && paymentResult.isPending() && numberOfCustomAdditionalCells() > indexPath.row
+        return indexPath.section == Sections.additionaCells.rawValue && paymentResult.isInProcess() && numberOfCustomAdditionalCells() > indexPath.row
     }
 
     func isSecondaryExitButtonCellFor(indexPath: IndexPath) -> Bool {
@@ -164,7 +164,7 @@ class PaymentResultViewModel: NSObject {
     func shouldShowSecondaryExitButton() -> Bool {
         if paymentResult.isApproved() && paymentResultScreenPreference.approvedSecondaryExitButtonCallback != nil {
             return true
-        } else if paymentResult.isPending() && !paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
+        } else if paymentResult.isInProcess() && !paymentResultScreenPreference.isPendingSecondaryExitButtonDisable() {
             return true
         } else if paymentResult.isRejected() && !paymentResultScreenPreference.isRejectedSecondaryExitButtonDisable() {
             return true
@@ -185,7 +185,7 @@ class PaymentResultViewModel: NSObject {
     }
 
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(paymentResultScreenPreference.pendingAdditionalInfoCells) && paymentResult.isPending() {
+        if !Array.isNullOrEmpty(paymentResultScreenPreference.pendingAdditionalInfoCells) && paymentResult.isInProcess() {
             return paymentResultScreenPreference.pendingAdditionalInfoCells.count
         } else if !Array.isNullOrEmpty(paymentResultScreenPreference.approvedAdditionalInfoCells) && paymentResult.isApproved() {
             return paymentResultScreenPreference.approvedAdditionalInfoCells.count
@@ -234,6 +234,7 @@ struct PaymentStatus {
     static let REJECTED = "rejected"
     static let RECOVERY = "recovery"
     static let IN_PROCESS = "in_process"
+    static let PENDING = "pending"
 }
 
 struct RejectedStatusDetail {
@@ -248,6 +249,8 @@ struct RejectedStatusDetail {
     static let CALL_FOR_AUTH = "cc_rejected_call_for_authorize"
     static let DUPLICATED_PAYMENT = "cc_rejected_duplicated_payment"
     static let INSUFFICIENT_AMOUNT = "cc_rejected_insufficient_amount"
+    static let INSUFFICIENT_DATA = "rejected_insufficient_data"
+    static let REJECTED_BY_BANK = "rejected_by_bank"
     static let INVALID_ESC = "invalid_esc"
 }
 

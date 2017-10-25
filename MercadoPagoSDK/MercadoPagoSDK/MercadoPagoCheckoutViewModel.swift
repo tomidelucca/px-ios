@@ -622,7 +622,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && paymentResult.isApproved() {
             return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isPending() {
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isInProcess() {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && paymentResult.isRejected() {
             return false

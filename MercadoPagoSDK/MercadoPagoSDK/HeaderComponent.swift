@@ -9,7 +9,7 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var title : String
+    var title : String?
     var subTitle : String
     var backgroundColor : UIColor
     var productImage : UIImage?
@@ -24,12 +24,12 @@ class HeaderComponent: NSObject {
     }
 }
 class HeaderData : NSObject {
-    var title : String
+    var title : String?
     var subTitle : String
     var backgroundColor : UIColor
     var productImage : UIImage?
     var statusImage : UIImage?
-    init(title: String, subTitle: String, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
+    init(title: String?, subTitle: String, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
         self.title = title
         self.subTitle = subTitle
         self.backgroundColor = backgroundColor

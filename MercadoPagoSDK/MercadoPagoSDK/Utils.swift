@@ -213,7 +213,6 @@ class Utils {
         let lastThreeDigits = amount.lastCharacters(number: 3)
 
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
-
     }
 
     /**

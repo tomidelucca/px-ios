@@ -19,14 +19,14 @@ class PXInstructionsViewModel: NSObject {
     }
     
     func primaryResultColor() -> UIColor {
-        guard let result = self.paymentResult else {
-            return .pxWhite
-        }
-        if result.isApproved() || result.isWaitingForPayment()  || result.isPending(){
+        if isAccepted() {
             return .pxGreenMp
         }
-        if result.isRejected() {
+        if isError() {
             return .pxRedMp
+        }
+        if isWarning() {
+            return .pxOrangeMp
         }
         return .white
     }
@@ -35,11 +35,10 @@ class PXInstructionsViewModel: NSObject {
         guard let result = self.paymentResult else {
             return nil
         }
-        if result.isApproved() || result.isWaitingForPayment()  || result.isPending(){
-            return MercadoPago.getImage("default_item_icon")
-        }
-        if result.isRejected() {
-            return paymentMethodImage()
+        if isAccepted() {
+            if result.isApproved() || result.isWaitingForPayment() {
+                return MercadoPago.getImage("default_item_icon")
+            }
         }
         return paymentMethodImage()
     }
@@ -50,8 +49,12 @@ class PXInstructionsViewModel: NSObject {
         }
         if (result.paymentData?.paymentMethod?.isCard)! {
             return MercadoPago.getImage("card_icon")
+        } else if (result.paymentData?.paymentMethod?.isBolbradesco)! {
+            return MercadoPago.getImage("boleto_icon")
+        }else {
+            return MercadoPago.getImage("default_payment_method_icon")
         }
-        return MercadoPago.getImage("boleto_icon")
+
         
     }
     
@@ -59,55 +62,127 @@ class PXInstructionsViewModel: NSObject {
         guard let result = self.paymentResult else {
             return nil
         }
-        if result.isApproved() {
-            return MercadoPago.getImage("ok_badge")
+        if isAccepted() {
+            if result.isApproved() {
+                return MercadoPago.getImage("ok_badge")
+            }else{
+                return MercadoPago.getImage("pending_badge")
+            }
         }
-        if  result.isWaitingForPayment(){
-            return MercadoPago.getImage("pending_badge")
+        if isWarning() {
+            return MercadoPago.getImage("need_action_badge")
         }
-        if result.isPending() {
-            return MercadoPago.getImage("pending_badge")
-        }
-        if result.isCallForAuth() {
-            return MercadoPago.getImage("pending_badge")
-        }
-        if result.isRejected() {
+        if  isError() {
             return MercadoPago.getImage("error_badge")
         }
         return nil
     }
     
-    func statusMessage() -> String {
+    func statusMessage() -> String? {
         guard let result = self.paymentResult else {
-            return ""
+            return nil
         }
-        if result.isApproved() {
-            return ""
+        if isAccepted() {
+            if result.isWaitingForPayment() {
+                return "¡Apúrate a pagar!".localized
+            }else{
+                return nil
+            }
         }
-        if  result.isWaitingForPayment(){
-            return "¡Apúrate a pagar!"
-        }
-        if result.isPending() {
-            return ""
-        }
-        if result.isCallForAuth() {
-            return ""
-        }
-        if result.isRejected() {
-            return "Algo salió mal..."
-        }
-        return ""
+        return "Algo salió mal...".localized
     }
     func message() -> String {
         guard let result = self.paymentResult else {
             return ""
         }
-        return result.statusDetail
+        if let _ = self.instructionsInfo {
+            return titleForInstructions()
+        }
+        if isAccepted() {
+            if result.isApproved() {
+                return "¡Listo, se acreditó tu pago!".localized
+            }else{
+                return "Estamos procesando el pago".localized
+            }
+        }
+        return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
     
     func headerComponentData() -> HeaderData {
-        let data = HeaderData(title: "!Listo! Recargaste el celular", subTitle: "En unos minutos tendrás el crédito disponible.", backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
+        let data = HeaderData(title: statusMessage(), subTitle: message(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return data
+    }
+    
+    func isAccepted() -> Bool {
+        guard let result = self.paymentResult else {
+            return false
+        }
+        if result.isApproved() || result.isInProcess() || result.isPending() {
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func isWarning() -> Bool {
+        guard let result = self.paymentResult else {
+            return false
+        }
+        if !result.isRejected() {
+            return false
+        }
+        if result.statusDetail == RejectedStatusDetail.INVALID_ESC || result.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || result.statusDetail == RejectedStatusDetail.BAD_FILLED_CARD_NUMBER || result.statusDetail == RejectedStatusDetail.CARD_DISABLE || result.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT || result.statusDetail == RejectedStatusDetail.BAD_FILLED_DATE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_SECURITY_CODE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_OTHER {
+            return true
+        }
+        
+        return false
+    }
+    func isError() -> Bool {
+        guard let result = self.paymentResult else {
+            return true
+        }
+        if !result.isRejected() {
+            return false
+        }
+        return !isWarning()
+    }
+    
+    func titleForStatusDetail(statusDetail:String, paymentMethod: PaymentMethod?) -> String {
+        guard let paymentMethod = paymentMethod else {
+            return ""
+        }
+        let title = statusDetail + "_title"
+        if !title.existsLocalized() {
+            return "Uy, no pudimos procesar el pago".localized
+        } else {
+            if let paymentMethodName = paymentMethod.name {
+                return (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+            }else{
+                return ""
+            }
+        }
+    }
+    
+    func titleForInstructions() -> String {
+
+        guard let instructionsInfo = self.instructionsInfo else {
+            return ""
+        }
+        let currency = MercadoPagoContext.getCurrency()
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+        
+        let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
+        let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
+        let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
+        
+        if amountRange != nil {
+            return instructionsInfo.instructions[0].title
+        } else {
+            return instructionsInfo.instructions[0].title
+        }
     }
     
 }

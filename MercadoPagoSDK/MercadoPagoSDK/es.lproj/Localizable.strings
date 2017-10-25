@@ -78,7 +78,8 @@
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";
 "El número de identificación es inválido" = "El número de identificación es inválido";
-
+"rejected_insufficient_data_title" = "No fue posible procesar su pago";
+"rejected_by_bank_title" = "No fue posible procesar su pago";
 
 "rejected_high_risk_subtitle_credit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. \n\nO si prefieres, puedes elegir otro medio de pago.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "¡No te desanimes! Puedes elegir otro medio de pago.";

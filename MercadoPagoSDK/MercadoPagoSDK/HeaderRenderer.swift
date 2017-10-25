@@ -16,7 +16,8 @@ class HeaderRenderer: NSObject {
     let S_MARGIN : CGFloat = 16.0
     
     //Image
-    let IMAGE_SIZE : CGFloat = 90.0
+    let IMAGE_WIDTH : CGFloat = 115.0
+    let IMAGE_HEIGHT : CGFloat = 90.0
     
     let BADGE_IMAGE_SIZE : CGFloat = 30.0
     
@@ -39,8 +40,8 @@ class HeaderRenderer: NSObject {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = header.productImage
         headerView.addSubview(image)
-        MPLayout.setHeight(owner: image, height: IMAGE_SIZE).isActive = true
-        MPLayout.setWidth(owner: image, width: IMAGE_SIZE).isActive = true
+        MPLayout.setHeight(owner: image, height: IMAGE_HEIGHT).isActive = true
+        MPLayout.setWidth(owner: image, width: IMAGE_WIDTH).isActive = true
         MPLayout.centerHorizontally(view: image, to: headerView).isActive = true
         MPLayout.pinTop(view: image, to: headerView, withMargin: XXL_MARGIN).isActive = true
         
@@ -58,15 +59,22 @@ class HeaderRenderer: NSObject {
         //IMAGE TITLE
         let statusLabel = UILabel()
         headerView.addSubview(statusLabel)
-        statusLabel.textAlignment = .center
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.textColor = .pxWhite
-        MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
-        MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
-        MPLayout.setWidth(ofView: statusLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        statusLabel.text = header.title
-        statusLabel.font = Utils.getFont(size: STATUS_FONT_SIZE)
-        MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
+        if (header.title != nil) {
+            statusLabel.textAlignment = .center
+            statusLabel.translatesAutoresizingMaskIntoConstraints = false
+            statusLabel.textColor = .pxWhite
+            MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
+            MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
+            MPLayout.setWidth(ofView: statusLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+            statusLabel.text = header.title
+            statusLabel.font = Utils.getFont(size: STATUS_FONT_SIZE)
+            MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
+        }else {
+            MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
+            MPLayout.setWidth(owner: statusLabel, width: 0).isActive = true
+            MPLayout.setHeight(owner: statusLabel, height: 0).isActive = true
+        }
+        
         
         //MESSAGE
         let messageLabel = UILabel()

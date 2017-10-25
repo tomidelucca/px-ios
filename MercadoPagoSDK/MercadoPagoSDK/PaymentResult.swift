@@ -52,9 +52,12 @@ open class PaymentResult: NSObject {
     }
 
     func isPending() -> Bool {
-        return self.status == PaymentStatus.IN_PROCESS
+        return self.status == PaymentStatus.PENDING
     }
 
+    func isInProcess() -> Bool {
+        return self.status == PaymentStatus.IN_PROCESS
+    }
     func isRejected() -> Bool {
         return self.status == PaymentStatus.REJECTED
     }
