@@ -32,6 +32,7 @@ class PXInstructionsViewModel: NSObject {
     }
     
     func iconImageHeader() -> UIImage? {
+        return MercadoPago.getImage("mercadopago_cc")
         guard let result = self.paymentResult else {
             return nil
         }

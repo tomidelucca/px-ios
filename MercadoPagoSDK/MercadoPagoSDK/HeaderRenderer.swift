@@ -36,12 +36,18 @@ class HeaderRenderer: NSObject {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
         //IMAGE
-        let image = UIImageView()
+        let image = UIImageView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
+        image.layer.masksToBounds = false
+        image.layer.cornerRadius = image.frame.height/2
+        image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         image.image = header.productImage
+       // image.rounded()
+        
         headerView.addSubview(image)
-        MPLayout.setHeight(owner: image, height: IMAGE_HEIGHT).isActive = true
-        MPLayout.setWidth(owner: image, width: IMAGE_WIDTH).isActive = true
+        
+        MPLayout.setHeight(owner: image, height: 90).isActive = true
+        MPLayout.setWidth(owner: image, width: 90).isActive = true
         MPLayout.centerHorizontally(view: image, to: headerView).isActive = true
         MPLayout.pinTop(view: image, to: headerView, withMargin: XXL_MARGIN).isActive = true
         
@@ -52,16 +58,16 @@ class HeaderRenderer: NSObject {
         headerView.addSubview(badgeImage)
         MPLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
         MPLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
-        MPLayout.pinRight(view: badgeImage, to: image).isActive = true
-        MPLayout.pinBottom(view: badgeImage, to: image).isActive = true
+        MPLayout.pinRight(view: badgeImage, to: image, withMargin: -7).isActive = true
+        MPLayout.pinBottom(view: badgeImage, to: image, withMargin: -7).isActive = true
 
 
         //IMAGE TITLE
         let statusLabel = UILabel()
         headerView.addSubview(statusLabel)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         if (header.title != nil) {
             statusLabel.textAlignment = .center
-            statusLabel.translatesAutoresizingMaskIntoConstraints = false
             statusLabel.textColor = .pxWhite
             MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
             MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
@@ -70,8 +76,9 @@ class HeaderRenderer: NSObject {
             statusLabel.font = Utils.getFont(size: STATUS_FONT_SIZE)
             MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
         }else {
-            MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
-            MPLayout.setWidth(owner: statusLabel, width: 0).isActive = true
+            MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
+            MPLayout.setWidth(ofView: statusLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+            MPLayout.put(view: statusLabel, onBottomOf:image).isActive = true
             MPLayout.setHeight(owner: statusLabel, height: 0).isActive = true
         }
         

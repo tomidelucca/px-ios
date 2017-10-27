@@ -10,7 +10,13 @@ import Foundation
 
 open class PaymentResultScreenPreference: NSObject {
 
+    public enum ApprovedBadge {
+        case pending
+        case check
+    }
+    var approvedBadge = ApprovedBadge.check
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
+    var approvedLabelText = ""
     var approvedSubtitle = ""
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
@@ -31,6 +37,7 @@ open class PaymentResultScreenPreference: NSObject {
 
     var rejectedTitle = "Uy, no pudimos procesar el pago".localized
     var rejectedSubtitle = ""
+    var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
     var rejectedIconName = "MPSDK_payment_result_error"
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
@@ -58,11 +65,20 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubHeaderCells = [MPCustomCell]()
 
     // Sets de Approved
-
+    
+    open func setBadgeApproved(badge: ApprovedBadge){
+        self.approvedBadge = badge
+    }
+    
+    open func setApprovedLabel(text: String){
+        self.approvedLabelText = text
+    }
+    
     open func setApprovedTitle(title: String) {
         self.approvedTitle = title
     }
 
+    @available(*, deprecated)
     open func setApprovedSubtitle(subtitle: String) {
         self.approvedSubtitle = subtitle
     }
@@ -83,6 +99,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.pendingTitle = title
     }
 
+    @available(*, deprecated)
     open func setPendingSubtitle(subtitle: String) {
         self.pendingSubtitle = subtitle
     }
@@ -122,11 +139,12 @@ open class PaymentResultScreenPreference: NSObject {
     open func setRejectedTitle(title: String) {
         self.rejectedTitle = title
     }
-
+    
+    @available(*, deprecated)
     open func setRejectedSubtitle(subtitle: String) {
         self.rejectedSubtitle = subtitle
     }
-
+    
     open func setRejectedHeaderIcon(name: String, bundle: Bundle) {
         self.rejectedIconName = name
         self.rejectedIconBundle = bundle
@@ -140,8 +158,16 @@ open class PaymentResultScreenPreference: NSObject {
         self.rejectedContentTitle = title
     }
 
+    open func disableRejectedLabel() {
+        self.disableRejectedLabelText = true
+    }
+    
+    @available(*, deprecated)
     open func setRejectedIconSubtext(text: String) {
         self.rejectedIconSubtext = text
+        if text.characters.count == 0 {
+            self.disableRejectedLabelText = true
+        }
     }
 
     open func disableRejectdSecondaryExitButton() {

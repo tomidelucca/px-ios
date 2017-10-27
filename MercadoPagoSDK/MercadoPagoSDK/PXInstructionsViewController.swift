@@ -67,6 +67,7 @@ class PXInstructionsViewController: MercadoPagoUIViewController
         //Add Foo
         
         let dataFoo = FooterData(titleLabel: "Aceptar", titleButton: "Nada") {
+            print("Hello World")
             self.renderViews()
         }
         let componentFoo = FooterComponent(data: dataFoo)
