@@ -12,8 +12,9 @@ class PXInstructionsViewModel: NSObject {
 
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
+    var preference : PaymentResultScreenPreference?
 
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil)  {
+    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference? = nil)  {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
     }
