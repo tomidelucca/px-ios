@@ -67,8 +67,7 @@ class PXInstructionsViewController: MercadoPagoUIViewController
         //Add Foo
         
         let dataFoo = FooterData(titleLabel: "Aceptar", titleButton: "Nada") {
-            print("Hello World")
-            self.renderViews()
+            self.callback(PaymentResult.CongratsState.ok)
         }
         let componentFoo = FooterComponent(data: dataFoo)
         let rendererFoo = FooterRenderer()

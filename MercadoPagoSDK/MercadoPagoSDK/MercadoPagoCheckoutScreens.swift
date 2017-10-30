@@ -177,8 +177,12 @@ extension MercadoPagoCheckout {
         var congratsViewController: MercadoPagoUIViewController
 
         let viewModel = PXInstructionsViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo)
-        congratsViewController = PXInstructionsViewController(viewModel: viewModel, callback: { (state) in
-            print("hola")
+        congratsViewController = PXInstructionsViewController(viewModel: viewModel, callback: {[weak self] (state) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
+            strongSelf.finish()
         })
         self.pushViewController(viewController : congratsViewController, animated: false)
         

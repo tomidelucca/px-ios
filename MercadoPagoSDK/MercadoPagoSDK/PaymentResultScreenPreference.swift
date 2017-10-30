@@ -20,7 +20,7 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubtitle = ""
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    var approvedIconName = "MPSDK_payment_result_approved"
+    var approvedIconName = "default_item_icon"
     var approvedIconBundle = MercadoPago.getBundle()!
 
     var pendingTitle = "Estamos procesando el pago".localized
@@ -39,9 +39,11 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedSubtitle = ""
     var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
-    var rejectedIconName = "MPSDK_payment_result_error"
-    var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
+    var rejectedIconName = "card_icon"
+    var rejectedBolbradescoIconName = "boleto_icon"
     var rejectedIconBundle = MercadoPago.getBundle()!
+    var rejectedDefaultIconName : String?
+
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
     var hideRejectedSecondaryButton = false
@@ -338,7 +340,15 @@ open class PaymentResultScreenPreference: NSObject {
         return rejectedSubtitle
     }
 
+    open func setHeaderRejectedIcon(name: String, bundle: Bundle) {
+        self.rejectedDefaultIconName = name
+        self.approvedIconBundle = bundle
+    }
+    
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
+        if let name = rejectedDefaultIconName {
+            return MercadoPago.getImage(rejectedDefaultIconName, bundle: rejectedIconBundle)
+        }
         guard let paymentMethod = paymentMethod else {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }

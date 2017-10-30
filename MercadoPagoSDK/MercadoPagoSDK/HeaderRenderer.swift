@@ -16,10 +16,11 @@ class HeaderRenderer: NSObject {
     let S_MARGIN : CGFloat = 16.0
     
     //Image
-    let IMAGE_WIDTH : CGFloat = 115.0
+    let IMAGE_WIDTH : CGFloat = 90.0
     let IMAGE_HEIGHT : CGFloat = 90.0
     
     let BADGE_IMAGE_SIZE : CGFloat = 30.0
+    let BADGE_OFFSET : CGFloat = -6.0
     
     //Image Title
     let STATUS_TITLE_HEIGHT : CGFloat = 15.0
@@ -46,8 +47,8 @@ class HeaderRenderer: NSObject {
         
         headerView.addSubview(image)
         
-        MPLayout.setHeight(owner: image, height: 90).isActive = true
-        MPLayout.setWidth(owner: image, width: 90).isActive = true
+        MPLayout.setHeight(owner: image, height: IMAGE_WIDTH).isActive = true
+        MPLayout.setWidth(owner: image, width: IMAGE_HEIGHT).isActive = true
         MPLayout.centerHorizontally(view: image, to: headerView).isActive = true
         MPLayout.pinTop(view: image, to: headerView, withMargin: XXL_MARGIN).isActive = true
         
@@ -58,8 +59,8 @@ class HeaderRenderer: NSObject {
         headerView.addSubview(badgeImage)
         MPLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
         MPLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
-        MPLayout.pinRight(view: badgeImage, to: image, withMargin: -7).isActive = true
-        MPLayout.pinBottom(view: badgeImage, to: image, withMargin: -7).isActive = true
+        MPLayout.pinRight(view: badgeImage, to: image, withMargin: BADGE_OFFSET).isActive = true
+        MPLayout.pinBottom(view: badgeImage, to: image, withMargin: BADGE_OFFSET).isActive = true
 
 
         //IMAGE TITLE

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "iconoBoleto.png",
+      "filename" : "iconoMedioDePagoDefault.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "iconoBoleto@2x.png",
+      "filename" : "iconoMedioDePagoDefault@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "iconoBoleto@3x.png",
+      "filename" : "iconoMedioDePagoDefault@3x.png",
       "scale" : "3x"
     }
   ],

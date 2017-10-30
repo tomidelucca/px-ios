@@ -12,11 +12,12 @@ class PXInstructionsViewModel: NSObject {
 
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
-    var preference : PaymentResultScreenPreference?
+    var preference : PaymentResultScreenPreference
 
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference? = nil)  {
+    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference = PaymentResultScreenPreference())  {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
+        self.preference = preference
     }
     
     func primaryResultColor() -> UIColor {
@@ -33,30 +34,18 @@ class PXInstructionsViewModel: NSObject {
     }
     
     func iconImageHeader() -> UIImage? {
-        return MercadoPago.getImage("mercadopago_cc")
         guard let result = self.paymentResult else {
             return nil
         }
         if isAccepted() {
-            if result.isApproved() || result.isWaitingForPayment() {
-                return MercadoPago.getImage("default_item_icon")
+            if result.isApproved() {
+                return preference.getHeaderApprovedIcon()
+            }else {
+                return preference.getHeaderPendingIcon()
             }
-        }
-        return paymentMethodImage()
-    }
-    
-    func paymentMethodImage() -> UIImage? {
-        guard let result = self.paymentResult else {
-            return nil
-        }
-        if (result.paymentData?.paymentMethod?.isCard)! {
-            return MercadoPago.getImage("card_icon")
-        } else if (result.paymentData?.paymentMethod?.isBolbradesco)! {
-            return MercadoPago.getImage("boleto_icon")
         }else {
-            return MercadoPago.getImage("default_payment_method_icon")
+            return preference.getHeaderRejectedIcon(paymentResult?.paymentData?.paymentMethod)
         }
-
         
     }
     
