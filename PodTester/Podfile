@@ -6,7 +6,7 @@ target 'PodTester' do
   use_frameworks!
 
   # Pods for PodTester
-   pod 'MercadoPagoSDK', :path => '../'
+   pod 'MercadoPagoPXTracking', :path => '../'
   #pod 'MercadoPagoSDK', '3.2.0'
 
   target 'PodTesterTests' do
