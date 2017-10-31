@@ -14,7 +14,7 @@ open class PaymentResultScreenPreference: NSObject {
         case pending
         case check
     }
-    var approvedBadge : ApprovedBadge? = nil
+    var approvedBadge : ApprovedBadge? = ApprovedBadge.check
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
@@ -30,7 +30,7 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingContentText = ""
     private var _pendingLabelText = ""
     private var _disablePendingLabelText = true
-    var pendingIconName = "MPSDK_payment_result_pending"
+    var pendingIconName = "default_item_icon"
     var pendingIconBundle = MercadoPago.getBundle()!
     var hidePendingSecondaryButton = false
     var hidePendingContentText = false
@@ -42,11 +42,15 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedSubtitle = ""
     private var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
-    var rejectedIconName = "card_icon"
-    var rejectedBolbradescoIconName = "boleto_icon"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName : String?
+    var rejectedIconName: String?
+    
+    var pmDefaultIconName = "card_icon"
+    var pmBolbradescoIconName = "boleto_icon"
+    var pmIconBundle = MercadoPago.getBundle()!
 
+    
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
     var hideRejectedSecondaryButton = false
@@ -413,14 +417,18 @@ open class PaymentResultScreenPreference: NSObject {
         if let name = rejectedDefaultIconName {
             return MercadoPago.getImage(rejectedDefaultIconName, bundle: rejectedIconBundle)
         }
+       return getHeaderImageFor(paymentMethod)
+    }
+    
+    open func getHeaderImageFor(_ paymentMethod: PaymentMethod?) -> UIImage? {
         guard let paymentMethod = paymentMethod else {
-            return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+            return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
         }
         
         if paymentMethod.isBolbradesco {
-            return MercadoPago.getImage(rejectedBolbradescoIconName, bundle: rejectedIconBundle)
+            return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
         }
-        return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+        return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
     }
 
     open func getRejectedContetTitle() -> String {

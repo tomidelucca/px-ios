@@ -1,5 +1,5 @@
 //
-//  PXInstructionsViewController.swift
+//  PXResultViewController.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 20/10/17.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class PXInstructionsViewController: MercadoPagoUIViewController
+class PXResultViewController: MercadoPagoUIViewController
 {
 
     let STATUS_BAR_HEIGHT : CGFloat = 20.0
-    let viewModel : PXInstructionsViewModel
+    let viewModel : PXResultViewModel
     var scrollView : UIScrollView!
     var headerView = UIView()
     var contentView = UIView()
@@ -21,7 +21,7 @@ class PXInstructionsViewController: MercadoPagoUIViewController
     var fooView : UIView!
     var callback : (PaymentResult.CongratsState) -> Void
     
-    init(viewModel : PXInstructionsViewModel,  callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void){
+    init(viewModel : PXResultViewModel,  callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void){
         self.viewModel = viewModel
         self.scrollView = UIScrollView()
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false

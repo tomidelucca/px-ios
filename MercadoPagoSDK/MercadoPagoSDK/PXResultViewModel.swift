@@ -1,5 +1,5 @@
 //
-//  PXInstructionsViewModel.swift
+//  PXResultViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 20/10/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXInstructionsViewModel: NSObject {
+class PXResultViewModel: NSObject {
 
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
@@ -40,8 +40,10 @@ class PXInstructionsViewModel: NSObject {
         if isAccepted() {
             if result.isApproved() {
                 return preference.getHeaderApprovedIcon()
-            }else {
+            }else if result.isWaitingForPayment(){
                 return preference.getHeaderPendingIcon()
+            } else{
+                return preference.getHeaderImageFor(result.paymentData?.paymentMethod)
             }
         }else {
             return preference.getHeaderRejectedIcon(paymentResult?.paymentData?.paymentMethod)

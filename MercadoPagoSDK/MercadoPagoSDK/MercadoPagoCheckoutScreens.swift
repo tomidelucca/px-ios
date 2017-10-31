@@ -176,8 +176,8 @@ extension MercadoPagoCheckout {
 
         var congratsViewController: MercadoPagoUIViewController
 
-        let viewModel = PXInstructionsViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo)
-        congratsViewController = PXInstructionsViewController(viewModel: viewModel, callback: {[weak self] (state) in
+        let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo)
+        congratsViewController = PXResultViewController(viewModel: viewModel, callback: {[weak self] (state) in
             guard let strongSelf = self else {
                 return
             }
@@ -218,8 +218,8 @@ extension MercadoPagoCheckout {
                 strongSelf.finish()
                 }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
  */
-            let viewModel = PXInstructionsViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!)
-            congratsViewController = PXInstructionsViewController(viewModel: viewModel, callback: { (state) in
+            let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!)
+            congratsViewController = PXResultViewController(viewModel: viewModel, callback: { (state) in
                 print("hola")
             })
         }
