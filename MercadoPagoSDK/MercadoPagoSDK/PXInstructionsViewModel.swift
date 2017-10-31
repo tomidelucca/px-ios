@@ -53,9 +53,12 @@ class PXInstructionsViewModel: NSObject {
         guard let result = self.paymentResult else {
             return nil
         }
+        if !preference._showBadgeImage {
+            return nil
+        }
         if isAccepted() {
             if result.isApproved() {
-                return MercadoPago.getImage("ok_badge")
+                return preference.getApprovedBadgeImage()
             }else{
                 return MercadoPago.getImage("pending_badge")
             }
@@ -77,10 +80,15 @@ class PXInstructionsViewModel: NSObject {
             if result.isWaitingForPayment() {
                 return "¡Apúrate a pagar!".localized
             }else{
-                return nil
+                return preference.getApprovedLabelText()
             }
         }
-        return "Algo salió mal...".localized
+        if !preference._showLabelText {
+            return nil
+        }else{
+            return "Algo salió mal...".localized
+        }
+        
     }
     func message() -> String {
         guard let result = self.paymentResult else {
@@ -91,10 +99,13 @@ class PXInstructionsViewModel: NSObject {
         }
         if isAccepted() {
             if result.isApproved() {
-                return "¡Listo, se acreditó tu pago!".localized
+                return preference.getApprovedTitle()
             }else{
                 return "Estamos procesando el pago".localized
             }
+        }
+        if let title = preference.getRejectedTitle() {
+            return title
         }
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
