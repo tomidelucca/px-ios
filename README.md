@@ -40,7 +40,11 @@ Copy and paste the following lines into the TextEdit window:
     source 'https://github.com/CocoaPods/Specs.git'
     use_frameworks!
     platform :ios, '8.0'
+<<<<<<< HEAD
     pod 'MercadoPagoSDK', '3.6.4'
+=======
+    pod 'MercadoPagoSDK', '3.6.3'
+>>>>>>> d0b4f426fd72611d2bab885b871f25d1a63dca3e
 
 > You shouldn’t use TextEdit to edit the pod file because TextEdit likes to replace standard quotes with more graphically appealing quotes. This can cause CocoaPods to get confused and display errors, so it’s best to just use Xcode or another programming text editor.
 
