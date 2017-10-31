@@ -5,6 +5,7 @@ osx_image: xcode8.1
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcworkspace
 xcode_scheme: MercadoPagoSDK
 xcode_sdk: iphonesimulator
+podfile: MercadoPagoSDK/Podfile
 
 before_script:
   - cd MercadoPagoSDK
@@ -19,6 +20,7 @@ install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
+- pod install
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
