@@ -1,4 +1,4 @@
-//
+  //
 //  PXResultViewModel.swift
 //  MercadoPagoSDK
 //
@@ -14,10 +14,14 @@ class PXResultViewModel: NSObject {
     var instructionsInfo: InstructionsInfo?
     var preference : PaymentResultScreenPreference
 
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference = PaymentResultScreenPreference())  {
+    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference? = nil)  {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
-        self.preference = preference
+        if let pref =  preference {
+            self.preference = pref
+        }else {
+            self.preference = PaymentResultScreenPreference()
+        }
     }
     
     func primaryResultColor() -> UIColor {
@@ -74,7 +78,7 @@ class PXResultViewModel: NSObject {
         return nil
     }
     
-    func statusMessage() -> String? {
+    func labelTextHeader() -> String? {
         guard let result = self.paymentResult else {
             return nil
         }
@@ -92,7 +96,7 @@ class PXResultViewModel: NSObject {
         }
         
     }
-    func message() -> String {
+    func titleHeader() -> String {
         guard let result = self.paymentResult else {
             return ""
         }
@@ -113,7 +117,7 @@ class PXResultViewModel: NSObject {
     }
     
     func headerComponentData() -> HeaderData {
-        let data = HeaderData(title: statusMessage(), subTitle: message(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
+        let data = HeaderData(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return data
     }
     
@@ -155,6 +159,16 @@ class PXResultViewModel: NSObject {
         guard let paymentMethod = paymentMethod else {
             return ""
         }
+        if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
+            if let paymentMethodName = paymentMethod.name {
+                let amountStr = self.amountFormatter(amount: String(format:"%.2f",self.paymentResult!.paymentData!.payerCost!.totalAmount ))
+                var c4aTitle = "Debes autorizar ante %1$s el pago de ".localized + amountStr + " a MercadoPago".localized
+                return c4aTitle.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
+            }else{
+                return ""
+            }
+            
+        }
         let title = statusDetail + "_title"
         if !title.existsLocalized() {
             return "Uy, no pudimos procesar el pago".localized
@@ -172,21 +186,21 @@ class PXResultViewModel: NSObject {
         guard let instructionsInfo = self.instructionsInfo else {
             return ""
         }
+        return instructionsInfo.instructions[0].title
+
+    }
+    
+    
+    func amountFormatter(amount:String) -> String {
         let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-        
-        let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
+        let arr = String(amount).characters.split(separator: ".").map(String.init)
         let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
-        let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
-        let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
-        
-        if amountRange != nil {
-            return instructionsInfo.instructions[0].title
-        } else {
-            return instructionsInfo.instructions[0].title
-        }
+        let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
+        return currencySymbol + amountStr + decimalSeparator + centsStr
     }
+    
     
 }

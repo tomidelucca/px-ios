@@ -67,13 +67,13 @@ class HeaderRenderer: NSObject {
         let statusLabel = UILabel()
         headerView.addSubview(statusLabel)
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        if (header.title != nil) {
+        if (header.labelText != nil) {
             statusLabel.textAlignment = .center
             statusLabel.textColor = .pxWhite
             MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
             MPLayout.put(view: statusLabel, onBottomOf:image, withMargin: S_MARGIN).isActive = true
             MPLayout.setWidth(ofView: statusLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-            statusLabel.text = header.title
+            statusLabel.text = header.labelText
             statusLabel.font = Utils.getFont(size: STATUS_FONT_SIZE)
             MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
         }else {
@@ -91,14 +91,14 @@ class HeaderRenderer: NSObject {
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         MPLayout.centerHorizontally(view: messageLabel, to: headerView).isActive = true
         MPLayout.put(view: messageLabel, onBottomOf:statusLabel, withMargin: L_MARGIN).isActive = true
-        messageLabel.text = header.subTitle
+        messageLabel.text = header.title
         messageLabel.textColor = .pxWhite
         messageLabel.font = Utils.getFont(size: MESSAGE_FONT_SIZE)
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        let height = UILabel.requiredHight(forText: header.subTitle, withFont: messageLabel.font  , inWidth: screenWidth)
+        let height = UILabel.requiredHight(forText: header.title, withFont: messageLabel.font  , inWidth: screenWidth)
         MPLayout.setHeight(owner: messageLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: messageLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.pinBottom(view: messageLabel, to: headerView, withMargin: XL_MARGIN).isActive = true

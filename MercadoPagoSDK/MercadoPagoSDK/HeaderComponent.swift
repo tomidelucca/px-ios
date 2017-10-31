@@ -9,29 +9,29 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var title : String?
-    var subTitle : String
+    var labelText : String?
+    var title : String
     var backgroundColor : UIColor
     var productImage : UIImage?
     var statusImage : UIImage?
     
     init(data : HeaderData) {
+        self.labelText = data.labelText
         self.title = data.title
-        self.subTitle = data.subTitle
         self.backgroundColor = data.backgroundColor
         self.productImage = data.productImage
         self.statusImage = data.statusImage
     }
 }
 class HeaderData : NSObject {
-    var title : String?
-    var subTitle : String
+    var labelText : String?
+    var title : String
     var backgroundColor : UIColor
     var productImage : UIImage?
     var statusImage : UIImage?
-    init(title: String?, subTitle: String, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
+    init(labelText: String?, title: String, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
+        self.labelText = labelText
         self.title = title
-        self.subTitle = subTitle
         self.backgroundColor = backgroundColor
         self.productImage = productImage
         self.statusImage = statusImage
