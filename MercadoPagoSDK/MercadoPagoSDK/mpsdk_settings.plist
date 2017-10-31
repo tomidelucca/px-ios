@@ -28,11 +28,7 @@
 	<key>flow_sdk_type_hybrid</key>
 	<false/>
 	<key>sdk_version</key>
-<<<<<<< HEAD
 	<string>3.6.4</string>
-=======
-	<string>3.6.3</string>
->>>>>>> d0b4f426fd72611d2bab885b871f25d1a63dca3e
 	<key>tracking_settings</key>
 	<dict>
 		<key>tracking_enabled</key>
