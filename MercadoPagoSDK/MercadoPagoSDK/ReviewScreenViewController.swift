@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
 
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 

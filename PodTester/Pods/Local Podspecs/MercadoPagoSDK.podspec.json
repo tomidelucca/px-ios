@@ -19,11 +19,6 @@
   },
   "requires_arc": true,
   "default_subspecs": "Default",
-  "dependencies": {
-    "MercadoPagoPXTracking": [
-
-    ]
-  },
   "pod_target_xcconfig": {
     "SWIFT_VERSION": "3.0.1"
   },
@@ -37,7 +32,8 @@
         "MercadoPagoSDK/MercadoPagoSDK/*.lproj"
       ],
       "source_files": [
-        "MercadoPagoSDK/MercadoPagoSDK/*"
+        "MercadoPagoSDK/MercadoPagoSDK/*",
+        "MercadoPagoSDK/MercadoPagoSDK/Tracker/*"
       ]
     }
   ]

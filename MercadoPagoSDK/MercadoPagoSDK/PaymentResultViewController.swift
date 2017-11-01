@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MercadoPagoPXTracking
 
 open class PaymentResultViewController: MercadoPagoUIViewController, UITableViewDelegate, UITableViewDataSource, MPCustomRowDelegate {
 

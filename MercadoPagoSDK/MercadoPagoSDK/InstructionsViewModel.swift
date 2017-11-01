@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MercadoPagoPXTracking
 
 open class InstructionsViewModel: NSObject {
     var paymentResult: PaymentResult!
