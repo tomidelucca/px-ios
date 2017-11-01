@@ -86,7 +86,11 @@ class PXResultViewModel: NSObject {
             if result.isWaitingForPayment() {
                 return "¡Apúrate a pagar!".localized
             }else{
-                return preference.getApprovedLabelText()
+                if result.isApproved() {
+                    return preference.getApprovedLabelText()
+                }else{
+                    return preference.getPendingLabelText()
+                }
             }
         }
         if !preference._showLabelText {

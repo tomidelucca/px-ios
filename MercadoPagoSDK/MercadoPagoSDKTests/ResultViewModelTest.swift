@@ -8,14 +8,13 @@
 
 import XCTest
 
-/*
- static let APPROVED = "approved"
- static let REJECTED = "rejected"
- static let RECOVERY = "recovery"
- static let IN_PROCESS = "in_process"
- static let PENDING = "pending"
- */
 class ResultViewModelTest: XCTestCase {
+    
+    let approvedTitleDummy = "ATD"
+    let rejectedTitleDummy = "RTD"
+    let pendingTitleDummy = "PTD"
+    let approvedLabelDummy = "ALD"
+
     
     override func setUp() {
         super.setUp()
@@ -33,8 +32,8 @@ class ResultViewModelTest: XCTestCase {
         XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxGreenMp)
         XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("ok_badge"))
-        XCTAssertNil(resultViewModel.statusMessage())
-        XCTAssertEqual(resultViewModel.message(), "¡Listo, se acreditó tu pago!".localized)
+        XCTAssertNil(resultViewModel.labelTextHeader())
+        XCTAssertEqual(resultViewModel.titleHeader(), "¡Listo, se acreditó tu pago!".localized)
         XCTAssertTrue(resultViewModel.isAccepted())
         XCTAssertFalse(resultViewModel.isWarning())
         XCTAssertFalse(resultViewModel.isError())
@@ -46,8 +45,8 @@ class ResultViewModelTest: XCTestCase {
         XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxRedMp)
         XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("error_badge"))
-        XCTAssertEqual(resultViewModel.statusMessage(),"Algo salió mal...".localized)
-        XCTAssertEqual(resultViewModel.message(), "Uy, no pudimos procesar el pago".localized)
+        XCTAssertEqual(resultViewModel.labelTextHeader(),"Algo salió mal...".localized)
+        XCTAssertEqual(resultViewModel.titleHeader(), "Uy, no pudimos procesar el pago".localized)
         XCTAssertFalse(resultViewModel.isAccepted())
         XCTAssertFalse(resultViewModel.isWarning())
         XCTAssertTrue(resultViewModel.isError())
@@ -59,18 +58,59 @@ class ResultViewModelTest: XCTestCase {
         XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxGreenMp)
         XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("pending_badge"))
-        XCTAssertNil(resultViewModel.statusMessage())
-        XCTAssertEqual(resultViewModel.message(), "Estamos procesando el pago".localized)
+        XCTAssertNil(resultViewModel.labelTextHeader())
+        XCTAssertEqual(resultViewModel.titleHeader(), "Estamos procesando el pago".localized)
         XCTAssertTrue(resultViewModel.isAccepted())
         XCTAssertFalse(resultViewModel.isWarning())
         XCTAssertFalse(resultViewModel.isError())
     }
     
-    
-    func testViewModelWithTextPreference() {
+    func testViewModelWithTextPreferenceAndApprovedPayment() {
+        let preference = PaymentResultScreenPreference()
+        preference.setApproved(title: approvedTitleDummy)
+        preference.setApproved(labelText: approvedLabelDummy)
+        let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, preference:preference)
+        XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxGreenMp)
+        XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
+        XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("ok_badge"))
+        XCTAssertTrue(resultViewModel.isAccepted())
+        XCTAssertFalse(resultViewModel.isWarning())
+        XCTAssertFalse(resultViewModel.isError())
+        XCTAssertEqual(resultViewModel.labelTextHeader(),approvedLabelDummy)
+        XCTAssertEqual(resultViewModel.titleHeader(), approvedTitleDummy)
     }
     
-    func testViewModelWithLabelText() {
+    func testViewModelWithTextPreferenceAndRejectedPayment() {
+        let preference = PaymentResultScreenPreference()
+        preference.setRejected(title: rejectedTitleDummy)
+        let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil,preference: preference)
+        XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxRedMp)
+        XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
+        XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("error_badge"))
+        XCTAssertFalse(resultViewModel.isAccepted())
+        XCTAssertFalse(resultViewModel.isWarning())
+        XCTAssertTrue(resultViewModel.isError())
+        XCTAssertEqual(resultViewModel.titleHeader(),rejectedTitleDummy)
+        XCTAssertEqual(resultViewModel.labelTextHeader(),"Algo salió mal...".localized)
+    }
+    
+    func testViewModelWithTextPreferenceAndPendingPayment() {
+        let preference = PaymentResultScreenPreference()
+        preference.setPending(title: pendingTitleDummy)
+        preference.disablePendingLabelText()
+        let paymentResult = MockBuilder.buildPaymentResult("in_process", paymentMethodId: "visa")
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, preference: preference)
+        XCTAssertEqual(resultViewModel.primaryResultColor(), UIColor.pxGreenMp)
+        XCTAssertEqual(resultViewModel.iconImageHeader(),MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
+        XCTAssertEqual(resultViewModel.badgeImage(),MercadoPago.getImage("pending_badge"))
+        XCTAssertTrue(resultViewModel.isAccepted())
+        XCTAssertFalse(resultViewModel.isWarning())
+        XCTAssertFalse(resultViewModel.isError())
+        XCTAssertEqual(resultViewModel.labelTextHeader(),nil)
+        XCTAssertEqual(resultViewModel.titleHeader(), "Estamos procesando el pago".localized)
+
     }
 
 }

@@ -124,11 +124,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedBadge = badge
     }
     
-    open func setApprovedLabel(text: String){
-        self._approvedLabelText = text
-    }
-    
-    open func setApprovedTitle(title: String) {
+    open func setApproved(title: String) {
         self.approvedTitle = title
     }
 
@@ -165,7 +161,7 @@ open class PaymentResultScreenPreference: NSObject {
             return self._pendingLabelText
         }
     }
-    open func setPendingTitle(title: String) {
+    open func setPending(title: String) {
         self.pendingTitle = title
     }
 
@@ -206,7 +202,7 @@ open class PaymentResultScreenPreference: NSObject {
 
     // Sets de rejected
 
-    open func setRejectedTitle(title: String) {
+    open func setRejected(title: String) {
         self.rejectedTitle = title
     }
     

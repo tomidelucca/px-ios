@@ -29,9 +29,9 @@ class PaymentResultScreenPreferenceTest: BaseTest {
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingTitle(), "Estamos procesando el pago".localized)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedTitle(), "Uy, no pudimos procesar el pago".localized)
 
-        paymentResultScreenPreference.setApprovedTitle(title: "1")
-        paymentResultScreenPreference.setPendingTitle(title: "2")
-        paymentResultScreenPreference.setRejectedTitle(title: "3")
+        paymentResultScreenPreference.setApproved(title: "1")
+        paymentResultScreenPreference.setPending(title: "2")
+        paymentResultScreenPreference.setRejected(title: "3")
 
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
 
