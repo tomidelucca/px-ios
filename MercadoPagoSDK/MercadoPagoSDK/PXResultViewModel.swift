@@ -78,44 +78,49 @@ class PXResultViewModel: NSObject {
         return nil
     }
     
-    func labelTextHeader() -> String? {
+    func labelTextHeader() -> NSAttributedString? {
         guard let result = self.paymentResult else {
             return nil
         }
         if isAccepted() {
             if result.isWaitingForPayment() {
-                return "¡Apúrate a pagar!".localized
+                return "¡Apúrate a pagar!".localized.toAttributedString()
             }else{
+                var labelText : String? 
                 if result.isApproved() {
-                    return preference.getApprovedLabelText()
+                    labelText = preference.getApprovedLabelText()
                 }else{
-                    return preference.getPendingLabelText()
+                    labelText = preference.getPendingLabelText()
                 }
+                guard let text = labelText else {
+                    return nil
+                }
+                return text.toAttributedString()
             }
         }
         if !preference._showLabelText {
             return nil
         }else{
-            return "Algo salió mal...".localized
+            return "Algo salió mal...".localized.toAttributedString()
         }
         
     }
-    func titleHeader() -> String {
+    func titleHeader() -> NSAttributedString {
         guard let result = self.paymentResult else {
-            return ""
+            return "".toAttributedString()
         }
         if let _ = self.instructionsInfo {
-            return titleForInstructions()
+            return titleForInstructions().toAttributedString()
         }
         if isAccepted() {
             if result.isApproved() {
-                return preference.getApprovedTitle()
+                return preference.getApprovedTitle().toAttributedString()
             }else{
-                return "Estamos procesando el pago".localized
+                return "Estamos procesando el pago".localized.toAttributedString()
             }
         }
         if let title = preference.getRejectedTitle() {
-            return title
+            return title.toAttributedString()
         }
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
@@ -159,28 +164,36 @@ class PXResultViewModel: NSObject {
         return !isWarning()
     }
     
-    func titleForStatusDetail(statusDetail:String, paymentMethod: PaymentMethod?) -> String {
+    func titleForStatusDetail(statusDetail:String, paymentMethod: PaymentMethod?) -> NSAttributedString {
         guard let paymentMethod = paymentMethod else {
-            return ""
+            return "".toAttributedString()
         }
         if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
             if let paymentMethodName = paymentMethod.name {
-                let amountStr = self.amountFormatter(amount: String(format:"%.2f",self.paymentResult!.paymentData!.payerCost!.totalAmount ))
-                var c4aTitle = "Debes autorizar ante %1$s el pago de ".localized + amountStr + " a MercadoPago".localized
-                return c4aTitle.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
+                let currency = MercadoPagoContext.getCurrency()
+                let currencySymbol = currency.getCurrencySymbolOrDefault()
+                let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+                let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+                let amountStr = Utils.getAttributedAmount(self.paymentResult!.paymentData!.payerCost!.totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .green)
+                    //self.amountFormatter(amount: String(format:"%.2f",self.paymentResult!.paymentData!.payerCost!.totalAmount ))
+                let string : NSMutableAttributedString = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)").toAttributedString() as! NSMutableAttributedString
+                var result : NSMutableAttributedString = string
+                result.append(amountStr)
+                result.append(" a MercadoPago".localized.toAttributedString())
+                return result
             }else{
-                return ""
+                return "".toAttributedString()
             }
             
         }
         let title = statusDetail + "_title"
         if !title.existsLocalized() {
-            return "Uy, no pudimos procesar el pago".localized
+            return "Uy, no pudimos procesar el pago".localized.toAttributedString()
         } else {
             if let paymentMethodName = paymentMethod.name {
-                return (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)")
+                return (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)").toAttributedString()
             }else{
-                return ""
+                return "".toAttributedString()
             }
         }
     }
@@ -205,6 +218,11 @@ class PXResultViewModel: NSObject {
         let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
         return currencySymbol + amountStr + decimalSeparator + centsStr
     }
-    
-    
 }
+
+  
+  extension String {
+    public func toAttributedString() -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: self, attributes: nil)
+    }
+  }

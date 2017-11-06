@@ -14,6 +14,10 @@ open class PaymentResultScreenPreference: NSObject {
         case pending
         case check
     }
+    
+    //HEADER
+    
+    //Approved
     var approvedBadge : ApprovedBadge? = ApprovedBadge.check
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
     var approvedSubtitle = ""
@@ -24,6 +28,7 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedIconName = "default_item_icon"
     var approvedIconBundle = MercadoPago.getBundle()!
 
+    //Pending
     var pendingTitle = "Estamos procesando el pago".localized
     var pendingSubtitle = ""
     var pendingContentTitle = "¿Qué puedo hacer?".localized
@@ -38,6 +43,7 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
+    //Rejected
     var rejectedTitle : String? = nil
     var rejectedSubtitle = ""
     private var disableRejectedLabelText = false
@@ -45,12 +51,6 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName : String?
     var rejectedIconName: String?
-    
-    var pmDefaultIconName = "card_icon"
-    var pmBolbradescoIconName = "boleto_icon"
-    var pmIconBundle = MercadoPago.getBundle()!
-
-    
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
     var hideRejectedSecondaryButton = false
@@ -58,32 +58,16 @@ open class PaymentResultScreenPreference: NSObject {
     var hideRejectedContentTitle = false
     var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
     var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-
-    var exitButtonTitle = "Seguir comprando"
-
-    var statusBackgroundColor: UIColor?
-
-    var hideApprovedPaymentBodyCell = false
-    var hideContentCell = false
-    var hideAmount = false
-    var hidePaymentId = false
-    var hidePaymentMethod = false
-
-    var pendingAdditionalInfoCells = [MPCustomCell]()
-    var approvedAdditionalInfoCells = [MPCustomCell]()
-    var approvedSubHeaderCells = [MPCustomCell]()
-
+    
+    //Commons
     var _showBadgeImage = true
-
+    var _showLabelText = true
     open func showBadgeImage() {
         self._showBadgeImage = true
     }
     open func hideBadgeImage() {
         self._showBadgeImage = false
     }
-    
-    var _showLabelText = true
-    
     open func showLabelText() {
         self._showLabelText = true
     }
@@ -92,8 +76,23 @@ open class PaymentResultScreenPreference: NSObject {
     }
     
     
-    // Sets de Approved
+    //--
+    var pmDefaultIconName = "card_icon"
+    var pmBolbradescoIconName = "boleto_icon"
+    var pmIconBundle = MercadoPago.getBundle()!
+    var exitButtonTitle = "Seguir comprando"
+    var statusBackgroundColor: UIColor?
+    var hideApprovedPaymentBodyCell = false
+    var hideContentCell = false
+    var hideAmount = false
+    var hidePaymentId = false
+    var hidePaymentMethod = false
+    var pendingAdditionalInfoCells = [MPCustomCell]()
+    var approvedAdditionalInfoCells = [MPCustomCell]()
+    var approvedSubHeaderCells = [MPCustomCell]()
+
     
+    // Sets de Approved
     open func getApprovedBadgeImage() -> UIImage? {
         guard let badge = approvedBadge else {
             return nil

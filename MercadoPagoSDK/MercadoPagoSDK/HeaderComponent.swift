@@ -9,8 +9,8 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var labelText : String?
-    var title : String
+    var labelText : NSAttributedString?
+    var title : NSAttributedString
     var backgroundColor : UIColor
     var productImage : UIImage?
     var statusImage : UIImage?
@@ -24,12 +24,12 @@ class HeaderComponent: NSObject {
     }
 }
 class HeaderData : NSObject {
-    var labelText : String?
-    var title : String
+    var labelText : NSAttributedString?
+    var title : NSAttributedString
     var backgroundColor : UIColor
     var productImage : UIImage?
     var statusImage : UIImage?
-    init(labelText: String?, title: String, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
+    init(labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
         self.labelText = labelText
         self.title = title
         self.backgroundColor = backgroundColor

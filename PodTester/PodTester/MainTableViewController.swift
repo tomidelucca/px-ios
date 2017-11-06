@@ -187,7 +187,7 @@ class MainTableViewController: UITableViewController {
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
 
         let paypref = PaymentResultScreenPreference()
-        paypref.setApprovedTitle(title: "⬅ Soy hermano de ese titulo")
+        paypref.setApproved(title: "⬅ Soy hermano de ese titulo")
         paypref.setRejectedHeaderIcon(name: "jn", bundle: Bundle.main)
         checkout.setPaymentResultScreenPreference(paypref)
         
