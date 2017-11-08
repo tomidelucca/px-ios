@@ -14,11 +14,11 @@ open class PaymentResultScreenPreference: NSObject {
         case pending
         case check
     }
-    
+
     //HEADER
-    
+
     //Approved
-    var approvedBadge : ApprovedBadge? = ApprovedBadge.check
+    var approvedBadge: ApprovedBadge? = ApprovedBadge.check
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
@@ -44,12 +44,12 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
     //Rejected
-    var rejectedTitle : String? = nil
+    var rejectedTitle: String?
     var rejectedSubtitle = ""
     private var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
     var rejectedIconBundle = MercadoPago.getBundle()!
-    var rejectedDefaultIconName : String?
+    var rejectedDefaultIconName: String?
     var rejectedIconName: String?
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
@@ -58,7 +58,7 @@ open class PaymentResultScreenPreference: NSObject {
     var hideRejectedContentTitle = false
     var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
     var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    
+
     //Commons
     var _showBadgeImage = true
     var _showLabelText = true
@@ -74,8 +74,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func hideLabelText() {
         self._showLabelText = false
     }
-    
-    
+
     //--
     var pmDefaultIconName = "card_icon"
     var pmBolbradescoIconName = "boleto_icon"
@@ -91,7 +90,6 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedAdditionalInfoCells = [MPCustomCell]()
     var approvedSubHeaderCells = [MPCustomCell]()
 
-    
     // Sets de Approved
     open func getApprovedBadgeImage() -> UIImage? {
         guard let badge = approvedBadge else {
@@ -107,7 +105,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func disableApprovedLabelText() {
         self._disableApprovedLabelText = true
     }
-    
+
     open func setApproved(labelText: String) {
         self._disableApprovedLabelText = false
         self._approvedLabelText = labelText
@@ -115,14 +113,14 @@ open class PaymentResultScreenPreference: NSObject {
     open func getApprovedLabelText() -> String? {
         if self._disableApprovedLabelText {
             return nil
-        }else{
+        }else {
             return self._approvedLabelText
         }
     }
-    open func setBadgeApproved(badge: ApprovedBadge){
+    open func setBadgeApproved(badge: ApprovedBadge) {
         self.approvedBadge = badge
     }
-    
+
     open func setApproved(title: String) {
         self.approvedTitle = title
     }
@@ -144,11 +142,10 @@ open class PaymentResultScreenPreference: NSObject {
 
     // Sets de Pending
 
-    
     open func disablePendingLabelText() {
         self._disablePendingLabelText = true
     }
-    
+
     open func setPending(labelText: String) {
         self._disablePendingLabelText = false
         self._pendingLabelText = labelText
@@ -156,7 +153,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func getPendingLabelText() -> String? {
         if self._disablePendingLabelText {
             return nil
-        }else{
+        }else {
             return self._pendingLabelText
         }
     }
@@ -204,12 +201,12 @@ open class PaymentResultScreenPreference: NSObject {
     open func setRejected(title: String) {
         self.rejectedTitle = title
     }
-    
+
     @available(*, deprecated)
     open func setRejectedSubtitle(subtitle: String) {
         self.rejectedSubtitle = subtitle
     }
-    
+
     open func setRejectedHeaderIcon(name: String, bundle: Bundle) {
         self.rejectedIconName = name
         self.rejectedIconBundle = bundle
@@ -226,7 +223,7 @@ open class PaymentResultScreenPreference: NSObject {
     open func disableRejectedLabel() {
         self.disableRejectedLabelText = true
     }
-    
+
     @available(*, deprecated)
     open func setRejectedIconSubtext(text: String) {
         self.rejectedIconSubtext = text
@@ -407,19 +404,19 @@ open class PaymentResultScreenPreference: NSObject {
         self.rejectedDefaultIconName = name
         self.approvedIconBundle = bundle
     }
-    
+
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
         if let name = rejectedIconName {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }
        return getHeaderImageFor(paymentMethod)
     }
-    
+
     open func getHeaderImageFor(_ paymentMethod: PaymentMethod?) -> UIImage? {
         guard let paymentMethod = paymentMethod else {
             return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
         }
-        
+
         if paymentMethod.isBolbradesco {
             return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
         }
@@ -481,5 +478,4 @@ open class PaymentResultScreenPreference: NSObject {
         return hidePaymentId
     }
 
-    
 }

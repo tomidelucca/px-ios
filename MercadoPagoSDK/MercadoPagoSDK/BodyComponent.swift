@@ -13,10 +13,10 @@ class BodyComponent: NSObject {
     init(data: BodyData) {
         self.text = data.text
     }
-    
+
 }
 class BodyData: NSObject {
-    var text : String
+    var text: String
     init(text: String) {
         self.text = text
     }

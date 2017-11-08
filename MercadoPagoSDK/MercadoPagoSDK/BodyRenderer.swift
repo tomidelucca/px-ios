@@ -10,8 +10,9 @@ import UIKit
 
 class BodyRenderer: NSObject {
 
-    func render(body : BodyComponent) -> UIView{
+    func render(body: BodyComponent) -> UIView {
         let bodyView = UIView()
+        bodyView.translatesAutoresizingMaskIntoConstraints = false
         bodyView.backgroundColor = .purple
         let textLabel = UILabel()
         textLabel.backgroundColor = .white

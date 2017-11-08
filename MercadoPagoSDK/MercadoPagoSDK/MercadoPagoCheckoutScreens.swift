@@ -167,7 +167,7 @@ extension MercadoPagoCheckout {
     }
 
     func showPaymentResultScreen() {
-       
+
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
@@ -176,8 +176,7 @@ extension MercadoPagoCheckout {
 
         var congratsViewController: MercadoPagoUIViewController
 
-        let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo, preference :self.viewModel.paymentResultScreenPreference)
-        congratsViewController = PXResultViewController(viewModel: viewModel, callback: {[weak self] (state) in
+        congratsViewController = PXResultViewController(viewModel: self.viewModel.resultViewModel(), callback: {[weak self] (state) in
             guard let strongSelf = self else {
                 return
             }
@@ -185,9 +184,9 @@ extension MercadoPagoCheckout {
             strongSelf.finish()
         })
         self.pushViewController(viewController : congratsViewController, animated: false)
-        
-        return
-        
+
+        return // Borro el codigo de abajo cuando tenga el componente completo. Quiero tenerlo de referencia para las diferentes acciones del footer.
+
         if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) || self.viewModel.paymentResult?.status == PaymentStatus.REJECTED {
             congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
 
@@ -223,7 +222,7 @@ extension MercadoPagoCheckout {
                 print("hola")
             })
         }
-        
+
         self.pushViewController(viewController : congratsViewController, animated: false)
     }
 

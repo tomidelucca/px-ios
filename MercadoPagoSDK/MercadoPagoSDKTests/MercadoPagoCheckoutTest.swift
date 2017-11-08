@@ -298,7 +298,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         self.mpCheckout!.viewModel.payment = MockBuilder.buildPayment("bolbradesco")
         self.mpCheckout!.viewModel.paymentData = MockBuilder.buildPaymentData(paymentMethod: paymentMethod)
         self.mpCheckout?.viewModel.instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
-        
+
         self.mpCheckout!.showPaymentResultScreen()
 
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentResult)

@@ -190,8 +190,7 @@ class MainTableViewController: UITableViewController {
         paypref.setApproved(title: "⬅ Soy hermano de ese titulo")
         paypref.setRejectedHeaderIcon(name: "jn", bundle: Bundle.main)
         checkout.setPaymentResultScreenPreference(paypref)
-        
-        
+
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)
             MercadoPagoCheckout.setDecorationPreference(decorationPref)

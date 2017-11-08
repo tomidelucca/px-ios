@@ -212,14 +212,14 @@
 
 -(void)setPaymentResultScreenPreference {
     PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
-    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
+//    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
     [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
     [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
     [resultPreference setPendingHeaderIconWithName:@"sube" bundle:[NSBundle mainBundle]];
-    [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+//    [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
     [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
     //[resultPreference disableRejectdSecondaryExitButton];
-    [resultPreference setRejectedTitleWithTitle:@"No pudimos hacer la recarga"];
+//    [resultPreference setRejectedTitleWithTitle:@"No pudimos hacer la recarga"];
     [resultPreference setRejectedSubtitleWithSubtitle:@"Movistar no esta disponible ahora"];
     [resultPreference setRejectedIconSubtextWithText:@"Uppss..."];
     [resultPreference setRejectedContentTextWithText:@"Vuelve más tarde"];

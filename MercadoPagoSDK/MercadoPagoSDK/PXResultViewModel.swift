@@ -1,4 +1,4 @@
-  //
+//
 //  PXResultViewModel.swift
 //  MercadoPagoSDK
 //
@@ -8,22 +8,18 @@
 
 import UIKit
 
-class PXResultViewModel: NSObject {
+public class PXResultViewModel: NSObject {
 
     var paymentResult: PaymentResult?
     var instructionsInfo: InstructionsInfo?
-    var preference : PaymentResultScreenPreference
+    var preference: PaymentResultScreenPreference
 
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, preference : PaymentResultScreenPreference? = nil)  {
+    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
-        if let pref =  preference {
-            self.preference = pref
-        }else {
-            self.preference = PaymentResultScreenPreference()
-        }
+        self.preference =  paymentResultScreenPreference
     }
-    
+
     func primaryResultColor() -> UIColor {
         if isAccepted() {
             return .pxGreenMp
@@ -36,7 +32,7 @@ class PXResultViewModel: NSObject {
         }
         return .white
     }
-    
+
     func iconImageHeader() -> UIImage? {
         guard let result = self.paymentResult else {
             return nil
@@ -44,17 +40,17 @@ class PXResultViewModel: NSObject {
         if isAccepted() {
             if result.isApproved() {
                 return preference.getHeaderApprovedIcon()
-            }else if result.isWaitingForPayment(){
+            }else if result.isWaitingForPayment() {
                 return preference.getHeaderPendingIcon()
-            } else{
+            } else {
                 return preference.getHeaderImageFor(result.paymentData?.paymentMethod)
             }
         }else {
             return preference.getHeaderRejectedIcon(paymentResult?.paymentData?.paymentMethod)
         }
-        
+
     }
-    
+
     func badgeImage() -> UIImage? {
         guard let result = self.paymentResult else {
             return nil
@@ -65,7 +61,7 @@ class PXResultViewModel: NSObject {
         if isAccepted() {
             if result.isApproved() {
                 return preference.getApprovedBadgeImage()
-            }else{
+            }else {
                 return MercadoPago.getImage("pending_badge")
             }
         }
@@ -77,45 +73,45 @@ class PXResultViewModel: NSObject {
         }
         return nil
     }
-    
+
     func labelTextHeader() -> NSAttributedString? {
         guard let result = self.paymentResult else {
             return nil
         }
         if isAccepted() {
             if result.isWaitingForPayment() {
-                return "¡Apúrate a pagar!".localized.toAttributedString()
-            }else{
-                var labelText : String? 
+                return "¡Apúrate a pagar!".localized.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: HeaderRenderer.LABEL_FONT_SIZE)])
+            }else {
+                var labelText: String?
                 if result.isApproved() {
                     labelText = preference.getApprovedLabelText()
-                }else{
+                }else {
                     labelText = preference.getPendingLabelText()
                 }
                 guard let text = labelText else {
                     return nil
                 }
-                return text.toAttributedString()
+                return text.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: HeaderRenderer.LABEL_FONT_SIZE)])
             }
         }
         if !preference._showLabelText {
             return nil
-        }else{
+        }else {
             return "Algo salió mal...".localized.toAttributedString()
         }
-        
+
     }
     func titleHeader() -> NSAttributedString {
         guard let result = self.paymentResult else {
             return "".toAttributedString()
         }
         if let _ = self.instructionsInfo {
-            return titleForInstructions().toAttributedString()
+            return titleForInstructions()
         }
         if isAccepted() {
             if result.isApproved() {
                 return preference.getApprovedTitle().toAttributedString()
-            }else{
+            }else {
                 return "Estamos procesando el pago".localized.toAttributedString()
             }
         }
@@ -124,23 +120,23 @@ class PXResultViewModel: NSObject {
         }
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
-    
+
     func headerComponentData() -> HeaderData {
         let data = HeaderData(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return data
     }
-    
+
     func isAccepted() -> Bool {
         guard let result = self.paymentResult else {
             return false
         }
         if result.isApproved() || result.isInProcess() || result.isPending() {
             return true
-        }else{
+        }else {
             return false
         }
     }
-    
+
     func isWarning() -> Bool {
         guard let result = self.paymentResult else {
             return false
@@ -151,7 +147,7 @@ class PXResultViewModel: NSObject {
         if result.statusDetail == RejectedStatusDetail.INVALID_ESC || result.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || result.statusDetail == RejectedStatusDetail.BAD_FILLED_CARD_NUMBER || result.statusDetail == RejectedStatusDetail.CARD_DISABLE || result.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT || result.statusDetail == RejectedStatusDetail.BAD_FILLED_DATE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_SECURITY_CODE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_OTHER {
             return true
         }
-        
+
         return false
     }
     func isError() -> Bool {
@@ -163,8 +159,8 @@ class PXResultViewModel: NSObject {
         }
         return !isWarning()
     }
-    
-    func titleForStatusDetail(statusDetail:String, paymentMethod: PaymentMethod?) -> NSAttributedString {
+
+    func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
         guard let paymentMethod = paymentMethod else {
             return "".toAttributedString()
         }
@@ -176,15 +172,15 @@ class PXResultViewModel: NSObject {
                 let decimalSeparator = currency.getDecimalSeparatorOrDefault()
                 let amountStr = Utils.getAttributedAmount(self.paymentResult!.paymentData!.payerCost!.totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .green)
                     //self.amountFormatter(amount: String(format:"%.2f",self.paymentResult!.paymentData!.payerCost!.totalAmount ))
-                let string : NSMutableAttributedString = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)").toAttributedString() as! NSMutableAttributedString
-                var result : NSMutableAttributedString = string
+                let string: NSMutableAttributedString = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)").toAttributedString() as! NSMutableAttributedString
+                var result: NSMutableAttributedString = string
                 result.append(amountStr)
                 result.append(" a MercadoPago".localized.toAttributedString())
                 return result
-            }else{
+            }else {
                 return "".toAttributedString()
             }
-            
+
         }
         let title = statusDetail + "_title"
         if !title.existsLocalized() {
@@ -192,23 +188,41 @@ class PXResultViewModel: NSObject {
         } else {
             if let paymentMethodName = paymentMethod.name {
                 return (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)").toAttributedString()
-            }else{
+            }else {
                 return "".toAttributedString()
             }
         }
     }
-    
-    func titleForInstructions() -> String {
 
+    func titleForInstructions() -> NSMutableAttributedString {
         guard let instructionsInfo = self.instructionsInfo else {
-            return ""
+            return "".toAttributedString()
         }
-        return instructionsInfo.instructions[0].title
+        let currency = MercadoPagoContext.getCurrency()
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
 
+        let arr = String(instructionsInfo.amountInfo.amount).characters.split(separator: ".").map(String.init)
+        let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
+        let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
+
+        if amountRange != nil {
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (amountRange?.lowerBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
+            let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:HeaderRenderer.TITLE_FONT_SIZE, centsFontSize:HeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
+            attributedTitle.append(attributedAmount)
+            let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (amountRange?.upperBound)!)), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
+            attributedTitle.append(endingTitle)
+
+            return attributedTitle
+        } else {
+            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title), attributes: [NSFontAttributeName: Utils.getFont(size: 26)])
+            return attributedTitle
+        }
     }
-    
-    
-    func amountFormatter(amount:String) -> String {
+
+    func amountFormatter(amount: String) -> String {
         let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
@@ -220,9 +234,8 @@ class PXResultViewModel: NSObject {
     }
 }
 
-  
   extension String {
-    public func toAttributedString() -> NSMutableAttributedString {
-        return NSMutableAttributedString(string: self, attributes: nil)
+    public func toAttributedString(attributes: [String : Any]? = nil) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: self, attributes: attributes)
     }
   }

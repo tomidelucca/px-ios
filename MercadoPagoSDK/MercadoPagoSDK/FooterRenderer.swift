@@ -10,8 +10,9 @@ import UIKit
 
 class FooterRenderer: NSObject {
 
-    func render(footer : FooterComponent) -> UIView {
+    func render(footer: FooterComponent) -> UIView {
         let fooView = UIView()
+        fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.isUserInteractionEnabled = true
         fooView.backgroundColor = .yellow
         let title = UILabel()
@@ -33,7 +34,7 @@ class FooterRenderer: NSObject {
         MPLayout.pinRight(view: button, to: fooView, withMargin: 10).isActive = true
         MPLayout.setHeight(owner: button, height: 30).isActive = true
         button.setTitle(footer.titleButton, for: .normal)
-        button.actionHandle(controlEvents: UIControlEvents.touchUpInside, ForAction:{() -> Void in
+        button.actionHandle(controlEvents: UIControlEvents.touchUpInside, ForAction: {() -> Void in
             if let action = footer.actionButton {
                 action()
             }
@@ -42,6 +43,3 @@ class FooterRenderer: NSObject {
         return fooView
     }
 }
-
-
-

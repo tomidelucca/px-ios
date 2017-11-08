@@ -165,10 +165,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.willMove(toParentViewController: parent)
     }
 
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {
         return { () -> Void in
             if self.viewModel.getDisplayedPaymentMethodsCount() > 1 {

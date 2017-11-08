@@ -9,13 +9,13 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var labelText : NSAttributedString?
-    var title : NSAttributedString
-    var backgroundColor : UIColor
-    var productImage : UIImage?
-    var statusImage : UIImage?
-    
-    init(data : HeaderData) {
+    var labelText: NSAttributedString?
+    var title: NSAttributedString
+    var backgroundColor: UIColor
+    var productImage: UIImage?
+    var statusImage: UIImage?
+
+    init(data: HeaderData) {
         self.labelText = data.labelText
         self.title = data.title
         self.backgroundColor = data.backgroundColor
@@ -23,13 +23,13 @@ class HeaderComponent: NSObject {
         self.statusImage = data.statusImage
     }
 }
-class HeaderData : NSObject {
-    var labelText : NSAttributedString?
-    var title : NSAttributedString
-    var backgroundColor : UIColor
-    var productImage : UIImage?
-    var statusImage : UIImage?
-    init(labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor,productImage:UIImage?, statusImage : UIImage? ) {
+class HeaderData: NSObject {
+    var labelText: NSAttributedString?
+    var title: NSAttributedString
+    var backgroundColor: UIColor
+    var productImage: UIImage?
+    var statusImage: UIImage?
+    init(labelText: NSAttributedString?, title: NSAttributedString, backgroundColor: UIColor, productImage: UIImage?, statusImage: UIImage? ) {
         self.labelText = labelText
         self.title = title
         self.backgroundColor = backgroundColor
@@ -37,5 +37,3 @@ class HeaderData : NSObject {
         self.statusImage = statusImage
     }
 }
-
-
