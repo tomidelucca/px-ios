@@ -31,35 +31,35 @@ class HeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(header: HeaderComponent ) -> UIView {
-        let headerView = UIView()
-        headerView.backgroundColor = header.backgroundColor
+    func render(header: HeaderComponent ) -> HeaderView {
+        let headerView = HeaderView()
+        headerView.backgroundColor = header.data.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         //Image
-        let circleImage = buildCircleImage(with: header.productImage)
-        headerView.addSubview(circleImage)
-        MPLayout.centerHorizontally(view: circleImage, to: headerView).isActive = true
-        MPLayout.pinTop(view: circleImage, to: headerView, withMargin: XXL_MARGIN).isActive = true
+        headerView.circleImage = buildCircleImage(with: header.data.productImage)
+        headerView.addSubview(headerView.circleImage!)
+        MPLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
+        MPLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: XXL_MARGIN).isActive = true
 
         //Badge Image
-        let badgeImage = buildBudgeImage(with: header.statusImage)
-        headerView.addSubview(badgeImage)
-        MPLayout.pinRight(view: badgeImage, to: circleImage, withMargin: BADGE_OFFSET).isActive = true
-        MPLayout.pinBottom(view: badgeImage, to: circleImage, withMargin: BADGE_OFFSET).isActive = true
+        headerView.badgeImage = buildBudgeImage(with: header.data.statusImage)
+        headerView.addSubview(headerView.badgeImage!)
+        MPLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
+        MPLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
 
         //Status Label
-        let statusLabel = buildStatusLabel(with: header.labelText, in: headerView, onBottomOf: circleImage)
-        MPLayout.centerHorizontally(view: statusLabel, to: headerView).isActive = true
-        MPLayout.setWidth(ofView: statusLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        headerView.statusLabel = buildStatusLabel(with: header.data.labelText, in: headerView, onBottomOf: headerView.circleImage!)
+        MPLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
+        MPLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
-        let messageLabel = buildMessageLabel(with: header.title)
-        headerView.addSubview(messageLabel)
-        MPLayout.centerHorizontally(view: messageLabel, to: headerView).isActive = true
-        MPLayout.put(view: messageLabel, onBottomOf:statusLabel, withMargin: L_MARGIN).isActive = true
-        MPLayout.setWidth(ofView: messageLabel, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.pinBottom(view: messageLabel, to: headerView, withMargin: XL_MARGIN).isActive = true
+        headerView.messageLabel = buildMessageLabel(with: header.data.title)
+        headerView.addSubview(headerView.messageLabel!)
+        MPLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
+        MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: L_MARGIN).isActive = true
+        MPLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        MPLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: XL_MARGIN).isActive = true
         return headerView
     }
 
@@ -114,5 +114,11 @@ class HeaderRenderer: NSObject {
         MPLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }
+}
 
+class HeaderView : UIView {
+    public var circleImage: UIImageView?
+    public var badgeImage: UIImageView?
+    public var statusLabel: UILabel?
+    public var messageLabel: UILabel?
 }

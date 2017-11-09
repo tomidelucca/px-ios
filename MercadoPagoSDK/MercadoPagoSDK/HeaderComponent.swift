@@ -9,18 +9,10 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var labelText: NSAttributedString?
-    var title: NSAttributedString
-    var backgroundColor: UIColor
-    var productImage: UIImage?
-    var statusImage: UIImage?
+    var data : HeaderData
 
     init(data: HeaderData) {
-        self.labelText = data.labelText
-        self.title = data.title
-        self.backgroundColor = data.backgroundColor
-        self.productImage = data.productImage
-        self.statusImage = data.statusImage
+        self.data = data
     }
 }
 class HeaderData: NSObject {
