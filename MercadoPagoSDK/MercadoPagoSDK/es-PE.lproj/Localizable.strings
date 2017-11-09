@@ -70,6 +70,8 @@
 "cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_bad_filled_date_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
+"rejected_insufficient_data_title" = "No fue posible procesar su pago";
+"rejected_by_bank_title" = "No fue posible procesar su pago";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";
@@ -249,3 +251,7 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";
+
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Algo salió mal...";

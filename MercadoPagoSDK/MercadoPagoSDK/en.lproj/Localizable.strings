@@ -91,6 +91,8 @@
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="The security code is not correct";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="The expiration date is not correct.";
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
+"rejected_insufficient_data_title" = "Payment could not be processed";
+"rejected_by_bank_title" = "Payment could not be processed";
 
 "Ingresalo nuevamente" = "Enter again";
 
@@ -265,3 +267,6 @@
 //Instrucciones
 "Seguir comprando"= "Continue shopping";
 
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Something went wrong...";
