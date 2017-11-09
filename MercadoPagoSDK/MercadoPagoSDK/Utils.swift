@@ -109,8 +109,10 @@ class Utils {
         let space = NSMutableAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
         attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
-        attributedSymbol.append(space)
-        attributedSymbol.append(attributedCents)
+        if cents != "00" || fontSize < 26 {
+            attributedSymbol.append(space)
+            attributedSymbol.append(attributedCents)
+        }
         return attributedSymbol
     }
 

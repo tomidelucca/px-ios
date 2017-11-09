@@ -97,7 +97,7 @@ public class PXResultViewModel: NSObject {
         if !preference._showLabelText {
             return nil
         }else {
-            return "Algo salió mal...".localized.toAttributedString()
+            return NSMutableAttributedString(string: "Algo salió mal...".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
         }
 
     }
@@ -110,13 +110,13 @@ public class PXResultViewModel: NSObject {
         }
         if isAccepted() {
             if result.isApproved() {
-                return preference.getApprovedTitle().toAttributedString()
+                return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
             }else {
-                return "Estamos procesando el pago".localized.toAttributedString()
+                return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
             }
         }
         if let title = preference.getRejectedTitle() {
-            return title.toAttributedString()
+            return NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
         }
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
@@ -170,12 +170,11 @@ public class PXResultViewModel: NSObject {
                 let currencySymbol = currency.getCurrencySymbolOrDefault()
                 let thousandSeparator = currency.getThousandsSeparatorOrDefault()
                 let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-                let amountStr = Utils.getAttributedAmount(self.paymentResult!.paymentData!.payerCost!.totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .green)
-                    //self.amountFormatter(amount: String(format:"%.2f",self.paymentResult!.paymentData!.payerCost!.totalAmount ))
-                let string: NSMutableAttributedString = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)").toAttributedString() as! NSMutableAttributedString
-                var result: NSMutableAttributedString = string
+                let amountStr = Utils.getAttributedAmount(self.paymentResult!.paymentData!.payerCost!.totalAmount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:HeaderRenderer.TITLE_FONT_SIZE, centsFontSize:HeaderRenderer.TITLE_FONT_SIZE/2)
+                let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
+                var result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
                 result.append(amountStr)
-                result.append(" a MercadoPago".localized.toAttributedString())
+                result.append(NSMutableAttributedString(string: " a MercadoPago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)]))
                 return result
             }else {
                 return "".toAttributedString()
@@ -184,7 +183,7 @@ public class PXResultViewModel: NSObject {
         }
         let title = statusDetail + "_title"
         if !title.existsLocalized() {
-            return "Uy, no pudimos procesar el pago".localized.toAttributedString()
+            return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
         } else {
             if let paymentMethodName = paymentMethod.name {
                 return (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)").toAttributedString()
