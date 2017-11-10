@@ -127,10 +127,10 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetHeaderIcon() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconName, "MPSDK_payment_result_pending")
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconName, "default_item_icon")
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconBundle, MercadoPago.getBundle())
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconName, "MPSDK_payment_result_error")
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconName, nil)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconBundle, MercadoPago.getBundle())
 
         paymentResultScreenPreference.setPendingHeaderIcon(name: "lala", bundle: Bundle.main)

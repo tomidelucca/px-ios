@@ -44,8 +44,9 @@ open class PaymentResultScreenPreference: NSObject {
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
     //Rejected
-    var rejectedTitle: String?
+    var rejectedTitle = "Uy, no pudimos procesar el pago".localized
     var rejectedSubtitle = ""
+    var rejectedTitleSetted = false
     private var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
     var rejectedIconBundle = MercadoPago.getBundle()!
@@ -200,6 +201,7 @@ open class PaymentResultScreenPreference: NSObject {
 
     open func setRejected(title: String) {
         self.rejectedTitle = title
+        self.rejectedTitleSetted = true
     }
 
     @available(*, deprecated)
@@ -392,7 +394,7 @@ open class PaymentResultScreenPreference: NSObject {
 
     // Rejected
 
-    open func getRejectedTitle() -> String? {
+    open func getRejectedTitle() -> String {
         return rejectedTitle
     }
 

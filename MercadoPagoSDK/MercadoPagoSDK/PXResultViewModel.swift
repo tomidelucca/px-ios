@@ -115,8 +115,8 @@ public class PXResultViewModel: NSObject {
                 return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
             }
         }
-        if let title = preference.getRejectedTitle() {
-            return NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
+        if preference.rejectedTitleSetted {
+            return NSMutableAttributedString(string: preference.getRejectedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
         }
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
@@ -221,20 +221,6 @@ public class PXResultViewModel: NSObject {
         }
     }
 
-    func amountFormatter(amount: String) -> String {
-        let currency = MercadoPagoContext.getCurrency()
-        let currencySymbol = currency.getCurrencySymbolOrDefault()
-        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
-        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-        let arr = String(amount).characters.split(separator: ".").map(String.init)
-        let amountStr = Utils.getAmountFormatted(arr[0], thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
-        let centsStr = Utils.getCentsFormatted(String(amount), decimalSeparator: decimalSeparator)
-        return currencySymbol + amountStr + decimalSeparator + centsStr
-    }
 }
 
-  extension String {
-    public func toAttributedString(attributes: [String : Any]? = nil) -> NSMutableAttributedString {
-        return NSMutableAttributedString(string: self, attributes: attributes)
-    }
-  }
+ 

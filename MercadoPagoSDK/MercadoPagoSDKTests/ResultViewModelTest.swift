@@ -132,7 +132,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertFalse(resultViewModel.isAccepted())
         XCTAssertTrue(resultViewModel.isWarning())
         XCTAssertFalse(resultViewModel.isError())
-        XCTAssertEqual(headerView.statusLabel?.attributedText, "Algo salió mal...".localized.toAttributedString())
+        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, "Algo salió mal...".localized.toAttributedString().string)
     }
     
     func buildHeaderView(resultViewModel : PXResultViewModel) -> HeaderView {
