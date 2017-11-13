@@ -9,23 +9,21 @@
 import UIKit
 
 class FooterComponent: NSObject {
-    var titleLabel: String
-    var titleButton: String
-   var actionButton : (() -> Void)?
+  var data : FooterData
     init(data: FooterData) {
-        self.titleLabel = data.titleLabel
-        self.titleButton = data.titleButton
-        self.actionButton = data.actionButton
+        self.data = data
     }
 
 }
 class FooterData: NSObject {
-    var titleLabel: String
-    var titleButton: String
-    var actionButton : (() -> Void)?
-    init(titleLabel: String, titleButton: String, actionCallback:(() -> Void)? = nil) {
-        self.titleLabel = titleLabel
-        self.titleButton = titleButton
-        self.actionButton = actionCallback
+    var principalButtonLabel: String
+    var principalButtonAction : (() -> Void)?
+    var secundaryButtonLabel: String
+    var secundaryButtonAction : (() -> Void)?
+    init(principalButtonLabel: String, principalButtonAction : (() -> Void)?, secundaryButtonLabel: String, secundaryButtonAction : (() -> Void)?) {
+        self.principalButtonLabel = principalButtonLabel
+        self.principalButtonAction = principalButtonAction
+        self.secundaryButtonLabel = secundaryButtonLabel
+        self.secundaryButtonAction = secundaryButtonAction
     }
 }

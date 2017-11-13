@@ -2093,11 +2093,11 @@
 		81ACC8071F9A647700206F7B /* Congrats */ = {
 			isa = PBXGroup;
 			children = (
+				81ACC80E1F9A68D900206F7B /* FooterComponent.swift */,
+				81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */,
 				81ACC80F1F9A69FB00206F7B /* Screen */,
 				81ACC80A1F9A68D900206F7B /* BodyComponent.swift */,
 				81ACC8091F9A68D800206F7B /* BodyRenderer.swift */,
-				81ACC80E1F9A68D900206F7B /* FooterComponent.swift */,
-				81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */,
 				81ACC8081F9A68D800206F7B /* HeaderComponent.swift */,
 				81ACC80C1F9A68D900206F7B /* HeaderRenderer.swift */,
 				81ACC80D1F9A68D900206F7B /* MPLayout.swift */,
