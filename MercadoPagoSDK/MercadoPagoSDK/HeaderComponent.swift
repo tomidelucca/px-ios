@@ -9,13 +9,13 @@
 import UIKit
 
 class HeaderComponent: NSObject {
-    var data : HeaderData
+    var props : HeaderProps
 
-    init(data: HeaderData) {
-        self.data = data
+    init(props: HeaderProps) {
+        self.props = props
     }
 }
-class HeaderData: NSObject {
+class HeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor

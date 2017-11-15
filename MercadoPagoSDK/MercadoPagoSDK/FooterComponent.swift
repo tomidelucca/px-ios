@@ -9,13 +9,13 @@
 import UIKit
 
 class FooterComponent: NSObject {
-  var data : FooterData
-    init(data: FooterData) {
-        self.data = data
+  var props : FooterProps
+    init(props: FooterProps) {
+        self.props = props
     }
 
 }
-class FooterData: NSObject {
+class FooterProps: NSObject {
     var buttonAction: FooterAction?
     var linkAction : FooterAction?
     

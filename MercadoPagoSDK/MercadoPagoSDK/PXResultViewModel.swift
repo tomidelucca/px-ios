@@ -121,8 +121,8 @@ public class PXResultViewModel: NSObject {
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
 
-    func headerComponentData() -> HeaderData {
-        let data = HeaderData(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
+    func headerComponentData() -> HeaderProps {
+        let data = HeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return data
     }
 

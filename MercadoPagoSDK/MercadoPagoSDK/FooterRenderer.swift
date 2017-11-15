@@ -19,7 +19,7 @@ class FooterRenderer: NSObject {
         var topView : UIView = fooView
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .white
-        if let principalAction = footer.data.buttonAction {
+        if let principalAction = footer.props.buttonAction {
             let principalButton = self.buildPrincipalButton(with: principalAction)
             fooView.principalButton = principalButton
             fooView.addSubview(principalButton)
@@ -29,7 +29,7 @@ class FooterRenderer: NSObject {
             MPLayout.setHeight(owner: principalButton, height: BUTTON_HEIGH).isActive = true
             topView = principalButton
         }
-        if let linkAction = footer.data.linkAction {
+        if let linkAction = footer.props.linkAction {
             let linkButton = self.buildLinkButton(with: linkAction)
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)

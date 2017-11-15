@@ -33,28 +33,28 @@ class HeaderRenderer: NSObject {
 
     func render(header: HeaderComponent ) -> HeaderView {
         let headerView = HeaderView()
-        headerView.backgroundColor = header.data.backgroundColor
+        headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
         //Image
-        headerView.circleImage = buildCircleImage(with: header.data.productImage)
+        headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
         MPLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
         MPLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: XXL_MARGIN).isActive = true
 
         //Badge Image
-        headerView.badgeImage = buildBudgeImage(with: header.data.statusImage)
+        headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
         headerView.addSubview(headerView.badgeImage!)
         MPLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
         MPLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
 
         //Status Label
-        headerView.statusLabel = buildStatusLabel(with: header.data.labelText, in: headerView, onBottomOf: headerView.circleImage!)
+        headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
         MPLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
         MPLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
-        headerView.messageLabel = buildMessageLabel(with: header.data.title)
+        headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
         MPLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
         MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: L_MARGIN).isActive = true

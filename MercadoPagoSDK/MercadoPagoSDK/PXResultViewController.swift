@@ -69,7 +69,7 @@ class PXResultViewController: PXComponentContainerViewController {
         let action2 = FooterAction(label: "boton link") {
             print("boton LINK presionado")
         }
-        let dataFoo = FooterData(buttonAction: action1, linkAction: action2)
+        let dataFoo = FooterProps(buttonAction: action1, linkAction: action2)
         let componentFoo = FooterComponent(data: dataFoo)
         let rendererFoo = FooterRenderer()
         return rendererFoo.render(footer: componentFoo)
