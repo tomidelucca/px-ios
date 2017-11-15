@@ -9,15 +9,32 @@
 import UIKit
 
 class BodyComponent: NSObject {
-    var text: String
-    init(data: BodyData) {
-        self.text = data.text
+    var props: BodyProps
+    
+    init(props: BodyProps) {
+        self.props = props
     }
 
+    public func hasInstructions() -> Bool {
+        return props.instruction != nil
+    }
+    
+    public func getInstructionsComponent() -> InstructionsComponent {
+        let instructionsProps = InstructionsProps(instruction: props.instruction!, processingMode: props.processingMode)
+        let instructionsComponent = InstructionsComponent(props: instructionsProps)
+        return instructionsComponent
+    }
+    
 }
-class BodyData: NSObject {
-    var text: String
-    init(text: String) {
-        self.text = text
+class BodyProps: NSObject {
+    var status: String
+    var statusDetail: String
+    var instruction: Instruction?
+    var processingMode: String
+    init(status: String, statusDetail: String, instruction: Instruction?, processingMode: String) {
+        self.status = status
+        self.statusDetail = statusDetail
+        self.instruction = instruction
+        self.processingMode = processingMode
     }
 }

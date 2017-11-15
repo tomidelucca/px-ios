@@ -57,7 +57,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
     func buildHeaderView() -> UIView {
         let dataHeader = self.viewModel.headerComponentData()
-        let componentHeader = HeaderComponent(data: dataHeader)
+        let componentHeader = HeaderComponent(props: dataHeader)
         let rendererHeader = HeaderRenderer()
         return rendererHeader.render(header: componentHeader)
     }
@@ -70,13 +70,16 @@ class PXResultViewController: PXComponentContainerViewController {
             print("boton LINK presionado")
         }
         let dataFoo = FooterProps(buttonAction: action1, linkAction: action2)
-        let componentFoo = FooterComponent(data: dataFoo)
+        let componentFoo = FooterComponent(props: dataFoo)
         let rendererFoo = FooterRenderer()
         return rendererFoo.render(footer: componentFoo)
     }
     func buildBodyView() -> UIView {
-        let dataBody = BodyData(text: "Aca va el texto del body")
-        let componentBody = BodyComponent(data: dataBody)
+        let instruc = Instruction()
+        instruc.subtitle = "subtitulo"
+        instruc.secondaryInfo = ["hola","dos"]
+        let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
+        let componentBody = BodyComponent(props: dataBody)
         let rendererBody = BodyRenderer()
         return rendererBody.render(body: componentBody)
     }
