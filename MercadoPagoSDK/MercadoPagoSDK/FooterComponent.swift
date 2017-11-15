@@ -16,14 +16,20 @@ class FooterComponent: NSObject {
 
 }
 class FooterData: NSObject {
-    var principalButtonLabel: String
-    var principalButtonAction : (() -> Void)?
-    var secundaryButtonLabel: String
-    var secundaryButtonAction : (() -> Void)?
-    init(principalButtonLabel: String, principalButtonAction : (() -> Void)?, secundaryButtonLabel: String, secundaryButtonAction : (() -> Void)?) {
-        self.principalButtonLabel = principalButtonLabel
-        self.principalButtonAction = principalButtonAction
-        self.secundaryButtonLabel = secundaryButtonLabel
-        self.secundaryButtonAction = secundaryButtonAction
+    var buttonAction: FooterAction?
+    var linkAction : FooterAction?
+    
+    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil) {
+        self.buttonAction = buttonAction
+        self.linkAction = linkAction
+    }
+}
+
+class FooterAction : NSObject {
+    var label : String
+    var action : (() -> Void)
+    init(label : String, action:  @escaping (() -> Void)) {
+        self.label = label
+        self.action = action
     }
 }

@@ -42,14 +42,15 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(fooView)
         MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
         MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
-
+        MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
+        
         //Add Body
         let bodyView = buildBodyView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
         MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
-        MPLayout.put(view: bodyView, overOf: fooView).isActive = true
+        MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
 
         self.view.layoutIfNeeded()
     }
@@ -61,9 +62,14 @@ class PXResultViewController: PXComponentContainerViewController {
         return rendererHeader.render(header: componentHeader)
     }
     func buildFooterView() -> UIView {
-        let dataFoo = FooterData(titleLabel: "Aceptar", titleButton: "Nada") {
-            self.callback(PaymentResult.CongratsState.ok)
+        let action1 = FooterAction(label: "boton grande") {
+            print("boton grande presionado")
         }
+        
+        let action2 = FooterAction(label: "boton link") {
+            print("boton LINK presionado")
+        }
+        let dataFoo = FooterData(buttonAction: action1, linkAction: action2)
         let componentFoo = FooterComponent(data: dataFoo)
         let rendererFoo = FooterRenderer()
         return rendererFoo.render(footer: componentFoo)

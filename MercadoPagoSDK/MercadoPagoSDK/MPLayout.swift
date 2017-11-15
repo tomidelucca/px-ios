@@ -50,7 +50,7 @@ class MPLayout: NSObject {
         )
     }
     //Vista 1 arriba de vista 2
-    static func put(view: UIView, overOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
+    static func put(view: UIView, aboveOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
         return  NSLayoutConstraint(
             item: view,
             attribute: .bottom,
@@ -84,7 +84,7 @@ class MPLayout: NSObject {
         return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0)
     }
 
-    static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent: CGFloat) -> NSLayoutConstraint {
+    static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent: CGFloat = 100) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0)
     }
 
