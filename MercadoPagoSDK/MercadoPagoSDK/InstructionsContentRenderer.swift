@@ -13,8 +13,7 @@ class InstructionsContentRenderer: NSObject {
     func render(instructionsContent: InstructionsContentComponent) -> UIView {
         let instructionsContentView = UIView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsContentView.backgroundColor = .red
-        
+        instructionsContentView.backgroundColor = .blue
         return instructionsContentView
     }
 }

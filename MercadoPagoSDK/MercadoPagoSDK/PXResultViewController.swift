@@ -43,6 +43,8 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
         MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
         MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
+        self.view.layoutIfNeeded()
+        MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
         
         //Add Body
         let bodyView = buildBodyView()
@@ -53,6 +55,7 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
 
         self.view.layoutIfNeeded()
+        self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
 
     func buildHeaderView() -> UIView {
@@ -76,8 +79,8 @@ class PXResultViewController: PXComponentContainerViewController {
     }
     func buildBodyView() -> UIView {
         let instruc = Instruction()
-        instruc.subtitle = "subtitulo"
-        instruc.secondaryInfo = ["hola","dos"]
+        instruc.subtitle = "Paga con estos datos y con estos otros tambien, asi hay 2 renglones"
+        instruc.secondaryInfo = ["También enviamos estos datos a tu email", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lacinia semper magna id commodo. Integer molestie ligula ut mauris sagittis dapibus. Aenean non enim blandit, rhoncus elit eu, ullamcorper elit. Nulla vitae venenatis elit. Praesent ac lorem accumsan, ultricies odio elementum, eleifend tellus. Donec vitae massa ornare, convallis urna id, posuere diam.", "También enviamos"]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)
         let rendererBody = BodyRenderer()

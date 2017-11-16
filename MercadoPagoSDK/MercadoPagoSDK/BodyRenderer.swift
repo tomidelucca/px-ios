@@ -13,16 +13,17 @@ class BodyRenderer: NSObject {
     func render(body: BodyComponent) -> UIView {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        bodyView.backgroundColor = .red
+        bodyView.backgroundColor = .blue
         
         if body.hasInstructions() {
             let instructionsRenderer = InstructionsRenderer()
             let instructionsView = instructionsRenderer.render(instructions: body.getInstructionsComponent())
             bodyView.addSubview(instructionsView)
-            MPLayout.equalizeWidth(view: instructionsView, to: bodyView).isActive = true
-            MPLayout.equalizeHeight(view: instructionsView, to: bodyView).isActive = true
+            MPLayout.pinTop(view: instructionsView, to: bodyView).isActive = true
+            MPLayout.pinBottom(view: instructionsView, to: bodyView).isActive = true
             MPLayout.centerHorizontally(view: instructionsView, to: bodyView).isActive = true
-            MPLayout.centerVertically(view: instructionsView, into: bodyView).isActive = true
+            MPLayout.equalizeWidth(view: instructionsView, to: bodyView).isActive = true
+            
         }
         
 //        textLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -11,31 +11,51 @@ import Foundation
 class InstructionsRenderer: NSObject {
     
     func render(instructions: InstructionsComponent) -> UIView {
-        let instructionsView = UIView()
+        let instructionsView = InstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
         instructionsView.backgroundColor = .yellow
-        
+        var bottomView: UIView!
+
         if instructions.hasSubtitle() {
             let instructionsSubtitleRenderer = InstructionsSubtitleRenderer()
-            let instructionsSubtitleView = instructionsSubtitleRenderer.render(instructionsSubtitle: instructions.getSubtitleComponent())
-            instructionsSubtitleView.backgroundColor = .purple
-            instructionsView.addSubview(instructionsSubtitleView)
-            MPLayout.equalizeWidth(view: instructionsSubtitleView, to: instructionsView).isActive = true
-            MPLayout.equalizeHeight(view: instructionsSubtitleView, to: instructionsView).isActive = true
-            MPLayout.centerHorizontally(view: instructionsSubtitleView, to: instructionsView).isActive = true
-            MPLayout.centerVertically(view: instructionsSubtitleView, into: instructionsView).isActive = true
+            instructionsView.subtitleView = instructionsSubtitleRenderer.render(instructionsSubtitle: instructions.getSubtitleComponent())
+            instructionsView.addSubview(instructionsView.subtitleView!)
+            MPLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
+            MPLayout.equalizeWidth(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
+            MPLayout.centerHorizontally(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
         }
 
         let instructionsContentRenderer = InstructionsContentRenderer()
-        let instructionsContentView = instructionsContentRenderer.render(instructionsContent: instructions.getContentComponent())
-        instructionsView.addSubview(instructionsContentView)
-
+        instructionsView.contentView = instructionsContentRenderer.render(instructionsContent: instructions.getContentComponent())
+        instructionsView.contentView!.backgroundColor = .brown
+        instructionsView.addSubview(instructionsView.contentView!)
+        if let subtitleView = instructionsView.subtitleView {
+          MPLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
+        } else {
+          MPLayout.pinTop(view: instructionsView.contentView!, to: instructionsView).isActive = true
+        }
+        MPLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
+        MPLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
+        MPLayout.setHeight(owner: instructionsView.contentView!, height: 100).isActive = true
+        bottomView = instructionsView.contentView!
+        
         if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo() {
             let instructionsSecondaryInfoRenderer = InstructionsSecondaryInfoRenderer()
-            let instructionsSecondaryInfoView = instructionsSecondaryInfoRenderer.render(instructionsSecondaryInfo: instructions.getSecondaryInfoComponent())
-            instructionsView.addSubview(instructionsSecondaryInfoView)
+            instructionsView.secondaryInfoView = instructionsSecondaryInfoRenderer.render(instructionsSecondaryInfo: instructions.getSecondaryInfoComponent())
+            instructionsView.addSubview(instructionsView.secondaryInfoView!)
+            MPLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentView!).isActive = true
+            MPLayout.equalizeWidth(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
+            MPLayout.centerHorizontally(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
+            bottomView = instructionsView.secondaryInfoView!
         }
-
+        
+        MPLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
         return instructionsView
     }
+}
+
+class InstructionsView: UIView {
+    public var subtitleView: UIView?
+    public var contentView: UIView?
+    public var secondaryInfoView: UIView?
 }
