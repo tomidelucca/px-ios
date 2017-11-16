@@ -79,6 +79,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
     func buildBodyView() -> UIView {
         let instruc = Instruction()
+        instruc.info = ["hola como estas?", "todo bien, vos?", "yo re bien por suerte"]
         instruc.subtitle = "Paga con estos datos y con estos otros tambien, asi hay 2 renglones"
         instruc.secondaryInfo = ["También enviamos estos datos a tu email", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lacinia semper magna id commodo. Integer molestie ligula ut mauris sagittis dapibus. Aenean non enim blandit, rhoncus elit eu, ullamcorper elit. Nulla vitae venenatis elit. Praesent ac lorem accumsan, ultricies odio elementum, eleifend tellus. Donec vitae massa ornare, convallis urna id, posuere diam.", "También enviamos"]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")

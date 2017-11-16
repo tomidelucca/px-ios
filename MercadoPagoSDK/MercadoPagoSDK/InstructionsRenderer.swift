@@ -13,9 +13,9 @@ class InstructionsRenderer: NSObject {
     func render(instructions: InstructionsComponent) -> UIView {
         let instructionsView = InstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
-        instructionsView.backgroundColor = .yellow
         var bottomView: UIView!
 
+        //Subtitle Component
         if instructions.hasSubtitle() {
             let instructionsSubtitleRenderer = InstructionsSubtitleRenderer()
             instructionsView.subtitleView = instructionsSubtitleRenderer.render(instructionsSubtitle: instructions.getSubtitleComponent())
@@ -25,9 +25,9 @@ class InstructionsRenderer: NSObject {
             MPLayout.centerHorizontally(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
         }
 
+        //Content Component
         let instructionsContentRenderer = InstructionsContentRenderer()
         instructionsView.contentView = instructionsContentRenderer.render(instructionsContent: instructions.getContentComponent())
-        instructionsView.contentView!.backgroundColor = .brown
         instructionsView.addSubview(instructionsView.contentView!)
         if let subtitleView = instructionsView.subtitleView {
           MPLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
@@ -36,9 +36,10 @@ class InstructionsRenderer: NSObject {
         }
         MPLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
         MPLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
-        MPLayout.setHeight(owner: instructionsView.contentView!, height: 100).isActive = true
+//        MPLayout.setHeight(owner: instructionsView.contentView!, height: 100).isActive = true
         bottomView = instructionsView.contentView!
-        
+
+        //Secondary Info Component
         if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo() {
             let instructionsSecondaryInfoRenderer = InstructionsSecondaryInfoRenderer()
             instructionsView.secondaryInfoView = instructionsSecondaryInfoRenderer.render(instructionsSecondaryInfo: instructions.getSecondaryInfoComponent())

@@ -38,7 +38,7 @@ class InstructionsComponent: NSObject {
     }
     
     public func hasSecondaryInfo() -> Bool {
-        return props.instruction.secondaryInfo != nil
+        return !Array.isNullOrEmpty(props.instruction.secondaryInfo)
     }
     
     public func shouldShowEmailInSecondaryInfo() -> Bool {

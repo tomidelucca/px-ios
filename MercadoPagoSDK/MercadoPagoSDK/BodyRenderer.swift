@@ -13,7 +13,6 @@ class BodyRenderer: NSObject {
     func render(body: BodyComponent) -> UIView {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        bodyView.backgroundColor = .blue
         
         if body.hasInstructions() {
             let instructionsRenderer = InstructionsRenderer()
