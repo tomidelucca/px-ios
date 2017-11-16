@@ -49,8 +49,14 @@ class InstructionsRenderer: NSObject {
             MPLayout.centerHorizontally(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
             bottomView = instructionsView.secondaryInfoView!
         }
-        
-        MPLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
+
+        if let secondaryInfo = instructionsView.secondaryInfoView  {
+            MPLayout.put(view: instructionsView.contentView!, aboveOf: secondaryInfo).isActive = true
+            MPLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
+        } else {
+            MPLayout.pinBottom(view: instructionsView.contentView!, to: instructionsView).isActive = true
+        }
+
         return instructionsView
     }
 }

@@ -20,6 +20,7 @@ class InstructionsContentRenderer: NSObject {
             instructionsContentView.infoView = instructionsInfoRenderer.render(instructionsInfo: instructionsContent.getInfoComponent())
             instructionsContentView.addSubview(instructionsContentView.infoView!)
             MPLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+            MPLayout.pinBottom(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
 //            MPLayout.setHeight(owner: instructionsContentView.infoView!, height: 30).isActive = true
             MPLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
