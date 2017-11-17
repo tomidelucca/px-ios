@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+class InstructionReferenceComponent: NSObject {
+    var props: InstructionReferenceProps
+    
+    init(props: InstructionReferenceProps) {
+        self.props = props
+    }
+}
+class InstructionReferenceProps: NSObject {
+    var reference: InstructionReference?
+    init(reference: InstructionReference?) {
+        self.reference = reference
+    }
+}

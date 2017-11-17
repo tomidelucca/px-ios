@@ -36,7 +36,6 @@ class InstructionsRenderer: NSObject {
         }
         MPLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
         MPLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
-//        MPLayout.setHeight(owner: instructionsView.contentView!, height: 100).isActive = true
         bottomView = instructionsView.contentView!
 
         //Secondary Info Component

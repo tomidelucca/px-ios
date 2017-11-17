@@ -14,6 +14,7 @@ class InstructionsContentRenderer: NSObject {
         let instructionsContentView = ContentView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsContentView.backgroundColor = .blue
+        var bottomView: UIView!
         
         if instructionsContent.hasInfo() {
             let instructionsInfoRenderer = InstructionsInfoRenderer()
@@ -21,9 +22,12 @@ class InstructionsContentRenderer: NSObject {
             instructionsContentView.addSubview(instructionsContentView.infoView!)
             MPLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.pinBottom(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-//            MPLayout.setHeight(owner: instructionsContentView.infoView!, height: 30).isActive = true
             MPLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+        }
+        
+        if instructionsContent.hasReferences() {
+            
         }
         
         return instructionsContentView

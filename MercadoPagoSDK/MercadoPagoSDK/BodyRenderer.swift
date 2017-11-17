@@ -24,8 +24,6 @@ class BodyRenderer: NSObject {
             MPLayout.equalizeWidth(view: instructionsView, to: bodyView).isActive = true
             
         }
-        
-//        textLabel.translatesAutoresizingMaskIntoConstraints = false
         return bodyView
     }
 }
