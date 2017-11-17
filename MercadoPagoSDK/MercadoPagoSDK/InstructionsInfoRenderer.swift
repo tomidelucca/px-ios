@@ -11,8 +11,10 @@ import Foundation
 class InstructionsInfoRenderer: NSObject {
     let XXL_MARGIN: CGFloat = 50.0
     let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 24.0
+    let L_MARGIN: CGFloat = 30.0
+    let M_MARGIN: CGFloat = 24.0
     let S_MARGIN: CGFloat = 16.0
+    let ZERO_MARGIN: CGFloat = 0.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
@@ -23,7 +25,6 @@ class InstructionsInfoRenderer: NSObject {
         let instructionsInfoView = InfoView()
         instructionsInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsInfoView.backgroundColor = .pxLightGray
-        
         
         var lastLabel: UILabel?
         
@@ -46,7 +47,8 @@ class InstructionsInfoRenderer: NSObject {
 
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
-                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastLabel, isLastLabel: isLast)
+                let isFirstInfo = loopsDone == 0
+                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastLabel, isLastLabel: isLast, bottomDivider: instructionsInfo.props.bottomDivider, isFirstInfo: isFirstInfo)
                 instructionsInfoView.contentLabels?.append(infoContentLabel)
                 lastLabel = infoContentLabel
                 loopsDone += 1
@@ -54,13 +56,13 @@ class InstructionsInfoRenderer: NSObject {
         }
         
         if instructionsInfo.props.bottomDivider != nil, instructionsInfo.props.bottomDivider == true {
-            
+            instructionsInfoView.bottomDivider = buildBottomDivider(in: instructionsInfoView, onBottomOf: lastLabel)
         }
         
         return instructionsInfoView
     }
     
-    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false, isTitle: Bool = false) -> UILabel {
+    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false, isTitle: Bool = false, bottomDivider: Bool? = false, isFirstInfo: Bool = false) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textAlignment = .center
@@ -84,16 +86,38 @@ class InstructionsInfoRenderer: NSObject {
         MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: S_MARGIN).isActive = true
+            if isFirstInfo {
+                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: L_MARGIN).isActive = true
+            } else {
+                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: ZERO_MARGIN).isActive = true
+            }
         } else {
-            MPLayout.pinTop(view: infoLabel, to: superView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinTop(view: infoLabel, to: superView, withMargin: L_MARGIN).isActive = true
         }
         
-        if isLastLabel {
-            MPLayout.pinBottom(view: infoLabel, to: superView, withMargin: S_MARGIN).isActive = true
+        if isLastLabel, !bottomDivider! {
+            MPLayout.pinBottom(view: infoLabel, to: superView).isActive = true
         }
         
         return infoLabel
+    }
+    
+    func buildBottomDivider(in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+        let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        let view = UIView(frame: frame)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .red
+        superView.addSubview(view)
+        MPLayout.setHeight(owner: view, height: 1).isActive = true
+        MPLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
+        MPLayout.centerHorizontally(view: view, to: superView).isActive = true
+        
+        if let upperView = upperView {
+            MPLayout.put(view: view, onBottomOf:upperView, withMargin: L_MARGIN).isActive = true
+        }
+        
+        MPLayout.pinBottom(view: view, to: superView).isActive = true
+        return view
     }
 }
 
