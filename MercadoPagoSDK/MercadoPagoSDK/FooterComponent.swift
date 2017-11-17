@@ -18,10 +18,11 @@ class FooterComponent: NSObject {
 class FooterData: NSObject {
     var buttonAction: FooterAction?
     var linkAction: FooterAction?
-
-    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil) {
+    var primaryColor : UIColor?
+    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor?) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
+        self.primaryColor = primaryColor
     }
 }
 

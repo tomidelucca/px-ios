@@ -11,7 +11,7 @@ import UIKit
 extension PXResultViewModel {
 
     func getFooterComponentData() -> FooterData {
-        return FooterData(buttonAction: getActionButton(), linkAction: getActionLink())
+        return FooterData(buttonAction: getActionButton(), linkAction: getActionLink(), primaryColor: UIColor.primaryColor())
     }
 
     func getActionButton() -> FooterAction? {
