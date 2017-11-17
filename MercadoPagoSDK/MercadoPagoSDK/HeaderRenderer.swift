@@ -36,6 +36,8 @@ class HeaderRenderer: NSObject {
         headerView.backgroundColor = header.data.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
+        let totalHeight: CGFloat = 0
+
         //Image
         headerView.circleImage = buildCircleImage(with: header.data.productImage)
         headerView.addSubview(headerView.circleImage!)
@@ -60,6 +62,7 @@ class HeaderRenderer: NSObject {
         MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: L_MARGIN).isActive = true
         MPLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: XL_MARGIN).isActive = true
+
         return headerView
     }
 
@@ -116,7 +119,7 @@ class HeaderRenderer: NSObject {
     }
 }
 
-class HeaderView : UIView {
+class HeaderView: UIView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?

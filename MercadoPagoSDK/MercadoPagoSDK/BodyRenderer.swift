@@ -24,6 +24,7 @@ class BodyRenderer: NSObject {
         MPLayout.centerVertically(view: textLabel, into: bodyView).isActive = true
         textLabel.text = body.text
         textLabel.textAlignment = .center
+        MPLayout.setHeight(owner: bodyView, height: 60).isActive = true
         return bodyView
     }
 }

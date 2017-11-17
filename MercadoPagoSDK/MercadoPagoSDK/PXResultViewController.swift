@@ -13,11 +13,10 @@ class PXResultViewController: PXComponentContainerViewController {
     let viewModel: PXResultViewModel
     var headerView = UIView()
     var fooView: UIView!
-    var callback: (PaymentResult.CongratsState) -> Void
 
     init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
-        self.callback = callback
         self.viewModel = viewModel
+        self.viewModel.callback = callback
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
 
@@ -36,6 +35,8 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(headerView)
         MPLayout.pinTop(view: headerView, to: contentView).isActive = true
         MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
+        self.view.layoutIfNeeded()
+        MPLayout.setHeight(owner: headerView, height: headerView.frame.height).isActive = true
 
         //Add Foo
         fooView = buildFooterView()
@@ -43,7 +44,9 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
         MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
         MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
-        
+        self.view.layoutIfNeeded()
+        MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
+
         //Add Body
         let bodyView = buildBodyView()
         contentView.addSubview(bodyView)
@@ -51,8 +54,19 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
         MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
         MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
-
         self.view.layoutIfNeeded()
+
+      /*
+        let h = bodyView.frame.height + fooView.frame.height + headerView.frame.height
+        if scrollView.frame.height > h {
+            MPLayout.setHeight(owner: contentView, height:scrollView.frame.height ).isActive = true
+        }else{
+            MPLayout.setHeight(owner: contentView, height:h ).isActive = true
+        }
+        
+        self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: bodyView.frame.height + fooView.frame.height + headerView.frame.height)
+        self.view.layoutIfNeeded()
+ */
     }
 
     func buildHeaderView() -> UIView {
@@ -62,14 +76,7 @@ class PXResultViewController: PXComponentContainerViewController {
         return rendererHeader.render(header: componentHeader)
     }
     func buildFooterView() -> UIView {
-        let action1 = FooterAction(label: "boton grande") {
-            print("boton grande presionado")
-        }
-        
-        let action2 = FooterAction(label: "boton link") {
-            print("boton LINK presionado")
-        }
-        let dataFoo = FooterData(buttonAction: action1, linkAction: action2)
+        let dataFoo = self.viewModel.getFooterComponentData()
         let componentFoo = FooterComponent(data: dataFoo)
         let rendererFoo = FooterRenderer()
         return rendererFoo.render(footer: componentFoo)

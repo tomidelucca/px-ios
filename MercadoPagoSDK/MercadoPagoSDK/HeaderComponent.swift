@@ -8,14 +8,14 @@
 
 import UIKit
 
-class HeaderComponent: NSObject {
-    var data : HeaderData
+open class HeaderComponent: NSObject {
+    var data: HeaderData
 
     init(data: HeaderData) {
         self.data = data
     }
 }
-class HeaderData: NSObject {
+open class HeaderData: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor

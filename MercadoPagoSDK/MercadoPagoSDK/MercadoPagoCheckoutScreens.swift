@@ -176,12 +176,21 @@ extension MercadoPagoCheckout {
 
         var congratsViewController: MercadoPagoUIViewController
 
-        congratsViewController = PXResultViewController(viewModel: self.viewModel.resultViewModel(), callback: {[weak self] (state) in
+        congratsViewController = PXResultViewController(viewModel: self.viewModel.resultViewModel(), callback: {[weak self] (state: PaymentResult.CongratsState) in
             guard let strongSelf = self else {
                 return
             }
             strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
-            strongSelf.finish()
+            if state == PaymentResult.CongratsState.call_FOR_AUTH {
+                strongSelf.viewModel.prepareForClone()
+                strongSelf.collectSecurityCodeForRetry()
+            } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
+                strongSelf.viewModel.prepareForNewSelection()
+                strongSelf.executeNextStep()
+
+            } else {
+                strongSelf.finish()
+            }
         })
         self.pushViewController(viewController : congratsViewController, animated: false)
 
