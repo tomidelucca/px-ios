@@ -106,7 +106,7 @@ class InstructionsInfoRenderer: NSObject {
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .pxMediumLightGrey
         superView.addSubview(view)
         MPLayout.setHeight(owner: view, height: 1).isActive = true
         MPLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true

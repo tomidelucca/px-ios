@@ -55,9 +55,24 @@ class InstructionsContentComponent: NSObject {
         return infoComponent
     }
     
-//    public func getReferencesComponent() -> InstructionsReferencesComponent {
-//
-//    }
+    public func getReferencesComponent() -> InstructionsReferencesComponent {
+        var info: [String] = props.instruction.info
+        var spacesFound = 0
+        var title = ""
+        
+        for text in info {
+            if text.isEmpty {
+                spacesFound += 1
+            } else if spacesFound == 2 {
+                title = text
+                break
+            }
+        }
+        
+        let referencesProps = InstructionsReferencesProps(title: title, references: props.instruction.references)
+        let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
+        return referencesComponent
+    }
 //
 //    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent {
 //

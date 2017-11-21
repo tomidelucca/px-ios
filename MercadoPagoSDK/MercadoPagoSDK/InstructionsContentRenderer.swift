@@ -21,14 +21,30 @@ class InstructionsContentRenderer: NSObject {
             instructionsContentView.infoView = instructionsInfoRenderer.render(instructionsInfo: instructionsContent.getInfoComponent())
             instructionsContentView.addSubview(instructionsContentView.infoView!)
             MPLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            MPLayout.pinBottom(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+//            MPLayout.pinBottom(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+            bottomView = instructionsContentView.infoView
         }
         
         if instructionsContent.hasReferences() {
+            let instructionsReferencesRenderer = InstructionsReferencesRenderer()
+            instructionsContentView.referencesView = instructionsReferencesRenderer.render(instructionsReferences: instructionsContent.getReferencesComponent())
+            instructionsContentView.addSubview(instructionsContentView.referencesView!)
+            if let infoView = instructionsContentView.infoView {
+                MPLayout.put(view: instructionsContentView.referencesView!, onBottomOf: infoView).isActive = true
+            } else {
+                MPLayout.pinTop(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            }
             
+            
+//            MPLayout.pinBottom(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            MPLayout.centerHorizontally(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            MPLayout.equalizeWidth(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            bottomView = instructionsContentView.referencesView
         }
+        
+        MPLayout.pinBottom(view: bottomView, to: instructionsContentView).isActive = true
         
         return instructionsContentView
     }

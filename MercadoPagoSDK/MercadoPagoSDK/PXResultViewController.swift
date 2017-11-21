@@ -90,6 +90,11 @@ class PXResultViewController: PXComponentContainerViewController {
         ]
         instruc.subtitle = "Paga con estos datos y con estos otros tambien, asi hay 2 renglones"
         instruc.secondaryInfo = ["También enviamos estos datos a tu email", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lacinia semper magna id commodo. Integer molestie ligula ut mauris sagittis dapibus. Aenean non enim blandit, rhoncus elit eu, ullamcorper elit. Nulla vitae venenatis elit. Praesent ac lorem accumsan, ultricies odio elementum, eleifend tellus. Donec vitae massa ornare, convallis urna id, posuere diam.", "También enviamos"]
+        let refer1 = InstructionReference()
+        let refer2 = InstructionReference()
+        let refer3 = InstructionReference()
+        let refer4 = InstructionReference()
+        instruc.references = [refer1,refer2,refer3,refer4]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)
         let rendererBody = BodyRenderer()

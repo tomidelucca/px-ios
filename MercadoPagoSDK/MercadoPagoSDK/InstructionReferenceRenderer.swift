@@ -22,7 +22,11 @@ class InstructionReferenceRenderer: NSObject {
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGrey
     
     func render(instructionReference: InstructionReferenceComponent) -> UIView {
-        return UIView()
+        let viw = UIView()
+        viw.translatesAutoresizingMaskIntoConstraints = false
+        MPLayout.setHeight(owner: viw, height: 50).isActive = true
+
+        return viw
     }
 }
 
