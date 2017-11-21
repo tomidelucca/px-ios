@@ -80,9 +80,7 @@ class InstructionsReferencesRenderer: NSObject {
         let referenceComponent = InstructionReferenceComponent(props: referenceProps)
         let referenceView = referenceRenderer.render(instructionReference: referenceComponent)
 //        referenceView.translatesAutoresizingMaskIntoConstraints = false
-        referenceView.backgroundColor = .purple
-        superView.addSubview(referenceView)
-        
+        superView.addSubview(referenceView)        
 //        MPLayout.setHeight(owner: referenceView, height: 100).isActive = true
         MPLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
