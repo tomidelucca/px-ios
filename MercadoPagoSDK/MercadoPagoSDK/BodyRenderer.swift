@@ -15,7 +15,7 @@ class BodyRenderer: NSObject {
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         bodyView.backgroundColor = .purple
         let textLabel = UILabel()
-        textLabel.backgroundColor = .white
+        textLabel.backgroundColor = .pxWhite
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         bodyView.addSubview(textLabel)
         MPLayout.equalizeWidth(view: textLabel, to: bodyView).isActive = true

@@ -19,7 +19,7 @@ class FooterData: NSObject {
     var buttonAction: FooterAction?
     var linkAction: FooterAction?
     var primaryColor : UIColor?
-    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor?) {
+    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
         self.primaryColor = primaryColor

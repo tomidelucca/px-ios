@@ -13,13 +13,13 @@ class FooterRenderer: NSObject {
     let S_MARGIN: CGFloat = 16.0
     let M_MARGIN: CGFloat = 19.0
 
-    let BUTTON_HEIGH: CGFloat = 50.0
+    let BUTTON_HEIGHT: CGFloat = 50.0
 
     func render(footer: FooterComponent) -> FooterView {
         let fooView = FooterView()
         var topView: UIView = fooView
         fooView.translatesAutoresizingMaskIntoConstraints = false
-        fooView.backgroundColor = .white
+        fooView.backgroundColor = .pxWhite
         if let principalAction = footer.data.buttonAction {
             let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.data.primaryColor)
             fooView.principalButton = principalButton
@@ -27,7 +27,7 @@ class FooterRenderer: NSObject {
             MPLayout.pinTop(view: principalButton, to: topView, withMargin: S_MARGIN).isActive = true
             MPLayout.pinLeft(view: principalButton, to: fooView, withMargin: M_MARGIN).isActive = true
             MPLayout.pinRight(view: principalButton, to: fooView, withMargin: M_MARGIN).isActive = true
-            MPLayout.setHeight(owner: principalButton, height: BUTTON_HEIGH).isActive = true
+            MPLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
             topView = principalButton
         }
         if let linkAction = footer.data.linkAction {
@@ -42,7 +42,7 @@ class FooterRenderer: NSObject {
             
             MPLayout.pinLeft(view: linkButton, to: fooView, withMargin: M_MARGIN).isActive = true
             MPLayout.pinRight(view: linkButton, to: fooView, withMargin: M_MARGIN).isActive = true
-            MPLayout.setHeight(owner: linkButton, height: BUTTON_HEIGH).isActive = true
+            MPLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
             topView = linkButton
         }
         if topView != fooView { // Si hay al menos alguna vista dentro del footer, agrego un margen

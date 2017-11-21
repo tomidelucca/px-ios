@@ -31,7 +31,7 @@ public class PXResultViewModel: NSObject {
         if isWarning() {
             return .pxOrangeMp
         }
-        return .white
+        return .pxWhite
     }
 
     func isAccepted() -> Bool {

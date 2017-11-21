@@ -461,10 +461,10 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getExitButtonTitle() -> String? {
-        if exitButtonTitle == nil {
-            return nil
+        if let title = exitButtonTitle {
+            return title.localized
         }
-        return exitButtonTitle!.localized
+        return nil
     }
 
     open func isContentCellDisable() -> Bool {

@@ -25,7 +25,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         MPLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         MPLayout.equalizeWidth(view: contentView, to: scrollView).isActive = true
         //  MPLayout.equalizeHeight(view: contentView, to: scrollView).isActive = true
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(self.scrollView)
         MPLayout.pinLeft(view: scrollView, to: self.view).isActive = true
