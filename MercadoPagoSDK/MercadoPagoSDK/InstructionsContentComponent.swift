@@ -25,7 +25,7 @@ class InstructionsContentComponent: NSObject {
         
         var title = ""
         var hasTitle = false
-        if info.count == 1 || info.count > 1, info.indices.contains(1), info[1] != "" {
+        if info.count == 1 || (info.count > 1 && info[1] == "") {
             title = info[0]
             hasTitle = true
         }
