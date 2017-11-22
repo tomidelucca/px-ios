@@ -105,6 +105,11 @@ class PXResultViewController: PXComponentContainerViewController {
             "Donec at est a lacus faucibus tincidunt id sed odio. Aenean convallis ultrices metus, et auctor dui dignissim ac. Suspendisse ultrices quam suscipit augue sollicitudin, in auctor urna accumsan. Ut sagittis dui vitae risus imperdiet, at dictum ex molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis nibh odio.",
             "Informacion terciaria 3"
         ]
+        let action1 = InstructionAction()
+        action1.label = "Ir a banca en linea"
+        action1.tag = "link"
+        action1.url = "http://www.banamex.com.mx"
+        instruc.actions = [action1,action1]
         let instruction = viewModel.instructionsInfo?.instructions[0]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)

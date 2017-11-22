@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class InstructionsActionComponent: NSObject {
+    var props: InstructionsActionProps
+    
+    init(props: InstructionsActionProps) {
+        self.props = props
+    }
+}
+class InstructionsActionProps: NSObject {
+    var instructionActionInfo: InstructionAction?
+    init(instructionActionInfo: InstructionAction?) {
+        self.instructionActionInfo = instructionActionInfo
+    }
+}
+

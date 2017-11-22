@@ -77,6 +77,20 @@ class InstructionsContentRenderer: NSObject {
             MPLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.accreditationTimeView
         }
+        if instructionsContent.hasActions() {
+            let instructionsActionsRenderer = InstructionsActionsRenderer()
+            instructionsContentView.actionsView = instructionsActionsRenderer.render(instructionsActions: instructionsContent.getActionsComponent())
+            instructionsContentView.addSubview(instructionsContentView.actionsView!)
+            if let lastView = bottomView {
+                MPLayout.put(view: instructionsContentView.actionsView!, onBottomOf: lastView).isActive = true
+            } else {
+                MPLayout.pinTop(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            }
+            
+            MPLayout.centerHorizontally(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            MPLayout.equalizeWidth(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            bottomView = instructionsContentView.actionsView
+        }
 
         MPLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: L_MARGIN).isActive = true
 

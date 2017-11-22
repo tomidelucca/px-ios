@@ -85,10 +85,12 @@ class InstructionsContentComponent: NSObject {
         let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
-//
-//    public func getActionsComponent() -> InstructionsActionsComponent {
-//
-//    }
+    
+    public func getActionsComponent() -> InstructionsActionsComponent {
+        let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
+        let actionsComponent = InstructionsActionsComponent(props: actionsProps)
+        return actionsComponent
+    }
     
     public func hasReferences() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.references)

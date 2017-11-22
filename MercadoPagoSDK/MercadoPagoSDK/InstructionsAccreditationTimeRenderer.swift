@@ -35,8 +35,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         if let commentsArray = instructionsAccreditationTime.props.accreditationComments, !Array.isNullOrEmpty(commentsArray) {
             var loopsDone = 0
             for comment in commentsArray {
-                let isFirstView = String.isNullOrEmpty(instructionsAccreditationTime.props.accreditationMessage) && instructionsAccreditationTimeView.accreditationMessageLabel == nil
-                let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView, isFirstView: isFirstView)
+                let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView)
                 instructionsAccreditationTimeView.accreditationCommentsComponents?.append(commentView)
                 lastView = commentView
                 loopsDone += 1
@@ -81,7 +80,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         return titleLabel
     }
     
-    func buildCommentView(with comment: String, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildCommentView(with comment: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let accreditationCommentRenderer = InstructionsAccreditationCommentRenderer()
         let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
         let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
