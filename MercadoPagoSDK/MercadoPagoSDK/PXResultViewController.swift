@@ -96,8 +96,8 @@ class PXResultViewController: PXComponentContainerViewController {
         refer1.separator = " "
         instruc.references = [refer1,refer1,refer1,refer1]
         instruc.tertiaryInfo = [
-            "Informacion terciaria 1",
-            "Informacion terciaria 2",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac varius nunc. Pellentesque sit amet massa lectus. Aenean sem dui, gravida non tellus vel, vulputate ultrices est.",
+            "Donec at est a lacus faucibus tincidunt id sed odio. Aenean convallis ultrices metus, et auctor dui dignissim ac. Suspendisse ultrices quam suscipit augue sollicitudin, in auctor urna accumsan. Ut sagittis dui vitae risus imperdiet, at dictum ex molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis nibh odio.",
             "Informacion terciaria 3"
         ]
         let instruction = viewModel.instructionsInfo?.instructions[0]

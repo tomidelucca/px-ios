@@ -14,11 +14,13 @@ class InstructionsTertiaryInfoRenderer: NSObject {
     let L_MARGIN: CGFloat = 30.0
     let M_MARGIN: CGFloat = 24.0
     let S_MARGIN: CGFloat = 16.0
+    let XS_MARGIN: CGFloat = 10.0
+    let XXS_MARGIN: CGFloat = 5.0
     let ZERO_MARGIN: CGFloat = 0.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
-    let INFO_LABEL_FONT_SIZE: CGFloat = 16.0
+    let INFO_LABEL_FONT_SIZE: CGFloat = 12.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGrey
     
     func render(instructionsTertiaryInfo: InstructionsTertiaryInfoComponent) -> UIView {
@@ -39,8 +41,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
                 
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
-                let isFirstInfo = loopsDone == 0
-                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel, isLastLabel: isLast, isFirstInfo: isFirstInfo)
+                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel, isLastLabel: isLast)
                 instructionsTertiaryInfoView.tertiaryInfoLabels?.append(infoContentLabel)
                 lastLabel = infoContentLabel
                 loopsDone += 1
@@ -50,7 +51,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         return instructionsTertiaryInfoView
     }
     
-    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false, isTitle: Bool = false, isFirstInfo: Bool = false) -> UILabel {
+    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textAlignment = .center
@@ -58,13 +59,8 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         infoLabel.attributedText = text
         infoLabel.lineBreakMode = .byWordWrapping
         superView.addSubview(infoLabel)
-        var textColor: UIColor = INFO_LABEL_FONT_COLOR
-        var textSize: CGFloat = INFO_LABEL_FONT_SIZE
-        if isTitle {
-            textColor = TITLE_LABEL_FONT_COLOR
-            textSize = TITLE_LABEL_FONT_SIZE
-        }
-        infoLabel.textColor = textColor
+        let textSize: CGFloat = INFO_LABEL_FONT_SIZE
+        infoLabel.textColor = INFO_LABEL_FONT_COLOR
         
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
@@ -74,11 +70,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
         if let upperView = upperView {
-            if isFirstInfo {
-                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: L_MARGIN).isActive = true
-            } else {
-                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: ZERO_MARGIN).isActive = true
-            }
+            MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: XS_MARGIN).isActive = true
         } else {
             MPLayout.pinTop(view: infoLabel, to: superView, withMargin: L_MARGIN).isActive = true
         }
