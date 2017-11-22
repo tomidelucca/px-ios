@@ -95,6 +95,11 @@ class PXResultViewController: PXComponentContainerViewController {
         refer1.value = ["1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234"]
         refer1.separator = " "
         instruc.references = [refer1,refer1,refer1,refer1]
+        instruc.tertiaryInfo = [
+            "Informacion terciaria 1",
+            "Informacion terciaria 2",
+            "Informacion terciaria 3"
+        ]
         let instruction = viewModel.instructionsInfo?.instructions[0]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)

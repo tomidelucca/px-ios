@@ -73,10 +73,12 @@ class InstructionsContentComponent: NSObject {
         let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }
-//
-//    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent {
-//
-//    }
+    
+    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent {
+        let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
+        let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
+        return tertiaryInfoComponent
+    }
 //
 //    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent {
 //

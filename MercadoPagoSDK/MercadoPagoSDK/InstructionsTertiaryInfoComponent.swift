@@ -7,3 +7,17 @@
 //
 
 import Foundation
+
+class InstructionsTertiaryInfoComponent: NSObject {
+    var props: InstructionsTertiaryInfoProps
+    
+    init(props: InstructionsTertiaryInfoProps) {
+        self.props = props
+    }
+}
+class InstructionsTertiaryInfoProps: NSObject {
+    var tertiaryInfo: [String]?
+    init(tertiaryInfo: [String]?) {
+        self.tertiaryInfo = tertiaryInfo
+    }
+}
