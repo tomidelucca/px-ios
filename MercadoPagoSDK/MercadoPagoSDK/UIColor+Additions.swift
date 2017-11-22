@@ -160,11 +160,11 @@ extension UIColor {
 
 // COMPONENTS
 extension UIColor {
-    class var pxWarmGrey: UIColor {
+    class var pxWarmGray: UIColor {
         return UIColor(white: 153.0 / 255.0, alpha: 1.0)
     }
 
-    class var pxBrownishGrey: UIColor {
+    class var pxBrownishGray: UIColor {
         return UIColor(white: 102.0 / 255.0, alpha: 1.0)
     }
 
@@ -196,7 +196,7 @@ extension UIColor {
         return UIColor(white: 247.0 / 255.0, alpha: 1.0)
     }
     
-    class var pxMediumLightGrey: UIColor {
+    class var pxMediumLightGray: UIColor {
         return UIColor(red: 238.0 / 255.0, green: 238.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
     }
 }

@@ -19,7 +19,7 @@ class InstructionsInfoRenderer: NSObject {
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
     let INFO_LABEL_FONT_SIZE: CGFloat = 16.0
-    let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGrey
+    let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     
     func render(instructionsInfo: InstructionsInfoComponent) -> UIView {
         let instructionsInfoView = InfoView()
@@ -106,7 +106,7 @@ class InstructionsInfoRenderer: NSObject {
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .pxMediumLightGrey
+        view.backgroundColor = .pxMediumLightGray
         superView.addSubview(view)
         MPLayout.setHeight(owner: view, height: 1).isActive = true
         MPLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true

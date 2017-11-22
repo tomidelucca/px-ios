@@ -45,7 +45,7 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         let secondaryInfoLabel = UILabel()
         secondaryInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         secondaryInfoLabel.textAlignment = .center
-        secondaryInfoLabel.textColor = .pxBrownishGrey
+        secondaryInfoLabel.textColor = .pxBrownishGray
         secondaryInfoLabel.numberOfLines = 0
         secondaryInfoLabel.attributedText = text
         secondaryInfoLabel.lineBreakMode = .byWordWrapping

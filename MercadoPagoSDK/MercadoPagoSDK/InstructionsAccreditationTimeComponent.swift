@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+class InstructionsAccreditationTimeComponent: NSObject {
+    var props: InstructionsAccreditationTimeProps
+    
+    init(props: InstructionsAccreditationTimeProps) {
+        self.props = props
+    }
+}
+class InstructionsAccreditationTimeProps: NSObject {
+    var accreditationMessage: String?
+    var accreditationComments: [String]?
+    init(accreditationMessage: String?, accreditationComments: [String]?) {
+        self.accreditationMessage = accreditationMessage
+        self.accreditationComments = accreditationComments
+    }
+}

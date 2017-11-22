@@ -21,7 +21,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
     let INFO_LABEL_FONT_SIZE: CGFloat = 12.0
-    let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGrey
+    let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     
     func render(instructionsTertiaryInfo: InstructionsTertiaryInfoComponent) -> UIView {
         let instructionsTertiaryInfoView = TertiaryInfoView()

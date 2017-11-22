@@ -30,7 +30,7 @@ class InstructionsSubtitleRenderer: NSObject {
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = .pxBrownishGrey
+        subtitleLabel.textColor = .pxBrownishGray
         subtitleLabel.numberOfLines = 0
         subtitleLabel.attributedText = text
         subtitleLabel.lineBreakMode = .byWordWrapping

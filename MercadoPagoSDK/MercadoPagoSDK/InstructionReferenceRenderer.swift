@@ -19,7 +19,7 @@ class InstructionReferenceRenderer: NSObject {
     let ZERO_MARGIN: CGFloat = 0.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 12.0
-    let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGrey
+    let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let REFERENCE_LABEL_FONT_SIZE: CGFloat = 20.0
     let REFERENCE_LABEL_FONT_COLOR: UIColor = .pxBlack
     

@@ -100,6 +100,11 @@ class PXResultViewController: PXComponentContainerViewController {
             "Donec at est a lacus faucibus tincidunt id sed odio. Aenean convallis ultrices metus, et auctor dui dignissim ac. Suspendisse ultrices quam suscipit augue sollicitudin, in auctor urna accumsan. Ut sagittis dui vitae risus imperdiet, at dictum ex molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis nibh odio.",
             "Informacion terciaria 3"
         ]
+        instruc.accreditationMessage = "Se acreditara en uno o dos dias habiles"
+        instruc.accreditationComment = [
+            "Donec at est a lacus faucibus tincidunt id sed odio. Aenean convallis ultrices metus, et auctor dui dignissim ac. Suspendisse ultrices quam suscipit augue sollicitudin, in auctor urna accumsan. Ut sagittis dui vitae risus imperdiet, at dictum ex molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis nibh odio.",
+            "Informacion terciaria 3"
+        ]
         let instruction = viewModel.instructionsInfo?.instructions[0]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)

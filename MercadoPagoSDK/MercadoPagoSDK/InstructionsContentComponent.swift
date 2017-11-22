@@ -79,10 +79,12 @@ class InstructionsContentComponent: NSObject {
         let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
         return tertiaryInfoComponent
     }
-//
-//    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent {
-//
-//    }
+
+    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent {
+        let accreditationTimeProps = InstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
+        let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
+        return accreditationTimeComponent
+    }
 //
 //    public func getActionsComponent() -> InstructionsActionsComponent {
 //
@@ -97,7 +99,7 @@ class InstructionsContentComponent: NSObject {
     }
     
     public func hasAccreditationTime() -> Bool {
-        return !Array.isNullOrEmpty(props.instruction.actions) || String.isNullOrEmpty(props.instruction.accreditationMessage)
+        return !Array.isNullOrEmpty(props.instruction.accreditationComment) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
     }
     
     public func hasActions() -> Bool {
