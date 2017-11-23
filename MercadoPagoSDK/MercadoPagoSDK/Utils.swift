@@ -86,7 +86,7 @@ class Utils {
         return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount)
     }
 
-    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false) -> NSMutableAttributedString {
+    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false) -> NSMutableAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
 
@@ -99,16 +99,23 @@ class Utils {
         } else {
             symbols = currencySymbol
         }
-        let attributedSymbol = NSMutableAttributedString(string: symbols, attributes: normalAttributes)
+        var symbolAttributes = normalAttributes
+        if smallSymbol {
+            symbolAttributes = smallAttributes
+        }
+        let attributedSymbol = NSMutableAttributedString(string: symbols, attributes: symbolAttributes)
         let attributedAmount = NSMutableAttributedString(string: amount, attributes: normalAttributes)
         let attributedCents = NSAttributedString(string: cents, attributes: smallAttributes)
         let space = NSMutableAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
         attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
-        attributedSymbol.append(space)
-        attributedSymbol.append(attributedCents)
+        if cents != "00" || fontSize < 26 {
+            attributedSymbol.append(space)
+            attributedSymbol.append(attributedCents)
+        }
         return attributedSymbol
     }
+    
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
@@ -213,7 +220,6 @@ class Utils {
         let lastThreeDigits = amount.lastCharacters(number: 3)
 
         return  getAmountFormatted(numberWithoutLastThreeDigits, thousandSeparator: thousandSeparator, decimalSeparator:thousandSeparator).appending(thousandSeparator).appending(lastThreeDigits)
-
     }
 
     /**

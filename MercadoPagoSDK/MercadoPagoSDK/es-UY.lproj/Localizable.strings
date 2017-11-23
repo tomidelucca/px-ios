@@ -87,7 +87,8 @@
 "cc_rejected_bad_filled_security_code_subtitle_credit_card"="El código de seguridad no es el correcto.";
 "cc_rejected_bad_filled_date_subtitle_credit_card"="La fecha de vencimiento no es la correcta.";
 "cc_rejected_call_for_authorize_subtitle_credit_card" = "";
-
+"rejected_insufficient_data_title" = "No fue posible procesar su pago";
+"rejected_by_bank_title" = "No fue posible procesar su pago";
 
 
 "rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
@@ -249,3 +250,7 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";
+
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Algo salió mal...";

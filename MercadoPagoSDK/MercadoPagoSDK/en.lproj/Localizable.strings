@@ -91,6 +91,8 @@
 "cc_rejected_bad_filled_security_code_subtitle_debit_card"="The security code is not correct";
 "cc_rejected_bad_filled_date_subtitle_debit_card"="The expiration date is not correct.";
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
+"rejected_insufficient_data_title" = "Payment could not be processed";
+"rejected_by_bank_title" = "Payment could not be processed";
 
 "Ingresalo nuevamente" = "Enter again";
 
@@ -177,7 +179,7 @@
 "Algún dato de tu %1$s es incorrecto."="Some data of your %1$s is incorect.";
 "El teléfono está al dorso de tu tarjeta"="The phone number is on the back of your card";
 "Debes autorizar el pago ante tu tarjeta"="You must authorize the payment with your card";
-"Debes autorizar ante %1$s el pago de " = "You must authorize with %1$s the payment of";
+"Debes autorizar ante %1$s el pago de " = "You must authorize with %1$s the payment of ";
 " a MercadoPago" = " to MercadoPago";
 "Ya hablé con %1$s y me autorizó" = "Already talked with %0 and I am authorized";
 "En tu estado de cuenta verás el cargo como %0" = "In your account yo will see the charge as %0";
@@ -265,3 +267,6 @@
 //Instrucciones
 "Seguir comprando"= "Continue shopping";
 
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Something went wrong...";

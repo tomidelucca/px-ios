@@ -170,8 +170,9 @@
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Se você precisar pagar novamente, use outro cartão ou outro meio de pagamento.";
 "cc_rejected_card_disabled_subtitle_credit_card"="O telefone do banco está no verso do seu cartão.";
 "cc_rejected_call_for_authorize_subtitle_credit_card" = "";
-
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
+"rejected_insufficient_data_title" = "Não foi possível processar o seu pagamento, desculpe-nos";
+"rejected_by_bank_title" = "Não foi possível processar o seu pagamento, desculpe-nos";
 
 "Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
@@ -264,3 +265,8 @@
 "Descuentos" = "Descontos";
 "Impuestos" = "Impostos";
 "Envío" = "Remessa";
+
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Algo deu errado...";
+

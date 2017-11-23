@@ -153,7 +153,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
         }
         return paymentMethods
     }
-    
+
     func payerInfoFlow() -> PayerInfoViewModel {
         let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
         return viewModel
@@ -224,6 +224,10 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     public func checkoutViewModel() -> CheckoutViewModel {
         let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
         return checkoutViewModel
+    }
+
+    func resultViewModel() -> PXResultViewModel {
+         return PXResultViewModel(paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference :self.paymentResultScreenPreference)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -622,7 +626,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && paymentResult.isApproved() {
             return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isPending() {
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isInProcess() {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && paymentResult.isRejected() {
             return false

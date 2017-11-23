@@ -85,4 +85,8 @@ extension String {
             }
         }
     }
+
+    public func toAttributedString(attributes: [String : Any]? = nil) -> NSMutableAttributedString {
+        return NSMutableAttributedString(string: self, attributes: attributes)
+    }
 }

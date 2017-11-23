@@ -183,8 +183,13 @@ class MainTableViewController: UITableViewController {
 
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
-        let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
+        let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id:self.prefID)
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
+
+   //     let paypref = PaymentResultScreenPreference()
+   //     paypref.setApproved(title: "⬅ Soy hermano de ese titulo")
+   //     paypref.setRejectedHeaderIcon(name: "jn", bundle: Bundle.main)
+   //     checkout.setPaymentResultScreenPreference(paypref)
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)

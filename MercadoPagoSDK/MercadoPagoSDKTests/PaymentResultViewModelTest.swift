@@ -355,7 +355,7 @@ class PendingPaymentResultViewModelTest: BaseTest {
 
     func testStatus() {
         XCTAssertFalse(self.instance.paymentResult.isApproved())
-        XCTAssertTrue(self.instance.paymentResult.isPending())
+        XCTAssertTrue(self.instance.paymentResult.isInProcess())
         XCTAssertFalse(self.instance.paymentResult.isRejected())
         XCTAssertFalse(self.instance.paymentResult.isCallForAuth())
     }

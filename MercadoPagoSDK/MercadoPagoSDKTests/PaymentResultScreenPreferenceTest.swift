@@ -29,9 +29,9 @@ class PaymentResultScreenPreferenceTest: BaseTest {
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingTitle(), "Estamos procesando el pago".localized)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedTitle(), "Uy, no pudimos procesar el pago".localized)
 
-        paymentResultScreenPreference.setApprovedTitle(title: "1")
-        paymentResultScreenPreference.setPendingTitle(title: "2")
-        paymentResultScreenPreference.setRejectedTitle(title: "3")
+        paymentResultScreenPreference.setApproved(title: "1")
+        paymentResultScreenPreference.setPending(title: "2")
+        paymentResultScreenPreference.setRejected(title: "3")
 
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
 
@@ -96,10 +96,11 @@ class PaymentResultScreenPreferenceTest: BaseTest {
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedSecondaryButtonText(), "")
         XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedSecondaryButtonCallback() == nil)
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonText(), "Pagar con otro medio".localized)
-        XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() == nil)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonText())
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonText(), "Pagar con otro medio".localized)
+        XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() == nil)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonText())
+
         XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonCallback() == nil)
 
         paymentResultScreenPreference.setApprovedSecondaryExitButton(callback: { (_) in
@@ -127,10 +128,10 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetHeaderIcon() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconName, "MPSDK_payment_result_pending")
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconName, "default_item_icon")
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.pendingIconBundle, MercadoPago.getBundle())
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconName, "MPSDK_payment_result_error")
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconName, nil)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.rejectedIconBundle, MercadoPago.getBundle())
 
         paymentResultScreenPreference.setPendingHeaderIcon(name: "lala", bundle: Bundle.main)
@@ -192,7 +193,7 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetExitTitle() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle(), "Seguir comprando".localized)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle())
 
         paymentResultScreenPreference.setExitButtonTitle(title: "lala")
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
