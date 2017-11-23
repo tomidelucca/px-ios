@@ -53,7 +53,6 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, "Algo salió mal...".localized)
-        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, "Uy, no pudimos procesar el pago".localized)
         XCTAssertFalse(resultViewModel.isAccepted())
         XCTAssertFalse(resultViewModel.isWarning())
         XCTAssertTrue(resultViewModel.isError())
