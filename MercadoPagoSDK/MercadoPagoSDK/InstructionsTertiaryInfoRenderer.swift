@@ -31,27 +31,22 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         var lastLabel: UILabel?
         
         if let tertiaryInfoContent = instructionsTertiaryInfo.props.tertiaryInfo, !Array.isNullOrEmpty(instructionsTertiaryInfo.props.tertiaryInfo) {
-            var loopsDone = 0
             for text in tertiaryInfoContent {
-                var isLast = false
-                
-                if loopsDone == tertiaryInfoContent.count - 1 {
-                    isLast = true
-                }
                 
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
-                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel, isLastLabel: isLast)
+                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel)
                 instructionsTertiaryInfoView.tertiaryInfoLabels?.append(infoContentLabel)
                 lastLabel = infoContentLabel
-                loopsDone += 1
             }
         }
+        
+        MPLayout.pinLastSubviewToBottom(view: instructionsTertiaryInfoView)?.isActive = true
         
         return instructionsTertiaryInfoView
     }
     
-    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false) -> UILabel {
+    func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.textAlignment = .center
@@ -74,11 +69,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         } else {
             MPLayout.pinTop(view: infoLabel, to: superView, withMargin: L_MARGIN).isActive = true
         }
-        
-        if isLastLabel {
-            MPLayout.pinBottom(view: infoLabel, to: superView).isActive = true
-        }
-        
+
         return infoLabel
     }
 }
@@ -86,4 +77,3 @@ class InstructionsTertiaryInfoRenderer: NSObject {
 class TertiaryInfoView: UIView {
     public var tertiaryInfoLabels: [UILabel]?
 }
-

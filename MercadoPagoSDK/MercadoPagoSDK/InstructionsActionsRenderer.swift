@@ -26,19 +26,15 @@ class InstructionsActionsRenderer: NSObject {
         var lastView: UIView?
         
         if let actionsArray = instructionsActions.props.instructionActions, !Array.isNullOrEmpty(actionsArray) {
-            var loopsDone = 0
             for action in actionsArray {
                 let actionView = buildActionView(with: action, in: instructionsActionsView, onBottomOf: lastView)
                 instructionsActionsView.actionsViews?.append(actionView)
                 lastView = actionView
-                loopsDone += 1
             }
         }
         
-        if let lastView = lastView {
-            MPLayout.pinBottom(view: lastView, to: instructionsActionsView).isActive = true
-        }
-        
+        MPLayout.pinLastSubviewToBottom(view: instructionsActionsView)?.isActive = true
+
         return instructionsActionsView
     }
     

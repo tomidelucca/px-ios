@@ -22,26 +22,20 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         instructionsSecondaryInfoView.backgroundColor = .pxWhite
 
         var lastLabel: UILabel?
-        var loopsDone = 0
         for string in instructionsSecondaryInfo.props.secondaryInfo {
-            var isLast = false
-            
-            if loopsDone == instructionsSecondaryInfo.props.secondaryInfo.count - 1 {
-                isLast = true
-            }
-            
             let attributes = [ NSFontAttributeName: Utils.getFont(size: LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: string, attributes: attributes)
-            let secondaryInfoLabel = buildSecondaryInfoLabel(with: attributedString, in: instructionsSecondaryInfoView, onBottomOf: lastLabel, isLastLabel: isLast)
+            let secondaryInfoLabel = buildSecondaryInfoLabel(with: attributedString, in: instructionsSecondaryInfoView, onBottomOf: lastLabel)
             instructionsSecondaryInfoView.secondaryInfoLabels?.append(secondaryInfoLabel)
             lastLabel = secondaryInfoLabel
-            loopsDone += 1
         }
 
+        MPLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: S_MARGIN)?.isActive = true
+        
         return instructionsSecondaryInfoView
     }
     
-    func buildSecondaryInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false) -> UILabel {
+    func buildSecondaryInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let secondaryInfoLabel = UILabel()
         secondaryInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         secondaryInfoLabel.textAlignment = .center
@@ -62,10 +56,6 @@ class InstructionsSecondaryInfoRenderer: NSObject {
             MPLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: S_MARGIN).isActive = true
         } else {
             MPLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: S_MARGIN).isActive = true
-        }
-        
-        if isLastLabel {
-            MPLayout.pinBottom(view: secondaryInfoLabel, to: superView, withMargin: S_MARGIN).isActive = true
         }
         
         return secondaryInfoLabel

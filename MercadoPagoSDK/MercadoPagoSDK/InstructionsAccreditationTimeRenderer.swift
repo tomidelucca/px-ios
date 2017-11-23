@@ -33,18 +33,14 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         }
         
         if let commentsArray = instructionsAccreditationTime.props.accreditationComments, !Array.isNullOrEmpty(commentsArray) {
-            var loopsDone = 0
             for comment in commentsArray {
                 let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView)
                 instructionsAccreditationTimeView.accreditationCommentsComponents?.append(commentView)
                 lastView = commentView
-                loopsDone += 1
             }
         }
         
-        if let lastView = lastView {
-            MPLayout.pinBottom(view: lastView, to: instructionsAccreditationTimeView).isActive = true
-        }
+        MPLayout.pinLastSubviewToBottom(view: instructionsAccreditationTimeView)?.isActive = true
         
         return instructionsAccreditationTimeView
     }

@@ -26,14 +26,14 @@ class InstructionsInfoRenderer: NSObject {
         instructionsInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsInfoView.backgroundColor = .pxLightGray
         
-        var lastLabel: UILabel?
+        var lastView: UIView?
         
         if let infoTitle = instructionsInfo.props.infoTitle, !infoTitle.isEmpty {
             let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: infoTitle, attributes: attributes)
             let isLastLabel = Array.isNullOrEmpty(instructionsInfo.props.infoContent)
-            instructionsInfoView.titleLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastLabel, isLastLabel: isLastLabel, isTitle: true)
-            lastLabel = instructionsInfoView.titleLabel
+            instructionsInfoView.titleLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLastLabel, isTitle: true)
+            lastView = instructionsInfoView.titleLabel
         }
         
         if let infoContent = instructionsInfo.props.infoContent, !Array.isNullOrEmpty(instructionsInfo.props.infoContent) {
@@ -48,16 +48,19 @@ class InstructionsInfoRenderer: NSObject {
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let isFirstInfo = loopsDone == 0
-                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastLabel, isLastLabel: isLast, bottomDivider: instructionsInfo.props.bottomDivider, isFirstInfo: isFirstInfo)
+                let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLast, bottomDivider: instructionsInfo.props.bottomDivider, isFirstInfo: isFirstInfo)
                 instructionsInfoView.contentLabels?.append(infoContentLabel)
-                lastLabel = infoContentLabel
+                lastView = infoContentLabel
                 loopsDone += 1
             }
         }
         
         if instructionsInfo.props.bottomDivider != nil, instructionsInfo.props.bottomDivider == true {
-            instructionsInfoView.bottomDivider = buildBottomDivider(in: instructionsInfoView, onBottomOf: lastLabel)
+            instructionsInfoView.bottomDivider = buildBottomDivider(in: instructionsInfoView, onBottomOf: lastView)
+            lastView = instructionsInfoView.bottomDivider
         }
+        
+        MPLayout.pinLastSubviewToBottom(view: instructionsInfoView)?.isActive = true
         
         return instructionsInfoView
     }
@@ -94,11 +97,7 @@ class InstructionsInfoRenderer: NSObject {
         } else {
             MPLayout.pinTop(view: infoLabel, to: superView, withMargin: L_MARGIN).isActive = true
         }
-        
-        if isLastLabel, !bottomDivider! {
-            MPLayout.pinBottom(view: infoLabel, to: superView).isActive = true
-        }
-        
+
         return infoLabel
     }
     
@@ -116,7 +115,6 @@ class InstructionsInfoRenderer: NSObject {
             MPLayout.put(view: view, onBottomOf:upperView, withMargin: L_MARGIN).isActive = true
         }
         
-        MPLayout.pinBottom(view: view, to: superView).isActive = true
         return view
     }
 }

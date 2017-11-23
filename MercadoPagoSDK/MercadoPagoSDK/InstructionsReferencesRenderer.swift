@@ -33,19 +33,15 @@ class InstructionsReferencesRenderer: NSObject {
         }
         
         if let referencesArray = instructionsReferences.props.references, !Array.isNullOrEmpty(referencesArray) {
-            var loopsDone = 0
             for reference in referencesArray {
                 let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
                 let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)
                 instructionsReferencesView.referencesComponents?.append(referenceView)
                 lastView = referenceView
-                loopsDone += 1
             }
         }
         
-        if let lastView = lastView {
-            MPLayout.pinBottom(view: lastView, to: instructionsReferencesView).isActive = true
-        }
+        MPLayout.pinLastSubviewToBottom(view: instructionsReferencesView)?.isActive = true
         
         return instructionsReferencesView
     }
