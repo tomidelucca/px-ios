@@ -28,11 +28,9 @@ class FooterRenderer: NSObject {
             topView = principalButton
         }
         if let linkAction = footer.props.linkAction {
-<<<<<<< HEAD
-            let linkButton = self.buildLinkButton(with: linkAction)
-=======
+
             let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
->>>>>>> b2a67b37e026f37134e7a09f7fc9cb02ba448adf
+
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
             if topView != fooView {
