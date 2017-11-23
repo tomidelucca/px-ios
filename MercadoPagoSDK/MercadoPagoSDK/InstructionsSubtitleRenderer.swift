@@ -9,10 +9,6 @@
 import Foundation
 
 class InstructionsSubtitleRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 22.0
 
@@ -43,8 +39,8 @@ class InstructionsSubtitleRenderer: NSObject {
         MPLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: L_MARGIN).isActive = true
-        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: L_MARGIN).isActive = true
+        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
+        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
         return subtitleLabel
     }
 }

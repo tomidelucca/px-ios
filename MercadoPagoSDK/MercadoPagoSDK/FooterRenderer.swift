@@ -9,10 +9,7 @@
 import UIKit
 
 class FooterRenderer: NSObject {
-
-    let S_MARGIN: CGFloat = 16.0
-    let M_MARGIN: CGFloat = 19.0
-
+    
     let BUTTON_HEIGHT: CGFloat = 50.0
 
     func render(footer: FooterComponent) -> FooterView {
@@ -24,29 +21,33 @@ class FooterRenderer: NSObject {
             let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
             fooView.principalButton = principalButton
             fooView.addSubview(principalButton)
-            MPLayout.pinTop(view: principalButton, to: topView, withMargin: S_MARGIN).isActive = true
-            MPLayout.pinLeft(view: principalButton, to: fooView, withMargin: M_MARGIN).isActive = true
-            MPLayout.pinRight(view: principalButton, to: fooView, withMargin: M_MARGIN).isActive = true
+            MPLayout.pinTop(view: principalButton, to: topView, withMargin: MPLayout.S_MARGIN).isActive = true
+            MPLayout.pinLeft(view: principalButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
+            MPLayout.pinRight(view: principalButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             MPLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
             topView = principalButton
         }
         if let linkAction = footer.props.linkAction {
+<<<<<<< HEAD
             let linkButton = self.buildLinkButton(with: linkAction)
+=======
+            let linkButton = self.buildLinkButton(with: linkAction, color: footer.props.primaryColor)
+>>>>>>> b2a67b37e026f37134e7a09f7fc9cb02ba448adf
             fooView.linkButton = linkButton
             fooView.addSubview(linkButton)
             if topView != fooView {
-               MPLayout.put(view: linkButton, onBottomOf: topView, withMargin: S_MARGIN).isActive = true
-            }else{
-                MPLayout.pinTop(view: linkButton, to: fooView, withMargin: S_MARGIN).isActive = true
+               MPLayout.put(view: linkButton, onBottomOf: topView, withMargin: MPLayout.S_MARGIN).isActive = true
+            }else {
+                MPLayout.pinTop(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             }
             
-            MPLayout.pinLeft(view: linkButton, to: fooView, withMargin: M_MARGIN).isActive = true
-            MPLayout.pinRight(view: linkButton, to: fooView, withMargin: M_MARGIN).isActive = true
+            MPLayout.pinLeft(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
+            MPLayout.pinRight(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             MPLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
             topView = linkButton
         }
         if topView != fooView { // Si hay al menos alguna vista dentro del footer, agrego un margen
-            MPLayout.pinBottom(view: topView, to: fooView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinBottom(view: topView, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
         }
         return fooView
     }

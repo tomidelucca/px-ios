@@ -9,15 +9,7 @@
 import Foundation
 
 class InstructionReferenceRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 30.0
-    let M_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
-    let XS_MARGIN: CGFloat = 10.0
-    let XXS_MARGIN: CGFloat = 5.0
-    let ZERO_MARGIN: CGFloat = 0.0
-    let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
+    let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 12.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let REFERENCE_LABEL_FONT_SIZE: CGFloat = 20.0
@@ -76,9 +68,9 @@ class InstructionReferenceRenderer: NSObject {
         MPLayout.centerHorizontally(view: label, to: superView).isActive = true
         
         if let upperView = upperView {
-            MPLayout.put(view: label, onBottomOf: upperView, withMargin: XXS_MARGIN).isActive = true
+            MPLayout.put(view: label, onBottomOf: upperView, withMargin: MPLayout.XXXS_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: label, to: superView, withMargin: ZERO_MARGIN).isActive = true
+            MPLayout.pinTop(view: label, to: superView, withMargin: MPLayout.ZERO_MARGIN).isActive = true
         }
         
         return label

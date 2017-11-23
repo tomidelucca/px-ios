@@ -10,36 +10,71 @@ import UIKit
 
 class MPLayout: NSObject {
 
+    //Margins
+    static let ZERO_MARGIN: CGFloat = 0.0
+    static let XXXS_MARGIN: CGFloat = 4.0
+    static let XXS_MARGIN: CGFloat = 8.0
+    static let XS_MARGIN: CGFloat = 12.0
+    static let S_MARGIN: CGFloat = 16.0
+    static let M_MARGIN: CGFloat = 24.0
+    static let L_MARGIN: CGFloat = 32.0
+    static let XL_MARGIN: CGFloat = 40.0
+    static let XXL_MARGIN: CGFloat = 48.0
+    static let XXXL_MARGIN: CGFloat = 50.0
+    
+    static let DEFAULT_CONTRAINT_ACTIVE = true
+
+    static func checkContraintActivation(_ constraint : NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
+        constraint.isActive = true
+        return constraint
+    }
+    
     //Altura fija
     static func setHeight(owner: UIView, height: CGFloat ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: owner, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
+        return checkContraintActivation(NSLayoutConstraint(item: owner, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height))
     }
 
     //Ancho fijo
     static func setWidth(owner: UIView, width: CGFloat ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: owner, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: width)
+        return checkContraintActivation(NSLayoutConstraint(item: owner, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: width))
     }
 
     // Pin Left
     static func pinLeft(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: otherView, attribute: .leading, multiplier: 1, constant: margin)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: otherView, attribute: .leading, multiplier: 1, constant: margin))
     }
     //Pin Right
     static func pinRight(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: otherView, attribute: .trailing, multiplier: 1, constant: -margin)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: otherView, attribute: .trailing, multiplier: 1, constant: -margin))
     }
     //Pin Top
     static func pinTop(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: otherView, attribute: .top, multiplier: 1, constant: margin)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: otherView, attribute: .top, multiplier: 1, constant: margin))
     }
     //Pin Bottom
     static func pinBottom(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: otherView, attribute: .bottom, multiplier: 1, constant: -margin)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: otherView, attribute: .bottom, multiplier: 1, constant: -margin))
+    }
+    
+    //Pin parent last subview to Bottom
+    static func pinLastSubviewToBottom(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+        guard let lastView = view.subviews.last else {
+            return nil
+        }
+        return pinBottom(view: lastView, to: view, withMargin: margin)
+    }
+    
+    //Pin parent first subview to Top
+    static func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+        guard let firstView = view.subviews.first else {
+            return nil
+        }
+        return pinTop(view: firstView, to: view, withMargin: margin)
     }
 
     //Vista 1 abajo de vista 2
     static func put(view: UIView, onBottomOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
-        return  NSLayoutConstraint(
+        return checkContraintActivation(NSLayoutConstraint(
             item: view,
             attribute: .top,
             relatedBy: .equal,
@@ -47,11 +82,11 @@ class MPLayout: NSObject {
             attribute: .bottom,
             multiplier: 1.0,
             constant: margin
-        )
+        ))
     }
     //Vista 1 arriba de vista 2
     static func put(view: UIView, aboveOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
-        return  NSLayoutConstraint(
+        return checkContraintActivation(NSLayoutConstraint(
             item: view,
             attribute: .bottom,
             relatedBy: .equal,
@@ -59,33 +94,33 @@ class MPLayout: NSObject {
             attribute: .top,
             multiplier: 1.0,
             constant: margin
-        )
+        ))
     }
 
     //Centrado horizontal
     static func centerHorizontally(view: UIView, to container: UIView) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))
     }
 
     //Centrado Vertical
     static func centerVertically(view: UIView, into container: UIView) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
     }
 
     static func equalizeHeight(view: UIView, to otherView: UIView) -> NSLayoutConstraint {
-         return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0)
+         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0))
     }
 
     static func equalizeWidth(view: UIView, to otherView: UIView) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0))
     }
 
     static func setHeight(ofView view: UIView, asHeightOfView otherView: UIView, percent: CGFloat) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
     }
 
     static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent: CGFloat = 100) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0)
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
     }
 
 }
