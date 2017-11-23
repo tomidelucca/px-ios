@@ -9,14 +9,6 @@
 import Foundation
 
 class InstructionsContentRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 30.0
-    let M_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
-    let XS_MARGIN: CGFloat = 10.0
-    let XXS_MARGIN: CGFloat = 5.0
-    let ZERO_MARGIN: CGFloat = 0.0
     
     func render(instructionsContent: InstructionsContentComponent) -> UIView {
         let instructionsContentView = ContentView()
@@ -92,7 +84,7 @@ class InstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.actionsView
         }
 
-        MPLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: L_MARGIN).isActive = true
+        MPLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: MPLayout.L_MARGIN).isActive = true
 
         return instructionsContentView
     }

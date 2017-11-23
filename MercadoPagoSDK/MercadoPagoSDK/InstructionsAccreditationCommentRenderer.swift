@@ -9,12 +9,6 @@
 import Foundation
 
 class InstructionsAccreditationCommentRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 30.0
-    let M_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
-    let ZERO_MARGIN: CGFloat = 0.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray

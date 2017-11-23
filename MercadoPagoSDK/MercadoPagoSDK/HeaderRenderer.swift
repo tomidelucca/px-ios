@@ -10,11 +10,6 @@ import UIKit
 
 class HeaderRenderer: NSObject {
 
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
-
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0
     let IMAGE_HEIGHT: CGFloat = 90.0
@@ -42,7 +37,7 @@ class HeaderRenderer: NSObject {
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
         MPLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
-        MPLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: XXL_MARGIN).isActive = true
+        MPLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: MPLayout.XXXL_MARGIN).isActive = true
 
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
@@ -59,9 +54,9 @@ class HeaderRenderer: NSObject {
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
         MPLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
-        MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: L_MARGIN).isActive = true
+        MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: MPLayout.M_MARGIN).isActive = true
         MPLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: XL_MARGIN).isActive = true
+        MPLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: MPLayout.XL_MARGIN).isActive = true
 
         return headerView
     }
@@ -93,7 +88,7 @@ class HeaderRenderer: NSObject {
         statusLabel.textColor = .pxWhite
         superView.addSubview(statusLabel)
         if text != nil {
-            MPLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: S_MARGIN).isActive = true
+            MPLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: MPLayout.S_MARGIN).isActive = true
             statusLabel.attributedText = text
             MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
         }else {

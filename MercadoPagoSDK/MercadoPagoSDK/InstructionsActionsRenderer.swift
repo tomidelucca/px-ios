@@ -9,12 +9,6 @@
 import Foundation
 
 class InstructionsActionsRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 30.0
-    let M_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
-    let ZERO_MARGIN: CGFloat = 0.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
@@ -48,9 +42,9 @@ class InstructionsActionsRenderer: NSObject {
         MPLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: actionView, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: actionView, onBottomOf: upperView, withMargin: L_MARGIN).isActive = true
+            MPLayout.put(view: actionView, onBottomOf: upperView, withMargin: MPLayout.L_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: actionView, to: superView, withMargin: L_MARGIN).isActive = true
+            MPLayout.pinTop(view: actionView, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
         }
 
         return actionView

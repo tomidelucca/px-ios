@@ -9,10 +9,6 @@
 import Foundation
 
 class InstructionsSecondaryInfoRenderer: NSObject {
-    let XXL_MARGIN: CGFloat = 50.0
-    let XL_MARGIN: CGFloat = 42.0
-    let L_MARGIN: CGFloat = 24.0
-    let S_MARGIN: CGFloat = 16.0
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 12.0
 
@@ -30,7 +26,7 @@ class InstructionsSecondaryInfoRenderer: NSObject {
             lastLabel = secondaryInfoLabel
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: S_MARGIN)?.isActive = true
+        MPLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: MPLayout.S_MARGIN)?.isActive = true
         
         return instructionsSecondaryInfoView
     }
@@ -53,9 +49,9 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         MPLayout.setWidth(ofView: secondaryInfoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: secondaryInfoLabel, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: S_MARGIN).isActive = true
+            MPLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: MPLayout.S_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: MPLayout.S_MARGIN).isActive = true
         }
         
         return secondaryInfoLabel
