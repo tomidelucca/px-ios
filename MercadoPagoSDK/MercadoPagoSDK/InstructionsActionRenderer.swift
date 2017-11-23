@@ -15,7 +15,7 @@ class InstructionsActionRenderer: NSObject {
     let M_MARGIN: CGFloat = 24.0
     let S_MARGIN: CGFloat = 16.0
     let ZERO_MARGIN: CGFloat = 0.0
-    let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
+    let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
     
