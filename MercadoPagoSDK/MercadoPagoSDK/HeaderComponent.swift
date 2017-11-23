@@ -8,14 +8,16 @@
 
 import UIKit
 
-class HeaderComponent: NSObject {
+
+open class HeaderComponent: NSObject {
     var props : HeaderProps
 
     init(props: HeaderProps) {
         self.props = props
     }
 }
-class HeaderProps: NSObject {
+
+open class HeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor

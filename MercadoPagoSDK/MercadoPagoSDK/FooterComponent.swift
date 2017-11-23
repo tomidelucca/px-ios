@@ -17,18 +17,19 @@ class FooterComponent: NSObject {
 }
 class FooterProps: NSObject {
     var buttonAction: FooterAction?
-    var linkAction : FooterAction?
-    
-    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil) {
+    var linkAction: FooterAction?
+    var primaryColor : UIColor?
+    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
+        self.primaryColor = primaryColor
     }
 }
 
-class FooterAction : NSObject {
-    var label : String
+class FooterAction: NSObject {
+    var label: String
     var action : (() -> Void)
-    init(label : String, action:  @escaping (() -> Void)) {
+    init(label: String, action:  @escaping (() -> Void)) {
         self.label = label
         self.action = action
     }

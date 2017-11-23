@@ -186,10 +186,10 @@ class MainTableViewController: UITableViewController {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id:self.prefID)
         let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
 
-        let paypref = PaymentResultScreenPreference()
-        paypref.setApproved(title: "⬅ Soy hermano de ese titulo")
-        paypref.setRejectedHeaderIcon(name: "jn", bundle: Bundle.main)
-        checkout.setPaymentResultScreenPreference(paypref)
+   //     let paypref = PaymentResultScreenPreference()
+   //     paypref.setApproved(title: "⬅ Soy hermano de ese titulo")
+   //     paypref.setRejectedHeaderIcon(name: "jn", bundle: Bundle.main)
+   //     checkout.setPaymentResultScreenPreference(paypref)
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)

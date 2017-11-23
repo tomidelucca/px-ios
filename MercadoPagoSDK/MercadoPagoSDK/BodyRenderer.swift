@@ -13,7 +13,6 @@ class BodyRenderer: NSObject {
     func render(body: BodyComponent) -> UIView {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        
         if body.hasInstructions() {
             let instructionsRenderer = InstructionsRenderer()
             let instructionsView = instructionsRenderer.render(instructions: body.getInstructionsComponent())

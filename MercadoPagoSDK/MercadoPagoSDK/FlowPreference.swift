@@ -8,6 +8,12 @@
 
 import Foundation
 
+public enum PXHookStep: String {
+    case STEP1
+    case STEP2
+    case STEP3
+}
+
 open class FlowPreference: NSObject {
 
     static let DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3

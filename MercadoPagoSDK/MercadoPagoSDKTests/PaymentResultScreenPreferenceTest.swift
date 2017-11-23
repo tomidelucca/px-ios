@@ -96,10 +96,11 @@ class PaymentResultScreenPreferenceTest: BaseTest {
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedSecondaryButtonText(), "")
         XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedSecondaryButtonCallback() == nil)
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonText(), "Pagar con otro medio".localized)
-        XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() == nil)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonText())
 
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonText(), "Pagar con otro medio".localized)
+        XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingSecondaryButtonCallback() == nil)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonText())
+
         XCTAssert(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedSecondaryButtonCallback() == nil)
 
         paymentResultScreenPreference.setApprovedSecondaryExitButton(callback: { (_) in
@@ -192,7 +193,7 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetExitTitle() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle(), "Seguir comprando".localized)
+        XCTAssertNil(self.mpCheckout.viewModel.paymentResultScreenPreference.getExitButtonTitle())
 
         paymentResultScreenPreference.setExitButtonTitle(title: "lala")
         self.mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
