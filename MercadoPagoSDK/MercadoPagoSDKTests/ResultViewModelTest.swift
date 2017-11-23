@@ -29,7 +29,10 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
         XCTAssertNil(headerView.statusLabel?.attributedText)
@@ -43,6 +46,9 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
@@ -57,6 +63,9 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("in_process", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
@@ -74,6 +83,9 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference:preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
@@ -90,6 +102,9 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("error_badge"))
@@ -107,6 +122,9 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("in_process", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("pending_badge"))
@@ -116,7 +134,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(headerView.statusLabel?.attributedText, nil)
         XCTAssertEqual(headerView.messageLabel?.attributedText?.string, "Estamos procesando el pago".localized)
     }
-    
+
     func testViewModelWithTextPreferenceAndCallForAuth() {
         let preference = PaymentResultScreenPreference()
         preference.setPending(title: pendingTitleDummy)
@@ -126,6 +144,9 @@ class ResultViewModelTest: BaseTest {
         paymentResult.paymentData?.payerCost = PayerCost(installments: 1, installmentRate: 1, labels: [], minAllowedAmount: 100, maxAllowedAmount: 100, recommendedMessage: "", installmentAmount: 1, totalAmount: 100)
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxOrangeMp)
         XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("card_icon", bundle: MercadoPago.getBundle()!))
         XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("need_action_badge"))
@@ -134,12 +155,16 @@ class ResultViewModelTest: BaseTest {
         XCTAssertFalse(resultViewModel.isError())
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, "Algo salió mal...".localized.toAttributedString().string)
     }
-    
-    func buildHeaderView(resultViewModel : PXResultViewModel) -> HeaderView {
+
+    func buildHeaderView(resultViewModel: PXResultViewModel) -> HeaderView {
         let data = HeaderData(labelText: resultViewModel.labelTextHeader(), title: resultViewModel.titleHeader(), backgroundColor: resultViewModel.primaryResultColor(), productImage: resultViewModel.iconImageHeader(), statusImage: resultViewModel.badgeImage())
         let headerComponent = HeaderComponent(data: data)
         return HeaderRenderer().render(header: headerComponent)
     }
-    
+    func buildFooterView(resultViewModel: PXResultViewModel) -> FooterView {
+        let data = FooterData(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink(), primaryColor: nil)
+        let footerComponent = FooterComponent(data: data)
+        return FooterRenderer().render(footer: footerComponent)
+    }
 
 }

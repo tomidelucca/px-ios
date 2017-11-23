@@ -15,7 +15,7 @@ class HeaderComponent: NSObject {
         self.props = props
     }
 }
-class HeaderProps: NSObject {
+public class HeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor

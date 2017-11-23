@@ -15,16 +15,27 @@ open class PaymentResultScreenPreference: NSObject {
         case check
     }
 
-    //HEADER
+    //FOOTER
+    var approvedSecondaryExitButtonText = ""
+    var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
+    var hidePendingSecondaryButton = false
+    var pendingSecondaryExitButtonText: String?
+    var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+
+    var hideRejectedSecondaryButton = false
+    var rejectedSecondaryExitButtonText: String?
+    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+
+    var exitButtonTitle: String?
+
+    //HEADER
     //Approved
     var approvedBadge: ApprovedBadge? = ApprovedBadge.check
     var approvedTitle = "¡Listo, se acreditó tu pago!".localized
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
-    var approvedSecondaryExitButtonText = ""
-    var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
     var approvedIconName = "default_item_icon"
     var approvedIconBundle = MercadoPago.getBundle()!
 
@@ -37,11 +48,8 @@ open class PaymentResultScreenPreference: NSObject {
     private var _disablePendingLabelText = true
     var pendingIconName = "default_item_icon"
     var pendingIconBundle = MercadoPago.getBundle()!
-    var hidePendingSecondaryButton = false
     var hidePendingContentText = false
     var hidePendingContentTitle = false
-    var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
-    var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
     //Rejected
     var rejectedTitle = "Uy, no pudimos procesar el pago".localized
@@ -54,11 +62,8 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedIconName: String?
     var rejectedContentTitle = "¿Qué puedo hacer?".localized
     var rejectedContentText = ""
-    var hideRejectedSecondaryButton = false
     var hideRejectedContentText = false
     var hideRejectedContentTitle = false
-    var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
-    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
     //Commons
     var _showBadgeImage = true
@@ -80,7 +85,6 @@ open class PaymentResultScreenPreference: NSObject {
     var pmDefaultIconName = "card_icon"
     var pmBolbradescoIconName = "boleto_icon"
     var pmIconBundle = MercadoPago.getBundle()!
-    var exitButtonTitle = "Seguir comprando"
     var statusBackgroundColor: UIColor?
     var hideApprovedPaymentBodyCell = false
     var hideContentCell = false
@@ -192,7 +196,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePendingContentTitle = true
     }
 
-    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
+    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
         self.pendingSecondaryExitButtonText = text
         self.pendingSecondaryExitButtonCallback = callback
     }
@@ -246,7 +250,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.hideRejectedContentTitle = true
     }
 
-    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
+    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
         self.rejectedSecondaryExitButtonText = text
         self.rejectedSecondaryExitButtonCallback = callback
     }
@@ -372,7 +376,7 @@ open class PaymentResultScreenPreference: NSObject {
         return pendingContentText
     }
 
-    open func getPendingSecondaryButtonText() -> String {
+    open func getPendingSecondaryButtonText() -> String? {
         return pendingSecondaryExitButtonText
     }
 
@@ -437,7 +441,7 @@ open class PaymentResultScreenPreference: NSObject {
         return rejectedIconSubtext
     }
 
-    open func getRejectedSecondaryButtonText() -> String {
+    open func getRejectedSecondaryButtonText() -> String? {
         return rejectedSecondaryExitButtonText
     }
     open func getRejectedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
@@ -456,8 +460,11 @@ open class PaymentResultScreenPreference: NSObject {
         return hideRejectedContentTitle
     }
 
-    open func getExitButtonTitle() -> String {
-        return exitButtonTitle.localized
+    open func getExitButtonTitle() -> String? {
+        if let title = exitButtonTitle {
+            return title.localized
+        }
+        return nil
     }
 
     open func isContentCellDisable() -> Bool {

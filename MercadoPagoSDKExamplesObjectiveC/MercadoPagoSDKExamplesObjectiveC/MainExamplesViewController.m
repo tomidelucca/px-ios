@@ -232,10 +232,10 @@
     //    } text:@"Ir a mi activdad"];
     //    [resultPreference disablePendingContentText];
     //    [resultPreference disableChangePaymentMethodOptionButton];
-    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-        NSLog(@"%@", paymentResult.status);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    } text:@"Ir a mi actividad"];
+//    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
+//        NSLog(@"%@", paymentResult.status);
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+//    } text:@"Ir a mi actividad"];
     //    [resultPreference setApprovedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
     //        NSLog(@"%@", paymentResult.status);
     //        [self.navigationController popToRootViewControllerAnimated:NO];

@@ -90,24 +90,22 @@ class MPLayout: NSObject {
 
 }
 
-extension UIButton {
-    private func actionHandleBlock(action:(() -> Void)? = nil) {
-        struct __ {
-            static var action :(() -> Void)?
-        }
-        if action != nil {
-            __.action = action
-        } else {
-            __.action?()
-        }
+class ClosureSleeve {
+    let closure: ()->Void
+
+    init (_ closure: @escaping ()->Void) {
+        self.closure = closure
     }
 
-    @objc private func triggerActionHandleBlock() {
-        self.actionHandleBlock()
+    @objc func invoke () {
+        closure()
     }
+}
 
-    func actionHandle(controlEvents control: UIControlEvents, ForAction action:@escaping () -> Void) {
-        self.actionHandleBlock(action: action)
-        self.addTarget(self, action: #selector(UIButton.triggerActionHandleBlock), for: control)
+extension UIControl {
+    func add (for controlEvents: UIControlEvents, _ closure: @escaping ()->Void) {
+        let sleeve = ClosureSleeve(closure)
+        addTarget(sleeve, action: #selector(ClosureSleeve.invoke), for: controlEvents)
+        objc_setAssociatedObject(self, String(format: "[%d]", arc4random()), sleeve, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
     }
 }

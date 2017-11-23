@@ -13,11 +13,10 @@ class PXResultViewController: PXComponentContainerViewController {
     let viewModel: PXResultViewModel
     var headerView = UIView()
     var fooView: UIView!
-    var callback: (PaymentResult.CongratsState) -> Void
 
     init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
-        self.callback = callback
         self.viewModel = viewModel
+        self.viewModel.callback = callback
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
 
@@ -36,7 +35,7 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(headerView)
         MPLayout.pinTop(view: headerView, to: contentView).isActive = true
         MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
-
+        
         //Add Foo
         fooView = buildFooterView()
         contentView.addSubview(fooView)
@@ -53,7 +52,7 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
         MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
         MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
-
+        
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
@@ -65,14 +64,7 @@ class PXResultViewController: PXComponentContainerViewController {
         return rendererHeader.render(header: componentHeader)
     }
     func buildFooterView() -> UIView {
-        let action1 = FooterAction(label: "boton grande") {
-            print("boton grande presionado")
-        }
-        
-        let action2 = FooterAction(label: "boton link") {
-            print("boton LINK presionado")
-        }
-        let dataFoo = FooterProps(buttonAction: action1, linkAction: action2)
+        let dataFoo = self.viewModel.getFooterComponentData()
         let componentFoo = FooterComponent(props: dataFoo)
         let rendererFoo = FooterRenderer()
         return rendererFoo.render(footer: componentFoo)
