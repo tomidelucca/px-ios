@@ -31,7 +31,6 @@ class InstructionsActionRenderer: NSObject {
         if tag == ActionTag.LINK.rawValue {
             instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
         }
-        MPLayout.setHeight(owner: instructionsActionView, height: 100).isActive = true
 
         return instructionsActionView
     }
