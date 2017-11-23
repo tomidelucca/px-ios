@@ -3,11 +3,11 @@ public protocol PXComponetizable {
     func render() -> UIView
 }
 
-public protocol PXHookeable: Componetisable {
-    func getStep() -> HookStep
+public protocol PXHookeable: PXComponetizable {
+    func getStep() -> PXHookStep
     func render() -> UIView
     func renderDidFinish()
-    func didRecive(hookStore: HookStore)
+    func didRecive(hookStore: PXHookStore)
 //    func didRecive(action: MPAction)
 }
 
@@ -30,7 +30,7 @@ open class MPAction: NSObject {
 */
 open class PXHookStore: NSObject {
     
-    static let sharedInstance = HookStore()
+    static let sharedInstance = PXHookStore()
     private var data = [String : Any]()
     var paymentData = PaymentData()
     var paymentOptionSelected: PaymentMethodOption?
