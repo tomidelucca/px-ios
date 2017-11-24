@@ -8,11 +8,14 @@
 
 import Foundation
 
-class InstructionsInfoComponent: NSObject {
+class InstructionsInfoComponent: NSObject, PXComponetizable {
     var props: InstructionsInfoProps
     
     init(props: InstructionsInfoProps) {
         self.props = props
+    }
+    func render() -> UIView {
+        return InstructionsInfoRenderer().render(instructionsInfo: self)
     }
 }
 class InstructionsInfoProps: NSObject {

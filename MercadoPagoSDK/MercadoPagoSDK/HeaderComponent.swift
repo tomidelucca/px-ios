@@ -9,12 +9,15 @@
 import UIKit
 
 
-open class HeaderComponent: NSObject {
+open class HeaderComponent: NSObject, PXComponetizable {
 
     var props : HeaderProps
 
     init(props: HeaderProps) {
         self.props = props
+    }
+    public func render() -> UIView {
+        return HeaderRenderer().render(header: self)
     }
 }
 

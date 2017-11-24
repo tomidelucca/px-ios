@@ -64,14 +64,11 @@ class InstructionsReferencesRenderer: NSObject {
     }
     
     func buildReferenceView(with reference: InstructionReference, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
-        
-        let referenceRenderer = InstructionReferenceRenderer()
+
         let referenceProps = InstructionReferenceProps(reference: reference)
         let referenceComponent = InstructionReferenceComponent(props: referenceProps)
-        let referenceView = referenceRenderer.render(instructionReference: referenceComponent)
-//        referenceView.translatesAutoresizingMaskIntoConstraints = false
-        superView.addSubview(referenceView)        
-//        MPLayout.setHeight(owner: referenceView, height: 100).isActive = true
+        let referenceView = referenceComponent.render()
+        superView.addSubview(referenceView)
         MPLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
         if let upperView = upperView {

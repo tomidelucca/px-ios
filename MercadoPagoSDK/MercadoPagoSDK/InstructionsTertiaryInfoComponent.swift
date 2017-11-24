@@ -8,11 +8,14 @@
 
 import Foundation
 
-class InstructionsTertiaryInfoComponent: NSObject {
+class InstructionsTertiaryInfoComponent: NSObject, PXComponetizable {
     var props: InstructionsTertiaryInfoProps
     
     init(props: InstructionsTertiaryInfoProps) {
         self.props = props
+    }
+    func render() -> UIView {
+        return InstructionsTertiaryInfoRenderer().render(instructionsTertiaryInfo: self)
     }
 }
 class InstructionsTertiaryInfoProps: NSObject {

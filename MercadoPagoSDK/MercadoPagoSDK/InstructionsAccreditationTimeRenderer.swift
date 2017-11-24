@@ -69,10 +69,9 @@ class InstructionsAccreditationTimeRenderer: NSObject {
     }
     
     func buildCommentView(with comment: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
-        let accreditationCommentRenderer = InstructionsAccreditationCommentRenderer()
         let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
         let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
-        let accreditationCommentView = accreditationCommentRenderer.render(instructionsAccreditationComment: accreditationCommentComponent)
+        let accreditationCommentView = accreditationCommentComponent.render()
         superView.addSubview(accreditationCommentView)
         MPLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: accreditationCommentView, to: superView).isActive = true

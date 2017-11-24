@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1D7ED7B1C1FD78C87FD79F /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
 		0F0749051AED5BAE003DD39D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0749081AED5BAE003DD39D /* Localizable.strings */; };
 		0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0749081AED5BAE003DD39D /* Localizable.strings */; };
 		0F9883101AD2A97A00F750F0 /* MercadoPagoSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F98830F1AD2A97A00F750F0 /* MercadoPagoSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -580,6 +581,7 @@
 		81ACC8201F9A88F700206F7B /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
 		81ACC8211F9A88F700206F7B /* HeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* HeaderComponent.swift */; };
 		81ACC8221F9A88F700206F7B /* HeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* HeaderRenderer.swift */; };
+		91EC2E7CB6887C4DE34595D5 /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0BE383DF11CE371769290AC /* Pods_MercadoPagoSDK.framework */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -1135,6 +1137,7 @@
 			files = (
 				4B5E77451FA8F78400D813AF /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B5E77461FA8F78500D813AF /* MercadoPagoServices.framework in Frameworks */,
+				91EC2E7CB6887C4DE34595D5 /* Pods_MercadoPagoSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1144,6 +1147,7 @@
 			files = (
 				4B0E72AA1FA8F9E8006A3853 /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B0E72A81FA8F9E4006A3853 /* MercadoPagoServices.framework in Frameworks */,
+				0E1D7ED7B1C1FD78C87FD79F /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,11 +8,14 @@
 
 import Foundation
 
-class InstructionsReferencesComponent: NSObject {
+class InstructionsReferencesComponent: NSObject, PXComponetizable {
     var props: InstructionsReferencesProps
     
     init(props: InstructionsReferencesProps) {
         self.props = props
+    }
+    func render() -> UIView {
+        return InstructionsReferencesRenderer().render(instructionsReferences: self)
     }
 }
 class InstructionsReferencesProps: NSObject {

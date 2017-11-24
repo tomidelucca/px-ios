@@ -60,14 +60,12 @@ class PXResultViewController: PXComponentContainerViewController {
     func buildHeaderView() -> UIView {
         let dataHeader = self.viewModel.headerComponentData()
         let componentHeader = HeaderComponent(props: dataHeader)
-        let rendererHeader = HeaderRenderer()
-        return rendererHeader.render(header: componentHeader)
+        return componentHeader.render()
     }
     func buildFooterView() -> UIView {
         let dataFoo = self.viewModel.getFooterComponentData()
         let componentFoo = FooterComponent(props: dataFoo)
-        let rendererFoo = FooterRenderer()
-        return rendererFoo.render(footer: componentFoo)
+        return componentFoo.render()
     }
     func buildBodyView() -> UIView {
         let instruc = Instruction()
@@ -105,8 +103,7 @@ class PXResultViewController: PXComponentContainerViewController {
         let instruction = viewModel.instructionsInfo?.instructions[0]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)
-        let rendererBody = BodyRenderer()
-        return rendererBody.render(body: componentBody)
+        return componentBody.render()
     }
     override func viewDidLoad() {
         super.viewDidLoad()

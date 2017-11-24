@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsContentComponent: NSObject {
+class InstructionsContentComponent: NSObject, PXComponetizable {
     var props: InstructionsContentProps
 
     init(props: InstructionsContentProps) {
@@ -117,6 +117,9 @@ class InstructionsContentComponent: NSObject {
     
     public func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
+    }
+    func render() -> UIView {
+        return InstructionsContentRenderer().render(instructionsContent: self)
     }
 }
 class InstructionsContentProps: NSObject {

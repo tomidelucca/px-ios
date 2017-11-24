@@ -15,8 +15,7 @@ class BodyRenderer: NSObject {
         bodyView.translatesAutoresizingMaskIntoConstraints = false
 
         if body.hasInstructions() {
-            let instructionsRenderer = InstructionsRenderer()
-            let instructionsView = instructionsRenderer.render(instructions: body.getInstructionsComponent())
+            let instructionsView = body.getInstructionsComponent().render()
             bodyView.addSubview(instructionsView)
             MPLayout.pinTop(view: instructionsView, to: bodyView).isActive = true
             MPLayout.pinBottom(view: instructionsView, to: bodyView).isActive = true

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsComponent: NSObject {
+class InstructionsComponent: NSObject, PXComponetizable {
     var props: InstructionsProps
     
     init(props: InstructionsProps) {
@@ -43,6 +43,10 @@ class InstructionsComponent: NSObject {
     
     public func shouldShowEmailInSecondaryInfo() -> Bool {
         return (props.processingMode == ProcessingMode.aggregator.rawValue)
+    }
+    
+    func render() -> UIView {
+        return InstructionsRenderer().render(instructions: self)
     }
 }
 class InstructionsProps: NSObject {

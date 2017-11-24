@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BodyComponent: NSObject {
+class BodyComponent: NSObject, PXComponetizable {
     var props: BodyProps
     
     init(props: BodyProps) {
@@ -23,6 +23,9 @@ class BodyComponent: NSObject {
         let instructionsProps = InstructionsProps(instruction: props.instruction!, processingMode: props.processingMode)
         let instructionsComponent = InstructionsComponent(props: instructionsProps)
         return instructionsComponent
+    }
+    func render() -> UIView {
+        return BodyRenderer().render(body: self)
     }
     
 }

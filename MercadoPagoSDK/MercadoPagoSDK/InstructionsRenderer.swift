@@ -17,8 +17,7 @@ class InstructionsRenderer: NSObject {
 
         //Subtitle Component
         if instructions.hasSubtitle() {
-            let instructionsSubtitleRenderer = InstructionsSubtitleRenderer()
-            instructionsView.subtitleView = instructionsSubtitleRenderer.render(instructionsSubtitle: instructions.getSubtitleComponent())
+            instructionsView.subtitleView = instructions.getSubtitleComponent().render()
             instructionsView.addSubview(instructionsView.subtitleView!)
             MPLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
             MPLayout.equalizeWidth(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
@@ -26,8 +25,7 @@ class InstructionsRenderer: NSObject {
         }
 
         //Content Component
-        let instructionsContentRenderer = InstructionsContentRenderer()
-        instructionsView.contentView = instructionsContentRenderer.render(instructionsContent: instructions.getContentComponent())
+        instructionsView.contentView = instructions.getContentComponent().render()
         instructionsView.addSubview(instructionsView.contentView!)
         if let subtitleView = instructionsView.subtitleView {
           MPLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
@@ -40,8 +38,7 @@ class InstructionsRenderer: NSObject {
 
         //Secondary Info Component
         if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo() {
-            let instructionsSecondaryInfoRenderer = InstructionsSecondaryInfoRenderer()
-            instructionsView.secondaryInfoView = instructionsSecondaryInfoRenderer.render(instructionsSecondaryInfo: instructions.getSecondaryInfoComponent())
+            instructionsView.secondaryInfoView = instructions.getSecondaryInfoComponent().render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
             MPLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentView!).isActive = true
             MPLayout.equalizeWidth(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true

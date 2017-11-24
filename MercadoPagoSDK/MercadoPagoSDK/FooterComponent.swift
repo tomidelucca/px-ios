@@ -8,12 +8,16 @@
 
 import UIKit
 
-class FooterComponent: NSObject {
+class FooterComponent: NSObject, PXComponetizable {
   var props : FooterProps
+    
     init(props: FooterProps) {
         self.props = props
     }
 
+    func render() -> UIView {
+        return FooterRenderer().render(footer: self)
+    }
 }
 class FooterProps: NSObject {
     var buttonAction: FooterAction?

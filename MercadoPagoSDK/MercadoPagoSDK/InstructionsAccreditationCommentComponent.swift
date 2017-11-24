@@ -8,11 +8,14 @@
 
 import Foundation
 
-class InstructionsAccreditationCommentComponent: NSObject {
+class InstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
     var props: InstructionsAccreditationCommentProps
     
     init(props: InstructionsAccreditationCommentProps) {
         self.props = props
+    }
+    func render() -> UIView {
+       return InstructionsAccreditationCommentRenderer().render(instructionsAccreditationComment: self)
     }
 }
 class InstructionsAccreditationCommentProps: NSObject {

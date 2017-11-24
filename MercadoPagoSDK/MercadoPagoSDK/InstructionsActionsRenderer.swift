@@ -33,11 +33,9 @@ class InstructionsActionsRenderer: NSObject {
     }
     
     func buildActionView(with action: InstructionAction, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
-        
-        let actionRenderer = InstructionsActionRenderer()
         let actionProps = InstructionsActionProps(instructionActionInfo: action)
         let actionComponent = InstructionsActionComponent(props: actionProps)
-        let actionView = actionRenderer.render(instructionsAction: actionComponent)
+        let actionView = actionComponent.render()
         superView.addSubview(actionView)
         MPLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: actionView, to: superView).isActive = true
