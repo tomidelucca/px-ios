@@ -9,8 +9,8 @@
 import UIKit
 
 class FooterComponent: NSObject, PXComponetizable {
-  var props : FooterProps
-    
+  var props: FooterProps
+
     init(props: FooterProps) {
         self.props = props
     }
@@ -22,7 +22,7 @@ class FooterComponent: NSObject, PXComponetizable {
 class FooterProps: NSObject {
     var buttonAction: FooterAction?
     var linkAction: FooterAction?
-    var primaryColor : UIColor?
+    var primaryColor: UIColor?
     init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction

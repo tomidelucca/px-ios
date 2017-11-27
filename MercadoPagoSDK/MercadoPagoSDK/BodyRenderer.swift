@@ -21,7 +21,7 @@ class BodyRenderer: NSObject {
             MPLayout.pinBottom(view: instructionsView, to: bodyView).isActive = true
             MPLayout.centerHorizontally(view: instructionsView, to: bodyView).isActive = true
             MPLayout.equalizeWidth(view: instructionsView, to: bodyView).isActive = true
-            
+
         }
         return bodyView
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 class InstructionsRenderer: NSObject {
-    
+
     func render(instructions: InstructionsComponent) -> UIView {
         let instructionsView = InstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ class InstructionsRenderer: NSObject {
             bottomView = instructionsView.secondaryInfoView!
         }
 
-        if let secondaryInfo = instructionsView.secondaryInfoView  {
+        if let secondaryInfo = instructionsView.secondaryInfoView {
             MPLayout.put(view: instructionsView.contentView!, aboveOf: secondaryInfo).isActive = true
             MPLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
         } else {

@@ -10,7 +10,7 @@ import Foundation
 
 class InstructionsInfoComponent: NSObject, PXComponetizable {
     var props: InstructionsInfoProps
-    
+
     init(props: InstructionsInfoProps) {
         self.props = props
     }

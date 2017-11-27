@@ -103,7 +103,7 @@ extension PXResultViewModel {
         return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
     }
     open func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
-        guard let paymentMethod = paymentMethod , let totalAmount = self.paymentResult?.paymentData?.payerCost?.totalAmount  else {
+        guard let paymentMethod = paymentMethod, let totalAmount = self.paymentResult?.paymentData?.payerCost?.totalAmount  else {
             return "".toAttributedString()
         }
         if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
@@ -149,7 +149,7 @@ extension PXResultViewModel {
         let centsStr = Utils.getCentsFormatted(String(instructionsInfo.amountInfo.amount), decimalSeparator: decimalSeparator)
         let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
 
-        if let range = amountRange{
+        if let range = amountRange {
             let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (range.lowerBound))), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
             let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:HeaderRenderer.TITLE_FONT_SIZE, centsFontSize:HeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
             attributedTitle.append(attributedAmount)

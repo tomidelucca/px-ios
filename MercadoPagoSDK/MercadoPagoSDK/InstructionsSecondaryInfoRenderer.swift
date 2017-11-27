@@ -27,10 +27,10 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         }
 
         MPLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: MPLayout.S_MARGIN)?.isActive = true
-        
+
         return instructionsSecondaryInfoView
     }
-    
+
     func buildSecondaryInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let secondaryInfoLabel = UILabel()
         secondaryInfoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +40,10 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         secondaryInfoLabel.attributedText = text
         secondaryInfoLabel.lineBreakMode = .byWordWrapping
         superView.addSubview(secondaryInfoLabel)
-        
+
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
         MPLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: secondaryInfoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
@@ -53,7 +53,7 @@ class InstructionsSecondaryInfoRenderer: NSObject {
         } else {
             MPLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: MPLayout.S_MARGIN).isActive = true
         }
-        
+
         return secondaryInfoLabel
     }
 }

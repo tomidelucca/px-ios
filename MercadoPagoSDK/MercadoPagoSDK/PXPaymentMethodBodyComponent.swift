@@ -9,9 +9,9 @@
 import UIKit
 
 class PXPaymentMethodBodyComponent: NSObject, PXComponetizable {
-    var props : PXPaymentMethodBodyComponentProps
-    
-    init(props : PXPaymentMethodBodyComponentProps) {
+    var props: PXPaymentMethodBodyComponentProps
+
+    init(props: PXPaymentMethodBodyComponentProps) {
        self.props = props
     }
     func render() -> UIView {
@@ -20,18 +20,18 @@ class PXPaymentMethodBodyComponent: NSObject, PXComponetizable {
 }
 
 class PXPaymentMethodBodyComponentProps: NSObject {
-    var paymentMethodIcon: UIImage?
-    var amountTitle: String?
+    var paymentMethodIcon: UIImage
+    var amountTitle: String
     var amountDetail: String?
     var paymentMethodDescription: String?
     var paymentMethodDetail: String?
-    
-    init(paymentMethodIcon: UIImage?,amountTitle: String?,amountDetail: String?,paymentMethodDescription: String?,paymentMethodDetail: String?) {
+
+    init(paymentMethodIcon: UIImage, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?) {
         self.paymentMethodIcon = paymentMethodIcon
         self.amountTitle = amountTitle
         self.amountDetail = amountDetail
         self.paymentMethodDescription = paymentMethodDescription
         self.paymentMethodDetail = paymentMethodDetail
     }
-    
+
 }

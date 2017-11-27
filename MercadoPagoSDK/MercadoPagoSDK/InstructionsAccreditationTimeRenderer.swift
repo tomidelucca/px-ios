@@ -12,18 +12,18 @@ class InstructionsAccreditationTimeRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
-    
+
     func render(instructionsAccreditationTime: InstructionsAccreditationTimeComponent) -> UIView {
         let instructionsAccreditationTimeView = AccreditationTimeView()
         instructionsAccreditationTimeView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationTimeView.backgroundColor = .pxLightGray
         var lastView: UIView?
-        
+
         if let title = instructionsAccreditationTime.props.accreditationMessage, !title.isEmpty {
             instructionsAccreditationTimeView.accreditationMessageLabel = buildTitleLabel(with: title, in: instructionsAccreditationTimeView)
             lastView = instructionsAccreditationTimeView.accreditationMessageLabel
         }
-        
+
         if let commentsArray = instructionsAccreditationTime.props.accreditationComments, !Array.isNullOrEmpty(commentsArray) {
             for comment in commentsArray {
                 let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView)
@@ -31,12 +31,12 @@ class InstructionsAccreditationTimeRenderer: NSObject {
                 lastView = commentView
             }
         }
-        
+
         MPLayout.pinLastSubviewToBottom(view: instructionsAccreditationTimeView)?.isActive = true
-        
+
         return instructionsAccreditationTimeView
     }
-    
+
     func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
         let textSize: CGFloat = ACCREDITATION_LABEL_FONT_SIZE
         let attributes = [ NSFontAttributeName: Utils.getFont(size: textSize) ]
@@ -46,7 +46,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text), attributes: attributes)
         labelAttributedString.insert(clockAttributedString, at: 0)
         let labelTitle = labelAttributedString
-        
+
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
@@ -55,19 +55,19 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         titleLabel.lineBreakMode = .byWordWrapping
         superView.addSubview(titleLabel)
         titleLabel.textColor = ACCREDITATION_LABEL_FONT_COLOR
-        
+
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        
+
         let height = UILabel.requiredHeight(forAttributedText: labelTitle, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         MPLayout.setHeight(owner: titleLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
         MPLayout.pinTop(view: titleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
-        
+
         return titleLabel
     }
-    
+
     func buildCommentView(with comment: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
         let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
@@ -80,7 +80,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         } else {
             MPLayout.pinTop(view: accreditationCommentView, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
         }
-        
+
         return accreditationCommentView
     }
 }
@@ -89,4 +89,3 @@ class AccreditationTimeView: UIView {
     public var accreditationMessageLabel: UILabel?
     public var accreditationCommentsComponents: [UIView]?
 }
-

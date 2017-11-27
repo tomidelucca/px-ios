@@ -9,8 +9,94 @@
 import UIKit
 
 class PXPaymentMethodBodyComponentRenderer: NSObject {
+    //Image
+    let IMAGE_WIDTH: CGFloat = 48.0
+    let IMAGE_HEIGHT: CGFloat = 48.0
+
+    let M_MARGIN: CGFloat = 32.0
+    let S_MARGIN: CGFloat = 16.0
+    let XS_MARGIN: CGFloat = 8.0
+
+    let TITLE_FONT_SIZE: CGFloat = 21.0
+    let DETAIL_FONT_SIZE: CGFloat = 16.0
 
     func render(component: PXPaymentMethodBodyComponent) -> UIView {
-        return UIView()
+        let pmBodyView = PXPaymentMethodBodyView()
+        pmBodyView.translatesAutoresizingMaskIntoConstraints = false
+        let icon = UIImageView()
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        pmBodyView.paymentMethodIcon = icon
+        icon.image = component.props.paymentMethodIcon
+        pmBodyView.addSubview(icon)
+        MPLayout.centerHorizontally(view: icon, to: pmBodyView).isActive = true
+        MPLayout.setHeight(owner: icon, height: IMAGE_HEIGHT).isActive = true
+        MPLayout.setWidth(owner: icon, width: IMAGE_WIDTH).isActive = true
+        MPLayout.pinTop(view: icon, to:pmBodyView, withMargin: M_MARGIN).isActive = true
+
+        // Title
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        pmBodyView.amountTitle = title
+        pmBodyView.addSubview(title)
+        title.text = component.props.amountTitle
+        title.font = Utils.getFont(size: TITLE_FONT_SIZE)
+        title.textColor = .pxBlack
+        title.textAlignment = .center
+        MPLayout.put(view: title, onBottomOfLastViewOf: pmBodyView, withMargin: S_MARGIN)?.isActive = true
+        MPLayout.pinLeft(view: title, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+        MPLayout.pinRight(view: title, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+
+        if let detailText = component.props.amountDetail {
+            let detailLabel = UILabel()
+            detailLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.addSubview(detailLabel)
+            detailLabel.text = detailText
+            detailLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            detailLabel.textColor = .pxBrownishGray
+            detailLabel.textAlignment = .center
+            MPLayout.put(view: detailLabel, onBottomOfLastViewOf: pmBodyView, withMargin: XS_MARGIN)?.isActive = true
+            MPLayout.pinLeft(view: detailLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinRight(view: detailLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+        }
+
+        if let paymentMethodDescription = component.props.paymentMethodDescription {
+            let descriptionLabel = UILabel()
+            descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.addSubview(descriptionLabel)
+            pmBodyView.paymentMethodDescription = descriptionLabel
+            descriptionLabel.text = paymentMethodDescription
+            descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            descriptionLabel.textColor = .pxBrownishGray
+            descriptionLabel.textAlignment = .center
+            MPLayout.put(view: descriptionLabel, onBottomOfLastViewOf: pmBodyView, withMargin: S_MARGIN)?.isActive = true
+            MPLayout.pinLeft(view: descriptionLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinRight(view: descriptionLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+        }
+
+        if let pmDetailText = component.props.paymentMethodDetail {
+            let pmDetailLabel = UILabel()
+            pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.amountDetail = pmDetailLabel
+            pmBodyView.addSubview(pmDetailLabel)
+            pmDetailLabel.text = pmDetailText
+            pmDetailLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            pmDetailLabel.textColor = .pxBrownishGray
+            pmDetailLabel.textAlignment = .center
+            MPLayout.put(view: pmDetailLabel, onBottomOfLastViewOf: pmBodyView, withMargin: S_MARGIN)?.isActive = true
+            MPLayout.pinLeft(view: pmDetailLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+            MPLayout.pinRight(view: pmDetailLabel, to: pmBodyView, withMargin: S_MARGIN).isActive = true
+        }
+
+        MPLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: M_MARGIN)?.isActive = true
+
+        return pmBodyView
     }
+}
+
+class PXPaymentMethodBodyView: UIView {
+    var paymentMethodIcon: UIImageView?
+    var amountTitle: UILabel?
+    var amountDetail: UILabel?
+    var paymentMethodDescription: UILabel?
+    var paymentMethodDetail: UILabel?
 }

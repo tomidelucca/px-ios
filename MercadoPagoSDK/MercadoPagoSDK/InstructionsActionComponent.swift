@@ -10,7 +10,7 @@ import Foundation
 
 class InstructionsActionComponent: NSObject, PXComponetizable {
     var props: InstructionsActionProps
-    
+
     init(props: InstructionsActionProps) {
         self.props = props
     }
@@ -24,4 +24,3 @@ class InstructionsActionProps: NSObject {
         self.instructionActionInfo = instructionActionInfo
     }
 }
-

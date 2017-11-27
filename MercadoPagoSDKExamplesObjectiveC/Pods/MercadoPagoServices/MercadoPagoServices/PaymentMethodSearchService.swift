@@ -90,7 +90,7 @@ open class PaymentMethodSearchService: MercadoPagoService {
                 }
             }
 
-            }, failure: { (error) -> Void in
+            }, failure: { (_) -> Void in
                 failure(PXError(domain: "mercadopago.sdk.PaymentMethodSearchService.getPaymentMethods", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }

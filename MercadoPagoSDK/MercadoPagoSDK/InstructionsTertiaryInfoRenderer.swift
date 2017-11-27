@@ -14,17 +14,17 @@ class InstructionsTertiaryInfoRenderer: NSObject {
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
     let INFO_LABEL_FONT_SIZE: CGFloat = 12.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
-    
+
     func render(instructionsTertiaryInfo: InstructionsTertiaryInfoComponent) -> UIView {
         let instructionsTertiaryInfoView = TertiaryInfoView()
         instructionsTertiaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsTertiaryInfoView.backgroundColor = .pxLightGray
-        
+
         var lastLabel: UILabel?
-        
+
         if let tertiaryInfoContent = instructionsTertiaryInfo.props.tertiaryInfo, !Array.isNullOrEmpty(instructionsTertiaryInfo.props.tertiaryInfo) {
             for text in tertiaryInfoContent {
-                
+
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel)
@@ -32,12 +32,12 @@ class InstructionsTertiaryInfoRenderer: NSObject {
                 lastLabel = infoContentLabel
             }
         }
-        
+
         MPLayout.pinLastSubviewToBottom(view: instructionsTertiaryInfoView)?.isActive = true
-        
+
         return instructionsTertiaryInfoView
     }
-    
+
     func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -48,10 +48,10 @@ class InstructionsTertiaryInfoRenderer: NSObject {
         superView.addSubview(infoLabel)
         let textSize: CGFloat = INFO_LABEL_FONT_SIZE
         infoLabel.textColor = INFO_LABEL_FONT_COLOR
-        
+
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         MPLayout.setHeight(owner: infoLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true

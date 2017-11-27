@@ -35,7 +35,7 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(headerView)
         MPLayout.pinTop(view: headerView, to: contentView).isActive = true
         MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
-        
+
         //Add Foo
         fooView = buildFooterView()
         contentView.addSubview(fooView)
@@ -44,15 +44,15 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
         MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
-        
+
         //Add Body
-        let bodyView = buildBodyView()
+        let bodyView = builPMBody()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
         MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
         MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
-        
+
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
@@ -66,6 +66,14 @@ class PXResultViewController: PXComponentContainerViewController {
         let dataFoo = self.viewModel.getFooterComponentData()
         let componentFoo = FooterComponent(props: dataFoo)
         return componentFoo.render()
+    }
+
+    func builPMBody() -> UIView {
+        let pm = self.viewModel.paymentResult?.paymentData?.paymentMethod
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
+        let bprop = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: "$1500", amountDetail: nil, paymentMethodDescription: "Master terminada en 2345", paymentMethodDetail: nil)
+        let body = PXPaymentMethodBodyComponent(props: bprop)
+        return body.render()
     }
     func buildBodyView() -> UIView {
         let instruc = Instruction()
@@ -82,9 +90,9 @@ class PXResultViewController: PXComponentContainerViewController {
         instruc.secondaryInfo = ["También enviamos estos datos a tu email", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lacinia semper magna id commodo. Integer molestie ligula ut mauris sagittis dapibus. Aenean non enim blandit, rhoncus elit eu, ullamcorper elit. Nulla vitae venenatis elit. Praesent ac lorem accumsan, ultricies odio elementum, eleifend tellus. Donec vitae massa ornare, convallis urna id, posuere diam.", "También enviamos"]
         let refer1 = InstructionReference()
         refer1.label = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lacinia semper magna id commodo"
-        refer1.value = ["1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234","1234"]
+        refer1.value = ["1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234"]
         refer1.separator = " "
-        instruc.references = [refer1,refer1,refer1,refer1]
+        instruc.references = [refer1, refer1, refer1, refer1]
         instruc.tertiaryInfo = [
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac varius nunc. Pellentesque sit amet massa lectus. Aenean sem dui, gravida non tellus vel, vulputate ultrices est.",
             "Donec at est a lacus faucibus tincidunt id sed odio. Aenean convallis ultrices metus, et auctor dui dignissim ac. Suspendisse ultrices quam suscipit augue sollicitudin, in auctor urna accumsan. Ut sagittis dui vitae risus imperdiet, at dictum ex molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce quis nibh odio.",
@@ -99,7 +107,7 @@ class PXResultViewController: PXComponentContainerViewController {
         action1.label = "Ir a banca en linea"
         action1.tag = "link"
         action1.url = "http://www.banamex.com.mx"
-        instruc.actions = [action1,action1]
+        instruc.actions = [action1, action1]
         let instruction = viewModel.instructionsInfo?.instructions[0]
         let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)

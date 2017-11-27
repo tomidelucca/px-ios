@@ -9,7 +9,7 @@
 import UIKit
 
 class FooterRenderer: NSObject {
-    
+
     let BUTTON_HEIGHT: CGFloat = 50.0
 
     func render(footer: FooterComponent) -> FooterView {
@@ -38,7 +38,7 @@ class FooterRenderer: NSObject {
             }else {
                 MPLayout.pinTop(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             }
-            
+
             MPLayout.pinLeft(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             MPLayout.pinRight(view: linkButton, to: fooView, withMargin: MPLayout.S_MARGIN).isActive = true
             MPLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
@@ -49,7 +49,7 @@ class FooterRenderer: NSObject {
         }
         return fooView
     }
-    func buildPrincipalButton(with footerAction: FooterAction, color : UIColor? = .pxBlueMp) -> UIButton {
+    func buildPrincipalButton(with footerAction: FooterAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 3
@@ -58,7 +58,7 @@ class FooterRenderer: NSObject {
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
-    func buildLinkButton(with footerAction: FooterAction, color : UIColor? = .pxBlueMp) -> UIButton {
+    func buildLinkButton(with footerAction: FooterAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let linkButton = UIButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
         linkButton.setTitle(footerAction.label, for: .normal)

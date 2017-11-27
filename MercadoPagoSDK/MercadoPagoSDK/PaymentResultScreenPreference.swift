@@ -423,7 +423,6 @@ open class PaymentResultScreenPreference: NSObject {
             return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
         }
 
-
         if paymentMethod.isBolbradesco {
             return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
         }

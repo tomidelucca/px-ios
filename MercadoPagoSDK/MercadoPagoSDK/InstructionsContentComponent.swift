@@ -14,26 +14,26 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
     init(props: InstructionsContentProps) {
         self.props = props
     }
-    
+
     public func hasInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
-    
+
     public func getInfoComponent() -> InstructionsInfoComponent {
         var content: [String] = []
         var info: [String] = props.instruction.info
-        
+
         var title = ""
         var hasTitle = false
         if info.count == 1 || (info.count > 1 && info[1] == "") {
             title = info[0]
             hasTitle = true
         }
-        
+
         var firstSpaceFound = false
         var secondSpaceFound = false
         var hasBottomDivider = false
-        
+
         for text in info {
             if text.isEmpty {
                 if firstSpaceFound {
@@ -54,12 +54,12 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         let infoComponent = InstructionsInfoComponent(props: infoProps)
         return infoComponent
     }
-    
+
     public func getReferencesComponent() -> InstructionsReferencesComponent {
         var info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
-        
+
         for text in info {
             if text.isEmpty {
                 spacesFound += 1
@@ -68,12 +68,12 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
                 break
             }
         }
-        
+
         let referencesProps = InstructionsReferencesProps(title: title, references: props.instruction.references)
         let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }
-    
+
     public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent {
         let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
@@ -85,25 +85,25 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
-    
+
     public func getActionsComponent() -> InstructionsActionsComponent {
         let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
         let actionsComponent = InstructionsActionsComponent(props: actionsProps)
         return actionsComponent
     }
-    
+
     public func hasReferences() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.references)
     }
-    
+
     public func hasTertiaryInfo() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.tertiaryInfo)
     }
-    
+
     public func hasAccreditationTime() -> Bool {
         return !Array.isNullOrEmpty(props.instruction.accreditationComment) || !String.isNullOrEmpty(props.instruction.accreditationMessage)
     }
-    
+
     public func hasActions() -> Bool {
         if !Array.isNullOrEmpty(props.instruction.actions) {
             for action in props.instruction.actions! {
@@ -114,7 +114,7 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         }
         return false
     }
-    
+
     public func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
     }
