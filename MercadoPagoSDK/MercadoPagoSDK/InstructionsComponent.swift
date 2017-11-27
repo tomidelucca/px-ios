@@ -15,19 +15,19 @@ class InstructionsComponent: NSObject, PXComponetizable {
         self.props = props
     }
     
-    public func getSubtitleComponent() -> InstructionsSubtitleComponent {
+    public func getSubtitleComponent() -> InstructionsSubtitleComponent? {
         let instructionsSubtitleProps = InstructionsSubtitleProps(subtitle: props.instruction.subtitle!)
         let instructionsSubtitleComponent = InstructionsSubtitleComponent(props: instructionsSubtitleProps)
         return instructionsSubtitleComponent
     }
     
-    public func getContentComponent() -> InstructionsContentComponent {
+    public func getContentComponent() -> InstructionsContentComponent? {
         let instructionsContentProps = InstructionsContentProps(instruction: props.instruction)
         let instructionsContentComponent = InstructionsContentComponent(props: instructionsContentProps)
         return instructionsContentComponent
     }
     
-    public func getSecondaryInfoComponent() -> InstructionsSecondaryInfoComponent {
+    public func getSecondaryInfoComponent() -> InstructionsSecondaryInfoComponent? {
         let instructionsSecondaryInfoProps = InstructionsSecondaryInfoProps(secondaryInfo: props.instruction.secondaryInfo!)
         let instructionsSecondaryInfoComponent = InstructionsSecondaryInfoComponent(props: instructionsSecondaryInfoProps)
         return instructionsSecondaryInfoComponent

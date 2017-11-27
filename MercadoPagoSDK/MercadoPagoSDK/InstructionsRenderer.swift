@@ -16,8 +16,8 @@ class InstructionsRenderer: NSObject {
         var bottomView: UIView!
 
         //Subtitle Component
-        if instructions.hasSubtitle() {
-            instructionsView.subtitleView = instructions.getSubtitleComponent().render()
+        if instructions.hasSubtitle(), let subtitleComponent = instructions.getSubtitleComponent() {
+            instructionsView.subtitleView = subtitleComponent.render()
             instructionsView.addSubview(instructionsView.subtitleView!)
             MPLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
             MPLayout.equalizeWidth(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
@@ -25,20 +25,22 @@ class InstructionsRenderer: NSObject {
         }
 
         //Content Component
-        instructionsView.contentView = instructions.getContentComponent().render()
-        instructionsView.addSubview(instructionsView.contentView!)
-        if let subtitleView = instructionsView.subtitleView {
-          MPLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
-        } else {
-          MPLayout.pinTop(view: instructionsView.contentView!, to: instructionsView).isActive = true
+        if let contentComponent = instructions.getContentComponent() {
+            instructionsView.contentView = contentComponent.render()
+            instructionsView.addSubview(instructionsView.contentView!)
+            if let subtitleView = instructionsView.subtitleView {
+                MPLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
+            } else {
+                MPLayout.pinTop(view: instructionsView.contentView!, to: instructionsView).isActive = true
+            }
+            MPLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
+            MPLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
+            bottomView = instructionsView.contentView!
         }
-        MPLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
-        MPLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
-        bottomView = instructionsView.contentView!
 
         //Secondary Info Component
-        if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo() {
-            instructionsView.secondaryInfoView = instructions.getSecondaryInfoComponent().render()
+        if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo(), let secondaryInfoComponent = instructions.getSecondaryInfoComponent() {
+            instructionsView.secondaryInfoView = secondaryInfoComponent.render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
             MPLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentView!).isActive = true
             MPLayout.equalizeWidth(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true

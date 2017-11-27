@@ -19,12 +19,10 @@ class InstructionsActionsRenderer: NSObject {
         instructionsActionsView.backgroundColor = .pxLightGray
         var lastView: UIView?
         
-        if let actionsArray = instructionsActions.props.instructionActions, !Array.isNullOrEmpty(actionsArray) {
-            for action in actionsArray {
-                let actionView = buildActionView(with: action, in: instructionsActionsView, onBottomOf: lastView)
-                instructionsActionsView.actionsViews?.append(actionView)
-                lastView = actionView
-            }
+        for action in instructionsActions.getActionComponents() {
+            let actionView = buildActionView(with: action, in: instructionsActionsView, onBottomOf: lastView)
+            instructionsActionsView.actionsViews?.append(actionView)
+            lastView = actionView
         }
         
         MPLayout.pinLastSubviewToBottom(view: instructionsActionsView)?.isActive = true
@@ -32,10 +30,8 @@ class InstructionsActionsRenderer: NSObject {
         return instructionsActionsView
     }
     
-    func buildActionView(with action: InstructionAction, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
-        let actionProps = InstructionsActionProps(instructionActionInfo: action)
-        let actionComponent = InstructionsActionComponent(props: actionProps)
-        let actionView = actionComponent.render()
+    func buildActionView(with action: InstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+        let actionView = action.render()
         superView.addSubview(actionView)
         MPLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: actionView, to: superView).isActive = true

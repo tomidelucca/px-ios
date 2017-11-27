@@ -19,7 +19,7 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
     
-    public func getInfoComponent() -> InstructionsInfoComponent {
+    public func getInfoComponent() -> InstructionsInfoComponent? {
         var content: [String] = []
         var info: [String] = props.instruction.info
         
@@ -55,8 +55,8 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return infoComponent
     }
     
-    public func getReferencesComponent() -> InstructionsReferencesComponent {
-        var info: [String] = props.instruction.info
+    public func getReferencesComponent() -> InstructionsReferencesComponent? {
+        let info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
         
@@ -74,19 +74,19 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return referencesComponent
     }
     
-    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent {
+    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent? {
         let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
         return tertiaryInfoComponent
     }
 
-    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent {
+    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent? {
         let accreditationTimeProps = InstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
         let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
     
-    public func getActionsComponent() -> InstructionsActionsComponent {
+    public func getActionsComponent() -> InstructionsActionsComponent? {
         let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
         let actionsComponent = InstructionsActionsComponent(props: actionsProps)
         return actionsComponent

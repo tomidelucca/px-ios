@@ -14,6 +14,19 @@ class InstructionsReferencesComponent: NSObject, PXComponetizable {
     init(props: InstructionsReferencesProps) {
         self.props = props
     }
+    
+    public func getReferenceComponents() -> [InstructionReferenceComponent] {
+        var referenceComponents: [InstructionReferenceComponent] = []
+        if let references = props.references, !references.isEmpty {
+            for reference in references {
+                let referenceProps = InstructionReferenceProps(reference: reference)
+                let referenceComponent = InstructionReferenceComponent(props: referenceProps)
+                referenceComponents.append(referenceComponent)
+            }
+        }
+        return referenceComponents
+    }
+    
     func render() -> UIView {
         return InstructionsReferencesRenderer().render(instructionsReferences: self)
     }

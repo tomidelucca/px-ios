@@ -101,8 +101,8 @@ class PXResultViewController: PXComponentContainerViewController {
         action1.url = "http://www.banamex.com.mx"
         instruc.actions = [action1,action1]
         let instruction = viewModel.instructionsInfo?.instructions[0]
-        let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
-        let componentBody = BodyComponent(props: dataBody)
+        let bodyProps = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
+        let componentBody = BodyComponent(props: bodyProps)
         return componentBody.render()
     }
     override func viewDidLoad() {

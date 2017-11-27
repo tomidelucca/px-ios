@@ -19,7 +19,7 @@ class BodyComponent: NSObject, PXComponetizable {
         return props.instruction != nil
     }
     
-    public func getInstructionsComponent() -> InstructionsComponent {
+    public func getInstructionsComponent() -> InstructionsComponent? {
         let instructionsProps = InstructionsProps(instruction: props.instruction!, processingMode: props.processingMode)
         let instructionsComponent = InstructionsComponent(props: instructionsProps)
         return instructionsComponent
