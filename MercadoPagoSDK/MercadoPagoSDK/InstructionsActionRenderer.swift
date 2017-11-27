@@ -29,14 +29,15 @@ class InstructionsActionRenderer: NSObject {
         return instructionsActionView
     }
     
-    func buildActionButton(with text: String, url: String, in superView: UIView) -> MPButton {
-        let button = MPButton()
+    func buildActionButton(with text: String, url: String, in superView: UIView) -> UIButton {
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_LABEL_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
-        button.actionLink = url
-        button.addTarget(self, action: #selector(self.goToURL), for: .touchUpInside)
+        button.add(for: .touchUpInside) {
+            self.goToURL(url)
+        }
         superView.addSubview(button)
         
         let screenSize = UIScreen.main.bounds
@@ -52,14 +53,15 @@ class InstructionsActionRenderer: NSObject {
         return button
     }
     
-    func goToURL(sender: MPButton!) {   if let link = sender.actionLink {
-        UIApplication.shared.openURL(URL(string: link)!)
+    func goToURL(_ url: String) {
+        if let url = URL(string: url) {
+            UIApplication.shared.openURL(url)
         }
     }
 }
 
 class ActionView: UIView {
-    public var actionButton: MPButton?
+    public var actionButton: UIButton?
 }
 
 
