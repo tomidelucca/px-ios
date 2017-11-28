@@ -27,7 +27,7 @@ class ResultViewModelTest: BaseTest {
 
     func testViewModelWithoutPreferenceAndApprovedPayment() {
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
@@ -44,7 +44,7 @@ class ResultViewModelTest: BaseTest {
 
     func testViewModelWithoutPreferenceAndRejectedPayment() {
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
@@ -60,7 +60,7 @@ class ResultViewModelTest: BaseTest {
 
     func testViewModelWithoutPreferenceAndPendingPayment() {
         let paymentResult = MockBuilder.buildPaymentResult("in_process", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertNil(footerView.principalButton)
@@ -80,7 +80,7 @@ class ResultViewModelTest: BaseTest {
         preference.setApproved(title: approvedTitleDummy)
         preference.setApproved(labelText: approvedLabelDummy)
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference:preference)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference:preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertNil(footerView.principalButton)
@@ -99,7 +99,7 @@ class ResultViewModelTest: BaseTest {
         let preference = PaymentResultScreenPreference()
         preference.setRejected(title: rejectedTitleDummy)
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
@@ -119,7 +119,7 @@ class ResultViewModelTest: BaseTest {
         preference.setPending(title: pendingTitleDummy)
         preference.disablePendingLabelText()
         let paymentResult = MockBuilder.buildPaymentResult("in_process", paymentMethodId: "visa")
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertNil(footerView.principalButton)
@@ -141,7 +141,7 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "visa")
         paymentResult.statusDetail = RejectedStatusDetail.CALL_FOR_AUTH
         paymentResult.paymentData?.payerCost = PayerCost(installments: 1, installmentRate: 1, labels: [], minAllowedAmount: 100, maxAllowedAmount: 100, recommendedMessage: "", installmentAmount: 1, totalAmount: 100)
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: nil, paymentResultScreenPreference: preference)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
