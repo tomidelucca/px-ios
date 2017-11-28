@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BodyComponent: NSObject, PXComponetizable {
+open class BodyComponent: NSObject, PXComponetizable {
     var props: BodyProps
 
     init(props: BodyProps) {
@@ -19,8 +19,8 @@ class BodyComponent: NSObject, PXComponetizable {
         return props.instruction != nil
     }
 
-    public func getInstructionsComponent() -> InstructionsComponent {
-        let instructionsProps = InstructionsProps(instruction: props.instruction!, processingMode: props.processingMode)
+    public func getInstructionsComponent() -> InstructionsComponent? {
+        let instructionsProps = InstructionsProps(instruction: props.instruction!)
         let instructionsComponent = InstructionsComponent(props: instructionsProps)
         return instructionsComponent
     }
@@ -49,20 +49,19 @@ class BodyComponent: NSObject, PXComponetizable {
         return PXPaymentMethodBodyComponent(props: bodyProps)
     }
     
-    func render() -> UIView {
+    public func render() -> UIView {
         return BodyRenderer().render(body: self)
     }
 
 }
-class BodyProps: NSObject {
+
+open class BodyProps: NSObject {
     var paymentResult: PaymentResult
     var instruction: Instruction?
-    var processingMode: String
     var amount : Double
-    init(paymentResult : PaymentResult, amount: Double, instruction: Instruction?, processingMode: String) {
+    init(paymentResult:PaymentResult, amount: Double, instruction: Instruction?) {
         self.paymentResult = paymentResult
         self.instruction = instruction
-        self.processingMode = processingMode
         self.amount = amount
     }
 }

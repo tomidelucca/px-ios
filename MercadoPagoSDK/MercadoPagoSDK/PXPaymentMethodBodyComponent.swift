@@ -8,13 +8,13 @@
 
 import UIKit
 
-class PXPaymentMethodBodyComponent: NSObject, PXComponetizable {
+public class PXPaymentMethodBodyComponent: NSObject, PXComponetizable {
     var props: PXPaymentMethodBodyComponentProps
 
     init(props: PXPaymentMethodBodyComponentProps) {
        self.props = props
     }
-    func render() -> UIView {
+    public func render() -> UIView {
         return PXPaymentMethodBodyComponentRenderer().render(component: self)
     }
 }

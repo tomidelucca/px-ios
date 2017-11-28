@@ -23,13 +23,10 @@ class InstructionsAccreditationTimeRenderer: NSObject {
             instructionsAccreditationTimeView.accreditationMessageLabel = buildTitleLabel(with: title, in: instructionsAccreditationTimeView)
             lastView = instructionsAccreditationTimeView.accreditationMessageLabel
         }
-
-        if let commentsArray = instructionsAccreditationTime.props.accreditationComments, !Array.isNullOrEmpty(commentsArray) {
-            for comment in commentsArray {
-                let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView)
-                instructionsAccreditationTimeView.accreditationCommentsComponents?.append(commentView)
-                lastView = commentView
-            }
+        for comment in instructionsAccreditationTime.getAccreditationCommentComponents() {
+            let commentView = buildCommentView(with: comment, in: instructionsAccreditationTimeView, onBottomOf: lastView)
+            instructionsAccreditationTimeView.accreditationCommentsComponents = Array.safeAppend(instructionsAccreditationTimeView.accreditationCommentsComponents, commentView)
+            lastView = commentView
         }
 
         MPLayout.pinLastSubviewToBottom(view: instructionsAccreditationTimeView)?.isActive = true
@@ -68,10 +65,8 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         return titleLabel
     }
 
-    func buildCommentView(with comment: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
-        let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
-        let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
-        let accreditationCommentView = accreditationCommentComponent.render()
+    func buildCommentView(with comment: InstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+        let accreditationCommentView = comment.render()
         superView.addSubview(accreditationCommentView)
         MPLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: accreditationCommentView, to: superView).isActive = true

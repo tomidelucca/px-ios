@@ -8,18 +8,19 @@
 
 import Foundation
 
-class InstructionsSubtitleComponent: NSObject, PXComponetizable {
+
+public class InstructionsSubtitleComponent: NSObject, PXComponetizable{
     var props: InstructionsSubtitleProps
 
     init(props: InstructionsSubtitleProps) {
         self.props = props
     }
 
-    func render() -> UIView {
+    public func render() -> UIView {
         return InstructionsSubtitleRenderer().render(instructionsSubtitle: self)
     }
 }
-class InstructionsSubtitleProps: NSObject {
+public class InstructionsSubtitleProps: NSObject {
     var subtitle: String
     init(subtitle: String) {
         self.subtitle = subtitle

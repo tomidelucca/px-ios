@@ -14,6 +14,19 @@ class InstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
     init(props: InstructionsAccreditationTimeProps) {
         self.props = props
     }
+    
+    public func getAccreditationCommentComponents() -> [InstructionsAccreditationCommentComponent] {
+        var accreditationCommentComponents: [InstructionsAccreditationCommentComponent] = []
+        if let comments = props.accreditationComments, !comments.isEmpty {
+            for comment in comments {
+                let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
+                let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
+                accreditationCommentComponents.append(accreditationCommentComponent)
+            }
+        }
+        return accreditationCommentComponents
+    }
+    
     func render() -> UIView {
         return InstructionsAccreditationTimeRenderer().render(instructionsAccreditationTime: self)
     }

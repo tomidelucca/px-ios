@@ -155,12 +155,158 @@ class ResultViewModelTest: BaseTest {
         XCTAssertFalse(resultViewModel.isError())
         XCTAssertEqual(headerView.statusLabel?.attributedText?.string, "Algo salió mal...".localized.toAttributedString().string)
     }
-
+    
+    func testBodyWithInstructions() {
+        let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
+        let paymentMethod = MockBuilder.buildPaymentMethod("rapipago")
+        let instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: instructionsInfo)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        
+        //Instructions View
+        guard let instructionsView = bodyView as? InstructionsView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        
+        //Instructions Subtitle View
+        XCTAssertNotNil(instructionsView.subtitleView)
+        let subtitleView = instructionsView.subtitleView as! SubtitleView
+        XCTAssertEqual(subtitleView.subtitleLabel?.text, "Veja como é fácil pagar o seu produto")
+        
+        //Instructions Secondary Info View
+        XCTAssertNotNil(instructionsView.secondaryInfoView)
+        let secondaryInfoView = instructionsView.secondaryInfoView as! SecondaryInfoView
+        XCTAssertEqual(secondaryInfoView.secondaryInfoLabels?.count, 1)
+        XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "Uma cópia desse boleto foi enviada ao seu e-mail -payer.email- caso você precise realizar o pagamento depois.")
+        
+        //Instructions Content View
+        XCTAssertNotNil(instructionsView.contentView)
+        let contentView = instructionsView.contentView as! ContentView
+        XCTAssertNotNil(contentView.infoView)
+        XCTAssertNotNil(contentView.referencesView)
+        XCTAssertNil(contentView.tertiaryInfoView)
+        XCTAssertNotNil(contentView.accreditationTimeView)
+        XCTAssertNil(contentView.actionsView)
+        
+        //Info View
+        let infoView = contentView.infoView as! InfoView
+        XCTAssertNil(infoView.titleLabel)
+        XCTAssertNotNil(infoView.contentLabels)
+        XCTAssertEqual(infoView.contentLabels?.count, 2)
+        XCTAssertEqual(infoView.contentLabels![0].text, "1. Acesse o seu Internet Banking ou abra o aplicativo do seu banco.")
+        XCTAssertEqual(infoView.contentLabels![1].text, "2. Utilize o código abaixo para realizar o pagamento.")
+        XCTAssertNil(infoView.bottomDivider)
+        
+        //References View
+        let referencesView = contentView.referencesView as! ReferencesView
+        XCTAssertNil(referencesView.titleLabel)
+        XCTAssertNotNil(referencesView.referencesComponents)
+        XCTAssertEqual(referencesView.referencesComponents?.count, 1)
+        //Reference View
+        let referenceView = referencesView.referencesComponents![0] as! ReferenceView
+        XCTAssertNotNil(referenceView.titleLabel)
+        XCTAssertNotNil(referenceView.referenceLabel)
+        XCTAssertEqual(referenceView.titleLabel?.text, "Número")
+        XCTAssertEqual(referenceView.referenceLabel?.text, "2379 1729 0000 0400 1003 3802 6025 4607 2909 0063 3330")
+        
+        //Accreditation Time View
+        let accreditationTimeView = contentView.accreditationTimeView as! AccreditationTimeView
+        XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
+        let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
+        let clockImage = NSTextAttachment()
+        clockImage.image = MercadoPago.getImage("iconTime")
+        let clockAttributedString = NSAttributedString(attachment: clockImage)
+        let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text))
+        labelAttributedString.insert(clockAttributedString, at: 0)
+        let labelTitle = labelAttributedString
+        
+        XCTAssertEqual(accreditationTimeView.accreditationMessageLabel?.text, labelTitle.string)
+        XCTAssertNil(accreditationTimeView.accreditationCommentsComponents)
+    }
+    
+    func testBodyWithAllInstructionsComponents() {
+        let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
+        let paymentMethod = MockBuilder.buildPaymentMethod("rapipago")
+        let instructionsInfo = MockBuilder.buildCompleteInstructionsInfo()
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: instructionsInfo)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        
+        //Instructions View
+        guard let instructionsView = bodyView as? InstructionsView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        
+        //Instructions Subtitle View
+        XCTAssertNotNil(instructionsView.subtitleView)
+        let subtitleView = instructionsView.subtitleView as! SubtitleView
+        XCTAssertEqual(subtitleView.subtitleLabel?.text, "Veja como é fácil pagar o seu produto")
+        
+        //Instructions Secondary Info View
+        XCTAssertNotNil(instructionsView.secondaryInfoView)
+        let secondaryInfoView = instructionsView.secondaryInfoView as! SecondaryInfoView
+        XCTAssertEqual(secondaryInfoView.secondaryInfoLabels?.count, 1)
+        XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "Uma cópia desse boleto foi enviada ao seu e-mail -payer.email- caso você precise realizar o pagamento depois.")
+        
+        //Instructions Content View
+        XCTAssertNotNil(instructionsView.contentView)
+        let contentView = instructionsView.contentView as! ContentView
+        XCTAssertNotNil(contentView.infoView)
+        XCTAssertNotNil(contentView.referencesView)
+        XCTAssertNotNil(contentView.tertiaryInfoView)
+        XCTAssertNotNil(contentView.accreditationTimeView)
+        XCTAssertNotNil(contentView.actionsView)
+        
+        //Info View
+        let infoView = contentView.infoView as! InfoView
+        XCTAssertNotNil(infoView.titleLabel)
+        XCTAssertEqual(infoView.titleLabel?.text, "1. Acesse o seu Internet Banking ou abra o aplicativo do seu banco.")
+        XCTAssertNotNil(infoView.contentLabels)
+        XCTAssertEqual(infoView.contentLabels?.count, 2)
+        XCTAssertEqual(infoView.contentLabels![0].text, "1. Acesse o seu Internet Banking ou abra o aplicativo do seu banco.")
+        XCTAssertEqual(infoView.contentLabels![1].text, "2. Utilize o código abaixo para realizar o pagamento.")
+        XCTAssertNil(infoView.bottomDivider)
+        
+        //References View
+        let referencesView = contentView.referencesView as! ReferencesView
+        XCTAssertNil(referencesView.titleLabel)
+        XCTAssertNotNil(referencesView.referencesComponents)
+        XCTAssertEqual(referencesView.referencesComponents?.count, 1)
+        //Reference View
+        let referenceView = referencesView.referencesComponents![0] as! ReferenceView
+        XCTAssertNotNil(referenceView.titleLabel)
+        XCTAssertNotNil(referenceView.referenceLabel)
+        XCTAssertEqual(referenceView.titleLabel?.text, "Número")
+        XCTAssertEqual(referenceView.referenceLabel?.text, "2379 1729 0000 0400 1003 3802 6025 4607 2909 0063 3330")
+        
+        //Accreditation Time View
+        let accreditationTimeView = contentView.accreditationTimeView as! AccreditationTimeView
+        XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
+        let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
+        let clockImage = NSTextAttachment()
+        clockImage.image = MercadoPago.getImage("iconTime")
+        let clockAttributedString = NSAttributedString(attachment: clockImage)
+        let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text))
+        labelAttributedString.insert(clockAttributedString, at: 0)
+        let labelTitle = labelAttributedString
+        
+        XCTAssertEqual(accreditationTimeView.accreditationMessageLabel?.text, labelTitle.string)
+        XCTAssertNil(accreditationTimeView.accreditationCommentsComponents)
+    }
+    
     func buildHeaderView(resultViewModel: PXResultViewModel) -> HeaderView {
         let data = HeaderProps(labelText: resultViewModel.labelTextHeader(), title: resultViewModel.titleHeader(), backgroundColor: resultViewModel.primaryResultColor(), productImage: resultViewModel.iconImageHeader(), statusImage: resultViewModel.badgeImage())
         let headerComponent = HeaderComponent(props: data)
         return HeaderRenderer().render(header: headerComponent)
     }
+    
+    func buildBodyView(resultViewModel: PXResultViewModel) -> BodyView {
+        let props = resultViewModel.bodyComponentProps()
+        let bodyComponent = BodyComponent(props: props)
+        return BodyRenderer().render(body: bodyComponent) 
+    }
+    
     func buildFooterView(resultViewModel: PXResultViewModel) -> FooterView {
         let data = FooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
         let footerComponent = FooterComponent(props: data)

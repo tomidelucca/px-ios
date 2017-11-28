@@ -8,26 +8,28 @@
 
 import Foundation
 
-class InstructionsComponent: NSObject, PXComponetizable {
+public class InstructionsComponent: NSObject, PXComponetizable {
     var props: InstructionsProps
 
     init(props: InstructionsProps) {
         self.props = props
     }
 
-    public func getSubtitleComponent() -> InstructionsSubtitleComponent {
+    
+    func getSubtitleComponent() -> InstructionsSubtitleComponent? {
         let instructionsSubtitleProps = InstructionsSubtitleProps(subtitle: props.instruction.subtitle!)
         let instructionsSubtitleComponent = InstructionsSubtitleComponent(props: instructionsSubtitleProps)
         return instructionsSubtitleComponent
     }
 
-    public func getContentComponent() -> InstructionsContentComponent {
+    func getContentComponent() -> InstructionsContentComponent? {
         let instructionsContentProps = InstructionsContentProps(instruction: props.instruction)
         let instructionsContentComponent = InstructionsContentComponent(props: instructionsContentProps)
         return instructionsContentComponent
     }
 
-    public func getSecondaryInfoComponent() -> InstructionsSecondaryInfoComponent {
+    
+    func getSecondaryInfoComponent() -> InstructionsSecondaryInfoComponent? {
         let instructionsSecondaryInfoProps = InstructionsSecondaryInfoProps(secondaryInfo: props.instruction.secondaryInfo!)
         let instructionsSecondaryInfoComponent = InstructionsSecondaryInfoComponent(props: instructionsSecondaryInfoProps)
         return instructionsSecondaryInfoComponent
@@ -42,18 +44,17 @@ class InstructionsComponent: NSObject, PXComponetizable {
     }
 
     public func shouldShowEmailInSecondaryInfo() -> Bool {
-        return (props.processingMode == ProcessingMode.aggregator.rawValue)
+        return MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell()
     }
 
-    func render() -> UIView {
+    
+    public func render() -> UIView {
         return InstructionsRenderer().render(instructions: self)
     }
 }
-class InstructionsProps: NSObject {
+public class InstructionsProps: NSObject {
     var instruction: Instruction
-    var processingMode: String
-    init(instruction: Instruction, processingMode: String) {
+    init(instruction: Instruction) {
         self.instruction = instruction
-        self.processingMode = processingMode
     }
 }

@@ -25,14 +25,12 @@ class InstructionsReferencesRenderer: NSObject {
             instructionsReferencesView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsReferencesView)
             lastView = instructionsReferencesView.titleLabel
         }
-
-        if let referencesArray = instructionsReferences.props.references, !Array.isNullOrEmpty(referencesArray) {
-            for reference in referencesArray {
-                let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
-                let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)
-                instructionsReferencesView.referencesComponents?.append(referenceView)
-                lastView = referenceView
-            }
+        
+        for reference in instructionsReferences.getReferenceComponents() {
+            let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
+            let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)
+            instructionsReferencesView.referencesComponents = Array.safeAppend(instructionsReferencesView.referencesComponents, referenceView)
+            lastView = referenceView
         }
 
         MPLayout.pinLastSubviewToBottom(view: instructionsReferencesView)?.isActive = true
@@ -63,11 +61,10 @@ class InstructionsReferencesRenderer: NSObject {
         return titleLabel
     }
 
-    func buildReferenceView(with reference: InstructionReference, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    
+    func buildReferenceView(with reference: InstructionReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
 
-        let referenceProps = InstructionReferenceProps(reference: reference)
-        let referenceComponent = InstructionReferenceComponent(props: referenceProps)
-        let referenceView = referenceComponent.render()
+        let referenceView = reference.render()
         superView.addSubview(referenceView)
         MPLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: referenceView, to: superView).isActive = true

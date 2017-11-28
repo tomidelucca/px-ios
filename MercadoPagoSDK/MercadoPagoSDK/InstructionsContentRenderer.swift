@@ -16,8 +16,8 @@ class InstructionsContentRenderer: NSObject {
         instructionsContentView.backgroundColor = .pxLightGray
         var bottomView: UIView!
 
-        if instructionsContent.hasInfo() {
-            instructionsContentView.infoView = instructionsContent.getInfoComponent().render()
+        if instructionsContent.hasInfo(), let infoComponent = instructionsContent.getInfoComponent() {
+            instructionsContentView.infoView = infoComponent.render()
             instructionsContentView.addSubview(instructionsContentView.infoView!)
             MPLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             MPLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
@@ -25,8 +25,9 @@ class InstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.infoView
         }
 
-        if instructionsContent.hasReferences() {
-            instructionsContentView.referencesView = instructionsContent.getReferencesComponent().render()
+        
+        if instructionsContent.hasReferences(), let referencesComponent = instructionsContent.getReferencesComponent() {
+            instructionsContentView.referencesView = referencesComponent.render()
             instructionsContentView.addSubview(instructionsContentView.referencesView!)
             if let lastView = bottomView {
                 MPLayout.put(view: instructionsContentView.referencesView!, onBottomOf: lastView).isActive = true
@@ -39,8 +40,8 @@ class InstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.referencesView
         }
 
-        if instructionsContent.hasTertiaryInfo() {
-            instructionsContentView.tertiaryInfoView = instructionsContent.getTertiaryInfoComponent().render()
+        if instructionsContent.hasTertiaryInfo(), let tertiaryInfoComponent = instructionsContent.getTertiaryInfoComponent() {
+            instructionsContentView.tertiaryInfoView = tertiaryInfoComponent.render()
             instructionsContentView.addSubview(instructionsContentView.tertiaryInfoView!)
             if let lastView = bottomView {
                 MPLayout.put(view: instructionsContentView.tertiaryInfoView!, onBottomOf: lastView).isActive = true
@@ -52,8 +53,9 @@ class InstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.tertiaryInfoView
         }
 
-        if instructionsContent.hasAccreditationTime() {
-            instructionsContentView.accreditationTimeView = instructionsContent.getAccreditationTimeComponent().render()
+        
+        if instructionsContent.hasAccreditationTime(), let accreditationTimeComponent = instructionsContent.getAccreditationTimeComponent() {
+            instructionsContentView.accreditationTimeView = accreditationTimeComponent.render()
             instructionsContentView.addSubview(instructionsContentView.accreditationTimeView!)
             if let lastView = bottomView {
                 MPLayout.put(view: instructionsContentView.accreditationTimeView!, onBottomOf: lastView).isActive = true
@@ -65,8 +67,8 @@ class InstructionsContentRenderer: NSObject {
             MPLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.accreditationTimeView
         }
-        if instructionsContent.hasActions() {
-            instructionsContentView.actionsView = instructionsContent.getActionsComponent().render()
+        if instructionsContent.hasActions(), let actionsComponent = instructionsContent.getActionsComponent() {
+            instructionsContentView.actionsView = actionsComponent.render()
             instructionsContentView.addSubview(instructionsContentView.actionsView!)
             if let lastView = bottomView {
                 MPLayout.put(view: instructionsContentView.actionsView!, onBottomOf: lastView).isActive = true

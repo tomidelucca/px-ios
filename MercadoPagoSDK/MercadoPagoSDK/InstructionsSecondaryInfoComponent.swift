@@ -8,17 +8,17 @@
 
 import Foundation
 
-class InstructionsSecondaryInfoComponent: NSObject, PXComponetizable {
+public class InstructionsSecondaryInfoComponent: NSObject, PXComponetizable {
     var props: InstructionsSecondaryInfoProps
 
     init(props: InstructionsSecondaryInfoProps) {
         self.props = props
     }
-    func render() -> UIView {
+    public func render() -> UIView {
         return InstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
     }
 }
-class InstructionsSecondaryInfoProps: NSObject {
+public class InstructionsSecondaryInfoProps: NSObject {
     var secondaryInfo: [String]
     init(secondaryInfo: [String]) {
         self.secondaryInfo = secondaryInfo

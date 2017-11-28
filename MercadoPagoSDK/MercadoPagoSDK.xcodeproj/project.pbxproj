@@ -151,6 +151,7 @@
 		1563DCAA1E9C11CB00A7E5C8 /* CardsAdminViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1563DCA61E9C11CB00A7E5C8 /* CardsAdminViewController.xib */; };
 		1565B1311CBFD7F100181998 /* GuessingFormTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1565B1301CBFD7F100181998 /* GuessingFormTest.swift */; };
 		15661C561FCC7334007FD7B7 /* ComponentHooks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15498BA71FC6165500A65AAB /* ComponentHooks.swift */; };
+		15661C5C1FCDCC48007FD7B7 /* BodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* BodyViewModelHelper.swift */; };
 		156A6DD01F6C7C9C00B17A20 /* SummaryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156A6DCF1F6C7C9C00B17A20 /* SummaryTest.swift */; };
 		156A6DD81F7019A200B17A20 /* CardFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardFormViewModel.swift */; };
 		156A743B1F59CE59006BC4A7 /* CardNotAvailableErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D84291F5593BC00C2C6F9 /* CardNotAvailableErrorView.swift */; };
@@ -792,6 +793,7 @@
 		1563DCA51E9C11CB00A7E5C8 /* CardsAdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewController.swift; sourceTree = "<group>"; };
 		1563DCA61E9C11CB00A7E5C8 /* CardsAdminViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsAdminViewController.xib; sourceTree = "<group>"; };
 		1565B1301CBFD7F100181998 /* GuessingFormTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuessingFormTest.swift; sourceTree = "<group>"; };
+		15661C5B1FCDCC47007FD7B7 /* BodyViewModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyViewModelHelper.swift; sourceTree = "<group>"; };
 		156A6DCF1F6C7C9C00B17A20 /* SummaryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryTest.swift; sourceTree = "<group>"; };
 		156F25B21EA927430073D3AA /* CardsAdminViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewModel.swift; sourceTree = "<group>"; };
 		157420F41DF881770041171E /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
@@ -1489,6 +1491,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				15661C5B1FCDCC47007FD7B7 /* BodyViewModelHelper.swift */,
 				81ACC8071F9A647700206F7B /* Congrats */,
 				155954E81F87CD1F0086854B /* BoletoComponent.swift */,
 				155954E91F87CD200086854B /* CardInfo.swift */,
@@ -2678,6 +2681,7 @@
 				761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				0F9883971AD2AB6000F750F0 /* Token.swift in Sources */,
+				15661C5C1FCDCC48007FD7B7 /* BodyViewModelHelper.swift in Sources */,
 				4BAA55E71DB0012300501061 /* AdditionalStepViewController.swift in Sources */,
 				155954F11F87CD200086854B /* InputComponent.swift in Sources */,
 				15521E381E60A0B000148979 /* AppDecorationKeeper.swift in Sources */,
