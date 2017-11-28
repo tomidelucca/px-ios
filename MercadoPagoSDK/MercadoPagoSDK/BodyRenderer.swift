@@ -14,15 +14,17 @@ class BodyRenderer: NSObject {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
 
+        var content : UIView = UIView()
         if body.hasInstructions() {
-            let instructionsView = body.getInstructionsComponent().render()
-            bodyView.addSubview(instructionsView)
-            MPLayout.pinTop(view: instructionsView, to: bodyView).isActive = true
-            MPLayout.pinBottom(view: instructionsView, to: bodyView).isActive = true
-            MPLayout.centerHorizontally(view: instructionsView, to: bodyView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsView, to: bodyView).isActive = true
-
+            content = body.getInstructionsComponent().render()
+        } else if body.props.paymentResult.isApproved() {
+            content = body.getPaymentMethodComponent().render()
         }
+        bodyView.addSubview(content)
+        MPLayout.pinTop(view: content, to: bodyView).isActive = true
+        MPLayout.pinBottom(view: content, to: bodyView).isActive = true
+        MPLayout.centerHorizontally(view: content, to: bodyView).isActive = true
+        MPLayout.equalizeWidth(view: content, to: bodyView).isActive = true
         return bodyView
     }
 }

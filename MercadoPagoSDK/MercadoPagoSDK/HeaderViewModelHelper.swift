@@ -16,32 +16,26 @@ extension PXResultViewModel {
     }
 
     open func iconImageHeader() -> UIImage? {
-        guard let result = self.paymentResult else {
-            return nil
-        }
         if isAccepted() {
-            if result.isApproved() {
+            if self.paymentResult.isApproved() {
                 return preference.getHeaderApprovedIcon()
-            }else if result.isWaitingForPayment() {
+            }else if self.paymentResult.isWaitingForPayment() {
                 return preference.getHeaderPendingIcon()
             } else {
-                return preference.getHeaderImageFor(result.paymentData?.paymentMethod)
+                return preference.getHeaderImageFor(self.paymentResult.paymentData?.paymentMethod)
             }
         }else {
-            return preference.getHeaderRejectedIcon(paymentResult?.paymentData?.paymentMethod)
+            return preference.getHeaderRejectedIcon(paymentResult.paymentData?.paymentMethod)
         }
 
     }
 
     open func badgeImage() -> UIImage? {
-        guard let result = self.paymentResult else {
-            return nil
-        }
         if !preference._showBadgeImage {
             return nil
         }
         if isAccepted() {
-            if result.isApproved() {
+            if self.paymentResult.isApproved() {
                 return preference.getApprovedBadgeImage()
             }else {
                 return MercadoPago.getImage("pending_badge")
@@ -57,15 +51,12 @@ extension PXResultViewModel {
     }
 
     open func labelTextHeader() -> NSAttributedString? {
-        guard let result = self.paymentResult else {
-            return nil
-        }
         if isAccepted() {
-            if result.isWaitingForPayment() {
+            if self.paymentResult.isWaitingForPayment() {
                 return "¡Apúrate a pagar!".localized.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: HeaderRenderer.LABEL_FONT_SIZE)])
             }else {
                 var labelText: String?
-                if result.isApproved() {
+                if self.paymentResult.isApproved() {
                     labelText = preference.getApprovedLabelText()
                 }else {
                     labelText = preference.getPendingLabelText()
@@ -84,14 +75,11 @@ extension PXResultViewModel {
 
     }
     open func titleHeader() -> NSAttributedString {
-        guard let result = self.paymentResult else {
-            return "".toAttributedString()
-        }
         if let _ = self.instructionsInfo {
             return titleForInstructions()
         }
         if isAccepted() {
-            if result.isApproved() {
+            if self.paymentResult.isApproved() {
                 return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
             }else {
                 return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
@@ -100,10 +88,10 @@ extension PXResultViewModel {
         if preference.rejectedTitleSetted {
             return NSMutableAttributedString(string: preference.getRejectedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE)])
         }
-        return titleForStatusDetail(statusDetail: result.statusDetail, paymentMethod: result.paymentData?.paymentMethod)
+        return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
     open func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
-        guard let paymentMethod = paymentMethod, let totalAmount = self.paymentResult?.paymentData?.payerCost?.totalAmount  else {
+        guard let paymentMethod = paymentMethod, let totalAmount = self.paymentResult.paymentData?.payerCost?.totalAmount  else {
             return "".toAttributedString()
         }
         if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {

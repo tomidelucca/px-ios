@@ -24,20 +24,40 @@ class BodyComponent: NSObject, PXComponetizable {
         let instructionsComponent = InstructionsComponent(props: instructionsProps)
         return instructionsComponent
     }
+    
+    public func getPaymentMethodComponent() -> PXPaymentMethodBodyComponent {
+        let pm = self.props.paymentResult.paymentData?.paymentMethod
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
+        var amountTitle = String(self.props.amount)
+        var amountDetail: String?
+        if let payerCost = self.props.paymentResult.paymentData?.payerCost {
+            if payerCost.installments > 1 {
+                amountTitle = String(payerCost.installments) + "x " + MercadoPagoContext.getCurrency().symbol + " " + String(payerCost.installmentAmount)
+                amountDetail = "(" +  String(payerCost.totalAmount) + ")"
+            }
+        }
+        var issuerName : String?
+        if (pm?.isCreditCard)! {
+            issuerName = self.props.paymentResult.paymentData?.issuer?.name
+        }
+        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: "XXasdas", paymentMethodDetail: issuerName)
+        return PXPaymentMethodBodyComponent(props: bodyProps)
+    }
+    
     func render() -> UIView {
         return BodyRenderer().render(body: self)
     }
 
 }
 class BodyProps: NSObject {
-    var status: String
-    var statusDetail: String
+    var paymentResult: PaymentResult
     var instruction: Instruction?
     var processingMode: String
-    init(status: String, statusDetail: String, instruction: Instruction?, processingMode: String) {
-        self.status = status
-        self.statusDetail = statusDetail
+    var amount : Double
+    init(paymentResult : PaymentResult, amount: Double, instruction: Instruction?, processingMode: String) {
+        self.paymentResult = paymentResult
         self.instruction = instruction
         self.processingMode = processingMode
+        self.amount = amount
     }
 }

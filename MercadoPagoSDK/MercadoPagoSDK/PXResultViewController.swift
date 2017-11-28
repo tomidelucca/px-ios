@@ -46,7 +46,10 @@ class PXResultViewController: PXComponentContainerViewController {
         MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
 
         //Add Body
-        let bodyView = builPMBody()
+       // let bodyView = builPMBody()
+        let dataBody = BodyProps(paymentResult : self.viewModel.paymentResult, amount: self.viewModel.amount, instruction: self.viewModel.instructionsInfo?.instructions[0], processingMode: "aggregator")
+        let componentBody = BodyComponent(props: dataBody)
+        let bodyView =  componentBody.render()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
@@ -69,7 +72,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     func builPMBody() -> UIView {
-        let pm = self.viewModel.paymentResult?.paymentData?.paymentMethod
+        let pm = self.viewModel.paymentResult.paymentData?.paymentMethod
         let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
         let bprop = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: "$1500", amountDetail: nil, paymentMethodDescription: "Master terminada en 2345", paymentMethodDetail: nil)
         let body = PXPaymentMethodBodyComponent(props: bprop)
@@ -109,7 +112,7 @@ class PXResultViewController: PXComponentContainerViewController {
         action1.url = "http://www.banamex.com.mx"
         instruc.actions = [action1, action1]
         let instruction = viewModel.instructionsInfo?.instructions[0]
-        let dataBody = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc, processingMode: "aggregator")
+        let dataBody = BodyProps(paymentResult : self.viewModel.paymentResult, amount: self.viewModel.amount, instruction: instruc, processingMode: "aggregator")
         let componentBody = BodyComponent(props: dataBody)
         return componentBody.render()
     }
