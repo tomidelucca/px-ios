@@ -227,7 +227,7 @@ class ResultViewModelTest: BaseTest {
     func testBodyWithAllInstructionsComponents() {
         let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
         let paymentMethod = MockBuilder.buildPaymentMethod("rapipago")
-        let instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
+        let instructionsInfo = MockBuilder.buildCompleteInstructionsInfo()
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: instructionsInfo)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
