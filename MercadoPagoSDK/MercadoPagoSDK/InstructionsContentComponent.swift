@@ -42,9 +42,9 @@ public class InstructionsContentComponent: NSObject, PXComponetizable {
                     firstSpaceFound = true
                 }
             } else {
-                if !hasTitle || firstSpaceFound, !secondSpaceFound {
+                if !hasTitle || (firstSpaceFound && !secondSpaceFound) {
                     content.append(text)
-                } else {
+                } else if firstSpaceFound && secondSpaceFound {
                     hasBottomDivider = true
                 }
             }

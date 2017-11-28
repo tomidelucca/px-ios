@@ -22,6 +22,63 @@ extension PXResultViewModel {
         return instructionsInfo.getInstruction()
     }
     
+    open func getRapipagoProps() -> BodyProps {
+        let instruc = Instruction()
+        instruc.info = [
+            "Dictale este codigo al cajero"
+        ]
+        instruc.subtitle = "Paga con estos datos"
+        instruc.secondaryInfo = ["También enviamos estos datos a tu email"]
+        let refer1 = InstructionReference()
+        refer1.label = "Codigo"
+        refer1.value = ["8442","988"]
+        refer1.separator = " "
+
+        instruc.references = [refer1]
+        instruc.accreditationMessage = "El pago se acreditara al instante"
+        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
+        return bodyProps
+    }
+    
+    open func getRedlinkProps() -> BodyProps {
+        let instruc = Instruction()
+        instruc.info = [
+            "Primero sigue estos pasos en el cajero",
+            "",
+            "1. Ingresa a Pagos",
+            "2. Pagos de impuestos y servicios",
+            "3. Rubro cobranzas",
+            "",
+            "Luego te irá pidiendo estos datos"
+        ]
+        instruc.subtitle = "Paga con estos datos"
+        instruc.secondaryInfo = ["También enviamos estos datos a tu email"]
+        let refer1 = InstructionReference()
+        refer1.label = "Codigo de Link pagos"
+        refer1.value = ["0234","9625","061"]
+        refer1.separator = " "
+        
+        let refer2 = InstructionReference()
+        refer2.label = "Referencia para abonar"
+        refer2.value = ["0008","4429","93"]
+        refer2.separator = " "
+        
+        let refer3 = InstructionReference()
+        refer3.label = "Concepto"
+        refer3.value = ["MPAGO:COMPRA"]
+        refer3.separator = ""
+        
+        let refer4 = InstructionReference()
+        refer4.label = "Empresa"
+        refer4.value = ["Mercado Libre - Mercado Pago"]
+        refer4.separator = ""
+        
+        instruc.references = [refer1,refer2,refer3]
+        instruc.accreditationMessage = "El pago se acreditara de 1 a 2 días habiles"
+        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
+        return bodyProps
+    }
+    
     open func getTestProps() -> BodyProps {
         let instruc = Instruction()
         instruc.info = [
