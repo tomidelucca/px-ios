@@ -23,7 +23,5 @@ class BodyRenderer: NSObject {
     }
 }
 
-
 class BodyView: UIView {
-
 }

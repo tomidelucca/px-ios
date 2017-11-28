@@ -39,8 +39,8 @@ class InstructionsSubtitleRenderer: NSObject {
         MPLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
-        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
+        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
         return subtitleLabel
     }
 }
