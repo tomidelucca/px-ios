@@ -358,6 +358,12 @@ open class MockBuilder: NSObject {
         let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
         return intructionsInfo
     }
+    
+    class func buildCompleteInstructionsInfo() -> InstructionsInfo {
+        let instructionInfoJson = MockManager.getMockFor("InstructionInfo_complete")
+        let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
+        return intructionsInfo
+    }
 
     class func buildPaymentData(paymentMethodId: String, paymentMethodName: String?, paymentMethodTypeId: String?) -> PaymentData {
         let paymentData = PaymentData()

@@ -11,9 +11,6 @@ import UIKit
 extension PXResultViewModel {
     
     open func bodyComponentProps() -> BodyProps {
-//        guard let result = self.paymentResult else {
-//            return nil
-//        }
         let props = BodyProps(status: self.paymentResult!.status, statusDetail: self.paymentResult!.statusDetail, instruction: getInstrucion())
         return props
     }
@@ -23,10 +20,6 @@ extension PXResultViewModel {
             return nil
         }
         return instructionsInfo.getInstruction()
-    }
-    
-    open func getProcessingMode() -> String {
-        return "aggregator"
     }
     
     open func getTestProps() -> BodyProps {

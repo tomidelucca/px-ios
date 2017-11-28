@@ -11,21 +11,13 @@ import UIKit
 class BodyRenderer: NSObject {
 
     func render(body: BodyComponent) -> BodyView {
-        let bodyView = BodyView()
-        bodyView.translatesAutoresizingMaskIntoConstraints = false
-
+        var bodyView = BodyView()
         if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
-            bodyView.instructionsView = instructionsComponent.render()
-            bodyView.addSubview(bodyView.instructionsView!)
-            MPLayout.pinTop(view: bodyView.instructionsView!, to: bodyView).isActive = true
-            MPLayout.pinBottom(view: bodyView.instructionsView!, to: bodyView).isActive = true
-            MPLayout.centerHorizontally(view: bodyView.instructionsView!, to: bodyView).isActive = true
-            MPLayout.equalizeWidth(view: bodyView.instructionsView!, to: bodyView).isActive = true
+            bodyView = instructionsComponent.render() as! InstructionsView
         }
         return bodyView
     }
 }
 
 class BodyView: UIView {
-    public var instructionsView: UIView?
 }
