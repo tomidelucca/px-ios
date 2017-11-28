@@ -57,7 +57,7 @@ class InstructionsRenderer: NSObject {
     }
 }
 
-class InstructionsView: UIView {
+class InstructionsView: PXBodyView {
     public var subtitleView: UIView?
     public var contentView: UIView?
     public var secondaryInfoView: UIView?

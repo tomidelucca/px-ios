@@ -39,6 +39,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Foo
         fooView = buildFooterView()
         contentView.addSubview(fooView)
+        fooView.backgroundColor = .gray
         MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
         MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
         MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true

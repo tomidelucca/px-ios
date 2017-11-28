@@ -37,10 +37,15 @@ class BodyComponent: NSObject, PXComponetizable {
             }
         }
         var issuerName : String?
+        var pmDescription : String = ""
         if (pm?.isCreditCard)! {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
+            pmDescription = (pm?.name)! + " " + "terminada en ".localized + (self.props.paymentResult.paymentData?.token?.lastFourDigits)!
+        }else if (pm?.isAccountMoney)!{
+            pmDescription = (pm?.name)!
         }
-        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: "XXasdas", paymentMethodDetail: issuerName)
+        
+        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
         return PXPaymentMethodBodyComponent(props: bodyProps)
     }
     

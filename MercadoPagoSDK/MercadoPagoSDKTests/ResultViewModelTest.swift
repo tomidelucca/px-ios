@@ -30,6 +30,7 @@ class ResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertNil(footerView.principalButton)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
@@ -165,5 +166,6 @@ class ResultViewModelTest: BaseTest {
         let footerComponent = FooterComponent(props: data)
         return FooterRenderer().render(footer: footerComponent)
     }
+    func buildBody() -> BodyView
 
 }
