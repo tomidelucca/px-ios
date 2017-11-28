@@ -21,22 +21,23 @@ class InstructionsActionRenderer: NSObject {
         guard let label = instructionsAction.props.instructionActionInfo?.label, let tag = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
             return instructionsActionView
         }
-
-        if tag == ActionTag.LINK.rawValue {
-            instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
-        }
-
+        
+        instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
+        
         return instructionsActionView
     }
 
     func buildActionButton(with text: String, url: String, in superView: UIView) -> UIButton {
-        let button = UIButton()
+        let button = MPButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_LABEL_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
+        button.actionLink = url
         button.add(for: .touchUpInside) {
-            self.goToURL(url)
+            if let URL = button.actionLink {
+                self.goToURL(URL)
+            }
         }
         superView.addSubview(button)
 

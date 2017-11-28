@@ -15,7 +15,7 @@ class InstructionReferenceRenderer: NSObject {
     let REFERENCE_LABEL_FONT_SIZE: CGFloat = 20.0
     let REFERENCE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
-    func render(instructionReference: InstructionReferenceComponent) -> UIView {
+    func render(instructionReference: InstructionReferenceComponent) -> ReferenceView {
         let instructionReferenceView = ReferenceView()
         instructionReferenceView.translatesAutoresizingMaskIntoConstraints = false
         instructionReferenceView.backgroundColor = .pxLightGray
