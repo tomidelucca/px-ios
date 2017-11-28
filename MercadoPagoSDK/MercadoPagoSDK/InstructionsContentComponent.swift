@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsContentComponent: NSObject, PXComponetizable {
+public class InstructionsContentComponent: NSObject, PXComponetizable {
     var props: InstructionsContentProps
 
     init(props: InstructionsContentProps) {
@@ -19,7 +19,7 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
     
-    public func getInfoComponent() -> InstructionsInfoComponent? {
+    func getInfoComponent() -> InstructionsInfoComponent? {
         var content: [String] = []
         var info: [String] = props.instruction.info
         
@@ -55,7 +55,7 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return infoComponent
     }
     
-    public func getReferencesComponent() -> InstructionsReferencesComponent? {
+    func getReferencesComponent() -> InstructionsReferencesComponent? {
         let info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
@@ -74,19 +74,19 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
         return referencesComponent
     }
     
-    public func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent? {
+    func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent? {
         let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
         return tertiaryInfoComponent
     }
 
-    public func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent? {
+    func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent? {
         let accreditationTimeProps = InstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
         let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
     
-    public func getActionsComponent() -> InstructionsActionsComponent? {
+    func getActionsComponent() -> InstructionsActionsComponent? {
         let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
         let actionsComponent = InstructionsActionsComponent(props: actionsProps)
         return actionsComponent
@@ -118,11 +118,12 @@ class InstructionsContentComponent: NSObject, PXComponetizable {
     public func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
     }
-    func render() -> UIView {
+    
+    public func render() -> UIView {
         return InstructionsContentRenderer().render(instructionsContent: self)
     }
 }
-class InstructionsContentProps: NSObject {
+public class InstructionsContentProps: NSObject {
     var instruction: Instruction
     init(instruction: Instruction) {
         self.instruction = instruction

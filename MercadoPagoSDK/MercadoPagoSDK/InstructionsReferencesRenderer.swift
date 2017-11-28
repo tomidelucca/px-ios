@@ -29,7 +29,7 @@ class InstructionsReferencesRenderer: NSObject {
         for reference in instructionsReferences.getReferenceComponents() {
             let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
             let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)
-            instructionsReferencesView.referencesComponents?.append(referenceView)
+            instructionsReferencesView.referencesComponents = Array.safeAppend(instructionsReferencesView.referencesComponents, referenceView)
             lastView = referenceView
         }
         

@@ -22,7 +22,7 @@ class InstructionsSecondaryInfoRenderer: NSObject {
             let attributes = [ NSFontAttributeName: Utils.getFont(size: LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: string, attributes: attributes)
             let secondaryInfoLabel = buildSecondaryInfoLabel(with: attributedString, in: instructionsSecondaryInfoView, onBottomOf: lastLabel)
-            instructionsSecondaryInfoView.secondaryInfoLabels?.append(secondaryInfoLabel)
+            instructionsSecondaryInfoView.secondaryInfoLabels = Array.safeAppend(instructionsSecondaryInfoView.secondaryInfoLabels, secondaryInfoLabel)
             lastLabel = secondaryInfoLabel
         }
 

@@ -21,7 +21,7 @@ class InstructionsActionsRenderer: NSObject {
         
         for action in instructionsActions.getActionComponents() {
             let actionView = buildActionView(with: action, in: instructionsActionsView, onBottomOf: lastView)
-            instructionsActionsView.actionsViews?.append(actionView)
+            instructionsActionsView.actionsViews = Array.safeAppend(instructionsActionsView.actionsViews, actionView)
             lastView = actionView
         }
         

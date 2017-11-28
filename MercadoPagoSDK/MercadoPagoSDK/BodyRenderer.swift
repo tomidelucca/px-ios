@@ -10,7 +10,7 @@ import UIKit
 
 class BodyRenderer: NSObject {
 
-    func render(body: BodyComponent) -> UIView {
+    func render(body: BodyComponent) -> BodyView {
         let bodyView = BodyView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
 

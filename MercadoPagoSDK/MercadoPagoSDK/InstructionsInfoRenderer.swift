@@ -43,7 +43,7 @@ class InstructionsInfoRenderer: NSObject {
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let isFirstInfo = loopsDone == 0
                 let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLast, bottomDivider: instructionsInfo.props.bottomDivider, isFirstInfo: isFirstInfo)
-                instructionsInfoView.contentLabels?.append(infoContentLabel)
+                instructionsInfoView.contentLabels = Array.safeAppend(instructionsInfoView.contentLabels, infoContentLabel)
                 lastView = infoContentLabel
                 loopsDone += 1
             }

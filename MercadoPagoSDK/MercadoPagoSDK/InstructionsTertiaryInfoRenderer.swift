@@ -28,7 +28,7 @@ class InstructionsTertiaryInfoRenderer: NSObject {
                 let attributes = [ NSFontAttributeName: Utils.getFont(size: INFO_LABEL_FONT_SIZE) ]
                 let attributedString = NSAttributedString(string: text, attributes: attributes)
                 let infoContentLabel = buildInfoLabel(with: attributedString, in: instructionsTertiaryInfoView, onBottomOf: lastLabel)
-                instructionsTertiaryInfoView.tertiaryInfoLabels?.append(infoContentLabel)
+                instructionsTertiaryInfoView.tertiaryInfoLabels = Array.safeAppend(instructionsTertiaryInfoView.tertiaryInfoLabels, infoContentLabel)
                 lastLabel = infoContentLabel
             }
         }
