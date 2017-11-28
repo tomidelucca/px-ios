@@ -8,13 +8,14 @@
 
 import Foundation
 
+
 public class InstructionsSubtitleComponent: NSObject, PXComponetizable{
     var props: InstructionsSubtitleProps
-    
+
     init(props: InstructionsSubtitleProps) {
         self.props = props
     }
-    
+
     public func render() -> UIView {
         return InstructionsSubtitleRenderer().render(instructionsSubtitle: self)
     }

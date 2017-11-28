@@ -228,7 +228,7 @@ open class MercadoPagoCheckoutViewModel: NSObject {
     }
 
     func resultViewModel() -> PXResultViewModel {
-         return PXResultViewModel(paymentResult: self.paymentResult!, instructionsInfo: self.instructionsInfo, paymentResultScreenPreference :self.paymentResultScreenPreference)
+        return PXResultViewModel(paymentResult: self.paymentResult!, amount: self.getAmount(), instructionsInfo: self.instructionsInfo, paymentResultScreenPreference :self.paymentResultScreenPreference)
     }
 
     //SEARCH_PAYMENT_METHODS

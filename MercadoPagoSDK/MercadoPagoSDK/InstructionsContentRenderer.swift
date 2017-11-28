@@ -9,7 +9,7 @@
 import Foundation
 
 class InstructionsContentRenderer: NSObject {
-    
+
     func render(instructionsContent: InstructionsContentComponent) -> UIView {
         let instructionsContentView = ContentView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,6 +24,7 @@ class InstructionsContentRenderer: NSObject {
             MPLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.infoView
         }
+
         
         if instructionsContent.hasReferences(), let referencesComponent = instructionsContent.getReferencesComponent() {
             instructionsContentView.referencesView = referencesComponent.render()
@@ -51,6 +52,7 @@ class InstructionsContentRenderer: NSObject {
             MPLayout.equalizeWidth(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.tertiaryInfoView
         }
+
         
         if instructionsContent.hasAccreditationTime(), let accreditationTimeComponent = instructionsContent.getAccreditationTimeComponent() {
             instructionsContentView.accreditationTimeView = accreditationTimeComponent.render()
@@ -60,7 +62,7 @@ class InstructionsContentRenderer: NSObject {
             } else {
                 MPLayout.pinTop(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             }
-            
+
             MPLayout.centerHorizontally(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             MPLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.accreditationTimeView
@@ -73,7 +75,7 @@ class InstructionsContentRenderer: NSObject {
             } else {
                 MPLayout.pinTop(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
             }
-            
+
             MPLayout.centerHorizontally(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
             MPLayout.equalizeWidth(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.actionsView

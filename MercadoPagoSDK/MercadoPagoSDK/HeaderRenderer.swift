@@ -30,9 +30,6 @@ class HeaderRenderer: NSObject {
         let headerView = HeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
-
-        let totalHeight: CGFloat = 0
-
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
@@ -114,7 +111,7 @@ class HeaderRenderer: NSObject {
     }
 }
 
-class HeaderView: UIView {
+public class HeaderView: UIView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?

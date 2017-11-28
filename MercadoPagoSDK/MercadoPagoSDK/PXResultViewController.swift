@@ -35,24 +35,28 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(headerView)
         MPLayout.pinTop(view: headerView, to: contentView).isActive = true
         MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
-        
+
         //Add Foo
         fooView = buildFooterView()
         contentView.addSubview(fooView)
+        fooView.backgroundColor = .gray
         MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
         MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
         MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
         MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
-        
+
         //Add Body
-        let bodyView = buildBodyView()
+       // let bodyView = builPMBody()
+        let dataBody = BodyProps(paymentResult : self.viewModel.paymentResult, amount: self.viewModel.amount, instruction: self.viewModel.instructionsInfo?.instructions[0])
+        let componentBody = BodyComponent(props: dataBody)
+        let bodyView =  componentBody.render()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
         MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
         MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
-        
+
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
@@ -66,6 +70,14 @@ class PXResultViewController: PXComponentContainerViewController {
         let footerProps = self.viewModel.getFooterComponentData()
         let footerComponent = FooterComponent(props: footerProps)
         return footerComponent.render()
+    }
+
+    func builPMBody() -> UIView {
+        let pm = self.viewModel.paymentResult.paymentData?.paymentMethod
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
+        let bprop = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: "$1500", amountDetail: nil, paymentMethodDescription: "Master terminada en 2345", paymentMethodDetail: nil)
+        let body = PXPaymentMethodBodyComponent(props: bprop)
+        return body.render()
     }
     func buildBodyView() -> UIView {
         let bodyProps = self.viewModel.getTestProps()

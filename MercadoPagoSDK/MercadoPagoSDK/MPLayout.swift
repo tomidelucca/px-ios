@@ -21,14 +21,14 @@ class MPLayout: NSObject {
     static let XL_MARGIN: CGFloat = 40.0
     static let XXL_MARGIN: CGFloat = 48.0
     static let XXXL_MARGIN: CGFloat = 50.0
-    
+
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
-    static func checkContraintActivation(_ constraint : NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
+    static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
         constraint.isActive = true
         return constraint
     }
-    
+
     //Altura fija
     static func setHeight(owner: UIView, height: CGFloat ) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(item: owner, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height))
@@ -55,7 +55,7 @@ class MPLayout: NSObject {
     static func pinBottom(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: otherView, attribute: .bottom, multiplier: 1, constant: -margin))
     }
-    
+
     //Pin parent last subview to Bottom
     static func pinLastSubviewToBottom(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let lastView = view.subviews.last else {
@@ -63,7 +63,7 @@ class MPLayout: NSObject {
         }
         return pinBottom(view: lastView, to: view, withMargin: margin)
     }
-    
+
     //Pin parent first subview to Top
     static func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = view.subviews.first else {
@@ -84,6 +84,19 @@ class MPLayout: NSObject {
             constant: margin
         ))
     }
+    //Vista 1 abajo de la ultima vista
+    static func put(view: UIView, onBottomOfLastViewOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
+        if !view2.subviews.contains(view) {
+            return nil
+        }
+        for actualView in view2.subviews.reversed() {
+            if actualView != view {
+                return put(view: view, onBottomOf: actualView, withMargin: margin)
+            }
+        }
+        return nil
+    }
+
     //Vista 1 arriba de vista 2
     static func put(view: UIView, aboveOf view2: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(
@@ -126,9 +139,9 @@ class MPLayout: NSObject {
 }
 
 class ClosureSleeve {
-    let closure: ()->Void
+    let closure: () -> Void
 
-    init (_ closure: @escaping ()->Void) {
+    init (_ closure: @escaping () -> Void) {
         self.closure = closure
     }
 
@@ -138,7 +151,7 @@ class ClosureSleeve {
 }
 
 extension UIControl {
-    func add (for controlEvents: UIControlEvents, _ closure: @escaping ()->Void) {
+    func add (for controlEvents: UIControlEvents, _ closure: @escaping () -> Void) {
         let sleeve = ClosureSleeve(closure)
         addTarget(sleeve, action: #selector(ClosureSleeve.invoke), for: controlEvents)
         objc_setAssociatedObject(self, String(format: "[%d]", arc4random()), sleeve, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)

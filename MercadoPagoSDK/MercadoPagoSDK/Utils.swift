@@ -115,7 +115,6 @@ class Utils {
         }
         return attributedSymbol
     }
-    
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()

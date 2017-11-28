@@ -11,13 +11,19 @@ import UIKit
 class BodyRenderer: NSObject {
 
     func render(body: BodyComponent) -> BodyView {
-        var bodyView = BodyView()
-        if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
-            bodyView = instructionsComponent.render() as! InstructionsView
+        var content : UIView = UIView()
+        if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent()  {
+            return instructionsComponent.render() as! InstructionsView
+        } else if body.props.paymentResult.isApproved() {
+            return body.getPaymentMethodComponent().render() as! BodyView
         }
+        let bodyView = BodyView()
+        bodyView.translatesAutoresizingMaskIntoConstraints = false
         return bodyView
     }
 }
 
+
 class BodyView: UIView {
+
 }

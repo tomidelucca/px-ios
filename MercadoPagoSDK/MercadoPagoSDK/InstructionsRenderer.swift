@@ -9,6 +9,7 @@
 import Foundation
 
 class InstructionsRenderer: NSObject {
+
     
     func render(instructions: InstructionsComponent) -> InstructionsView {
         let instructionsView = InstructionsView()
@@ -48,7 +49,7 @@ class InstructionsRenderer: NSObject {
             bottomView = instructionsView.secondaryInfoView!
         }
 
-        if let secondaryInfo = instructionsView.secondaryInfoView  {
+        if let secondaryInfo = instructionsView.secondaryInfoView {
             MPLayout.put(view: instructionsView.contentView!, aboveOf: secondaryInfo).isActive = true
             MPLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
         } else {
@@ -58,6 +59,7 @@ class InstructionsRenderer: NSObject {
         return instructionsView
     }
 }
+
 
 class InstructionsView: BodyView {
     public var subtitleView: UIView?

@@ -226,7 +226,7 @@ extension MercadoPagoCheckout {
                 strongSelf.finish()
                 }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
  */
-            let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!)
+            let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, amount: self.viewModel.getAmount(), instructionsInfo: self.viewModel.instructionsInfo!)
             congratsViewController = PXResultViewController(viewModel: viewModel, callback: { (state) in
                 print("hola")
             })

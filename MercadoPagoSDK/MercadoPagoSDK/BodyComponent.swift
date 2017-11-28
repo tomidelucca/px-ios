@@ -10,7 +10,7 @@ import UIKit
 
 open class BodyComponent: NSObject, PXComponetizable {
     var props: BodyProps
-    
+
     init(props: BodyProps) {
         self.props = props
     }
@@ -18,24 +18,50 @@ open class BodyComponent: NSObject, PXComponetizable {
     public func hasInstructions() -> Bool {
         return props.instruction != nil
     }
-    
+
     public func getInstructionsComponent() -> InstructionsComponent? {
         let instructionsProps = InstructionsProps(instruction: props.instruction!)
         let instructionsComponent = InstructionsComponent(props: instructionsProps)
         return instructionsComponent
     }
+    
+    public func getPaymentMethodComponent() -> PXPaymentMethodBodyComponent {
+        let pm = self.props.paymentResult.paymentData?.paymentMethod
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
+        var amountTitle = String(self.props.amount)
+        var amountDetail: String?
+        if let payerCost = self.props.paymentResult.paymentData?.payerCost {
+            if payerCost.installments > 1 {
+                amountTitle = String(payerCost.installments) + "x " + MercadoPagoContext.getCurrency().symbol + " " + String(payerCost.installmentAmount)
+                amountDetail = "(" +  String(payerCost.totalAmount) + ")"
+            }
+        }
+        var issuerName : String?
+        var pmDescription : String = ""
+        if (pm?.isCreditCard)! {
+            issuerName = self.props.paymentResult.paymentData?.issuer?.name
+            pmDescription = (pm?.name)! + " " + "terminada en ".localized + (self.props.paymentResult.paymentData?.token?.lastFourDigits)!
+        }else if (pm?.isAccountMoney)!{
+            pmDescription = (pm?.name)!
+        }
+        
+        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
+        return PXPaymentMethodBodyComponent(props: bodyProps)
+    }
+    
     public func render() -> UIView {
         return BodyRenderer().render(body: self)
     }
-    
+
 }
+
 open class BodyProps: NSObject {
-    var status: String
-    var statusDetail: String
+    var paymentResult: PaymentResult
     var instruction: Instruction?
-    init(status: String, statusDetail: String, instruction: Instruction?) {
-        self.status = status
-        self.statusDetail = statusDetail
+    var amount : Double
+    init(paymentResult:PaymentResult, amount: Double, instruction: Instruction?) {
+        self.paymentResult = paymentResult
         self.instruction = instruction
+        self.amount = amount
     }
 }

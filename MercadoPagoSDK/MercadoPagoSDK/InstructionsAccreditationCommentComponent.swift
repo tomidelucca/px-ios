@@ -10,7 +10,7 @@ import Foundation
 
 class InstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
     var props: InstructionsAccreditationCommentProps
-    
+
     init(props: InstructionsAccreditationCommentProps) {
         self.props = props
     }

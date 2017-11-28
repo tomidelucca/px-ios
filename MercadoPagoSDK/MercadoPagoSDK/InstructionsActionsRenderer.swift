@@ -12,7 +12,7 @@ class InstructionsActionsRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
-    
+
     func render(instructionsActions: InstructionsActionsComponent) -> UIView {
         let instructionsActionsView = ActionsView()
         instructionsActionsView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +24,7 @@ class InstructionsActionsRenderer: NSObject {
             instructionsActionsView.actionsViews = Array.safeAppend(instructionsActionsView.actionsViews, actionView)
             lastView = actionView
         }
-        
+
         MPLayout.pinLastSubviewToBottom(view: instructionsActionsView)?.isActive = true
 
         return instructionsActionsView
@@ -48,4 +48,3 @@ class InstructionsActionsRenderer: NSObject {
 class ActionsView: UIView {
     public var actionsViews: [UIView]?
 }
-

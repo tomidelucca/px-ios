@@ -14,14 +14,14 @@ class InstructionsInfoRenderer: NSObject {
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
     let INFO_LABEL_FONT_SIZE: CGFloat = 16.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
-    
+
     func render(instructionsInfo: InstructionsInfoComponent) -> UIView {
         let instructionsInfoView = InfoView()
         instructionsInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsInfoView.backgroundColor = .pxLightGray
-        
+
         var lastView: UIView?
-        
+
         if let infoTitle = instructionsInfo.props.infoTitle, !infoTitle.isEmpty {
             let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
             let attributedString = NSAttributedString(string: infoTitle, attributes: attributes)
@@ -29,12 +29,12 @@ class InstructionsInfoRenderer: NSObject {
             instructionsInfoView.titleLabel = buildInfoLabel(with: attributedString, in: instructionsInfoView, onBottomOf: lastView, isLastLabel: isLastLabel, isTitle: true)
             lastView = instructionsInfoView.titleLabel
         }
-        
+
         if let infoContent = instructionsInfo.props.infoContent, !Array.isNullOrEmpty(instructionsInfo.props.infoContent) {
             var loopsDone = 0
             for text in infoContent {
                 var isLast = false
-                
+
                 if loopsDone == infoContent.count - 1 {
                     isLast = true
                 }
@@ -48,17 +48,17 @@ class InstructionsInfoRenderer: NSObject {
                 loopsDone += 1
             }
         }
-        
+
         if instructionsInfo.props.bottomDivider != nil, instructionsInfo.props.bottomDivider == true {
             instructionsInfoView.bottomDivider = buildBottomDivider(in: instructionsInfoView, onBottomOf: lastView)
             lastView = instructionsInfoView.bottomDivider
         }
-        
+
         MPLayout.pinLastSubviewToBottom(view: instructionsInfoView)?.isActive = true
-        
+
         return instructionsInfoView
     }
-    
+
     func buildInfoLabel(with text: NSAttributedString, in superView: UIView, onBottomOf upperView: UIView?, isLastLabel: Bool = false, isTitle: Bool = false, bottomDivider: Bool? = false, isFirstInfo: Bool = false) -> UILabel {
         let infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -74,10 +74,10 @@ class InstructionsInfoRenderer: NSObject {
             textSize = TITLE_LABEL_FONT_SIZE
         }
         infoLabel.textColor = textColor
-        
+
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        
+
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         MPLayout.setHeight(owner: infoLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
@@ -94,7 +94,7 @@ class InstructionsInfoRenderer: NSObject {
 
         return infoLabel
     }
-    
+
     func buildBottomDivider(in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         let view = UIView(frame: frame)
@@ -104,11 +104,11 @@ class InstructionsInfoRenderer: NSObject {
         MPLayout.setHeight(owner: view, height: 1).isActive = true
         MPLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
         MPLayout.centerHorizontally(view: view, to: superView).isActive = true
-        
+
         if let upperView = upperView {
             MPLayout.put(view: view, onBottomOf:upperView, withMargin: MPLayout.L_MARGIN).isActive = true
         }
-        
+
         return view
     }
 }

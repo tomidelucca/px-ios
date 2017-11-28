@@ -8,19 +8,19 @@
 
 import UIKit
 
+open class HeaderComponent: PXComponetizable {
 
-open class HeaderComponent: NSObject, PXComponetizable {
+    public func render() -> UIView {
+        return HeaderRenderer().render(header: self)
+    }
 
-    var props : HeaderProps
+    var props: HeaderProps
 
     init(props: HeaderProps) {
         self.props = props
     }
-    public func render() -> UIView {
-        return HeaderRenderer().render(header: self)
-    }
-}
 
+}
 
 open class HeaderProps: NSObject {
     var labelText: NSAttributedString?

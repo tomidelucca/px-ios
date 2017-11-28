@@ -195,7 +195,7 @@ extension UIColor {
     class var pxLightGray: UIColor {
         return UIColor(white: 247.0 / 255.0, alpha: 1.0)
     }
-    
+
     class var pxMediumLightGray: UIColor {
         return UIColor(red: 238.0 / 255.0, green: 238.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
     }

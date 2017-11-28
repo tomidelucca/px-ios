@@ -11,7 +11,7 @@ import UIKit
 extension PXResultViewModel {
     
     open func bodyComponentProps() -> BodyProps {
-        let props = BodyProps(status: self.paymentResult!.status, statusDetail: self.paymentResult!.statusDetail, instruction: getInstrucion())
+        let props = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion())
         return props
     }
     
@@ -55,7 +55,7 @@ extension PXResultViewModel {
         action1.tag = "link"
         action1.url = "http://www.banamex.com.mx"
         instruc.actions = [action1,action1]
-        let bodyProps = BodyProps(status: "ok", statusDetail: "masok", instruction: instruc)
+        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
         return bodyProps
     }
 }
