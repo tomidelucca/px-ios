@@ -343,8 +343,8 @@ class ResultViewModelTest: BaseTest {
     
     func buildBodyView(resultViewModel: PXResultViewModel) -> BodyView {
         let props = resultViewModel.bodyComponentProps()
-        let bodyComponent = BodyComponent(props: props)
-        return BodyRenderer().render(body: bodyComponent)
+        let bodyComponent = PXBodyComponent(props: props)
+        return PXBodyRenderer().render(body: bodyComponent)
     }
     
     func buildFooterView(resultViewModel: PXResultViewModel) -> FooterView {

@@ -1,5 +1,5 @@
 //
-//  BodyRenderer.swift
+//  PXBodyRenderer.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/19/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BodyRenderer: NSObject {
+class PXBodyRenderer: NSObject {
 
     func render(body: PXBodyComponent) -> BodyView {
         var content : UIView = UIView()
