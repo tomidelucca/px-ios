@@ -9,16 +9,16 @@
 import Foundation
 
 class PXInstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
-    var props: InstructionsAccreditationCommentProps
+    var props: PXInstructionsAccreditationCommentProps
 
-    init(props: InstructionsAccreditationCommentProps) {
+    init(props: PXInstructionsAccreditationCommentProps) {
         self.props = props
     }
     func render() -> UIView {
        return InstructionsAccreditationCommentRenderer().render(instructionsAccreditationComment: self)
     }
 }
-class InstructionsAccreditationCommentProps: NSObject {
+class PXInstructionsAccreditationCommentProps: NSObject {
     var accreditationComment: String?
     init(accreditationComment: String?) {
         self.accreditationComment = accreditationComment

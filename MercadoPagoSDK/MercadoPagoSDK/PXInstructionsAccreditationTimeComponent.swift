@@ -19,7 +19,7 @@ class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
         var accreditationCommentComponents: [PXInstructionsAccreditationCommentComponent] = []
         if let comments = props.accreditationComments, !comments.isEmpty {
             for comment in comments {
-                let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
+                let accreditationCommentProps = PXInstructionsAccreditationCommentProps(accreditationComment: comment)
                 let accreditationCommentComponent = PXInstructionsAccreditationCommentComponent(props: accreditationCommentProps)
                 accreditationCommentComponents.append(accreditationCommentComponent)
             }
