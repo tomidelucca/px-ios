@@ -10,7 +10,7 @@ import Foundation
 
 class InstructionsContentRenderer: NSObject {
 
-    func render(instructionsContent: InstructionsContentComponent) -> UIView {
+    func render(instructionsContent: PXInstructionsContentComponent) -> UIView {
         let instructionsContentView = ContentView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsContentView.backgroundColor = .pxLightGray
