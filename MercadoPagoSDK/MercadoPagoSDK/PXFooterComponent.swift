@@ -9,9 +9,9 @@
 import UIKit
 
 class PXFooterComponent: NSObject, PXComponetizable {
-  var props: FooterProps
+  var props: PXFooterProps
 
-    init(props: FooterProps) {
+    init(props: PXFooterProps) {
         self.props = props
     }
 
@@ -19,7 +19,7 @@ class PXFooterComponent: NSObject, PXComponetizable {
         return FooterRenderer().render(footer: self)
     }
 }
-class FooterProps: NSObject {
+class PXFooterProps: NSObject {
     var buttonAction: FooterAction?
     var linkAction: FooterAction?
     var primaryColor: UIColor?
