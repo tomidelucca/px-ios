@@ -19,7 +19,7 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
         var referenceComponents: [PXInstructionsReferenceComponent] = []
         if let references = props.references, !references.isEmpty {
             for reference in references {
-                let referenceProps = InstructionReferenceProps(reference: reference)
+                let referenceProps = PXInstructionsReferenceProps(reference: reference)
                 let referenceComponent = PXInstructionsReferenceComponent(props: referenceProps)
                 referenceComponents.append(referenceComponent)
             }

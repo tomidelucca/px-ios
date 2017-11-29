@@ -9,16 +9,16 @@
 import Foundation
 
 class PXInstructionsReferenceComponent: NSObject, PXComponetizable {
-    var props: InstructionReferenceProps
+    var props: PXInstructionsReferenceProps
 
-    init(props: InstructionReferenceProps) {
+    init(props: PXInstructionsReferenceProps) {
         self.props = props
     }
     func render() -> UIView {
         return InstructionReferenceRenderer().render(instructionReference: self)
     }
 }
-class InstructionReferenceProps: NSObject {
+class PXInstructionsReferenceProps: NSObject {
     var reference: InstructionReference?
     init(reference: InstructionReference?) {
         self.reference = reference
