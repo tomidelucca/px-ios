@@ -160,7 +160,7 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
         let paymentMethod = MockBuilder.buildPaymentMethod("rapipago")
         let instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: instructionsInfo)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount: 100.0, instructionsInfo: instructionsInfo)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
         //Instructions View
@@ -229,7 +229,7 @@ class ResultViewModelTest: BaseTest {
         let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
         let paymentMethod = MockBuilder.buildPaymentMethod("rapipago")
         let instructionsInfo = MockBuilder.buildCompleteInstructionsInfo()
-        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, instructionsInfo: instructionsInfo)
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount: 100.0, instructionsInfo: instructionsInfo)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
         //Instructions View
@@ -312,6 +312,6 @@ class ResultViewModelTest: BaseTest {
         let footerComponent = FooterComponent(props: data)
         return FooterRenderer().render(footer: footerComponent)
     }
-    func buildBody() -> BodyView
+
 
 }
