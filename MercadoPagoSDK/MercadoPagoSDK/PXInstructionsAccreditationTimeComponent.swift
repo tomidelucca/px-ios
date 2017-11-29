@@ -15,12 +15,12 @@ class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
         self.props = props
     }
     
-    public func getAccreditationCommentComponents() -> [InstructionsAccreditationCommentComponent] {
-        var accreditationCommentComponents: [InstructionsAccreditationCommentComponent] = []
+    public func getAccreditationCommentComponents() -> [PXInstructionsAccreditationCommentComponent] {
+        var accreditationCommentComponents: [PXInstructionsAccreditationCommentComponent] = []
         if let comments = props.accreditationComments, !comments.isEmpty {
             for comment in comments {
                 let accreditationCommentProps = InstructionsAccreditationCommentProps(accreditationComment: comment)
-                let accreditationCommentComponent = InstructionsAccreditationCommentComponent(props: accreditationCommentProps)
+                let accreditationCommentComponent = PXInstructionsAccreditationCommentComponent(props: accreditationCommentProps)
                 accreditationCommentComponents.append(accreditationCommentComponent)
             }
         }

@@ -65,7 +65,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
         return titleLabel
     }
 
-    func buildCommentView(with comment: InstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+    func buildCommentView(with comment: PXInstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let accreditationCommentView = comment.render()
         superView.addSubview(accreditationCommentView)
         MPLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true

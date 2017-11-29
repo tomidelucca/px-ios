@@ -632,8 +632,8 @@
 		FC3FC87F1FBE137200CF29E1 /* PXInstructionsAccreditationTimeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC87D1FBE137200CF29E1 /* PXInstructionsAccreditationTimeComponent.swift */; };
 		FC3FC8811FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8801FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift */; };
 		FC3FC8821FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8801FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift */; };
-		FC3FC8841FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8831FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift */; };
-		FC3FC8851FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8831FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift */; };
+		FC3FC8841FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */; };
+		FC3FC8851FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */; };
 		FC3FC8871FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8861FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift */; };
 		FC3FC8881FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8861FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift */; };
 		FC3FC88A1FBE13C900CF29E1 /* InstructionsActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */; };
@@ -1103,7 +1103,7 @@
 		FC3FC8751FBE122F00CF29E1 /* PXInstructionsTertiaryInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsTertiaryInfoRenderer.swift; sourceTree = "<group>"; };
 		FC3FC87D1FBE137200CF29E1 /* PXInstructionsAccreditationTimeComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationTimeComponent.swift; sourceTree = "<group>"; };
 		FC3FC8801FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationTimeRenderer.swift; sourceTree = "<group>"; };
-		FC3FC8831FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsAccreditationCommentComponent.swift; sourceTree = "<group>"; };
+		FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationCommentComponent.swift; sourceTree = "<group>"; };
 		FC3FC8861FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsAccreditationCommentRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC88C1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionsRenderer.swift; sourceTree = "<group>"; };
@@ -2286,7 +2286,7 @@
 		FC3FC87A1FBE12B900CF29E1 /* AccreditationComment */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC8831FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift */,
+				FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */,
 				FC3FC8861FBE13B600CF29E1 /* InstructionsAccreditationCommentRenderer.swift */,
 			);
 			name = AccreditationComment;
@@ -2889,7 +2889,7 @@
 				0F9883871AD2AB6000F750F0 /* Payment.swift in Sources */,
 				15904D551E09748C00B3B9FD /* MLPXSpinner.m in Sources */,
 				FC3FC8501FBCCAA700CF29E1 /* PXInstructionsContentComponent.swift in Sources */,
-				FC3FC8841FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift in Sources */,
+				FC3FC8841FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */,
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
 				4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				FC3FC8731FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
@@ -3011,7 +3011,7 @@
 				0FC4FC221B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				812BA9C21FC8B25D00FF32C2 /* PXPaymentMethodBodyComponentRenderer.swift in Sources */,
 				76EC47EE1C8615330086FA53 /* PaymentTypeTest.swift in Sources */,
-				FC3FC8851FBE13A300CF29E1 /* InstructionsAccreditationCommentComponent.swift in Sources */,
+				FC3FC8851FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */,
 				FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */,
 				15B8B1B11E71DE950065DF50 /* DiscountBodyCell.swift in Sources */,
 				769EC35C1E130D860054E940 /* CardViewModelManagerTest.swift in Sources */,

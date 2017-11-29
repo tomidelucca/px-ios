@@ -1,5 +1,5 @@
 //
-//  InstructionsAccreditationCommentComponent.swift
+//  PXInstructionsAccreditationCommentComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
+class PXInstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
     var props: InstructionsAccreditationCommentProps
 
     init(props: InstructionsAccreditationCommentProps) {
