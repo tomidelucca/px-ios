@@ -30,7 +30,7 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
 
     
     func getSecondaryInfoComponent() -> PXInstructionsSecondaryInfoComponent? {
-        let instructionsSecondaryInfoProps = SecondaryInfoProps(secondaryInfo: props.instruction.secondaryInfo!)
+        let instructionsSecondaryInfoProps = PXInstructionsSecondaryInfoProps(secondaryInfo: props.instruction.secondaryInfo!)
         let instructionsSecondaryInfoComponent = PXInstructionsSecondaryInfoComponent(props: instructionsSecondaryInfoProps)
         return instructionsSecondaryInfoComponent
     }

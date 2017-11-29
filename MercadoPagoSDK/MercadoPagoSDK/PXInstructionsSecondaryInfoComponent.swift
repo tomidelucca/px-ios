@@ -9,16 +9,16 @@
 import Foundation
 
 public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponetizable {
-    var props: SecondaryInfoProps
+    var props: PXInstructionsSecondaryInfoProps
 
-    init(props: SecondaryInfoProps) {
+    init(props: PXInstructionsSecondaryInfoProps) {
         self.props = props
     }
     public func render() -> UIView {
         return InstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
     }
 }
-public class SecondaryInfoProps: NSObject {
+public class PXInstructionsSecondaryInfoProps: NSObject {
     var secondaryInfo: [String]
     init(secondaryInfo: [String]) {
         self.secondaryInfo = secondaryInfo
