@@ -114,7 +114,7 @@
 		150786A71CD7CD340034C5B1 /* IdentificationCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 150786A51CD7CD340034C5B1 /* IdentificationCardView.xib */; };
 		150E4BFE1FB37FD300773565 /* PXComponentContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150E4BFD1FB37FD300773565 /* PXComponentContainerViewController.swift */; };
 		150E4BFF1FB37FD300773565 /* PXComponentContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150E4BFD1FB37FD300773565 /* PXComponentContainerViewController.swift */; };
-		1510DF721FBDF878004B01C6 /* FooterViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7151FBCD35C00E0756D /* FooterViewModelHelper.swift */; };
+		1510DF721FBDF878004B01C6 /* PXFooterViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7151FBCD35C00E0756D /* PXFooterViewModelHelper.swift */; };
 		1510DF751FBF102D004B01C6 /* PXHeaderViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7131FBCD34700E0756D /* PXHeaderViewModelHelper.swift */; };
 		151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */; };
 		151A94191DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151A94161DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift */; };
@@ -163,7 +163,7 @@
 		157420F61DF881770041171E /* UIView+RotateView.h in Headers */ = {isa = PBXBuildFile; fileRef = 157420F41DF881770041171E /* UIView+RotateView.h */; };
 		157420F71DF881770041171E /* UIView+RotateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 157420F51DF881770041171E /* UIView+RotateView.m */; };
 		1575E7141FBCD34700E0756D /* PXHeaderViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7131FBCD34700E0756D /* PXHeaderViewModelHelper.swift */; };
-		1575E7161FBCD35C00E0756D /* FooterViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7151FBCD35C00E0756D /* FooterViewModelHelper.swift */; };
+		1575E7161FBCD35C00E0756D /* PXFooterViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1575E7151FBCD35C00E0756D /* PXFooterViewModelHelper.swift */; };
 		157704B51DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */; };
 		157704B61DCBA1500038C550 /* SecurityCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */; };
 		157704B71DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */; };
@@ -800,7 +800,7 @@
 		157420F41DF881770041171E /* UIView+RotateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RotateView.h"; sourceTree = "<group>"; };
 		157420F51DF881770041171E /* UIView+RotateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RotateView.m"; sourceTree = "<group>"; };
 		1575E7131FBCD34700E0756D /* PXHeaderViewModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderViewModelHelper.swift; sourceTree = "<group>"; };
-		1575E7151FBCD35C00E0756D /* FooterViewModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterViewModelHelper.swift; sourceTree = "<group>"; };
+		1575E7151FBCD35C00E0756D /* PXFooterViewModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFooterViewModelHelper.swift; sourceTree = "<group>"; };
 		157704B31DCBA1500038C550 /* SecurityCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewController.swift; sourceTree = "<group>"; };
 		157704B41DCBA1500038C550 /* SecurityCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecurityCodeViewController.xib; sourceTree = "<group>"; };
 		15822D521F69ABD5008353B9 /* PayerCostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayerCostView.swift; sourceTree = "<group>"; };
@@ -2151,7 +2151,7 @@
 				81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */,
 				1575E7131FBCD34700E0756D /* PXHeaderViewModelHelper.swift */,
 				15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */,
-				1575E7151FBCD35C00E0756D /* FooterViewModelHelper.swift */,
+				1575E7151FBCD35C00E0756D /* PXFooterViewModelHelper.swift */,
 			);
 			name = Screen;
 			sourceTree = "<group>";
@@ -2714,7 +2714,7 @@
 				15904D581E09748C00B3B9FD /* MLPXSpinnerConfig.m in Sources */,
 				4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */,
-				1575E7161FBCD35C00E0756D /* FooterViewModelHelper.swift in Sources */,
+				1575E7161FBCD35C00E0756D /* PXFooterViewModelHelper.swift in Sources */,
 				81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */,
 				4BB3ECE61FB37B0300AAFD38 /* PXSDKSettings.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
@@ -3098,7 +3098,7 @@
 				FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				76EC47D21C85E77A0086FA53 /* CurrencyTest.swift in Sources */,
 				4B2AF5821EEACD9300925644 /* UILabel+Additions.swift in Sources */,
-				1510DF721FBDF878004B01C6 /* FooterViewModelHelper.swift in Sources */,
+				1510DF721FBDF878004B01C6 /* PXFooterViewModelHelper.swift in Sources */,
 				0F9883601AD2AB6000F750F0 /* Cardholder.swift in Sources */,
 				0F9883821AD2AB6000F750F0 /* Order.swift in Sources */,
 				4BEF81011E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,

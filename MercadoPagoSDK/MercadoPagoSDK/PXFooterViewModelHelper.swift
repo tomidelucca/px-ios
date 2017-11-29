@@ -1,5 +1,5 @@
 //
-//  FooterViewModelHelper.swift
+//  PXFooterViewModelHelper.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 11/15/17.
