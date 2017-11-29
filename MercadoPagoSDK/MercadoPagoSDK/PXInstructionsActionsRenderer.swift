@@ -1,5 +1,5 @@
 //
-//  InstructionsActionsRenderer.swift
+//  PXInstructionsActionsRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsActionsRenderer: NSObject {
+class PXInstructionsActionsRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray

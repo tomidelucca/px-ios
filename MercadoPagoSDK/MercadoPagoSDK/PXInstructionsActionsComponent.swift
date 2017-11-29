@@ -30,7 +30,7 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
     }
     
     func render() -> UIView {
-        return InstructionsActionsRenderer().render(instructionsActions: self)
+        return PXInstructionsActionsRenderer().render(instructionsActions: self)
     }
 }
 class PXInstructionsActionsProps: NSObject {
