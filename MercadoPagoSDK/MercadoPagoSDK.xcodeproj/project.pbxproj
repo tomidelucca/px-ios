@@ -616,8 +616,8 @@
 		FC3FC85F1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */; };
 		FC3FC8611FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8601FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift */; };
 		FC3FC8621FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8601FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift */; };
-		FC3FC8651FBE117200CF29E1 /* InstructionsReferencesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */; };
-		FC3FC8661FBE117200CF29E1 /* InstructionsReferencesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */; };
+		FC3FC8651FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8641FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift */; };
+		FC3FC8661FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8641FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift */; };
 		FC3FC8681FBE118100CF29E1 /* InstructionsReferencesRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8671FBE118100CF29E1 /* InstructionsReferencesRenderer.swift */; };
 		FC3FC8691FBE118100CF29E1 /* InstructionsReferencesRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8671FBE118100CF29E1 /* InstructionsReferencesRenderer.swift */; };
 		FC3FC86C1FBE11C500CF29E1 /* InstructionReferenceComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC86B1FBE11C500CF29E1 /* InstructionReferenceComponent.swift */; };
@@ -1095,7 +1095,7 @@
 		FC3FC8591FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSecondaryInfoRenderer.swift; sourceTree = "<group>"; };
 		FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsInfoComponent.swift; sourceTree = "<group>"; };
 		FC3FC8601FBE113100CF29E1 /* PXInstructionsInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsInfoRenderer.swift; sourceTree = "<group>"; };
-		FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsReferencesComponent.swift; sourceTree = "<group>"; };
+		FC3FC8641FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsReferencesComponent.swift; sourceTree = "<group>"; };
 		FC3FC8671FBE118100CF29E1 /* InstructionsReferencesRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsReferencesRenderer.swift; sourceTree = "<group>"; };
 		FC3FC86B1FBE11C500CF29E1 /* InstructionReferenceComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionReferenceComponent.swift; sourceTree = "<group>"; };
 		FC3FC86F1FBE11FF00CF29E1 /* InstructionReferenceRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionReferenceRenderer.swift; sourceTree = "<group>"; };
@@ -2248,7 +2248,7 @@
 		FC3FC86A1FBE118800CF29E1 /* References */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */,
+				FC3FC8641FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift */,
 				FC3FC8671FBE118100CF29E1 /* InstructionsReferencesRenderer.swift */,
 				FC3FC86E1FBE11DB00CF29E1 /* Instruction Reference */,
 			);
@@ -2767,7 +2767,7 @@
 				7656CA1A1C7645450043BDB2 /* InstructionReference.swift in Sources */,
 				0F9883851AD2AB6000F750F0 /* PayerCost.swift in Sources */,
 				FC3FC8681FBE118100CF29E1 /* InstructionsReferencesRenderer.swift in Sources */,
-				FC3FC8651FBE117200CF29E1 /* InstructionsReferencesComponent.swift in Sources */,
+				FC3FC8651FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */,
 				534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */,
 				FCE865671F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift in Sources */,
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
@@ -2970,7 +2970,7 @@
 				4B53C5EC1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				4B9FEFCC1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */,
 				813873791FA8D29C002095D6 /* ResultViewModelTest.swift in Sources */,
-				FC3FC8661FBE117200CF29E1 /* InstructionsReferencesComponent.swift in Sources */,
+				FC3FC8661FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */,
 				7671F15D1D5A337000B9481F /* CustomerPaymentMethod.swift in Sources */,
 				155954F41F87D1FF0086854B /* InputComponent.swift in Sources */,
 				156A743E1F59CE63006BC4A7 /* AvailableCardsViewController.swift in Sources */,

@@ -55,7 +55,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return infoComponent
     }
 
-    func getReferencesComponent() -> InstructionsReferencesComponent? {
+    func getReferencesComponent() -> PXInstructionsReferencesComponent? {
         let info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
@@ -70,7 +70,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         }
 
         let referencesProps = InstructionsReferencesProps(title: title, references: props.instruction.references)
-        let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
+        let referencesComponent = PXInstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }
 
