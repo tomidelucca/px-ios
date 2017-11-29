@@ -9,16 +9,16 @@
 import Foundation
 
 class PXInstructionsActionComponent: NSObject, PXComponetizable {
-    var props: InstructionsActionProps
+    var props: PXInstructionsActionProps
 
-    init(props: InstructionsActionProps) {
+    init(props: PXInstructionsActionProps) {
         self.props = props
     }
     func render() -> UIView {
         return InstructionsActionRenderer().render(instructionsAction: self)
     }
 }
-class InstructionsActionProps: NSObject {
+class PXInstructionsActionProps: NSObject {
     var instructionActionInfo: InstructionAction?
     init(instructionActionInfo: InstructionAction?) {
         self.instructionActionInfo = instructionActionInfo

@@ -20,7 +20,7 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
         if let actions = props.instructionActions, !actions.isEmpty {
             for action in actions {
                 if action.tag == ActionTag.LINK.rawValue {
-                    let actionProps = InstructionsActionProps(instructionActionInfo: action)
+                    let actionProps = PXInstructionsActionProps(instructionActionInfo: action)
                     let actionComponent = PXInstructionsActionComponent(props: actionProps)
                     actionComponents.append(actionComponent)
                 }
