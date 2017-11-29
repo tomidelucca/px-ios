@@ -49,6 +49,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             let detailLabel = UILabel()
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
+            pmBodyView.amountDetail = detailLabel
             detailLabel.text = detailText
             detailLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
             detailLabel.textColor = .pxBrownishGray
@@ -76,7 +77,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         if let pmDetailText = component.props.paymentMethodDetail {
             let pmDetailLabel = UILabel()
             pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
-            pmBodyView.amountDetail = pmDetailLabel
+            pmBodyView.paymentMethodDetail = pmDetailLabel
             pmBodyView.addSubview(pmDetailLabel)
             pmDetailLabel.text = pmDetailText
             pmDetailLabel.font = Utils.getFont(size: PM_DETAIL_FONT_SIZE)

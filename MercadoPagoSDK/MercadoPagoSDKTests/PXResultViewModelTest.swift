@@ -27,11 +27,54 @@ class PXResultViewModelTest: BaseTest {
     
     func testViewModelWithoutPreferenceAndApprovedPayment() {
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
+        paymentResult.paymentData?.token = MockBuilder.buildToken()
+        paymentResult.paymentData?.issuer = MockBuilder.buildIssuer()
+        paymentResult.paymentData?.issuer?.name = "RIO"
+        paymentResult.paymentData?.payerCost = PayerCost(installments: 3, installmentRate: 1, labels: [], minAllowedAmount: 123, maxAllowedAmount: 123, recommendedMessage: "", installmentAmount: 100, totalAmount: 300)
+        paymentResult.paymentData?.token?.lastFourDigits = "1234"
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
+        guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
+        XCTAssertEqual(paymentMethodView.amountTitle?.text,"3x $ 100.0")
+        XCTAssertEqual(paymentMethodView.amountDetail?.text, "(300.0)")
+        XCTAssertEqual(paymentMethodView.paymentMethodDescription?.text,"visa ending in 1234")
+        XCTAssertEqual(paymentMethodView.paymentMethodDetail?.text, "RIO")
+        XCTAssertEqual(paymentMethodView.disclaimerLabel?.text,"In your account yo will see the charge as description")
+        XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
+        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
+        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
+        XCTAssertNil(headerView.statusLabel?.attributedText)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, "¡Listo, se acreditó tu pago!".localized)
+        XCTAssertTrue(resultViewModel.isAccepted())
+        XCTAssertFalse(resultViewModel.isWarning())
+        XCTAssertFalse(resultViewModel.isError())
+    }
+    
+    func testViewModelWithoutPreferenceAndApprovedPaymentAccountMoney() {
+        let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "account_money")
+        paymentResult.paymentData?.paymentMethod?.paymentTypeId = "account_money"
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
+        let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
+        XCTAssertEqual(paymentMethodView.amountTitle?.text,"$ 1000.00")
+        XCTAssertNil(paymentMethodView.amountDetail?.text)
+        XCTAssertEqual(paymentMethodView.paymentMethodDescription?.text,"account_money")
+        XCTAssertNil(paymentMethodView.paymentMethodDetail?.text)
+        XCTAssertEqual(paymentMethodView.disclaimerLabel?.text,"In your account yo will see the charge as description")
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertNil(footerView.principalButton)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
@@ -83,8 +126,21 @@ class PXResultViewModelTest: BaseTest {
         preference.setApproved(labelText: approvedLabelDummy)
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult,amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference:preference)
+        paymentResult.paymentData?.token = MockBuilder.buildToken()
+        paymentResult.paymentData?.token?.lastFourDigits = "1234"
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
+        XCTAssertEqual(paymentMethodView.amountTitle?.text,"$ 1000.00")
+        XCTAssertNil(paymentMethodView.amountDetail?.text)
+        XCTAssertEqual(paymentMethodView.paymentMethodDescription?.text,"visa ending in 1234")
+        XCTAssertNil(paymentMethodView.paymentMethodDetail?.text)
+        XCTAssertEqual(paymentMethodView.disclaimerLabel?.text,"In your account yo will see the charge as description")
         XCTAssertNil(footerView.principalButton)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)

@@ -44,17 +44,13 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         }else if (pm?.isAccountMoney)! {
             pmDescription = (pm?.name)!
         }
-<<<<<<< HEAD
         var disclaimerText : String? = nil
         if let statementDescription = self.props.paymentResult.statementDescription {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
        
         let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
-=======
 
-        let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
->>>>>>> 8c07e410f1c1e3184c425b6b9232054e72cf103e
         return PXPaymentMethodComponent(props: bodyProps)
     }
 
