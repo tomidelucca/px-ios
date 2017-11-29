@@ -199,7 +199,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNil(infoView.bottomDivider)
         
         //References View
-        let referencesView = contentView.referencesView as! ReferencesView
+        let referencesView = contentView.referencesView as! PXInstructionsReferencesView
         XCTAssertNil(referencesView.titleLabel)
         XCTAssertNotNil(referencesView.referencesComponents)
         XCTAssertEqual(referencesView.referencesComponents?.count, 1)
@@ -271,7 +271,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNotNil(infoView.bottomDivider)
         
         //References View
-        let referencesView = contentView.referencesView as! ReferencesView
+        let referencesView = contentView.referencesView as! PXInstructionsReferencesView
         XCTAssertNotNil(referencesView.titleLabel)
         XCTAssertEqual(referencesView.titleLabel?.text, "Luego te irá pidiendo estos datos")
         XCTAssertNotNil(referencesView.referencesComponents)

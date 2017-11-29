@@ -14,7 +14,7 @@ class PXInstructionsReferencesRenderer: NSObject {
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
     func render(instructionsReferences: PXInstructionsReferencesComponent) -> UIView {
-        let instructionsReferencesView = ReferencesView()
+        let instructionsReferencesView = PXInstructionsReferencesView()
         instructionsReferencesView.translatesAutoresizingMaskIntoConstraints = false
         instructionsReferencesView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -61,7 +61,6 @@ class PXInstructionsReferencesRenderer: NSObject {
         return titleLabel
     }
 
-    
     func buildReferenceView(with reference: InstructionReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
 
         let referenceView = reference.render()
@@ -78,7 +77,7 @@ class PXInstructionsReferencesRenderer: NSObject {
     }
 }
 
-class ReferencesView: UIView {
+class PXInstructionsReferencesView: UIView {
     public var titleLabel: UILabel?
     public var referencesComponents: [UIView]?
 }
