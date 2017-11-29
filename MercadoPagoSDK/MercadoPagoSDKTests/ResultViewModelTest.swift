@@ -1,5 +1,5 @@
 //
-//  ResultViewModelTest.swift
+//  PXResultViewModelTest.swift
 //  MercadoPagoSDKTests
 //
 //  Created by Demian Tejo on 31/10/17.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class ResultViewModelTest: BaseTest {
+class PXResultViewModelTest: BaseTest {
     
     let approvedTitleDummy = "ATD"
     let rejectedTitleDummy = "RTD"

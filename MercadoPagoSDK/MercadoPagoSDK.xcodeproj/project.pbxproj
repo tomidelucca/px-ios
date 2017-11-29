@@ -565,7 +565,7 @@
 		812BA9BF1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */; };
 		812BA9C21FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */; };
 		812BA9C31FC8B31800FF32C2 /* PXPaymentMethodComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */; };
-		813873791FA8D29C002095D6 /* ResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813873781FA8D29C002095D6 /* ResultViewModelTest.swift */; };
+		813873791FA8D29C002095D6 /* PXResultViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813873781FA8D29C002095D6 /* PXResultViewModelTest.swift */; };
 		8138737A1FA8D2BC002095D6 /* PXResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */; };
 		8138737B1FA8D2BF002095D6 /* PXResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */; };
 		8138737C1FA8DDD6002095D6 /* PXHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */; };
@@ -1063,7 +1063,7 @@
 		76FD24781C5BFEA1008C5DC0 /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
 		812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponent.swift; sourceTree = "<group>"; };
 		812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponentRenderer.swift; sourceTree = "<group>"; };
-		813873781FA8D29C002095D6 /* ResultViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModelTest.swift; sourceTree = "<group>"; };
+		813873781FA8D29C002095D6 /* PXResultViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewModelTest.swift; sourceTree = "<group>"; };
 		81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyRenderer.swift; sourceTree = "<group>"; };
 		81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponent.swift; sourceTree = "<group>"; };
@@ -2124,7 +2124,7 @@
 		813873771FA8CA9D002095D6 /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				813873781FA8D29C002095D6 /* ResultViewModelTest.swift */,
+				813873781FA8D29C002095D6 /* PXResultViewModelTest.swift */,
 			);
 			name = Component;
 			sourceTree = "<group>";
@@ -2977,7 +2977,7 @@
 				FC3FC8881FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift in Sources */,
 				4B53C5EC1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				4B9FEFCC1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */,
-				813873791FA8D29C002095D6 /* ResultViewModelTest.swift in Sources */,
+				813873791FA8D29C002095D6 /* PXResultViewModelTest.swift in Sources */,
 				FC3FC8661FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */,
 				7671F15D1D5A337000B9481F /* CustomerPaymentMethod.swift in Sources */,
 				155954F41F87D1FF0086854B /* InputComponent.swift in Sources */,
