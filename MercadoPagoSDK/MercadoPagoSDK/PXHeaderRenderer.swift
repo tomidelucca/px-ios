@@ -1,5 +1,5 @@
 //
-//  HeaderRenderer.swift
+//  PXHeaderRenderer.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderRenderer: NSObject {
+class PXHeaderRenderer: NSObject {
 
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0
@@ -105,7 +105,7 @@ class HeaderRenderer: NSObject {
         messageLabel.numberOfLines = 0
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
         MPLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }
