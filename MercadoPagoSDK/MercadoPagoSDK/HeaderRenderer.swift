@@ -26,7 +26,7 @@ class HeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(header: HeaderComponent ) -> HeaderView {
+    func render(header: PXHeaderComponent ) -> HeaderView {
         let headerView = HeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false

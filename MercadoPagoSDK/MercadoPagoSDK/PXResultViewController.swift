@@ -60,7 +60,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
     func buildHeaderView() -> UIView {
         let headerProps = self.viewModel.headerComponentData()
-        let headerComponent = HeaderComponent(props: headerProps)
+        let headerComponent = PXHeaderComponent(props: headerProps)
         return headerComponent.render()
     }
     func buildFooterView() -> UIView {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class HeaderComponent: PXComponetizable {
+open class PXHeaderComponent: PXComponetizable {
 
     public func render() -> UIView {
         return HeaderRenderer().render(header: self)

@@ -337,7 +337,7 @@ class ResultViewModelTest: BaseTest {
     
     func buildHeaderView(resultViewModel: PXResultViewModel) -> HeaderView {
         let data = HeaderProps(labelText: resultViewModel.labelTextHeader(), title: resultViewModel.titleHeader(), backgroundColor: resultViewModel.primaryResultColor(), productImage: resultViewModel.iconImageHeader(), statusImage: resultViewModel.badgeImage())
-        let headerComponent = HeaderComponent(props: data)
+        let headerComponent = PXHeaderComponent(props: data)
         return HeaderRenderer().render(header: headerComponent)
     }
     
