@@ -25,7 +25,7 @@ class PXInstructionsReferencesRenderer: NSObject {
             instructionsReferencesView.titleLabel = buildTitleLabel(with: attributedString, in: instructionsReferencesView)
             lastView = instructionsReferencesView.titleLabel
         }
-        
+
         for reference in instructionsReferences.getReferenceComponents() {
             let isFirstView = String.isNullOrEmpty(instructionsReferences.props.title) && instructionsReferencesView.titleLabel == nil
             let referenceView = buildReferenceView(with: reference, in: instructionsReferencesView, onBottomOf: lastView, isFirstView: isFirstView)

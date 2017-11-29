@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
+public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable {
     var props: PXInstructionsSubtitleProps
 
     init(props: PXInstructionsSubtitleProps) {

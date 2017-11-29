@@ -14,7 +14,7 @@ public class PXResultViewModel: NSObject {
     open var instructionsInfo: InstructionsInfo?
     open var preference: PaymentResultScreenPreference
     var callback: ((PaymentResult.CongratsState) -> Void)!
-    let  amount : Double
+    let  amount: Double
     init(paymentResult: PaymentResult, amount: Double, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo

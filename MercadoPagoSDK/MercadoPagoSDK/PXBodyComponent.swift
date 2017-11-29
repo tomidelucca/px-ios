@@ -24,7 +24,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
         return instructionsComponent
     }
-    
+
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData?.paymentMethod
         let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
@@ -36,19 +36,19 @@ open class PXBodyComponent: NSObject, PXComponetizable {
                 amountDetail = "(" +  String(payerCost.totalAmount) + ")"
             }
         }
-        var issuerName : String?
-        var pmDescription : String = ""
+        var issuerName: String?
+        var pmDescription: String = ""
         if (pm?.isCreditCard)! {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
             pmDescription = (pm?.name)! + " " + "terminada en ".localized + (self.props.paymentResult.paymentData?.token?.lastFourDigits)!
-        }else if (pm?.isAccountMoney)!{
+        }else if (pm?.isAccountMoney)! {
             pmDescription = (pm?.name)!
         }
-        
+
         let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
         return PXPaymentMethodComponent(props: bodyProps)
     }
-    
+
     public func render() -> UIView {
         return PXBodyRenderer().render(body: self)
     }
@@ -58,8 +58,8 @@ open class PXBodyComponent: NSObject, PXComponetizable {
 open class PXBodyProps: NSObject {
     var paymentResult: PaymentResult
     var instruction: Instruction?
-    var amount : Double
-    init(paymentResult:PaymentResult, amount: Double, instruction: Instruction?) {
+    var amount: Double
+    init(paymentResult: PaymentResult, amount: Double, instruction: Instruction?) {
         self.paymentResult = paymentResult
         self.instruction = instruction
         self.amount = amount
