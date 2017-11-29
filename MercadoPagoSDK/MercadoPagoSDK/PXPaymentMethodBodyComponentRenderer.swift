@@ -16,6 +16,7 @@ class PXPaymentMethodBodyComponentRenderer: NSObject {
     let TITLE_FONT_SIZE: CGFloat = 21.0
     let DETAIL_FONT_SIZE: CGFloat = 16.0
     let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
+    let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
     
     func render(component: PXPaymentMethodBodyComponent) -> UIView {
         let pmBodyView = PXPaymentMethodBodyView()
@@ -85,6 +86,22 @@ class PXPaymentMethodBodyComponentRenderer: NSObject {
             MPLayout.pinRight(view: pmDetailLabel, to: pmBodyView, withMargin:  MPLayout.XXS_MARGIN).isActive = true
         }
 
+        if let disclaimer = component.props.disclaimer {
+            let disclaimerLabel = UILabel()
+            disclaimerLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.disclaimerLabel = disclaimerLabel
+            pmBodyView.addSubview(disclaimerLabel)
+            disclaimerLabel.text = disclaimer
+            disclaimerLabel.numberOfLines = 2
+            disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
+            disclaimerLabel.textColor = .pxBrownishGray
+            disclaimerLabel.textAlignment = .center
+            MPLayout.put(view: disclaimerLabel, onBottomOfLastViewOf: pmBodyView, withMargin:  MPLayout.M_MARGIN)?.isActive = true
+            MPLayout.pinLeft(view: disclaimerLabel, to: pmBodyView, withMargin:  MPLayout.XS_MARGIN).isActive = true
+            MPLayout.pinRight(view: disclaimerLabel, to: pmBodyView, withMargin:  MPLayout.XS_MARGIN).isActive = true
+        }
+        
+        
         MPLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: MPLayout.L_MARGIN)?.isActive = true
 
         return pmBodyView
@@ -97,4 +114,5 @@ class PXPaymentMethodBodyView: BodyView {
     var amountDetail: UILabel?
     var paymentMethodDescription: UILabel?
     var paymentMethodDetail: UILabel?
+    var disclaimerLabel: UILabel?
 }

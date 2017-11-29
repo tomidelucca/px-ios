@@ -25,13 +25,15 @@ class PXPaymentMethodBodyComponentProps: NSObject {
     var amountDetail: String?
     var paymentMethodDescription: String?
     var paymentMethodDetail: String?
+    var disclaimer: String?
 
-    init(paymentMethodIcon: UIImage, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?) {
+    init(paymentMethodIcon: UIImage, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?) {
         self.paymentMethodIcon = paymentMethodIcon
         self.amountTitle = amountTitle
         self.amountDetail = amountDetail
         self.paymentMethodDescription = paymentMethodDescription
         self.paymentMethodDetail = paymentMethodDetail
+        self.disclaimer = disclaimer
     }
 
 }
