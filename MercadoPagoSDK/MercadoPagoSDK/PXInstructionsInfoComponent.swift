@@ -15,7 +15,7 @@ class PXInstructionsInfoComponent: NSObject, PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-        return InstructionsInfoRenderer().render(instructionsInfo: self)
+        return PXInstructionsInfoRenderer().render(instructionsInfo: self)
     }
 }
 class PXInstructionsInfoProps: NSObject {
