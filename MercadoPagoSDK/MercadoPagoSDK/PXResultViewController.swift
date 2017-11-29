@@ -77,11 +77,11 @@ class PXResultViewController: PXComponentContainerViewController {
         let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {

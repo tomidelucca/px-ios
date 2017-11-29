@@ -16,7 +16,7 @@ class PXFooterComponent: NSObject, PXComponetizable {
     }
 
     func render() -> UIView {
-        return PXFooterRenderer().render(footer: self)
+        return PXFooterRenderer().render(self)
     }
 }
 class PXFooterProps: NSObject {

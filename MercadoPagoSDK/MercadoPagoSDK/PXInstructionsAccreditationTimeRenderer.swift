@@ -13,7 +13,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsAccreditationTime: PXInstructionsAccreditationTimeComponent) -> UIView {
+    func render(_ instructionsAccreditationTime: PXInstructionsAccreditationTimeComponent) -> UIView {
         let instructionsAccreditationTimeView = PXInstructionsAccreditationTimeView()
         instructionsAccreditationTimeView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationTimeView.backgroundColor = .pxLightGray

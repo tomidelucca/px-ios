@@ -14,7 +14,7 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
     init(props: PXInstructionsReferencesProps) {
         self.props = props
     }
-    
+
     public func getReferenceComponents() -> [PXInstructionsReferenceComponent] {
         var referenceComponents: [PXInstructionsReferenceComponent] = []
         if let references = props.references, !references.isEmpty {
@@ -26,9 +26,9 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
         }
         return referenceComponents
     }
-    
+
     func render() -> UIView {
-        return PXInstructionsReferencesRenderer().render(instructionsReferences: self)
+        return PXInstructionsReferencesRenderer().render(self)
     }
 }
 class PXInstructionsReferencesProps: NSObject {

@@ -13,7 +13,7 @@ class PXInstructionsActionRenderer: NSObject {
     let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
 
-    func render(instructionsAction: PXInstructionsActionComponent) -> UIView {
+    func render(_ instructionsAction: PXInstructionsActionComponent) -> UIView {
         let instructionsActionView = PXInstructionsActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
@@ -21,9 +21,9 @@ class PXInstructionsActionRenderer: NSObject {
         guard let label = instructionsAction.props.instructionActionInfo?.label, let tag = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
             return instructionsActionView
         }
-        
+
         instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
-        
+
         return instructionsActionView
     }
 
@@ -53,7 +53,7 @@ class PXInstructionsActionRenderer: NSObject {
 
         return button
     }
-    
+
     func goToURL(_ url: String) {
         if let url = URL(string: url) {
             UIApplication.shared.openURL(url)

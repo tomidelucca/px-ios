@@ -15,7 +15,7 @@ class PXInstructionsTertiaryInfoComponent: NSObject, PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-        return PXInstructionsTertiaryInfoRenderer().render(instructionsTertiaryInfo: self)
+        return PXInstructionsTertiaryInfoRenderer().render(self)
     }
 }
 class PXInstructionsTertiaryInfoProps: NSObject {

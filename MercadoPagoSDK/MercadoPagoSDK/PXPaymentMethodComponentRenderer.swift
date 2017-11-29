@@ -17,7 +17,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let DETAIL_FONT_SIZE: CGFloat = 16.0
     let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
     let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
-    
+
+
     func render(component: PXPaymentMethodComponent) -> UIView {
         let pmBodyView = PXPaymentMethodView()
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false

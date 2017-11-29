@@ -46,7 +46,7 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
     }
 
     public func render() -> UIView {
-        return PXInstructionsRenderer().render(instructions: self)
+        return PXInstructionsRenderer().render(self)
     }
 }
 public class PXInstructionsProps: NSObject {

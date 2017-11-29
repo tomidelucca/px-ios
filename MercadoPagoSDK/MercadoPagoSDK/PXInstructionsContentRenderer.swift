@@ -10,7 +10,7 @@ import Foundation
 
 class PXInstructionsContentRenderer: NSObject {
 
-    func render(instructionsContent: PXInstructionsContentComponent) -> UIView {
+    func render(_ instructionsContent: PXInstructionsContentComponent) -> UIView {
         let instructionsContentView = PXInstructionsContentView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsContentView.backgroundColor = .pxLightGray
@@ -25,7 +25,6 @@ class PXInstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.infoView
         }
 
-        
         if instructionsContent.hasReferences(), let referencesComponent = instructionsContent.getReferencesComponent() {
             instructionsContentView.referencesView = referencesComponent.render()
             instructionsContentView.addSubview(instructionsContentView.referencesView!)
@@ -53,7 +52,6 @@ class PXInstructionsContentRenderer: NSObject {
             bottomView = instructionsContentView.tertiaryInfoView
         }
 
-        
         if instructionsContent.hasAccreditationTime(), let accreditationTimeComponent = instructionsContent.getAccreditationTimeComponent() {
             instructionsContentView.accreditationTimeView = accreditationTimeComponent.render()
             instructionsContentView.addSubview(instructionsContentView.accreditationTimeView!)

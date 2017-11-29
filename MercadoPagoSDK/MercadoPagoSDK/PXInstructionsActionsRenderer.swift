@@ -13,12 +13,12 @@ class PXInstructionsActionsRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsActions: PXInstructionsActionsComponent) -> UIView {
+    func render(_ instructionsActions: PXInstructionsActionsComponent) -> UIView {
         let instructionsActionsView = PXInstructionsActionsView()
         instructionsActionsView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionsView.backgroundColor = .pxLightGray
         var lastView: UIView?
-        
+
         for action in instructionsActions.getActionComponents() {
             let actionView = buildActionView(with: action, in: instructionsActionsView, onBottomOf: lastView)
             instructionsActionsView.actionsViews = Array.safeAppend(instructionsActionsView.actionsViews, actionView)
@@ -29,7 +29,7 @@ class PXInstructionsActionsRenderer: NSObject {
 
         return instructionsActionsView
     }
-    
+
     func buildActionView(with action: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
         let actionView = action.render()
         superView.addSubview(actionView)

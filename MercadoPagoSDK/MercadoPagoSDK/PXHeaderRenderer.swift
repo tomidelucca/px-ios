@@ -26,7 +26,7 @@ class PXHeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(header: PXHeaderComponent ) -> PXHeaderView {
+    func render(_ header: PXHeaderComponent ) -> PXHeaderView {
         let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false

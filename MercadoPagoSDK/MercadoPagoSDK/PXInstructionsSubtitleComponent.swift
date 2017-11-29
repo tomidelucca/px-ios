@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
+public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable {
     var props: PXInstructionsSubtitleProps
 
     init(props: PXInstructionsSubtitleProps) {
@@ -17,7 +16,7 @@ public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
     }
 
     public func render() -> UIView {
-        return PXInstructionsSubtitleRenderer().render(instructionsSubtitle: self)
+        return PXInstructionsSubtitleRenderer().render(self)
     }
 }
 public class PXInstructionsSubtitleProps: NSObject {

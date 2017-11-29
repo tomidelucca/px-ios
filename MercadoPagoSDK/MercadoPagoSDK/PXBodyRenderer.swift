@@ -10,9 +10,9 @@ import UIKit
 
 class PXBodyRenderer: NSObject {
 
-    func render(body: PXBodyComponent) -> PXBodyView {
-        var content : UIView = UIView()
-        if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent()  {
+    func render(_ body: PXBodyComponent) -> PXBodyView {
+        var content: UIView = UIView()
+        if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
             return instructionsComponent.render() as! PXInstructionsView
         } else if body.props.paymentResult.isApproved() {
             return body.getPaymentMethodComponent().render() as! PXBodyView

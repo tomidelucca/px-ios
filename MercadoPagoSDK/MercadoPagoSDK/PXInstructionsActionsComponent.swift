@@ -14,7 +14,7 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
     init(props: PXInstructionsActionsProps) {
         self.props = props
     }
-    
+
     public func getActionComponents() -> [PXInstructionsActionComponent] {
         var actionComponents: [PXInstructionsActionComponent] = []
         if let actions = props.instructionActions, !actions.isEmpty {
@@ -28,9 +28,9 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
         }
         return actionComponents
     }
-    
+
     func render() -> UIView {
-        return PXInstructionsActionsRenderer().render(instructionsActions: self)
+        return PXInstructionsActionsRenderer().render(self)
     }
 }
 class PXInstructionsActionsProps: NSObject {
