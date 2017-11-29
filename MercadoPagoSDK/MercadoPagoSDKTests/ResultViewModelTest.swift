@@ -298,7 +298,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(referenceView.referenceLabel?.text, "Mercado Libre - Mercado Pago")
         
         //Tertiary Info View
-        let tertiaryInfoView = contentView.tertiaryInfoView as! TertiaryInfoView
+        let tertiaryInfoView = contentView.tertiaryInfoView as! PXInstructionsTertiaryInfoView
         XCTAssertNotNil(tertiaryInfoView.tertiaryInfoLabels)
         XCTAssertEqual(tertiaryInfoView.tertiaryInfoLabels?.count, 1)
         XCTAssertEqual(tertiaryInfoView.tertiaryInfoLabels![0].text, "Si pagas un fin de semana o feriado, será al siguiente día hábil.")

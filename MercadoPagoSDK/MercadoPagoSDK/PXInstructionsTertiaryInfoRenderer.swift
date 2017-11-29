@@ -16,7 +16,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(instructionsTertiaryInfo: PXInstructionsTertiaryInfoComponent) -> UIView {
-        let instructionsTertiaryInfoView = TertiaryInfoView()
+        let instructionsTertiaryInfoView = PXInstructionsTertiaryInfoView()
         instructionsTertiaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsTertiaryInfoView.backgroundColor = .pxLightGray
 
@@ -66,6 +66,6 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
     }
 }
 
-class TertiaryInfoView: UIView {
+class PXInstructionsTertiaryInfoView: UIView {
     public var tertiaryInfoLabels: [UILabel]?
 }
