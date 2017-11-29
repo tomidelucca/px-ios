@@ -13,7 +13,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
     let LABEL_FONT_SIZE: CGFloat = 12.0
 
     func render(instructionsSecondaryInfo: PXInstructionsSecondaryInfoComponent) -> UIView {
-        let instructionsSecondaryInfoView = SecondaryInfoView()
+        let instructionsSecondaryInfoView = PXInstructionsSecondaryInfoView()
         instructionsSecondaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSecondaryInfoView.backgroundColor = .pxWhite
 
@@ -58,6 +58,6 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
     }
 }
 
-class SecondaryInfoView: UIView {
+class PXInstructionsSecondaryInfoView: UIView {
     public var secondaryInfoLabels: [UILabel]?
 }

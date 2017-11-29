@@ -176,7 +176,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Secondary Info View
         XCTAssertNotNil(instructionsView.secondaryInfoView)
-        let secondaryInfoView = instructionsView.secondaryInfoView as! SecondaryInfoView
+        let secondaryInfoView = instructionsView.secondaryInfoView as! PXInstructionsSecondaryInfoView
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels?.count, 1)
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "Uma cópia desse boleto foi enviada ao seu e-mail -payer.email- caso você precise realizar o pagamento depois.")
         
@@ -244,7 +244,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Secondary Info View
         XCTAssertNotNil(instructionsView.secondaryInfoView)
-        let secondaryInfoView = instructionsView.secondaryInfoView as! SecondaryInfoView
+        let secondaryInfoView = instructionsView.secondaryInfoView as! PXInstructionsSecondaryInfoView
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels?.count, 1)
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "También enviamos estos datos a tu email")
         
