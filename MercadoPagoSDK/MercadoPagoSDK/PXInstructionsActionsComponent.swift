@@ -9,9 +9,9 @@
 import Foundation
 
 class PXInstructionsActionsComponent: NSObject, PXComponetizable {
-    var props: InstructionsActionsProps
+    var props: PXInstructionsActionsProps
 
-    init(props: InstructionsActionsProps) {
+    init(props: PXInstructionsActionsProps) {
         self.props = props
     }
     
@@ -33,7 +33,7 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
         return InstructionsActionsRenderer().render(instructionsActions: self)
     }
 }
-class InstructionsActionsProps: NSObject {
+class PXInstructionsActionsProps: NSObject {
     var instructionActions: [InstructionAction]?
     init(instructionActions: [InstructionAction]?) {
         self.instructionActions = instructionActions

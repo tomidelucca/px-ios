@@ -87,7 +87,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
     }
 
     func getActionsComponent() -> PXInstructionsActionsComponent? {
-        let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
+        let actionsProps = PXInstructionsActionsProps(instructionActions: props.instruction.actions)
         let actionsComponent = PXInstructionsActionsComponent(props: actionsProps)
         return actionsComponent
     }
