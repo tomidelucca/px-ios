@@ -14,7 +14,7 @@ class PXInstructionsActionRenderer: NSObject {
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
 
     func render(instructionsAction: PXInstructionsActionComponent) -> UIView {
-        let instructionsActionView = ActionView()
+        let instructionsActionView = PXInstructionsActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
 
@@ -61,6 +61,6 @@ class PXInstructionsActionRenderer: NSObject {
     }
 }
 
-class ActionView: UIView {
+class PXInstructionsActionView: UIView {
     public var actionButton: UIButton?
 }

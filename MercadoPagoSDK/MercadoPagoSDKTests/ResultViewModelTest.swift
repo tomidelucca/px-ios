@@ -328,7 +328,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(actionsView.actionsViews?.count, 1)
         
         //Action View
-        let actionView = actionsView.actionsViews![0] as! ActionView
+        let actionView = actionsView.actionsViews![0] as! PXInstructionsActionView
         XCTAssertNotNil(actionView.actionButton)
         let actionButton = actionView.actionButton as! MPButton
         XCTAssertEqual(actionButton.titleLabel?.text, "Ir a banca en línea")
