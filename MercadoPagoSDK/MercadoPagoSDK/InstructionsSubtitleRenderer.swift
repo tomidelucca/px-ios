@@ -12,7 +12,7 @@ class InstructionsSubtitleRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 22.0
 
-    func render(instructionsSubtitle: InstructionsSubtitleComponent) -> UIView {
+    func render(instructionsSubtitle: PXInstructionsSubtitleComponent) -> UIView {
         let instructionsSubtitleView = SubtitleView()
         instructionsSubtitleView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSubtitleView.backgroundColor = .pxWhite

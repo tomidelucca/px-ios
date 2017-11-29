@@ -1,5 +1,5 @@
 //
-//  InstructionsSubtitleComponent.swift
+//  PXInstructionsSubtitleComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class InstructionsSubtitleComponent: NSObject, PXComponetizable{
+public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
     var props: InstructionsSubtitleProps
 
     init(props: InstructionsSubtitleProps) {

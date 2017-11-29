@@ -600,8 +600,8 @@
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8451FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
 		FC3FC8461FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
-		FC3FC8491FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift */; };
-		FC3FC84A1FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift */; };
+		FC3FC8491FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */; };
+		FC3FC84A1FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */; };
 		FC3FC84C1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */; };
 		FC3FC84D1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */; };
 		FC3FC8501FBCCAA700CF29E1 /* InstructionsContentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84F1FBCCAA700CF29E1 /* InstructionsContentComponent.swift */; };
@@ -1087,7 +1087,7 @@
 		FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTest.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
-		FC3FC8481FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
+		FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
 		FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleRenderer.swift; sourceTree = "<group>"; };
 		FC3FC84F1FBCCAA700CF29E1 /* InstructionsContentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsContentComponent.swift; sourceTree = "<group>"; };
 		FC3FC8521FBCCAB600CF29E1 /* InstructionsContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsContentRenderer.swift; sourceTree = "<group>"; };
@@ -2207,7 +2207,7 @@
 		FC3FC84E1FBCC9BE00CF29E1 /* Subtitle */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC8481FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift */,
+				FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */,
 				FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */,
 			);
 			name = Subtitle;
@@ -2835,7 +2835,7 @@
 				15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
 				15AE1DA61F60807900B0DAF8 /* SummaryPreference.swift in Sources */,
 				FC3FC8901FBE13E800CF29E1 /* InstructionsActionComponent.swift in Sources */,
-				FC3FC8491FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift in Sources */,
+				FC3FC8491FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
 				76128AC11DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift in Sources */,
 				1553AF331E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				15AE1DB01F61BAC200B0DAF8 /* SummaryComponent.swift in Sources */,
@@ -3042,7 +3042,7 @@
 				0F98839A1AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,
 				53EB434E1F601D09009510BC /* AvailableCardsViewModelTests.swift in Sources */,
 				4B277F671E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */,
-				FC3FC84A1FBCC98F00CF29E1 /* InstructionsSubtitleComponent.swift in Sources */,
+				FC3FC84A1FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
 				4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */,
 				76EC47DE1C85E9CC0086FA53 /* IssuerTest.swift in Sources */,
 				4B53C5FA1E4B3FDD00D6190A /* PaymentData.swift in Sources */,
