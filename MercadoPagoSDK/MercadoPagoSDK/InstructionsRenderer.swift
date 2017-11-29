@@ -11,7 +11,7 @@ import Foundation
 class InstructionsRenderer: NSObject {
 
     
-    func render(instructions: InstructionsComponent) -> InstructionsView {
+    func render(instructions: PXInstructionsComponent) -> InstructionsView {
         let instructionsView = InstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
         var bottomView: UIView!
