@@ -204,7 +204,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNotNil(referencesView.referencesComponents)
         XCTAssertEqual(referencesView.referencesComponents?.count, 1)
         //Reference View
-        let referenceView = referencesView.referencesComponents![0] as! ReferenceView
+        let referenceView = referencesView.referencesComponents![0] as! PXInstructionsReferenceView
         XCTAssertNotNil(referenceView.titleLabel)
         XCTAssertNotNil(referenceView.referenceLabel)
         XCTAssertEqual(referenceView.titleLabel?.text, "Número")
@@ -277,21 +277,21 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNotNil(referencesView.referencesComponents)
         XCTAssertEqual(referencesView.referencesComponents?.count, 3)
         //Reference View 0
-        var referenceView = referencesView.referencesComponents![0] as! ReferenceView
+        var referenceView = referencesView.referencesComponents![0] as! PXInstructionsReferenceView
         XCTAssertNotNil(referenceView.titleLabel)
         XCTAssertNotNil(referenceView.referenceLabel)
         XCTAssertEqual(referenceView.titleLabel?.text, "Referencia para abonar")
         XCTAssertEqual(referenceView.referenceLabel?.text, "2379 1729 0000 0400 1003 3802 6025 4607 2909 0063 3330")
         
         //Reference View 1
-        referenceView = referencesView.referencesComponents![1] as! ReferenceView
+        referenceView = referencesView.referencesComponents![1] as! PXInstructionsReferenceView
         XCTAssertNotNil(referenceView.titleLabel)
         XCTAssertNotNil(referenceView.referenceLabel)
         XCTAssertEqual(referenceView.titleLabel?.text, "Concepto")
         XCTAssertEqual(referenceView.referenceLabel?.text, "MPAGO:COMPRA")
         
         //Reference View 2
-        referenceView = referencesView.referencesComponents![2] as! ReferenceView
+        referenceView = referencesView.referencesComponents![2] as! PXInstructionsReferenceView
         XCTAssertNotNil(referenceView.titleLabel)
         XCTAssertNotNil(referenceView.referenceLabel)
         XCTAssertEqual(referenceView.titleLabel?.text, "Empresa")
