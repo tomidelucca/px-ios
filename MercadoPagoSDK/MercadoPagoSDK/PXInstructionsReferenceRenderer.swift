@@ -1,5 +1,5 @@
 //
-//  InstructionReferenceRenderer.swift
+//  PXInstructionsReferenceRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionReferenceRenderer: NSObject {
+class PXInstructionsReferenceRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 12.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray

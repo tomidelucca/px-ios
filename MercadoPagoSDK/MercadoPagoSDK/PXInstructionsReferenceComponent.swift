@@ -15,7 +15,7 @@ class PXInstructionsReferenceComponent: NSObject, PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-        return InstructionReferenceRenderer().render(instructionReference: self)
+        return PXInstructionsReferenceRenderer().render(instructionReference: self)
     }
 }
 class PXInstructionsReferenceProps: NSObject {
