@@ -70,10 +70,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     func buildBodyView() -> UIView {
-        let bodyProps = self.viewModel.getTestProps()
-//        let bodyProps = self.viewModel.bodyComponentProps()
-//        let bodyProps = self.viewModel.getRapipagoProps()
-//        let bodyProps = self.viewModel.getRedlinkProps()
+        let bodyProps = self.viewModel.bodyComponentProps()
         let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }
