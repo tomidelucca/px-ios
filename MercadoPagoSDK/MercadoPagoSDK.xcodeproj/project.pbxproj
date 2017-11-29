@@ -573,14 +573,14 @@
 		8138737E1FA8DE8B002095D6 /* MPLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* MPLayout.swift */; };
 		8138737F1FA8DEA7002095D6 /* FooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* FooterComponent.swift */; };
 		813873801FA8DEB0002095D6 /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
-		813873811FA8DECE002095D6 /* BodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* BodyComponent.swift */; };
+		813873811FA8DECE002095D6 /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		813873821FA8DEE7002095D6 /* BodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* BodyRenderer.swift */; };
 		813873831FA8E3E5002095D6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 155F58321E3923180070A0D6 /* Images.xcassets */; };
 		813873841FA8E425002095D6 /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCEB90861EB8F7F00096B1A2 /* RevampImages.xcassets */; };
 		81ACC8141F9A88EF00206F7B /* MPLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* MPLayout.swift */; };
 		81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */; };
 		81ACC81C1F9A88F700206F7B /* PXResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */; };
-		81ACC81D1F9A88F700206F7B /* BodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* BodyComponent.swift */; };
+		81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		81ACC81E1F9A88F700206F7B /* BodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* BodyRenderer.swift */; };
 		81ACC81F1F9A88F700206F7B /* FooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* FooterComponent.swift */; };
 		81ACC8201F9A88F700206F7B /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
@@ -1066,7 +1066,7 @@
 		813873781FA8D29C002095D6 /* ResultViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModelTest.swift; sourceTree = "<group>"; };
 		81ACC8081F9A68D800206F7B /* HeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* BodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyRenderer.swift; sourceTree = "<group>"; };
-		81ACC80A1F9A68D900206F7B /* BodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyComponent.swift; sourceTree = "<group>"; };
+		81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponent.swift; sourceTree = "<group>"; };
 		81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterRenderer.swift; sourceTree = "<group>"; };
 		81ACC80C1F9A68D900206F7B /* HeaderRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderRenderer.swift; sourceTree = "<group>"; };
 		81ACC80D1F9A68D900206F7B /* MPLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPLayout.swift; sourceTree = "<group>"; };
@@ -2136,7 +2136,7 @@
 				81ACC80D1F9A68D900206F7B /* MPLayout.swift */,
 				812BA9C51FC8B4C600FF32C2 /* Header */,
 				812BA9C41FC8B4AA00FF32C2 /* Footer */,
-				81ACC80A1F9A68D900206F7B /* BodyComponent.swift */,
+				81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */,
 				81ACC8091F9A68D800206F7B /* BodyRenderer.swift */,
 				FC3FC8471FBCC95C00CF29E1 /* Instructions */,
 				812BA9BC1FC8B1F800FF32C2 /* Body Payment Method */,
@@ -2715,7 +2715,7 @@
 				4B34DC361E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				15904D5A1E09748C00B3B9FD /* MPSDKLoadingView.m in Sources */,
 				1575E7161FBCD35C00E0756D /* FooterViewModelHelper.swift in Sources */,
-				81ACC81D1F9A88F700206F7B /* BodyComponent.swift in Sources */,
+				81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */,
 				4BB3ECE61FB37B0300AAFD38 /* PXSDKSettings.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
 				4BAE1D421DCBE8FF0000ED5C /* ApprovedTableViewCell.swift in Sources */,
@@ -2990,7 +2990,7 @@
 				76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				76EC47F81C8629E10086FA53 /* SecurityCodeTest.swift in Sources */,
-				813873811FA8DECE002095D6 /* BodyComponent.swift in Sources */,
+				813873811FA8DECE002095D6 /* PXBodyComponent.swift in Sources */,
 				0F98835C1AD2AB6000F750F0 /* Bin.swift in Sources */,
 				0F9883941AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				FC7E14991F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */,

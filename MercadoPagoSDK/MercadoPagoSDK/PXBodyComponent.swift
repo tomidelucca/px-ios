@@ -1,5 +1,5 @@
 //
-//  BodyComponent.swift
+//  PXBodyComponent.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/19/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class BodyComponent: NSObject, PXComponetizable {
+open class PXBodyComponent: NSObject, PXComponetizable {
     var props: BodyProps
 
     init(props: BodyProps) {

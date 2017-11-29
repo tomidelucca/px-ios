@@ -74,7 +74,7 @@ class PXResultViewController: PXComponentContainerViewController {
 //        let bodyProps = self.viewModel.bodyComponentProps()
 //        let bodyProps = self.viewModel.getRapipagoProps()
 //        let bodyProps = self.viewModel.getRedlinkProps()
-        let bodyComponent = BodyComponent(props: bodyProps)
+        let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }
     
