@@ -164,7 +164,7 @@ class ResultViewModelTest: BaseTest {
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
         //Instructions View
-        guard let instructionsView = bodyView as? InstructionsView else {
+        guard let instructionsView = bodyView as? PXInstructionsView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
@@ -232,7 +232,7 @@ class ResultViewModelTest: BaseTest {
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
         //Instructions View
-        guard let instructionsView = bodyView as? InstructionsView else {
+        guard let instructionsView = bodyView as? PXInstructionsView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }

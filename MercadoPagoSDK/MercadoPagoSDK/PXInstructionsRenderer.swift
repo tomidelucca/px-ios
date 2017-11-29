@@ -9,10 +9,9 @@
 import Foundation
 
 class PXInstructionsRenderer: NSObject {
-
     
-    func render(instructions: PXInstructionsComponent) -> InstructionsView {
-        let instructionsView = InstructionsView()
+    func render(instructions: PXInstructionsComponent) -> PXInstructionsView {
+        let instructionsView = PXInstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
         var bottomView: UIView!
 
@@ -61,7 +60,7 @@ class PXInstructionsRenderer: NSObject {
 }
 
 
-class InstructionsView: PXBodyView {
+class PXInstructionsView: PXBodyView {
     public var subtitleView: UIView?
     public var contentView: UIView?
     public var secondaryInfoView: UIView?
