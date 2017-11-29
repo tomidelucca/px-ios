@@ -33,7 +33,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
             }
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsTertiaryInfoView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: instructionsTertiaryInfoView)?.isActive = true
 
         return instructionsTertiaryInfoView
     }
@@ -53,13 +53,13 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: infoLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
+        PXLayout.setHeight(owner: infoLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: MPLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: infoLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: infoLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return infoLabel

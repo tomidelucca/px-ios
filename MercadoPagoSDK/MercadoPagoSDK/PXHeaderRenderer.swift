@@ -33,27 +33,27 @@ class PXHeaderRenderer: NSObject {
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
-        MPLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
-        MPLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: MPLayout.XXXL_MARGIN).isActive = true
+        PXLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
+        PXLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
 
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
         headerView.addSubview(headerView.badgeImage!)
-        MPLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
-        MPLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
+        PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
+        PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
 
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
-        MPLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
-        MPLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
+        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
-        MPLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
-        MPLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: MPLayout.M_MARGIN).isActive = true
-        MPLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: MPLayout.XL_MARGIN).isActive = true
+        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
+        PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: PXLayout.XL_MARGIN).isActive = true
 
         return headerView
     }
@@ -65,8 +65,8 @@ class PXHeaderRenderer: NSObject {
         circleImage.clipsToBounds = true
         circleImage.translatesAutoresizingMaskIntoConstraints = false
         circleImage.image = image
-        MPLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
-        MPLayout.setWidth(owner: circleImage, width: IMAGE_HEIGHT).isActive = true
+        PXLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
+        PXLayout.setWidth(owner: circleImage, width: IMAGE_HEIGHT).isActive = true
         return circleImage
     }
 
@@ -74,8 +74,8 @@ class PXHeaderRenderer: NSObject {
         let badgeImage = UIImageView()
         badgeImage.translatesAutoresizingMaskIntoConstraints = false
         badgeImage.image = image
-        MPLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
-        MPLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
+        PXLayout.setHeight(owner: badgeImage, height: BADGE_IMAGE_SIZE).isActive = true
+        PXLayout.setWidth(owner: badgeImage, width: BADGE_IMAGE_SIZE).isActive = true
         return badgeImage
     }
     func buildStatusLabel(with text: NSAttributedString?, in superView: UIView, onBottomOf upperView: UIView) -> UILabel {
@@ -85,12 +85,12 @@ class PXHeaderRenderer: NSObject {
         statusLabel.textColor = .pxWhite
         superView.addSubview(statusLabel)
         if text != nil {
-            MPLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: MPLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
             statusLabel.attributedText = text
-            MPLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
+            PXLayout.setHeight(owner: statusLabel, height: STATUS_TITLE_HEIGHT).isActive = true
         }else {
-            MPLayout.put(view: statusLabel, onBottomOf:upperView).isActive = true
-            MPLayout.setHeight(owner: statusLabel, height: 0).isActive = true
+            PXLayout.put(view: statusLabel, onBottomOf:upperView).isActive = true
+            PXLayout.setHeight(owner: statusLabel, height: 0).isActive = true
         }
         return statusLabel
     }
@@ -106,7 +106,7 @@ class PXHeaderRenderer: NSObject {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
-        MPLayout.setHeight(owner: messageLabel, height: height).isActive = true
+        PXLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }
 }

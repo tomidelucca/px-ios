@@ -29,7 +29,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
             lastView = commentView
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsAccreditationTimeView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: instructionsAccreditationTimeView)?.isActive = true
 
         return instructionsAccreditationTimeView
     }
@@ -57,10 +57,10 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: labelTitle, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: titleLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
-        MPLayout.pinTop(view: titleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+        PXLayout.setHeight(owner: titleLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
+        PXLayout.pinTop(view: titleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
 
         return titleLabel
     }
@@ -68,12 +68,12 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
     func buildCommentView(with comment: PXInstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let accreditationCommentView = comment.render()
         superView.addSubview(accreditationCommentView)
-        MPLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: accreditationCommentView, to: superView).isActive = true
+        PXLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: accreditationCommentView, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: accreditationCommentView, onBottomOf: upperView, withMargin: MPLayout.XXS_MARGIN).isActive = true
+            PXLayout.put(view: accreditationCommentView, onBottomOf: upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: accreditationCommentView, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: accreditationCommentView, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return accreditationCommentView
