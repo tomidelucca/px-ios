@@ -318,7 +318,7 @@ class ResultViewModelTest: BaseTest {
         //Accreditation Comment Views
         XCTAssertNotNil(accreditationTimeView.accreditationCommentsComponents)
         XCTAssertEqual(accreditationTimeView.accreditationCommentsComponents?.count, 1)
-        let accreditationCommentView = accreditationTimeView.accreditationCommentsComponents![0] as! AccreditationCommentView
+        let accreditationCommentView = accreditationTimeView.accreditationCommentsComponents![0] as! PXInstructionsAccreditationCommentView
         XCTAssertNotNil(accreditationCommentView.commentLabel)
         XCTAssertEqual(accreditationCommentView.commentLabel?.text, "Pagamentos realizados em correspondentes bancários podem ultrapassar este prazo.")
         

@@ -14,7 +14,7 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(instructionsAccreditationComment: PXInstructionsAccreditationCommentComponent) -> UIView {
-        let instructionsAccreditationCommentView = AccreditationCommentView()
+        let instructionsAccreditationCommentView = PXInstructionsAccreditationCommentView()
         instructionsAccreditationCommentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationCommentView.backgroundColor = .pxLightGray
 
@@ -52,6 +52,6 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
     }
 }
 
-class AccreditationCommentView: UIView {
+class PXInstructionsAccreditationCommentView: UIView {
     public var commentLabel: UILabel?
 }
