@@ -1,5 +1,5 @@
 //
-//  InstructionsTertiaryInfoComponent.swift
+//  PXInstructionsTertiaryInfoComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsTertiaryInfoComponent: NSObject, PXComponetizable {
+class PXInstructionsTertiaryInfoComponent: NSObject, PXComponetizable {
     var props: InstructionsTertiaryInfoProps
 
     init(props: InstructionsTertiaryInfoProps) {
