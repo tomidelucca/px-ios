@@ -335,7 +335,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(actionButton.actionLink, "http://www.bancomer.com.mx")
     }
     
-    func buildHeaderView(resultViewModel: PXResultViewModel) -> HeaderView {
+    func buildHeaderView(resultViewModel: PXResultViewModel) -> PXHeaderView {
         let props = PXHeaderProps(labelText: resultViewModel.labelTextHeader(), title: resultViewModel.titleHeader(), backgroundColor: resultViewModel.primaryResultColor(), productImage: resultViewModel.iconImageHeader(), statusImage: resultViewModel.badgeImage())
         let headerComponent = PXHeaderComponent(props: props)
         return PXHeaderRenderer().render(header: headerComponent)

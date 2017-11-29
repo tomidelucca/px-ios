@@ -26,8 +26,8 @@ class PXHeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(header: PXHeaderComponent ) -> HeaderView {
-        let headerView = HeaderView()
+    func render(header: PXHeaderComponent ) -> PXHeaderView {
+        let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
         //Image
@@ -111,7 +111,7 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class HeaderView: UIView {
+public class PXHeaderView: UIView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?
