@@ -141,7 +141,7 @@ class PXLayout: NSObject {
         let availableWidth = screenSize.width * percent / 100
         return availableWidth
     }
-    
+
     static func getScreenHeight(applyingMarginFactor percent: CGFloat) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableHeight = screenSize.height * percent / 100

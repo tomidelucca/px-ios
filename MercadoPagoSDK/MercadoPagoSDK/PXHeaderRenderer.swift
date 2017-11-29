@@ -103,8 +103,7 @@ class PXHeaderRenderer: NSObject {
         messageLabel.textColor = .pxWhite
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel

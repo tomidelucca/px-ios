@@ -19,7 +19,6 @@ class PXInstructionsReferenceRenderer: NSObject {
         let instructionReferenceView = PXInstructionsReferenceView()
         instructionReferenceView.translatesAutoresizingMaskIntoConstraints = false
         instructionReferenceView.backgroundColor = .pxLightGray
-        instructionReferenceView.translatesAutoresizingMaskIntoConstraints = false
         var lastView: UIView?
 
         if let title = instructionReference.props.reference?.label {
@@ -59,8 +58,7 @@ class PXInstructionsReferenceRenderer: NSObject {
         }
         label.textColor = textColor
 
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
