@@ -572,7 +572,7 @@
 		8138737D1FA8DE6E002095D6 /* PXHeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */; };
 		8138737E1FA8DE8B002095D6 /* MPLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* MPLayout.swift */; };
 		8138737F1FA8DEA7002095D6 /* PXFooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */; };
-		813873801FA8DEB0002095D6 /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
+		813873801FA8DEB0002095D6 /* PXFooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* PXFooterRenderer.swift */; };
 		813873811FA8DECE002095D6 /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		813873821FA8DEE7002095D6 /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
 		813873831FA8E3E5002095D6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 155F58321E3923180070A0D6 /* Images.xcassets */; };
@@ -583,7 +583,7 @@
 		81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		81ACC81E1F9A88F700206F7B /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
 		81ACC81F1F9A88F700206F7B /* PXFooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */; };
-		81ACC8201F9A88F700206F7B /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
+		81ACC8201F9A88F700206F7B /* PXFooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* PXFooterRenderer.swift */; };
 		81ACC8211F9A88F700206F7B /* PXHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */; };
 		81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
@@ -1067,7 +1067,7 @@
 		81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyRenderer.swift; sourceTree = "<group>"; };
 		81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponent.swift; sourceTree = "<group>"; };
-		81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterRenderer.swift; sourceTree = "<group>"; };
+		81ACC80B1F9A68D900206F7B /* PXFooterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFooterRenderer.swift; sourceTree = "<group>"; };
 		81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderRenderer.swift; sourceTree = "<group>"; };
 		81ACC80D1F9A68D900206F7B /* MPLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPLayout.swift; sourceTree = "<group>"; };
 		81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFooterComponent.swift; sourceTree = "<group>"; };
@@ -2108,7 +2108,7 @@
 			isa = PBXGroup;
 			children = (
 				81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */,
-				81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */,
+				81ACC80B1F9A68D900206F7B /* PXFooterRenderer.swift */,
 			);
 			name = Footer;
 			sourceTree = "<group>";
@@ -2856,7 +2856,7 @@
 				157420F71DF881770041171E /* UIView+RotateView.m in Sources */,
 				FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */,
 				0F9883731AD2AB6000F750F0 /* Fingerprint.swift in Sources */,
-				81ACC8201F9A88F700206F7B /* FooterRenderer.swift in Sources */,
+				81ACC8201F9A88F700206F7B /* PXFooterRenderer.swift in Sources */,
 				0F9883931AD2AB6000F750F0 /* SecurityCode.swift in Sources */,
 				FC45F1231E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */,
 				81ACC8141F9A88EF00206F7B /* MPLayout.swift in Sources */,
@@ -2940,7 +2940,7 @@
 				4B08CD9E1F20F66B00FE800A /* SavedESCCardToken.swift in Sources */,
 				4BEFBF911F06BFB2003EA94E /* PayerCostCFTTableViewCell.swift in Sources */,
 				1510DF751FBF102D004B01C6 /* HeaderViewModelHelper.swift in Sources */,
-				813873801FA8DEB0002095D6 /* FooterRenderer.swift in Sources */,
+				813873801FA8DEB0002095D6 /* PXFooterRenderer.swift in Sources */,
 				156A6DD01F6C7C9C00B17A20 /* SummaryTest.swift in Sources */,
 				FC3FC8741FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
 				0F9883801AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,

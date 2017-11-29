@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FooterRenderer: NSObject {
+class PXFooterRenderer: NSObject {
 
     let BUTTON_HEIGHT: CGFloat = 50.0
 
