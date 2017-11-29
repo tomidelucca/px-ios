@@ -17,7 +17,7 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
 
     
     func getSubtitleComponent() -> PXInstructionsSubtitleComponent? {
-        let instructionsSubtitleProps = InstructionsSubtitleProps(subtitle: props.instruction.subtitle!)
+        let instructionsSubtitleProps = PXInstructionsSubtitleProps(subtitle: props.instruction.subtitle!)
         let instructionsSubtitleComponent = PXInstructionsSubtitleComponent(props: instructionsSubtitleProps)
         return instructionsSubtitleComponent
     }

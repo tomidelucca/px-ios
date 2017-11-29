@@ -10,9 +10,9 @@ import Foundation
 
 
 public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
-    var props: InstructionsSubtitleProps
+    var props: PXInstructionsSubtitleProps
 
-    init(props: InstructionsSubtitleProps) {
+    init(props: PXInstructionsSubtitleProps) {
         self.props = props
     }
 
@@ -20,7 +20,7 @@ public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
         return InstructionsSubtitleRenderer().render(instructionsSubtitle: self)
     }
 }
-public class InstructionsSubtitleProps: NSObject {
+public class PXInstructionsSubtitleProps: NSObject {
     var subtitle: String
     init(subtitle: String) {
         self.subtitle = subtitle
