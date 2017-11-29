@@ -211,7 +211,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(referenceView.referenceLabel?.text, "2379 1729 0000 0400 1003 3802 6025 4607 2909 0063 3330")
         
         //Accreditation Time View
-        let accreditationTimeView = contentView.accreditationTimeView as! AccreditationTimeView
+        let accreditationTimeView = contentView.accreditationTimeView as! PXInstructionsAccreditationTimeView
         XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
         let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
         let clockImage = NSTextAttachment()
@@ -304,7 +304,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(tertiaryInfoView.tertiaryInfoLabels![0].text, "Si pagas un fin de semana o feriado, será al siguiente día hábil.")
         
         //Accreditation Time View
-        let accreditationTimeView = contentView.accreditationTimeView as! AccreditationTimeView
+        let accreditationTimeView = contentView.accreditationTimeView as! PXInstructionsAccreditationTimeView
         XCTAssertNotNil(accreditationTimeView.accreditationMessageLabel)
         let text = "Assim que você pagar, será aprovado automaticamente entre 1 e 2 dias úteis, mas considere: Em caso de feriados, será identificado até às 18h do segundo dia útil subsequente ao feriado."
         let clockImage = NSTextAttachment()

@@ -14,7 +14,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(instructionsAccreditationTime: PXInstructionsAccreditationTimeComponent) -> UIView {
-        let instructionsAccreditationTimeView = AccreditationTimeView()
+        let instructionsAccreditationTimeView = PXInstructionsAccreditationTimeView()
         instructionsAccreditationTimeView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationTimeView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -80,7 +80,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
     }
 }
 
-class AccreditationTimeView: UIView {
+class PXInstructionsAccreditationTimeView: UIView {
     public var accreditationMessageLabel: UILabel?
     public var accreditationCommentsComponents: [UIView]?
 }
