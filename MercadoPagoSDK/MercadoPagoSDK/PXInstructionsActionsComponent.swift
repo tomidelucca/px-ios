@@ -15,13 +15,13 @@ class PXInstructionsActionsComponent: NSObject, PXComponetizable {
         self.props = props
     }
     
-    public func getActionComponents() -> [InstructionsActionComponent] {
-        var actionComponents: [InstructionsActionComponent] = []
+    public func getActionComponents() -> [PXInstructionsActionComponent] {
+        var actionComponents: [PXInstructionsActionComponent] = []
         if let actions = props.instructionActions, !actions.isEmpty {
             for action in actions {
                 if action.tag == ActionTag.LINK.rawValue {
                     let actionProps = InstructionsActionProps(instructionActionInfo: action)
-                    let actionComponent = InstructionsActionComponent(props: actionProps)
+                    let actionComponent = PXInstructionsActionComponent(props: actionProps)
                     actionComponents.append(actionComponent)
                 }
             }

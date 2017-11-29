@@ -30,7 +30,7 @@ class PXInstructionsActionsRenderer: NSObject {
         return instructionsActionsView
     }
     
-    func buildActionView(with action: InstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildActionView(with action: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
         let actionView = action.render()
         superView.addSubview(actionView)
         MPLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true

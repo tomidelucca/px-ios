@@ -13,7 +13,7 @@ class InstructionsActionRenderer: NSObject {
     let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
 
-    func render(instructionsAction: InstructionsActionComponent) -> UIView {
+    func render(instructionsAction: PXInstructionsActionComponent) -> UIView {
         let instructionsActionView = ActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
