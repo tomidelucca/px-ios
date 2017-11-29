@@ -1,5 +1,5 @@
 //
-//  InstructionsAccreditationTimeComponent.swift
+//  PXInstructionsAccreditationTimeComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
+class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
     var props: InstructionsAccreditationTimeProps
 
     init(props: InstructionsAccreditationTimeProps) {

@@ -80,9 +80,9 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return tertiaryInfoComponent
     }
 
-    func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent? {
+    func getAccreditationTimeComponent() -> PXInstructionsAccreditationTimeComponent? {
         let accreditationTimeProps = InstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
-        let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
+        let accreditationTimeComponent = PXInstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
 
