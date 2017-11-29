@@ -2094,13 +2094,13 @@
 			name = GuessingForm;
 			sourceTree = "<group>";
 		};
-		812BA9BC1FC8B1F800FF32C2 /* Body Payment Method */ = {
+		812BA9BC1FC8B1F800FF32C2 /* Payment Method */ = {
 			isa = PBXGroup;
 			children = (
 				812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */,
 				812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */,
 			);
-			name = "Body Payment Method";
+			name = "Payment Method";
 			sourceTree = "<group>";
 		};
 		812BA9C41FC8B4AA00FF32C2 /* Footer */ = {
@@ -2135,10 +2135,7 @@
 				81ACC80D1F9A68D900206F7B /* MPLayout.swift */,
 				812BA9C51FC8B4C600FF32C2 /* Header */,
 				812BA9C41FC8B4AA00FF32C2 /* Footer */,
-				81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */,
-				81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */,
-				FC3FC8471FBCC95C00CF29E1 /* Instructions */,
-				812BA9BC1FC8B1F800FF32C2 /* Body Payment Method */,
+				FCCC11F51FCF28CC0001A591 /* Body */,
 				81ACC80F1F9A69FB00206F7B /* Screen */,
 			);
 			name = Congrats;
@@ -2309,6 +2306,17 @@
 				FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */,
 			);
 			name = "Instruction Action";
+			sourceTree = "<group>";
+		};
+		FCCC11F51FCF28CC0001A591 /* Body */ = {
+			isa = PBXGroup;
+			children = (
+				81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */,
+				81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */,
+				FC3FC8471FBCC95C00CF29E1 /* Instructions */,
+				812BA9BC1FC8B1F800FF32C2 /* Payment Method */,
+			);
+			name = Body;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
