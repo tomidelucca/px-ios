@@ -45,7 +45,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
             pmDescription = (pm?.name)!
         }
         
-        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
+        let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
         return PXPaymentMethodComponent(props: bodyProps)
     }
     
