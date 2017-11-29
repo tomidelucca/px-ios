@@ -65,7 +65,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
     func buildFooterView() -> UIView {
         let footerProps = self.viewModel.getFooterComponentData()
-        let footerComponent = FooterComponent(props: footerProps)
+        let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
 

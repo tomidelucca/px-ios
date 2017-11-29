@@ -571,7 +571,7 @@
 		8138737C1FA8DDD6002095D6 /* PXHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */; };
 		8138737D1FA8DE6E002095D6 /* PXHeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */; };
 		8138737E1FA8DE8B002095D6 /* MPLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* MPLayout.swift */; };
-		8138737F1FA8DEA7002095D6 /* FooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* FooterComponent.swift */; };
+		8138737F1FA8DEA7002095D6 /* PXFooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */; };
 		813873801FA8DEB0002095D6 /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
 		813873811FA8DECE002095D6 /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		813873821FA8DEE7002095D6 /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
@@ -582,7 +582,7 @@
 		81ACC81C1F9A88F700206F7B /* PXResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */; };
 		81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */; };
 		81ACC81E1F9A88F700206F7B /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
-		81ACC81F1F9A88F700206F7B /* FooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* FooterComponent.swift */; };
+		81ACC81F1F9A88F700206F7B /* PXFooterComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */; };
 		81ACC8201F9A88F700206F7B /* FooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */; };
 		81ACC8211F9A88F700206F7B /* PXHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */; };
 		81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */; };
@@ -1070,7 +1070,7 @@
 		81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterRenderer.swift; sourceTree = "<group>"; };
 		81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderRenderer.swift; sourceTree = "<group>"; };
 		81ACC80D1F9A68D900206F7B /* MPLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPLayout.swift; sourceTree = "<group>"; };
-		81ACC80E1F9A68D900206F7B /* FooterComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterComponent.swift; sourceTree = "<group>"; };
+		81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFooterComponent.swift; sourceTree = "<group>"; };
 		81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewController.swift; sourceTree = "<group>"; };
 		81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewModel.swift; sourceTree = "<group>"; };
 		8DB007FF143DCF995E060D5D /* Pods-MercadoPagoSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MercadoPagoSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2107,7 +2107,7 @@
 		812BA9C41FC8B4AA00FF32C2 /* Footer */ = {
 			isa = PBXGroup;
 			children = (
-				81ACC80E1F9A68D900206F7B /* FooterComponent.swift */,
+				81ACC80E1F9A68D900206F7B /* PXFooterComponent.swift */,
 				81ACC80B1F9A68D900206F7B /* FooterRenderer.swift */,
 			);
 			name = Footer;
@@ -2775,7 +2775,7 @@
 				15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */,
 				76943ED91D51405E00358442 /* InstructionsInfo.swift in Sources */,
 				0F98835B1AD2AB6000F750F0 /* Bin.swift in Sources */,
-				81ACC81F1F9A88F700206F7B /* FooterComponent.swift in Sources */,
+				81ACC81F1F9A88F700206F7B /* PXFooterComponent.swift in Sources */,
 				0F98838D1AD2AB6000F750F0 /* Phone.swift in Sources */,
 				0F98835D1AD2AB6000F750F0 /* Card.swift in Sources */,
 				FCF0EEBB1FA111F9007D878C /* MercadoPagoServicesModelAdapter.swift in Sources */,
@@ -3175,7 +3175,7 @@
 				8138737E1FA8DE8B002095D6 /* MPLayout.swift in Sources */,
 				15F3D7591EA65B3B00DC57AA /* CardsAdminViewModelTest.swift in Sources */,
 				0F9883921AD2AB6000F750F0 /* SavedCardToken.swift in Sources */,
-				8138737F1FA8DEA7002095D6 /* FooterComponent.swift in Sources */,
+				8138737F1FA8DEA7002095D6 /* PXFooterComponent.swift in Sources */,
 				15904D601E0976DB00B3B9FD /* MLPXSpinnerConfig.m in Sources */,
 				FC20C9D21F05580E003A018C /* ArrayExtensionsTest.swift in Sources */,
 				0FC4FC2E1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
