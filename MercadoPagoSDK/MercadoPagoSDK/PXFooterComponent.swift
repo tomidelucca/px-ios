@@ -9,28 +9,28 @@
 import UIKit
 
 class PXFooterComponent: NSObject, PXComponetizable {
-  var props: FooterProps
+  var props: PXFooterProps
 
-    init(props: FooterProps) {
+    init(props: PXFooterProps) {
         self.props = props
     }
 
     func render() -> UIView {
-        return FooterRenderer().render(footer: self)
+        return PXFooterRenderer().render(footer: self)
     }
 }
-class FooterProps: NSObject {
-    var buttonAction: FooterAction?
-    var linkAction: FooterAction?
+class PXFooterProps: NSObject {
+    var buttonAction: PXFooterAction?
+    var linkAction: PXFooterAction?
     var primaryColor: UIColor?
-    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
+    init(buttonAction: PXFooterAction? = nil, linkAction: PXFooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
         self.primaryColor = primaryColor
     }
 }
 
-class FooterAction: NSObject {
+class PXFooterAction: NSObject {
     var label: String
     var action : (() -> Void)
     init(label: String, action:  @escaping (() -> Void)) {

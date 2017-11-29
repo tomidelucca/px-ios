@@ -1,5 +1,5 @@
 //
-//  BodyViewModelHelper.swift
+//  PXBodyViewModelHelper.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/27/17.

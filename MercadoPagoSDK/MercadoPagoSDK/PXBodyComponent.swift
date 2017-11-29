@@ -25,7 +25,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         return instructionsComponent
     }
     
-    public func getPaymentMethodComponent() -> PXPaymentMethodBodyComponent {
+    public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData?.paymentMethod
         let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
         var amountTitle = MercadoPagoContext.getCurrency().symbol + " " + String(format:"%.02f",self.props.amount)
@@ -49,8 +49,8 @@ open class PXBodyComponent: NSObject, PXComponetizable {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
        
-        let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
-        return PXPaymentMethodBodyComponent(props: bodyProps)
+        let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
+        return PXPaymentMethodComponent(props: bodyProps)
     }
     
     public func render() -> UIView {

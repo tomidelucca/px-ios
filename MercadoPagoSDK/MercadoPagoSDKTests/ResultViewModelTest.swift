@@ -30,6 +30,7 @@ class ResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
         
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
         XCTAssertNil(footerView.principalButton)
@@ -347,10 +348,10 @@ class ResultViewModelTest: BaseTest {
         return PXBodyRenderer().render(body: bodyComponent)
     }
     
-    func buildFooterView(resultViewModel: PXResultViewModel) -> FooterView {
-        let data = FooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
+    func buildFooterView(resultViewModel: PXResultViewModel) -> PXFooterView {
+        let data = PXFooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
         let footerComponent = PXFooterComponent(props: data)
-        return FooterRenderer().render(footer: footerComponent)
+        return PXFooterRenderer().render(footer: footerComponent)
     }
 }
 

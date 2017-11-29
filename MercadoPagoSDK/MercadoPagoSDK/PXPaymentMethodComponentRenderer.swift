@@ -1,5 +1,5 @@
 //
-//  PXPaymentMethodBodyComponentRenderer.swift
+//  PXPaymentMethodComponentRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 24/11/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXPaymentMethodBodyComponentRenderer: NSObject {
+class PXPaymentMethodComponentRenderer: NSObject {
     //Image
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
@@ -18,8 +18,8 @@ class PXPaymentMethodBodyComponentRenderer: NSObject {
     let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
     let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
     
-    func render(component: PXPaymentMethodBodyComponent) -> UIView {
-        let pmBodyView = PXPaymentMethodBodyView()
+    func render(component: PXPaymentMethodComponent) -> UIView {
+        let pmBodyView = PXPaymentMethodView()
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -108,7 +108,7 @@ class PXPaymentMethodBodyComponentRenderer: NSObject {
     }
 }
 
-class PXPaymentMethodBodyView: PXBodyView {
+class PXPaymentMethodView: PXBodyView {
     var paymentMethodIcon: UIImageView?
     var amountTitle: UILabel?
     var amountDetail: UILabel?
