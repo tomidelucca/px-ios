@@ -23,7 +23,7 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
     }
 
     func getContentComponent() -> PXInstructionsContentComponent? {
-        let instructionsContentProps = InstructionsContentProps(instruction: props.instruction)
+        let instructionsContentProps = PXInstructionsContentProps(instruction: props.instruction)
         let instructionsContentComponent = PXInstructionsContentComponent(props: instructionsContentProps)
         return instructionsContentComponent
     }

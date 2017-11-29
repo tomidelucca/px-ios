@@ -9,9 +9,9 @@
 import Foundation
 
 public class PXInstructionsContentComponent: NSObject, PXComponetizable {
-    var props: InstructionsContentProps
+    var props: PXInstructionsContentProps
 
-    init(props: InstructionsContentProps) {
+    init(props: PXInstructionsContentProps) {
         self.props = props
     }
 
@@ -125,7 +125,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return InstructionsContentRenderer().render(instructionsContent: self)
     }
 }
-public class InstructionsContentProps: NSObject {
+public class PXInstructionsContentProps: NSObject {
     var instruction: Instruction
     init(instruction: Instruction) {
         self.instruction = instruction
