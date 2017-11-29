@@ -347,7 +347,7 @@ class ResultViewModelTest: BaseTest {
         return PXBodyRenderer().render(body: bodyComponent)
     }
     
-    func buildFooterView(resultViewModel: PXResultViewModel) -> FooterView {
+    func buildFooterView(resultViewModel: PXResultViewModel) -> PXFooterView {
         let data = PXFooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
         let footerComponent = PXFooterComponent(props: data)
         return PXFooterRenderer().render(footer: footerComponent)

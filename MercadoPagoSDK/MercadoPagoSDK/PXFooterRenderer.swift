@@ -12,8 +12,8 @@ class PXFooterRenderer: NSObject {
 
     let BUTTON_HEIGHT: CGFloat = 50.0
 
-    func render(footer: PXFooterComponent) -> FooterView {
-        let fooView = FooterView()
+    func render(footer: PXFooterComponent) -> PXFooterView {
+        let fooView = PXFooterView()
         var topView: UIView = fooView
         fooView.translatesAutoresizingMaskIntoConstraints = false
         fooView.backgroundColor = .pxWhite
@@ -69,7 +69,7 @@ class PXFooterRenderer: NSObject {
     }
 }
 
-class FooterView: UIView {
+class PXFooterView: UIView {
     public var principalButton: UIButton?
     public var linkButton: UIButton?
 }
