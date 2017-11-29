@@ -15,7 +15,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
     let INFO_LABEL_FONT_SIZE: CGFloat = 12.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(_ instructionsTertiaryInfo: PXInstructionsTertiaryInfoComponent) -> UIView {
+    func render(_ instructionsTertiaryInfo: PXInstructionsTertiaryInfoComponent) -> PXInstructionsTertiaryInfoView {
         let instructionsTertiaryInfoView = PXInstructionsTertiaryInfoView()
         instructionsTertiaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsTertiaryInfoView.backgroundColor = .pxLightGray

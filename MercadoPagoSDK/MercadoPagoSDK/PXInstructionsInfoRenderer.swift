@@ -15,7 +15,7 @@ class PXInstructionsInfoRenderer: NSObject {
     let INFO_LABEL_FONT_SIZE: CGFloat = 16.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(_ instructionsInfo: PXInstructionsInfoComponent) -> UIView {
+    func render(_ instructionsInfo: PXInstructionsInfoComponent) -> PXInstructionsInfoView {
         let instructionsInfoView = PXInstructionsInfoView()
         instructionsInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsInfoView.backgroundColor = .pxLightGray
