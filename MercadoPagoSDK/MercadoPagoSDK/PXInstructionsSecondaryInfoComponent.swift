@@ -15,7 +15,7 @@ public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponetizable {
         self.props = props
     }
     public func render() -> UIView {
-        return InstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
+        return PXInstructionsSecondaryInfoRenderer().render(instructionsSecondaryInfo: self)
     }
 }
 public class PXInstructionsSecondaryInfoProps: NSObject {

@@ -1,5 +1,5 @@
 //
-//  InstructionsSecondaryInfoRenderer.swift
+//  PXInstructionsSecondaryInfoRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsSecondaryInfoRenderer: NSObject {
+class PXInstructionsSecondaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 12.0
 
