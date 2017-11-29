@@ -15,12 +15,12 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
         self.props = props
     }
     
-    public func getReferenceComponents() -> [InstructionReferenceComponent] {
-        var referenceComponents: [InstructionReferenceComponent] = []
+    public func getReferenceComponents() -> [PXInstructionsReferenceComponent] {
+        var referenceComponents: [PXInstructionsReferenceComponent] = []
         if let references = props.references, !references.isEmpty {
             for reference in references {
                 let referenceProps = InstructionReferenceProps(reference: reference)
-                let referenceComponent = InstructionReferenceComponent(props: referenceProps)
+                let referenceComponent = PXInstructionsReferenceComponent(props: referenceProps)
                 referenceComponents.append(referenceComponent)
             }
         }

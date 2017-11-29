@@ -61,7 +61,7 @@ class PXInstructionsReferencesRenderer: NSObject {
         return titleLabel
     }
 
-    func buildReferenceView(with reference: InstructionReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildReferenceView(with reference: PXInstructionsReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
 
         let referenceView = reference.render()
         superView.addSubview(referenceView)
