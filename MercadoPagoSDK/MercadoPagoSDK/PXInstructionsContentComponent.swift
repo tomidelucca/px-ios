@@ -50,7 +50,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
             }
         }
 
-        let infoProps = InstructionsInfoProps(infoTitle: title, infoContent: content, bottomDivider: hasBottomDivider)
+        let infoProps = PXInstructionsInfoProps(infoTitle: title, infoContent: content, bottomDivider: hasBottomDivider)
         let infoComponent = PXInstructionsInfoComponent(props: infoProps)
         return infoComponent
     }

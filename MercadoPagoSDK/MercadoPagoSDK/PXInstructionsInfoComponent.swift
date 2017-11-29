@@ -9,16 +9,16 @@
 import Foundation
 
 class PXInstructionsInfoComponent: NSObject, PXComponetizable {
-    var props: InstructionsInfoProps
+    var props: PXInstructionsInfoProps
 
-    init(props: InstructionsInfoProps) {
+    init(props: PXInstructionsInfoProps) {
         self.props = props
     }
     func render() -> UIView {
         return InstructionsInfoRenderer().render(instructionsInfo: self)
     }
 }
-class InstructionsInfoProps: NSObject {
+class PXInstructionsInfoProps: NSObject {
     var infoTitle: String?
     var infoContent: [String]?
     var bottomDivider: Bool?
