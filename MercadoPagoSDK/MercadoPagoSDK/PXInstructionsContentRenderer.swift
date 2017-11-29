@@ -11,7 +11,7 @@ import Foundation
 class PXInstructionsContentRenderer: NSObject {
 
     func render(instructionsContent: PXInstructionsContentComponent) -> UIView {
-        let instructionsContentView = ContentView()
+        let instructionsContentView = PXInstructionsContentView()
         instructionsContentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsContentView.backgroundColor = .pxLightGray
         var bottomView: UIView!
@@ -87,7 +87,7 @@ class PXInstructionsContentRenderer: NSObject {
     }
 }
 
-class ContentView: UIView {
+class PXInstructionsContentView: UIView {
     public var infoView: UIView?
     public var referencesView: UIView?
     public var tertiaryInfoView: UIView?

@@ -182,7 +182,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Content View
         XCTAssertNotNil(instructionsView.contentView)
-        let contentView = instructionsView.contentView as! ContentView
+        let contentView = instructionsView.contentView as! PXInstructionsContentView
         XCTAssertNotNil(contentView.infoView)
         XCTAssertNotNil(contentView.referencesView)
         XCTAssertNil(contentView.tertiaryInfoView)
@@ -250,7 +250,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Content View
         XCTAssertNotNil(instructionsView.contentView)
-        let contentView = instructionsView.contentView as! ContentView
+        let contentView = instructionsView.contentView as! PXInstructionsContentView
         
         //Content View Sub components
         XCTAssertNotNil(contentView.infoView)
