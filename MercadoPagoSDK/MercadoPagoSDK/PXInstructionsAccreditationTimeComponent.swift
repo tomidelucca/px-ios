@@ -9,9 +9,9 @@
 import Foundation
 
 class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
-    var props: InstructionsAccreditationTimeProps
+    var props: PXInstructionsAccreditationTimeProps
 
-    init(props: InstructionsAccreditationTimeProps) {
+    init(props: PXInstructionsAccreditationTimeProps) {
         self.props = props
     }
     
@@ -31,7 +31,7 @@ class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
         return InstructionsAccreditationTimeRenderer().render(instructionsAccreditationTime: self)
     }
 }
-class InstructionsAccreditationTimeProps: NSObject {
+class PXInstructionsAccreditationTimeProps: NSObject {
     var accreditationMessage: String?
     var accreditationComments: [String]?
     init(accreditationMessage: String?, accreditationComments: [String]?) {
