@@ -15,7 +15,6 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
         self.props = props
     }
 
-    
     func getSubtitleComponent() -> PXInstructionsSubtitleComponent? {
         let instructionsSubtitleProps = PXInstructionsSubtitleProps(subtitle: props.instruction.subtitle!)
         let instructionsSubtitleComponent = PXInstructionsSubtitleComponent(props: instructionsSubtitleProps)
@@ -28,7 +27,6 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
         return instructionsContentComponent
     }
 
-    
     func getSecondaryInfoComponent() -> PXInstructionsSecondaryInfoComponent? {
         let instructionsSecondaryInfoProps = PXInstructionsSecondaryInfoProps(secondaryInfo: props.instruction.secondaryInfo!)
         let instructionsSecondaryInfoComponent = PXInstructionsSecondaryInfoComponent(props: instructionsSecondaryInfoProps)
@@ -47,7 +45,6 @@ public class PXInstructionsComponent: NSObject, PXComponetizable {
         return MercadoPagoCheckoutViewModel.servicePreference.shouldShowEmailConfirmationCell()
     }
 
-    
     public func render() -> UIView {
         return PXInstructionsRenderer().render(instructions: self)
     }

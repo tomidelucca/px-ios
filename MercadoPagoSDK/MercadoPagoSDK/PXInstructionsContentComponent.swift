@@ -19,7 +19,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
 
-    func getInfoComponent() -> InstructionsInfoComponent? {
+    func getInfoComponent() -> PXInstructionsInfoComponent? {
         var content: [String] = []
         var info: [String] = props.instruction.info
 
@@ -51,11 +51,10 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         }
 
         let infoProps = InstructionsInfoProps(infoTitle: title, infoContent: content, bottomDivider: hasBottomDivider)
-        let infoComponent = InstructionsInfoComponent(props: infoProps)
+        let infoComponent = PXInstructionsInfoComponent(props: infoProps)
         return infoComponent
     }
 
-    
     func getReferencesComponent() -> InstructionsReferencesComponent? {
         let info: [String] = props.instruction.info
         var spacesFound = 0
@@ -74,7 +73,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }
-    
+
     func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent? {
         let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
@@ -87,7 +86,6 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return accreditationTimeComponent
     }
 
-    
     func getActionsComponent() -> InstructionsActionsComponent? {
         let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
         let actionsComponent = InstructionsActionsComponent(props: actionsProps)
@@ -120,7 +118,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
     public func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
     }
-    
+
     public func render() -> UIView {
         return PXInstructionsContentRenderer().render(instructionsContent: self)
     }

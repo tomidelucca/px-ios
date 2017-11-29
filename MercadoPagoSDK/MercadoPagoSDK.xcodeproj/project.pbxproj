@@ -612,8 +612,8 @@
 		FC3FC8581FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */; };
 		FC3FC85A1FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8591FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift */; };
 		FC3FC85B1FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8591FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift */; };
-		FC3FC85E1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */; };
-		FC3FC85F1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */; };
+		FC3FC85E1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */; };
+		FC3FC85F1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */; };
 		FC3FC8611FBE113100CF29E1 /* InstructionsInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8601FBE113100CF29E1 /* InstructionsInfoRenderer.swift */; };
 		FC3FC8621FBE113100CF29E1 /* InstructionsInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8601FBE113100CF29E1 /* InstructionsInfoRenderer.swift */; };
 		FC3FC8651FBE117200CF29E1 /* InstructionsReferencesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */; };
@@ -1093,7 +1093,7 @@
 		FC3FC8521FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsContentRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSecondaryInfoComponent.swift; sourceTree = "<group>"; };
 		FC3FC8591FBCCAF800CF29E1 /* PXInstructionsSecondaryInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSecondaryInfoRenderer.swift; sourceTree = "<group>"; };
-		FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsInfoComponent.swift; sourceTree = "<group>"; };
+		FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsInfoComponent.swift; sourceTree = "<group>"; };
 		FC3FC8601FBE113100CF29E1 /* InstructionsInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsInfoRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8641FBE117200CF29E1 /* InstructionsReferencesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsReferencesComponent.swift; sourceTree = "<group>"; };
 		FC3FC8671FBE118100CF29E1 /* InstructionsReferencesRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsReferencesRenderer.swift; sourceTree = "<group>"; };
@@ -2239,7 +2239,7 @@
 		FC3FC8631FBE113900CF29E1 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */,
+				FC3FC85D1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift */,
 				FC3FC8601FBE113100CF29E1 /* InstructionsInfoRenderer.swift */,
 			);
 			name = Info;
@@ -2865,7 +2865,7 @@
 				0F9883AF1AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
 				FC3FC8571FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */,
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
-				FC3FC85E1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */,
+				FC3FC85E1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
 				FCBF13521E720A6E0092B756 /* EntityTypeTableViewCell.swift in Sources */,
 				0F98835F1AD2AB6000F750F0 /* Cardholder.swift in Sources */,
@@ -3196,7 +3196,7 @@
 				FCBF13431E7201570092B756 /* FinancialInstituion.swift in Sources */,
 				FC3FC8511FBCCAA700CF29E1 /* PXInstructionsContentComponent.swift in Sources */,
 				0F9883B61AD2AD0C00F750F0 /* Regex.swift in Sources */,
-				FC3FC85F1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */,
+				FC3FC85F1FBE111000CF29E1 /* PXInstructionsInfoComponent.swift in Sources */,
 				76EC47CA1C85E3C80086FA53 /* CardholderTest.swift in Sources */,
 				FC3FC8541FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift in Sources */,
 				155954F61F87D2040086854B /* PayerInfoViewModel.swift in Sources */,
