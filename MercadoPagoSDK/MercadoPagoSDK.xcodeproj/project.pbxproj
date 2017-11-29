@@ -602,8 +602,8 @@
 		FC3FC8461FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
 		FC3FC8491FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */; };
 		FC3FC84A1FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */; };
-		FC3FC84C1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */; };
-		FC3FC84D1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */; };
+		FC3FC84C1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift */; };
+		FC3FC84D1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84B1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift */; };
 		FC3FC8501FBCCAA700CF29E1 /* InstructionsContentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84F1FBCCAA700CF29E1 /* InstructionsContentComponent.swift */; };
 		FC3FC8511FBCCAA700CF29E1 /* InstructionsContentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84F1FBCCAA700CF29E1 /* InstructionsContentComponent.swift */; };
 		FC3FC8531FBCCAB600CF29E1 /* InstructionsContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8521FBCCAB600CF29E1 /* InstructionsContentRenderer.swift */; };
@@ -1088,7 +1088,7 @@
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
-		FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSubtitleRenderer.swift; sourceTree = "<group>"; };
+		FC3FC84B1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleRenderer.swift; sourceTree = "<group>"; };
 		FC3FC84F1FBCCAA700CF29E1 /* InstructionsContentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsContentComponent.swift; sourceTree = "<group>"; };
 		FC3FC8521FBCCAB600CF29E1 /* InstructionsContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsContentRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8561FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSecondaryInfoComponent.swift; sourceTree = "<group>"; };
@@ -2208,7 +2208,7 @@
 			isa = PBXGroup;
 			children = (
 				FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */,
-				FC3FC84B1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift */,
+				FC3FC84B1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift */,
 			);
 			name = Subtitle;
 			sourceTree = "<group>";
@@ -2882,7 +2882,7 @@
 				76C834411D510CD4003C4717 /* AmountInfo.swift in Sources */,
 				4B88E2571E48CC5C00D52527 /* MPCustomCell.swift in Sources */,
 				4B5C1A681F82AEB6008E56B9 /* UIView+Additions.swift in Sources */,
-				FC3FC84C1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */,
+				FC3FC84C1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */,
 				812BA9C31FC8B31800FF32C2 /* PXPaymentMethodBodyComponentRenderer.swift in Sources */,
 				0F9883BA1AD2AD1600F750F0 /* String+Additions.swift in Sources */,
 				76062BD71C4D20C30067A14B /* PaymentVaultViewController.swift in Sources */,
@@ -3225,7 +3225,7 @@
 				15521E391E60A0B000148979 /* AppDecorationKeeper.swift in Sources */,
 				0F98837C1AD2AB6000F750F0 /* Issuer.swift in Sources */,
 				23BC73851F0E84FB00B19C1A /* CauseTest.swift in Sources */,
-				FC3FC84D1FBCC9B600CF29E1 /* InstructionsSubtitleRenderer.swift in Sources */,
+				FC3FC84D1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */,
 				76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */,
 				767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */,
 				15B8B1C21E71DEBD0065DF50 /* CouponDetailViewController.swift in Sources */,

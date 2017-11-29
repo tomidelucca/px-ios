@@ -17,7 +17,7 @@ public class PXInstructionsSubtitleComponent: NSObject, PXComponetizable{
     }
 
     public func render() -> UIView {
-        return InstructionsSubtitleRenderer().render(instructionsSubtitle: self)
+        return PXInstructionsSubtitleRenderer().render(instructionsSubtitle: self)
     }
 }
 public class PXInstructionsSubtitleProps: NSObject {
