@@ -323,7 +323,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertEqual(accreditationCommentView.commentLabel?.text, "Pagamentos realizados em correspondentes bancários podem ultrapassar este prazo.")
         
         //Actions View
-        let actionsView = contentView.actionsView as! ActionsView
+        let actionsView = contentView.actionsView as! PXInstructionsActionsView
         XCTAssertNotNil(actionsView.actionsViews)
         XCTAssertEqual(actionsView.actionsViews?.count, 1)
         

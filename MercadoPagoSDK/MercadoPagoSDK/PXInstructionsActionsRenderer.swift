@@ -14,7 +14,7 @@ class PXInstructionsActionsRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(instructionsActions: PXInstructionsActionsComponent) -> UIView {
-        let instructionsActionsView = ActionsView()
+        let instructionsActionsView = PXInstructionsActionsView()
         instructionsActionsView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionsView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -45,6 +45,6 @@ class PXInstructionsActionsRenderer: NSObject {
     }
 }
 
-class ActionsView: UIView {
+class PXInstructionsActionsView: UIView {
     public var actionsViews: [UIView]?
 }
