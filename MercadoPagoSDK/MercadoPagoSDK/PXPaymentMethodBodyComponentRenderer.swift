@@ -91,7 +91,7 @@ class PXPaymentMethodBodyComponentRenderer: NSObject {
     }
 }
 
-class PXPaymentMethodBodyView: BodyView {
+class PXPaymentMethodBodyView: PXBodyView {
     var paymentMethodIcon: UIImageView?
     var amountTitle: UILabel?
     var amountDetail: UILabel?

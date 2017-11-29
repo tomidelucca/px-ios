@@ -10,18 +10,18 @@ import UIKit
 
 class PXBodyRenderer: NSObject {
 
-    func render(body: PXBodyComponent) -> BodyView {
+    func render(body: PXBodyComponent) -> PXBodyView {
         var content : UIView = UIView()
         if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent()  {
             return instructionsComponent.render() as! InstructionsView
         } else if body.props.paymentResult.isApproved() {
-            return body.getPaymentMethodComponent().render() as! BodyView
+            return body.getPaymentMethodComponent().render() as! PXBodyView
         }
-        let bodyView = BodyView()
+        let bodyView = PXBodyView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         return bodyView
     }
 }
 
-class BodyView: UIView {
+class PXBodyView: UIView {
 }

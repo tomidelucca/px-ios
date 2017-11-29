@@ -341,7 +341,7 @@ class ResultViewModelTest: BaseTest {
         return HeaderRenderer().render(header: headerComponent)
     }
     
-    func buildBodyView(resultViewModel: PXResultViewModel) -> BodyView {
+    func buildBodyView(resultViewModel: PXResultViewModel) -> PXBodyView {
         let props = resultViewModel.bodyComponentProps()
         let bodyComponent = PXBodyComponent(props: props)
         return PXBodyRenderer().render(body: bodyComponent)
