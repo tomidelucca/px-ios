@@ -1,5 +1,5 @@
 //
-//  InstructionsActionRenderer.swift
+//  PXInstructionsActionRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsActionRenderer: NSObject {
+class PXInstructionsActionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()

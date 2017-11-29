@@ -15,7 +15,7 @@ class PXInstructionsActionComponent: NSObject, PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-        return InstructionsActionRenderer().render(instructionsAction: self)
+        return PXInstructionsActionRenderer().render(instructionsAction: self)
     }
 }
 class PXInstructionsActionProps: NSObject {

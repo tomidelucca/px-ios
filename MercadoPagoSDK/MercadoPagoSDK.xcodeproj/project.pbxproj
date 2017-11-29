@@ -642,8 +642,8 @@
 		FC3FC88E1FBE13D600CF29E1 /* PXInstructionsActionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88C1FBE13D600CF29E1 /* PXInstructionsActionsRenderer.swift */; };
 		FC3FC8901FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */; };
 		FC3FC8911FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */; };
-		FC3FC8931FBE13F900CF29E1 /* InstructionsActionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8921FBE13F900CF29E1 /* InstructionsActionRenderer.swift */; };
-		FC3FC8941FBE13F900CF29E1 /* InstructionsActionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8921FBE13F900CF29E1 /* InstructionsActionRenderer.swift */; };
+		FC3FC8931FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */; };
+		FC3FC8941FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */; };
 		FC45F1231E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */; };
 		FC45F1241E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */; };
 		FC45F1251E8D50F2008D4831 /* UnlockCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */; };
@@ -1108,7 +1108,7 @@
 		FC3FC8891FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC88C1FBE13D600CF29E1 /* PXInstructionsActionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionComponent.swift; sourceTree = "<group>"; };
-		FC3FC8921FBE13F900CF29E1 /* InstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionRenderer.swift; sourceTree = "<group>"; };
+		FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionRenderer.swift; sourceTree = "<group>"; };
 		FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockCardTableViewCell.swift; sourceTree = "<group>"; };
 		FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnlockCardTableViewCell.xib; sourceTree = "<group>"; };
 		FC7146A21F7BF65A00224B4E /* InstructionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewModel.swift; sourceTree = "<group>"; };
@@ -2306,7 +2306,7 @@
 			isa = PBXGroup;
 			children = (
 				FC3FC88F1FBE13E800CF29E1 /* PXInstructionsActionComponent.swift */,
-				FC3FC8921FBE13F900CF29E1 /* InstructionsActionRenderer.swift */,
+				FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */,
 			);
 			name = "Instruction Action";
 			sourceTree = "<group>";
@@ -2691,7 +2691,7 @@
 				15822D531F69ABD5008353B9 /* PayerCostView.swift in Sources */,
 				15E08F661DA2A2BF0087041B /* JSONHandler.swift in Sources */,
 				FC3FC86C1FBE11C500CF29E1 /* PXInstructionsReferenceComponent.swift in Sources */,
-				FC3FC8931FBE13F900CF29E1 /* InstructionsActionRenderer.swift in Sources */,
+				FC3FC8931FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */,
 				151A94181DBFBBC700A5557B /* PaymentSearchCollectionViewCell.swift in Sources */,
 				76FD24851C5BFEA1008C5DC0 /* HoshiTextField.swift in Sources */,
 				CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */,
@@ -3150,7 +3150,7 @@
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
 				4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */,
 				7652F43E1D78ADEE006022AF /* MPStepBuilderTest.swift in Sources */,
-				FC3FC8941FBE13F900CF29E1 /* InstructionsActionRenderer.swift in Sources */,
+				FC3FC8941FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */,
 				76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */,
 				4B34DC371E5DAEF300FDD295 /* PaymentResultViewModel.swift in Sources */,
 				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
