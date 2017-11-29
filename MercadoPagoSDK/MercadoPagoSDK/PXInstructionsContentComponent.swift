@@ -69,7 +69,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
             }
         }
 
-        let referencesProps = InstructionsReferencesProps(title: title, references: props.instruction.references)
+        let referencesProps = PXInstructionsReferencesProps(title: title, references: props.instruction.references)
         let referencesComponent = PXInstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }

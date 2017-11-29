@@ -9,9 +9,9 @@
 import Foundation
 
 class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
-    var props: InstructionsReferencesProps
+    var props: PXInstructionsReferencesProps
 
-    init(props: InstructionsReferencesProps) {
+    init(props: PXInstructionsReferencesProps) {
         self.props = props
     }
     
@@ -31,7 +31,7 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
         return InstructionsReferencesRenderer().render(instructionsReferences: self)
     }
 }
-class InstructionsReferencesProps: NSObject {
+class PXInstructionsReferencesProps: NSObject {
     var title: String?
     var references: [InstructionReference]?
     init(title: String, references: [InstructionReference]?) {
