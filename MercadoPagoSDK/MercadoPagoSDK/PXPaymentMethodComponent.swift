@@ -1,5 +1,5 @@
 //
-//  PXPaymentMethodBodyComponent.swift
+//  PXPaymentMethodComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 24/11/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PXPaymentMethodBodyComponent: NSObject, PXComponetizable {
+public class PXPaymentMethodComponent: NSObject, PXComponetizable {
     var props: PXPaymentMethodBodyComponentProps
 
     init(props: PXPaymentMethodBodyComponentProps) {

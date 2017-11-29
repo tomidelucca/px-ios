@@ -25,7 +25,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         return instructionsComponent
     }
     
-    public func getPaymentMethodComponent() -> PXPaymentMethodBodyComponent {
+    public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData?.paymentMethod
         let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
         var amountTitle = String(self.props.amount)
@@ -46,7 +46,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         }
         
         let bodyProps = PXPaymentMethodBodyComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName)
-        return PXPaymentMethodBodyComponent(props: bodyProps)
+        return PXPaymentMethodComponent(props: bodyProps)
     }
     
     public func render() -> UIView {
