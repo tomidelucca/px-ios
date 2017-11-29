@@ -608,8 +608,8 @@
 		FC3FC8511FBCCAA700CF29E1 /* PXInstructionsContentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC84F1FBCCAA700CF29E1 /* PXInstructionsContentComponent.swift */; };
 		FC3FC8531FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8521FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift */; };
 		FC3FC8541FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8521FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift */; };
-		FC3FC8571FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8561FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift */; };
-		FC3FC8581FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8561FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift */; };
+		FC3FC8571FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */; };
+		FC3FC8581FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */; };
 		FC3FC85A1FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8591FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift */; };
 		FC3FC85B1FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8591FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift */; };
 		FC3FC85E1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */; };
@@ -1091,7 +1091,7 @@
 		FC3FC84B1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleRenderer.swift; sourceTree = "<group>"; };
 		FC3FC84F1FBCCAA700CF29E1 /* PXInstructionsContentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsContentComponent.swift; sourceTree = "<group>"; };
 		FC3FC8521FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsContentRenderer.swift; sourceTree = "<group>"; };
-		FC3FC8561FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSecondaryInfoComponent.swift; sourceTree = "<group>"; };
+		FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSecondaryInfoComponent.swift; sourceTree = "<group>"; };
 		FC3FC8591FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsSecondaryInfoRenderer.swift; sourceTree = "<group>"; };
 		FC3FC85D1FBE111000CF29E1 /* InstructionsInfoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsInfoComponent.swift; sourceTree = "<group>"; };
 		FC3FC8601FBE113100CF29E1 /* InstructionsInfoRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsInfoRenderer.swift; sourceTree = "<group>"; };
@@ -2230,7 +2230,7 @@
 		FC3FC85C1FBCCAFC00CF29E1 /* SecondaryInfo */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC8561FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift */,
+				FC3FC8561FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift */,
 				FC3FC8591FBCCAF800CF29E1 /* InstructionsSecondaryInfoRenderer.swift */,
 			);
 			name = SecondaryInfo;
@@ -2863,7 +2863,7 @@
 				4BD84D721F1E48FB002219D4 /* MercadoPagoCheckoutServices.swift in Sources */,
 				0F98836B1AD2AB6000F750F0 /* Customer.swift in Sources */,
 				0F9883AF1AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
-				FC3FC8571FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift in Sources */,
+				FC3FC8571FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */,
 				0F9883651AD2AB6000F750F0 /* CardToken.swift in Sources */,
 				FC3FC85E1FBE111000CF29E1 /* InstructionsInfoComponent.swift in Sources */,
 				0F98838F1AD2AB6000F750F0 /* Refund.swift in Sources */,
@@ -3143,7 +3143,7 @@
 				15B8B1B31E71DE950065DF50 /* DiscountDetailView.swift in Sources */,
 				156A743B1F59CE59006BC4A7 /* CardNotAvailableErrorView.swift in Sources */,
 				0F98836A1AD2AB6000F750F0 /* Currency.swift in Sources */,
-				FC3FC8581FBCCAD200CF29E1 /* InstructionsSecondaryInfoComponent.swift in Sources */,
+				FC3FC8581FBCCAD200CF29E1 /* PXInstructionsSecondaryInfoComponent.swift in Sources */,
 				76EC47C61C85E1EA0086FA53 /* BinTest.swift in Sources */,
 				7622E33E1DF5F2B400490C4E /* PurchaseItemDetailTableViewCell.swift in Sources */,
 				76EC47E41C85F01D0086FA53 /* OrderTest.swift in Sources */,

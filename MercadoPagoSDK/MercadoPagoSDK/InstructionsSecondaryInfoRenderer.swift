@@ -12,7 +12,7 @@ class InstructionsSecondaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 12.0
 
-    func render(instructionsSecondaryInfo: InstructionsSecondaryInfoComponent) -> UIView {
+    func render(instructionsSecondaryInfo: PXInstructionsSecondaryInfoComponent) -> UIView {
         let instructionsSecondaryInfoView = SecondaryInfoView()
         instructionsSecondaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSecondaryInfoView.backgroundColor = .pxWhite
