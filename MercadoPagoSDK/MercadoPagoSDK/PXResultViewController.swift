@@ -33,25 +33,25 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Header
         headerView = self.buildHeaderView()
         contentView.addSubview(headerView)
-        MPLayout.pinTop(view: headerView, to: contentView).isActive = true
-        MPLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
+        PXLayout.pinTop(view: headerView, to: contentView).isActive = true
+        PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
 
         //Add Foo
         fooView = buildFooterView()
         contentView.addSubview(fooView)
-        MPLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
-        MPLayout.pinBottom(view: fooView, to: contentView).isActive = true
-        MPLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
+        PXLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
+        PXLayout.pinBottom(view: fooView, to: contentView).isActive = true
+        PXLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
-        MPLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
+        PXLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
 
         //Add Body
         let bodyView = self.buildBodyView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        MPLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
-        MPLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
-        MPLayout.put(view: bodyView, aboveOf: fooView).isActive = true
+        PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
+        PXLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
+        PXLayout.put(view: bodyView, aboveOf: fooView).isActive = true
 
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)

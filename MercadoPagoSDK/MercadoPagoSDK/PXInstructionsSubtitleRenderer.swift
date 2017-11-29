@@ -36,11 +36,11 @@ class PXInstructionsSubtitleRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
-        MPLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
-        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+        PXLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
+        PXLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinTop(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
         return subtitleLabel
     }
 }

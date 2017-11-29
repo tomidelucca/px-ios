@@ -1,5 +1,5 @@
 //
-//  MPLayout.swift
+//  PXLayout.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MPLayout: NSObject {
+class PXLayout: NSObject {
 
     //Margins
     static let ZERO_MARGIN: CGFloat = 0.0

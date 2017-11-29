@@ -26,7 +26,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
             lastLabel = secondaryInfoLabel
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: MPLayout.S_MARGIN)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: PXLayout.S_MARGIN)?.isActive = true
 
         return instructionsSecondaryInfoView
     }
@@ -45,13 +45,13 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
-        MPLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: secondaryInfoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: secondaryInfoLabel, to: superView).isActive = true
+        PXLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: secondaryInfoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: secondaryInfoLabel, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: MPLayout.S_MARGIN).isActive = true
+            PXLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: MPLayout.S_MARGIN).isActive = true
+            PXLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
         return secondaryInfoLabel

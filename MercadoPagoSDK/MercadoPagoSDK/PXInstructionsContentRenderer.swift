@@ -19,9 +19,9 @@ class PXInstructionsContentRenderer: NSObject {
         if instructionsContent.hasInfo(), let infoComponent = instructionsContent.getInfoComponent() {
             instructionsContentView.infoView = infoComponent.render()
             instructionsContentView.addSubview(instructionsContentView.infoView!)
-            MPLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            MPLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+            PXLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+            PXLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
+            PXLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.infoView
         }
 
@@ -29,13 +29,13 @@ class PXInstructionsContentRenderer: NSObject {
             instructionsContentView.referencesView = referencesComponent.render()
             instructionsContentView.addSubview(instructionsContentView.referencesView!)
             if let lastView = bottomView {
-                MPLayout.put(view: instructionsContentView.referencesView!, onBottomOf: lastView).isActive = true
+                PXLayout.put(view: instructionsContentView.referencesView!, onBottomOf: lastView).isActive = true
             } else {
-                MPLayout.pinTop(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+                PXLayout.pinTop(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
             }
 
-            MPLayout.centerHorizontally(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            PXLayout.centerHorizontally(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            PXLayout.equalizeWidth(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.referencesView
         }
 
@@ -43,12 +43,12 @@ class PXInstructionsContentRenderer: NSObject {
             instructionsContentView.tertiaryInfoView = tertiaryInfoComponent.render()
             instructionsContentView.addSubview(instructionsContentView.tertiaryInfoView!)
             if let lastView = bottomView {
-                MPLayout.put(view: instructionsContentView.tertiaryInfoView!, onBottomOf: lastView).isActive = true
+                PXLayout.put(view: instructionsContentView.tertiaryInfoView!, onBottomOf: lastView).isActive = true
             } else {
-                MPLayout.pinTop(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
+                PXLayout.pinTop(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
             }
-            MPLayout.centerHorizontally(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
+            PXLayout.centerHorizontally(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
+            PXLayout.equalizeWidth(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.tertiaryInfoView
         }
 
@@ -56,30 +56,30 @@ class PXInstructionsContentRenderer: NSObject {
             instructionsContentView.accreditationTimeView = accreditationTimeComponent.render()
             instructionsContentView.addSubview(instructionsContentView.accreditationTimeView!)
             if let lastView = bottomView {
-                MPLayout.put(view: instructionsContentView.accreditationTimeView!, onBottomOf: lastView).isActive = true
+                PXLayout.put(view: instructionsContentView.accreditationTimeView!, onBottomOf: lastView).isActive = true
             } else {
-                MPLayout.pinTop(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
+                PXLayout.pinTop(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             }
 
-            MPLayout.centerHorizontally(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
+            PXLayout.centerHorizontally(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
+            PXLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.accreditationTimeView
         }
         if instructionsContent.hasActions(), let actionsComponent = instructionsContent.getActionsComponent() {
             instructionsContentView.actionsView = actionsComponent.render()
             instructionsContentView.addSubview(instructionsContentView.actionsView!)
             if let lastView = bottomView {
-                MPLayout.put(view: instructionsContentView.actionsView!, onBottomOf: lastView).isActive = true
+                PXLayout.put(view: instructionsContentView.actionsView!, onBottomOf: lastView).isActive = true
             } else {
-                MPLayout.pinTop(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+                PXLayout.pinTop(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
             }
 
-            MPLayout.centerHorizontally(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
-            MPLayout.equalizeWidth(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            PXLayout.centerHorizontally(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            PXLayout.equalizeWidth(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
             bottomView = instructionsContentView.actionsView
         }
 
-        MPLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: MPLayout.L_MARGIN).isActive = true
+        PXLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: PXLayout.L_MARGIN).isActive = true
 
         return instructionsContentView
     }

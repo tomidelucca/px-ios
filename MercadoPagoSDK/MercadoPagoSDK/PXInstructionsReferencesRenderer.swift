@@ -33,7 +33,7 @@ class PXInstructionsReferencesRenderer: NSObject {
             lastView = referenceView
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsReferencesView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: instructionsReferencesView)?.isActive = true
 
         return instructionsReferencesView
     }
@@ -53,10 +53,10 @@ class PXInstructionsReferencesRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: titleLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
-        MPLayout.pinTop(view: titleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+        PXLayout.setHeight(owner: titleLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
+        PXLayout.pinTop(view: titleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
 
         return titleLabel
     }
@@ -65,12 +65,12 @@ class PXInstructionsReferencesRenderer: NSObject {
 
         let referenceView = reference.render()
         superView.addSubview(referenceView)
-        MPLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
+        PXLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
         if let upperView = upperView {
-            MPLayout.put(view: referenceView, onBottomOf: upperView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.put(view: referenceView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: referenceView, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: referenceView, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return referenceView

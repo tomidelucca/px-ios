@@ -37,7 +37,7 @@ class PXInstructionsReferenceRenderer: NSObject {
         }
 
         if let lastView = lastView {
-            MPLayout.pinBottom(view: lastView, to: instructionReferenceView).isActive = true
+            PXLayout.pinBottom(view: lastView, to: instructionReferenceView).isActive = true
         }
 
         return instructionReferenceView
@@ -63,14 +63,14 @@ class PXInstructionsReferenceRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: label, height: height).isActive = true
-        MPLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: label, to: superView).isActive = true
+        PXLayout.setHeight(owner: label, height: height).isActive = true
+        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
 
         if let upperView = upperView {
-            MPLayout.put(view: label, onBottomOf: upperView, withMargin: MPLayout.XXXS_MARGIN).isActive = true
+            PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         } else {
-            MPLayout.pinTop(view: label, to: superView, withMargin: MPLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinTop(view: label, to: superView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
         }
 
         return label

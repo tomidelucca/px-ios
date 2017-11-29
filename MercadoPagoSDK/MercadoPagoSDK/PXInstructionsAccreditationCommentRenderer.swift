@@ -42,11 +42,11 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: label, height: height).isActive = true
-        MPLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: label, to: superView).isActive = true
-        MPLayout.pinTop(view: label, to: superView).isActive = true
-        MPLayout.pinBottom(view: label, to: superView).isActive = true
+        PXLayout.setHeight(owner: label, height: height).isActive = true
+        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
+        PXLayout.pinTop(view: label, to: superView).isActive = true
+        PXLayout.pinBottom(view: label, to: superView).isActive = true
 
         return label
     }

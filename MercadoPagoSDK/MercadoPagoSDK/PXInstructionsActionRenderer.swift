@@ -45,11 +45,11 @@ class PXInstructionsActionRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forText: text, withFont: Utils.getFont(size: ACTION_LABEL_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
-        MPLayout.setHeight(owner: button, height: height).isActive = true
-        MPLayout.setWidth(ofView: button, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: button, to: superView).isActive = true
-        MPLayout.pinTop(view: button, to: superView).isActive = true
-        MPLayout.pinBottom(view: button, to: superView).isActive = true
+        PXLayout.setHeight(owner: button, height: height).isActive = true
+        PXLayout.setWidth(ofView: button, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: button, to: superView).isActive = true
+        PXLayout.pinTop(view: button, to: superView).isActive = true
+        PXLayout.pinBottom(view: button, to: superView).isActive = true
 
         return button
     }

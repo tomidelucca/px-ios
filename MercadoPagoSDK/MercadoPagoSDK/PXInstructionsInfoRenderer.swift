@@ -54,7 +54,7 @@ class PXInstructionsInfoRenderer: NSObject {
             lastView = instructionsInfoView.bottomDivider
         }
 
-        MPLayout.pinLastSubviewToBottom(view: instructionsInfoView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: instructionsInfoView)?.isActive = true
 
         return instructionsInfoView
     }
@@ -79,17 +79,17 @@ class PXInstructionsInfoRenderer: NSObject {
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
-        MPLayout.setHeight(owner: infoLabel, height: height).isActive = true
-        MPLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        MPLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
+        PXLayout.setHeight(owner: infoLabel, height: height).isActive = true
+        PXLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
         if let upperView = upperView {
             if isFirstInfo {
-                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: MPLayout.L_MARGIN).isActive = true
+                PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
             } else {
-                MPLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: MPLayout.ZERO_MARGIN).isActive = true
+                PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
             }
         } else {
-            MPLayout.pinTop(view: infoLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: infoLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return infoLabel
@@ -101,12 +101,12 @@ class PXInstructionsInfoRenderer: NSObject {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .pxMediumLightGray
         superView.addSubview(view)
-        MPLayout.setHeight(owner: view, height: 1).isActive = true
-        MPLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
-        MPLayout.centerHorizontally(view: view, to: superView).isActive = true
+        PXLayout.setHeight(owner: view, height: 1).isActive = true
+        PXLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
+        PXLayout.centerHorizontally(view: view, to: superView).isActive = true
 
         if let upperView = upperView {
-            MPLayout.put(view: view, onBottomOf:upperView, withMargin: MPLayout.L_MARGIN).isActive = true
+            PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return view
