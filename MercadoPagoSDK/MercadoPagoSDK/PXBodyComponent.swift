@@ -9,9 +9,9 @@
 import UIKit
 
 open class PXBodyComponent: NSObject, PXComponetizable {
-    var props: BodyProps
+    var props: PXBodyProps
 
-    init(props: BodyProps) {
+    init(props: PXBodyProps) {
         self.props = props
     }
 
@@ -55,7 +55,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
 
 }
 
-open class BodyProps: NSObject {
+open class PXBodyProps: NSObject {
     var paymentResult: PaymentResult
     var instruction: Instruction?
     var amount : Double

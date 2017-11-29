@@ -10,8 +10,8 @@ import UIKit
 
 extension PXResultViewModel {
     
-    open func bodyComponentProps() -> BodyProps {
-        let props = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion())
+    open func bodyComponentProps() -> PXBodyProps {
+        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion())
         return props
     }
     
@@ -22,7 +22,7 @@ extension PXResultViewModel {
         return instructionsInfo.getInstruction()
     }
     
-    open func getRapipagoProps() -> BodyProps {
+    open func getRapipagoProps() -> PXBodyProps {
         let instruc = Instruction()
         instruc.info = [
             "Dictale este codigo al cajero"
@@ -36,11 +36,11 @@ extension PXResultViewModel {
 
         instruc.references = [refer1]
         instruc.accreditationMessage = "El pago se acreditara al instante"
-        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
+        let bodyProps = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
         return bodyProps
     }
     
-    open func getRedlinkProps() -> BodyProps {
+    open func getRedlinkProps() -> PXBodyProps {
         let instruc = Instruction()
         instruc.info = [
             "Primero sigue estos pasos en el cajero",
@@ -75,11 +75,11 @@ extension PXResultViewModel {
         
         instruc.references = [refer1,refer2,refer3]
         instruc.accreditationMessage = "El pago se acreditara de 1 a 2 días habiles"
-        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
+        let bodyProps = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
         return bodyProps
     }
     
-    open func getTestProps() -> BodyProps {
+    open func getTestProps() -> PXBodyProps {
         let instruc = Instruction()
         instruc.info = [
             "Primero sigue estos pasos en el cajero",
@@ -112,7 +112,7 @@ extension PXResultViewModel {
         action1.tag = "link"
         action1.url = "http://www.banamex.com.mx"
         instruc.actions = [action1,action1]
-        let bodyProps = BodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
+        let bodyProps = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: instruc)
         return bodyProps
     }
 }
