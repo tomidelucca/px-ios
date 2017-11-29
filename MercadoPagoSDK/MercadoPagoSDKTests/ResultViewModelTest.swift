@@ -171,7 +171,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
-        let subtitleView = instructionsView.subtitleView as! SubtitleView
+        let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
         XCTAssertEqual(subtitleView.subtitleLabel?.text, "Veja como é fácil pagar o seu produto")
         
         //Instructions Secondary Info View
@@ -239,7 +239,7 @@ class ResultViewModelTest: BaseTest {
         
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
-        let subtitleView = instructionsView.subtitleView as! SubtitleView
+        let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
         XCTAssertEqual(subtitleView.subtitleLabel?.text, "Paga con estos datos")
         
         //Instructions Secondary Info View

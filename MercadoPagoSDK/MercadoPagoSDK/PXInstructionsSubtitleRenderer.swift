@@ -13,7 +13,7 @@ class PXInstructionsSubtitleRenderer: NSObject {
     let LABEL_FONT_SIZE: CGFloat = 22.0
 
     func render(instructionsSubtitle: PXInstructionsSubtitleComponent) -> UIView {
-        let instructionsSubtitleView = SubtitleView()
+        let instructionsSubtitleView = PXInstructionsSubtitleView()
         instructionsSubtitleView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSubtitleView.backgroundColor = .pxWhite
         let attributes = [ NSFontAttributeName: Utils.getFont(size: LABEL_FONT_SIZE) ]
@@ -45,6 +45,6 @@ class PXInstructionsSubtitleRenderer: NSObject {
     }
 }
 
-class SubtitleView: UIView {
+class PXInstructionsSubtitleView: UIView {
     public var subtitleLabel: UILabel?
 }
