@@ -28,7 +28,7 @@ class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
     }
 
     func render() -> UIView {
-        return PXInstructionsAccreditationTimeRenderer().render(instructionsAccreditationTime: self)
+        return PXInstructionsAccreditationTimeRenderer().render(self)
     }
 }
 class PXInstructionsAccreditationTimeProps: NSObject {

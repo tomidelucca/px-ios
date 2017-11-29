@@ -11,7 +11,7 @@ import UIKit
 open class PXHeaderComponent: PXComponetizable {
 
     public func render() -> UIView {
-        return PXHeaderRenderer().render(header: self)
+        return PXHeaderRenderer().render(self)
     }
 
     var props: PXHeaderProps

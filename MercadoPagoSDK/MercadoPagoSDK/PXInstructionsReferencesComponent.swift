@@ -28,7 +28,7 @@ class PXInstructionsReferencesComponent: NSObject, PXComponetizable {
     }
 
     func render() -> UIView {
-        return PXInstructionsReferencesRenderer().render(instructionsReferences: self)
+        return PXInstructionsReferencesRenderer().render(self)
     }
 }
 class PXInstructionsReferencesProps: NSObject {

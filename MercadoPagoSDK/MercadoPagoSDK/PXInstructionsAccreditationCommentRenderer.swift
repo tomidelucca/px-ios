@@ -13,7 +13,7 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsAccreditationComment: PXInstructionsAccreditationCommentComponent) -> UIView {
+    func render(_ instructionsAccreditationComment: PXInstructionsAccreditationCommentComponent) -> UIView {
         let instructionsAccreditationCommentView = PXInstructionsAccreditationCommentView()
         instructionsAccreditationCommentView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationCommentView.backgroundColor = .pxLightGray

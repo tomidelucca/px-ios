@@ -338,19 +338,19 @@ class PXResultViewModelTest: BaseTest {
     func buildHeaderView(resultViewModel: PXResultViewModel) -> PXHeaderView {
         let props = PXHeaderProps(labelText: resultViewModel.labelTextHeader(), title: resultViewModel.titleHeader(), backgroundColor: resultViewModel.primaryResultColor(), productImage: resultViewModel.iconImageHeader(), statusImage: resultViewModel.badgeImage())
         let headerComponent = PXHeaderComponent(props: props)
-        return PXHeaderRenderer().render(header: headerComponent)
+        return PXHeaderRenderer().render(headerComponent)
     }
     
     func buildBodyView(resultViewModel: PXResultViewModel) -> PXBodyView {
         let props = resultViewModel.bodyComponentProps()
         let bodyComponent = PXBodyComponent(props: props)
-        return PXBodyRenderer().render(body: bodyComponent)
+        return PXBodyRenderer().render(bodyComponent)
     }
     
     func buildFooterView(resultViewModel: PXResultViewModel) -> PXFooterView {
         let data = PXFooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
         let footerComponent = PXFooterComponent(props: data)
-        return PXFooterRenderer().render(footer: footerComponent)
+        return PXFooterRenderer().render(footerComponent)
     }
 }
 

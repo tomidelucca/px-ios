@@ -15,7 +15,7 @@ class PXInstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-       return PXInstructionsAccreditationCommentRenderer().render(instructionsAccreditationComment: self)
+       return PXInstructionsAccreditationCommentRenderer().render(self)
     }
 }
 class PXInstructionsAccreditationCommentProps: NSObject {

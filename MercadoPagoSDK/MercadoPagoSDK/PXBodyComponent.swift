@@ -50,7 +50,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
     }
 
     public func render() -> UIView {
-        return PXBodyRenderer().render(body: self)
+        return PXBodyRenderer().render(self)
     }
 
 }

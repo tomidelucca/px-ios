@@ -120,7 +120,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
     }
 
     public func render() -> UIView {
-        return PXInstructionsContentRenderer().render(instructionsContent: self)
+        return PXInstructionsContentRenderer().render(self)
     }
 }
 public class PXInstructionsContentProps: NSObject {

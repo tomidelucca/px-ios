@@ -10,7 +10,7 @@ import UIKit
 
 class PXBodyRenderer: NSObject {
 
-    func render(body: PXBodyComponent) -> PXBodyView {
+    func render(_ body: PXBodyComponent) -> PXBodyView {
         var content: UIView = UIView()
         if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent() {
             return instructionsComponent.render() as! PXInstructionsView

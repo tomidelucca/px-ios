@@ -13,7 +13,7 @@ class PXInstructionsReferencesRenderer: NSObject {
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
-    func render(instructionsReferences: PXInstructionsReferencesComponent) -> UIView {
+    func render(_ instructionsReferences: PXInstructionsReferencesComponent) -> UIView {
         let instructionsReferencesView = PXInstructionsReferencesView()
         instructionsReferencesView.translatesAutoresizingMaskIntoConstraints = false
         instructionsReferencesView.backgroundColor = .pxLightGray
