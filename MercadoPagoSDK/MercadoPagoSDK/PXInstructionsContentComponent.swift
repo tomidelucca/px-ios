@@ -75,7 +75,7 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
     }
 
     func getTertiaryInfoComponent() -> PXInstructionsTertiaryInfoComponent? {
-        let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
+        let tertiaryInfoProps = PXInstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
         let tertiaryInfoComponent = PXInstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
         return tertiaryInfoComponent
     }

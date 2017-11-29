@@ -9,16 +9,16 @@
 import Foundation
 
 class PXInstructionsTertiaryInfoComponent: NSObject, PXComponetizable {
-    var props: InstructionsTertiaryInfoProps
+    var props: PXInstructionsTertiaryInfoProps
 
-    init(props: InstructionsTertiaryInfoProps) {
+    init(props: PXInstructionsTertiaryInfoProps) {
         self.props = props
     }
     func render() -> UIView {
         return InstructionsTertiaryInfoRenderer().render(instructionsTertiaryInfo: self)
     }
 }
-class InstructionsTertiaryInfoProps: NSObject {
+class PXInstructionsTertiaryInfoProps: NSObject {
     var tertiaryInfo: [String]?
     init(tertiaryInfo: [String]?) {
         self.tertiaryInfo = tertiaryInfo
