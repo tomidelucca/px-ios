@@ -1,5 +1,5 @@
 //
-//  InstructionsRenderer.swift
+//  PXInstructionsRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsRenderer: NSObject {
+class PXInstructionsRenderer: NSObject {
 
     
     func render(instructions: PXInstructionsComponent) -> InstructionsView {
