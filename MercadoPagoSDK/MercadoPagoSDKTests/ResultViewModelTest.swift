@@ -190,7 +190,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNil(contentView.actionsView)
         
         //Info View
-        let infoView = contentView.infoView as! InfoView
+        let infoView = contentView.infoView as! PXInstructionsInfoView
         XCTAssertNil(infoView.titleLabel)
         XCTAssertNotNil(infoView.contentLabels)
         XCTAssertEqual(infoView.contentLabels?.count, 2)
@@ -260,7 +260,7 @@ class ResultViewModelTest: BaseTest {
         XCTAssertNotNil(contentView.actionsView)
         
         //Info View
-        let infoView = contentView.infoView as! InfoView
+        let infoView = contentView.infoView as! PXInstructionsInfoView
         XCTAssertNotNil(infoView.titleLabel)
         XCTAssertEqual(infoView.titleLabel?.text, "Primero sigue estos pasos en el cajero")
         XCTAssertNotNil(infoView.contentLabels)

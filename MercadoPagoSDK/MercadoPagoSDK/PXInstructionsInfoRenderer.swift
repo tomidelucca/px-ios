@@ -16,7 +16,7 @@ class PXInstructionsInfoRenderer: NSObject {
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(instructionsInfo: PXInstructionsInfoComponent) -> UIView {
-        let instructionsInfoView = InfoView()
+        let instructionsInfoView = PXInstructionsInfoView()
         instructionsInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsInfoView.backgroundColor = .pxLightGray
 
@@ -113,7 +113,7 @@ class PXInstructionsInfoRenderer: NSObject {
     }
 }
 
-class InfoView: UIView {
+class PXInstructionsInfoView: UIView {
     public var titleLabel: UILabel?
     public var contentLabels: [UILabel]?
     public var bottomDivider: UIView?
