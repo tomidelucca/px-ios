@@ -636,8 +636,8 @@
 		FC3FC8851FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */; };
 		FC3FC8871FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8861FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift */; };
 		FC3FC8881FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8861FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift */; };
-		FC3FC88A1FBE13C900CF29E1 /* InstructionsActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */; };
-		FC3FC88B1FBE13C900CF29E1 /* InstructionsActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */; };
+		FC3FC88A1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8891FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift */; };
+		FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8891FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift */; };
 		FC3FC88D1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88C1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift */; };
 		FC3FC88E1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88C1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift */; };
 		FC3FC8901FBE13E800CF29E1 /* InstructionsActionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC88F1FBE13E800CF29E1 /* InstructionsActionComponent.swift */; };
@@ -1105,7 +1105,7 @@
 		FC3FC8801FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationTimeRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8831FBE13A300CF29E1 /* PXInstructionsAccreditationCommentComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationCommentComponent.swift; sourceTree = "<group>"; };
 		FC3FC8861FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsAccreditationCommentRenderer.swift; sourceTree = "<group>"; };
-		FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionsComponent.swift; sourceTree = "<group>"; };
+		FC3FC8891FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC88C1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC88F1FBE13E800CF29E1 /* InstructionsActionComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionComponent.swift; sourceTree = "<group>"; };
 		FC3FC8921FBE13F900CF29E1 /* InstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsActionRenderer.swift; sourceTree = "<group>"; };
@@ -2295,7 +2295,7 @@
 		FC3FC87B1FBE130700CF29E1 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				FC3FC8891FBE13C900CF29E1 /* InstructionsActionsComponent.swift */,
+				FC3FC8891FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift */,
 				FC3FC88C1FBE13D600CF29E1 /* InstructionsActionsRenderer.swift */,
 				FC3FC87C1FBE131300CF29E1 /* Instruction Action */,
 			);
@@ -2740,7 +2740,7 @@
 				0F9883711AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				FCBF13491E7204C30092B756 /* FinancialInstitutionTableViewCell.swift in Sources */,
 				4BF80E571ED33747001D7915 /* PaymentResultContentView.swift in Sources */,
-				FC3FC88A1FBE13C900CF29E1 /* InstructionsActionsComponent.swift in Sources */,
+				FC3FC88A1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				0FC4FC211B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				7627DE8A1DB56EC30082E5D7 /* CountdownTimer.swift in Sources */,
 				76AB4DB21E424BB10015EA3B /* PaymentData.swift in Sources */,
@@ -3095,7 +3095,7 @@
 				76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */,
 				4BF80E581ED33899001D7915 /* PaymentResultContentView.swift in Sources */,
 				FC45F1241E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */,
-				FC3FC88B1FBE13C900CF29E1 /* InstructionsActionsComponent.swift in Sources */,
+				FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				76EC47D21C85E77A0086FA53 /* CurrencyTest.swift in Sources */,
 				4B2AF5821EEACD9300925644 /* UILabel+Additions.swift in Sources */,
 				1510DF721FBDF878004B01C6 /* FooterViewModelHelper.swift in Sources */,

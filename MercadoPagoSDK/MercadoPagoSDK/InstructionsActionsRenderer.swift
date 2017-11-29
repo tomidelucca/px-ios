@@ -13,7 +13,7 @@ class InstructionsActionsRenderer: NSObject {
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsActions: InstructionsActionsComponent) -> UIView {
+    func render(instructionsActions: PXInstructionsActionsComponent) -> UIView {
         let instructionsActionsView = ActionsView()
         instructionsActionsView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionsView.backgroundColor = .pxLightGray

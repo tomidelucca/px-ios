@@ -86,9 +86,9 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
         return accreditationTimeComponent
     }
 
-    func getActionsComponent() -> InstructionsActionsComponent? {
+    func getActionsComponent() -> PXInstructionsActionsComponent? {
         let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
-        let actionsComponent = InstructionsActionsComponent(props: actionsProps)
+        let actionsComponent = PXInstructionsActionsComponent(props: actionsProps)
         return actionsComponent
     }
 

@@ -1,5 +1,5 @@
 //
-//  InstructionsActionsComponent.swift
+//  PXInstructionsActionsComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InstructionsActionsComponent: NSObject, PXComponetizable {
+class PXInstructionsActionsComponent: NSObject, PXComponetizable {
     var props: InstructionsActionsProps
 
     init(props: InstructionsActionsProps) {
