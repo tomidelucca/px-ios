@@ -19,7 +19,6 @@ open class PXHeaderComponent: PXComponetizable {
     init(props: PXHeaderProps) {
         self.props = props
     }
-
 }
 
 open class PXHeaderProps: NSObject {
