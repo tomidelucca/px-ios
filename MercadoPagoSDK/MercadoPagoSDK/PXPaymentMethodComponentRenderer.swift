@@ -1,5 +1,5 @@
 //
-//  PXPaymentMethodBodyComponentRenderer.swift
+//  PXPaymentMethodComponentRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 24/11/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXPaymentMethodBodyComponentRenderer: NSObject {
+class PXPaymentMethodComponentRenderer: NSObject {
     //Image
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0

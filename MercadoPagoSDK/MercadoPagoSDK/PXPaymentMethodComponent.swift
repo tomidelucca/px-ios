@@ -15,7 +15,7 @@ public class PXPaymentMethodComponent: NSObject, PXComponetizable {
        self.props = props
     }
     public func render() -> UIView {
-        return PXPaymentMethodBodyComponentRenderer().render(component: self)
+        return PXPaymentMethodComponentRenderer().render(component: self)
     }
 }
 
