@@ -14,18 +14,18 @@ extension PXResultViewModel {
         return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
     }
 
-    func getActionButton() -> FooterAction? {
-         var actionButton: FooterAction?
+    func getActionButton() -> PXFooterAction? {
+         var actionButton: PXFooterAction?
         if let label = self.getButtonLabel(), let action = self.getButtonAction() {
-            actionButton = FooterAction(label: label, action: action)
+            actionButton = PXFooterAction(label: label, action: action)
         }
         return actionButton
     }
-    func getActionLink() -> FooterAction? {
-        var actionLink: FooterAction?
+    func getActionLink() -> PXFooterAction? {
+        var actionLink: PXFooterAction?
 
         if let labelLink = self.getLinkLabel(), let actionOfLink = self.getLinkAction() {
-            actionLink = FooterAction(label: labelLink, action: actionOfLink)
+            actionLink = PXFooterAction(label: labelLink, action: actionOfLink)
         }
         return actionLink
     }

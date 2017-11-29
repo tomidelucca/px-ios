@@ -20,17 +20,17 @@ class PXFooterComponent: NSObject, PXComponetizable {
     }
 }
 class PXFooterProps: NSObject {
-    var buttonAction: FooterAction?
-    var linkAction: FooterAction?
+    var buttonAction: PXFooterAction?
+    var linkAction: PXFooterAction?
     var primaryColor: UIColor?
-    init(buttonAction: FooterAction? = nil, linkAction: FooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
+    init(buttonAction: PXFooterAction? = nil, linkAction: PXFooterAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
         self.buttonAction = buttonAction
         self.linkAction = linkAction
         self.primaryColor = primaryColor
     }
 }
 
-class FooterAction: NSObject {
+class PXFooterAction: NSObject {
     var label: String
     var action : (() -> Void)
     init(label: String, action:  @escaping (() -> Void)) {
