@@ -1,5 +1,5 @@
 //
-//  InstructionReferenceComponent.swift
+//  PXInstructionsReferenceComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-class InstructionReferenceComponent: NSObject, PXComponetizable {
-    var props: InstructionReferenceProps
+class PXInstructionsReferenceComponent: NSObject, PXComponetizable {
+    var props: PXInstructionsReferenceProps
 
-    init(props: InstructionReferenceProps) {
+    init(props: PXInstructionsReferenceProps) {
         self.props = props
     }
     func render() -> UIView {
-        return InstructionReferenceRenderer().render(instructionReference: self)
+        return PXInstructionsReferenceRenderer().render(instructionReference: self)
     }
 }
-class InstructionReferenceProps: NSObject {
+class PXInstructionsReferenceProps: NSObject {
     var reference: InstructionReference?
     init(reference: InstructionReference?) {
         self.reference = reference

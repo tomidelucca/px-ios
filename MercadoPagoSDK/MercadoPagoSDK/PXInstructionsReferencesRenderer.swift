@@ -1,5 +1,5 @@
 //
-//  InstructionsReferencesRenderer.swift
+//  PXInstructionsReferencesRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class InstructionsReferencesRenderer: NSObject {
+class PXInstructionsReferencesRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
-    func render(instructionsReferences: InstructionsReferencesComponent) -> UIView {
-        let instructionsReferencesView = ReferencesView()
+    func render(instructionsReferences: PXInstructionsReferencesComponent) -> UIView {
+        let instructionsReferencesView = PXInstructionsReferencesView()
         instructionsReferencesView.translatesAutoresizingMaskIntoConstraints = false
         instructionsReferencesView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -61,8 +61,7 @@ class InstructionsReferencesRenderer: NSObject {
         return titleLabel
     }
 
-    
-    func buildReferenceView(with reference: InstructionReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildReferenceView(with reference: PXInstructionsReferenceComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
 
         let referenceView = reference.render()
         superView.addSubview(referenceView)
@@ -78,7 +77,7 @@ class InstructionsReferencesRenderer: NSObject {
     }
 }
 
-class ReferencesView: UIView {
+class PXInstructionsReferencesView: UIView {
     public var titleLabel: UILabel?
     public var referencesComponents: [UIView]?
 }

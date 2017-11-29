@@ -1,5 +1,5 @@
 //
-//  InstructionsActionRenderer.swift
+//  PXInstructionsActionRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,35 +8,36 @@
 
 import Foundation
 
-class InstructionsActionRenderer: NSObject {
+class PXInstructionsActionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
 
-    func render(instructionsAction: InstructionsActionComponent) -> UIView {
-        let instructionsActionView = ActionView()
+    func render(instructionsAction: PXInstructionsActionComponent) -> UIView {
+        let instructionsActionView = PXInstructionsActionView()
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
 
         guard let label = instructionsAction.props.instructionActionInfo?.label, let tag = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
             return instructionsActionView
         }
-
-        if tag == ActionTag.LINK.rawValue {
-            instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
-        }
-
+        
+        instructionsActionView.actionButton = buildActionButton(with: label, url: url, in: instructionsActionView)
+        
         return instructionsActionView
     }
 
     func buildActionButton(with text: String, url: String, in superView: UIView) -> UIButton {
-        let button = UIButton()
+        let button = MPButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_LABEL_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
+        button.actionLink = url
         button.add(for: .touchUpInside) {
-            self.goToURL(url)
+            if let URL = button.actionLink {
+                self.goToURL(URL)
+            }
         }
         superView.addSubview(button)
 
@@ -60,6 +61,6 @@ class InstructionsActionRenderer: NSObject {
     }
 }
 
-class ActionView: UIView {
+class PXInstructionsActionView: UIView {
     public var actionButton: UIButton?
 }

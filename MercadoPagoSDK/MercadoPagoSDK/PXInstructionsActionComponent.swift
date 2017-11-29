@@ -1,5 +1,5 @@
 //
-//  InstructionsActionComponent.swift
+//  PXInstructionsActionComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,17 +8,17 @@
 
 import Foundation
 
-class InstructionsActionComponent: NSObject, PXComponetizable {
-    var props: InstructionsActionProps
+class PXInstructionsActionComponent: NSObject, PXComponetizable {
+    var props: PXInstructionsActionProps
 
-    init(props: InstructionsActionProps) {
+    init(props: PXInstructionsActionProps) {
         self.props = props
     }
     func render() -> UIView {
-        return InstructionsActionRenderer().render(instructionsAction: self)
+        return PXInstructionsActionRenderer().render(instructionsAction: self)
     }
 }
-class InstructionsActionProps: NSObject {
+class PXInstructionsActionProps: NSObject {
     var instructionActionInfo: InstructionAction?
     init(instructionActionInfo: InstructionAction?) {
         self.instructionActionInfo = instructionActionInfo

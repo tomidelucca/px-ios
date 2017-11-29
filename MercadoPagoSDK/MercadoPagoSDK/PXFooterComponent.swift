@@ -1,5 +1,5 @@
 //
-//  FooterComponent.swift
+//  PXFooterComponent.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/19/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FooterComponent: NSObject, PXComponetizable {
+class PXFooterComponent: NSObject, PXComponetizable {
   var props: FooterProps
 
     init(props: FooterProps) {

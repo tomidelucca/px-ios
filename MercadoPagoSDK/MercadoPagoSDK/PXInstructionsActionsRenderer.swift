@@ -1,5 +1,5 @@
 //
-//  InstructionsActionsRenderer.swift
+//  PXInstructionsActionsRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class InstructionsActionsRenderer: NSObject {
+class PXInstructionsActionsRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsActions: InstructionsActionsComponent) -> UIView {
-        let instructionsActionsView = ActionsView()
+    func render(instructionsActions: PXInstructionsActionsComponent) -> UIView {
+        let instructionsActionsView = PXInstructionsActionsView()
         instructionsActionsView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionsView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -30,7 +30,7 @@ class InstructionsActionsRenderer: NSObject {
         return instructionsActionsView
     }
     
-    func buildActionView(with action: InstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
+    func buildActionView(with action: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
         let actionView = action.render()
         superView.addSubview(actionView)
         MPLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
@@ -45,6 +45,6 @@ class InstructionsActionsRenderer: NSObject {
     }
 }
 
-class ActionsView: UIView {
+class PXInstructionsActionsView: UIView {
     public var actionsViews: [UIView]?
 }

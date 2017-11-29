@@ -1,5 +1,5 @@
 //
-//  InstructionsTertiaryInfoRenderer.swift
+//  PXInstructionsTertiaryInfoRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class InstructionsTertiaryInfoRenderer: NSObject {
+class PXInstructionsTertiaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
     let INFO_LABEL_FONT_SIZE: CGFloat = 12.0
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsTertiaryInfo: InstructionsTertiaryInfoComponent) -> UIView {
-        let instructionsTertiaryInfoView = TertiaryInfoView()
+    func render(instructionsTertiaryInfo: PXInstructionsTertiaryInfoComponent) -> UIView {
+        let instructionsTertiaryInfoView = PXInstructionsTertiaryInfoView()
         instructionsTertiaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsTertiaryInfoView.backgroundColor = .pxLightGray
 
@@ -66,6 +66,6 @@ class InstructionsTertiaryInfoRenderer: NSObject {
     }
 }
 
-class TertiaryInfoView: UIView {
+class PXInstructionsTertiaryInfoView: UIView {
     public var tertiaryInfoLabels: [UILabel]?
 }

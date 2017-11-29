@@ -1,5 +1,5 @@
 //
-//  InstructionReferenceRenderer.swift
+//  PXInstructionsReferenceRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-class InstructionReferenceRenderer: NSObject {
+class PXInstructionsReferenceRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
     let TITLE_LABEL_FONT_SIZE: CGFloat = 12.0
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
     let REFERENCE_LABEL_FONT_SIZE: CGFloat = 20.0
     let REFERENCE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
-    func render(instructionReference: InstructionReferenceComponent) -> UIView {
-        let instructionReferenceView = ReferenceView()
+    func render(instructionReference: PXInstructionsReferenceComponent) -> PXInstructionsReferenceView {
+        let instructionReferenceView = PXInstructionsReferenceView()
         instructionReferenceView.translatesAutoresizingMaskIntoConstraints = false
         instructionReferenceView.backgroundColor = .pxLightGray
         instructionReferenceView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +77,7 @@ class InstructionReferenceRenderer: NSObject {
     }
 }
 
-class ReferenceView: UIView {
+class PXInstructionsReferenceView: UIView {
     public var titleLabel: UILabel?
     public var referenceLabel: UILabel?
 }

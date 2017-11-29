@@ -42,7 +42,6 @@ open class InstructionReference: Equatable {
                     reference.value.append(String(describing: val))
                 }
             }
-
         }
 
         if json["separator"] !=  nil && !(json["separator"]! is NSNull) {

@@ -1,5 +1,5 @@
 //
-//  InstructionsRenderer.swift
+//  PXInstructionsRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,11 +8,10 @@
 
 import Foundation
 
-class InstructionsRenderer: NSObject {
-
+class PXInstructionsRenderer: NSObject {
     
-    func render(instructions: InstructionsComponent) -> InstructionsView {
-        let instructionsView = InstructionsView()
+    func render(instructions: PXInstructionsComponent) -> PXInstructionsView {
+        let instructionsView = PXInstructionsView()
         instructionsView.translatesAutoresizingMaskIntoConstraints = false
         var bottomView: UIView!
 
@@ -61,7 +60,7 @@ class InstructionsRenderer: NSObject {
 }
 
 
-class InstructionsView: BodyView {
+class PXInstructionsView: PXBodyView {
     public var subtitleView: UIView?
     public var contentView: UIView?
     public var secondaryInfoView: UIView?

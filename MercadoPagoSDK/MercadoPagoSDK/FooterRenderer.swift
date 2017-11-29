@@ -12,7 +12,7 @@ class FooterRenderer: NSObject {
 
     let BUTTON_HEIGHT: CGFloat = 50.0
 
-    func render(footer: FooterComponent) -> FooterView {
+    func render(footer: PXFooterComponent) -> FooterView {
         let fooView = FooterView()
         var topView: UIView = fooView
         fooView.translatesAutoresizingMaskIntoConstraints = false

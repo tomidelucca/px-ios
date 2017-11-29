@@ -1,5 +1,5 @@
 //
-//  HeaderRenderer.swift
+//  PXHeaderRenderer.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderRenderer: NSObject {
+class PXHeaderRenderer: NSObject {
 
     //Image
     let IMAGE_WIDTH: CGFloat = 90.0
@@ -26,8 +26,8 @@ class HeaderRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
-    func render(header: HeaderComponent ) -> HeaderView {
-        let headerView = HeaderView()
+    func render(header: PXHeaderComponent ) -> PXHeaderView {
+        let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
         //Image
@@ -105,13 +105,13 @@ class HeaderRenderer: NSObject {
         messageLabel.numberOfLines = 0
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: HeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE), inWidth: screenWidth)
         MPLayout.setHeight(owner: messageLabel, height: height).isActive = true
         return messageLabel
     }
 }
 
-public class HeaderView: UIView {
+public class PXHeaderView: UIView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?

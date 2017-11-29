@@ -1,5 +1,5 @@
 //
-//  InstructionsAccreditationTimeRenderer.swift
+//  PXInstructionsAccreditationTimeRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/16/17.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class InstructionsAccreditationTimeRenderer: NSObject {
+class PXInstructionsAccreditationTimeRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
-    func render(instructionsAccreditationTime: InstructionsAccreditationTimeComponent) -> UIView {
-        let instructionsAccreditationTimeView = AccreditationTimeView()
+    func render(instructionsAccreditationTime: PXInstructionsAccreditationTimeComponent) -> UIView {
+        let instructionsAccreditationTimeView = PXInstructionsAccreditationTimeView()
         instructionsAccreditationTimeView.translatesAutoresizingMaskIntoConstraints = false
         instructionsAccreditationTimeView.backgroundColor = .pxLightGray
         var lastView: UIView?
@@ -65,7 +65,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
         return titleLabel
     }
 
-    func buildCommentView(with comment: InstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+    func buildCommentView(with comment: PXInstructionsAccreditationCommentComponent, in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
         let accreditationCommentView = comment.render()
         superView.addSubview(accreditationCommentView)
         MPLayout.setWidth(ofView: accreditationCommentView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
@@ -80,7 +80,7 @@ class InstructionsAccreditationTimeRenderer: NSObject {
     }
 }
 
-class AccreditationTimeView: UIView {
+class PXInstructionsAccreditationTimeView: UIView {
     public var accreditationMessageLabel: UILabel?
     public var accreditationCommentsComponents: [UIView]?
 }

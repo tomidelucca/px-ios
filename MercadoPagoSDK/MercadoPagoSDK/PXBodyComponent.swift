@@ -1,5 +1,5 @@
 //
-//  BodyComponent.swift
+//  PXBodyComponent.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/19/17.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-open class BodyComponent: NSObject, PXComponetizable {
-    var props: BodyProps
+open class PXBodyComponent: NSObject, PXComponetizable {
+    var props: PXBodyProps
 
-    init(props: BodyProps) {
+    init(props: PXBodyProps) {
         self.props = props
     }
 
@@ -19,9 +19,9 @@ open class BodyComponent: NSObject, PXComponetizable {
         return props.instruction != nil
     }
 
-    public func getInstructionsComponent() -> InstructionsComponent? {
-        let instructionsProps = InstructionsProps(instruction: props.instruction!)
-        let instructionsComponent = InstructionsComponent(props: instructionsProps)
+    public func getInstructionsComponent() -> PXInstructionsComponent? {
+        let instructionsProps = PXInstructionsProps(instruction: props.instruction!)
+        let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
         return instructionsComponent
     }
     
@@ -54,12 +54,12 @@ open class BodyComponent: NSObject, PXComponetizable {
     }
     
     public func render() -> UIView {
-        return BodyRenderer().render(body: self)
+        return PXBodyRenderer().render(body: self)
     }
 
 }
 
-open class BodyProps: NSObject {
+open class PXBodyProps: NSObject {
     var paymentResult: PaymentResult
     var instruction: Instruction?
     var amount : Double

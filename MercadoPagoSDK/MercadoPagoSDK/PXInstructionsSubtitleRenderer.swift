@@ -1,5 +1,5 @@
 //
-//  InstructionsSubtitleRenderer.swift
+//  PXInstructionsSubtitleRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class InstructionsSubtitleRenderer: NSObject {
+class PXInstructionsSubtitleRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 22.0
 
-    func render(instructionsSubtitle: InstructionsSubtitleComponent) -> UIView {
-        let instructionsSubtitleView = SubtitleView()
+    func render(instructionsSubtitle: PXInstructionsSubtitleComponent) -> UIView {
+        let instructionsSubtitleView = PXInstructionsSubtitleView()
         instructionsSubtitleView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSubtitleView.backgroundColor = .pxWhite
         let attributes = [ NSFontAttributeName: Utils.getFont(size: LABEL_FONT_SIZE) ]
@@ -39,12 +39,12 @@ class InstructionsSubtitleRenderer: NSObject {
         MPLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
         MPLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         MPLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
-        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.M_MARGIN).isActive = true
+        MPLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
+        MPLayout.pinTop(view: subtitleLabel, to: superView, withMargin: MPLayout.L_MARGIN).isActive = true
         return subtitleLabel
     }
 }
 
-class SubtitleView: UIView {
+class PXInstructionsSubtitleView: UIView {
     public var subtitleLabel: UILabel?
 }

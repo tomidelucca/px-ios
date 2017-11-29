@@ -1,5 +1,5 @@
 //
-//  BodyRenderer.swift
+//  PXBodyRenderer.swift
 //  TestAutolayout
 //
 //  Created by Demian Tejo on 10/19/17.
@@ -8,22 +8,20 @@
 
 import UIKit
 
-class BodyRenderer: NSObject {
+class PXBodyRenderer: NSObject {
 
-    func render(body: BodyComponent) -> BodyView {
+    func render(body: PXBodyComponent) -> PXBodyView {
         var content : UIView = UIView()
         if body.hasInstructions(), let instructionsComponent = body.getInstructionsComponent()  {
-            return instructionsComponent.render() as! InstructionsView
+            return instructionsComponent.render() as! PXInstructionsView
         } else if body.props.paymentResult.isApproved() {
-            return body.getPaymentMethodComponent().render() as! BodyView
+            return body.getPaymentMethodComponent().render() as! PXBodyView
         }
-        let bodyView = BodyView()
+        let bodyView = PXBodyView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         return bodyView
     }
 }
 
-
-class BodyView: UIView {
-
+class PXBodyView: UIView {
 }

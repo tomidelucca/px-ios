@@ -454,6 +454,11 @@
                     &quot;label&quot;: &quot;Ir a banca en línea&quot;,
                     &quot;tag&quot;: &quot;link&quot;,
                     &quot;url&quot;: &quot;http://www.bancomer.com.mx&quot;
+                },
+                {
+                    &quot;label&quot;: &quot;Imprime el cupon&quot;,
+                    &quot;tag&quot;: &quot;print&quot;,
+                    &quot;url&quot;: &quot;http://www.bancomer.com.mx&quot;
                 }
             ],
             &quot;info&quot;: [
@@ -486,13 +491,13 @@
                     &quot;splitable_every&quot;: 4
                 },
                 {
-                    &quot;field_value&quot;: &quot;MPAGO:COMPRA&quot;,
+                    &quot;field_value&quot;: [&quot;MPAGO:COMPRA&quot;],
                     &quot;is_splitable&quot;: false,
                     &quot;label&quot;: &quot;Concepto&quot;,
                     &quot;separator&quot;: &quot;&quot;
                 },
                 {
-                    &quot;field_value&quot;: &quot;Mercado Libre - Mercado Pago&quot;,
+                    &quot;field_value&quot;: [&quot;Mercado Libre - Mercado Pago&quot;],
                     &quot;label&quot;: &quot;Empresa&quot;,
                     &quot;separator&quot;: &quot; &quot;
                 }

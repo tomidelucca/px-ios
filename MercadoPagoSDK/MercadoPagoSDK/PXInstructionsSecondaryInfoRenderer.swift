@@ -1,5 +1,5 @@
 //
-//  InstructionsSecondaryInfoRenderer.swift
+//  PXInstructionsSecondaryInfoRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class InstructionsSecondaryInfoRenderer: NSObject {
+class PXInstructionsSecondaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let LABEL_FONT_SIZE: CGFloat = 12.0
 
-    func render(instructionsSecondaryInfo: InstructionsSecondaryInfoComponent) -> UIView {
-        let instructionsSecondaryInfoView = SecondaryInfoView()
+    func render(instructionsSecondaryInfo: PXInstructionsSecondaryInfoComponent) -> UIView {
+        let instructionsSecondaryInfoView = PXInstructionsSecondaryInfoView()
         instructionsSecondaryInfoView.translatesAutoresizingMaskIntoConstraints = false
         instructionsSecondaryInfoView.backgroundColor = .pxWhite
 
@@ -58,6 +58,6 @@ class InstructionsSecondaryInfoRenderer: NSObject {
     }
 }
 
-class SecondaryInfoView: UIView {
+class PXInstructionsSecondaryInfoView: UIView {
     public var secondaryInfoLabels: [UILabel]?
 }

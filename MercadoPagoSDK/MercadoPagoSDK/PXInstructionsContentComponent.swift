@@ -1,5 +1,5 @@
 //
-//  InstructionsContentComponent.swift
+//  PXInstructionsContentComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 11/15/17.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class InstructionsContentComponent: NSObject, PXComponetizable {
-    var props: InstructionsContentProps
+public class PXInstructionsContentComponent: NSObject, PXComponetizable {
+    var props: PXInstructionsContentProps
 
-    init(props: InstructionsContentProps) {
+    init(props: PXInstructionsContentProps) {
         self.props = props
     }
 
@@ -19,7 +19,7 @@ public class InstructionsContentComponent: NSObject, PXComponetizable {
         return !Array.isNullOrEmpty(props.instruction.info)
     }
 
-    func getInfoComponent() -> InstructionsInfoComponent? {
+    func getInfoComponent() -> PXInstructionsInfoComponent? {
         var content: [String] = []
         var info: [String] = props.instruction.info
 
@@ -50,13 +50,12 @@ public class InstructionsContentComponent: NSObject, PXComponetizable {
             }
         }
 
-        let infoProps = InstructionsInfoProps(infoTitle: title, infoContent: content, bottomDivider: hasBottomDivider)
-        let infoComponent = InstructionsInfoComponent(props: infoProps)
+        let infoProps = PXInstructionsInfoProps(infoTitle: title, infoContent: content, bottomDivider: hasBottomDivider)
+        let infoComponent = PXInstructionsInfoComponent(props: infoProps)
         return infoComponent
     }
 
-    
-    func getReferencesComponent() -> InstructionsReferencesComponent? {
+    func getReferencesComponent() -> PXInstructionsReferencesComponent? {
         let info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
@@ -70,27 +69,26 @@ public class InstructionsContentComponent: NSObject, PXComponetizable {
             }
         }
 
-        let referencesProps = InstructionsReferencesProps(title: title, references: props.instruction.references)
-        let referencesComponent = InstructionsReferencesComponent(props: referencesProps)
+        let referencesProps = PXInstructionsReferencesProps(title: title, references: props.instruction.references)
+        let referencesComponent = PXInstructionsReferencesComponent(props: referencesProps)
         return referencesComponent
     }
-    
-    func getTertiaryInfoComponent() -> InstructionsTertiaryInfoComponent? {
-        let tertiaryInfoProps = InstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
-        let tertiaryInfoComponent = InstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
+
+    func getTertiaryInfoComponent() -> PXInstructionsTertiaryInfoComponent? {
+        let tertiaryInfoProps = PXInstructionsTertiaryInfoProps(tertiaryInfo: props.instruction.tertiaryInfo)
+        let tertiaryInfoComponent = PXInstructionsTertiaryInfoComponent(props: tertiaryInfoProps)
         return tertiaryInfoComponent
     }
 
-    func getAccreditationTimeComponent() -> InstructionsAccreditationTimeComponent? {
-        let accreditationTimeProps = InstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
-        let accreditationTimeComponent = InstructionsAccreditationTimeComponent(props: accreditationTimeProps)
+    func getAccreditationTimeComponent() -> PXInstructionsAccreditationTimeComponent? {
+        let accreditationTimeProps = PXInstructionsAccreditationTimeProps(accreditationMessage: props.instruction.accreditationMessage, accreditationComments: props.instruction.accreditationComment)
+        let accreditationTimeComponent = PXInstructionsAccreditationTimeComponent(props: accreditationTimeProps)
         return accreditationTimeComponent
     }
 
-    
-    func getActionsComponent() -> InstructionsActionsComponent? {
-        let actionsProps = InstructionsActionsProps(instructionActions: props.instruction.actions)
-        let actionsComponent = InstructionsActionsComponent(props: actionsProps)
+    func getActionsComponent() -> PXInstructionsActionsComponent? {
+        let actionsProps = PXInstructionsActionsProps(instructionActions: props.instruction.actions)
+        let actionsComponent = PXInstructionsActionsComponent(props: actionsProps)
         return actionsComponent
     }
 
@@ -120,12 +118,12 @@ public class InstructionsContentComponent: NSObject, PXComponetizable {
     public func needsBottomMargin() -> Bool {
         return hasInfo() || hasReferences() || hasAccreditationTime()
     }
-    
+
     public func render() -> UIView {
-        return InstructionsContentRenderer().render(instructionsContent: self)
+        return PXInstructionsContentRenderer().render(instructionsContent: self)
     }
 }
-public class InstructionsContentProps: NSObject {
+public class PXInstructionsContentProps: NSObject {
     var instruction: Instruction
     init(instruction: Instruction) {
         self.instruction = instruction
