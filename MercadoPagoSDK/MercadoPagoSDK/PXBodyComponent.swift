@@ -31,27 +31,30 @@ open class PXBodyComponent: NSObject, PXComponetizable {
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData?.paymentMethod
         let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
-        var amountTitle = MercadoPagoContext.getCurrency().symbol + " " + String(format:"%.02f",self.props.amount)
+        let currency = MercadoPagoContext.getCurrency()
+        var amountTitle = Utils.getAmountFormated(amount: self.props.amount, forCurrency: currency)
         var amountDetail: String?
         if let payerCost = self.props.paymentResult.paymentData?.payerCost {
             if payerCost.installments > 1 {
-                amountTitle = String(payerCost.installments) + "x " + MercadoPagoContext.getCurrency().symbol + " " + String(payerCost.installmentAmount)
-                amountDetail = "(" +  String(payerCost.totalAmount) + ")"
+                amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
+                amountDetail = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)
             }
         }
         var issuerName: String?
         var pmDescription: String = ""
         if (pm?.isCreditCard)! {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
-            pmDescription = (pm?.name)! + " " + "terminada en ".localized + (self.props.paymentResult.paymentData?.token?.lastFourDigits)!
+            if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
+                pmDescription = (pm?.name)! + " " + "terminada en ".localized + lastFourDigits
+            }
         }else if (pm?.isAccountMoney)! {
             pmDescription = (pm?.name)!
         }
-        var disclaimerText : String? = nil
+        var disclaimerText: String? = nil
         if let statementDescription = self.props.paymentResult.statementDescription {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
-       
+
         let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
 
         return PXPaymentMethodComponent(props: bodyProps)

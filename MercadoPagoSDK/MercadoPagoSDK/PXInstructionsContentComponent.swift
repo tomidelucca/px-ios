@@ -56,14 +56,21 @@ public class PXInstructionsContentComponent: NSObject, PXComponetizable {
     }
 
     func getReferencesComponent() -> PXInstructionsReferencesComponent? {
+
         let info: [String] = props.instruction.info
         var spacesFound = 0
         var title = ""
+        func isSpaceRepresentation(_ text: String) -> Bool {
+            return text.isEmpty
+        }
+        func isTitleRepresentation() -> Bool {
+            return spacesFound == 2
+        }
 
         for text in info {
-            if text.isEmpty {
+            if isSpaceRepresentation(text) {
                 spacesFound += 1
-            } else if spacesFound == 2 {
+            } else if isTitleRepresentation() {
                 title = text
                 break
             }

@@ -41,15 +41,24 @@ open class Currency: NSObject {
      *
      **/
     open func getThousandsSeparatorOrDefault() -> String {
-        return self.thousandsSeparator ?? ","
+        if String.isNullOrEmpty( self.thousandsSeparator) {
+            return "."
+        }
+        return self.thousandsSeparator
     }
 
     open func getDecimalPlacesOrDefault() -> Int {
-        return self.decimalPlaces ?? 2
+        if  self.decimalPlaces == 0 {
+            return 2
+        }
+        return self.decimalPlaces
     }
 
     open func getDecimalSeparatorOrDefault() -> String {
-        return self.decimalSeparator ?? ","
+        if String.isNullOrEmpty(self.decimalSeparator) {
+            return ","
+        }
+        return self.decimalSeparator
     }
 
 }

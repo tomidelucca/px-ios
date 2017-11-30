@@ -18,7 +18,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
     let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
 
-
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,10 +101,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.pinLeft(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
             PXLayout.pinRight(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
         }
-        
-        
-        PXLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
 
+        PXLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
 
         return pmBodyView
     }
