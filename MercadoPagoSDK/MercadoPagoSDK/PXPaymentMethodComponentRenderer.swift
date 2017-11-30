@@ -16,6 +16,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let TITLE_FONT_SIZE: CGFloat = 21.0
     let DETAIL_FONT_SIZE: CGFloat = 16.0
     let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
+    let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
@@ -47,6 +48,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             let detailLabel = UILabel()
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
+            pmBodyView.amountDetail = detailLabel
             detailLabel.text = detailText
             detailLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
             detailLabel.textColor = .pxBrownishGray
@@ -74,7 +76,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         if let pmDetailText = component.props.paymentMethodDetail {
             let pmDetailLabel = UILabel()
             pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
-            pmBodyView.amountDetail = pmDetailLabel
+            pmBodyView.paymentMethodDetail = pmDetailLabel
             pmBodyView.addSubview(pmDetailLabel)
             pmDetailLabel.text = pmDetailText
             pmDetailLabel.font = Utils.getFont(size: PM_DETAIL_FONT_SIZE)
@@ -83,6 +85,21 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.put(view: pmDetailLabel, onBottomOfLastViewOf: pmBodyView, withMargin:  PXLayout.XXS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: pmDetailLabel, to: pmBodyView, withMargin:  PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: pmDetailLabel, to: pmBodyView, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+        }
+
+        if let disclaimer = component.props.disclaimer {
+            let disclaimerLabel = UILabel()
+            disclaimerLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmBodyView.disclaimerLabel = disclaimerLabel
+            pmBodyView.addSubview(disclaimerLabel)
+            disclaimerLabel.text = disclaimer
+            disclaimerLabel.numberOfLines = 2
+            disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
+            disclaimerLabel.textColor = .pxBrownishGray
+            disclaimerLabel.textAlignment = .center
+            PXLayout.put(view: disclaimerLabel, onBottomOfLastViewOf: pmBodyView, withMargin:  PXLayout.M_MARGIN)?.isActive = true
+            PXLayout.pinLeft(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
+            PXLayout.pinRight(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
         }
 
         PXLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
@@ -97,4 +114,5 @@ class PXPaymentMethodView: PXBodyView {
     var amountDetail: UILabel?
     var paymentMethodDescription: UILabel?
     var paymentMethodDetail: UILabel?
+    var disclaimerLabel: UILabel?
 }

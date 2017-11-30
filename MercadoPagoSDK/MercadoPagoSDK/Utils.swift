@@ -116,6 +116,28 @@ class Utils {
         return attributedSymbol
     }
 
+    class func getAmountFormated(amount: Double, forCurrency currency: Currency, addingParenthesis: Bool = false) -> String {
+        return getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: addingParenthesis)
+    }
+
+    class func getAmountFormatted(amount: Double, thousandSeparator: String, decimalSeparator: String, addingCurrencySymbol symbol: String? = nil, addingParenthesis: Bool = false) -> String {
+        let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
+        let entireAmount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
+        var amountFotmated = entireAmount
+        if !cents.isEmpty {
+              amountFotmated = amountFotmated + decimalSeparator + cents
+              amountFotmated = amountFotmated.replacingOccurrences(of: decimalSeparator + "00", with: "")
+        }
+
+        if let symbol = symbol {
+            amountFotmated = symbol + " " + amountFotmated
+        }
+        if addingParenthesis {
+            amountFotmated = "(\(amountFotmated))"
+        }
+        return amountFotmated
+    }
+
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()
         let currency = MercadoPagoContext.getCurrency()
@@ -178,7 +200,7 @@ class Utils {
      Ex: formattedString = "100.2", decimalSeparator = "."
      returns 20
      **/
-    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().decimalPlaces) -> String {
+    class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
         let range = formattedString.range(of: decimalSeparator)
         var cents = ""
         if range != nil {
