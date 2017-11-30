@@ -53,8 +53,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
         superView.addSubview(titleLabel)
         titleLabel.textColor = ACCREDITATION_LABEL_FONT_COLOR
 
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
         let height = UILabel.requiredHeight(forAttributedText: labelTitle, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: titleLabel, height: height).isActive = true

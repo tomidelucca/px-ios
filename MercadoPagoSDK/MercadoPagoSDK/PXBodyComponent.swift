@@ -20,9 +20,12 @@ open class PXBodyComponent: NSObject, PXComponetizable {
     }
 
     public func getInstructionsComponent() -> PXInstructionsComponent? {
-        let instructionsProps = PXInstructionsProps(instruction: props.instruction!)
-        let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
-        return instructionsComponent
+        if let instruction = props.instruction {
+            let instructionsProps = PXInstructionsProps(instruction: instruction)
+            let instructionsComponent = PXInstructionsComponent(props: instructionsProps)
+            return instructionsComponent
+        }
+        return nil
     }
 
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {

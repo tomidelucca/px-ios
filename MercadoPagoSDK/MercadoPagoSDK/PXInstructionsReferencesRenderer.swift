@@ -49,8 +49,7 @@ class PXInstructionsReferencesRenderer: NSObject {
         let textSize: CGFloat = TITLE_LABEL_FONT_SIZE
         titleLabel.textColor = TITLE_LABEL_FONT_COLOR
 
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: titleLabel, height: height).isActive = true

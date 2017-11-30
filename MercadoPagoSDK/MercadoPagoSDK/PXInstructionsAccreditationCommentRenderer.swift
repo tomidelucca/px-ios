@@ -38,8 +38,7 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
         let textSize: CGFloat = ACCREDITATION_LABEL_FONT_SIZE
         label.textColor = textColor
 
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true

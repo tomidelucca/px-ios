@@ -41,8 +41,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
         secondaryInfoLabel.lineBreakMode = .byWordWrapping
         superView.addSubview(secondaryInfoLabel)
 
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width * CONTENT_WIDTH_PERCENT / 100
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true

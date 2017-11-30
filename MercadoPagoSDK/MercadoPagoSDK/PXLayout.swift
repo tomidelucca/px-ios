@@ -25,7 +25,7 @@ class PXLayout: NSObject {
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {
-        constraint.isActive = true
+        constraint.isActive = isActive
         return constraint
     }
 
@@ -134,6 +134,18 @@ class PXLayout: NSObject {
 
     static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent: CGFloat = 100) -> NSLayoutConstraint {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
+    }
+
+    static func getScreenWidth(applyingMarginFactor percent: CGFloat) -> CGFloat {
+        let screenSize = UIScreen.main.bounds
+        let availableWidth = screenSize.width * percent / 100
+        return availableWidth
+    }
+
+    static func getScreenHeight(applyingMarginFactor percent: CGFloat) -> CGFloat {
+        let screenSize = UIScreen.main.bounds
+        let availableHeight = screenSize.height * percent / 100
+        return availableHeight
     }
 
 }
