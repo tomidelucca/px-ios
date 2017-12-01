@@ -18,65 +18,73 @@ class PXInstructionsContentRenderer: NSObject {
 
         if instructionsContent.hasInfo(), let infoComponent = instructionsContent.getInfoComponent() {
             instructionsContentView.infoView = infoComponent.render()
-            instructionsContentView.addSubview(instructionsContentView.infoView!)
-            PXLayout.pinTop(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsContentView.infoView!, to: instructionsContentView).isActive = true
-            bottomView = instructionsContentView.infoView
+            if let infoView = instructionsContentView.infoView {
+                instructionsContentView.addSubview(infoView)
+                PXLayout.pinTop(view: infoView, to: instructionsContentView).isActive = true
+                PXLayout.centerHorizontally(view: infoView, to: instructionsContentView).isActive = true
+                PXLayout.equalizeWidth(view: infoView, to: instructionsContentView).isActive = true
+                bottomView = instructionsContentView.infoView
+            }
         }
 
         if instructionsContent.hasReferences(), let referencesComponent = instructionsContent.getReferencesComponent() {
             instructionsContentView.referencesView = referencesComponent.render()
-            instructionsContentView.addSubview(instructionsContentView.referencesView!)
-            if let lastView = bottomView {
-                PXLayout.put(view: instructionsContentView.referencesView!, onBottomOf: lastView).isActive = true
-            } else {
-                PXLayout.pinTop(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
+            if let referencesView = instructionsContentView.referencesView {
+                instructionsContentView.addSubview(referencesView)
+                if let lastView = bottomView {
+                    PXLayout.put(view: referencesView, onBottomOf: lastView).isActive = true
+                } else {
+                    PXLayout.pinTop(view: referencesView, to: instructionsContentView).isActive = true
+                }
+                PXLayout.centerHorizontally(view: referencesView, to: instructionsContentView).isActive = true
+                PXLayout.equalizeWidth(view: referencesView, to: instructionsContentView).isActive = true
+                bottomView = instructionsContentView.referencesView
             }
-
-            PXLayout.centerHorizontally(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsContentView.referencesView!, to: instructionsContentView).isActive = true
-            bottomView = instructionsContentView.referencesView
         }
 
         if instructionsContent.hasTertiaryInfo(), let tertiaryInfoComponent = instructionsContent.getTertiaryInfoComponent() {
             instructionsContentView.tertiaryInfoView = tertiaryInfoComponent.render()
-            instructionsContentView.addSubview(instructionsContentView.tertiaryInfoView!)
-            if let lastView = bottomView {
-                PXLayout.put(view: instructionsContentView.tertiaryInfoView!, onBottomOf: lastView).isActive = true
-            } else {
-                PXLayout.pinTop(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
+            if let tertiaryInfoView = instructionsContentView.tertiaryInfoView {
+                instructionsContentView.addSubview(tertiaryInfoView)
+                if let lastView = bottomView {
+                    PXLayout.put(view: tertiaryInfoView, onBottomOf: lastView).isActive = true
+                } else {
+                    PXLayout.pinTop(view: tertiaryInfoView, to: instructionsContentView).isActive = true
+                }
+                PXLayout.centerHorizontally(view: tertiaryInfoView, to: instructionsContentView).isActive = true
+                PXLayout.equalizeWidth(view: tertiaryInfoView, to: instructionsContentView).isActive = true
+                bottomView = instructionsContentView.tertiaryInfoView
+
             }
-            PXLayout.centerHorizontally(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsContentView.tertiaryInfoView!, to: instructionsContentView).isActive = true
-            bottomView = instructionsContentView.tertiaryInfoView
         }
 
         if instructionsContent.hasAccreditationTime(), let accreditationTimeComponent = instructionsContent.getAccreditationTimeComponent() {
             instructionsContentView.accreditationTimeView = accreditationTimeComponent.render()
-            instructionsContentView.addSubview(instructionsContentView.accreditationTimeView!)
-            if let lastView = bottomView {
-                PXLayout.put(view: instructionsContentView.accreditationTimeView!, onBottomOf: lastView).isActive = true
-            } else {
-                PXLayout.pinTop(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
+            if let accreditationTimeView = instructionsContentView.accreditationTimeView {
+                instructionsContentView.addSubview(accreditationTimeView)
+                if let lastView = bottomView {
+                    PXLayout.put(view: accreditationTimeView, onBottomOf: lastView).isActive = true
+                } else {
+                    PXLayout.pinTop(view: accreditationTimeView, to: instructionsContentView).isActive = true
+                }
+                PXLayout.centerHorizontally(view: accreditationTimeView, to: instructionsContentView).isActive = true
+                PXLayout.equalizeWidth(view: accreditationTimeView, to: instructionsContentView).isActive = true
+                bottomView = instructionsContentView.accreditationTimeView
             }
-
-            PXLayout.centerHorizontally(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsContentView.accreditationTimeView!, to: instructionsContentView).isActive = true
-            bottomView = instructionsContentView.accreditationTimeView
         }
         if instructionsContent.hasActions(), let actionsComponent = instructionsContent.getActionsComponent() {
             instructionsContentView.actionsView = actionsComponent.render()
-            instructionsContentView.addSubview(instructionsContentView.actionsView!)
-            if let lastView = bottomView {
-                PXLayout.put(view: instructionsContentView.actionsView!, onBottomOf: lastView).isActive = true
-            } else {
-                PXLayout.pinTop(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
+            if let actionsView = instructionsContentView.actionsView {
+                instructionsContentView.addSubview(actionsView)
+                if let lastView = bottomView {
+                    PXLayout.put(view: actionsView, onBottomOf: lastView).isActive = true
+                } else {
+                    PXLayout.pinTop(view: actionsView, to: instructionsContentView).isActive = true
+                }
+                PXLayout.centerHorizontally(view: actionsView, to: instructionsContentView).isActive = true
+                PXLayout.equalizeWidth(view: actionsView, to: instructionsContentView).isActive = true
+                bottomView = instructionsContentView.actionsView
             }
-
-            PXLayout.centerHorizontally(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsContentView.actionsView!, to: instructionsContentView).isActive = true
-            bottomView = instructionsContentView.actionsView
         }
 
         PXLayout.pinBottom(view: bottomView, to: instructionsContentView, withMargin: PXLayout.L_MARGIN).isActive = true
