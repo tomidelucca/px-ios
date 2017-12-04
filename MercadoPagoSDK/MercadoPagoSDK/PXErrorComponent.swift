@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 public class PXErrorComponent: NSObject, PXComponetizable {
     var props: PXErrorProps
@@ -36,11 +37,11 @@ public class PXErrorComponent: NSObject, PXComponetizable {
     }
     
     public func isCallForAuthorize() -> Bool {
-        return true
+        return props.status.elementsEqual(PXPayment.Status.REJECTED) && props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
     }
     
     public func hasActionForCallForAuth() -> Bool {
-        return true
+        return isCallForAuthorize() && !String.isNullOrEmpty(props.paymentMethodName)
     }
     
     public func recoverPayment() {
@@ -51,9 +52,9 @@ public class PXErrorComponent: NSObject, PXComponetizable {
 class PXErrorProps: NSObject {
     var status: String
     var statusDetail: String
-    var paymentMethodName: String
+    var paymentMethodName: String?
     
-    init(status: String, statusDetail: String, paymentMethodName: String) {
+    init(status: String, statusDetail: String, paymentMethodName: String?) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentMethodName = paymentMethodName

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MercadoPagoServices
 
 open class PXBodyComponent: NSObject, PXComponetizable {
     var props: PXBodyProps
@@ -60,43 +61,27 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         return PXPaymentMethodComponent(props: bodyProps)
     }
     
+    public func hasBodyError() -> Bool {
+        return isPendingWithBody() || isRejectedWithBody()
+    }
+    
     public func getBodyErrorComponent() -> PXErrorComponent {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
-        let errorProps = PXErrorProps(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName!)
+        let errorProps = PXErrorProps(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
         let errorComponent = PXErrorComponent(props: errorProps)
         return errorComponent
     }
     
     public func isPendingWithBody() -> Bool {
-//        return (props.paymentResult.status.elementsEqual(PaymentStatus.PENDING) || props.paymentResult.status.elementsEqual(PaymentStatus.IN_PROCESS)) && (props.paymentResult.statusDetail.elementsEqual())
-        return true
+        return (props.paymentResult.status.elementsEqual(PXPayment.Status.PENDING) || props.paymentResult.status.elementsEqual(PXPayment.Status.IN_PROCESS)) && (props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_REVIEW_MANUAL))
     }
     
     public func isRejectedWithBody() -> Bool {
-        return true
+        return (props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED)) && (props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_OTHER_REASON) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_BY_BANK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_HIGH_RISK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CARD_DISABLED) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT))
     }
     
-//    private boolean isPendingWithBody() {
-//    return (props.status.equals(Payment.StatusCodes.STATUS_PENDING) || props.status.equals(Payment.StatusCodes.STATUS_IN_PROCESS)) &&
-//    (props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_PENDING_CONTINGENCY) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_PENDING_REVIEW_MANUAL));
-//    }
-    
-//    private boolean isRejectedWithBody() {
-//    return (props.status.equals(Payment.StatusCodes.STATUS_REJECTED) &&
-//    (props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_OTHER_REASON) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_REJECTED_BY_BANK) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_REJECTED_INSUFFICIENT_DATA) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_DUPLICATED_PAYMENT) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_MAX_ATTEMPTS) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_HIGH_RISK) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_CALL_FOR_AUTHORIZE) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_CARD_DISABLED) ||
-//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_INSUFFICIENT_AMOUNT)));
-//    }
-
     public func render() -> UIView {
         return PXBodyRenderer().render(self)
     }
