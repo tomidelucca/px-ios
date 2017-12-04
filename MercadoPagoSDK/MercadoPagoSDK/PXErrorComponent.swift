@@ -19,28 +19,20 @@ public class PXErrorComponent: NSObject, PXComponetizable {
         return PXErrorRenderer().render(component: self)
     }
     
-    public func getTitle() -> NSAttributedString {
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: "infoTitle", attributes: attributes)
-        return attributedString
+    public func getTitle() -> String {
+        return "¿Que puedo hacer?"
     }
     
-    public func getDescription() -> NSAttributedString {
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: "infoTitle", attributes: attributes)
-        return attributedString
+    public func getDescription() -> String {
+        return "El teléfono está al dorso de tu tarjeta."
     }
     
-    public func getActionText() -> NSAttributedString {
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: "infoTitle", attributes: attributes)
-        return attributedString
+    public func getActionText() -> String {
+        return "Ya hablé con Visa y me autorizó"
     }
     
-    public func getSecondaryTitleForCallForAuth() -> NSAttributedString {
-        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_LABEL_FONT_SIZE) ]
-        let attributedString = NSAttributedString(string: "infoTitle", attributes: attributes)
-        return attributedString
+    public func getSecondaryTitleForCallForAuth() -> String {
+        return "¿No pudiste autorizarlo?"
     }
     
     public func isCallForAuthorize() -> Bool {
@@ -51,8 +43,8 @@ public class PXErrorComponent: NSObject, PXComponetizable {
         return true
     }
     
-    public func recoverPayment() -> Bool {
-        return true
+    public func recoverPayment() {
+        
     }
 }
 

@@ -11,69 +11,171 @@ import UIKit
 class PXErrorRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let LABEL_FONT_SIZE: CGFloat = 22.0
+    let TITLE_FONT_SIZE: CGFloat = 24.0
+    let DESCRIPTION_FONT_SIZE: CGFloat = 20.0
+    let ACTION_FONT_SIZE: CGFloat = 18.0
+    let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
     
     func render(component: PXErrorComponent) -> PXErrorView {
         let errorBodyView = PXErrorView()
-        errorBodyView.backgroundColor = .yellow
+        errorBodyView.backgroundColor = .pxWhite
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
         
-        errorBodyView.titleLabel = buildLabel(with: component.getTitle(), in: errorBodyView)
+        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
         errorBodyView.addSubview(errorBodyView.titleLabel!)
         
-        errorBodyView.descriptionLabel = buildLabel(with: component.getDescription(), in: errorBodyView)
+        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
         errorBodyView.addSubview(errorBodyView.descriptionLabel!)
         
         if component.hasActionForCallForAuth() {
-            errorBodyView.actionLabel = buildLabel(with: component.getActionText(), in: errorBodyView)
-            errorBodyView.addSubview(errorBodyView.actionLabel!)
+            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel)
+            errorBodyView.addSubview(errorBodyView.actionButton!)
             
-            errorBodyView.secondaryTitleLabel = buildLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView)
+            errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
+            errorBodyView.addSubview(errorBodyView.middleDivider!)
+            
+            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
             errorBodyView.addSubview(errorBodyView.secondaryTitleLabel!)
-            
-            errorBodyView.middleDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
+
+            errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
+            errorBodyView.addSubview(errorBodyView.bottomDivider!)
+            PXLayout.pinLastSubviewToBottom(view: errorBodyView, withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
+        } else {
+            PXLayout.pinLastSubviewToBottom(view: errorBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
-        
-        
-        PXLayout.setHeight(owner: errorBodyView, height: 100).isActive = true
+
         return errorBodyView
     }
     
-    func buildLabel(with text: NSAttributedString, in superView: UIView) -> UILabel {
-        let subtitleLabel = UILabel()
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = .pxBrownishGray
-        subtitleLabel.numberOfLines = 0
-        subtitleLabel.attributedText = text
-        subtitleLabel.lineBreakMode = .byWordWrapping
-        superView.addSubview(subtitleLabel)
+    func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
+        let label = UILabel()
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = .pxBlack
+        label.numberOfLines = 0
+        
+        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_FONT_SIZE) ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        label.attributedText = attributedString
+        label.lineBreakMode = .byWordWrapping
+        superView.addSubview(label)
+
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
+
+        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: TITLE_FONT_SIZE), inWidth: screenWidth)
+        PXLayout.setHeight(owner: label, height: height).isActive = true
+        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
+        PXLayout.pinTop(view: label, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+        return label
+    }
+    
+    func buildDescriptionLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
+        let label = UILabel()
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = .pxBrownishGray
+        label.numberOfLines = 0
+        
+        let attributes = [ NSFontAttributeName: Utils.getFont(size: DESCRIPTION_FONT_SIZE) ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        label.attributedText = attributedString
+        
+        label.lineBreakMode = .byWordWrapping
+        superView.addSubview(label)
         
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
         
-        let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
-        PXLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        PXLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.pinTop(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
-        return subtitleLabel
+        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: DESCRIPTION_FONT_SIZE), inWidth: screenWidth)
+        PXLayout.setHeight(owner: label, height: height).isActive = true
+        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
+        if let upperView = upperView {
+            PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.S_MARGIN).isActive = true
+        }
+        return label
     }
     
-    func buildBottomDivider(in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
-        let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        let view = UIView(frame: frame)
+    func buildActionButton(withTitle text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIButton {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = Utils.getFont(size: ACTION_FONT_SIZE)
+        button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
+        button.add(for: .touchUpInside) {
+            print("Action Button")
+        }
+        superView.addSubview(button)
+        
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
+        
+        let height = UILabel.requiredHeight(forText: text, withFont: Utils.getFont(size: ACTION_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
+        PXLayout.setHeight(owner: button, height: height).isActive = true
+        PXLayout.setWidth(ofView: button, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: button, to: superView).isActive = true
+        
+        if let upperView = upperView {
+            PXLayout.put(view: button, onBottomOf: upperView, withMargin: PXLayout.M_MARGIN).isActive = true
+        }
+        return button
+    }
+
+    func buildSecondaryTitleLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
+        let label = UILabel()
+        label.layer.borderWidth = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.textColor = .pxBlack
+        label.numberOfLines = 0
+
+        let attributes = [ NSFontAttributeName: Utils.getFont(size: TITLE_FONT_SIZE) ]
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        label.attributedText = attributedString
+
+        label.lineBreakMode = .byWordWrapping
+        superView.addSubview(label)
+
+        let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
+
+        let height = UILabel.requiredHeight(forAttributedText: attributedString, withFont: Utils.getFont(size: TITLE_FONT_SIZE), inWidth: screenWidth)
+        PXLayout.setHeight(owner: label, height: height).isActive = true
+        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
+        if let upperView = upperView {
+            PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
+        }
+        return label
+    }
+
+    func buildMiddleDivider(in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .pxMediumLightGray
         superView.addSubview(view)
         PXLayout.setHeight(owner: view, height: 1).isActive = true
         PXLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
         PXLayout.centerHorizontally(view: view, to: superView).isActive = true
-        
+
+        if let upperView = upperView {
+            PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.XXL_MARGIN).isActive = true
+        }
+        return view
+    }
+
+    func buildBottomDivider(in superView: UIView, onBottomOf upperView: UIView?) -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .pxMediumLightGray
+        superView.addSubview(view)
+        PXLayout.setHeight(owner: view, height: 1).isActive = true
+        PXLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
+        PXLayout.centerHorizontally(view: view, to: superView).isActive = true
+
         if let upperView = upperView {
             PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
-        
         return view
     }
 }
@@ -81,7 +183,7 @@ class PXErrorRenderer: NSObject {
 class PXErrorView: PXBodyView {
     var titleLabel: UILabel?
     var descriptionLabel: UILabel?
-    var actionLabel: UILabel?
+    var actionButton: UIButton?
     var middleDivider: UIView?
     var secondaryTitleLabel: UILabel?
     var bottomDivider: UIView?
