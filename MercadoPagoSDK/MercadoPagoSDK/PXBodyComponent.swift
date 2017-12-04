@@ -55,10 +55,47 @@ open class PXBodyComponent: NSObject, PXComponetizable {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodComponentProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
+    
+    public func getBodyErrorComponent() -> PXErrorComponent {
+        let status = props.paymentResult.status
+        let statusDetail = props.paymentResult.statusDetail
+        let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
+        let errorProps = PXErrorProps(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName!)
+        let errorComponent = PXErrorComponent(props: errorProps)
+        return errorComponent
+    }
+    
+    public func isPendingWithBody() -> Bool {
+//        return (props.paymentResult.status.elementsEqual(PaymentStatus.PENDING) || props.paymentResult.status.elementsEqual(PaymentStatus.IN_PROCESS)) && (props.paymentResult.statusDetail.elementsEqual())
+        return true
+    }
+    
+    public func isRejectedWithBody() -> Bool {
+        return true
+    }
+    
+//    private boolean isPendingWithBody() {
+//    return (props.status.equals(Payment.StatusCodes.STATUS_PENDING) || props.status.equals(Payment.StatusCodes.STATUS_IN_PROCESS)) &&
+//    (props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_PENDING_CONTINGENCY) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_PENDING_REVIEW_MANUAL));
+//    }
+    
+//    private boolean isRejectedWithBody() {
+//    return (props.status.equals(Payment.StatusCodes.STATUS_REJECTED) &&
+//    (props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_OTHER_REASON) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_REJECTED_BY_BANK) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_REJECTED_INSUFFICIENT_DATA) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_DUPLICATED_PAYMENT) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_MAX_ATTEMPTS) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_REJECTED_HIGH_RISK) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_CALL_FOR_AUTHORIZE) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_CARD_DISABLED) ||
+//    props.statusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_INSUFFICIENT_AMOUNT)));
+//    }
 
     public func render() -> UIView {
         return PXBodyRenderer().render(self)
