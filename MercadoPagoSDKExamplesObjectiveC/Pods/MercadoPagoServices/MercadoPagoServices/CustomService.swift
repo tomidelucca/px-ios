@@ -39,7 +39,7 @@ open class CustomService: MercadoPagoService {
                     failure!(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Response cannot be decoded"]))
                 }
             }
-        }, failure: { (error) in
+        }, failure: { (_) in
             failure?(PXError(domain: "mercadopago.sdk.customServer.getCustomer", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
         })
     }
@@ -72,7 +72,7 @@ open class CustomService: MercadoPagoService {
                 }
             } else if failure != nil {
                 failure!(PXError(domain: "mercadopago.sdk.customServer.createPayment", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Response cannot be decoded"]))
-            }}, failure: { (error) -> Void in
+            }}, failure: { (_) -> Void in
                 if let failure = failure {
                     failure(PXError(domain: "mercadopago.sdk.CustomService.createPayment", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 }
@@ -100,7 +100,7 @@ open class CustomService: MercadoPagoService {
             } else {
                 failure?(PXError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Response cannot be decoded"]))
 
-            }}, failure: { (error) in
+            }}, failure: { (_) in
                  failure?(PXError(domain: "mercadopago.sdk.customServer.createCheckoutPreference", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "Response cannot be decoded"]))
         })
     }

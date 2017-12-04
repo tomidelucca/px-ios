@@ -104,7 +104,7 @@ open class PXCustomer: NSObject, Codable {
         try container.encodeIfPresent(self.phone, forKey: .phone)
         try container.encodeIfPresent(self.registrationDate, forKey: .registrationDate)
     }
-    
+
     open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)

@@ -11,7 +11,6 @@ import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
 
-
     init(servicePreference: ServicePreference? = nil) {
         super.init()
     }

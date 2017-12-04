@@ -21,17 +21,17 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
-        MPLayout.pinTop(view: contentView, to: scrollView).isActive = true
-        MPLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
-        MPLayout.equalizeWidth(view: contentView, to: scrollView).isActive = true
-        //  MPLayout.equalizeHeight(view: contentView, to: scrollView).isActive = true
+        PXLayout.pinTop(view: contentView, to: scrollView).isActive = true
+        PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
+        PXLayout.equalizeWidth(view: contentView, to: scrollView).isActive = true
+        //  PXLayout.equalizeHeight(view: contentView, to: scrollView).isActive = true
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(self.scrollView)
-        MPLayout.pinLeft(view: scrollView, to: self.view).isActive = true
-        MPLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        MPLayout.pinTop(view: scrollView, to: self.view, withMargin: STATUS_BAR_HEIGHT).isActive = true
-        MPLayout.pinBottom(view: scrollView, to: self.view).isActive = true
+        PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
+        PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
+        PXLayout.pinTop(view: scrollView, to: self.view, withMargin: STATUS_BAR_HEIGHT).isActive = true
+        PXLayout.pinBottom(view: scrollView, to: self.view).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {

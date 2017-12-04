@@ -10,15 +10,16 @@ import UIKit
 
 public class PXResultViewModel: NSObject {
 
-    open var paymentResult: PaymentResult?
+    open var paymentResult: PaymentResult
     open var instructionsInfo: InstructionsInfo?
     open var preference: PaymentResultScreenPreference
     var callback: ((PaymentResult.CongratsState) -> Void)!
-
-    init(paymentResult: PaymentResult? = nil, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
+    let  amount: Double
+    init(paymentResult: PaymentResult, amount: Double, instructionsInfo: InstructionsInfo? = nil, paymentResultScreenPreference: PaymentResultScreenPreference = PaymentResultScreenPreference()) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.preference =  paymentResultScreenPreference
+        self.amount = amount
     }
 
     func primaryResultColor() -> UIColor {
@@ -35,10 +36,7 @@ public class PXResultViewModel: NSObject {
     }
 
     func isAccepted() -> Bool {
-        guard let result = self.paymentResult else {
-            return false
-        }
-        if result.isApproved() || result.isInProcess() || result.isPending() {
+        if self.paymentResult.isApproved() || self.paymentResult.isInProcess() || self.paymentResult.isPending() {
             return true
         }else {
             return false
@@ -46,23 +44,17 @@ public class PXResultViewModel: NSObject {
     }
 
     func isWarning() -> Bool {
-        guard let result = self.paymentResult else {
+        if !self.paymentResult.isRejected() {
             return false
         }
-        if !result.isRejected() {
-            return false
-        }
-        if result.statusDetail == RejectedStatusDetail.INVALID_ESC || result.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || result.statusDetail == RejectedStatusDetail.BAD_FILLED_CARD_NUMBER || result.statusDetail == RejectedStatusDetail.CARD_DISABLE || result.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT || result.statusDetail == RejectedStatusDetail.BAD_FILLED_DATE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_SECURITY_CODE || result.statusDetail == RejectedStatusDetail.BAD_FILLED_OTHER {
+        if self.paymentResult.statusDetail == RejectedStatusDetail.INVALID_ESC || self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_CARD_NUMBER || self.paymentResult.statusDetail == RejectedStatusDetail.CARD_DISABLE || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_DATE || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_SECURITY_CODE || self.paymentResult.statusDetail == RejectedStatusDetail.BAD_FILLED_OTHER {
             return true
         }
 
         return false
     }
     func isError() -> Bool {
-        guard let result = self.paymentResult else {
-            return true
-        }
-        if !result.isRejected() {
+        if !self.paymentResult.isRejected() {
             return false
         }
         return !isWarning()

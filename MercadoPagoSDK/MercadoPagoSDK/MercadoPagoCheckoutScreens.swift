@@ -194,45 +194,6 @@ extension MercadoPagoCheckout {
         })
         self.pushViewController(viewController : congratsViewController, animated: false)
 
-        return // Borro el codigo de abajo cuando tenga el componente completo. Quiero tenerlo de referencia para las diferentes acciones del footer.
-
-        if PaymentTypeId.isOnlineType(paymentTypeId: self.viewModel.paymentData.getPaymentMethod()!.paymentTypeId) || self.viewModel.paymentResult?.status == PaymentStatus.REJECTED {
-            congratsViewController = PaymentResultViewController(paymentResult: self.viewModel.paymentResult!, checkoutPreference: self.viewModel.checkoutPreference, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference, callback: { [weak self] (state: PaymentResult.CongratsState) in
-
-                guard let strongSelf = self else {
-                    return
-                }
-
-                strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
-                if state == PaymentResult.CongratsState.call_FOR_AUTH {
-                    strongSelf.viewModel.prepareForClone()
-                    strongSelf.collectSecurityCodeForRetry()
-                } else if state == PaymentResult.CongratsState.cancel_RETRY || state == PaymentResult.CongratsState.cancel_SELECT_OTHER {
-                    strongSelf.viewModel.prepareForNewSelection()
-                    strongSelf.executeNextStep()
-
-                } else {
-                    strongSelf.finish()
-                }
-
-            })
-        } else {
-       /*
-            congratsViewController = InstructionsViewController(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!, callback: { [weak self] (_ :PaymentResult.CongratsState) in
-                guard let strongSelf = self else {
-                    return
-                }
-                strongSelf.navigationController.setNavigationBarHidden(false, animated: false)
-                strongSelf.finish()
-                }, paymentResultScreenPreference: self.viewModel.paymentResultScreenPreference)
- */
-            let viewModel = PXResultViewModel(paymentResult: self.viewModel.paymentResult!, instructionsInfo: self.viewModel.instructionsInfo!)
-            congratsViewController = PXResultViewController(viewModel: viewModel, callback: { (state) in
-                print("hola")
-            })
-        }
-
-        self.pushViewController(viewController : congratsViewController, animated: false)
     }
 
     func showErrorScreen() {

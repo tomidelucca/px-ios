@@ -8,14 +8,20 @@
 
 import UIKit
 
-open class HeaderComponent: NSObject {
-    var data: HeaderData
+open class PXHeaderComponent: PXComponetizable {
 
-    init(data: HeaderData) {
-        self.data = data
+    public func render() -> UIView {
+        return PXHeaderRenderer().render(self)
+    }
+
+    var props: PXHeaderProps
+
+    init(props: PXHeaderProps) {
+        self.props = props
     }
 }
-open class HeaderData: NSObject {
+
+open class PXHeaderProps: NSObject {
     var labelText: NSAttributedString?
     var title: NSAttributedString
     var backgroundColor: UIColor
