@@ -10,8 +10,8 @@ import UIKit
 
 extension PXResultViewModel {
 
-    open func bodyComponentProps() -> PXBodyProps {
-        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion())
+    open func getBodyComponentProps() -> PXBodyProps {
+        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion(), callback: getAction())
         return props
     }
 
@@ -20,5 +20,25 @@ extension PXResultViewModel {
             return nil
         }
         return instructionsInfo.getInstruction()
+    }
+    
+    func getAction() -> (() -> Void) {
+        return { self.pressButtonBody() }
+    }
+    
+    func pressButtonBody() {
+        self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
+        
+//        if self.isAccepted() {
+//            self.callback(PaymentResult.CongratsState.ok)
+//        } else if self.isError() {
+//            self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
+//        } else if self.isWarning() {
+//            if self.paymentResult.statusDetail == RejectedStatusDetail.CALL_FOR_AUTH || self.paymentResult.statusDetail == RejectedStatusDetail.INSUFFICIENT_AMOUNT {
+//                self.callback(PaymentResult.CongratsState.cancel_SELECT_OTHER)
+//            }else {
+//                self.callback(PaymentResult.CongratsState.cancel_RETRY)
+//            }
+//        }
     }
 }

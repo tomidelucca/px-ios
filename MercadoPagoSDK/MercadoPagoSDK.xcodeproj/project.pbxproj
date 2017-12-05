@@ -652,6 +652,10 @@
 		FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */; };
 		FC7BD8AD1FD5899000D5B2C7 /* PXErrorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */; };
 		FC7BD8AE1FD5899000D5B2C7 /* PXErrorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */; };
+		FC7BD8B31FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */; };
+		FC7BD8B41FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */; };
+		FC7BD8B71FD6C80A00D5B2C7 /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */; };
+		FC7BD8B81FD6C80A00D5B2C7 /* PXTranslations.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */; };
 		FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E14991F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */; };
@@ -1118,6 +1122,8 @@
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorComponent.swift; sourceTree = "<group>"; };
 		FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorRenderer.swift; sourceTree = "<group>"; };
+		FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResourceProvider.swift; sourceTree = "<group>"; };
+		FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PXTranslations.plist; sourceTree = "<group>"; };
 		FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModel.swift; sourceTree = "<group>"; };
 		FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModelTest.swift; sourceTree = "<group>"; };
 		FC814BF31E54BEE100475474 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-PE"; path = "es-PE.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2318,6 +2324,8 @@
 			children = (
 				FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */,
 				FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */,
+				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
+				FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */,
 			);
 			name = Error;
 			sourceTree = "<group>";
@@ -2480,6 +2488,7 @@
 				4B34DC311E5CE39D00FDD295 /* SecondaryExitButtonTableViewCell.xib in Resources */,
 				0FC4FC291B0FB2B200CF7148 /* PromosTyCTableViewCell.xib in Resources */,
 				157704B71DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */,
+				FC7BD8B71FD6C80A00D5B2C7 /* PXTranslations.plist in Resources */,
 				0FC4FC3B1B0FB53500CF7148 /* PromoViewController.xib in Resources */,
 				155F58331E3923180070A0D6 /* Images.xcassets in Resources */,
 				4BAA55EC1DB0015800501061 /* AdditionalStepCardTableViewCell.xib in Resources */,
@@ -2570,6 +2579,7 @@
 				1529D9A61C7DEA4E00880C29 /* ReviewScreenViewController.xib in Resources */,
 				76FD24841C5BFEA1008C5DC0 /* CardFrontView.xib in Resources */,
 				76062BDA1C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
+				FC7BD8B81FD6C80A00D5B2C7 /* PXTranslations.plist in Resources */,
 				0FC4FC241B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
 				15DA7E611CD92C670068896E /* IdentificationViewController.xib in Resources */,
 				157704B81DCBA1500038C550 /* SecurityCodeViewController.xib in Resources */,
@@ -2834,6 +2844,7 @@
 				FC3FC8451FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */,
 				0FC4FC3F1B0FB83700CF7148 /* PromosTyCViewController.swift in Sources */,
 				15B8B1B91E71DEAE0065DF50 /* AddCouponViewController.swift in Sources */,
+				FC7BD8B31FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */,
 				FC3FC8531FBCCAB600CF29E1 /* PXInstructionsContentRenderer.swift in Sources */,
 				15B8B1C11E71DEBD0065DF50 /* CouponDetailViewController.swift in Sources */,
 				15B8B1AB1E71DE750065DF50 /* DiscountCoupon.swift in Sources */,
@@ -3012,6 +3023,7 @@
 				7622E3291DF5EF0B00490C4E /* AdditionalStepCardTableViewCell.swift in Sources */,
 				8138737A1FA8D2BC002095D6 /* PXResultViewController.swift in Sources */,
 				1553AF341E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
+				FC7BD8B41FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */,
 				76062BC51C4D1EFD0067A14B /* PaymentMethodSearch.swift in Sources */,
 				4BA4DB0B1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.swift in Sources */,
 				76EC47F81C8629E10086FA53 /* SecurityCodeTest.swift in Sources */,

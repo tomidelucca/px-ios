@@ -19,7 +19,6 @@ class PXResultViewController: PXComponentContainerViewController {
         self.viewModel.callback = callback
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,21 +57,18 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     func buildHeaderView() -> UIView {
-        let headerProps = self.viewModel.headerComponentData()
+        let headerProps = self.viewModel.getHeaderComponentProps()
         let headerComponent = PXHeaderComponent(props: headerProps)
         return headerComponent.render()
     }
     func buildFooterView() -> UIView {
-        let footerProps = self.viewModel.getFooterComponentData()
+        let footerProps = self.viewModel.getFooterComponentProps()
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
 
     func buildBodyView() -> UIView {
-//        let bodyProps = self.viewModel.getTestProps()
-        let bodyProps = self.viewModel.bodyComponentProps()
-       // let bodyProps = self.viewModel.getRapipagoProps()
-//        let bodyProps = self.viewModel.getRedlinkProps()
+        let bodyProps = self.viewModel.getBodyComponentProps()
         let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }

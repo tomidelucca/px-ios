@@ -10,7 +10,7 @@ import UIKit
 
 extension PXResultViewModel {
 
-    func getFooterComponentData() -> PXFooterProps {
+    func getFooterComponentProps() -> PXFooterProps {
         return PXFooterProps(buttonAction: getActionButton(), linkAction: getActionLink())
     }
 

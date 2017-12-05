@@ -28,7 +28,7 @@ class PXErrorRenderer: NSObject {
         errorBodyView.addSubview(errorBodyView.descriptionLabel!)
         
         if component.hasActionForCallForAuth() {
-            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel)
+            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel, component: component)
             errorBodyView.addSubview(errorBodyView.actionButton!)
             
             errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
@@ -98,14 +98,14 @@ class PXErrorRenderer: NSObject {
         return label
     }
     
-    func buildActionButton(withTitle text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UIButton {
+    func buildActionButton(withTitle text: String, in superView: UIView, onBottomOf upperView: UIView?, component: PXErrorComponent) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
         button.add(for: .touchUpInside) {
-            print("Action Button")
+            component.recoverPayment()
         }
         superView.addSubview(button)
         

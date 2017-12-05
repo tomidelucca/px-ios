@@ -69,7 +69,7 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         let status = props.paymentResult.status
         let statusDetail = props.paymentResult.statusDetail
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
-        let errorProps = PXErrorProps(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
+        let errorProps = PXErrorProps(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName, action: getAction())
         let errorComponent = PXErrorComponent(props: errorProps)
         return errorComponent
     }
@@ -82,6 +82,14 @@ open class PXBodyComponent: NSObject, PXComponetizable {
         return (props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED)) && (props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_OTHER_REASON) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_BY_BANK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_HIGH_RISK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CARD_DISABLED) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT))
     }
     
+    func getAction() -> (() -> Void) {
+        return { self.pressButton() }
+    }
+    
+    func pressButton() {
+        self.props.callback()
+    }
+    
     public func render() -> UIView {
         return PXBodyRenderer().render(self)
     }
@@ -92,9 +100,11 @@ open class PXBodyProps: NSObject {
     var paymentResult: PaymentResult
     var instruction: Instruction?
     var amount: Double
-    init(paymentResult: PaymentResult, amount: Double, instruction: Instruction?) {
+    var callback : (() -> Void)
+    init(paymentResult: PaymentResult, amount: Double, instruction: Instruction?, callback:  @escaping (() -> Void)) {
         self.paymentResult = paymentResult
         self.instruction = instruction
         self.amount = amount
+        self.callback = callback
     }
 }

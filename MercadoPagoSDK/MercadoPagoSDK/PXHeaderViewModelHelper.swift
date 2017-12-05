@@ -10,7 +10,7 @@ import UIKit
 
 extension PXResultViewModel {
 
-    open func headerComponentData() -> PXHeaderProps {
+    open func getHeaderComponentProps() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return props
     }

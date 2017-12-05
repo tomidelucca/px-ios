@@ -21,19 +21,19 @@ public class PXErrorComponent: NSObject, PXComponetizable {
     }
     
     public func getTitle() -> String {
-        return "¿Que puedo hacer?"
+        return PXResourceProvider.getTitleForErrorBody(status: props.status, statusDetail: props.statusDetail)
     }
     
     public func getDescription() -> String {
-        return "El teléfono está al dorso de tu tarjeta."
+        return PXResourceProvider.getDescriptionForErrorBody(status: props.status, statusDetail: props.statusDetail)
     }
     
     public func getActionText() -> String {
-        return "Ya hablé con Visa y me autorizó"
+        return PXResourceProvider.getActionTextForErrorBody(props.paymentMethodName)
     }
     
     public func getSecondaryTitleForCallForAuth() -> String {
-        return "¿No pudiste autorizarlo?"
+        return PXResourceProvider.getSecondaryTitleForErrorBody(status: props.status, statusDetail: props.statusDetail)
     }
     
     public func isCallForAuthorize() -> Bool {
@@ -45,7 +45,7 @@ public class PXErrorComponent: NSObject, PXComponetizable {
     }
     
     public func recoverPayment() {
-        
+        self.props.action()
     }
 }
 
@@ -53,11 +53,12 @@ class PXErrorProps: NSObject {
     var status: String
     var statusDetail: String
     var paymentMethodName: String?
+    var action : (() -> Void)
     
-    init(status: String, statusDetail: String, paymentMethodName: String?) {
+    init(status: String, statusDetail: String, paymentMethodName: String?, action:  @escaping (() -> Void)) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentMethodName = paymentMethodName
+        self.action = action
     }
 }
-
