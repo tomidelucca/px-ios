@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>error_body_title_</key>
+	<dict>
+		<key>es</key>
+		<string>¿Que puedo hacer?</string>
+		<key>pt</key>
+		<string>O que posso fazer?</string>
+	</dict>
 	<key>error_body_description_</key>
 	<dict>
 		<key>es</key>
@@ -33,9 +40,9 @@
 	<key>error_body_description_cc_rejected_card_disabled</key>
 	<dict>
 		<key>es</key>
-		<string>Usa otro medio de pago o llama a {banco/tarjeta} para activar tu tarjeta.O si prefieres, puedes elegir otro medio de pago.</string>
+		<string>Usa otro medio de pago o llama a %1$s para activar tu tarjeta. O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>pt</key>
-		<string>Use outro meio de pagamento ou ligue para {banco/ cartão} e desbloqueie o cartão.</string>
+		<string>Use outro meio de pagamento ou ligue para %1$s e desbloqueie o cartão.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_insufficient_amount</key>
 	<dict>
@@ -86,12 +93,26 @@
 		<key>pt</key>
 		<string>Use um meio de pagamento diferente de cartão.</string>
 	</dict>
-	<key>error_body_title</key>
+	<key>error_body_action_text_</key>
 	<dict>
 		<key>es</key>
-		<string>¿Que puedo hacer?</string>
+		<string>Ya hablé y me autorizó</string>
 		<key>pt</key>
-		<string>O que posso fazer?</string>
+		<string>Já falei e autorizei</string>
+	</dict>
+	<key>error_body_action_text_cc_rejected_call_for_authorize</key>
+	<dict>
+		<key>es</key>
+		<string>Ya hablé con %1$s y me autorizó</string>
+		<key>pt</key>
+		<string>Já falei com %1$s e autorizei</string>
+	</dict>
+	<key>error_body_secondary_title_</key>
+	<dict>
+		<key>es</key>
+		<string>¿No pudiste autorizarlo?</string>
+		<key>pt</key>
+		<string>Não conseguiu autorizá-lo?</string>
 	</dict>
 </dict>
 </plist>
