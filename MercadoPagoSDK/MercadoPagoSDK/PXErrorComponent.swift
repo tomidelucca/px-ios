@@ -34,7 +34,7 @@ public class PXErrorComponent: NSObject, PXComponetizable {
             if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE) {
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE()
             } else if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CARD_DISABLED) {
-                return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_CARD_DISABLED()
+                return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_CARD_DISABLED(self.props.paymentMethodName)
             } else if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT) {
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_AMOUNT()
             } else if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_OTHER_REASON) {

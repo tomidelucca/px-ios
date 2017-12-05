@@ -32,8 +32,13 @@ open class PXResourceProvider: NSObject {
         return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
     }
     
-    static open func getDescriptionForErrorBodyForREJECTED_CARD_DISABLED() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CARD_DISABLED)
+    static open func getDescriptionForErrorBodyForREJECTED_CARD_DISABLED(_ paymentMethodName: String?) -> String {
+        if let paymentMethodName = paymentMethodName {
+            let string = getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CARD_DISABLED)
+            return string.replacingOccurrences(of: "%1$s", with: paymentMethodName)
+        } else {
+            return getWord(key: error_body_description_base, statusDetail: "")
+        }
     }
     
     static open func getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_AMOUNT() -> String {
@@ -66,7 +71,7 @@ open class PXResourceProvider: NSObject {
 
     static open func getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(_ paymentMethodName: String?) -> String {
         if let paymentMethodName = paymentMethodName {
-            let string =  getWord(key: error_body_action_text_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
+            let string = getWord(key: error_body_action_text_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
             return string.replacingOccurrences(of: "%1$s", with: paymentMethodName)
         } else {
             return getWord(key: error_body_action_text_base, statusDetail: "")

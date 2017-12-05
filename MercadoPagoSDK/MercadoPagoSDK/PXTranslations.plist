@@ -26,9 +26,9 @@
 	<key>error_body_description_pending_review_manual</key>
 	<dict>
 		<key>es</key>
-		<string>Dentro de las próximas [24 horas] te avisaremos por e-mail si se acreditó.</string>
+		<string>Dentro de las próximas 24 horas te avisaremos por e-mail si se acreditó.</string>
 		<key>pt</key>
-		<string>Dentro das próximas {24 horas} te avisaremos por e-mail se foi aprovado.</string>
+		<string>Dentro das próximas 24 horas te avisaremos por e-mail se foi aprovado.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_call_for_authorize</key>
 	<dict>
