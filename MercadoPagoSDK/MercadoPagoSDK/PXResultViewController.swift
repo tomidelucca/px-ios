@@ -34,6 +34,11 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(headerView)
         PXLayout.pinTop(view: headerView, to: contentView).isActive = true
         PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
+        
+        let receiptView = self.buildReceiptView()
+        contentView.addSubview(receiptView)
+        PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
+        PXLayout.equalizeWidth(view: receiptView, to: contentView).isActive = true
 
         //Add Foo
         fooView = buildFooterView()
@@ -49,7 +54,7 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
-        PXLayout.put(view: bodyView, onBottomOf: headerView).isActive = true
+        PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
         PXLayout.put(view: bodyView, aboveOf: fooView).isActive = true
 
         self.view.layoutIfNeeded()
@@ -67,6 +72,11 @@ class PXResultViewController: PXComponentContainerViewController {
         return footerComponent.render()
     }
 
+    func buildReceiptView() -> UIView {
+        let receiptProps = self.viewModel.getReceiptComponentProps()
+        let receiptComponent = PXReceiptComponent(props: receiptProps)
+        return receiptComponent.render()
+    }
     func buildBodyView() -> UIView {
         let bodyProps = self.viewModel.getBodyComponentProps()
         let bodyComponent = PXBodyComponent(props: bodyProps)
