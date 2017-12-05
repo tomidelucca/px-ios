@@ -243,3 +243,7 @@
 "¡Apúrate a pagar!" = "¡Apúrate a pagar!";
 "Algo salió mal..." = "Algo salió mal...";
 
+// Receipt
+" de " = " de ";
+"Número de operación " = "Número de operación ";
+
