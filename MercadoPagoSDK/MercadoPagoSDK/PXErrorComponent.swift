@@ -11,7 +11,6 @@ import MercadoPagoServices
 
 public class PXErrorComponent: NSObject, PXComponetizable {
     var props: PXErrorProps
-    var TITLE_LABEL_FONT_SIZE: CGFloat = 10
     
     init(props: PXErrorProps) {
         self.props = props
@@ -73,7 +72,6 @@ public class PXErrorComponent: NSObject, PXComponetizable {
     
     public func recoverPayment() {
         self.props.action()
-        print("Action Button")
     }
 }
 
