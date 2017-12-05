@@ -42,7 +42,7 @@
     self.paymentResult = nil;
 
     // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithLanguage:Languages_PORTUGUESE];
+    [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH_PERU];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 

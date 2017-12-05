@@ -49,7 +49,6 @@ class PXErrorRenderer: NSObject {
     
     func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
         let label = UILabel()
-//        label.layer.borderWidth = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBlack
@@ -73,7 +72,6 @@ class PXErrorRenderer: NSObject {
     
     func buildDescriptionLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
-//        label.layer.borderWidth = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBrownishGray
@@ -124,7 +122,6 @@ class PXErrorRenderer: NSObject {
 
     func buildSecondaryTitleLabel(with text: String, in superView: UIView, onBottomOf upperView: UIView?) -> UILabel {
         let label = UILabel()
-//        label.layer.borderWidth = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .pxBlack

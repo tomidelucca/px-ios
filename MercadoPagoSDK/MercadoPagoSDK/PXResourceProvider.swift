@@ -15,6 +15,7 @@ open class PXResourceProvider: NSObject {
     static var error_body_description_base = "error_body_description_"
     static var error_body_action_text_base = "error_body_action_text_"
     static var error_body_secondary_title_base = "error_body_secondary_title_"
+    static var spanishId = "es"
     
     static open func getTitleForErrorBody() -> String {
         return getWord(key: error_body_title_base, statusDetail: "")
@@ -86,18 +87,25 @@ open class PXResourceProvider: NSObject {
         let searchKey = key + statusDetail
         if let translation = getTranslation(for: searchKey), translation.isNotEmpty {
             return translation
+        } else if let translation = getTranslation(for: key), translation.isNotEmpty {
+            return translation
         } else {
-            return getTranslation(for: key)!
+            return getTranslation(for: key, languageId: spanishId)!
         }
     }
 
-    static open func getTranslation(for key: String) -> String? {
-        let languageId = MercadoPagoContext.getLanguage()
+    static open func getTranslation(for key: String, languageId: String = MercadoPagoContext.getLanguage()) -> String? {
         let path = MercadoPago.getBundle()!.path(forResource: "PXTranslations", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         if let keyDict = dictionary?.value(forKey: key) as? NSDictionary {
             if let translation = keyDict.value(forKey: languageId) as? String {
                 return translation
+            } else {
+                if languageId.contains(spanishId) {
+                    if let translation = keyDict.value(forKey: spanishId) as? String {
+                        return translation
+                    }
+                }
             }
         }
         return nil

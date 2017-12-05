@@ -59,11 +59,17 @@
 	<key>error_body_description_cc_rejected_insufficient_amount</key>
 	<dict>
 		<key>es</key>
-		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo.\n\nO si prefieres, puedes elegir otro medio de pago.</string>
+		<string>¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. 
+
+O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>pt</key>
-		<string>Não se preocupe! Recarregue-o em qualquer banco ou pelo Internet Banking e tente novamente.\n\nSe preferir, você pode escolher outro meio de pagamento.</string>
+		<string>Não se preocupe! Recarregue-o em qualquer banco ou pelo Internet Banking e tente novamente.
+
+Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>en</key>
-		<string>Do not be discouraged! Recharge it in any bank or from your internet banking and try again.\n\nOr if you prefer, you can choose another payment method</string>
+		<string>Do not be discouraged! Recharge it in any bank or from your internet banking and try again.
+
+Or if you prefer, you can choose another payment method.</string>
 	</dict>
 	<key>error_body_description_cc_rejected_other_reason</key>
 	<dict>
@@ -126,7 +132,7 @@
 		<key>pt</key>
 		<string>Já falei e autorizei</string>
 		<key>en</key>
-		<string>I already talked and they authorized me.</string>
+		<string>Already talked and I am authorized.</string>
 	</dict>
 	<key>error_body_action_text_cc_rejected_call_for_authorize</key>
 	<dict>
@@ -135,7 +141,7 @@
 		<key>pt</key>
 		<string>Já falei com %1$s e autorizei</string>
 		<key>en</key>
-		<string>I already talked to %1$s and they authorized me.</string>
+		<string>Already talked with %1$s and I am authorized.</string>
 	</dict>
 	<key>error_body_secondary_title_</key>
 	<dict>
