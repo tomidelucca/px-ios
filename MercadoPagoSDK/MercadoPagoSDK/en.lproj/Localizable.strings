@@ -270,3 +270,8 @@
 // components - congrats
 "¡Apúrate a pagar!" = "¡Apúrate a pagar!";
 "Algo salió mal..." = "Something went wrong...";
+
+
+// Receipt
+" de " = " of ";
+"Número de operación " = "Transaction number ";

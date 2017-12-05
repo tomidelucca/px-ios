@@ -36,10 +36,13 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNotNil(recieptView.dateLabel)
+        XCTAssertNotNil(recieptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
         XCTAssertEqual(paymentMethodView.amountTitle?.text, "3x $ 100")
         XCTAssertEqual(paymentMethodView.amountDetail?.text, "($ 300)")
@@ -65,10 +68,13 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNotNil(recieptView.dateLabel)
+        XCTAssertNotNil(recieptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
         XCTAssertEqual(paymentMethodView.amountTitle?.text, "$ 1.000")
         XCTAssertNil(paymentMethodView.amountDetail?.text)
@@ -92,6 +98,9 @@ class PXResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
@@ -108,6 +117,9 @@ class PXResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertNil(footerView.principalButton)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
@@ -124,6 +136,7 @@ class PXResultViewModelTest: BaseTest {
         let preference = PaymentResultScreenPreference()
         preference.setApproved(title: approvedTitleDummy)
         preference.setApproved(labelText: approvedLabelDummy)
+        preference.disableApprovedReceipt()
         let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference:preference)
         paymentResult.paymentData?.token = MockBuilder.buildToken()
@@ -131,10 +144,13 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
         XCTAssertEqual(paymentMethodView.amountTitle?.text, "$ 1.000")
         XCTAssertNil(paymentMethodView.amountDetail?.text)
@@ -160,6 +176,9 @@ class PXResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxRedMp)
@@ -180,6 +199,9 @@ class PXResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertNil(footerView.principalButton)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
@@ -202,6 +224,9 @@ class PXResultViewModelTest: BaseTest {
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference: preference)
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
         XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Cancelar pago".localized)
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxOrangeMp)
@@ -219,13 +244,16 @@ class PXResultViewModelTest: BaseTest {
         let instructionsInfo = MockBuilder.buildInstructionsInfo(paymentMethod: paymentMethod)
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount: 1000.0, instructionsInfo: instructionsInfo)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
         //Instructions View
         guard let instructionsView = bodyView as? PXInstructionsView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
 
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
+        
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
         let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
@@ -287,13 +315,16 @@ class PXResultViewModelTest: BaseTest {
         let instructionsInfo = MockBuilder.buildCompleteInstructionsInfo()
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount: 1000.0, instructionsInfo: instructionsInfo)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-
+        let recieptView = buildReceiptView(resultViewModel: resultViewModel)
         //Instructions View
         guard let instructionsView = bodyView as? PXInstructionsView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
 
+        XCTAssertNil(recieptView.dateLabel)
+        XCTAssertNil(recieptView.detailLabel)
+        
         //Instructions Subtitle View
         XCTAssertNotNil(instructionsView.subtitleView)
         let subtitleView = instructionsView.subtitleView as! PXInstructionsSubtitleView
@@ -408,5 +439,11 @@ class PXResultViewModelTest: BaseTest {
         let data = PXFooterProps(buttonAction: resultViewModel.getActionButton(), linkAction: resultViewModel.getActionLink())
         let footerComponent = PXFooterComponent(props: data)
         return PXFooterRenderer().render(footerComponent)
+    }
+    
+    func buildReceiptView(resultViewModel: PXResultViewModel) -> PXRecieptView {
+        let data = resultViewModel.receiptProps()
+        let recieptComponent = PXReceiptComponent(props: data)
+        return PXReceiptComponentRenderer().render(recieptComponent)
     }
 }

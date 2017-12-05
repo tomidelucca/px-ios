@@ -10,6 +10,18 @@ import UIKit
 
 extension PXResultViewModel {
 
+    
+    open func receiptProps() -> PXRecieptProps {
+        if self.paymentResult.isApproved() && !self.preference.isPaymentIdDisable() {
+            let date = Date()
+            return PXRecieptProps(dateLabelString: Utils.getDateFormatter(date), recieptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
+        }else{
+            return PXRecieptProps()
+        }
+    }
+    
+   
+    
     open func headerComponentData() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return props

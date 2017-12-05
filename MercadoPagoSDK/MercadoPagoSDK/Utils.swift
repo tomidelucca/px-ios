@@ -404,5 +404,16 @@ class Utils {
         let environment = ProcessInfo.processInfo.environment
         return environment["testing"] != nil
     }
+    
+    static func getDateFormatter(_ date : Date) -> String {
+        let formatterDay = DateFormatter()
+        formatterDay.dateFormat = "dd"
+        let formatterMonth = DateFormatter()
+        formatterMonth.locale = NSLocale.current
+        formatterMonth.dateFormat = "MMMM"
+        let formatterYear = DateFormatter()
+        formatterYear.dateFormat = "yyyy"
+        return formatterDay.string(from:date) + " de ".localized + formatterMonth.string(from:date).localized + " de ".localized + formatterYear.string(from:date)
+    }
 
 }
