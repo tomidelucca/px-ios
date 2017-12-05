@@ -12,29 +12,29 @@ class PXReceiptComponentRenderer: NSObject {
     let FONT_SIZE : CGFloat = 14.0
     let LABEL_SIZE : CGFloat = 18.0
     
-    func render(_ component: PXReceiptComponent) -> PXRecieptView{
-        let recieptView = PXRecieptView()
-        recieptView.translatesAutoresizingMaskIntoConstraints = false
+    func render(_ component: PXReceiptComponent) -> PXReceiptView{
+        let receiptView = PXReceiptView()
+        receiptView.translatesAutoresizingMaskIntoConstraints = false
         if let dateString = component.props.dateLabelString {
             let dateLabel = makeLabel(text: dateString)
-            recieptView.addSubview(dateLabel)
-            recieptView.dateLabel = dateLabel
-            PXLayout.pinTop(view: dateLabel, to: recieptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.equalizeWidth(view: dateLabel, to: recieptView).isActive = true
+            receiptView.addSubview(dateLabel)
+            receiptView.dateLabel = dateLabel
+            PXLayout.pinTop(view: dateLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.equalizeWidth(view: dateLabel, to: receiptView).isActive = true
         }
         
-        if let detailString = component.props.recieptDescriptionString {
+        if let detailString = component.props.receiptDescriptionString {
             let detailLabel = makeLabel(text: detailString)
-            recieptView.addSubview(detailLabel)
-            recieptView.detailLabel = detailLabel
-            PXLayout.pinBottom(view: detailLabel, to: recieptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.equalizeWidth(view: detailLabel, to: recieptView).isActive = true
-            PXLayout.put(view: detailLabel, onBottomOfLastViewOf: recieptView)?.isActive = true
+            receiptView.addSubview(detailLabel)
+            receiptView.detailLabel = detailLabel
+            PXLayout.pinBottom(view: detailLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.equalizeWidth(view: detailLabel, to: receiptView).isActive = true
+            PXLayout.put(view: detailLabel, onBottomOfLastViewOf: receiptView)?.isActive = true
         }
         
         
         
-        return recieptView
+        return receiptView
     }
     
     
@@ -55,7 +55,7 @@ class PXReceiptComponentRenderer: NSObject {
     }
 }
 
-class PXRecieptView : UIView {
+class PXReceiptView : UIView {
     var dateLabel : UILabel?
     var detailLabel : UILabel?
 }

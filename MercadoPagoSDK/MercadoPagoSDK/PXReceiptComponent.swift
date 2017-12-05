@@ -9,20 +9,20 @@
 import UIKit
 
 class PXReceiptComponent: PXComponetizable {
-    var props : PXRecieptProps
+    var props : PXReceiptProps
 
-    init(props: PXRecieptProps) {
+    init(props: PXReceiptProps) {
         self.props = props
     }
     func render() -> UIView {
         return PXReceiptComponentRenderer().render(self)
     }
 }
-open class PXRecieptProps: NSObject {
+open class PXReceiptProps: NSObject {
     var dateLabelString : String?
-    var recieptDescriptionString : String?
-    init(dateLabelString : String? = nil, recieptDescriptionString: String? = nil) {
+    var receiptDescriptionString : String?
+    init(dateLabelString : String? = nil, receiptDescriptionString: String? = nil) {
         self.dateLabelString = dateLabelString
-        self.recieptDescriptionString = recieptDescriptionString
+        self.receiptDescriptionString = receiptDescriptionString
     }
 }

@@ -36,7 +36,7 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.pinTop(view: headerView, to: contentView).isActive = true
         PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
         
-        let receiptView = self.buildReceipt()
+        let receiptView = self.buildReceiptView()
         contentView.addSubview(receiptView)
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.equalizeWidth(view: receiptView, to: contentView).isActive = true
@@ -73,10 +73,10 @@ class PXResultViewController: PXComponentContainerViewController {
         return footerComponent.render()
     }
 
-    func buildReceipt() -> UIView {
-        let receiptProps = self.viewModel.receiptProps()
-        let recieptComponent = PXReceiptComponent(props: receiptProps)
-        return recieptComponent.render()
+    func buildReceiptView() -> UIView {
+        let receiptProps = self.viewModel.getReceiptComponentProps()
+        let receiptComponent = PXReceiptComponent(props: receiptProps)
+        return receiptComponent.render()
     }
     func buildBodyView() -> UIView {
 //        let bodyProps = self.viewModel.getTestProps()

@@ -405,7 +405,7 @@ class Utils {
         return environment["testing"] != nil
     }
     
-    static func getDateFormatter(_ date : Date) -> String {
+    static func getFormatedStringDate(_ date : Date) -> String {
         let formatterDay = DateFormatter()
         formatterDay.dateFormat = "dd"
         let formatterMonth = DateFormatter()
