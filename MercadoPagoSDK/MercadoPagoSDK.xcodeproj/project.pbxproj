@@ -1508,6 +1508,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FC7BD8BE1FD98BE700D5B2C7 /* PXUtils */,
 				81ACC8071F9A647700206F7B /* Congrats */,
 				155954E81F87CD1F0086854B /* BoletoComponent.swift */,
 				155954E91F87CD200086854B /* CardInfo.swift */,
@@ -2157,9 +2158,8 @@
 		81ACC8071F9A647700206F7B /* Congrats */ = {
 			isa = PBXGroup;
 			children = (
-				81760F331FD5937100237A81 /* Receipt */,
-				81ACC80D1F9A68D900206F7B /* PXLayout.swift */,
 				812BA9C51FC8B4C600FF32C2 /* Header */,
+				81760F331FD5937100237A81 /* Receipt */,
 				812BA9C41FC8B4AA00FF32C2 /* Footer */,
 				FCCC11F51FCF28CC0001A591 /* Body */,
 				81ACC80F1F9A69FB00206F7B /* Screen */,
@@ -2340,10 +2340,18 @@
 			children = (
 				FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */,
 				FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */,
-				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
-				FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */,
 			);
 			name = Error;
+			sourceTree = "<group>";
+		};
+		FC7BD8BE1FD98BE700D5B2C7 /* PXUtils */ = {
+			isa = PBXGroup;
+			children = (
+				FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */,
+				81ACC80D1F9A68D900206F7B /* PXLayout.swift */,
+				FC7BD8B61FD6C80A00D5B2C7 /* PXTranslations.plist */,
+			);
+			name = PXUtils;
 			sourceTree = "<group>";
 		};
 		FCCC11F51FCF28CC0001A591 /* Body */ = {
