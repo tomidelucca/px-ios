@@ -3,11 +3,11 @@ PODS:
   - MercadoPagoSDK (3.8.0):
     - MercadoPagoPXTracking (= 2.0.1)
     - MercadoPagoSDK/Default (= 3.8.0)
-    - MercadoPagoServices (= 1.0.1)
+    - MercadoPagoServices (= 1.0.2)
   - MercadoPagoSDK/Default (3.8.0):
     - MercadoPagoPXTracking (= 2.0.1)
-    - MercadoPagoServices (= 1.0.1)
-  - MercadoPagoServices (1.0.1):
+    - MercadoPagoServices (= 1.0.2)
+  - MercadoPagoServices (1.0.2):
     - MercadoPagoPXTracking (= 2.0.1)
 
 DEPENDENCIES:
