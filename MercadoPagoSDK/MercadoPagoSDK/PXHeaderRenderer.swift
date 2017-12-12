@@ -38,33 +38,32 @@ class PXHeaderRenderer: NSObject {
         PXLayout.centerHorizontally(view: contentView, to: headerView).isActive = true
         PXLayout.centerVertically(view: contentView, into: headerView).isActive = true
         PXLayout.equalizeWidth(view: contentView, to: headerView).isActive = true
-        PXLayout.setHeight(owner: contentView, height: 100).isActive = true
         contentView.layer.borderWidth = 3
         
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
-        headerView.addSubview(headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
-        PXLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
+        contentView.addSubview(headerView.circleImage!)
+        PXLayout.centerHorizontally(view: headerView.circleImage!, to: contentView).isActive = true
+        PXLayout.pinTop(view: headerView.circleImage!, to: contentView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
 
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
-        headerView.addSubview(headerView.badgeImage!)
+        contentView.addSubview(headerView.badgeImage!)
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
 
         //Status Label
-        headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
-        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: contentView, onBottomOf: headerView.circleImage!)
+        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: contentView).isActive = true
+        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
-        headerView.addSubview(headerView.messageLabel!)
-        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
+        contentView.addSubview(headerView.messageLabel!)
+        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: contentView).isActive = true
         PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: PXLayout.XL_MARGIN).isActive = true
+        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.pinBottom(view: headerView.messageLabel!, to: contentView, withMargin: PXLayout.XL_MARGIN).isActive = true
 
         return headerView
     }
