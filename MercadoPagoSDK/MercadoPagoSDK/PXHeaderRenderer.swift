@@ -30,6 +30,17 @@ class PXHeaderRenderer: NSObject {
         let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let contentView = UIView()
+        contentView.backgroundColor = header.props.backgroundColor
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(contentView)
+        PXLayout.centerHorizontally(view: contentView, to: headerView).isActive = true
+        PXLayout.centerVertically(view: contentView, into: headerView).isActive = true
+        PXLayout.equalizeWidth(view: contentView, to: headerView).isActive = true
+        PXLayout.setHeight(owner: contentView, height: 100).isActive = true
+        contentView.layer.borderWidth = 3
+        
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
@@ -44,7 +55,6 @@ class PXHeaderRenderer: NSObject {
 
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
-        headerView.addSubview(headerView.statusLabel!)
         PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
         PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
@@ -84,6 +94,7 @@ class PXHeaderRenderer: NSObject {
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.textAlignment = .center
         statusLabel.textColor = .pxWhite
+        superView.addSubview(statusLabel)
         if text != nil {
             PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
             statusLabel.attributedText = text
