@@ -38,8 +38,8 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
 
         //Add Receipt
-//        receiptView = self.buildReceiptView()
-        receiptView = UIView()
+        receiptView = self.buildReceiptView()
+//        receiptView = UIView()
         contentView.addSubview(receiptView)
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
@@ -55,7 +55,8 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
         //Add Body
-        bodyView = UIView()
+        bodyView = self.buildBodyView()
+//        bodyView = UIView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
@@ -67,7 +68,7 @@ class PXResultViewController: PXComponentContainerViewController {
                 // Expandir header
                 expandirHeader()
             } else {
-                // Expandir y centrar body
+                // Expandir body
                 expandirBody()
             }
         }
@@ -85,7 +86,11 @@ class PXResultViewController: PXComponentContainerViewController {
     }
     
     func expandirBody() {
-        
+        self.view.layoutIfNeeded()
+        let footerHeight = self.footerView.frame.height
+        let headerHeight = self.headerView.frame.height
+        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight
+        PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 
     func sobraEspacio() -> Bool {
@@ -95,7 +100,8 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func extenderHeader() -> Bool {
         self.view.layoutIfNeeded()
-        return bodyView.frame.height == 0
+        return bodyView.subviews.count == 0
+//        return bodyView.frame.height == 0
     }
     
     func buildHeaderView() -> UIView {

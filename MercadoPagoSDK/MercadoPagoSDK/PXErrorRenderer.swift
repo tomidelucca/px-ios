@@ -21,28 +21,45 @@ class PXErrorRenderer: NSObject {
         errorBodyView.backgroundColor = .pxWhite
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
         
-        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
-        errorBodyView.addSubview(errorBodyView.titleLabel!)
+        //Content View
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        errorBodyView.addSubview(contentView)
+        PXLayout.centerHorizontally(view: contentView, to: errorBodyView).isActive = true
+        PXLayout.centerVertically(view: contentView, into: errorBodyView).isActive = true
+        PXLayout.equalizeWidth(view: contentView, to: errorBodyView).isActive = true
         
-        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
-        errorBodyView.addSubview(errorBodyView.descriptionLabel!)
+        //Title Label
+        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: contentView)
+        contentView.addSubview(errorBodyView.titleLabel!)
         
+        //Description Label
+        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: contentView, onBottomOf: errorBodyView.titleLabel)
+        contentView.addSubview(errorBodyView.descriptionLabel!)
+        
+        //Action Button
         if component.hasActionForCallForAuth() {
-            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel, component: component)
-            errorBodyView.addSubview(errorBodyView.actionButton!)
+            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: contentView, onBottomOf: errorBodyView.descriptionLabel, component: component)
+            contentView.addSubview(errorBodyView.actionButton!)
             
-            errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
-            errorBodyView.addSubview(errorBodyView.middleDivider!)
+            errorBodyView.middleDivider = buildMiddleDivider(in: contentView, onBottomOf: errorBodyView.actionButton)
+            contentView.addSubview(errorBodyView.middleDivider!)
             
-            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
-            errorBodyView.addSubview(errorBodyView.secondaryTitleLabel!)
+            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: contentView, onBottomOf: errorBodyView.middleDivider)
+            contentView.addSubview(errorBodyView.secondaryTitleLabel!)
 
-            errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
-            errorBodyView.addSubview(errorBodyView.bottomDivider!)
-            PXLayout.pinLastSubviewToBottom(view: errorBodyView, withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
+            errorBodyView.bottomDivider = buildBottomDivider(in: contentView, onBottomOf: errorBodyView.secondaryTitleLabel)
+            contentView.addSubview(errorBodyView.bottomDivider!)
+            PXLayout.pinLastSubviewToBottom(view: contentView, withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
         } else {
-            PXLayout.pinLastSubviewToBottom(view: errorBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
+            PXLayout.pinLastSubviewToBottom(view: contentView, withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
+        
+        contentView.layer.borderWidth = 1
+        errorBodyView.layer.borderWidth = 3
+        
+//        PXLayout.pinTop(view: contentView, to: errorBodyView).isActive = true
+//        PXLayout.pinBottom(view: contentView, to: errorBodyView).isActive = true
 
         return errorBodyView
     }

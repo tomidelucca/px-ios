@@ -38,7 +38,6 @@ class PXHeaderRenderer: NSObject {
         PXLayout.centerHorizontally(view: contentView, to: headerView).isActive = true
         PXLayout.centerVertically(view: contentView, into: headerView).isActive = true
         PXLayout.equalizeWidth(view: contentView, to: headerView).isActive = true
-        contentView.layer.borderWidth = 3
         
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
@@ -64,6 +63,13 @@ class PXHeaderRenderer: NSObject {
         PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.pinBottom(view: headerView.messageLabel!, to: contentView, withMargin: PXLayout.XL_MARGIN).isActive = true
+        
+        
+        contentView.layoutIfNeeded()
+            if contentView.frame.height >= 12 {
+                PXLayout.pinTop(view: contentView, to: headerView).isActive = true
+                PXLayout.pinBottom(view: contentView, to: headerView).isActive = true
+            }
 
         return headerView
     }
