@@ -200,8 +200,8 @@
 		15AE1DA71F60807900B0DAF8 /* SummaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */; };
 		15AE1DA91F608BB500B0DAF8 /* SummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */; };
 		15AE1DAA1F608BB500B0DAF8 /* SummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */; };
-		15AE1DAD1F61B98200B0DAF8 /* Componentizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAC1F61B98200B0DAF8 /* Componentizable.swift */; };
-		15AE1DAE1F61B98200B0DAF8 /* Componentizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAC1F61B98200B0DAF8 /* Componentizable.swift */; };
+		15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */; };
+		15AE1DAE1F61B98200B0DAF8 /* PXComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */; };
 		15AE1DB01F61BAC200B0DAF8 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAF1F61BAC200B0DAF8 /* SummaryComponent.swift */; };
 		15AE1DB11F61BAC200B0DAF8 /* SummaryComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAF1F61BAC200B0DAF8 /* SummaryComponent.swift */; };
 		15AE1DB71F61BCEE00B0DAF8 /* TitleValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DB61F61BCEE00B0DAF8 /* TitleValueView.swift */; };
@@ -843,7 +843,7 @@
 		15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsReview.swift; sourceTree = "<group>"; };
 		15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryPreference.swift; sourceTree = "<group>"; };
 		15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryType.swift; sourceTree = "<group>"; };
-		15AE1DAC1F61B98200B0DAF8 /* Componentizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Componentizable.swift; sourceTree = "<group>"; };
+		15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXComponent.swift; sourceTree = "<group>"; };
 		15AE1DAF1F61BAC200B0DAF8 /* SummaryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
 		15AE1DB61F61BCEE00B0DAF8 /* TitleValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleValueView.swift; sourceTree = "<group>"; };
 		15AE1DBD1F672FAE00B0DAF8 /* DisclaimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
@@ -1542,7 +1542,7 @@
 				155954EA1F87CD200086854B /* PayerInfoViewModel.swift */,
 				155954E71F87CD1F0086854B /* PreferenceDescriptionTableViewCell.xib */,
 				15AE1DB21F61BC7A00B0DAF8 /* Summary */,
-				15AE1DAC1F61B98200B0DAF8 /* Componentizable.swift */,
+				15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */,
 				15AE1DAF1F61BAC200B0DAF8 /* SummaryComponent.swift */,
 				150E4BFD1FB37FD300773565 /* PXComponentContainerViewController.swift */,
 			);
@@ -2781,7 +2781,7 @@
 				FCBF132D1E71D6A60092B756 /* Updatable.swift in Sources */,
 				7671F15C1D5A336800B9481F /* CustomerPaymentMethod.swift in Sources */,
 				4BAE1D461DCBE8FF0000ED5C /* FooterTableViewCell.swift in Sources */,
-				15AE1DAD1F61B98200B0DAF8 /* Componentizable.swift in Sources */,
+				15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */,
 				15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */,
 				7656F5271C975EE20076A14D /* TermsAndConditionsViewCell.swift in Sources */,
 				761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
@@ -3230,7 +3230,7 @@
 				0F9883311AD2AB3C00F750F0 /* MercadoPago.swift in Sources */,
 				15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */,
 				0F9883B01AD2ACFE00F750F0 /* CurrenciesUtil.swift in Sources */,
-				15AE1DAE1F61B98200B0DAF8 /* Componentizable.swift in Sources */,
+				15AE1DAE1F61B98200B0DAF8 /* PXComponent.swift in Sources */,
 				4BEF80F71E53308C00797CD1 /* PaymentResult.swift in Sources */,
 				150E4BFF1FB37FD300773565 /* PXComponentContainerViewController.swift in Sources */,
 				0FC4FC281B0FB2B200CF7148 /* PromosTyCTableViewCell.swift in Sources */,
