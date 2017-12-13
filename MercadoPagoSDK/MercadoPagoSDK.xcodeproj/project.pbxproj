@@ -664,6 +664,8 @@
 		FC45F1241E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */; };
 		FC45F1251E8D50F2008D4831 /* UnlockCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */; };
 		FC45F1261E8D50F2008D4831 /* UnlockCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */; };
+		FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
+		FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */; };
 		FC7BD8AA1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */; };
 		FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */; };
@@ -1146,6 +1148,7 @@
 		FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionRenderer.swift; sourceTree = "<group>"; };
 		FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockCardTableViewCell.swift; sourceTree = "<group>"; };
 		FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnlockCardTableViewCell.xib; sourceTree = "<group>"; };
+		FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentView.swift; sourceTree = "<group>"; };
 		FC7146A21F7BF65A00224B4E /* InstructionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewModel.swift; sourceTree = "<group>"; };
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorComponent.swift; sourceTree = "<group>"; };
@@ -1533,6 +1536,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */,
 				FC7BD8BE1FD98BE700D5B2C7 /* PXUtils */,
 				81ACC8071F9A647700206F7B /* Congrats */,
 				155954E81F87CD1F0086854B /* BoletoComponent.swift */,
@@ -2897,6 +2901,7 @@
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
 				4BB3ECE31FB37A8700AAFD38 /* URLConfigs.swift in Sources */,
 				15AE1DB71F61BCEE00B0DAF8 /* TitleValueView.swift in Sources */,
+				FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */,
 				4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */,
 				4B9FEFCB1EA64DC6002B78A2 /* CheckoutViewModel.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
@@ -3152,6 +3157,7 @@
 				4B0BAC431F1E81C60097103E /* MercadoPagoCheckoutScreens.swift in Sources */,
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,
 				76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */,
+				FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */,
 				23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */,
 				0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */,
 				8138737B1FA8D2BF002095D6 /* PXResultViewModel.swift in Sources */,

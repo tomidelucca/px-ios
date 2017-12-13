@@ -31,52 +31,31 @@ class PXHeaderRenderer: NSObject {
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
-        let topViewGuide = UIView()
-        topViewGuide.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(topViewGuide)
-        topViewGuide.backgroundColor = .red
-        PXLayout.pinTop(view: topViewGuide, to: headerView).isActive = true
-        
-        let bottomViewGuide = UIView()
-        bottomViewGuide.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(bottomViewGuide)
-        bottomViewGuide.backgroundColor = .blue
-        PXLayout.pinBottom(view: bottomViewGuide, to: headerView).isActive = true
-        PXLayout.equalizeHeight(view: topViewGuide, to: bottomViewGuide).isActive = true
-        
-        let contentView = UIView()
-        contentView.backgroundColor = header.props.backgroundColor
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(contentView)
-        PXLayout.centerHorizontally(view: contentView, to: headerView).isActive = true
-        PXLayout.put(view: contentView, onBottomOf: topViewGuide).isActive = true
-        PXLayout.put(view: contentView, aboveOf: bottomViewGuide).isActive = true
-        PXLayout.equalizeWidth(view: contentView, to: headerView).isActive = true
-        
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
-        contentView.addSubview(headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.circleImage!, to: contentView).isActive = true
-        PXLayout.pinTop(view: headerView.circleImage!, to: contentView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
+        headerView.addSubview(headerView.circleImage!)
+        PXLayout.centerHorizontally(view: headerView.circleImage!, to: headerView.contentView).isActive = true
+        PXLayout.pinTop(view: headerView.circleImage!, to: headerView.contentView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
 
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
-        contentView.addSubview(headerView.badgeImage!)
+        headerView.addSubview(headerView.badgeImage!)
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
 
         //Status Label
-        headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: contentView, onBottomOf: headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: contentView).isActive = true
-        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView.contentView, onBottomOf: headerView.circleImage!)
+        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView.contentView).isActive = true
+        headerView.addFullWidthSubview(headerView.statusLabel!, percent: CONTENT_WIDTH_PERCENT)
+        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView.contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
-        contentView.addSubview(headerView.messageLabel!)
-        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: contentView).isActive = true
+        headerView.addSubview(headerView.messageLabel!)
+        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView.contentView).isActive = true
         PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.pinBottom(view: headerView.messageLabel!, to: contentView, withMargin: PXLayout.XL_MARGIN).isActive = true
+        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView.contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView.contentView, withMargin: PXLayout.XL_MARGIN).isActive = true
         
         return headerView
     }
@@ -133,7 +112,17 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class PXHeaderView: UIView {
+public enum pxLayoutOptions: String {
+    case FULL_WIDTH = "full_width"
+    case FULL_HEIGHT = "full_height"
+    case PIN_TOP = "pin_top"
+    case PIN_BOTTOM = "pin_bottom"
+    case PIN_LEFT = "pin_left"
+    case PIN_RIGHT = "pin_right"
+    
+}
+
+public class PXHeaderView: PXComponentView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?
