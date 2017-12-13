@@ -21,12 +21,26 @@ class PXErrorRenderer: NSObject {
         errorBodyView.backgroundColor = .pxWhite
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
         
+        let topViewGuide = UIView()
+        topViewGuide.translatesAutoresizingMaskIntoConstraints = false
+        errorBodyView.addSubview(topViewGuide)
+        topViewGuide.backgroundColor = .red
+        PXLayout.pinTop(view: topViewGuide, to: errorBodyView).isActive = true
+        
+        let bottomViewGuide = UIView()
+        bottomViewGuide.translatesAutoresizingMaskIntoConstraints = false
+        errorBodyView.addSubview(bottomViewGuide)
+        bottomViewGuide.backgroundColor = .blue
+        PXLayout.pinBottom(view: bottomViewGuide, to: errorBodyView).isActive = true
+        PXLayout.equalizeHeight(view: topViewGuide, to: bottomViewGuide).isActive = true
+        
         //Content View
         let contentView = UIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
         errorBodyView.addSubview(contentView)
         PXLayout.centerHorizontally(view: contentView, to: errorBodyView).isActive = true
-        PXLayout.centerVertically(view: contentView, into: errorBodyView).isActive = true
+        PXLayout.put(view: contentView, onBottomOf: topViewGuide).isActive = true
+        PXLayout.put(view: contentView, aboveOf: bottomViewGuide).isActive = true
         PXLayout.equalizeWidth(view: contentView, to: errorBodyView).isActive = true
         
         //Title Label
@@ -54,12 +68,6 @@ class PXErrorRenderer: NSObject {
         } else {
             PXLayout.pinLastSubviewToBottom(view: contentView, withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
-        
-        contentView.layer.borderWidth = 1
-        errorBodyView.layer.borderWidth = 3
-        
-//        PXLayout.pinTop(view: contentView, to: errorBodyView).isActive = true
-//        PXLayout.pinBottom(view: contentView, to: errorBodyView).isActive = true
 
         return errorBodyView
     }

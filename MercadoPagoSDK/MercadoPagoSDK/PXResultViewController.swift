@@ -63,13 +63,11 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
         PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
         
-        if sobraEspacio() {
-            if extenderHeader() {
-                // Expandir header
-                expandirHeader()
+        if isEmptySpaceOnScreen() {
+            if shouldExpandHeader() {
+                expandHeader()
             } else {
-                // Expandir body
-                expandirBody()
+                expandBody()
             }
         }
         
@@ -79,13 +77,13 @@ class PXResultViewController: PXComponentContainerViewController {
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
     
-    func expandirHeader() {
+    func expandHeader() {
         PXLayout.equalizeHeight(view: self.contentView, to: self.scrollView).isActive = true
         PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
         PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
     }
     
-    func expandirBody() {
+    func expandBody() {
         self.view.layoutIfNeeded()
         let footerHeight = self.footerView.frame.height
         let headerHeight = self.headerView.frame.height
@@ -93,15 +91,14 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 
-    func sobraEspacio() -> Bool {
+    func isEmptySpaceOnScreen() -> Bool {
         self.view.layoutIfNeeded()
-        return true
+        return self.contentView.frame.height < self.scrollView.frame.height
     }
     
-    func extenderHeader() -> Bool {
+    func shouldExpandHeader() -> Bool {
         self.view.layoutIfNeeded()
-        return bodyView.subviews.count == 0
-//        return bodyView.frame.height == 0
+        return bodyView.frame.height == 0
     }
     
     func buildHeaderView() -> UIView {

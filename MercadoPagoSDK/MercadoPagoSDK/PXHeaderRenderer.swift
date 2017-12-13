@@ -31,12 +31,26 @@ class PXHeaderRenderer: NSObject {
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
+        let topViewGuide = UIView()
+        topViewGuide.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(topViewGuide)
+        topViewGuide.backgroundColor = .red
+        PXLayout.pinTop(view: topViewGuide, to: headerView).isActive = true
+        
+        let bottomViewGuide = UIView()
+        bottomViewGuide.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(bottomViewGuide)
+        bottomViewGuide.backgroundColor = .blue
+        PXLayout.pinBottom(view: bottomViewGuide, to: headerView).isActive = true
+        PXLayout.equalizeHeight(view: topViewGuide, to: bottomViewGuide).isActive = true
+        
         let contentView = UIView()
         contentView.backgroundColor = header.props.backgroundColor
         contentView.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(contentView)
         PXLayout.centerHorizontally(view: contentView, to: headerView).isActive = true
-        PXLayout.centerVertically(view: contentView, into: headerView).isActive = true
+        PXLayout.put(view: contentView, onBottomOf: topViewGuide).isActive = true
+        PXLayout.put(view: contentView, aboveOf: bottomViewGuide).isActive = true
         PXLayout.equalizeWidth(view: contentView, to: headerView).isActive = true
         
         //Image
@@ -64,13 +78,6 @@ class PXHeaderRenderer: NSObject {
         PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: contentView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.pinBottom(view: headerView.messageLabel!, to: contentView, withMargin: PXLayout.XL_MARGIN).isActive = true
         
-        
-        contentView.layoutIfNeeded()
-            if contentView.frame.height >= 12 {
-                PXLayout.pinTop(view: contentView, to: headerView).isActive = true
-                PXLayout.pinBottom(view: contentView, to: headerView).isActive = true
-            }
-
         return headerView
     }
 
