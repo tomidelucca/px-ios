@@ -48,8 +48,14 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: otherView, attribute: .trailing, multiplier: 1, constant: -margin))
     }
     //Pin Top
-    static func pinTop(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: otherView, attribute: .top, multiplier: 1, constant: margin))
+    static func pinTop(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+        var superView : UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
     }
     //Pin Bottom
     static func pinBottom(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {

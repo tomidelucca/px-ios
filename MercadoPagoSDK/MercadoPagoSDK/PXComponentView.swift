@@ -39,14 +39,18 @@ public class PXComponentView: UIView {
         self.contentView.addSubview(view)
     }
     
-    public func addFullWidthSubview(_ view: UIView, percent: CGFloat = 100, horizontallyCentered: Bool = true, verticallyCentered: Bool = true) {
-        self.addSubview(view)
-        PXLayout.setWidth(ofView: view, asWidthOfView: self.contentView, percent: percent).isActive = true
-        if horizontallyCentered {
-            PXLayout.centerHorizontally(view: view, to: self.contentView).isActive = true
+    public func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+        guard let firstView = self.contentView.subviews.first else {
+            return nil
         }
-        if verticallyCentered {
-            PXLayout.centerVertically(view: view, into: self.contentView).isActive = true
+        return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
+    }
+    
+    public func pinLastSubviewToBottom(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+        guard let lastView = self.contentView.subviews.last else {
+            return nil
         }
+        
+        return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
 }

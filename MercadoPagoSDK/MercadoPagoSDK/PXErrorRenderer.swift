@@ -21,52 +21,27 @@ class PXErrorRenderer: NSObject {
         errorBodyView.backgroundColor = .pxWhite
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
         
-//        let topViewGuide = UIView()
-//        topViewGuide.translatesAutoresizingMaskIntoConstraints = false
-//        errorBodyView.addSubview(topViewGuide)
-//        topViewGuide.backgroundColor = .red
-//        PXLayout.pinTop(view: topViewGuide, to: errorBodyView).isActive = true
-//
-//        let bottomViewGuide = UIView()
-//        bottomViewGuide.translatesAutoresizingMaskIntoConstraints = false
-//        errorBodyView.addSubview(bottomViewGuide)
-//        bottomViewGuide.backgroundColor = .blue
-//        PXLayout.pinBottom(view: bottomViewGuide, to: errorBodyView).isActive = true
-//        PXLayout.equalizeHeight(view: topViewGuide, to: bottomViewGuide).isActive = true
-//
-//        //Content View
-//        let contentView = UIView()
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-//        errorBodyView.addSubview(contentView)
-//        PXLayout.centerHorizontally(view: contentView, to: errorBodyView).isActive = true
-//        PXLayout.put(view: contentView, onBottomOf: topViewGuide).isActive = true
-//        PXLayout.put(view: contentView, aboveOf: bottomViewGuide).isActive = true
-//        PXLayout.equalizeWidth(view: contentView, to: errorBodyView).isActive = true
-        
         //Title Label
-        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView.contentView)
-        errorBodyView.contentView.addSubview(errorBodyView.titleLabel!)
+        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
         
         //Description Label
-        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView.contentView, onBottomOf: errorBodyView.titleLabel)
-        errorBodyView.contentView.addSubview(errorBodyView.descriptionLabel!)
+        errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
         
         //Action Button
         if component.hasActionForCallForAuth() {
-            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView.contentView, onBottomOf: errorBodyView.descriptionLabel, component: component)
-            errorBodyView.contentView.addSubview(errorBodyView.actionButton!)
+            errorBodyView.actionButton = buildActionButton(withTitle: component.getActionText(), in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel, component: component)
             
-            errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView.contentView, onBottomOf: errorBodyView.actionButton)
-            errorBodyView.contentView.addSubview(errorBodyView.middleDivider!)
+            //Middle Divider
+            errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
             
-            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView.contentView, onBottomOf: errorBodyView.middleDivider)
-            errorBodyView.contentView.addSubview(errorBodyView.secondaryTitleLabel!)
+            //Secondary Title Label
+            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: component.getSecondaryTitleForCallForAuth(), in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
 
-            errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView.contentView, onBottomOf: errorBodyView.secondaryTitleLabel)
-            errorBodyView.contentView.addSubview(errorBodyView.bottomDivider!)
-            PXLayout.pinLastSubviewToBottom(view: errorBodyView.contentView, withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
+            //Bottom Divider
+            errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
+            errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
         } else {
-            PXLayout.pinLastSubviewToBottom(view: errorBodyView.contentView, withMargin: PXLayout.L_MARGIN)?.isActive = true
+            errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
 
         return errorBodyView
@@ -91,7 +66,7 @@ class PXErrorRenderer: NSObject {
         PXLayout.setHeight(owner: label, height: height).isActive = true
         PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
-        PXLayout.pinTop(view: label, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinTop(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
         return label
     }
     
