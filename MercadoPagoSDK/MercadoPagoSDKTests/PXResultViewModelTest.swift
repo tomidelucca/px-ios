@@ -245,7 +245,7 @@ class PXResultViewModelTest: BaseTest {
             return
         }
         XCTAssertNotNil(errorView.titleLabel)
-        XCTAssertEqual(errorView.titleLabel?.text, "¿Que puedo hacer?")
+        XCTAssertEqual(errorView.titleLabel?.text, "¿Qué puedo hacer?")
         XCTAssertNotNil(errorView.descriptionLabel)
         XCTAssertEqual(errorView.descriptionLabel?.text, "El teléfono está al dorso de tu tarjeta.")
         XCTAssertNotNil(errorView.actionButton)
@@ -278,9 +278,9 @@ class PXResultViewModelTest: BaseTest {
             return
         }
         XCTAssertNotNil(errorView.titleLabel)
-        XCTAssertEqual(errorView.titleLabel?.text, "¿Que puedo hacer?")
+        XCTAssertEqual(errorView.titleLabel?.text, "¿Qué puedo hacer?")
         XCTAssertNotNil(errorView.descriptionLabel)
-        XCTAssertEqual(errorView.descriptionLabel?.text, "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo.\\n\\nO si prefieres, puedes elegir otro medio de pago.")
+        XCTAssertEqual(errorView.descriptionLabel?.text, "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. \n\nO si prefieres, puedes elegir otro medio de pago.")
         XCTAssertNil(errorView.actionButton)
         XCTAssertNil(errorView.middleDivider)
         XCTAssertNil(errorView.secondaryTitleLabel)
@@ -378,6 +378,45 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertNil(errorView.secondaryTitleLabel)
         XCTAssertNil(errorView.bottomDivider)
     }
+    
+    func testExpandedHeader() {
+        MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
+        let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Mastercard")
+        paymentResult.statusDetail = RejectedStatusDetail.BAD_FILLED_SECURITY_CODE
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
+        let resultViewController = PXResultViewController(viewModel: resultViewModel) { (congratsState) in
+            
+        }
+        resultViewController.renderViews()
+        let scrollView = resultViewController.scrollView
+        let headerView = resultViewController.headerView
+        let bodyView = resultViewController.bodyView
+        let footerView = resultViewController.footerView
+        let expectedHeaderHeight = scrollView!.frame.height - footerView!.frame.height
+        XCTAssertEqual(headerView?.frame.height, expectedHeaderHeight)
+        XCTAssertEqual(bodyView?.frame.height, 0)
+        XCTAssertEqual(scrollView?.frame.height, resultViewController.contentView.frame.height)
+    }
+    
+    func testExpandedBody() {
+        MercadoPagoContext.setLanguage(language: Languages._PORTUGUESE)
+        let paymentResult = MockBuilder.buildPaymentResult("rejected", paymentMethodId: "Mastercard")
+        paymentResult.statusDetail = RejectedStatusDetail.OTHER_REASON
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
+        let resultViewController = PXResultViewController(viewModel: resultViewModel) { (congratsState) in
+            
+        }
+        resultViewController.renderViews()
+        let scrollView = resultViewController.scrollView
+        let headerView = resultViewController.headerView
+        let bodyView = resultViewController.bodyView
+        let footerView = resultViewController.footerView
+        let expectedHeaderHeight = scrollView!.frame.height - footerView!.frame.height - bodyView!.frame.height
+        let expectedBodyHeight = scrollView!.frame.height - footerView!.frame.height - headerView!.frame.height
+        XCTAssertEqual(headerView?.frame.height, expectedHeaderHeight)
+        XCTAssertEqual(bodyView?.frame.height, expectedBodyHeight)
+        XCTAssertEqual(scrollView?.frame.height, resultViewController.contentView.frame.height)
+    }
 
     func testBodyWithInstructions() {
         let paymentResult = MockBuilder.buildPaymentResult("pending", paymentMethodId: "rapipago")
@@ -407,8 +446,8 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "Uma cópia desse boleto foi enviada ao seu e-mail -payer.email- caso você precise realizar o pagamento depois.")
 
         //Instructions Content View
-        XCTAssertNotNil(instructionsView.contentView)
-        let contentView = instructionsView.contentView as! PXInstructionsContentView
+        XCTAssertNotNil(instructionsView.contentsView)
+        let contentView = instructionsView.contentsView as! PXInstructionsContentView
         XCTAssertNotNil(contentView.infoView)
         XCTAssertNotNil(contentView.referencesView)
         XCTAssertNil(contentView.tertiaryInfoView)
@@ -478,8 +517,8 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertEqual(secondaryInfoView.secondaryInfoLabels![0].text, "También enviamos estos datos a tu email")
 
         //Instructions Content View
-        XCTAssertNotNil(instructionsView.contentView)
-        let contentView = instructionsView.contentView as! PXInstructionsContentView
+        XCTAssertNotNil(instructionsView.contentsView)
+        let contentView = instructionsView.contentsView as! PXInstructionsContentView
 
         //Content View Sub components
         XCTAssertNotNil(contentView.infoView)

@@ -39,13 +39,12 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Receipt
         receiptView = self.buildReceiptView()
-//        receiptView = UIView()
         contentView.addSubview(receiptView)
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.equalizeWidth(view: receiptView, to: contentView).isActive = true
 
-        //Add Foo
+        //Add Footer
         footerView = self.buildFooterView()
         contentView.addSubview(footerView)
         PXLayout.equalizeWidth(view: footerView, to: contentView).isActive = true
@@ -56,7 +55,6 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Body
         bodyView = self.buildBodyView()
-//        bodyView = UIView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
