@@ -33,7 +33,7 @@ class PXInstructionsActionsRenderer: NSObject {
     func buildActionView(with action: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
         let actionView = action.render()
         superView.addSubview(actionView)
-        PXLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: actionView, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: actionView, to: superView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: actionView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true

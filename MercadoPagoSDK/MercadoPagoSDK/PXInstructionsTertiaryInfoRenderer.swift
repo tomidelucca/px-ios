@@ -53,7 +53,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: infoLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: infoLabel, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true

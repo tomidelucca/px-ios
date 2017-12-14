@@ -35,19 +35,19 @@ class PXResultViewController: PXComponentContainerViewController {
         headerView = self.buildHeaderView()
         contentView.addSubview(headerView)
         PXLayout.pinTop(view: headerView, to: contentView).isActive = true
-        PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: headerView, toView: contentView).isActive = true
 
         //Add Receipt
         receiptView = self.buildReceiptView()
         contentView.addSubview(receiptView)
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
-        PXLayout.equalizeWidth(view: receiptView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: receiptView, toView: contentView).isActive = true
 
         //Add Footer
         footerView = self.buildFooterView()
         contentView.addSubview(footerView)
-        PXLayout.equalizeWidth(view: footerView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: footerView, toView: contentView).isActive = true
         PXLayout.pinBottom(view: footerView, to: contentView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
@@ -57,7 +57,7 @@ class PXResultViewController: PXComponentContainerViewController {
         bodyView = self.buildBodyView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: bodyView, toView: contentView).isActive = true
         PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
         PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
         
@@ -76,7 +76,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
     
     func expandHeader() {
-        PXLayout.equalizeHeight(view: self.contentView, to: self.scrollView).isActive = true
+        PXLayout.matchHeight(ofView: self.contentView, toView: self.scrollView).isActive = true
         PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
         PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
     }

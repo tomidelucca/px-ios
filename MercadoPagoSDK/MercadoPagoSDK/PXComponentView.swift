@@ -24,11 +24,11 @@ public class PXComponentView: UIView {
         super.addSubview(contentView)
         PXLayout.pinTop(view: topGuideView, to: self).isActive = true
         PXLayout.pinBottom(view: bottomGuideView, to: self).isActive = true
-        PXLayout.equalizeHeight(view: topGuideView, to: bottomGuideView).isActive = true
+        PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView).isActive = true
         PXLayout.centerHorizontally(view: contentView, to: self).isActive = true
         PXLayout.put(view: contentView, onBottomOf: topGuideView).isActive = true
         PXLayout.put(view: contentView, aboveOf: bottomGuideView).isActive = true
-        PXLayout.equalizeWidth(view: contentView, to: self).isActive = true
+        PXLayout.matchWidth(ofView: contentView, toView: self).isActive = true
     }
 
     required public init?(coder aDecoder: NSCoder) {

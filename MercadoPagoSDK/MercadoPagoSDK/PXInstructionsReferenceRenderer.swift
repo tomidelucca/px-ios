@@ -62,7 +62,7 @@ class PXInstructionsReferenceRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
-        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: label, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
 
         if let upperView = upperView {

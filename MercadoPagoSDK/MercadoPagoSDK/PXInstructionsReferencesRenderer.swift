@@ -53,7 +53,7 @@ class PXInstructionsReferencesRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: titleLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: titleLabel, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
         PXLayout.pinTop(view: titleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
 
@@ -64,7 +64,7 @@ class PXInstructionsReferencesRenderer: NSObject {
 
         let referenceView = reference.render()
         superView.addSubview(referenceView)
-        PXLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: referenceView, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: referenceView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
