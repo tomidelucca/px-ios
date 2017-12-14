@@ -9,10 +9,10 @@
 import Foundation
 
 public class PXComponentView: UIView {
-    var topGuideView = UIView()
-    var bottomGuideView = UIView()
+    private var topGuideView = UIView()
+    private var bottomGuideView = UIView()
     private var contentView = UIView()
-    
+
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -30,27 +30,28 @@ public class PXComponentView: UIView {
         PXLayout.put(view: contentView, aboveOf: bottomGuideView).isActive = true
         PXLayout.equalizeWidth(view: contentView, to: self).isActive = true
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override public func addSubview(_ view: UIView) {
         self.contentView.addSubview(view)
     }
-    
+
+    //Pin first content view subview to top
     public func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = self.contentView.subviews.first else {
             return nil
         }
         return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
     }
-    
+
+    //Pin last content view subview to bottom
     public func pinLastSubviewToBottom(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let lastView = self.contentView.subviews.last else {
             return nil
         }
-        
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
 }
