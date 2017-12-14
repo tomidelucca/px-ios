@@ -11,8 +11,8 @@ import UIKit
 class PXErrorRenderer: NSObject {
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let TITLE_FONT_SIZE: CGFloat = 24.0
-    let DESCRIPTION_FONT_SIZE: CGFloat = 20.0
+    let TITLE_FONT_SIZE: CGFloat = 20.0
+    let DESCRIPTION_FONT_SIZE: CGFloat = 16.0
     let ACTION_FONT_SIZE: CGFloat = 18.0
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
     
