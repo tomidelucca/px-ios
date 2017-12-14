@@ -40,7 +40,7 @@ public class PXComponentView: UIView {
     }
 
     //Pin first content view subview to top
-    public func pinFirstSubviewToTop(view: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
+    public func pinFirstSubviewToTop(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = self.contentView.subviews.first else {
             return nil
         }
@@ -53,5 +53,18 @@ public class PXComponentView: UIView {
             return nil
         }
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
+    }
+    
+    //Put view on bottom of content view last subview
+    public func putOnBottomOfLastView(view: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
+        if !self.contentView.subviews.contains(view) {
+            return nil
+        }
+        for actualView in self.contentView.subviews.reversed() {
+            if actualView != view {
+                return PXLayout.put(view: view, onBottomOf: actualView, withMargin: margin)
+            }
+        }
+        return nil
     }
 }

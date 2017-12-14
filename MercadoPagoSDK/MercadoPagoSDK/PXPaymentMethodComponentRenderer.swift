@@ -26,10 +26,10 @@ class PXPaymentMethodComponentRenderer: NSObject {
         pmBodyView.paymentMethodIcon = icon
         icon.image = component.props.paymentMethodIcon
         pmBodyView.addSubview(icon)
-        PXLayout.centerHorizontally(view: icon, to: pmBodyView).isActive = true
+        PXLayout.centerHorizontally(view: icon).isActive = true
         PXLayout.setHeight(owner: icon, height: IMAGE_HEIGHT).isActive = true
         PXLayout.setWidth(owner: icon, width: IMAGE_WIDTH).isActive = true
-        PXLayout.pinTop(view: icon, to:pmBodyView, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinTop(view: icon, withMargin: PXLayout.L_MARGIN).isActive = true
 
         // Title
         let title = UILabel()
@@ -40,9 +40,9 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
         title.textColor = .pxBlack
         title.textAlignment = .center
-        PXLayout.put(view: title, onBottomOfLastViewOf: pmBodyView, withMargin: PXLayout.S_MARGIN)?.isActive = true
-        PXLayout.pinLeft(view: title, to: pmBodyView, withMargin: PXLayout.S_MARGIN).isActive = true
-        PXLayout.pinRight(view: title, to: pmBodyView, withMargin: PXLayout.S_MARGIN).isActive = true
+        pmBodyView.putOnBottomOfLastView(view: title, withMargin: PXLayout.S_MARGIN)?.isActive = true
+        PXLayout.pinLeft(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinRight(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
 
         if let detailText = component.props.amountDetail {
             let detailLabel = UILabel()
@@ -54,9 +54,9 @@ class PXPaymentMethodComponentRenderer: NSObject {
             detailLabel.textColor = .pxBrownishGray
             detailLabel.textAlignment = .center
             PXLayout.setHeight(owner: detailLabel, height: 18.0).isActive = true
-            PXLayout.put(view: detailLabel, onBottomOfLastViewOf: pmBodyView, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
-            PXLayout.pinLeft(view: detailLabel, to: pmBodyView, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinRight(view: detailLabel, to: pmBodyView, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            pmBodyView.putOnBottomOfLastView(view: detailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
+            PXLayout.pinLeft(view: detailLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinRight(view: detailLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
         }
 
         if let paymentMethodDescription = component.props.paymentMethodDescription {
@@ -68,9 +68,9 @@ class PXPaymentMethodComponentRenderer: NSObject {
             descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
             descriptionLabel.textColor = .pxBrownishGray
             descriptionLabel.textAlignment = .center
-            PXLayout.put(view: descriptionLabel, onBottomOfLastViewOf: pmBodyView, withMargin: PXLayout.XS_MARGIN)?.isActive = true
-            PXLayout.pinLeft(view: descriptionLabel, to: pmBodyView, withMargin: PXLayout.XS_MARGIN).isActive = true
-            PXLayout.pinRight(view: descriptionLabel, to: pmBodyView, withMargin: PXLayout.XS_MARGIN).isActive = true
+            pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
+            PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
+            PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
         }
 
         if let pmDetailText = component.props.paymentMethodDetail {
@@ -82,9 +82,9 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmDetailLabel.font = Utils.getFont(size: PM_DETAIL_FONT_SIZE)
             pmDetailLabel.textColor = .pxBrownishGray
             pmDetailLabel.textAlignment = .center
-            PXLayout.put(view: pmDetailLabel, onBottomOfLastViewOf: pmBodyView, withMargin:  PXLayout.XXS_MARGIN)?.isActive = true
-            PXLayout.pinLeft(view: pmDetailLabel, to: pmBodyView, withMargin:  PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinRight(view: pmDetailLabel, to: pmBodyView, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            pmBodyView.putOnBottomOfLastView(view: pmDetailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
+            PXLayout.pinLeft(view: pmDetailLabel, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinRight(view: pmDetailLabel, withMargin:  PXLayout.XXS_MARGIN).isActive = true
         }
 
         if let disclaimer = component.props.disclaimer {
@@ -97,12 +97,11 @@ class PXPaymentMethodComponentRenderer: NSObject {
             disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
             disclaimerLabel.textColor = .pxBrownishGray
             disclaimerLabel.textAlignment = .center
-            PXLayout.put(view: disclaimerLabel, onBottomOfLastViewOf: pmBodyView, withMargin:  PXLayout.M_MARGIN)?.isActive = true
-            PXLayout.pinLeft(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
-            PXLayout.pinRight(view: disclaimerLabel, to: pmBodyView, withMargin:  PXLayout.XS_MARGIN).isActive = true
+            pmBodyView.putOnBottomOfLastView(view: disclaimerLabel, withMargin: PXLayout.M_MARGIN)?.isActive = true
+            PXLayout.pinLeft(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
+            PXLayout.pinRight(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
         }
-
-        PXLayout.pinLastSubviewToBottom(view: pmBodyView, withMargin: PXLayout.L_MARGIN)?.isActive = true
+        pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
 
         return pmBodyView
     }
