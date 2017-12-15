@@ -19,9 +19,9 @@ class PXInstructionsRenderer: NSObject {
         if instructions.hasSubtitle(), let subtitleComponent = instructions.getSubtitleComponent() {
             instructionsView.subtitleView = subtitleComponent.render()
             instructionsView.addSubview(instructionsView.subtitleView!)
-            PXLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
-            PXLayout.matchWidth(ofView: instructionsView.subtitleView!, toView: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
+            PXLayout.pinTop(view: instructionsView.subtitleView!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.subtitleView!, toView: instructionsView.subtitleView!.superview!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.subtitleView!).isActive = true
         }
 
         //Content Component
@@ -31,10 +31,10 @@ class PXInstructionsRenderer: NSObject {
             if let subtitleView = instructionsView.subtitleView {
                 PXLayout.put(view: instructionsView.contentsView!, onBottomOf: subtitleView).isActive = true
             } else {
-                PXLayout.pinTop(view: instructionsView.contentsView!, to: instructionsView).isActive = true
+                PXLayout.pinTop(view: instructionsView.contentsView!).isActive = true
             }
-            PXLayout.matchWidth(ofView: instructionsView.contentsView!, toView: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.contentsView!, to: instructionsView).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.contentsView!, toView: instructionsView.contentsView!.superview!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.contentsView!).isActive = true
             bottomView = instructionsView.contentsView!
         }
 
@@ -43,16 +43,16 @@ class PXInstructionsRenderer: NSObject {
             instructionsView.secondaryInfoView = secondaryInfoComponent.render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
             PXLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentsView!).isActive = true
-            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!, toView: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!, toView: instructionsView.secondaryInfoView!.superview!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!).isActive = true
             bottomView = instructionsView.secondaryInfoView!
         }
 
         if let secondaryInfo = instructionsView.secondaryInfoView {
             PXLayout.put(view: instructionsView.contentsView!, aboveOf: secondaryInfo).isActive = true
-            PXLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
+            PXLayout.pinBottom(view: bottomView).isActive = true
         } else {
-            PXLayout.pinBottom(view: instructionsView.contentsView!, to: instructionsView).isActive = true
+            PXLayout.pinBottom(view: instructionsView.contentsView!).isActive = true
         }
 
         return instructionsView

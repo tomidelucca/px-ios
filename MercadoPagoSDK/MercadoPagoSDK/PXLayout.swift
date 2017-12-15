@@ -156,12 +156,24 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
     }
     
-    static func matchWidth(ofView view: UIView, toView otherView: UIView, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
+    static func matchWidth(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
     }
     
-    static func matchHeight(ofView view: UIView, toView otherView: UIView, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
+    static func matchHeight(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
     }
 
     static func getScreenWidth(applyingMarginFactor percent: CGFloat = 0) -> CGFloat {
