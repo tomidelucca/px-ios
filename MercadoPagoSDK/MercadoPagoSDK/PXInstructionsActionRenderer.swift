@@ -18,7 +18,7 @@ class PXInstructionsActionRenderer: NSObject {
         instructionsActionView.translatesAutoresizingMaskIntoConstraints = false
         instructionsActionView.backgroundColor = .pxLightGray
 
-        guard let label = instructionsAction.props.instructionActionInfo?.label, let tag = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
+        guard let label = instructionsAction.props.instructionActionInfo?.label, let _ = instructionsAction.props.instructionActionInfo?.tag, let url = instructionsAction.props.instructionActionInfo?.url else {
             return instructionsActionView
         }
 
@@ -45,10 +45,10 @@ class PXInstructionsActionRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forText: text, withFont: Utils.getFont(size: ACTION_LABEL_FONT_SIZE), inNumberOfLines: 0, inWidth: screenWidth)
         PXLayout.setHeight(owner: button, height: height).isActive = true
-        PXLayout.matchWidth(ofView: button, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: button, to: superView).isActive = true
-        PXLayout.pinTop(view: button, to: superView).isActive = true
-        PXLayout.pinBottom(view: button, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: button, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: button).isActive = true
+        PXLayout.pinTop(view: button).isActive = true
+        PXLayout.pinBottom(view: button).isActive = true
 
         return button
     }
@@ -60,6 +60,6 @@ class PXInstructionsActionRenderer: NSObject {
     }
 }
 
-class PXInstructionsActionView: UIView {
+class PXInstructionsActionView: PXComponentView {
     public var actionButton: UIButton?
 }

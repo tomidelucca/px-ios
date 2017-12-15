@@ -33,7 +33,7 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
             }
         }
 
-        PXLayout.pinLastSubviewToBottom(view: instructionsTertiaryInfoView)?.isActive = true
+        instructionsTertiaryInfoView.pinLastSubviewToBottom()?.isActive = true
 
         return instructionsTertiaryInfoView
     }
@@ -53,18 +53,18 @@ class PXInstructionsTertiaryInfoRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: infoLabel, height: height).isActive = true
-        PXLayout.matchWidth(ofView: infoLabel, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: infoLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: infoLabel).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.XXS_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: infoLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: infoLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return infoLabel
     }
 }
 
-class PXInstructionsTertiaryInfoView: UIView {
+class PXInstructionsTertiaryInfoView: PXComponentView {
     public var tertiaryInfoLabels: [UILabel]?
 }

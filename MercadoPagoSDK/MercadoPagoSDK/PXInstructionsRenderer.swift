@@ -49,6 +49,7 @@ class PXInstructionsRenderer: NSObject {
         }
 
         if let secondaryInfo = instructionsView.secondaryInfoView {
+            //TODO AUGUSTO
             PXLayout.put(view: instructionsView.contentsView!, aboveOf: secondaryInfo).isActive = true
             PXLayout.pinBottom(view: bottomView).isActive = true
         } else {

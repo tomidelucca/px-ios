@@ -26,7 +26,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
             lastLabel = secondaryInfoLabel
         }
 
-        PXLayout.pinLastSubviewToBottom(view: instructionsSecondaryInfoView, withMargin: PXLayout.S_MARGIN)?.isActive = true
+        instructionsSecondaryInfoView.pinLastSubviewToBottom(withMargin: PXLayout.S_MARGIN)?.isActive = true
 
         return instructionsSecondaryInfoView
     }
@@ -45,18 +45,18 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true
-        PXLayout.matchWidth(ofView: secondaryInfoLabel, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: secondaryInfoLabel, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: secondaryInfoLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: secondaryInfoLabel).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: secondaryInfoLabel, to: superView, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.pinTop(view: secondaryInfoLabel, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
         return secondaryInfoLabel
     }
 }
 
-class PXInstructionsSecondaryInfoView: UIView {
+class PXInstructionsSecondaryInfoView: PXComponentView {
     public var secondaryInfoLabels: [UILabel]?
 }
