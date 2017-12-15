@@ -1,5 +1,5 @@
 //
-//  PXReceiptComponentRenderer.swift
+//  PXReceiptRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 4/12/17.
@@ -8,36 +8,33 @@
 
 import UIKit
 
-class PXReceiptComponentRenderer: NSObject {
+class PXReceiptRenderer: NSObject {
     let FONT_SIZE : CGFloat = 14.0
-    let LABEL_SIZE : CGFloat = 18.0
+    let LABEL_SIZE: CGFloat = 18.0
     
-    func render(_ component: PXReceiptComponent) -> PXReceiptView{
+    func render(_ component: PXReceiptComponent) -> PXReceiptView {
         let receiptView = PXReceiptView()
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         if let dateString = component.props.dateLabelString {
             let dateLabel = makeLabel(text: dateString)
             receiptView.addSubview(dateLabel)
             receiptView.dateLabel = dateLabel
-            PXLayout.pinTop(view: dateLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.matchWidth(ofView: dateLabel, toView: receiptView).isActive = true
+            PXLayout.pinTop(view: dateLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.matchWidth(ofView: dateLabel).isActive = true
         }
-        
+
         if let detailString = component.props.receiptDescriptionString {
             let detailLabel = makeLabel(text: detailString)
             receiptView.addSubview(detailLabel)
             receiptView.detailLabel = detailLabel
-            PXLayout.pinBottom(view: detailLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.matchWidth(ofView: detailLabel, toView: receiptView).isActive = true
-            PXLayout.put(view: detailLabel, onBottomOfLastViewOf: receiptView)?.isActive = true
+            PXLayout.pinBottom(view: detailLabel, withMargin: PXLayout.S_MARGIN).isActive = true
+            PXLayout.matchWidth(ofView: detailLabel).isActive = true
+            receiptView.putOnBottomOfLastView(view: detailLabel)?.isActive = true
         }
-        
-        
-        
+
         return receiptView
     }
-    
-    
+
     func settupLabel() -> UILabel {
         let label = UILabel()
         label.font = Utils.getFont(size: FONT_SIZE)
@@ -45,8 +42,8 @@ class PXReceiptComponentRenderer: NSObject {
         label.textAlignment = .center
         return label
     }
-    
-    func makeLabel(text : String) -> UILabel {
+
+    func makeLabel(text: String) -> UILabel {
         let label = settupLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
@@ -55,7 +52,7 @@ class PXReceiptComponentRenderer: NSObject {
     }
 }
 
-class PXReceiptView : UIView {
-    var dateLabel : UILabel?
-    var detailLabel : UILabel?
+class PXReceiptView: PXComponentView {
+    var dateLabel: UILabel?
+    var detailLabel: UILabel?
 }

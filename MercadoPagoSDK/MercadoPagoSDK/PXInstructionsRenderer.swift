@@ -20,7 +20,7 @@ class PXInstructionsRenderer: NSObject {
             instructionsView.subtitleView = subtitleComponent.render()
             instructionsView.addSubview(instructionsView.subtitleView!)
             PXLayout.pinTop(view: instructionsView.subtitleView!).isActive = true
-            PXLayout.matchWidth(ofView: instructionsView.subtitleView!, toView: instructionsView.subtitleView!.superview!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.subtitleView!).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.subtitleView!).isActive = true
         }
 
@@ -33,7 +33,7 @@ class PXInstructionsRenderer: NSObject {
             } else {
                 PXLayout.pinTop(view: instructionsView.contentsView!).isActive = true
             }
-            PXLayout.matchWidth(ofView: instructionsView.contentsView!, toView: instructionsView.contentsView!.superview!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.contentsView!).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.contentsView!).isActive = true
             bottomView = instructionsView.contentsView!
         }
@@ -43,13 +43,12 @@ class PXInstructionsRenderer: NSObject {
             instructionsView.secondaryInfoView = secondaryInfoComponent.render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
             PXLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentsView!).isActive = true
-            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!, toView: instructionsView.secondaryInfoView!.superview!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!).isActive = true
             bottomView = instructionsView.secondaryInfoView!
         }
 
         if let secondaryInfo = instructionsView.secondaryInfoView {
-            //TODO AUGUSTO
             PXLayout.put(view: instructionsView.contentsView!, aboveOf: secondaryInfo).isActive = true
             PXLayout.pinBottom(view: bottomView).isActive = true
         } else {
