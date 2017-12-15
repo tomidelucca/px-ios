@@ -22,7 +22,7 @@ class PXInstructionsContentRenderer: NSObject {
                 instructionsContentView.addSubview(infoView)
                 PXLayout.pinTop(view: infoView, to: instructionsContentView).isActive = true
                 PXLayout.centerHorizontally(view: infoView, to: instructionsContentView).isActive = true
-                PXLayout.equalizeWidth(view: infoView, to: instructionsContentView).isActive = true
+                PXLayout.matchWidth(ofView: infoView, toView: instructionsContentView).isActive = true
                 bottomView = instructionsContentView.infoView
             }
         }
@@ -37,7 +37,7 @@ class PXInstructionsContentRenderer: NSObject {
                     PXLayout.pinTop(view: referencesView, to: instructionsContentView).isActive = true
                 }
                 PXLayout.centerHorizontally(view: referencesView, to: instructionsContentView).isActive = true
-                PXLayout.equalizeWidth(view: referencesView, to: instructionsContentView).isActive = true
+                PXLayout.matchWidth(ofView: referencesView, toView: instructionsContentView).isActive = true
                 bottomView = instructionsContentView.referencesView
             }
         }
@@ -52,7 +52,7 @@ class PXInstructionsContentRenderer: NSObject {
                     PXLayout.pinTop(view: tertiaryInfoView, to: instructionsContentView).isActive = true
                 }
                 PXLayout.centerHorizontally(view: tertiaryInfoView, to: instructionsContentView).isActive = true
-                PXLayout.equalizeWidth(view: tertiaryInfoView, to: instructionsContentView).isActive = true
+                PXLayout.matchWidth(ofView: tertiaryInfoView, toView: instructionsContentView).isActive = true
                 bottomView = instructionsContentView.tertiaryInfoView
 
             }
@@ -68,7 +68,7 @@ class PXInstructionsContentRenderer: NSObject {
                     PXLayout.pinTop(view: accreditationTimeView, to: instructionsContentView).isActive = true
                 }
                 PXLayout.centerHorizontally(view: accreditationTimeView, to: instructionsContentView).isActive = true
-                PXLayout.equalizeWidth(view: accreditationTimeView, to: instructionsContentView).isActive = true
+                PXLayout.matchWidth(ofView: accreditationTimeView, toView: instructionsContentView).isActive = true
                 bottomView = instructionsContentView.accreditationTimeView
             }
         }
@@ -82,7 +82,7 @@ class PXInstructionsContentRenderer: NSObject {
                     PXLayout.pinTop(view: actionsView, to: instructionsContentView).isActive = true
                 }
                 PXLayout.centerHorizontally(view: actionsView, to: instructionsContentView).isActive = true
-                PXLayout.equalizeWidth(view: actionsView, to: instructionsContentView).isActive = true
+                PXLayout.matchWidth(ofView: actionsView, toView: instructionsContentView).isActive = true
                 bottomView = instructionsContentView.actionsView
             }
         }

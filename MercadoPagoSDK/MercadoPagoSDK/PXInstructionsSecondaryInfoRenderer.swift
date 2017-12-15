@@ -45,7 +45,7 @@ class PXInstructionsSecondaryInfoRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: secondaryInfoLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: secondaryInfoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.matchWidth(ofView: secondaryInfoLabel, toView: superView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         PXLayout.centerHorizontally(view: secondaryInfoLabel, to: superView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: secondaryInfoLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true

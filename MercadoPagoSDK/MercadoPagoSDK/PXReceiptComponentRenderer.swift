@@ -20,7 +20,7 @@ class PXReceiptComponentRenderer: NSObject {
             receiptView.addSubview(dateLabel)
             receiptView.dateLabel = dateLabel
             PXLayout.pinTop(view: dateLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.equalizeWidth(view: dateLabel, to: receiptView).isActive = true
+            PXLayout.matchWidth(ofView: dateLabel, toView: receiptView).isActive = true
         }
         
         if let detailString = component.props.receiptDescriptionString {
@@ -28,7 +28,7 @@ class PXReceiptComponentRenderer: NSObject {
             receiptView.addSubview(detailLabel)
             receiptView.detailLabel = detailLabel
             PXLayout.pinBottom(view: detailLabel, to: receiptView, withMargin: PXLayout.S_MARGIN).isActive = true
-            PXLayout.equalizeWidth(view: detailLabel, to: receiptView).isActive = true
+            PXLayout.matchWidth(ofView: detailLabel, toView: receiptView).isActive = true
             PXLayout.put(view: detailLabel, onBottomOfLastViewOf: receiptView)?.isActive = true
         }
         

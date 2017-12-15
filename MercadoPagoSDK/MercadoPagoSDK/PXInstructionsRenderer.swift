@@ -20,7 +20,7 @@ class PXInstructionsRenderer: NSObject {
             instructionsView.subtitleView = subtitleComponent.render()
             instructionsView.addSubview(instructionsView.subtitleView!)
             PXLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.subtitleView!, toView: instructionsView).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
         }
 
@@ -33,7 +33,7 @@ class PXInstructionsRenderer: NSObject {
             } else {
                 PXLayout.pinTop(view: instructionsView.contentsView!, to: instructionsView).isActive = true
             }
-            PXLayout.equalizeWidth(view: instructionsView.contentsView!, to: instructionsView).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.contentsView!, toView: instructionsView).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.contentsView!, to: instructionsView).isActive = true
             bottomView = instructionsView.contentsView!
         }
@@ -43,7 +43,7 @@ class PXInstructionsRenderer: NSObject {
             instructionsView.secondaryInfoView = secondaryInfoComponent.render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
             PXLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentsView!).isActive = true
-            PXLayout.equalizeWidth(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!, toView: instructionsView).isActive = true
             PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
             bottomView = instructionsView.secondaryInfoView!
         }
