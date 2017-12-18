@@ -103,7 +103,10 @@ class PXResultViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
         let footerHeight = self.footerView.frame.height
         let headerHeight = self.headerView.frame.height
-        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight
+        let receiptHeight = self.receiptView.frame.height
+        let topCustomViewHeight = self.topCustomView.frame.height
+        let bottomCustomViewHeight = self.bottomCustomView.frame.height
+        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 
