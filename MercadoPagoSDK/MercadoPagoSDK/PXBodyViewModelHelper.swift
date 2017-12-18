@@ -10,8 +10,8 @@ import UIKit
 
 extension PXResultViewModel {
 
-    open func bodyComponentProps() -> PXBodyProps {
-        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion())
+    open func getBodyComponentProps() -> PXBodyProps {
+        let props = PXBodyProps(paymentResult: self.paymentResult, amount: self.amount, instruction: getInstrucion(), callback: getBodyAction())
         return props
     }
 
@@ -20,5 +20,13 @@ extension PXResultViewModel {
             return nil
         }
         return instructionsInfo.getInstruction()
+    }
+    
+    func getBodyAction() -> (() -> Void) {
+        return { self.executeBodyCallback() }
+    }
+    
+    func executeBodyCallback() {
+        self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }
 }

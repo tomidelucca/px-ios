@@ -9,7 +9,6 @@
 import UIKit
 
 extension PXResultViewModel {
-
     
     open func getReceiptComponentProps() -> PXReceiptProps {
         if self.paymentResult.isApproved() && !self.preference.isPaymentIdDisable() {
@@ -19,10 +18,8 @@ extension PXResultViewModel {
             return PXReceiptProps()
         }
     }
-    
-   
-    
-    open func headerComponentData() -> PXHeaderProps {
+  
+    open func getHeaderComponentProps() -> PXHeaderProps {
         let props = PXHeaderProps(labelText: labelTextHeader(), title: titleHeader(), backgroundColor: primaryResultColor(), productImage: iconImageHeader(), statusImage: badgeImage())
         return props
     }

@@ -25,7 +25,7 @@ class PXInstructionsActionsRenderer: NSObject {
             lastView = actionView
         }
 
-        PXLayout.pinLastSubviewToBottom(view: instructionsActionsView)?.isActive = true
+        instructionsActionsView.pinLastSubviewToBottom()?.isActive = true
 
         return instructionsActionsView
     }
@@ -33,18 +33,18 @@ class PXInstructionsActionsRenderer: NSObject {
     func buildActionView(with action: PXInstructionsActionComponent, in superView: UIView, onBottomOf upperView: UIView?, isFirstView: Bool = false) -> UIView {
         let actionView = action.render()
         superView.addSubview(actionView)
-        PXLayout.setWidth(ofView: actionView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: actionView, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: actionView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: actionView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: actionView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: actionView, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: actionView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return actionView
     }
 }
 
-class PXInstructionsActionsView: UIView {
+class PXInstructionsActionsView: PXComponentView {
     public var actionsViews: [UIView]?
 }

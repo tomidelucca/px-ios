@@ -36,7 +36,7 @@ class PXInstructionsReferenceRenderer: NSObject {
         }
 
         if let lastView = lastView {
-            PXLayout.pinBottom(view: lastView, to: instructionReferenceView).isActive = true
+            instructionReferenceView.pinLastSubviewToBottom()
         }
 
         return instructionReferenceView
@@ -62,20 +62,20 @@ class PXInstructionsReferenceRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
-        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: label, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label).isActive = true
 
         if let upperView = upperView {
             PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: label, to: superView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
+            PXLayout.pinTop(view: label, withMargin: PXLayout.ZERO_MARGIN).isActive = true
         }
 
         return label
     }
 }
 
-class PXInstructionsReferenceView: UIView {
+class PXInstructionsReferenceView: PXComponentView {
     public var titleLabel: UILabel?
     public var referenceLabel: UILabel?
 }

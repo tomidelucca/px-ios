@@ -40,20 +40,44 @@ class PXLayout: NSObject {
     }
 
     // Pin Left
-    static func pinLeft(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: otherView, attribute: .leading, multiplier: 1, constant: margin))
+    static func pinLeft(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: margin))
     }
     //Pin Right
-    static func pinRight(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: otherView, attribute: .trailing, multiplier: 1, constant: -margin))
+    static func pinRight(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: -margin))
     }
     //Pin Top
-    static func pinTop(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: otherView, attribute: .top, multiplier: 1, constant: margin))
+    static func pinTop(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: margin))
     }
     //Pin Bottom
-    static func pinBottom(view: UIView, to otherView: UIView, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: otherView, attribute: .bottom, multiplier: 1, constant: -margin))
+    static func pinBottom(view: UIView, to otherView: UIView? = nil, withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -margin))
     }
 
     //Pin parent last subview to Bottom
@@ -111,38 +135,54 @@ class PXLayout: NSObject {
     }
 
     //Centrado horizontal
-    static func centerHorizontally(view: UIView, to container: UIView) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))
+    static func centerHorizontally(view: UIView, to container: UIView? = nil) -> NSLayoutConstraint {
+        var superView: UIView!
+        if container == nil {
+            superView = view.superview
+        }else {
+            superView = container
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0))
     }
 
     //Centrado Vertical
-    static func centerVertically(view: UIView, into container: UIView) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: container, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
+    static func centerVertically(view: UIView, into container: UIView? = nil) -> NSLayoutConstraint {
+        var superView: UIView!
+        if container == nil {
+            superView = view.superview
+        }else {
+            superView = container
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0))
+    }
+    
+    static func matchWidth(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
+    }
+    
+    static func matchHeight(ofView view: UIView, toView otherView: UIView? = nil, withPercentage percent: CGFloat = 100) -> NSLayoutConstraint {
+        var superView: UIView!
+        if otherView == nil {
+            superView = view.superview
+        }else {
+            superView = otherView
+        }
+        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
     }
 
-    static func equalizeHeight(view: UIView, to otherView: UIView) -> NSLayoutConstraint {
-         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0))
-    }
-
-    static func equalizeWidth(view: UIView, to otherView: UIView) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0))
-    }
-
-    static func setHeight(ofView view: UIView, asHeightOfView otherView: UIView, percent: CGFloat) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
-    }
-
-    static func setWidth(ofView view: UIView, asWidthOfView otherView: UIView, percent: CGFloat = 100) -> NSLayoutConstraint {
-        return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: otherView, attribute: NSLayoutAttribute.width, multiplier: percent / 100, constant: 0))
-    }
-
-    static func getScreenWidth(applyingMarginFactor percent: CGFloat) -> CGFloat {
+    static func getScreenWidth(applyingMarginFactor percent: CGFloat = 0) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableWidth = screenSize.width * percent / 100
         return availableWidth
     }
 
-    static func getScreenHeight(applyingMarginFactor percent: CGFloat) -> CGFloat {
+    static func getScreenHeight(applyingMarginFactor percent: CGFloat = 0) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableHeight = screenSize.height * percent / 100
         return availableHeight

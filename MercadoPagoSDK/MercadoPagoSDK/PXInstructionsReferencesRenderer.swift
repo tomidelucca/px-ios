@@ -33,7 +33,7 @@ class PXInstructionsReferencesRenderer: NSObject {
             lastView = referenceView
         }
 
-        PXLayout.pinLastSubviewToBottom(view: instructionsReferencesView)?.isActive = true
+        instructionsReferencesView.pinLastSubviewToBottom()?.isActive = true
 
         return instructionsReferencesView
     }
@@ -53,9 +53,9 @@ class PXInstructionsReferencesRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: titleLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: titleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: titleLabel, to: superView).isActive = true
-        PXLayout.pinTop(view: titleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.matchWidth(ofView: titleLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: titleLabel).isActive = true
+        PXLayout.pinTop(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
 
         return titleLabel
     }
@@ -64,19 +64,19 @@ class PXInstructionsReferencesRenderer: NSObject {
 
         let referenceView = reference.render()
         superView.addSubview(referenceView)
-        PXLayout.setWidth(ofView: referenceView, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: referenceView, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: referenceView, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: referenceView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: referenceView, onBottomOf: upperView, withMargin: PXLayout.L_MARGIN).isActive = true
         } else {
-            PXLayout.pinTop(view: referenceView, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: referenceView, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return referenceView
     }
 }
 
-class PXInstructionsReferencesView: UIView {
+class PXInstructionsReferencesView: PXComponentView {
     public var titleLabel: UILabel?
     public var referencesComponents: [UIView]?
 }

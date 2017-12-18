@@ -54,7 +54,7 @@ class PXInstructionsInfoRenderer: NSObject {
             lastView = instructionsInfoView.bottomDivider
         }
 
-        PXLayout.pinLastSubviewToBottom(view: instructionsInfoView)?.isActive = true
+        instructionsInfoView.pinLastSubviewToBottom()?.isActive = true
 
         return instructionsInfoView
     }
@@ -79,8 +79,8 @@ class PXInstructionsInfoRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: infoLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: infoLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: infoLabel, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: infoLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: infoLabel).isActive = true
         if let upperView = upperView {
             if isFirstInfo {
                 PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
@@ -88,7 +88,7 @@ class PXInstructionsInfoRenderer: NSObject {
                 PXLayout.put(view: infoLabel, onBottomOf:upperView, withMargin: PXLayout.ZERO_MARGIN).isActive = true
             }
         } else {
-            PXLayout.pinTop(view: infoLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+            PXLayout.pinTop(view: infoLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 
         return infoLabel
@@ -101,8 +101,8 @@ class PXInstructionsInfoRenderer: NSObject {
         view.backgroundColor = .pxMediumLightGray
         superView.addSubview(view)
         PXLayout.setHeight(owner: view, height: 1).isActive = true
-        PXLayout.setWidth(ofView: view, asWidthOfView: superView).isActive = true
-        PXLayout.centerHorizontally(view: view, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+        PXLayout.centerHorizontally(view: view).isActive = true
 
         if let upperView = upperView {
             PXLayout.put(view: view, onBottomOf:upperView, withMargin: PXLayout.L_MARGIN).isActive = true
@@ -112,7 +112,7 @@ class PXInstructionsInfoRenderer: NSObject {
     }
 }
 
-class PXInstructionsInfoView: UIView {
+class PXInstructionsInfoView: PXComponentView {
     public var titleLabel: UILabel?
     public var contentLabels: [UILabel]?
     public var bottomDivider: UIView?

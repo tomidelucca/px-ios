@@ -19,40 +19,40 @@ class PXInstructionsRenderer: NSObject {
         if instructions.hasSubtitle(), let subtitleComponent = instructions.getSubtitleComponent() {
             instructionsView.subtitleView = subtitleComponent.render()
             instructionsView.addSubview(instructionsView.subtitleView!)
-            PXLayout.pinTop(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
-            PXLayout.equalizeWidth(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.subtitleView!, to: instructionsView).isActive = true
+            PXLayout.pinTop(view: instructionsView.subtitleView!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.subtitleView!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.subtitleView!).isActive = true
         }
 
         //Content Component
         if let contentComponent = instructions.getContentComponent() {
-            instructionsView.contentView = contentComponent.render()
-            instructionsView.addSubview(instructionsView.contentView!)
+            instructionsView.contentsView = contentComponent.render()
+            instructionsView.addSubview(instructionsView.contentsView!)
             if let subtitleView = instructionsView.subtitleView {
-                PXLayout.put(view: instructionsView.contentView!, onBottomOf: subtitleView).isActive = true
+                PXLayout.put(view: instructionsView.contentsView!, onBottomOf: subtitleView).isActive = true
             } else {
-                PXLayout.pinTop(view: instructionsView.contentView!, to: instructionsView).isActive = true
+                PXLayout.pinTop(view: instructionsView.contentsView!).isActive = true
             }
-            PXLayout.equalizeWidth(view: instructionsView.contentView!, to: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.contentView!, to: instructionsView).isActive = true
-            bottomView = instructionsView.contentView!
+            PXLayout.matchWidth(ofView: instructionsView.contentsView!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.contentsView!).isActive = true
+            bottomView = instructionsView.contentsView!
         }
 
         //Secondary Info Component
         if instructions.hasSecondaryInfo(), instructions.shouldShowEmailInSecondaryInfo(), let secondaryInfoComponent = instructions.getSecondaryInfoComponent() {
             instructionsView.secondaryInfoView = secondaryInfoComponent.render()
             instructionsView.addSubview(instructionsView.secondaryInfoView!)
-            PXLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentView!).isActive = true
-            PXLayout.equalizeWidth(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
-            PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!, to: instructionsView).isActive = true
+            PXLayout.put(view: instructionsView.secondaryInfoView!, onBottomOf: instructionsView.contentsView!).isActive = true
+            PXLayout.matchWidth(ofView: instructionsView.secondaryInfoView!).isActive = true
+            PXLayout.centerHorizontally(view: instructionsView.secondaryInfoView!).isActive = true
             bottomView = instructionsView.secondaryInfoView!
         }
 
         if let secondaryInfo = instructionsView.secondaryInfoView {
-            PXLayout.put(view: instructionsView.contentView!, aboveOf: secondaryInfo).isActive = true
-            PXLayout.pinBottom(view: bottomView, to: instructionsView).isActive = true
+            PXLayout.put(view: instructionsView.contentsView!, aboveOf: secondaryInfo).isActive = true
+            PXLayout.pinBottom(view: bottomView).isActive = true
         } else {
-            PXLayout.pinBottom(view: instructionsView.contentView!, to: instructionsView).isActive = true
+            PXLayout.pinBottom(view: instructionsView.contentsView!).isActive = true
         }
 
         return instructionsView
@@ -61,6 +61,6 @@ class PXInstructionsRenderer: NSObject {
 
 class PXInstructionsView: PXBodyView {
     public var subtitleView: UIView?
-    public var contentView: UIView?
+    public var contentsView: UIView?
     public var secondaryInfoView: UIView?
 }

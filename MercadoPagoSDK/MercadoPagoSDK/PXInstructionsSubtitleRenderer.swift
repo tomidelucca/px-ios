@@ -36,14 +36,14 @@ class PXInstructionsSubtitleRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: LABEL_FONT_SIZE), inWidth: screenWidth)
         PXLayout.setHeight(owner: subtitleLabel, height: height).isActive = true
-        PXLayout.setWidth(ofView: subtitleLabel, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: subtitleLabel, to: superView).isActive = true
-        PXLayout.pinBottom(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
-        PXLayout.pinTop(view: subtitleLabel, to: superView, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.matchWidth(ofView: subtitleLabel, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: subtitleLabel).isActive = true
+        PXLayout.pinBottom(view: subtitleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
+        PXLayout.pinTop(view: subtitleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         return subtitleLabel
     }
 }
 
-class PXInstructionsSubtitleView: UIView {
+class PXInstructionsSubtitleView: PXComponentView {
     public var subtitleLabel: UILabel?
 }

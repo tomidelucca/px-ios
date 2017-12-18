@@ -1,5 +1,5 @@
 //
-//  Componentizable.swift
+//  PXComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 9/7/17.

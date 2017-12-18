@@ -11,15 +11,16 @@ import UIKit
 class PXResultViewController: PXComponentContainerViewController {
 
     let viewModel: PXResultViewModel
-    var headerView = UIView()
-    var fooView: UIView!
+    var headerView: UIView!
+    var receiptView: UIView!
+    var footerView: UIView!
+    var bodyView: UIView!
 
     init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,41 +35,79 @@ class PXResultViewController: PXComponentContainerViewController {
         headerView = self.buildHeaderView()
         contentView.addSubview(headerView)
         PXLayout.pinTop(view: headerView, to: contentView).isActive = true
-        PXLayout.equalizeWidth(view: headerView, to: contentView).isActive = true
-        
-        let receiptView = self.buildReceiptView()
-        contentView.addSubview(receiptView)
-        PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
-        PXLayout.equalizeWidth(view: receiptView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: headerView, toView: contentView).isActive = true
 
-        //Add Foo
-        fooView = buildFooterView()
-        contentView.addSubview(fooView)
-        PXLayout.equalizeWidth(view: fooView, to: contentView).isActive = true
-        PXLayout.pinBottom(view: fooView, to: contentView).isActive = true
-        PXLayout.centerHorizontally(view: fooView, to: contentView).isActive = true
+        //Add Receipt
+        receiptView = self.buildReceiptView()
+        contentView.addSubview(receiptView)
+        receiptView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
+        PXLayout.matchWidth(ofView: receiptView, toView: contentView).isActive = true
+
+        //Add Footer
+        footerView = self.buildFooterView()
+        contentView.addSubview(footerView)
+        PXLayout.matchWidth(ofView: footerView, toView: contentView).isActive = true
+        PXLayout.pinBottom(view: footerView, to: contentView).isActive = true
+        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: fooView, height: fooView.frame.height).isActive = true
+        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
         //Add Body
-        let bodyView = self.buildBodyView()
+        bodyView = self.buildBodyView()
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
-        PXLayout.equalizeWidth(view: bodyView, to: contentView).isActive = true
+        PXLayout.matchWidth(ofView: bodyView, toView: contentView).isActive = true
         PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
-        PXLayout.put(view: bodyView, aboveOf: fooView).isActive = true
-
+        PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
+        self.view.layoutIfNeeded()
+        bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
+       
+        if isEmptySpaceOnScreen() {
+            if shouldExpandHeader() {
+                expandHeader()
+            } else {
+                expandBody()
+            }
+        }
+        
+        self.view.layoutIfNeeded()
+        self.contentView.layoutIfNeeded()
         self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
     }
+    
+    func expandHeader() {
+        PXLayout.matchHeight(ofView: self.contentView, toView: self.scrollView).isActive = true
+        PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
+        PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
+    }
+    
+    func expandBody() {
+        self.view.layoutIfNeeded()
+        let footerHeight = self.footerView.frame.height
+        let headerHeight = self.headerView.frame.height
+        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight
+        PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
+    }
 
+    func isEmptySpaceOnScreen() -> Bool {
+        self.view.layoutIfNeeded()
+        return self.contentView.frame.height < self.scrollView.frame.height
+    }
+    
+    func shouldExpandHeader() -> Bool {
+        self.view.layoutIfNeeded()
+        return bodyView.frame.height == 0
+    }
+    
     func buildHeaderView() -> UIView {
-        let headerProps = self.viewModel.headerComponentData()
+        let headerProps = self.viewModel.getHeaderComponentProps()
         let headerComponent = PXHeaderComponent(props: headerProps)
         return headerComponent.render()
     }
     func buildFooterView() -> UIView {
-        let footerProps = self.viewModel.getFooterComponentData()
+        let footerProps = self.viewModel.getFooterComponentProps()
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
@@ -79,10 +118,7 @@ class PXResultViewController: PXComponentContainerViewController {
         return receiptComponent.render()
     }
     func buildBodyView() -> UIView {
-//        let bodyProps = self.viewModel.getTestProps()
-        let bodyProps = self.viewModel.bodyComponentProps()
-       // let bodyProps = self.viewModel.getRapipagoProps()
-//        let bodyProps = self.viewModel.getRedlinkProps()
+        let bodyProps = self.viewModel.getBodyComponentProps()
         let bodyComponent = PXBodyComponent(props: bodyProps)
         return bodyComponent.render()
     }

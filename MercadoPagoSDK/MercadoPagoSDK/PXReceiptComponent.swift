@@ -15,7 +15,7 @@ class PXReceiptComponent: PXComponetizable {
         self.props = props
     }
     func render() -> UIView {
-        return PXReceiptComponentRenderer().render(self)
+        return PXReceiptRenderer().render(self)
     }
 }
 open class PXReceiptProps: NSObject {

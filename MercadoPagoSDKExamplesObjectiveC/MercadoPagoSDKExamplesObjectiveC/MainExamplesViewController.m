@@ -45,7 +45,7 @@
     self.paymentResult = nil;
 
     // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithLanguage:"es"];
+    [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH_PERU];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
@@ -85,11 +85,9 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8"
-    accessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"
-    checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-b17d8f8e-5039-4d58-a99f-7a66872741ca" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
 
-    [self setHooks];
+//    [self setHooks];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];

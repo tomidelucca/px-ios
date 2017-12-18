@@ -42,15 +42,15 @@ class PXInstructionsAccreditationCommentRenderer: NSObject {
 
         let height = UILabel.requiredHeight(forAttributedText: text, withFont: Utils.getFont(size: textSize), inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
-        PXLayout.setWidth(ofView: label, asWidthOfView: superView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.centerHorizontally(view: label, to: superView).isActive = true
-        PXLayout.pinTop(view: label, to: superView).isActive = true
-        PXLayout.pinBottom(view: label, to: superView).isActive = true
+        PXLayout.matchWidth(ofView: label, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: label).isActive = true
+        PXLayout.pinTop(view: label).isActive = true
+        PXLayout.pinBottom(view: label).isActive = true
 
         return label
     }
 }
 
-class PXInstructionsAccreditationCommentView: UIView {
+class PXInstructionsAccreditationCommentView: PXComponentView {
     public var commentLabel: UILabel?
 }

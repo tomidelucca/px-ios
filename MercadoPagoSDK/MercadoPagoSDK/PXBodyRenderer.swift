@@ -15,6 +15,8 @@ class PXBodyRenderer: NSObject {
             return instructionsComponent.render() as! PXInstructionsView
         } else if body.props.paymentResult.isApproved() {
             return body.getPaymentMethodComponent().render() as! PXBodyView
+        } else if body.hasBodyError() {
+            return body.getBodyErrorComponent().render() as! PXErrorView
         }
         let bodyView = PXBodyView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,5 +24,5 @@ class PXBodyRenderer: NSObject {
     }
 }
 
-class PXBodyView: UIView {
+class PXBodyView: PXComponentView {
 }

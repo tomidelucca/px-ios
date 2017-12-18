@@ -30,11 +30,12 @@ class PXHeaderRenderer: NSObject {
         let headerView = PXHeaderView()
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
+
         //Image
         headerView.circleImage = buildCircleImage(with: header.props.productImage)
         headerView.addSubview(headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.circleImage!, to: headerView).isActive = true
-        PXLayout.pinTop(view: headerView.circleImage!, to: headerView, withMargin: PXLayout.XXXL_MARGIN).isActive = true
+        PXLayout.centerHorizontally(view: headerView.circleImage!, to: headerView.circleImage!.superview!).isActive = true
+        PXLayout.pinTop(view: headerView.circleImage!, withMargin: PXLayout.XXXL_MARGIN).isActive = true
 
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
@@ -44,16 +45,16 @@ class PXHeaderRenderer: NSObject {
 
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
-        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView).isActive = true
-        PXLayout.setWidth(ofView: headerView.statusLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView.statusLabel!.superview!).isActive = true
+        PXLayout.matchWidth(ofView: headerView.statusLabel!, toView: headerView.statusLabel!.superview!, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
 
         //Message Label
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
-        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView).isActive = true
+        PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView.messageLabel!.superview!).isActive = true
         PXLayout.put(view: headerView.messageLabel!, onBottomOf:headerView.statusLabel!, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setWidth(ofView: headerView.messageLabel!, asWidthOfView: headerView, percent: CONTENT_WIDTH_PERCENT).isActive = true
-        PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView, withMargin: PXLayout.XL_MARGIN).isActive = true
+        PXLayout.matchWidth(ofView: headerView.messageLabel!, toView: headerView.messageLabel!.superview!, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
+        PXLayout.pinBottom(view: headerView.messageLabel!, to: headerView.messageLabel!.superview!, withMargin: PXLayout.XL_MARGIN).isActive = true
 
         return headerView
     }
@@ -110,7 +111,7 @@ class PXHeaderRenderer: NSObject {
     }
 }
 
-public class PXHeaderView: UIView {
+public class PXHeaderView: PXComponentView {
     public var circleImage: UIImageView?
     public var badgeImage: UIImageView?
     public var statusLabel: UILabel?
