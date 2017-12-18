@@ -26,6 +26,22 @@ extension PXResultViewModel {
         return { self.executeBodyCallback() }
     }
     
+    open func getTopCustomComponent() -> PXComponentizable? {
+        if self.paymentResult.isApproved() {
+            return preference.getApprovedTopCustomComponent()
+        } else {
+            return nil
+        }
+    }
+    
+    open func getBottomCustomComponent() -> PXComponentizable? {
+        if self.paymentResult.isApproved() {
+            return preference.getApprovedBottomCustomComponent()
+        } else {
+            return nil
+        }
+    }
+    
     func executeBodyCallback() {
         self.callback(PaymentResult.CongratsState.call_FOR_AUTH)
     }
