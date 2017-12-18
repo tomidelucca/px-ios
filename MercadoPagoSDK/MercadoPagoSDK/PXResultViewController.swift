@@ -68,7 +68,6 @@ class PXResultViewController: PXComponentContainerViewController {
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.matchWidth(ofView: bodyView).isActive = true
         PXLayout.put(view: bodyView, onBottomOf: topCustomView).isActive = true
-//        PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
         self.view.layoutIfNeeded()
         bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
         
