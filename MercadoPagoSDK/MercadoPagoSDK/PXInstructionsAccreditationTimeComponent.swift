@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXInstructionsAccreditationTimeComponent: NSObject, PXComponetizable {
+class PXInstructionsAccreditationTimeComponent: NSObject, PXComponentizable {
     var props: PXInstructionsAccreditationTimeProps
 
     init(props: PXInstructionsAccreditationTimeProps) {

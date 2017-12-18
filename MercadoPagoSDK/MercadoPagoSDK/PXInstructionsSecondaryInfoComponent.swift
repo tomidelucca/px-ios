@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponetizable {
+public class PXInstructionsSecondaryInfoComponent: NSObject, PXComponentizable {
     var props: PXInstructionsSecondaryInfoProps
 
     init(props: PXInstructionsSecondaryInfoProps) {
