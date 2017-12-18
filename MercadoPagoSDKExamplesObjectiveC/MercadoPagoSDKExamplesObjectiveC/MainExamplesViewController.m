@@ -239,60 +239,9 @@
 }
 
 -(void)setPaymentResultScreenPreference {
-    PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
-//    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
-    [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
-    [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
-    [resultPreference setPendingHeaderIconWithName:@"sube" bundle:[NSBundle mainBundle]];
-//    [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
-    [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
-    //[resultPreference disableRejectdSecondaryExitButton];
-//    [resultPreference setRejectedTitleWithTitle:@"No pudimos hacer la recarga"];
-    [resultPreference setRejectedSubtitleWithSubtitle:@"Movistar no esta disponible ahora"];
-    [resultPreference setRejectedIconSubtextWithText:@"Uppss..."];
-    [resultPreference setRejectedContentTextWithText:@"Vuelve más tarde"];
-    [resultPreference setRejectedContentTitleWithTitle:@"¿Qué hago?"];
-    [resultPreference disableApprovedReceipt];
-    //    [resultPreference disableRejectedContentTitle];
-    //    [resultPreference disableRejectedContentText];
-    //    [resultPreference setRejectedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-    //        NSLog(@"%@", paymentResult.status);
-    //    } text:@"Ir a mi activdad"];
-    //    [resultPreference disablePendingContentText];
-    //    [resultPreference disableChangePaymentMethodOptionButton];
-//    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-//        NSLog(@"%@", paymentResult.status);
-//        [self.navigationController popToRootViewControllerAnimated:NO];
-//    } text:@"Ir a mi actividad"];
-    //    [resultPreference setApprovedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-    //        NSLog(@"%@", paymentResult.status);
-    //        [self.navigationController popToRootViewControllerAnimated:NO];
-    //    } text:@"Ir a mi actividad"];
-
-
-
-    // Celdas custom de Payment Result
-
-    SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
-    MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
-
-    DineroEnCuentaTableViewCell *dineroEnCuenta = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
-    [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
-    MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
-    self.dineroEnCuentaCell = dineroEnCuentaCustom;
-
-
-    DineroEnCuentaTableViewCell *header = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
-    header.label.text = @"AXION";
-    MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
-
-
-    [resultPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
-    [resultPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
-    [resultPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
-
+    PaymentResultScreenPreference *resultPreference = [testComponent getPreference];
+    
     [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
-
 }
 
 -(void)setReviewScreenPreference {
