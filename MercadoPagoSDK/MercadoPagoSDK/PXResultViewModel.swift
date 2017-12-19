@@ -8,24 +8,6 @@
 
 import UIKit
 
-public class testComponent: PXComponentizable {
-    
-    static public func getPreference() -> PaymentResultScreenPreference {
-        let top = testComponent()
-        let bottom = testComponent()
-        let preference = PaymentResultScreenPreference()
-        preference.setApprovedTopCustomComponent(top)
-        //        preference.setApprovedBottomCustomComponent(bottom)
-        return preference
-    }
-    
-    public func render() -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 5))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
-        return view
-    }
-}
 
 public class PXResultViewModel: NSObject {
 
