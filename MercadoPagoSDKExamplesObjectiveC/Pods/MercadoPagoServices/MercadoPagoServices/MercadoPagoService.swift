@@ -57,7 +57,7 @@ open class MercadoPagoService: NSObject {
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
-        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (_: URLResponse?, data: Data?, error: Error?) in
+        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main) { (response: URLResponse?, data: Data?, error: Error?) in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if error == nil && data != nil {
                 do {

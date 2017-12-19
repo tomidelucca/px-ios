@@ -15,6 +15,8 @@
 #import "FirstHookViewController.h"
 #import "SecondHookViewController.h"
 #import "ThirdHookViewController.h"
+#import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
+
 
 @import MercadoPagoSDK;
 
@@ -239,7 +241,7 @@
 }
 
 -(void)setPaymentResultScreenPreference {
-    PaymentResultScreenPreference *resultPreference = [testComponent getPreference];
+    PaymentResultScreenPreference *resultPreference = [TestComponent getPreference];
     
     [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
 }
