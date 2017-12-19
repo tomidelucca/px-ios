@@ -28,7 +28,11 @@ extension PXResultViewModel {
     
     open func getTopCustomComponent() -> PXComponentizable? {
         if self.paymentResult.isApproved() {
-            return preference.getApprovedTopCustomComponent()
+            if let customComponent = preference.getApprovedTopCustomComponent() {
+                return PXCustomComponentContainer(withComponent: customComponent)
+            }else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -36,7 +40,11 @@ extension PXResultViewModel {
     
     open func getBottomCustomComponent() -> PXComponentizable? {
         if self.paymentResult.isApproved() {
-            return preference.getApprovedBottomCustomComponent()
+            if let customComponent = preference.getApprovedBottomCustomComponent() {
+                return PXCustomComponentContainer(withComponent: customComponent)
+            }else {
+                return nil
+            }
         } else {
             return nil
         }

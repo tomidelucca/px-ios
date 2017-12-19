@@ -50,7 +50,7 @@ class PXResultViewController: PXComponentContainerViewController {
         topCustomView = buildTopCustomView()
         contentView.addSubview(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
-        PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
+        //PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
         
         //Add Footer
@@ -76,7 +76,7 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(bottomCustomView)
         PXLayout.put(view: bottomCustomView, onBottomOf: bodyView).isActive = true
         PXLayout.put(view: bottomCustomView, aboveOf: footerView).isActive = true
-        PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
+      //  PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
         PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
        
         if isEmptySpaceOnScreen() {

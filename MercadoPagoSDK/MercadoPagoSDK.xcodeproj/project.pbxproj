@@ -592,6 +592,8 @@
 		815409461FD59F1E00B245BC /* PXReceiptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409441FD59F1C00B245BC /* PXReceiptComponent.swift */; };
 		815409481FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */; };
 		815409491FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */; };
+		816AB5B01FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */; };
+		816AB5B11FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */; };
 		81760F361FD5965F00237A81 /* MercadoPagoPXTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */; };
 		81ACC8141F9A88EF00206F7B /* PXLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* PXLayout.swift */; };
 		81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */; };
@@ -1101,6 +1103,7 @@
 		812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponentRenderer.swift; sourceTree = "<group>"; };
 		815409441FD59F1C00B245BC /* PXReceiptComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptComponent.swift; sourceTree = "<group>"; };
 		815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptRenderer.swift; sourceTree = "<group>"; };
+		816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCustomComponentContainer.swift; sourceTree = "<group>"; };
 		81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyRenderer.swift; sourceTree = "<group>"; };
@@ -1538,6 +1541,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				816AB5AE1FE966B00070A932 /* Custom Component */,
 				FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */,
 				FC7BD8BE1FD98BE700D5B2C7 /* PXUtils */,
 				81ACC8071F9A647700206F7B /* Congrats */,
@@ -2196,6 +2200,14 @@
 				FCCC11F61FCF2D590001A591 /* PXResultViewModelTest.swift */,
 			);
 			name = Component;
+			sourceTree = "<group>";
+		};
+		816AB5AE1FE966B00070A932 /* Custom Component */ = {
+			isa = PBXGroup;
+			children = (
+				816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */,
+			);
+			name = "Custom Component";
 			sourceTree = "<group>";
 		};
 		81760F331FD5937100237A81 /* Receipt */ = {
@@ -2898,6 +2910,7 @@
 				4B811DDD1FCDCE51000611AD /* PXHookStore.swift in Sources */,
 				76445AEF1CCA73B2008EE68E /* MockManager.swift in Sources */,
 				534D841E1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift in Sources */,
+				816AB5B01FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */,
 				4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */,
 				4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */,
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
@@ -3278,6 +3291,7 @@
 				76EC47C61C85E1EA0086FA53 /* BinTest.swift in Sources */,
 				FC7BD8AE1FD5899000D5B2C7 /* PXErrorRenderer.swift in Sources */,
 				7622E33E1DF5F2B400490C4E /* PurchaseItemDetailTableViewCell.swift in Sources */,
+				816AB5B11FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */,
 				76EC47E41C85F01D0086FA53 /* OrderTest.swift in Sources */,
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
 				4B68FFDC1EAFBB200048B62D /* PaymentResultViewModelTest.swift in Sources */,
