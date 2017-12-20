@@ -43,6 +43,10 @@ class PXResultViewController: PXComponentContainerViewController {
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.matchWidth(ofView: receiptView, toView: contentView).isActive = true
+        self.view.layoutIfNeeded()
+        if receiptView.frame.height != 0 {
+            receiptView.addSeparatorLineToBottom(height: 1)
+        }
 
         //Add Footer
         footerView = self.buildFooterView()
@@ -84,9 +88,10 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func expandBody() {
         self.view.layoutIfNeeded()
-        let footerHeight = self.footerView.frame.height
         let headerHeight = self.headerView.frame.height
-        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight
+        let footerHeight = self.footerView.frame.height
+        let receiptHeight = self.receiptView.frame.height
+        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight - receiptHeight
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 

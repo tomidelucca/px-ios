@@ -9,7 +9,7 @@
 import UIKit
 
 class PXReceiptComponent: PXComponetizable {
-    var props : PXReceiptProps
+    var props: PXReceiptProps
 
     init(props: PXReceiptProps) {
         self.props = props
@@ -19,9 +19,9 @@ class PXReceiptComponent: PXComponetizable {
     }
 }
 open class PXReceiptProps: NSObject {
-    var dateLabelString : String?
-    var receiptDescriptionString : String?
-    init(dateLabelString : String? = nil, receiptDescriptionString: String? = nil) {
+    var dateLabelString: String?
+    var receiptDescriptionString: String?
+    init(dateLabelString: String? = nil, receiptDescriptionString: String? = nil) {
         self.dateLabelString = dateLabelString
         self.receiptDescriptionString = receiptDescriptionString
     }
