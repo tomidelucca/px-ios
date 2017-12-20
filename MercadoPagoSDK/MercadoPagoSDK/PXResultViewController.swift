@@ -60,9 +60,8 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.matchWidth(ofView: bodyView, toView: contentView).isActive = true
         PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
         PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
-        self.view.layoutIfNeeded()
-        bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
-       
+        bodyView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
+        
         if isEmptySpaceOnScreen() {
             if shouldExpandHeader() {
                 expandHeader()

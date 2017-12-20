@@ -22,13 +22,17 @@ public class PXComponentView: UIView {
         super.addSubview(topGuideView)
         super.addSubview(bottomGuideView)
         super.addSubview(contentView)
-        PXLayout.pinTop(view: topGuideView, to: self).isActive = true
-        PXLayout.pinBottom(view: bottomGuideView, to: self).isActive = true
+        PXLayout.pinTop(view: topGuideView).isActive = true
+        PXLayout.pinBottom(view: bottomGuideView).isActive = true
         PXLayout.matchHeight(ofView: topGuideView, toView: bottomGuideView).isActive = true
-        PXLayout.centerHorizontally(view: contentView, to: self).isActive = true
+        PXLayout.centerHorizontally(view: contentView).isActive = true
+        PXLayout.centerHorizontally(view: topGuideView).isActive = true
+        PXLayout.centerHorizontally(view: bottomGuideView).isActive = true
         PXLayout.put(view: contentView, onBottomOf: topGuideView).isActive = true
         PXLayout.put(view: contentView, aboveOf: bottomGuideView).isActive = true
-        PXLayout.matchWidth(ofView: contentView, toView: self).isActive = true
+        PXLayout.matchWidth(ofView: contentView).isActive = true
+        PXLayout.matchWidth(ofView: topGuideView).isActive = true
+        PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -37,6 +41,18 @@ public class PXComponentView: UIView {
 
     override public func addSubview(_ view: UIView) {
         self.contentView.addSubview(view)
+    }
+
+    override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
+        self.topGuideView.addSeparatorLineToTop(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
+    }
+
+    override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
+        self.bottomGuideView.addSeparatorLineToBottom(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
+    }
+    
+    override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
+        super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 
     //Pin first content view subview to top
