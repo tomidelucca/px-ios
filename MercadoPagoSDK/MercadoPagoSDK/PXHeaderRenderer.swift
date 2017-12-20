@@ -15,7 +15,8 @@ class PXHeaderRenderer: NSObject {
     let IMAGE_HEIGHT: CGFloat = 90.0
 
     let BADGE_IMAGE_SIZE: CGFloat = 30.0
-    let BADGE_OFFSET: CGFloat = -6.0
+    let BADGE_HORIZONTAL_OFFSET: CGFloat = -6.0
+    let BADGE_VERTICAL_OFFSET: CGFloat = 0.0
 
     //Image Title
     let STATUS_TITLE_HEIGHT: CGFloat = 18.0
@@ -40,8 +41,8 @@ class PXHeaderRenderer: NSObject {
         //Badge Image
         headerView.badgeImage = buildBudgeImage(with: header.props.statusImage)
         headerView.addSubview(headerView.badgeImage!)
-        PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
-        PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_OFFSET).isActive = true
+        PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
+        PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
 
         //Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
