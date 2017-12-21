@@ -37,10 +37,14 @@ class PXResultViewModelTest: BaseTest {
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(receiptView.dateLabel)
         XCTAssertNotNil(receiptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
@@ -69,10 +73,14 @@ class PXResultViewModelTest: BaseTest {
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(receiptView.dateLabel)
         XCTAssertNotNil(receiptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
@@ -99,6 +107,10 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
@@ -118,6 +130,10 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertNil(footerView.principalButton)
@@ -145,10 +161,14 @@ class PXResultViewModelTest: BaseTest {
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
@@ -177,6 +197,10 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
@@ -200,6 +224,10 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertNil(footerView.principalButton)
@@ -226,9 +254,11 @@ class PXResultViewModelTest: BaseTest {
         let headerView = buildHeaderView(resultViewModel: resultViewModel)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
         let footerView = buildFooterView(resultViewModel: resultViewModel)
-        
-        //Header
         let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNil(receiptView.dateLabel)
         XCTAssertNil(receiptView.detailLabel)
         XCTAssertEqual(footerView.principalButton?.title(for: .normal), "Pagar con otro medio".localized)
@@ -270,13 +300,14 @@ class PXResultViewModelTest: BaseTest {
         paymentResult.statusDetail = RejectedStatusDetail.INSUFFICIENT_AMOUNT
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
-        //Body
-        //Error View
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let errorView = bodyView as? PXErrorView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(errorView.titleLabel)
         XCTAssertEqual(errorView.titleLabel?.text, "¿Qué puedo hacer?")
         XCTAssertNotNil(errorView.descriptionLabel)
@@ -316,13 +347,14 @@ class PXResultViewModelTest: BaseTest {
         paymentResult.statusDetail = RejectedStatusDetail.DUPLICATED_PAYMENT
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
-        //Body
-        //Error View
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let errorView = bodyView as? PXErrorView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(errorView.titleLabel)
         XCTAssertEqual(errorView.titleLabel?.text, "O que posso fazer?")
         XCTAssertNotNil(errorView.descriptionLabel)
@@ -339,13 +371,14 @@ class PXResultViewModelTest: BaseTest {
         paymentResult.statusDetail = RejectedStatusDetail.CARD_DISABLE
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
-        //Body
-        //Error View
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let errorView = bodyView as? PXErrorView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(errorView.titleLabel)
         XCTAssertEqual(errorView.titleLabel?.text, "O que posso fazer?")
         XCTAssertNotNil(errorView.descriptionLabel)
@@ -362,13 +395,14 @@ class PXResultViewModelTest: BaseTest {
         paymentResult.statusDetail = PendingStatusDetail.REVIEW_MANUAL
         let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil)
         let bodyView = buildBodyView(resultViewModel: resultViewModel)
-        
-        //Body
-        //Error View
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
         guard let errorView = bodyView as? PXErrorView else {
             XCTAssertTrue(false, "The view is not of the expected class")
             return
         }
+        XCTAssertNil(topCustomComponent)
+        XCTAssertNil(bottomCustomComponent)
         XCTAssertNotNil(errorView.titleLabel)
         XCTAssertEqual(errorView.titleLabel?.text, "O que posso fazer?")
         XCTAssertNotNil(errorView.descriptionLabel)
@@ -624,6 +658,69 @@ class PXResultViewModelTest: BaseTest {
     func buildReceiptView(resultViewModel: PXResultViewModel) -> PXReceiptView {
         let data = resultViewModel.getReceiptComponentProps()
         let receiptComponent = PXReceiptComponent(props: data)
-        return PXReceiptComponentRenderer().render(receiptComponent)
+        return PXReceiptRenderer().render(receiptComponent)
+    }
+    
+    func testViewModelWithTextAndCustomComponentPreferenceAndApprovedPayment() {
+        let ownComponent = TestComponent()
+        let preference = PaymentResultScreenPreference()
+        preference.setApprovedTopCustomComponent(ownComponent)
+        preference.setApprovedBottomCustomComponent(ownComponent)
+        preference.setApproved(title: approvedTitleDummy)
+        preference.setApproved(labelText: approvedLabelDummy)
+        preference.disableApprovedReceipt()
+        let paymentResult = MockBuilder.buildPaymentResult("approved", paymentMethodId: "visa")
+        let resultViewModel = PXResultViewModel(paymentResult: paymentResult, amount:1000.0, instructionsInfo: nil, paymentResultScreenPreference:preference)
+        paymentResult.paymentData?.token = MockBuilder.buildToken()
+        paymentResult.paymentData?.token?.lastFourDigits = "1234"
+        let headerView = buildHeaderView(resultViewModel: resultViewModel)
+        let footerView = buildFooterView(resultViewModel: resultViewModel)
+        let bodyView = buildBodyView(resultViewModel: resultViewModel)
+        let receiptView = buildReceiptView(resultViewModel: resultViewModel)
+        let topCustomComponent = resultViewModel.getTopCustomComponent()
+        let bottomCustomComponent = resultViewModel.getBottomCustomComponent()
+        guard let paymentMethodView = bodyView as? PXPaymentMethodView else {
+            XCTAssertTrue(false, "The view is not of the expected class")
+            return
+        }
+        XCTAssertNotNil(topCustomComponent)
+        XCTAssertNotNil(bottomCustomComponent)
+        XCTAssertNil(receiptView.dateLabel)
+        XCTAssertNil(receiptView.detailLabel)
+        XCTAssertNotNil(paymentMethodView.paymentMethodIcon)
+        XCTAssertEqual(paymentMethodView.amountTitle?.text, "$ 1.000")
+        XCTAssertNil(paymentMethodView.amountDetail?.text)
+        XCTAssertEqual(paymentMethodView.paymentMethodDescription?.text, "visa ending in 1234")
+        XCTAssertNil(paymentMethodView.paymentMethodDetail?.text)
+        XCTAssertEqual(paymentMethodView.disclaimerLabel?.text, "In your account yo will see the charge as description")
+        XCTAssertNil(footerView.principalButton)
+        XCTAssertEqual(footerView.linkButton?.title(for: .normal), "Seguir comprando".localized)
+        XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
+        XCTAssertEqual(headerView.circleImage?.image, MercadoPago.getImage("default_item_icon", bundle: MercadoPago.getBundle()!))
+        XCTAssertEqual(headerView.badgeImage?.image, MercadoPago.getImage("ok_badge"))
+        XCTAssertTrue(resultViewModel.isAccepted())
+        XCTAssertFalse(resultViewModel.isWarning())
+        XCTAssertFalse(resultViewModel.isError())
+        XCTAssertEqual(headerView.statusLabel?.attributedText?.string, approvedLabelDummy)
+        XCTAssertEqual(headerView.messageLabel?.attributedText?.string, approvedTitleDummy)
+    }
+}
+
+@objc public class TestComponent: NSObject, PXComponentizable {
+    
+    static public func getPreference() -> PaymentResultScreenPreference {
+        let top = TestComponent()
+        let bottom = TestComponent()
+        let preference = PaymentResultScreenPreference()
+        preference.setApprovedTopCustomComponent(top)
+        //        preference.setApprovedBottomCustomComponent(bottom)
+        return preference
+    }
+    
+    public func render() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .red
+        return view
     }
 }

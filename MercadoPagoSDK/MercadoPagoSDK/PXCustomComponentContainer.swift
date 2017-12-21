@@ -23,6 +23,8 @@ class PXCustomComponentContainer: PXComponentizable {
         PXLayout.setHeight(owner: customComponentView, height: customComponentView.frame.height).isActive = true
         componentView.addSubview(customComponentView)
         PXLayout.centerHorizontally(view: customComponentView).isActive = true
+        PXLayout.pinTop(view: customComponentView).isActive = true
+        PXLayout.pinBottom(view: customComponentView).isActive = true
         PXLayout.matchWidth(ofView: customComponentView).isActive = true
         return componentView
     }

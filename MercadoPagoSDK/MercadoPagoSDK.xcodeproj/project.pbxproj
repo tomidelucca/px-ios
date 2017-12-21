@@ -604,7 +604,6 @@
 		81ACC8201F9A88F700206F7B /* PXFooterRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80B1F9A68D900206F7B /* PXFooterRenderer.swift */; };
 		81ACC8211F9A88F700206F7B /* PXHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */; };
 		81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80C1F9A68D900206F7B /* PXHeaderRenderer.swift */; };
-		9C91892B56BA42800B73D39E /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -1199,7 +1198,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C91892B56BA42800B73D39E /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
