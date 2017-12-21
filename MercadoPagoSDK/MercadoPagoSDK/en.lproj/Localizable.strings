@@ -34,7 +34,7 @@
 
 // -- CallForAuth
 
-"Debes autorizar ante %p el pago de %t a MercadoPago" = "You must authorize with %p the payment of %t to Mercado Pago";
+"Debes autorizar ante %p el pago de %t a Mercado Pago" = "You must authorize with %p the payment of %t to Mercado Pago";
 "Ya hable con %0 y me autorizó" = "Already talked with %0 and I am authorized";
 "El teléfono está al dorso de tu tarjeta." = "The phone number is on the back of your card.";
 "Pagar con otro medio" = "Choose another payment method";
@@ -180,7 +180,7 @@
 "El teléfono está al dorso de tu tarjeta"="The phone number is on the back of your card";
 "Debes autorizar el pago ante tu tarjeta"="You must authorize the payment with your card";
 "Debes autorizar ante %1$s el pago de " = "You must authorize with %1$s the payment of ";
-" a MercadoPago" = " to MercadoPago";
+" a Mercado Pago" = " to Mercado Pago";
 "Ya hablé con %1$s y me autorizó" = "Already talked with %0 and I am authorized";
 "En tu estado de cuenta verás el cargo como %0" = "In your account yo will see the charge as %0";
 

@@ -113,7 +113,7 @@ extension PXResultViewModel {
                 let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
                 var result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
                 result.append(amountStr)
-                result.append(NSMutableAttributedString(string: " a MercadoPago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
+                result.append(NSMutableAttributedString(string: " a Mercado Pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
                 return result
             }else {
                 return "".toAttributedString()

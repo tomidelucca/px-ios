@@ -41,7 +41,7 @@
 
 // -- CallForAuth
 
-"Debes autorizar ante %p el pago de %t a MercadoPago" = "Debes autorizar ante %p el pago de %t a MercadoPago";
+"Debes autorizar ante %p el pago de %t a Mercado Pago" = "Debes autorizar ante %p el pago de %t a Mercado Pago";
 "Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
 "El teléfono está al dorso de tu tarjeta." = "El teléfono está al dorso de tu tarjeta.";
 "Pagar con otro medio" = "Pagar con otro medio";
@@ -193,7 +193,7 @@
 "El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
 "Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
 "Debes autorizar ante %1$s el pago de " = "Debes autorizar ante %1$s el pago de ";
-" a MercadoPago" = " a MercadoPago";
+" a Mercado Pago" = " a Mercado Pago";
 "Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
 
 "En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";

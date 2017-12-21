@@ -141,7 +141,7 @@
 // --Call for Auth
 
 "Ya hable con %0 y me autorizó" = "Já falei com %0 e autorizei";
-"Debes autorizar ante %p el pago de %t a MercadoPago" = "Você deve autorizar com %p o pagamento de %t ao Mercado Pago";
+"Debes autorizar ante %p el pago de %t a Mercado Pago" = "Você deve autorizar com %p o pagamento de %t ao Mercado Pago";
 "El teléfono está al dorso de tu tarjeta." = "O telefone do banco está no verso do seu cartão.";
 "cc_rejected_call_for_authorize_title" = "Não conseguiu autorizá-lo?";
 "Pagar con otro medio" = "Escolha outro meio de pagamento";
@@ -179,7 +179,7 @@
 "El teléfono está al dorso de tu tarjeta"="O telefone do banco está no verso do seu cartão.";
 "Debes autorizar el pago ante tu tarjeta"="Você deve autorizar o pagamento de seu cartão";
 "Debes autorizar ante %1$s el pago de " = "Você deve autorizar junto ao %1$s o pagamento do ";
-" a MercadoPago" = " o Mercado Pago";
+" a Mercado Pago" = " o Mercado Pago";
 "Ya hablé con %1$s y me autorizó" = "Já falei com %1$s e me autoriza";
 
 

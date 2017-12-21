@@ -60,7 +60,7 @@ class HeaderCongratsTableViewCell: UITableViewCell {
         icon.image = MercadoPago.getImage("MPSDK_payment_result_c4a")
         var titleWithParams: String = ""
         if let paymentMethodName = paymentMethod?.name {
-            titleWithParams = ("Debes autorizar ante %p el pago de %t a MercadoPago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
+            titleWithParams = ("Debes autorizar ante %p el pago de %t a Mercado Pago".localized as NSString).replacingOccurrences(of: "%p", with: "\(paymentMethodName)")
         }
         let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
