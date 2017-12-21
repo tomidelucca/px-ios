@@ -66,6 +66,10 @@ public class PXErrorComponent: NSObject, PXComponetizable {
         return props.status.elementsEqual(PXPayment.Status.REJECTED) && props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
     }
     
+    public func hasTitle() -> Bool {
+        return !self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT)
+    }
+    
     public func hasActionForCallForAuth() -> Bool {
         return isCallForAuthorize() && !String.isNullOrEmpty(props.paymentMethodName)
     }

@@ -22,7 +22,9 @@ class PXErrorRenderer: NSObject {
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
         
         //Title Label
-        errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
+        if component.hasTitle() {
+            errorBodyView.titleLabel = buildTitleLabel(with: component.getTitle(), in: errorBodyView)
+        }
         
         //Description Label
         errorBodyView.descriptionLabel = buildDescriptionLabel(with: component.getDescription(), in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
@@ -92,6 +94,8 @@ class PXErrorRenderer: NSObject {
         PXLayout.centerHorizontally(view: label, to: superView).isActive = true
         if let upperView = upperView {
             PXLayout.put(view: label, onBottomOf: upperView, withMargin: PXLayout.S_MARGIN).isActive = true
+        } else {
+            PXLayout.pinTop(view: label, withMargin: PXLayout.L_MARGIN).isActive = true
         }
         return label
     }
