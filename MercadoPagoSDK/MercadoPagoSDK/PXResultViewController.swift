@@ -62,6 +62,7 @@ class PXResultViewController: PXComponentContainerViewController {
         contentView.addSubview(bodyView)
         bodyView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.matchWidth(ofView: bodyView, toView: contentView).isActive = true
+        PXLayout.centerHorizontally(view: bodyView).isActive = true
         PXLayout.put(view: bodyView, onBottomOf: receiptView).isActive = true
         PXLayout.put(view: bodyView, aboveOf: footerView).isActive = true
         bodyView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
