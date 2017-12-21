@@ -50,7 +50,6 @@ class PXResultViewController: PXComponentContainerViewController {
         topCustomView = buildTopCustomView()
         contentView.addSubview(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
-        //PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
         
         //Add Footer
@@ -120,6 +119,27 @@ class PXResultViewController: PXComponentContainerViewController {
         return bodyView.frame.height == 0
     }
     
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.navigationController != nil && self.navigationController?.navigationBar != nil {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
+        }
+        renderViews()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}
+
+// Components 
+extension PXResultViewController {
     func buildHeaderView() -> UIView {
         let headerProps = self.viewModel.getHeaderComponentProps()
         let headerComponent = PXHeaderComponent(props: headerProps)
@@ -130,7 +150,7 @@ class PXResultViewController: PXComponentContainerViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
-
+    
     func buildReceiptView() -> UIView {
         let receiptProps = self.viewModel.getReceiptComponentProps()
         let receiptComponent = PXReceiptComponent(props: receiptProps)
@@ -159,22 +179,5 @@ class PXResultViewController: PXComponentContainerViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if self.navigationController != nil && self.navigationController?.navigationBar != nil {
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
-        }
-        renderViews()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }

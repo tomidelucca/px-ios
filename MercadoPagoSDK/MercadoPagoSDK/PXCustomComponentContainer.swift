@@ -16,7 +16,6 @@ class PXCustomComponentContainer: PXComponentizable {
     }
     func render() -> UIView {
         let componentView = UIView()
-        componentView.backgroundColor = .yellow
         componentView.translatesAutoresizingMaskIntoConstraints = false
         let customComponentView = customComponent.render()
         customComponentView.translatesAutoresizingMaskIntoConstraints = false
