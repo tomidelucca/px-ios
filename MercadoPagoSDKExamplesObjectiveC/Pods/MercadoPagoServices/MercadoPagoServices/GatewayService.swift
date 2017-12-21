@@ -45,7 +45,7 @@ open class GatewayService: MercadoPagoService {
             }
             let secCodeDic : [String:Any] = ["security_code": securityCode]
 
-            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: JSONHandler.jsonCoding(secCodeDic), method: "PUT", success: success, failure: { (_) in
+            self.request(uri: url + "/" + token!.id, params: "public_key=" + public_key, body: JSONHandler.jsonCoding(secCodeDic), method: "PUT", success: success, failure: { (error) in
                 failure?(PXError(domain: "mercadopago.sdk.GatewayService.cloneToken", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
                 })
 

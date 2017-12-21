@@ -27,7 +27,7 @@ open class PreferenceService: MercadoPagoService {
                     }
                 }
             }
-            }, failure : { (_) in
+            }, failure : { (error) in
                 failure(PXError(domain: "mercadopago.sdk.PreferenceService.getPreference", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
