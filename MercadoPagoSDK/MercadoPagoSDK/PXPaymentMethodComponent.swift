@@ -14,6 +14,13 @@ public class PXPaymentMethodComponent: NSObject, PXComponetizable {
     init(props: PXPaymentMethodProps) {
        self.props = props
     }
+    
+    func getPaymentMethodIconComponent() -> PXPaymentMethodIconComponent {
+        let paymentMethodIconProps = PXPaymentMethodIconProps(paymentMethodIcon: self.props.paymentMethodIcon)
+        let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: paymentMethodIconProps)
+        return paymentMethodIconComponent
+    }
+    
     public func render() -> UIView {
         return PXPaymentMethodComponentRenderer().render(component: self)
     }

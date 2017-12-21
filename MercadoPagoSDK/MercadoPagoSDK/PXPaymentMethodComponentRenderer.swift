@@ -21,15 +21,14 @@ class PXPaymentMethodComponentRenderer: NSObject {
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
-        let icon = UIImageView()
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        pmBodyView.paymentMethodIcon = icon
-        icon.image = component.props.paymentMethodIcon
-        pmBodyView.addSubview(icon)
-        PXLayout.centerHorizontally(view: icon).isActive = true
-        PXLayout.setHeight(owner: icon, height: IMAGE_HEIGHT).isActive = true
-        PXLayout.setWidth(owner: icon, width: IMAGE_WIDTH).isActive = true
-        PXLayout.pinTop(view: icon, withMargin: PXLayout.L_MARGIN).isActive = true
+        let paymentMethodIcon = component.getPaymentMethodIconComponent()
+        pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
+        pmBodyView.addSubview(pmBodyView.paymentMethodIcon!)
+        PXLayout.centerHorizontally(view: pmBodyView.paymentMethodIcon!).isActive = true
+        PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
+        PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
+        PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.L_MARGIN).isActive = true
+        pmBodyView.layoutIfNeeded()
 
         // Title
         let title = UILabel()
@@ -108,7 +107,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
 }
 
 class PXPaymentMethodView: PXBodyView {
-    var paymentMethodIcon: UIImageView?
+    var paymentMethodIcon: UIView?
     var amountTitle: UILabel?
     var amountDetail: UILabel?
     var paymentMethodDescription: UILabel?

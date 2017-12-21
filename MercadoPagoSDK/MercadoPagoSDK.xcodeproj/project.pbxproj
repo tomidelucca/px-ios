@@ -612,6 +612,10 @@
 		FC190A381E53879F003ACBE0 /* IdentificationTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */; };
 		FC190A391E53879F003ACBE0 /* IdentificationTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */; };
 		FC20C9D21F05580E003A018C /* ArrayExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */; };
+		FC2A09541FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
+		FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */; };
+		FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
+		FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */; };
 		FC3FC8421FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8431FBCC00000CF29E1 /* PXInstructionsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */; };
 		FC3FC8451FBCC1B800CF29E1 /* PXInstructionsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */; };
@@ -1122,6 +1126,8 @@
 		FC1841CD1E77238500EEBD18 /* es-VE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-VE"; path = "es-VE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC190A371E53879F003ACBE0 /* IdentificationTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = IdentificationTypes.plist; sourceTree = "<group>"; };
 		FC20C9D11F05580E003A018C /* ArrayExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTest.swift; sourceTree = "<group>"; };
+		FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconComponent.swift; sourceTree = "<group>"; };
+		FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodIconRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8411FBCC00000CF29E1 /* PXInstructionsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsComponent.swift; sourceTree = "<group>"; };
 		FC3FC8441FBCC1B800CF29E1 /* PXInstructionsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsRenderer.swift; sourceTree = "<group>"; };
 		FC3FC8481FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsSubtitleComponent.swift; sourceTree = "<group>"; };
@@ -2166,6 +2172,7 @@
 			children = (
 				812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */,
 				812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */,
+				FC2A09591FEC3F0E009EFDB0 /* Payment Method Icon */,
 			);
 			name = "Payment Method";
 			sourceTree = "<group>";
@@ -2264,6 +2271,15 @@
 				76743C771C45A24600120347 /* PaymentPreference.swift */,
 			);
 			name = "No Pretty";
+			sourceTree = "<group>";
+		};
+		FC2A09591FEC3F0E009EFDB0 /* Payment Method Icon */ = {
+			isa = PBXGroup;
+			children = (
+				FC2A09531FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift */,
+				FC2A09561FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift */,
+			);
+			name = "Payment Method Icon";
 			sourceTree = "<group>";
 		};
 		FC3FC8471FBCC95C00CF29E1 /* Instructions */ = {
@@ -2829,6 +2845,7 @@
 				81ACC81D1F9A88F700206F7B /* PXBodyComponent.swift in Sources */,
 				4BB3ECE61FB37B0300AAFD38 /* PXSDKSettings.swift in Sources */,
 				76743C761C45A00E00120347 /* CheckoutPreference.swift in Sources */,
+				FC2A09571FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */,
 				4BAE1D421DCBE8FF0000ED5C /* ApprovedTableViewCell.swift in Sources */,
 				15D79A071CA986E300623A84 /* MPTextField.swift in Sources */,
 				0F9883991AD2AB6000F750F0 /* TransactionDetails.swift in Sources */,
@@ -2948,6 +2965,7 @@
 				0F9883891AD2AB6000F750F0 /* PaymentMethod.swift in Sources */,
 				155F3D351E4533D8003F6DD6 /* NextStepHelper.swift in Sources */,
 				76FD24811C5BFEA1008C5DC0 /* CardFrontView.swift in Sources */,
+				FC2A09541FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */,
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				15AE1DBE1F672FAE00B0DAF8 /* DisclaimerView.swift in Sources */,
 				15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
@@ -3101,6 +3119,7 @@
 				4B2AF5841EEB8F1400925644 /* CardsAdminViewControllerTest.swift in Sources */,
 				76F41E301D3D5F5800B25E5B /* MercadoPagoTestContext.swift in Sources */,
 				815409491FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */,
+				FC2A09581FEC3F0B009EFDB0 /* PXPaymentMethodIconRenderer.swift in Sources */,
 				0FC4FC3A1B0FB53500CF7148 /* PromoViewController.swift in Sources */,
 				7622E3381DF5F0B100490C4E /* IssuerRowTableViewCell.swift in Sources */,
 				0F9883331AD2AB3C00F750F0 /* CustomServer.swift in Sources */,
@@ -3158,6 +3177,7 @@
 				766012E31CEB963300897F9D /* MPSDKError.swift in Sources */,
 				76DDF97B1E8AE8C900EEB66D /* ServicePreference.swift in Sources */,
 				FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */,
+				FC2A09551FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */,
 				23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */,
 				0F98837E1AD2AB6000F750F0 /* Item.swift in Sources */,
 				8138737B1FA8D2BF002095D6 /* PXResultViewModel.swift in Sources */,
