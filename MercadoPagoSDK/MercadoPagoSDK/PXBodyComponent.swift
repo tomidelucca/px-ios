@@ -31,7 +31,8 @@ open class PXBodyComponent: NSObject, PXComponetizable {
 
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
         let pm = self.props.paymentResult.paymentData?.paymentMethod
-        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!)
+        let defaultColor = pm?._id == "account_money"
+        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!, defaultColor: defaultColor)
         let currency = MercadoPagoContext.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.props.amount, forCurrency: currency)
         var amountDetail: String?

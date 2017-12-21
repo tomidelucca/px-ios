@@ -185,7 +185,7 @@ import UIKit
 
         let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
 
-        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
+        if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
             return image?.imageWithOverlayTint(tintColor: UIColor.primaryColor())
         } else {
             return image

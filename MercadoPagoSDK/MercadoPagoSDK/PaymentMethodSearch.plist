@@ -175,7 +175,7 @@
 	<key>account_money</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoDineroEnCuenta</string>
+		<string>mediosIconoDineroEnCuentaAzul</string>
 	</dict>
 	<key>bancomer_7eleven</key>
 	<dict>
