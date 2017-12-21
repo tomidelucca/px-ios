@@ -46,7 +46,9 @@ extension PXResultViewModel {
         if isAccepted() {
             if self.paymentResult.isApproved() {
                 return preference.getApprovedBadgeImage()
-            }else {
+            } else if self.paymentResult.isReviewManual() {
+                return MercadoPago.getImage("orange_pending_badge")
+            } else {
                 return MercadoPago.getImage("pending_badge")
             }
         }
