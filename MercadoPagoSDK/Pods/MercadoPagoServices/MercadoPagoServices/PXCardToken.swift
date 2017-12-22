@@ -223,7 +223,7 @@ extension PXCardToken {
     internal func hasMonthPassed(_ month: Int) -> Bool {
         return month < (now.month!)
     }
-
+    
     internal func hasDatePassed(year: Int?, month: Int?) -> Bool {
         guard let year = year, let month = month else {
             return true

@@ -45,7 +45,7 @@ open class InstructionsService: MercadoPagoService {
             } else {
                 success(try! PXInstructions.fromJSON(data: data))
             }
-        }, failure: { (_) in
+        }, failure: { (error) in
             failure?(PXError(domain: "com.mercadopago.sdk.getInstructions", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
             })
     }

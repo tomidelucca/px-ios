@@ -12,6 +12,7 @@ open class DiscountService: MercadoPagoService {
 
     var URI: String
 
+
     init (baseURL: String, URI: String) {
         self.URI = URI
         super.init(baseURL: baseURL)
@@ -45,12 +46,12 @@ open class DiscountService: MercadoPagoService {
                 }
             }
 
-        }, failure: { (_) -> Void in
+        }, failure: { (error) -> Void in
             failure(PXError(domain: "mercadopago.sdk.DiscountService.getDiscount", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }
 
-    open func getCampaigns(publicKey: String, success: @escaping (_ discount: [PXCampaign]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    open func getCampaigns(publicKey: String , success: @escaping (_ discount: [PXCampaign]) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
          var params = "public_key=" + publicKey
 
         self.request(uri: self.URI, params: params, body: nil, method: "GET", cache: false, success: { (data) -> Void in
@@ -66,7 +67,7 @@ open class DiscountService: MercadoPagoService {
                 }
             }
 
-        }, failure: { (_) -> Void in
+        }, failure: { (error) -> Void in
             failure(PXError(domain: "mercadopago.sdk.DiscountService.getCampaigns", code: ErrorTypes.NO_INTERNET_ERROR, userInfo: [NSLocalizedDescriptionKey: "Hubo un error", NSLocalizedFailureReasonErrorKey: "Verifique su conexión a internet e intente nuevamente"]))
         })
     }

@@ -14,6 +14,22 @@ open class PaymentResultScreenPreference: NSObject {
         case pending
         case check
     }
+    
+    var topCustomComponent: PXComponentizable?
+    var bottomCustomComponent: PXComponentizable?
+    
+    open func setApprovedTopCustomComponent(_ component: PXComponentizable) {
+        self.topCustomComponent = component
+    }
+    open func setApprovedBottomCustomComponent(_ component: PXComponentizable) {
+        self.bottomCustomComponent = component
+    }
+    open func getApprovedTopCustomComponent() -> PXComponentizable? {
+        return self.topCustomComponent
+    }
+    open func getApprovedBottomCustomComponent() -> PXComponentizable? {
+        return self.bottomCustomComponent
+    }
 
     //FOOTER
     var approvedSecondaryExitButtonText = ""

@@ -14,7 +14,7 @@ extension PXResultViewModel {
         if self.paymentResult.isApproved() && !self.preference.isPaymentIdDisable() {
             let date = Date()
             return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
-        }else{
+        } else {
             return PXReceiptProps()
         }
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXInstructionsReferenceComponent: NSObject, PXComponetizable {
+class PXInstructionsReferenceComponent: NSObject, PXComponentizable {
     var props: PXInstructionsReferenceProps
 
     init(props: PXInstructionsReferenceProps) {
