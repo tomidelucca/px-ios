@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXInstructionsAccreditationCommentComponent: NSObject, PXComponetizable {
+class PXInstructionsAccreditationCommentComponent: NSObject, PXComponentizable {
     var props: PXInstructionsAccreditationCommentProps
 
     init(props: PXInstructionsAccreditationCommentProps) {

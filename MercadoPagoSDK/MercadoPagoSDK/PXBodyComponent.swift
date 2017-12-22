@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoServices
 
-open class PXBodyComponent: NSObject, PXComponetizable {
+open class PXBodyComponent: NSObject, PXComponentizable {
     var props: PXBodyProps
 
     init(props: PXBodyProps) {

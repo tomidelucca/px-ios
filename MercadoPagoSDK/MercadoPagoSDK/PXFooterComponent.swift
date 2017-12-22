@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXFooterComponent: NSObject, PXComponetizable {
+class PXFooterComponent: NSObject, PXComponentizable {
   var props: PXFooterProps
 
     init(props: PXFooterProps) {

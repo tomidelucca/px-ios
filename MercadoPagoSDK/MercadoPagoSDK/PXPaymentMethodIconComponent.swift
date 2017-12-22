@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class PXPaymentMethodIconComponent: NSObject, PXComponetizable {
+public class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
     var props: PXPaymentMethodIconProps
     
     init(props: PXPaymentMethodIconProps) {

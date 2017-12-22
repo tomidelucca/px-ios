@@ -9,7 +9,7 @@
 import UIKit
 import MercadoPagoServices
 
-public class PXErrorComponent: NSObject, PXComponetizable {
+public class PXErrorComponent: NSObject, PXComponentizable {
     var props: PXErrorProps
     
     init(props: PXErrorProps) {

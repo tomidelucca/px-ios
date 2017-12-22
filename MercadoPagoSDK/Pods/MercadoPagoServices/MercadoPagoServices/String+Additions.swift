@@ -58,7 +58,7 @@ extension String {
             }
         }
     }
-
+    
     static public func getDate(_ string: String?) -> Date? {
         guard let dateString = string else {
             return nil
