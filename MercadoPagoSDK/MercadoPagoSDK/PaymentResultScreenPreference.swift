@@ -32,7 +32,7 @@ open class PaymentResultScreenPreference: NSObject {
     //HEADER
     //Approved
     var approvedBadge: ApprovedBadge? = ApprovedBadge.check
-    var approvedTitle = "¡Listo, se acreditó tu pago!".localized
+    var approvedTitle = "¡Listo! Se acreditó tu pago".localized
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true

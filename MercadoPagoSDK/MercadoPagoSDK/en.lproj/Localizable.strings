@@ -40,7 +40,7 @@
 "Pagar con otro medio" = "Choose another payment method";
 
 // -- Approved
-"¡Listo, se acreditó tu pago!" = "Done, your payment was accredited!";
+"¡Listo! Se acreditó tu pago" = "Done! Your payment was accredited";
 "También enviamos el código a tu email" = "También enviamos el código a tu email";
 "Te enviaremos este comprobante a %0" = "We will send you the data to %0";
 "Dinero en cuenta de MercadoPago" = "Account Money of MercadoPago";

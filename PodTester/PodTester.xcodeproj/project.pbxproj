@@ -13,7 +13,6 @@
 		23DCD0611FD5902500AA19C6 /* ThirdHookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DCD0601FD5902500AA19C6 /* ThirdHookViewController.swift */; };
 		4B2BFC151FD1DB230069843C /* Hooks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2BFC101FD1DB210069843C /* Hooks.storyboard */; };
 		4D1BA2FFECDADE21693F8479 /* Pods_PodTesterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCA4C6DA5720ADA0D959E10D /* Pods_PodTesterUITests.framework */; };
-		7977B3C2CC366377F1711AB8 /* Pods_PodTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F6C388D4809CF09D1B5C5F /* Pods_PodTester.framework */; };
 		96268BFEE693DF0EC8A35C50 /* Pods_PodTesterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D902B45F8C5F45AB09E44105 /* Pods_PodTesterTests.framework */; };
 		FC333DD71EA67982009C746A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD61EA67982009C746A /* SettingsViewController.swift */; };
 		FC333DD81EA67982009C746A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC333DD61EA67982009C746A /* SettingsViewController.swift */; };
@@ -88,7 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7977B3C2CC366377F1711AB8 /* Pods_PodTester.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

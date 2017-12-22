@@ -25,7 +25,7 @@ class PaymentResultScreenPreferenceTest: BaseTest {
     }
 
     func testSetTitle() {
-        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedTitle(), "¡Listo, se acreditó tu pago!".localized)
+        XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getApprovedTitle(), "¡Listo! Se acreditó tu pago".localized)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getPendingTitle(), "Estamos procesando el pago".localized)
         XCTAssertEqual(self.mpCheckout.viewModel.paymentResultScreenPreference.getRejectedTitle(), "Uy, no pudimos procesar el pago".localized)
 

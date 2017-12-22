@@ -45,7 +45,7 @@
 "Pagar con otro medio" = "Pagar con otro medio";
 
 // -- Approved
-"¡Listo, se acreditó tu pago!" = "¡Listo, se acreditó tu pago!";
+"¡Listo! Se acreditó tu pago" = "¡Listo! Se acreditó tu pago";
 "También enviamos el código a tu email" = "También enviamos el código a tu email";
 "Te enviaremos este comprobante a %0" = "Te enviaremos este comprobante a %0";
 "Dinero en cuenta de MercadoPago" = "Dinero en cuenta de MercadoPago";
