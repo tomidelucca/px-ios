@@ -184,7 +184,15 @@ class MainTableViewController: UITableViewController {
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id:self.prefID)
-        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, navigationController: self.navigationController!)
+        pref?._id = "243962506-e9464aff-30dd-43e0-a6fa-37e3a54b884c"
+        let discoupon = DiscountCoupon()
+        discoupon._id = "asd"
+        discoupon.name = "decuentito"
+        discoupon.amount = 1024
+        discoupon.amount_off = "100"
+        discoupon.coupon_amount = "100"
+        
+        let checkout = MercadoPagoCheckout(publicKey: "TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee", accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discoupon , navigationController: self.navigationController!)
 
          // Define hooks.
         let firstHook = HooksNavigationManager().getFirstHook()
@@ -213,14 +221,14 @@ class MainTableViewController: UITableViewController {
             }
 
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
-            let _ = flowPref.addHookToFlow(hook: firstHook)
-            let _ = flowPref.addHookToFlow(hook: secondHook)
-            let _ = flowPref.addHookToFlow(hook: thirdHook)
+        //    let _ = flowPref.addHookToFlow(hook: firstHook)
+         //   let _ = flowPref.addHookToFlow(hook: secondHook)
+          //  let _ = flowPref.addHookToFlow(hook: thirdHook)
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
-            let _ = flowPreference.addHookToFlow(hook: firstHook)
-            let _ = flowPreference.addHookToFlow(hook: secondHook)
-            let _ = flowPreference.addHookToFlow(hook: thirdHook)
+          //  let _ = flowPreference.addHookToFlow(hook: firstHook)
+           // let _ = flowPreference.addHookToFlow(hook: secondHook)
+           // let _ = flowPreference.addHookToFlow(hook: thirdHook)
             showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
