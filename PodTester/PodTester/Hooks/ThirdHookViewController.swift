@@ -11,9 +11,9 @@ import MercadoPagoSDK
 
 class ThirdHookViewController: UIViewController {
     
-    var actionHandler: PXActionHandler?
+    fileprivate var navigationHandler: PXHookNavigationHandler?
     
-    var targetHookStore: PXHookStore?
+    var targetHookStore: PXCheckoutStore?
     
     @IBOutlet weak var hookStoreDebugLabel: UILabel!
     
@@ -22,7 +22,7 @@ class ThirdHookViewController: UIViewController {
     }
     
     @IBAction func didTapOnNext() {
-        actionHandler?.next()
+        navigationHandler?.next()
     }
 }
 
@@ -49,8 +49,19 @@ extension ThirdHookViewController: PXHookComponent {
         }
     }
     
-    func didReceive(hookStore: PXHookStore) {
+    func didReceive(hookStore: PXCheckoutStore) {
         targetHookStore = hookStore
+    }
+    
+    func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool {
+        if let paymentId = hookStore.getPaymentOptionSelected()?.getId(), paymentId == "bitcoin_payment" {
+            return true
+        }
+        return false
+    }
+
+    func navigationHandlerForHook(navigationHandler: PXHookNavigationHandler) {
+        self.navigationHandler = navigationHandler
     }
 }
 

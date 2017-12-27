@@ -8,9 +8,9 @@
 
 import Foundation
 
-open class PXHookStore: NSObject {
+open class PXCheckoutStore: NSObject {
 
-    static let sharedInstance = PXHookStore()
+    static let sharedInstance = PXCheckoutStore()
     private var data = [String: Any]()
     var paymentData = PaymentData()
     var paymentOptionSelected: PaymentMethodOption?
