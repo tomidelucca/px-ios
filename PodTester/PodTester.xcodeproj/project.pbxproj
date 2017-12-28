@@ -32,6 +32,7 @@
 		FCCDCC341E0B2265005E7095 /* PodTesterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC331E0B2265005E7095 /* PodTesterTests.swift */; };
 		FCCDCC3F1E0B2265005E7095 /* PodTesterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCDCC3E1E0B2265005E7095 /* PodTesterUITests.swift */; };
 		FCF85BA31EAE402E00D45589 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF85BA21EAE402E00D45589 /* Site.swift */; };
+		FF600334A8FC39408B19A24C /* Pods_PodTester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 810E69701FED9224003AC1CF /* Pods_PodTester.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				810E69711FED9232003AC1CF /* MercadoPagoSDK.framework in Frameworks */,
+				FF600334A8FC39408B19A24C /* Pods_PodTester.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

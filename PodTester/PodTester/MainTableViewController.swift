@@ -183,18 +183,6 @@ class MainTableViewController: UITableViewController {
 
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
-<<<<<<< HEAD
-        let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id:self.prefID)
-        pref?._id = "243962506-e9464aff-30dd-43e0-a6fa-37e3a54b884c"
-        let discoupon = DiscountCoupon()
-        discoupon._id = "asd"
-        discoupon.name = "decuentito"
-        discoupon.amount = 1024
-        discoupon.amount_off = "100"
-        discoupon.coupon_amount = "100"
-        
-        let checkout = MercadoPagoCheckout(publicKey: "TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee", accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discoupon , navigationController: self.navigationController!)
-=======
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
         
         // Example DiscountCoupon for Test
@@ -207,14 +195,13 @@ class MainTableViewController: UITableViewController {
         discountObj.currency_id = "ARS"
         discountObj.amount = 5000
         
-        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
+        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
         
         // Get Payment plugin
         let paymentPlugin = PaymentMethodPluginsNavigationManager().getPaymentPlugin()
         
         // Create custom payment method plugin (Bitcoin)
         let bitcoinPaymentPlugin = PXPaymentMethodPlugin(id: "bitcoin_payment", name: "Bitcoin", image: UIImage(named: "bitcoin_payment")!, description: nil, paymentPlugin: paymentPlugin)
->>>>>>> aaa219bc2e40ecdde7c809987ea6b21ff2cc4617
 
         // Get Payment configuration plugin
         let paymentMethodConfigPlugin = PaymentMethodPluginsNavigationManager().getPaymentMethodConfigurationPlugin()
