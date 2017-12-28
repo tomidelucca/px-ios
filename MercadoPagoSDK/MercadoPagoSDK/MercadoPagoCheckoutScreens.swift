@@ -11,7 +11,14 @@ import Foundation
 extension MercadoPagoCheckout {
 
     func showPaymentMethodsScreen() {
+        
         self.viewModel.paymentData.clearCollectedData()
+        
+        // If paymentMethodsPlugins is available, disable discounts.
+        if !viewModel.paymentMethodPlugins.isEmpty && viewModel.paymentData.discount == nil {
+            MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
+        }
+        
         let paymentMethodSelectionStep = PaymentVaultViewController(viewModel: self.viewModel.paymentVaultViewModel(), callback : { [weak self] (paymentOptionSelected: PaymentMethodOption) -> Void  in
 
             guard let strongSelf = self else {
@@ -268,50 +275,5 @@ extension MercadoPagoCheckout {
         }
 
         self.navigationController.pushViewController(entityTypeStep, animated: true)
-    }
-
-    func showHookScreen(hookStep: PXHookStep) {
-
-        if let targetHook = MercadoPagoCheckoutViewModel.flowPreference.getHookForStep(hookStep: hookStep) {
-
-            let vc = MercadoPagoUIViewController()
-            vc.view.backgroundColor = .clear
-
-            vc.callbackCancel = {
-                self.viewModel.wentBackFrom(hook: hookStep)
-            }
-
-            if self.viewModel.copyViewModelAndAssignToHookStore() {
-                targetHook.didReceive?(hookStore: PXHookStore.sharedInstance)
-            }
-
-            if let navTitle = targetHook.titleForNavigationBar?() {
-                vc.title = navTitle
-            }
-            
-            if let navBarColor = targetHook.colorForNavigationBar?() {
-                vc.setNavBarBackgroundColor(color: navBarColor)
-            }
-            
-            vc.shouldShowBackArrow = true
-            if let shouldShowBackArrow = targetHook.shouldShowBackArrow?() {
-                 vc.shouldShowBackArrow = shouldShowBackArrow
-            }
-            
-            if let shouldShowNavigationBar = targetHook.shouldShowNavigationBar?() {
-                vc.shouldHideNavigationBar = !shouldShowNavigationBar
-            }
-            
-            let hookView = targetHook.render()
-            hookView.removeFromSuperview()
-            hookView.frame = vc.view.frame
-            vc.view.addSubview(hookView)
-
-            targetHook.renderDidFinish?()
-
-            self.navigationController.pushViewController(vc, animated: true)
-
-            self.viewModel.continueFrom(hook: hookStep)
-        }
     }
 }

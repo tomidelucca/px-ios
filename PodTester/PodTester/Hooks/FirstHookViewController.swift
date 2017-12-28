@@ -11,7 +11,7 @@ import MercadoPagoSDK
 
 class FirstHookViewController: UIViewController {
 
-    var actionHandler: PXActionHandler?
+    fileprivate var navigationHandler: PXHookNavigationHandler?
     
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet weak var messageLabel: UILabel!
@@ -33,6 +33,13 @@ extension FirstHookViewController: PXHookComponent {
         return self.view
     }
     
+    func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool {
+        if let paymentId = hookStore.getPaymentOptionSelected()?.getId(), paymentId == "bitcoin_payment" {
+            return true
+        }
+        return false
+    }
+    
     func renderDidFinish() {
         messageLabel.text = nil
         passwordTextfield.text = nil
@@ -41,6 +48,10 @@ extension FirstHookViewController: PXHookComponent {
     
     func titleForNavigationBar() -> String? {
         return "Hook 1"
+    }
+
+    func navigationHandlerForHook(navigationHandler: PXHookNavigationHandler) {
+        self.navigationHandler = navigationHandler
     }
 }
 
@@ -58,7 +69,7 @@ extension FirstHookViewController {
     
     func shouldNextAction() {
         if let text = passwordTextfield.text, !text.isEmpty {
-            actionHandler?.next()
+            navigationHandler?.next()
         } else {
             messageLabel.text = "Debes completar este campo."
         }

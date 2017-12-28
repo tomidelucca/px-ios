@@ -69,6 +69,10 @@ open class MercadoPagoCheckout: NSObject {
         self.viewModel.paymentData = paymentData
     }
 
+    public func setPaymentMethodPlugins(plugins: [PXPaymentMethodPlugin]) {
+        self.viewModel.paymentMethodPlugins = plugins
+    }
+
     public func resume() {
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
@@ -140,6 +144,10 @@ open class MercadoPagoCheckout: NSObject {
             self.showHookScreen(hookStep: .AFTER_PAYMENT_METHOD_CONFIG)
         case .SCREEN_HOOK_BEFORE_PAYMENT:
             self.showHookScreen(hookStep: .BEFORE_PAYMENT)
+        case .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT:
+            self.showPaymentMethodPluginPaymentScreen()
+        case .SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG:
+            self.showPaymentMethodPluginConfigScreen()
         default: break
         }
     }

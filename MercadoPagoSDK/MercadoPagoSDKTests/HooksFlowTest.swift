@@ -28,6 +28,7 @@ class HooksFlowTest : BaseTest {
         flowPreference.addHookToFlow(hook: thirdHook)
 
         MercadoPagoCheckout.setFlowPreference(flowPreference)
+
     }
 
     // MARK: Test Account Money with Hooks
@@ -145,7 +146,7 @@ class HooksFlowTest : BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
         mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
-        XCTAssertEqual(PXHookStore.sharedInstance.getPaymentOptionSelected()?.getId(), "credit_card")
+        XCTAssertEqual(PXCheckoutStore.sharedInstance.getPaymentOptionSelected()?.getId(), "credit_card")
 
         // 7. Display Form Tarjeta
         step = mpCheckout.viewModel.nextStep()
@@ -800,7 +801,7 @@ class HooksFlowTest : BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT_METHOD_CONFIG, step)
         mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT_METHOD_CONFIG)
-        XCTAssertEqual(PXHookStore.sharedInstance.getPaymentOptionSelected()?.getId(), "account_money")
+        XCTAssertEqual(PXCheckoutStore.sharedInstance.getPaymentOptionSelected()?.getId(), "account_money")
 
         // 8. Display HOOK 2: After payment method selected
         step = mpCheckout.viewModel.nextStep()
@@ -819,7 +820,7 @@ class HooksFlowTest : BaseTest {
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SCREEN_HOOK_BEFORE_PAYMENT, step)
         mpCheckout.viewModel.continueFrom(hook: .BEFORE_PAYMENT)
-        XCTAssertEqual(PXHookStore.sharedInstance.getPaymentData().getPaymentMethod()?._id, "account_money")
+        XCTAssertEqual(PXCheckoutStore.sharedInstance.getPaymentData().getPaymentMethod()?._id, "account_money")
 
         // 11 . Pagar
         step = mpCheckout.viewModel.nextStep()

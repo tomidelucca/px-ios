@@ -183,6 +183,7 @@ class MainTableViewController: UITableViewController {
 
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
+<<<<<<< HEAD
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id:self.prefID)
         pref?._id = "243962506-e9464aff-30dd-43e0-a6fa-37e3a54b884c"
         let discoupon = DiscountCoupon()
@@ -193,16 +194,44 @@ class MainTableViewController: UITableViewController {
         discoupon.coupon_amount = "100"
         
         let checkout = MercadoPagoCheckout(publicKey: "TEST-c6d9b1f9-71ff-4e05-9327-3c62468a23ee", accessToken: self.accessToken, checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discoupon , navigationController: self.navigationController!)
+=======
+        let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
+        
+        // Example DiscountCoupon for Test
+        var discountObj = DiscountCoupon()
+        discountObj._id = "15098"
+        discountObj.name = "Prueba Plugins"
+        discountObj.percent_off = "0"
+        discountObj.amount_off = "15"
+        discountObj.coupon_amount = "15"
+        discountObj.currency_id = "ARS"
+        discountObj.amount = 5000
+        
+        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
+        
+        // Get Payment plugin
+        let paymentPlugin = PaymentMethodPluginsNavigationManager().getPaymentPlugin()
+        
+        // Create custom payment method plugin (Bitcoin)
+        let bitcoinPaymentPlugin = PXPaymentMethodPlugin(id: "bitcoin_payment", name: "Bitcoin", image: UIImage(named: "bitcoin_payment")!, description: nil, paymentPlugin: paymentPlugin)
+>>>>>>> aaa219bc2e40ecdde7c809987ea6b21ff2cc4617
 
+        // Get Payment configuration plugin
+        let paymentMethodConfigPlugin = PaymentMethodPluginsNavigationManager().getPaymentMethodConfigurationPlugin()
+        
+        // Add Payment configuration (optional) plugin to Bitcoint payment plugin.
+        bitcoinPaymentPlugin.setPaymentMethodConfig(plugin: paymentMethodConfigPlugin)
+        
+        // Create NicoPagos custom payment method plugin
+        let nicoPagosPlugin = PXPaymentMethodPlugin(id: "nico_payment", name: "Nico Pagos", image: UIImage(named: "nico_payment")!, description: nil, paymentPlugin: paymentPlugin)
+        nicoPagosPlugin.setDisplayOrder(order: .BOTTOM)
+        
+        checkout.setPaymentMethodPlugins(plugins: [bitcoinPaymentPlugin, nicoPagosPlugin])
+        
          // Define hooks.
         let firstHook = HooksNavigationManager().getFirstHook()
-        firstHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: firstHook.hookForStep())
-        
         let secondHook = HooksNavigationManager().getSecondHook()
-        secondHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: secondHook.hookForStep())
-        
         let thirdHook = HooksNavigationManager().getThirdHook()
-        thirdHook.actionHandler = PXActionHandler(withCheckout: checkout, targetHook: thirdHook.hookForStep())
 
         if let color = self.color {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: color)
@@ -211,6 +240,7 @@ class MainTableViewController: UITableViewController {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: UIColor.mpDefaultColor())
             MercadoPagoCheckout.setDecorationPreference(decorationPref)
         }
+        
 
         if String.isNullOrEmpty(self.configJSON) {
 

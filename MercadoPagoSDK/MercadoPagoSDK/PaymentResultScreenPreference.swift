@@ -14,10 +14,10 @@ open class PaymentResultScreenPreference: NSObject {
         case pending
         case check
     }
-    
+
     var topCustomComponent: PXComponentizable?
     var bottomCustomComponent: PXComponentizable?
-    
+
     open func setApprovedTopCustomComponent(_ component: PXComponentizable) {
         self.topCustomComponent = component
     }
@@ -73,6 +73,9 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedTitleSetted = false
     private var disableRejectedLabelText = false
     var rejectedIconSubtext = "Algo salió mal… ".localized
+    var rejectedIconName = "MPSDK_payment_result_error"
+    var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
+    var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName: String?
     var rejectedIconName: String?
@@ -442,7 +445,11 @@ open class PaymentResultScreenPreference: NSObject {
         if paymentMethod.isBolbradesco {
             return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
         }
-        return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
+
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            return MercadoPago.getImage(rejectedPaymentMethodPluginIconName, bundle: rejectedIconBundle)
+        }
+        return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
     }
 
     open func getRejectedContetTitle() -> String {

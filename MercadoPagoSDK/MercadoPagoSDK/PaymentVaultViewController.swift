@@ -238,11 +238,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if self.titleSectionReference != nil {
             self.titleSectionReference.title.text = ""
         }
-        return "¿Cómo quiéres pagar?".localized
-    }
-
-    open override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        return "¿Cómo quieres pagar?".localized
     }
 
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -265,7 +261,9 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         if isGroupSection(section: indexPath.section) {
+
             let paymentSearchItemSelected = self.viewModel.getPaymentMethodOption(row: indexPath.row) as! PaymentMethodOption
             collectionView.deselectItem(at: indexPath, animated: true)
             collectionView.allowsSelection = false
@@ -320,9 +318,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     public func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
-
-                                                      for: indexPath) as! PaymentSearchCollectionViewCell
 
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "paymentVaultTitleCollectionViewCell",
@@ -332,8 +327,17 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             titleCell = cell
             return cell
         } else if isGroupSection(section: indexPath.section) {
-            let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row)
-            cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchCollectionCell",
+
+                                                          for: indexPath) as! PaymentSearchCollectionViewCell
+
+            if let paymentMethodToDisplay = self.viewModel.getPaymentMethodOption(row: indexPath.row) {
+                cell.fillCell(drawablePaymentOption: paymentMethodToDisplay)
+            }
+
+            return cell
+
         } else if isCouponSection(section: indexPath.section) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell", for: indexPath)
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
@@ -342,7 +346,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             cell.contentView.addSubview(discountBody)
             return cell
         }
-        return cell
+        return UICollectionViewCell()
 
     }
 
@@ -409,7 +413,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     func heightOfItem(indexItem: Int) -> CGFloat {
-        return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : self.viewModel.getPaymentMethodOption(row: indexItem))
+        if let paymentMethodOptionDrawable = self.viewModel.getPaymentMethodOption(row: indexItem) {
+
+            return PaymentSearchCollectionViewCell.totalHeight(drawablePaymentOption : paymentMethodOptionDrawable)
+        }
+        return 0
     }
 
     public func collectionView(_ collectionView: UICollectionView,
