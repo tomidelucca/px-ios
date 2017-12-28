@@ -448,7 +448,7 @@ open class PaymentResultScreenPreference: NSObject {
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             return MercadoPago.getImage(rejectedPaymentMethodPluginIconName, bundle: rejectedIconBundle)
         }
-        return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+        return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
     }
 
     open func getRejectedContetTitle() -> String {

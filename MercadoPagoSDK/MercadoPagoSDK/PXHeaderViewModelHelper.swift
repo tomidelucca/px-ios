@@ -27,7 +27,7 @@ extension PXResultViewModel {
     open func iconImageHeader() -> UIImage? {
         if isAccepted() {
             if self.paymentResult.isApproved() {
-                return preference.getHeaderApprovedIcon()
+                return preference.getHeaderApprovedIcon() // * **
             }else if self.paymentResult.isWaitingForPayment() {
                 return preference.getHeaderPendingIcon()
             } else {

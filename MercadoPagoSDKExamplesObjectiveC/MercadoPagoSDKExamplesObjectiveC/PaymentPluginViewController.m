@@ -33,7 +33,7 @@
     dispatch_time_t tm = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
     dispatch_after(tm, dispatch_get_main_queue(), ^(void){
         [self.pluginNavigationHandler hideLoading];
-        [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusREJECTED receiptId:@"ABCD"];
+        [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusAPPROVED receiptId:@"ABCD"];
     });
 }
 

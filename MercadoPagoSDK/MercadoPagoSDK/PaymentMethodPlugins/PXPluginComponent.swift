@@ -8,7 +8,7 @@
 
 import Foundation
 @objc
-public protocol PXPluginComponent: PXComponetizable {
+public protocol PXPluginComponent: PXComponentizable {
     func render() -> UIView
     @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
     @objc optional func didReceive(pluginStore: PXCheckoutStore)
