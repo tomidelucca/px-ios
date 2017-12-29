@@ -89,6 +89,7 @@
 "cc_rejected_call_for_authorize_subtitle_credit_card" = "";
 "rejected_insufficient_data_title" = "No fue posible procesar su pago";
 "rejected_by_bank_title" = "No fue posible procesar su pago";
+"cc_rejected_plugin_pm_title" = "%0 no procesó el pago";
 
 
 "rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";

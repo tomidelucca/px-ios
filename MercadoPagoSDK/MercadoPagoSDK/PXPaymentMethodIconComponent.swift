@@ -20,9 +20,9 @@ public class PXPaymentMethodIconComponent: NSObject, PXComponentizable {
 }
 
 class PXPaymentMethodIconProps: NSObject {
-    var paymentMethodIcon: UIImage
+    var paymentMethodIcon: UIImage?
     
-    init(paymentMethodIcon: UIImage) {
+    init(paymentMethodIcon: UIImage?) {
         self.paymentMethodIcon = paymentMethodIcon
     }
 }

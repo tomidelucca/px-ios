@@ -162,6 +162,7 @@
 "cc_rejected_bad_filled_card_number_title"="Qualquer dado de seu %0 é incorreto";
 "cc_rejected_bad_filled_security_code_title"="Qualquer dado de seu %0 é incorreto";
 "cc_rejected_bad_filled_date_title"="Qualquer dado de seu %0 é incorreto";
+"cc_rejected_plugin_pm_title" = "%0 não processou o pagamento";
 
 "rejected_high_risk_subtitle_credit_card"="SSe você quiser pagar com o dinheiro da sua conta, entre em contato com Atenção ao Cliente do Mercado Pago. \n \nOu, se preferir, escolha outro meio de pagamento.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "Não se preocupe! Você pode escolher outros meios de pagamento.";

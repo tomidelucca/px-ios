@@ -252,6 +252,7 @@ struct RejectedStatusDetail {
     static let INSUFFICIENT_DATA = "rejected_insufficient_data"
     static let REJECTED_BY_BANK = "rejected_by_bank"
     static let INVALID_ESC = "invalid_esc"
+    static let REJECTED_PLUGIN_PM = "cc_rejected_plugin_pm"
 }
 
 struct PendingStatusDetail {
