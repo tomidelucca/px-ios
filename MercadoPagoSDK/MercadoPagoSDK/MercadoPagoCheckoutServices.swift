@@ -40,7 +40,7 @@ extension MercadoPagoCheckout {
 
     func getDirectDiscount() {
         self.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getFinalAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
+        self.viewModel.mercadoPagoServicesAdapter.getDirectDiscount(amount: self.viewModel.getAmount(), payerEmail: self.viewModel.checkoutPreference.payer.email, callback: { [weak self] (discount) in
 
             guard let strongSelf = self else {
                 return
@@ -65,7 +65,7 @@ extension MercadoPagoCheckout {
     func getPaymentMethodSearch() {
         self.presentLoading()
 
-        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.getFinalAmount(), excludedPaymentTypesIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodsIds: self.viewModel.getExcludedPaymentMethodsIds(), defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
+        self.viewModel.mercadoPagoServicesAdapter.getPaymentMethodSearch(amount: self.viewModel.getAmount(), excludedPaymentTypesIds: self.viewModel.getExcludedPaymentTypesIds(), excludedPaymentMethodsIds: self.viewModel.getExcludedPaymentMethodsIds(), defaultPaymentMethod: self.viewModel.getDefaultPaymentMethodId(), payer: Payer(), site: MercadoPagoContext.getSite(), callback: { [weak self] (paymentMethodSearch) in
 
             guard let strongSelf = self else {
                 return
@@ -299,7 +299,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getFinalAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
 
             guard let strongSelf = self else {
                 return

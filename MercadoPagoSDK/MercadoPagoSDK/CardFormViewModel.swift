@@ -25,7 +25,6 @@ open class CardFormViewModel: NSObject {
     var customerCard: CardInformation?
     var token: Token?
     var cardToken: CardToken?
-    var amount: Double?
 
     let textMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX")
     let textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
@@ -38,8 +37,7 @@ open class CardFormViewModel: NSObject {
     var promos: [BankDeal]?
     let mercadoPagoServicesAdapter: MercadoPagoServicesAdapter!
 
-    public init(amount: Double, paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
-        self.amount = amount
+    public init(paymentMethods: [PaymentMethod], guessedPaymentMethods: [PaymentMethod]? = nil, customerCard: CardInformation? = nil, token: Token? = nil, mercadoPagoServicesAdapter: MercadoPagoServicesAdapter) {
         self.paymentMethods = paymentMethods
         self.guessedPMS = guessedPaymentMethods
         self.mercadoPagoServicesAdapter = mercadoPagoServicesAdapter

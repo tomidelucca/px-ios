@@ -128,9 +128,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     }
 
-    public init(paymentSettings: PaymentPreference?, amount: Double!, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
+    public init(paymentSettings: PaymentPreference?, token: Token? = nil, cardInformation: CardInformation? = nil, paymentMethods: [PaymentMethod], mercadoPagoServicesAdapter: MercadoPagoServicesAdapter, callback : @escaping ((_ paymentMethod: [PaymentMethod], _ cardToken: CardToken?) -> Void), callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "CardFormViewController", bundle: MercadoPago.getBundle())
-        self.viewModel = CardFormViewModel(amount: amount, paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        self.viewModel = CardFormViewModel(paymentMethods: paymentMethods, customerCard: cardInformation, token: token, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
         self.callbackCancel = callbackCancel
         self.callback = callback
     }
