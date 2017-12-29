@@ -11,12 +11,28 @@ import UIKit
 extension PXResultViewModel {
     
     open func getReceiptComponentProps() -> PXReceiptProps {
-        if self.paymentResult.isApproved() && !self.preference.isPaymentIdDisable() {
+        if hasReceiptComponent() {
             let date = Date()
             return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
         } else {
             return PXReceiptProps()
         }
+    }
+
+    open func hasReceiptComponent() -> Bool {
+        if paymentResult.isApproved() {
+            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+
+            if isPaymentMethodPlugin {
+                let hasReceiptId = !String.isNullOrEmpty(self.paymentResult._id)
+                if hasReceiptId {
+                    return true
+                }
+            } else if !self.preference.isPaymentIdDisable() {
+                return true
+            }
+        }
+        return false
     }
   
     open func getHeaderComponentProps() -> PXHeaderProps {

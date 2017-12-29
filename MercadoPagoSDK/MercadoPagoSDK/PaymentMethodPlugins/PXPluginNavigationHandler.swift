@@ -15,7 +15,7 @@ open class PXPluginNavigationHandler: NSObject {
         self.checkout = withCheckout
     }
 
-    open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, receiptId: String?) {
+    open func didFinishPayment(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, receiptId: String? = nil) {
 
         guard let paymentData = self.checkout?.viewModel.paymentData else {
             return
