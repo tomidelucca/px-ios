@@ -156,7 +156,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let paymentPreference = PaymentPreference()
         paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
         // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
-        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func getPaymentMethodsForSelection() -> [PaymentMethod] {
@@ -242,7 +242,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func resultViewModel() -> PXResultViewModel {
-        return PXResultViewModel(paymentResult: self.paymentResult!, amount: self.getAmount(), instructionsInfo: self.instructionsInfo, paymentResultScreenPreference :self.paymentResultScreenPreference)
+        return PXResultViewModel(paymentResult: self.paymentResult!, amount: self.getAmount(), instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
     }
 
     //SEARCH_PAYMENT_METHODS
@@ -565,11 +565,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func getAmount() -> Double {
-        return self.checkoutPreference.getAmount()
-    }
-
-    internal func getFinalAmount() -> Double {
-        if isDiscountEnable(), let discount = paymentData.discount {
+        if let payerCost = paymentData.getPayerCost() {
+            return payerCost.totalAmount
+        } else if isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         } else {
             return self.checkoutPreference.getAmount()

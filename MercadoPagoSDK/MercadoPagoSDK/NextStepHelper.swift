@@ -316,6 +316,6 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func isDiscountEnable() -> Bool {
-         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable() && self.paymentMethodPlugins.isEmpty
+         return MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable()
     }
 }

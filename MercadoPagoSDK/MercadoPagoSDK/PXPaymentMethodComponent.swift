@@ -27,14 +27,14 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 }
 
 class PXPaymentMethodProps: NSObject {
-    var paymentMethodIcon: UIImage
+    var paymentMethodIcon: UIImage?
     var amountTitle: String
     var amountDetail: String?
     var paymentMethodDescription: String?
     var paymentMethodDetail: String?
     var disclaimer: String?
 
-    init(paymentMethodIcon: UIImage, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?) {
+    init(paymentMethodIcon: UIImage?, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?) {
         self.paymentMethodIcon = paymentMethodIcon
         self.amountTitle = amountTitle
         self.amountDetail = amountDetail

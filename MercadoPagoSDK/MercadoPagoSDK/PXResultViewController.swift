@@ -69,8 +69,7 @@ class PXResultViewController: PXComponentContainerViewController {
         PXLayout.put(view: bodyView, onBottomOf: topCustomView).isActive = true
         PXLayout.centerHorizontally(view: bodyView).isActive = true
         self.view.layoutIfNeeded()
-        bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
-        
+
         //Add Bottom Custom Component
         bottomCustomView = buildBottomCustomView()
         contentView.addSubview(bottomCustomView)
@@ -85,7 +84,8 @@ class PXResultViewController: PXComponentContainerViewController {
                 expandBody()
             }
         }
-        
+        bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
+
         self.view.layoutIfNeeded()
         self.contentView.layoutIfNeeded()
         self.view.layoutIfNeeded()
@@ -100,6 +100,7 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func expandBody() {
         self.view.layoutIfNeeded()
+        self.scrollView.layoutIfNeeded()
         let headerHeight = self.headerView.frame.height
         let footerHeight = self.footerView.frame.height
         let receiptHeight = self.receiptView.frame.height

@@ -23,11 +23,14 @@ class PXPaymentMethodComponentRenderer: NSObject {
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
         let paymentMethodIcon = component.getPaymentMethodIconComponent()
         pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
+        pmBodyView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
         pmBodyView.addSubview(pmBodyView.paymentMethodIcon!)
         PXLayout.centerHorizontally(view: pmBodyView.paymentMethodIcon!).isActive = true
         PXLayout.setHeight(owner: pmBodyView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
         PXLayout.setWidth(owner: pmBodyView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
         PXLayout.pinTop(view: pmBodyView.paymentMethodIcon!, withMargin: PXLayout.L_MARGIN).isActive = true
+        
+        
 
         // Title
         let title = UILabel()

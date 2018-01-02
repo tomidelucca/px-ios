@@ -10,30 +10,32 @@ import UIKit
 
 class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var imageSearch: UIImageView!
     @IBOutlet weak var titleSearch: UILabel!
     @IBOutlet weak var subtitleSearch: UILabel!
-
-    @IBOutlet weak var titleConstraints: NSLayoutConstraint!
-    @IBOutlet weak var subtitleConstraints: NSLayoutConstraint!
+    @IBOutlet weak var paymentOptionImageContainer: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
+    }
+    
+    override func prepareForReuse() {
+        for subview in paymentOptionImageContainer.subviews {
+            subview.removeFromSuperview()
+        }
     }
 
     public func fillCell(image: UIImage?, title: String? = "", subtitle: String? = "") {
+        titleSearch.text = title
+        titleSearch.font = Utils.getFont(size: titleSearch.font.pointSize)
 
-        self.titleSearch.text = title
-        self.titleSearch.font = Utils.getFont(size: titleSearch.font.pointSize)
+        subtitleSearch.text = subtitle
+        subtitleSearch.font = Utils.getFont(size: subtitleSearch.font.pointSize)
+        
+        addPaymentOptionIconComponent(image: image)
 
-        self.subtitleSearch.text = subtitle
-        self.subtitleSearch.font = Utils.getFont(size: subtitleSearch.font.pointSize)
-        self.imageSearch.image = image
-
-        self.backgroundColor = UIColor.px_white()
-        self.titleSearch.textColor = UIColor.black
-        self.layoutIfNeeded()
+        backgroundColor = UIColor.px_white()
+        titleSearch.textColor = UIColor.black
+        layoutIfNeeded()
     }
 
     func getConstraintFor(label: UILabel) -> NSLayoutConstraint {
@@ -49,6 +51,7 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
 
         self.fillCell(image: image, title: drawablePaymentOption.getTitle(), subtitle: drawablePaymentOption.getSubtitle())
     }
+    
     func fillCell(optionText: String) {
         self.fillCell(image: nil, title:optionText, subtitle: nil)
     }
@@ -72,5 +75,24 @@ class PaymentSearchCollectionViewCell: UICollectionViewCell {
         let altura1 = titleLabel.requiredHeight()
         let altura2 = subtitleLabel.requiredHeight()
         return altura1 + altura2 + 112
+    }
+}
+
+extension PaymentSearchCollectionViewCell {
+    
+    fileprivate func addPaymentOptionIconComponent(image: UIImage?) {
+        
+        let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: PXPaymentMethodIconProps(paymentMethodIcon: image)).render()
+        
+        paymentMethodIconComponent.layer.cornerRadius = paymentOptionImageContainer.frame.width/2
+        
+        paymentMethodIconComponent.removeFromSuperview()
+        
+        paymentOptionImageContainer.insertSubview(paymentMethodIconComponent, at: 0)
+        
+        PXLayout.centerHorizontally(view: paymentMethodIconComponent).isActive = true
+        PXLayout.setHeight(owner: paymentMethodIconComponent, height: paymentOptionImageContainer.frame.width).isActive = true
+        PXLayout.setWidth(owner: paymentMethodIconComponent, width: paymentOptionImageContainer.frame.width).isActive = true
+        PXLayout.pinTop(view: paymentMethodIconComponent, withMargin: 0).isActive = true
     }
 }

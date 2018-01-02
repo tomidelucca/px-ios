@@ -72,6 +72,7 @@
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
 "rejected_insufficient_data_title" = "No fue posible procesar su pago";
 "rejected_by_bank_title" = "No fue posible procesar su pago";
+"cc_rejected_plugin_pm_title" = "%0 no procesó el pago";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";

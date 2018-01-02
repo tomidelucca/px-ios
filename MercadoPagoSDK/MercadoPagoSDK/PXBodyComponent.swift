@@ -10,6 +10,11 @@ import UIKit
 import MercadoPagoServices
 
 open class PXBodyComponent: NSObject, PXComponentizable {
+
+    let rejectedStatusDetailsWithBody = [PXPayment.StatusDetails.REJECTED_OTHER_REASON, PXPayment.StatusDetails.REJECTED_BY_BANK, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA, PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT, PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS, PXPayment.StatusDetails.REJECTED_HIGH_RISK, PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE, PXPayment.StatusDetails.REJECTED_CARD_DISABLED, PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT]
+
+    let pendingStatusDetailsWithBody = [PXPayment.StatusDetails.PENDING_CONTINGENCY, PXPayment.StatusDetails.PENDING_REVIEW_MANUAL]
+
     var props: PXBodyProps
 
     init(props: PXBodyProps) {
@@ -29,10 +34,20 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
 
+    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        }
+        return paymentMethodImage
+    }
+
     public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
-        let pm = self.props.paymentResult.paymentData?.paymentMethod
-        let defaultColor = pm?._id == "account_money"
-        let image = MercadoPago.getImageForPaymentMethod(withDescription: (pm?._id)!, defaultColor: defaultColor)
+        let pm = self.props.paymentResult.paymentData!.paymentMethod!
+
+        let image = getPaymentMethodIcon(paymentMethod: pm)
         let currency = MercadoPagoContext.getCurrency()
         var amountTitle = Utils.getAmountFormated(amount: self.props.amount, forCurrency: currency)
         var amountDetail: String?
@@ -44,20 +59,23 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         }
         var issuerName: String?
         var pmDescription: String = ""
-        if (pm?.isCreditCard)! {
+        let paymentMethodName = pm.name ?? ""
+
+        if pm.isCreditCard {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
-                pmDescription = (pm?.name)! + " " + "terminada en ".localized + lastFourDigits
+                pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
-        }else if (pm?.isAccountMoney)! {
-            pmDescription = (pm?.name)!
+        } else if pm.isAccountMoney {
+            pmDescription = paymentMethodName
         }
+
         var disclaimerText: String? = nil
         if let statementDescription = self.props.paymentResult.statementDescription {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image!, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: issuerName, disclaimer: disclaimerText)
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
@@ -76,11 +94,12 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     }
     
     public func isPendingWithBody() -> Bool {
-        return (props.paymentResult.status.elementsEqual(PXPayment.Status.PENDING) || props.paymentResult.status.elementsEqual(PXPayment.Status.IN_PROCESS)) && (props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_REVIEW_MANUAL))
+        let hasPendingStatus = props.paymentResult.status.elementsEqual(PXPayment.Status.PENDING) || props.paymentResult.status.elementsEqual(PXPayment.Status.IN_PROCESS)
+        return hasPendingStatus && pendingStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
     
     public func isRejectedWithBody() -> Bool {
-        return (props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED)) && (props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_OTHER_REASON) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_BY_BANK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_HIGH_RISK) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CARD_DISABLED) || props.paymentResult.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT))
+        return props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED) && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
     
     func getCallback() -> (() -> Void) {

@@ -11,12 +11,28 @@ import UIKit
 extension PXResultViewModel {
     
     open func getReceiptComponentProps() -> PXReceiptProps {
-        if self.paymentResult.isApproved() && !self.preference.isPaymentIdDisable() {
+        if hasReceiptComponent() {
             let date = Date()
             return PXReceiptProps(dateLabelString: Utils.getFormatedStringDate(date), receiptDescriptionString: "Número de operación ".localized + self.paymentResult._id!)
         } else {
             return PXReceiptProps()
         }
+    }
+
+    open func hasReceiptComponent() -> Bool {
+        if paymentResult.isApproved() {
+            let isPaymentMethodPlugin = self.paymentResult.paymentData?.getPaymentMethod()?.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+
+            if isPaymentMethodPlugin {
+                let hasReceiptId = !String.isNullOrEmpty(self.paymentResult._id)
+                if hasReceiptId {
+                    return true
+                }
+            } else if !self.preference.isPaymentIdDisable() {
+                return true
+            }
+        }
+        return false
     }
   
     open func getHeaderComponentProps() -> PXHeaderProps {
@@ -65,11 +81,11 @@ extension PXResultViewModel {
         if isAccepted() {
             if self.paymentResult.isWaitingForPayment() {
                 return "¡Apúrate a pagar!".localized.toAttributedString(attributes:[NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
-            }else {
+            } else {
                 var labelText: String?
                 if self.paymentResult.isApproved() {
                     labelText = preference.getApprovedLabelText()
-                }else {
+                } else {
                     labelText = preference.getPendingLabelText()
                 }
                 guard let text = labelText else {
@@ -80,7 +96,7 @@ extension PXResultViewModel {
         }
         if !preference._showLabelText {
             return nil
-        }else {
+        } else {
             return NSMutableAttributedString(string: "Algo salió mal...".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.LABEL_FONT_SIZE)])
         }
 
@@ -92,7 +108,7 @@ extension PXResultViewModel {
         if isAccepted() {
             if self.paymentResult.isApproved() {
                 return NSMutableAttributedString(string: preference.getApprovedTitle(), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-            }else {
+            } else {
                 return NSMutableAttributedString(string: "Estamos procesando el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             }
         }
@@ -101,36 +117,23 @@ extension PXResultViewModel {
         }
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
+
+
     open func titleForStatusDetail(statusDetail: String, paymentMethod: PaymentMethod?) -> NSAttributedString {
-        guard let paymentMethod = paymentMethod  else {
+        guard let paymentMethod = paymentMethod else {
             return "".toAttributedString()
         }
-        if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
-            if let paymentMethodName = paymentMethod.name {
-                let currency = MercadoPagoContext.getCurrency()
-                let currencySymbol = currency.getCurrencySymbolOrDefault()
-                let thousandSeparator = currency.getThousandsSeparatorOrDefault()
-                let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-                let amountStr = Utils.getAttributedAmount(self.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize:PXHeaderRenderer.TITLE_FONT_SIZE/2)
-                let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
-                var result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-                result.append(amountStr)
-                result.append(NSMutableAttributedString(string: " a Mercado Pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
-                return result
-            }else {
-                return "".toAttributedString()
-            }
 
+        if statusDetail == RejectedStatusDetail.CALL_FOR_AUTH {
+            return getTitleForCallForAuth(paymentMethod)
         }
+
         let title = statusDetail + "_title"
-        if !title.existsLocalized() {
-            return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+
+        if title.existsLocalized() {
+            return getTitleForRejected(paymentMethod, title)
         } else {
-            if let paymentMethodName = paymentMethod.name {
-                return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-            }else {
-                return "".toAttributedString()
-            }
+            return getDefaultRejectedTitle()
         }
     }
 
@@ -162,4 +165,32 @@ extension PXResultViewModel {
         }
     }
 
+    fileprivate func getTitleForCallForAuth(_ paymentMethod: PaymentMethod) -> NSAttributedString {
+        if let paymentMethodName = paymentMethod.name {
+            let currency = MercadoPagoContext.getCurrency()
+            let currencySymbol = currency.getCurrencySymbolOrDefault()
+            let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+            let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+            let amountStr = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize:PXHeaderRenderer.TITLE_FONT_SIZE/2)
+            let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
+            var result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            result.append(amountStr)
+            result.append(NSMutableAttributedString(string: " a Mercado Pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
+            return result
+        } else {
+            return "".toAttributedString()
+        }
+    }
+
+    fileprivate func getTitleForRejected(_ paymentMethod: PaymentMethod, _ title: String) -> NSAttributedString {
+        if let paymentMethodName = paymentMethod.name {
+            return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+        } else {
+            return "".toAttributedString()
+        }
+    }
+
+    fileprivate func getDefaultRejectedTitle() -> NSAttributedString {
+        return NSMutableAttributedString(string: "Uy, no pudimos procesar el pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+    }
 }

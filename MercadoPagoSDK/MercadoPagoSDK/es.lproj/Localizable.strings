@@ -74,6 +74,7 @@
 "cc_rejected_bad_filled_security_code_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_bad_filled_date_title"="Algún dato de tu %0 es incorrecto";
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
+"cc_rejected_plugin_pm_title" = "%0 no procesó el pago";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
 "Algo salió mal… " = "Algo salió mal… ";

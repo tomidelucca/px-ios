@@ -70,6 +70,7 @@
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Algo salió mal… " = "Something went wrong…";
 "El número de identificación es inválido" = "Invalid identification number";
+"cc_rejected_plugin_pm_title" = "%0 did not process the payment";
 
 "rejected_high_risk_subtitle_credit_card"="If you want to pay with the money from your account, contact Mercado Pago customer service.\n\n Or if you prefer, you can choose other payment method.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "Don't worry! You can choose another payment method.";

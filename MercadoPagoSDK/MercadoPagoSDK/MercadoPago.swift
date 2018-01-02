@@ -174,9 +174,9 @@ import UIKit
         var description = withDescription
 
         if defaultColor {
-            description = description+"Azul"
+            description = description + "Azul"
         } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
-            description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
+            description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description + "Azul" : description
         }
 
         guard let itemSelected = dictPM?.value(forKey: description) as? NSDictionary else {
