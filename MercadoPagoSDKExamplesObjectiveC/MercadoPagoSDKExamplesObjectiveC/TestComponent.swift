@@ -15,7 +15,8 @@ import MercadoPagoSDK
         let top = TestComponent()
         let bottom = TestComponent()
         let preference = PaymentResultScreenPreference()
-        preference.setApprovedTopCustomComponent(top)
+        preference.disableApprovedReceipt()
+       // preference.setApprovedTopCustomComponent(top)
         //        preference.setApprovedBottomCustomComponent(bottom)
         return preference
     }

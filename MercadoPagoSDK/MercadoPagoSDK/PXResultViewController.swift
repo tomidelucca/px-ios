@@ -109,7 +109,7 @@ class PXResultViewController: PXComponentContainerViewController {
         let receiptHeight = self.receiptView.frame.height
         let topCustomViewHeight = self.topCustomView.frame.height
         let bottomCustomViewHeight = self.bottomCustomView.frame.height
-        let restHeight = self.scrollView.frame.height - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
+        let restHeight = self.view.frame.height + self.view.frame.origin.y - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 
@@ -130,10 +130,12 @@ class PXResultViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
             ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
         }
+        self.view.layoutIfNeeded()
         renderViews()
     }
 
