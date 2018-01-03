@@ -10,7 +10,6 @@ import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
 
-    let STATUS_BAR_HEIGHT: CGFloat = 20.0
     var scrollView: UIScrollView!
     var contentView = UIView()
     var heightComponent: NSLayoutConstraint!
@@ -29,7 +28,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         self.view.addSubview(self.scrollView)
         PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        PXLayout.pinTop(view: scrollView, to: self.view, withMargin: STATUS_BAR_HEIGHT).isActive = true
+        PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
         PXLayout.pinBottom(view: scrollView, to: self.view).isActive = true
     }
 

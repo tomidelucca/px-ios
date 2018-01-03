@@ -19,6 +19,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var shouldShowBackArrow = true
     var tracked: Bool = false
 
+    let STATUS_BAR_HEIGTH = 20.0
+    let NAV_BAR_HEIGHT = 44.0
+
     var hideNavBarCallback: (() -> Void)?
 
     open var screenName: String { get { return TrackingUtil.NO_NAME_SCREEN } }
@@ -62,7 +65,20 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
+    }
 
+    // TODO: Safe area
+    open func totalContentViewHeigth() -> CGFloat {
+        return UIScreen.main.bounds.height - getReserveSpace()
+    }
+
+    open func getReserveSpace() -> CGFloat {
+        var totalReserveSpace: CGFloat = CGFloat(STATUS_BAR_HEIGTH)
+
+        if !shouldHideNavigationBar {
+            totalReserveSpace += CGFloat(NAV_BAR_HEIGHT)
+        }
+        return totalReserveSpace
     }
 
     func trackInfo() {

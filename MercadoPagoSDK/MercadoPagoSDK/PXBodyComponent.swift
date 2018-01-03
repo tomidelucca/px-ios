@@ -61,12 +61,12 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         var pmDescription: String = ""
         let paymentMethodName = pm.name ?? ""
 
-        if pm.isCreditCard {
+        if pm.isCard {
             issuerName = self.props.paymentResult.paymentData?.issuer?.name
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
-        } else if pm.isAccountMoney {
+        } else {
             pmDescription = paymentMethodName
         }
 

@@ -23,6 +23,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.viewModel.callback = callback
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
+        self.shouldHideNavigationBar = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -109,13 +110,13 @@ class PXResultViewController: PXComponentContainerViewController {
         let receiptHeight = self.receiptView.frame.height
         let topCustomViewHeight = self.topCustomView.frame.height
         let bottomCustomViewHeight = self.bottomCustomView.frame.height
-        let restHeight = self.view.frame.height + self.view.frame.origin.y - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
+        let restHeight = totalContentViewHeigth() - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
 
     func isEmptySpaceOnScreen() -> Bool {
         self.view.layoutIfNeeded()
-        return self.contentView.frame.height < self.scrollView.frame.height
+        return self.contentView.frame.height < totalContentViewHeigth()
     }
     
     func shouldExpandHeader() -> Bool {
@@ -130,11 +131,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if self.navigationController != nil && self.navigationController?.navigationBar != nil {
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
-        }
+        ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
         self.view.layoutIfNeeded()
         renderViews()
     }

@@ -184,7 +184,8 @@ class MainTableViewController: UITableViewController {
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
-        
+
+        MercadoPagoContext.setLanguage(language: Languages._SPANISH)
         // Example DiscountCoupon for Test
         var discountObj = DiscountCoupon()
         discountObj._id = "15098"
