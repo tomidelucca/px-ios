@@ -171,9 +171,9 @@ extension PXResultViewModel {
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
             let decimalSeparator = currency.getDecimalSeparatorOrDefault()
-            let amountStr = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize:PXHeaderRenderer.TITLE_FONT_SIZE/2)
+            let amountStr = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize:PXHeaderRenderer.TITLE_FONT_SIZE/2,smallSymbol: true)
             let string = "Debes autorizar ante %1$s el pago de ".localized.replacingOccurrences(of: "%1$s", with: "\(paymentMethodName)")
-            var result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            let result: NSMutableAttributedString = NSMutableAttributedString(string: string, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             result.append(amountStr)
             result.append(NSMutableAttributedString(string: " a Mercado Pago".localized, attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)]))
             return result

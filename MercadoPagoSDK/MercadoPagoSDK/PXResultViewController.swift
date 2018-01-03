@@ -33,6 +33,9 @@ class PXResultViewController: PXComponentContainerViewController {
         for view in contentView.subviews {
             view.removeFromSuperview()
         }
+        for constraint in contentView.constraints {
+            constraint.isActive = false
+        }
         //Add Header
         headerView = self.buildHeaderView()
         contentView.addSubview(headerView)
