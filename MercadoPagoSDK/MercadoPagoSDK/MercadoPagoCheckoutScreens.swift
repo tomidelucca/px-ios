@@ -154,9 +154,7 @@ extension MercadoPagoCheckout {
             self.viewModel.readyToPay = false
         }
 
-        self.pushViewController(viewController: checkoutVC, animated: true, completion: {
-            self.cleanNavigationStack()
-        })
+        self.pushViewController(viewController: checkoutVC, animated: true)
     }
 
     func showSecurityCodeScreen() {

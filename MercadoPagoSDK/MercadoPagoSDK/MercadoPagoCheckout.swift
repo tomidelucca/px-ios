@@ -160,10 +160,13 @@ open class MercadoPagoCheckout: NSObject {
         self.executeNextStep()
     }
 
-    func cleanNavigationStack () {
-        var  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
+    func cleanCompletedCheckoutsFromNavigationStack() {
+        let  pxResultViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:PXResultViewController.self)}
+        if let lastResultViewController = pxResultViewControllers.last  {
+            let index = self.navigationController.viewControllers.index(of: lastResultViewController)
+            let  validViewControllers = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || self.navigationController.viewControllers.index(of: $0)! > index! || $0 == self.navigationController.viewControllers.last }
+            self.navigationController.viewControllers = validViewControllers
         }
-        self.navigationController.viewControllers = newNavigationStack
     }
 
     private func executePaymentDataCallback() {
@@ -259,8 +262,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
-                                    animated: Bool,
-                                    completion : (() -> Swift.Void)? = nil) {
+                                    animated: Bool) {
 
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
@@ -269,6 +271,7 @@ open class MercadoPagoCheckout: NSObject {
             viewController.callbackCancel = { self.cancel() }
         }
         self.navigationController.pushViewController(viewController, animated: animated)
+        self.cleanCompletedCheckoutsFromNavigationStack()
     }
 
     internal func removeRootLoading() {
