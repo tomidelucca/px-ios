@@ -31,12 +31,12 @@ open class Issuer: NSObject, Cellable {
        return JSONHandler.jsonCoding(toJSON())
     }
 
-    open func toJSON() -> [String:Any] {
-        let id : Any = self._id == nil ? JSONHandler.null : self._id!
-        let name : Any = self.name == nil ? JSONHandler.null : self.name!
-        let obj: [String:Any] = [
+    open func toJSON() -> [String: Any] {
+        let id: Any = self._id == nil ? JSONHandler.null : self._id!
+        let name: Any = self.name == nil ? JSONHandler.null : self.name!
+        let obj: [String: Any] = [
             "id": id,
-            "name": name,
+            "name": name
             ]
         return obj
     }
