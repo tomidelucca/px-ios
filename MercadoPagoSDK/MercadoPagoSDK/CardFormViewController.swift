@@ -107,7 +107,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
 
             if self.navigationController != nil {
-                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+                self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
@@ -554,7 +554,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         if viewModel.shoudShowOnlyOneCardMessage() {
                 setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.mpRedPinkErrorMessage(), isError: true)
-        }else {
+        } else {
             let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
                 self.editingLabel?.text = ""
                 self.textBox.text = ""

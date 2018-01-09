@@ -10,7 +10,7 @@ import UIKit
 
 class TrackingServices: NSObject {
 
-    static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String:String]? = nil, success: @escaping (Any) -> Void,
+    static func request(url: String, params: String?, body: String? = nil, method: String, headers: [String: String]? = nil, success: @escaping (Any) -> Void,
                         failure: ((NSError) -> Void)?) {
         var requesturl = url
         if !String.isNullOrEmpty(params) {
@@ -42,11 +42,11 @@ class TrackingServices: NSObject {
                                                                                     options:JSONSerialization.ReadingOptions.allowFragments)
                                 success(responseJson as Any)
 
-                            }else {
+                            } else {
                                 success("")
                             }
 
-                        }else {
+                        } else {
                             let e: NSError = NSError(domain: "com.mercadopago.sdk", code: NSURLErrorCannotDecodeContentData, userInfo: nil)
                             failure?(e)
                         }

@@ -67,10 +67,10 @@ open class Payer: NSObject {
 		return JSONHandler.jsonCoding(toJSON())
 	}
 
-    open func toJSON() -> [String:Any] {
-        let email : Any = self.email == nil ? JSONHandler.null : (self.email!)
-        var obj: [String:Any] = [
-            "email": email,
+    open func toJSON() -> [String: Any] {
+        let email: Any = self.email == nil ? JSONHandler.null : (self.email!)
+        var obj: [String: Any] = [
+            "email": email
         ]
 
         if self._id != nil {
@@ -104,8 +104,8 @@ open class Payer: NSObject {
 
 public class GroupsPayer: Payer {
 
-    open override func toJSON() -> [String:Any] {
-        var payerObj: [String:Any]  = super.toJSON()
+    open override func toJSON() -> [String: Any] {
+        var payerObj: [String: Any]  = super.toJSON()
         payerObj["access_token"] = MercadoPagoContext.payerAccessToken()
         return payerObj
     }
