@@ -50,6 +50,20 @@ open class PXPluginNavigationHandler: NSObject {
         checkout?.executeNextStep()
     }
 
+    open func nextAndRemoveCurrentScreenFromStack() {
+        guard let currentViewController = self.checkout?.navigationController.viewControllers.last else {
+            checkout?.executeNextStep()
+            return
+        }
+
+        checkout?.executeNextStep()
+
+        let indexOfLastViewController = self.checkout?.navigationController.viewControllers.index(of: currentViewController)
+        if let indexOfLastViewController = indexOfLastViewController {
+            self.checkout?.navigationController.viewControllers.remove(at: indexOfLastViewController)
+        }
+    }
+
     open func cancel() {
         checkout?.cancel()
     }
