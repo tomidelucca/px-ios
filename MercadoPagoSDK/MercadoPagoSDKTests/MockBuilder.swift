@@ -244,6 +244,10 @@ open class MockBuilder: NSObject {
         return plugin
     }
 
+    class func buildPaymentPlugin(shouldSkipPaymentPlugin: Bool = false) -> PXPluginComponent {
+        return MockPaymentPluginViewController(shouldSkip: shouldSkipPaymentPlugin)
+    }
+
     class func buildPaymentMethodSearch(groups: [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, customOptions: [CardInformation]? = nil) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
         paymentMethodSearch.groups = groups
