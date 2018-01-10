@@ -98,8 +98,10 @@
 
     
     // Set default color or theme.
-    [self.mpCheckout setDefaultColor: UIColor.greenColor];
-    //[self.mpCheckout setTheme:themeProtocolInstance];
+    //[self.mpCheckout setDefaultColor: UIColor.greenColor];
+    
+    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
+    [self.mpCheckout setTheme:meliExampleTheme];
     
     //[self setHooks];
     
