@@ -25,11 +25,13 @@ open class MercadoPagoCheckout: NSObject {
     var entro = false
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
-
+        
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
 
         MercadoPagoContext.setPublicKey(publicKey)
         MercadoPagoContext.setPayerAccessToken(accessToken)
+        
+        ThemeManager.shared.initialize()
 
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
         DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
@@ -41,6 +43,14 @@ open class MercadoPagoCheckout: NSObject {
             }
             viewControllerBase = newNavigationStack.last
         }
+    }
+    
+    public func setTheme(_ theme: PXTheme) {
+        ThemeManager.shared.setTheme(theme: theme)
+    }
+    
+    public func setDefaultColor(_ color: UIColor) {
+        ThemeManager.shared.setDefaultColor(color: color)
     }
 
     func initMercadPagoPXTracking() {
@@ -87,6 +97,7 @@ open class MercadoPagoCheckout: NSObject {
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }
+    
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {

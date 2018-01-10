@@ -94,10 +94,15 @@
    // self.pref._id = @"245099733-db5f6239-aa8e-491b-8bd7-7058c7aff45d";
    // self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-f3f035a2-d343-4a6f-bd3b-fc3c3cb72416"
     accessToken:nil
-    checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
+                                                  checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
-   // [self setHooks];
-
+    
+    // Set default color or theme.
+    [self.mpCheckout setDefaultColor: UIColor.greenColor];
+    //[self.mpCheckout setTheme:themeProtocolInstance];
+    
+    //[self setHooks];
+    
     [self setPaymentMethodPlugins];
 
     // Setear PaymentResultScreenPreference
