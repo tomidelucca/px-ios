@@ -28,6 +28,8 @@ open class PXPaymentMethodPlugin: NSObject {
     var paymentPlugin: PXPluginComponent
     var paymentMethodConfigPlugin: PXPluginComponent?
     var displayOrder = DisplayOrder.TOP
+    open var initPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {h in return PXPaymentMethodPlugin.dummyInit(store:h) }
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {_ in return true}
 
     public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPluginComponent) {
         self.id = id
@@ -43,6 +45,11 @@ open class PXPaymentMethodPlugin: NSObject {
 
     open func setDisplayOrder(order: DisplayOrder) {
         self.displayOrder = order
+    }
+
+    static func dummyInit(store: PXCheckoutStore) -> Bool {
+        sleep(5)
+        return false
     }
 }
 
