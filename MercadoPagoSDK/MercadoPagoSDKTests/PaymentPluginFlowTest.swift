@@ -13,7 +13,7 @@ class PaymentPluginFlowTest: BaseTest {
 
     var mpCheckout: MercadoPagoCheckout!
     let flowPreference = FlowPreference()
-    var paymentPlugin: PXPluginComponent!
+    var paymentPlugin: PXPaymentPluginComponent!
     var mockPaymentMethodPlugin1: PXPaymentMethodPlugin!
     var mockPaymentMethodPlugin2: PXPaymentMethodPlugin!
 
@@ -23,8 +23,7 @@ class PaymentPluginFlowTest: BaseTest {
         mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
 
         // Configure payment methods plugin
-        let paymentMethodConfigPlugin = MockPaymentPluginViewController(shouldSkip: false)
-        let paymentMethodConfigPlugin2 = MockPaymentPluginViewController(shouldSkip: true)
+        let paymentMethodConfigPlugin = MockConfigPaymentMethodPlugin(shouldSkip: false)
 
         mockPaymentMethodPlugin1 = MockBuilder.buildPaymentMethodPlugin(id: "plugin1", name: "Plugin 1", configPaymentMethodPlugin: nil)
         mockPaymentMethodPlugin2 = MockBuilder.buildPaymentMethodPlugin(id: "plugin2", name: "Plugin 2", configPaymentMethodPlugin: paymentMethodConfigPlugin)
