@@ -16,6 +16,8 @@ import Foundation
     func titleTintColor() -> UIColor
     func subTitleTintColor() -> UIColor
     
+    func iconsTintColor() -> UIColor?
+    
     func successColor() -> UIColor
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor

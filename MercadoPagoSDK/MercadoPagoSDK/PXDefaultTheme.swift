@@ -55,6 +55,10 @@ extension PXDefaultTheme: PXTheme {
         return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     }
     
+    func iconsTintColor() -> UIColor? {
+        return nil
+    }
+    
     public func successColor() -> UIColor {
         return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     }
