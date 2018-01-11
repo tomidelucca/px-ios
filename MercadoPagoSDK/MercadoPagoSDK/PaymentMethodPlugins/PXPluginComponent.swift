@@ -9,6 +9,7 @@
 import Foundation
 @objc public protocol PXConfigPluginComponent: PXPluginComponent {
     @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
+    @objc optional func shouldShowBackArrow() -> Bool
 }
 
 @objc public protocol PXPaymentPluginComponent: PXPluginComponent {
@@ -22,6 +23,5 @@ import Foundation
     @objc optional func navigationHandlerForPlugin(navigationHandler: PXPluginNavigationHandler)
     @objc optional func titleForNavigationBar() -> String?
     @objc optional func colorForNavigationBar() -> UIColor?
-    @objc optional func shouldShowBackArrow() -> Bool
     @objc optional func shouldShowNavigationBar() -> Bool
 }
