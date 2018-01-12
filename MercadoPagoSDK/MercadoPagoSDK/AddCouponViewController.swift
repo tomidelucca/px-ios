@@ -14,7 +14,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     @IBOutlet weak var textBox: HoshiTextField!
     
     override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
     var errorLabel: MPLabel?
     var viewModel: AddCouponViewModel!
 
@@ -56,11 +56,9 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        let toolbar = PXToolbar(frame: frame)
 
         toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
 
         buttonNext = UIBarButtonItem(title: "Canejar".localized, style: .done, target: self, action: #selector(AddCouponViewController.rightArrowKeyTapped))

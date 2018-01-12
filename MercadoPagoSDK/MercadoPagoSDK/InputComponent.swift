@@ -154,8 +154,8 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
         pickerView.delegate = self
         return pickerView
     }
-    func getToolBar() -> UIToolbar {
-        let toolBar = UIToolbar()
+    func getToolBar() -> PXToolbar {
+        let toolBar = PXToolbar()
         toolBar.barStyle = UIBarStyle.default
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)

@@ -50,7 +50,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     static public var showBankDeals = true
 
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
     var errorLabel: MPLabel?
 
     var navItem: UINavigationItem?
@@ -504,11 +504,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         if self.toolbar == nil {
             let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
 
-            let toolbar = UIToolbar(frame: frame)
+            let toolbar = PXToolbar(frame: frame)
 
             toolbar.barStyle = UIBarStyle.default
-            toolbar.backgroundColor = UIColor.mpLightGray()
-            toolbar.alpha = 1
             toolbar.isUserInteractionEnabled = true
 
             let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
@@ -542,7 +540,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         onlyOnePaymentMethodLabel.text = message
         onlyOnePaymentMethodLabel.font = Utils.getLightFont(size: 14)
         setTextBox(isError: isError, inputAccessoryView: onlyOnePaymentMethodLabel)
-
     }
 
     func showOnlyOneCardMessage() {
@@ -580,7 +577,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func showMessage(_ errorMessage: String) {
-
         errorLabel = MPLabel(frame: toolbar!.frame)
         self.errorLabel!.backgroundColor = UIColor.mpLightGray()
         self.errorLabel!.textColor = UIColor.mpRedErrorMessage()

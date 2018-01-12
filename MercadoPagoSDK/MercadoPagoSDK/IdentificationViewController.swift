@@ -27,7 +27,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     var defaultMask = TextMaskFormater(mask: "XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX.XXX", completeEmptySpaces: false, leftToRight: false)
     var defaultEditTextMask = TextMaskFormater(mask: "XXXXXXXXXXXXXXXXXXXX", completeEmptySpaces: false, leftToRight: false)
 
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
 
     var identificationView: UIView!
     var identificationCard: IdentificationCardView?
@@ -67,7 +67,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         pickerView.showsSelectionIndicator = true
         pickerView.dataSource = self
         pickerView.delegate = self
-        let toolBar = UIToolbar()
+        let toolBar = PXToolbar()
         toolBar.barStyle = UIBarStyle.default
         toolBar.sizeToFit()
 
@@ -236,11 +236,9 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         if self.toolbar == nil {
             let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
 
-            let toolbar = UIToolbar(frame: frame)
+            let toolbar = PXToolbar(frame: frame)
 
             toolbar.barStyle = UIBarStyle.default
-            toolbar.backgroundColor = UIColor.mpLightGray()
-            toolbar.alpha = 1
             toolbar.isUserInteractionEnabled = true
 
             let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))

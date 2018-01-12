@@ -20,7 +20,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var textMaskFormater: TextMaskFormater!
     var cardFront: CardFrontView!
     var ccvLabelEmpty: Bool = true
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
@@ -91,11 +91,9 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        let toolbar = PXToolbar(frame: frame)
 
         toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
 
         let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .done, target: self, action: #selector(self.continueAction))

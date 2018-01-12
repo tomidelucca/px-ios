@@ -23,6 +23,7 @@ extension ThemeManager {
     func initialize() {
         customizeNavigationBar(theme: currentTheme)
         customizeButtons(theme: currentTheme)
+        customizeToolBar(theme: currentTheme)
     }
     
     func setDefaultColor(color: UIColor) {
@@ -74,4 +75,9 @@ extension ThemeManager {
         PXSecondaryButton.appearance().setTitleColor(theme.secondaryButton().tintColor, for: .normal)
     }
 
+    fileprivate func customizeToolBar(theme: PXTheme) {
+        PXToolbar.appearance().tintColor = theme.secondaryButton().tintColor
+        PXToolbar.appearance().backgroundColor = theme.secondaryButton().backgroundColor
+        PXToolbar.appearance().alpha = 1
+    }
 }

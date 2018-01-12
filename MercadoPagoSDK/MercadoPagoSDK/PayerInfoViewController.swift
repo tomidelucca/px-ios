@@ -22,7 +22,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let BEFORE_INPUT_TEXT = "Anterior"
 
     var currentInput: UIView!
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
     var errorLabel: MPLabel?
 
     // View Components
@@ -160,11 +160,9 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         if self.toolbar == nil {
             let frame =  getToolbarFrame()
 
-            let toolbar = UIToolbar(frame: frame)
+            let toolbar = PXToolbar(frame: frame)
 
             toolbar.barStyle = UIBarStyle.default
-            toolbar.backgroundColor = UIColor.mpLightGray()
-            toolbar.alpha = 1
             toolbar.isUserInteractionEnabled = true
 
             let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
