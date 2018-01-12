@@ -25,13 +25,13 @@ open class PXPaymentMethodPlugin: NSObject {
     var name: String
     var _description: String?
     var image: UIImage
-    var paymentPlugin: PXPluginComponent
-    var paymentMethodConfigPlugin: PXPluginComponent?
+    var paymentPlugin: PXPaymentPluginComponent
+    var paymentMethodConfigPlugin: PXConfigPluginComponent?
     var displayOrder = DisplayOrder.TOP
-    open var initPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {h in return PXPaymentMethodPlugin.dummyInit(store:h) }
-    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {_ in return true}
+    open var initPaymentMethodPlugin: ( PXCheckoutStore, @escaping (_ success: Bool)->()) -> () = {store,callback in callback(true)}
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {h in return true}
 
-    public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPluginComponent) {
+    public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
         self.id = id
         self.name = name
         self.image = image
@@ -39,7 +39,7 @@ open class PXPaymentMethodPlugin: NSObject {
         self.paymentPlugin = paymentPlugin
     }
 
-    open func setPaymentMethodConfig(plugin: PXPluginComponent) {
+    open func setPaymentMethodConfig(plugin: PXConfigPluginComponent) {
         self.paymentMethodConfigPlugin = plugin
     }
 
@@ -47,10 +47,6 @@ open class PXPaymentMethodPlugin: NSObject {
         self.displayOrder = order
     }
 
-    static func dummyInit(store: PXCheckoutStore) -> Bool {
-        sleep(5)
-        return false
-    }
 }
 
 // MARK: PXPaymentMethodPlugin as PaymentOptionDrawable/PaymentMethodOption
