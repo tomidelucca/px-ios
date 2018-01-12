@@ -12,6 +12,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
+    @IBOutlet weak var closeButton: UIButton!
+    
     override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
     var toolbar: UIToolbar?
     var errorLabel: MPLabel?
@@ -42,7 +44,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.backgroundView.backgroundColor = UIColor.primaryColor()
+        self.backgroundView.backgroundColor = ThemeManager.shared.getMainColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         setupInputAccessoryView()
         textBox.delegate = self

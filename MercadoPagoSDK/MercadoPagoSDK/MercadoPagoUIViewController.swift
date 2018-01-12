@@ -198,7 +198,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             backButton.image = MercadoPago.getImage("back")
             backButton.style = .plain
             backButton.target = self
-            backButton.tintColor = navBarTextColor
+            backButton.tintColor = ThemeManager.shared.getTheme().navigationBar().tintColor
             backButton.action = #selector(MercadoPagoUIViewController.executeBack)
             self.navigationItem.leftBarButtonItem = backButton
         }
@@ -295,7 +295,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             }
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: ThemeManager.shared.getTheme().navigationBar().tintColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
         }
 

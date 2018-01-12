@@ -13,10 +13,8 @@ import Foundation
     func primaryButton() -> PXThemeProperty
     func secondaryButton() -> PXThemeProperty
     
-    func titleTintColor() -> UIColor
-    func subTitleTintColor() -> UIColor
-    
-    func iconsTintColor() -> UIColor?
+    func labelTintColor() -> UIColor
+    func boldLabelTintColor() -> UIColor
     
     func successColor() -> UIColor
     func warningColor() -> UIColor

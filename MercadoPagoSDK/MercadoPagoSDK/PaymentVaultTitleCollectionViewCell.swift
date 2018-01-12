@@ -10,23 +10,20 @@ import UIKit
 
 class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScrollable {
 
-    internal func updateTitleFontSize(toSize: CGFloat) {
-        self.title.font = Utils.getFont(size: toSize)
-    }
-
-    @IBOutlet weak var title: MPLabel!
+    @IBOutlet weak var title: PXNavigationHeaderLabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.title.font = Utils.getFont(size: title.font.pointSize)
-        self.backgroundColor = UIColor.primaryColor()
+        self.backgroundColor = ThemeManager.shared.getMainColor()
         fillCell()
     }
 
     func fillCell() {
         title.text = "¿Cómo quieres pagar?".localized
-        title.textColor = UIColor.systemFontColor()
-
     }
-
+    
+    internal func updateTitleFontSize(toSize: CGFloat) {
+        self.title.font = Utils.getFont(size: toSize)
+    }
 }

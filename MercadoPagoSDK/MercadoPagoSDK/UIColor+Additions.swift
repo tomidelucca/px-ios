@@ -129,7 +129,7 @@ extension UIColor {
         return UIColorFromRGB(0xf04449)
     }
     class public func primaryColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
+        return ThemeManager.shared.getMainColor()
     }
     class public func mpGreenishTeal() -> UIColor {
         return UIColorFromRGB(0x3bc280)

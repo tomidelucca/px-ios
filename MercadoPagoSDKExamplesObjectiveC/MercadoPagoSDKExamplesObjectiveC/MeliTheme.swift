@@ -23,16 +23,12 @@ import MercadoPagoSDK
         return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 1))
     }
     
-    public func titleTintColor() -> UIColor {
+    public func labelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+    }
+    
+    public func boldLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-    }
-    
-    public func subTitleTintColor() -> UIColor {
-        return #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 1)
-    }
-    
-    public func iconsTintColor() -> UIColor? {
-        return #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 0.9519210188)
     }
     
     public func successColor() -> UIColor {

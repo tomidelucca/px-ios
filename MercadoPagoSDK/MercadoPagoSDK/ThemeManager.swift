@@ -21,7 +21,7 @@ class ThemeManager {
 extension ThemeManager {
     
     func initialize() {
-        customizeButtons(theme: currentTheme)
+        customizeNavigationBar(theme: currentTheme)
     }
     
     func setDefaultColor(color: UIColor) {
@@ -34,12 +34,32 @@ extension ThemeManager {
             self.currentTheme = currentTheme
         }
     }
+    
+    func getTheme() -> PXTheme {
+        return currentTheme
+    }
+    
+    func getMainColor() -> UIColor {
+        if let theme = currentTheme as? PXDefaultTheme {
+            if let mainColor = theme.primaryColor {
+                return mainColor
+            }
+        }
+        return currentTheme.navigationBar().backgroundColor
+    }
+    
+    func getTintColorForIcons() -> UIColor? {
+        if let currentTheme = ThemeManager.shared.getTheme() as? PXDefaultTheme, let colorForIcons = currentTheme.primaryColor {
+            return colorForIcons
+        }
+        return nil
+    }
 }
 
 //MARK: - UI Theme customization
 extension ThemeManager {
-    fileprivate func customizeButtons(theme: PXTheme) {
-        UIButton.appearance().backgroundColor = theme.primaryButton().backgroundColor
-        UIButton.appearance().tintColor = theme.primaryButton().tintColor
+    fileprivate func customizeNavigationBar(theme: PXTheme) {
+        UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
+        PXNavigationHeaderLabel.appearance().textColor = theme.navigationBar().tintColor
     }
 }

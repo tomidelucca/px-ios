@@ -98,14 +98,14 @@
 
     
     // Set default color or theme.
-    //[self.mpCheckout setDefaultColor: UIColor.greenColor];
     
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     [self.mpCheckout setTheme:meliExampleTheme];
+    //[self.mpCheckout setDefaultColor:UIColor.redColor];
     
     //[self setHooks];
     
-    [self setPaymentMethodPlugins];
+    //[self setPaymentMethodPlugins];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];

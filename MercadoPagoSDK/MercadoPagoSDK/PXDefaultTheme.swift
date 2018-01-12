@@ -9,7 +9,7 @@
 import Foundation
 
 class PXDefaultTheme: NSObject {
-    fileprivate var primaryColor: UIColor?
+    var primaryColor: UIColor?
     
     override init() {
         super.init()
@@ -47,16 +47,12 @@ extension PXDefaultTheme: PXTheme {
         return themeProperty
     }
     
-    public func titleTintColor() -> UIColor {
-        return #colorLiteral(red: 0.1978237927, green: 0.2149228156, blue: 0.2378431559, alpha: 1)
-    }
-    
-    public func subTitleTintColor() -> UIColor {
+    public func labelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     }
     
-    func iconsTintColor() -> UIColor? {
-        return nil
+    public func boldLabelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.1978237927, green: 0.2149228156, blue: 0.2378431559, alpha: 1)
     }
     
     public func successColor() -> UIColor {
