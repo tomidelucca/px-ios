@@ -39,7 +39,6 @@
 
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
 
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.opaque = YES;
 
