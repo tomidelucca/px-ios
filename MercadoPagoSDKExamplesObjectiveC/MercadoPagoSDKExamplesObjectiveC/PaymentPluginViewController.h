@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 @import MercadoPagoSDK;
 
-@interface PaymentPluginViewController : UIViewController <PXPluginComponent>
+@interface PaymentPluginViewController : UIViewController <PXPaymentPluginComponent>
 @end

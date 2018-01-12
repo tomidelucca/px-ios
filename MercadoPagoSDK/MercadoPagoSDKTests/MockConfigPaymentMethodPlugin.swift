@@ -1,5 +1,5 @@
 //
-//  MockPaymentPluginViewController.swift
+//  MockConfigPaymentMethodPlugin.swift
 //  MercadoPagoSDKTests
 //
 //  Created by Eden Torres on 12/15/17.
@@ -9,10 +9,13 @@
 import Foundation
 import UIKit
 
-open class MockPaymentPluginViewController: UIViewController {
+open class MockConfigPaymentMethodPlugin: UIViewController {
 
-    init() {
+    var shouldSkip = false
+
+    init(shouldSkip: Bool = false) {
         super.init(nibName: nil, bundle: nil)
+        self.shouldSkip = shouldSkip
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -21,9 +24,14 @@ open class MockPaymentPluginViewController: UIViewController {
 }
 
 // MARK: - Plugin implementation delegates.
-extension MockPaymentPluginViewController: PXPaymentPluginComponent {
+extension MockConfigPaymentMethodPlugin: PXConfigPluginComponent {
 
     public func render() -> UIView {
         return self.view
     }
+
+    public func shouldSkip(pluginStore: PXCheckoutStore) -> Bool {
+        return shouldSkip
+    }
 }
+
