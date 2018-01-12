@@ -48,20 +48,21 @@ open class LoadingOverlay {
         return self.screenContainer
     }
 
-    open func showOverlay(_ view: UIView, backgroundColor: UIColor, indicatorColor: UIColor = UIColor.px_white()) -> UIView {
+    open func showOverlay(_ view: UIView, backgroundColor: UIColor, indicatorColor: UIColor = UIColor.white) -> UIView {
         let loadingOverlay: UIView?
         if MercadoPagoContext.shouldDisplayDefaultLoading() {
             loadingOverlay = self.getDefaultLoadingOverlay(view, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
             view.addSubview(loadingOverlay!)
             view.bringSubview(toFront: loadingOverlay!)
         } else {
-            self.loadingContainer = MPSDKLoadingView(loading: UIColor.primaryColor())!
+            self.loadingContainer = MPSDKLoadingView(loading: ThemeManager.shared.getTheme().loadingComponent().tintColor)!
             let loadingImage = MercadoPago.getImage("mpui-loading_default")
-     //       self.loadingContainer.spinner = UIImageView(image: loadingImage)
-
+            //self.loadingContainer.spinner = UIImageView(image: loadingImage)
+            
             view.addSubview(self.loadingContainer)
             view.bringSubview(toFront: self.loadingContainer)
             loadingOverlay = self.loadingContainer
+            loadingOverlay?.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
         }
         return loadingOverlay!
     }

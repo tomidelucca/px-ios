@@ -54,7 +54,7 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 
         if self.callback == nil {
             self.callback = {
-                self.dismiss(animated: true, completion: {})
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }

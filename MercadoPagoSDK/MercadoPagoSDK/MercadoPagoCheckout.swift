@@ -263,8 +263,8 @@ open class MercadoPagoCheckout: NSObject {
 
     internal func createCurrentLoading() {
         let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = MercadoPagoCheckoutViewModel.decorationPreference.baseColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: MercadoPagoCheckoutViewModel.decorationPreference.baseColor)
+        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
+        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
 
         vcLoading.view.addSubview(loadingInstance)
         loadingInstance.bringSubview(toFront: vcLoading.view)

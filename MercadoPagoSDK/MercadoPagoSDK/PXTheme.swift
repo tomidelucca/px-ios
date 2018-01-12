@@ -20,5 +20,7 @@ import Foundation
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor
     
+    func loadingComponent() -> PXThemeProperty
+    
     func statusBarStyle() -> UIStatusBarStyle
 }

@@ -43,6 +43,10 @@ import MercadoPagoSDK
         return #colorLiteral(red: 0.9764705882, green: 0.3764705882, blue: 0.3803921569, alpha: 1)
     }
     
+    public func loadingComponent() -> PXThemeProperty {
+        return  PXThemeProperty(backgroundColor:#colorLiteral(red: 0.9960784314, green: 0.862745098, blue: 0.07450980392, alpha: 0.85), tintColor: #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 1))
+    }
+    
     public func statusBarStyle() -> UIStatusBarStyle {
         return .default
     }

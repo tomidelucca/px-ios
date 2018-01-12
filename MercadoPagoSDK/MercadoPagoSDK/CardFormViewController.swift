@@ -22,6 +22,9 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
+    let NAVIGATION_BAR_COLOR = ThemeManager.shared.getTheme().navigationBar().backgroundColor
+    let NAVIGATION_BAR_TEXT_COLOR = ThemeManager.shared.getTheme().navigationBar().tintColor
+    
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var cardBackground: UIView!
     var cardView: UIView!
@@ -97,27 +100,26 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         super.init(coder: aDecoder)
     }
     override func loadMPStyles() {
-
+        
         if self.navigationController != nil {
 
             //Navigation bar colors
             var titleDict: NSDictionary = [:]
             //Navigation bar colors
             let fontChosed = Utils.getFont(size: 18)
-            titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: fontChosed]
+            titleDict = [NSForegroundColorAttributeName: NAVIGATION_BAR_TEXT_COLOR, NSFontAttributeName: fontChosed]
 
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
+                self.navigationController?.navigationBar.barTintColor = NAVIGATION_BAR_COLOR
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
-                self.cardBackground.backgroundColor = UIColor.primaryColor()
+                self.cardBackground.backgroundColor = NAVIGATION_BAR_COLOR
 
                 if viewModel.showBankDeals() {
                     let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                    promocionesButton.tintColor = UIColor.systemFontColor()
                     promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
                     self.navigationItem.rightBarButtonItem = promocionesButton
                 }
@@ -169,7 +171,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         if self.navigationController != nil {
             if viewModel.showBankDeals() {
                 let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                promocionesButton.tintColor = UIColor.systemFontColor()
+                promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
                 promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
                 self.navigationItem.rightBarButtonItem = promocionesButton
             }
@@ -299,7 +301,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         guard let promos = self.viewModel.promos else {
             return
         }
-        self.navigationController?.present(UINavigationController(rootViewController: self.startPromosStep(promos : promos)), animated: true, completion: {})
+        self.navigationController?.pushViewController(self.startPromosStep(promos : promos), animated: true)
     }
 
     func startPromosStep(promos: [BankDeal],

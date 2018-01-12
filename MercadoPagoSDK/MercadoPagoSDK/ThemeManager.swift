@@ -60,6 +60,8 @@ extension ThemeManager {
 extension ThemeManager {
     fileprivate func customizeNavigationBar(theme: PXTheme) {
         UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
+        UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).backgroundColor = theme.navigationBar().backgroundColor
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
         PXNavigationHeaderLabel.appearance().textColor = theme.navigationBar().tintColor
     }
 }
