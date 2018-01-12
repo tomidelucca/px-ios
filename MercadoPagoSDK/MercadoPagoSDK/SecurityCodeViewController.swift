@@ -47,7 +47,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         loadMPStyles()
         self.securityCodeTextField.placeholder = "security_code".localized
         setupInputAccessoryView()
-        self.view.backgroundColor = UIColor.primaryColor()
+        self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
         self.view.addSubview(cardFront)
         self.securityCodeLabel = cardFront.cardCVV
@@ -167,13 +167,13 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     open func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.text = errorMessage
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        securityCodeTextField.borderInactiveColor = UIColor.red
-        securityCodeTextField.borderActiveColor = UIColor.red
+        securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         securityCodeTextField.inputAccessoryView = errorLabel
         securityCodeTextField.setNeedsDisplay()
         securityCodeTextField.resignFirstResponder()
@@ -181,8 +181,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
     open func hideErrorMessage() {
-        self.securityCodeTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.securityCodeTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.securityCodeTextField.inputAccessoryView = self.toolbar
         self.securityCodeTextField.setNeedsDisplay()
         self.securityCodeTextField.resignFirstResponder()

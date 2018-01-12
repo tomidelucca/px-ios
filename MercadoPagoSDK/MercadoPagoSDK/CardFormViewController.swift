@@ -203,6 +203,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         self.getPromos()
+        textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         textBox.autocorrectionType = UITextAutocorrectionType.no
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
@@ -223,7 +225,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         self.cardView.frame = rectBackground
         cardFront?.frame = rect
         cardBack?.frame = rect
-        self.cardView.backgroundColor = UIColor.mpLightGray()
+        self.cardView.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
         self.cardView.layer.cornerRadius = 11
         self.cardView.layer.masksToBounds = true
         self.cardBackground.addSubview(self.cardView)
@@ -544,7 +546,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     func showOnlyOneCardMessage() {
         if viewModel.shoudShowOnlyOneCardMessage() {
-            setOnlyOneCardMessage(message: viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.px_grayBaseText(), isError: false)
+            setOnlyOneCardMessage(message: viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.UIColorFromRGB(0x333333), isError: false)
         }
     }
 
@@ -552,7 +554,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
        let paymentMethods = self.viewModel.paymentMethods
 
         if viewModel.shoudShowOnlyOneCardMessage() {
-                setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.mpRedPinkErrorMessage(), isError: true)
+                setOnlyOneCardMessage(message: self.viewModel.getOnlyOneCardAvailableMessage(), color: UIColor.UIColorFromRGB(0xF04449), isError: true)
         } else {
             let cardNotAvailableError = CardNotAvailableErrorView(frame: (toolbar?.frame)!, paymentMethods: paymentMethods, showAvaibleCardsCallback: {
                 self.editingLabel?.text = ""
@@ -567,8 +569,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     func setTextBox(isError: Bool, inputAccessoryView: UIView) {
         if isError {
-            textBox.borderInactiveColor = UIColor.red
-            textBox.borderActiveColor = UIColor.red
+            textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+            textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         }
         textBox.inputAccessoryView = inputAccessoryView
         textBox.setNeedsDisplay()
@@ -578,8 +580,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     func showMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
@@ -587,8 +589,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func hideMessage() {
-        self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         setupToolbarButtons()
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()

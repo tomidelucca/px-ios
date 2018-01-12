@@ -37,7 +37,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     init(viewModel: PayerInfoViewModel, callback: @escaping ((_ payer: Payer) -> Void)) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        self.view.backgroundColor = UIColor.primaryColor()
+        self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.callback = callback
         NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
@@ -119,8 +119,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     func showToolbarError(message: String) {
-        errorLabel!.backgroundColor = UIColor.mpLightGray()
-        errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         errorLabel!.text = message
         errorLabel!.textAlignment = .center
         errorLabel!.font = errorLabel!.font.withSize(12)

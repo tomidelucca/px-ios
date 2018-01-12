@@ -11,7 +11,7 @@ import UIKit
 open class IdentificationViewController: MercadoPagoUIViewController, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var tipoDeDocumentoLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: HoshiTextField!
     var numberDocLabel: UILabel!
     @IBOutlet weak var numberTextField: HoshiTextField!
 
@@ -47,23 +47,23 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         var titleDict: NSDictionary = [:]
         if self.navigationController != nil {
             let font = Utils.getFont(size: 18)
-            titleDict = [NSForegroundColorAttributeName: UIColor.systemFontColor(), NSFontAttributeName: font]
+            titleDict = [NSForegroundColorAttributeName: ThemeManager.shared.getTheme().navigationBar().tintColor, NSFontAttributeName: font]
 
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
                 self.navigationController!.interactivePopGestureRecognizer?.delegate = self
-                self.navigationController?.navigationBar.tintColor = UIColor.px_white()
-                self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
+                self.navigationController?.navigationBar.tintColor = UIColor.white
+                self.navigationController?.navigationBar.barTintColor = ThemeManager.shared.getMainColor()
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false
                 displayBackButton()
             }
         }
         let pickerView = UIPickerView(frame: CGRect(x: 0, y: 150, width: view.frame.width, height: 216))
-        pickerView.backgroundColor = UIColor.px_white()
+        pickerView.backgroundColor = UIColor.white
         pickerView.showsSelectionIndicator = true
-        pickerView.backgroundColor = UIColor.px_white()
+        pickerView.backgroundColor = UIColor.white
         pickerView.showsSelectionIndicator = true
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -161,8 +161,12 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         self.tipoDeDocumentoLabel.text =  "DOCUMENTO DEL TITULAR DE LA TARJETA".localized
         self.tipoDeDocumentoLabel.font = Utils.getIdentificationFont(size: 10)
         self.numberTextField.placeholder = "Número".localized
+        self.numberTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textField.placeholder = "Tipo".localized
-        self.view.backgroundColor = UIColor.primaryColor()
+        self.textField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.view.backgroundColor = ThemeManager.shared.getMainColor()
         numberTextField.autocorrectionType = UITextAutocorrectionType.no
         numberTextField.keyboardType = UIKeyboardType.numberPad
         numberTextField.addTarget(self, action: #selector(IdentificationViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
@@ -285,13 +289,13 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
         }
 
         errorLabel = MPLabel(frame: toolbar.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        numberTextField.borderInactiveColor = UIColor.red
-        numberTextField.borderActiveColor = UIColor.red
+        numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        numberTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         numberTextField.inputAccessoryView = errorLabel
         numberTextField.setNeedsDisplay()
         numberTextField.resignFirstResponder()
@@ -300,8 +304,8 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
     }
 
     func hideErrorMessage() {
-        self.numberTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.numberTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.numberTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.numberTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.numberTextField.inputAccessoryView = self.toolbar
         self.numberTextField.setNeedsDisplay()
         self.numberTextField.resignFirstResponder()

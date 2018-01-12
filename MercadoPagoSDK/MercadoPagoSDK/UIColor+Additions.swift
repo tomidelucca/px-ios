@@ -82,10 +82,6 @@ extension UIColor {
         return UIColorFromRGB(0x999999)
     }
 
-    class public func px_grayLines() -> UIColor {
-        return UIColorFromRGB(0xCCCCCC)
-    }
-
     class public func grayTableSeparator() -> UIColor {
         return UIColorFromRGB(0xEFEFF4)
     }

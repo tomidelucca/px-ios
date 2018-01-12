@@ -156,8 +156,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func hideErrorMessage() {
-        self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textBox.inputAccessoryView = self.toolbar
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()

@@ -222,7 +222,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func registerAllCells() {
-
         let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
 
