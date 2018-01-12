@@ -12,7 +12,6 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
-    @IBOutlet weak var closeButton: UIButton!
     
     override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
     var toolbar: UIToolbar?
@@ -40,7 +39,6 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         textBox.placeholder = "Código de descuento".localized
-
     }
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +88,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func rightArrowKeyTapped() {
+        
         guard let couponCode = textBox.text else {
             return
         }
@@ -105,20 +104,17 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
             }
         }) { (errorMessage) in
             self.hideLoading()
-             self.showErrorMessage(errorMessage)
+            self.showErrorMessage(errorMessage)
         }
     }
 
     @IBAction func exit() {
         self.textBox.resignFirstResponder()
         guard let callbackCancel = self.callbackCancel else {
-            self.dismiss(animated: false, completion: nil)
+            self.navigationController?.popViewController(animated: false)
             return
         }
-        self.dismiss(animated: false) {
-            callbackCancel()
-        }
-
+        callbackCancel()
     }
 
     func executeCallback() {
@@ -132,18 +128,19 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     func callbackAndExit() {
         self.textBox.resignFirstResponder()
         self.executeCallback()
-        self.dismiss(animated: false, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
     func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        // TODO: Implement Meli Toast component. (Meli UI library).
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        textBox.borderInactiveColor = UIColor.red
-        textBox.borderActiveColor = UIColor.red
+        textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         textBox.inputAccessoryView = errorLabel
         textBox.setNeedsDisplay()
         textBox.resignFirstResponder()

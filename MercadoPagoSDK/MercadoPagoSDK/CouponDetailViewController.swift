@@ -45,9 +45,6 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
         self.couponView.layer.masksToBounds = true
         self.view.addSubview(self.couponView)
     }
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 
     @IBAction func exit() {
         guard let callbackCancel = self.callbackCancel else {
@@ -57,7 +54,6 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
         self.dismiss(animated: false) {
             callbackCancel()
         }
-
     }
 
 }
@@ -67,5 +63,4 @@ class CouponDetailViewModel: NSObject {
     init(coupon: DiscountCoupon) {
         self.coupon = coupon
     }
-
 }

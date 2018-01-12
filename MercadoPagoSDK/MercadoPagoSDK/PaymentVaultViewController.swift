@@ -124,8 +124,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.collectionSearch.backgroundColor = UIColor.px_white()
-
+       self.collectionSearch.backgroundColor = UIColor.white
     }
 
     func updateCoupon(_ notification: Notification) {
@@ -281,7 +280,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                         updateMercadoPagoCheckout(coupon)
                     }
                 })
-                self.present(step, animated: false, completion: {})
+                self.navigationController?.pushViewController(step, animated: true)
             }
         }
     }
