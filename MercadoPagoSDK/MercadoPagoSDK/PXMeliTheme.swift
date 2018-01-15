@@ -62,6 +62,10 @@ import Foundation
         return #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1)
     }
     
+    public func detailedBackgroundColor() -> UIColor {
+        return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
     public func statusBarStyle() -> UIStatusBarStyle {
         return .default
     }
