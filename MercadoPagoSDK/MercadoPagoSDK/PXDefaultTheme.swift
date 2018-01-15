@@ -48,11 +48,15 @@ extension PXDefaultTheme: PXTheme {
     }
     
     public func labelTintColor() -> UIColor {
-        return #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        return #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+    }
+    
+    public func lightLabelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
     }
     
     public func boldLabelTintColor() -> UIColor {
-        return #colorLiteral(red: 0.1978237927, green: 0.2149228156, blue: 0.2378431559, alpha: 1)
+        return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
     
     public func successColor() -> UIColor {
@@ -73,6 +77,10 @@ extension PXDefaultTheme: PXTheme {
             themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: customColor)
         }
         return themeProperty
+    }
+    
+    public func modalComponent() -> PXThemeProperty {
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.95), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
     
     public func statusBarStyle() -> UIStatusBarStyle {

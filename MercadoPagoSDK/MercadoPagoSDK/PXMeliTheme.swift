@@ -26,6 +26,10 @@ import Foundation
         return #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
     }
     
+    public func lightLabelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+    }
+    
     public func boldLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
@@ -44,6 +48,10 @@ import Foundation
     
     public func loadingComponent() -> PXThemeProperty {
         return  PXThemeProperty(backgroundColor:#colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1), tintColor: #colorLiteral(red: 0.2039215686, green: 0.5137254902, blue: 0.9803921569, alpha: 1))
+    }
+    
+    public func modalComponent() -> PXThemeProperty {
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1), tintColor: #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
     }
     
     public func statusBarStyle() -> UIStatusBarStyle {

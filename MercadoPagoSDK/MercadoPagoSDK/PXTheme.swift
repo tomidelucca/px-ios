@@ -14,6 +14,7 @@ import Foundation
     func secondaryButton() -> PXThemeProperty
     
     func labelTintColor() -> UIColor
+    func lightLabelTintColor() -> UIColor
     func boldLabelTintColor() -> UIColor
     
     func successColor() -> UIColor
@@ -21,6 +22,7 @@ import Foundation
     func rejectedColor() -> UIColor
     
     func loadingComponent() -> PXThemeProperty
+    func modalComponent() -> PXThemeProperty
     
     func statusBarStyle() -> UIStatusBarStyle
 }
