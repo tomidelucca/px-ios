@@ -19,7 +19,20 @@ class ViewUtils {
     }
 
     class func addStatusBar(_ view: UIView, color: UIColor) {
-        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 20))
+        
+        var heigth: CGFloat = 20
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+                case 2436:
+                    heigth = 42
+                    break
+                default:
+                    heigth = 20
+            }
+        }
+        
+        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: heigth))
         addStatusBar.backgroundColor = color
         view.addSubview(addStatusBar)
     }

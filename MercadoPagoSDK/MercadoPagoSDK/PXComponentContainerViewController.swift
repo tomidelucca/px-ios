@@ -14,12 +14,13 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var contentView = UIView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
-
+    
     init() {
         self.scrollView = UIScrollView()
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
+        
         PXLayout.pinTop(view: contentView, to: scrollView).isActive = true
         PXLayout.centerHorizontally(view: contentView, to: scrollView).isActive = true
         PXLayout.matchWidth(ofView: contentView, toView: scrollView).isActive = true
@@ -28,8 +29,8 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         self.view.addSubview(self.scrollView)
         PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
         PXLayout.pinBottom(view: scrollView, to: self.view).isActive = true
+        PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
     }
 
     required init?(coder aDecoder: NSCoder) {
