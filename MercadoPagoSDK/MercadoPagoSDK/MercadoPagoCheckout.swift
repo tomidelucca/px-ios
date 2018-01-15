@@ -34,8 +34,11 @@ open class MercadoPagoCheckout: NSObject {
         ThemeManager.shared.initialize()
 
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
-        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
+        
+        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+        
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
+        
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
@@ -196,7 +199,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func finish() {
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
         removeRootLoading()
 
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
@@ -218,7 +221,8 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func cancel() {
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
+       
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
 
         if let callback = viewModel.callbackCancel {
             callback()

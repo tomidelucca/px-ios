@@ -97,10 +97,6 @@ extension UIColor {
         return UIColorFromRGB(0x2BA2EC)
     }
 
-    class public func systemFontColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getFontColor()
-    }
-
     class public func px_redCongrats() -> UIColor {
         return UIColorFromRGB(0xFF6E6E)
     }

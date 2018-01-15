@@ -8,34 +8,8 @@
 
 import Foundation
 
-extension DecorationPreference {
-    @nonobjc internal static var navigationControllerMemento: NavigationControllerMemento?
-
-    static func saveNavBarStyleFor(navigationController: UINavigationController) {
-        DecorationPreference.navigationControllerMemento = NavigationControllerMemento(navigationController: navigationController)
-    }
-
-    static func applyAppNavBarDecorationPreferencesTo(navigationController: UINavigationController) {
-        guard let navControllerMemento = DecorationPreference.navigationControllerMemento else {
-            return
-        }
-        navigationController.navigationBar.barTintColor = navControllerMemento.navBarTintColor
-        navigationController.navigationBar.titleTextAttributes = navControllerMemento.navTitleTextAttributes
-        navigationController.navigationBar.tintColor = navControllerMemento.navTintColor
-        navigationController.navigationBar.titleTextAttributes =  navControllerMemento.navTitleTextAttributes
-        navigationController.navigationBar.isTranslucent = navControllerMemento.navIsTranslucent
-        navigationController.navigationBar.backgroundColor = navControllerMemento.navBackgroundColor
-        navigationController.navigationBar.restoreBottomLine()
-        navigationController.navigationBar.setBackgroundImage(navControllerMemento.navBackgroundImage, for: UIBarMetrics.default)
-        navigationController.navigationBar.shadowImage = navControllerMemento.navShadowImage
-        if let _ = navControllerMemento.navBarStyle {
-            navigationController.navigationBar.barStyle = navControllerMemento.navBarStyle!
-        }
-
-    }
-}
-
 internal class NavigationControllerMemento {
+    
     var navBarTintColor: UIColor?
     var navTintColor: UIColor?
     var navTitleTextAttributes: [String: Any]?

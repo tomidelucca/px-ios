@@ -147,7 +147,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         guard let navController = self.navigationController else {
             return
         }
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: navController)
+       
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: navController)
     }
 
     internal func invokeCallbackCancelShowingNavBar() {

@@ -51,8 +51,8 @@
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
-    // Setear DecorationPreference
-    [self setDecorationPreference];
+    // Set default color.
+    [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
 
     // Setear ServicePreference
     //[self setServicePreference];
@@ -326,11 +326,6 @@
     [PXSDKSettings enableBetaServices];
 
     [MercadoPagoCheckout setServicePreference:servicePreference];
-}
-
--(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"]];
-    [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 
 -(IBAction)startCardManager:(id)sender  {

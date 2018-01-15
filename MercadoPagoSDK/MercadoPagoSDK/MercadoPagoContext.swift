@@ -29,7 +29,7 @@ open class MercadoPagoContext: NSObject {
 
     var currency: Currency!
 
-    // TODO: Deprecated in Q2. - 2018
+    // TODO: Deprecate/Delete in Q2. - 2018
     var display_default_loading = true
 
     var language: String = NSLocale.preferredLanguages[0]

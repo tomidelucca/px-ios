@@ -32,7 +32,7 @@ class ViewUtils {
         view.addSubview(imageView)
     }
 
-    class func loadImageFromUrl(_ url: String, inView: UIView, loadingBackgroundColor: UIColor = UIColor.primaryColor(), loadingIndicatorColor: UIColor = UIColor.systemFontColor()) {
+    class func loadImageFromUrl(_ url: String, inView: UIView, loadingBackgroundColor: UIColor = UIColor.primaryColor(), loadingIndicatorColor: UIColor = UIColor.white) {
   //      LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             let url = URL(string: url)

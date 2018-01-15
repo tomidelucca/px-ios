@@ -14,6 +14,12 @@ class ThemeManager {
             initialize()
         }
     }
+    
+    fileprivate var fontName: String = ".SFUIDisplay-Regular"
+    fileprivate var fontLightName: String = ".SFUIDisplay-Light"
+    
+    var navigationControllerMemento: NavigationControllerMemento?
+    
     static let shared = ThemeManager()
 }
 
@@ -39,6 +45,14 @@ extension ThemeManager {
     
     func getTheme() -> PXTheme {
         return currentTheme
+    }
+    
+    func getFontName() -> String {
+        return fontName
+    }
+    
+    func getLightFontName() -> String {
+        return fontLightName
     }
     
     func getMainColor() -> UIColor {
