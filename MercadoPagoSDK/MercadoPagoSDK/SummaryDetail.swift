@@ -11,8 +11,8 @@ import UIKit
 class SummaryDetail: NSObject {
     var title: String
     var details: [SummaryItemDetail]
-    var titleColor = UIColor.px_grayDark()
-    var amountColor = UIColor.px_grayDark()
+    var titleColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+    var amountColor = ThemeManager.shared.getTheme().boldLabelTintColor()
     func getTotalAmount() -> Double {
         var sum: Double = 0
         for detail in details {

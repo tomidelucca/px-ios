@@ -28,7 +28,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
+        self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
         self.noRateLabel.text = ""
         self.noRateLabel.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
