@@ -24,5 +24,7 @@ import Foundation
     func loadingComponent() -> PXThemeProperty
     func modalComponent() -> PXThemeProperty
     
+    func highlightBackgroundColor() -> UIColor
+    
     func statusBarStyle() -> UIStatusBarStyle
 }

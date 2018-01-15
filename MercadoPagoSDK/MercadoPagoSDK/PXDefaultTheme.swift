@@ -83,6 +83,10 @@ extension PXDefaultTheme: PXTheme {
         return PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.95), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
     
+    public func highlightBackgroundColor() -> UIColor {
+        return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
     public func statusBarStyle() -> UIStatusBarStyle {
         return .lightContent
     }
