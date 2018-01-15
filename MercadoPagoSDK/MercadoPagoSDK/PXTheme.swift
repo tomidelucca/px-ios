@@ -20,6 +20,7 @@ import Foundation
     func successColor() -> UIColor
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor
+    func discountColor() -> UIColor
     
     func loadingComponent() -> PXThemeProperty
     func modalComponent() -> PXThemeProperty

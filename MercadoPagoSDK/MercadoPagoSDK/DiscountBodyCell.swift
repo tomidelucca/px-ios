@@ -10,7 +10,7 @@ import UIKit
 
 class DiscountBodyCell: UIView {
     
-    let SUCCESS_COLOR = ThemeManager.shared.getTheme().successColor()
+    let DISCOUNT_COLOR = ThemeManager.shared.getTheme().discountColor()
     let LABEL_COLOR = ThemeManager.shared.getTheme().labelTintColor()
     let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
     let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
@@ -102,7 +102,7 @@ class DiscountBodyCell: UIView {
         let space = NSMutableAttributedString(string: " ".localized, attributes: normalAttributes)
         let oldAmount = Utils.getAttributedAmount( amount, currency: currency, color : LABEL_COLOR, fontSize: 16, baselineOffset:4)
         oldAmount.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, oldAmount.length))
-        let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color : SUCCESS_COLOR, fontSize: 16, baselineOffset:4)
+        let newAmount = Utils.getAttributedAmount( coupon.newAmount(), currency: currency, color : DISCOUNT_COLOR, fontSize: 16, baselineOffset:4)
         result.append(total)
         result.append(oldAmount)
         result.append(space)
@@ -111,7 +111,7 @@ class DiscountBodyCell: UIView {
         let picFlag = UIImageView()
         picFlag.image = MercadoPago.getImage("couponArrowFlag")
         picFlag.image = picFlag.image?.withRenderingMode(.alwaysTemplate)
-        picFlag.tintColor = SUCCESS_COLOR
+        picFlag.tintColor = DISCOUNT_COLOR
         let rightArrow = UIImageView()
 
         if !self.hideArrow {
@@ -125,12 +125,12 @@ class DiscountBodyCell: UIView {
         } else {
            detailLabel.text = "Descuento".localized
         }
-        detailLabel.textColor = SUCCESS_COLOR
+        detailLabel.textColor = DISCOUNT_COLOR
         detailLabel.font = Utils.getFont(size: 16)
         let discountAmountLabel = MPLabel()
         discountAmountLabel.textAlignment = .center
         discountAmountLabel.text = coupon.getDiscountDescription()
-        discountAmountLabel.backgroundColor = SUCCESS_COLOR
+        discountAmountLabel.backgroundColor = DISCOUNT_COLOR
         discountAmountLabel.textColor = PRIMARY_BUTTON_TEXT_COLOR
         discountAmountLabel.font = Utils.getFont(size: 12)
 

@@ -22,7 +22,7 @@ class CardNotAvailableErrorView: UIView {
 
     init(frame: CGRect, paymentMethods: [PaymentMethod], showAvaibleCardsCallback: (() -> Void)?) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.mpRedPinkErrorMessage()
+        self.backgroundColor = ThemeManager.shared.getTheme().rejectedColor()
         self.paymentMethods = paymentMethods
         self.showAvaibleCardsCallback = showAvaibleCardsCallback
         errorMessage = "No puedes pagar con esta tarjeta".localized
