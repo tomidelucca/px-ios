@@ -230,7 +230,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.checkoutTable.separatorStyle = .none
         
         checkoutTable.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
-        checkoutTable.bounces = false
+        checkoutTable.bounces = true
     }
 
     private func getMainTitleCell(indexPath: IndexPath) -> UITableViewCell {
