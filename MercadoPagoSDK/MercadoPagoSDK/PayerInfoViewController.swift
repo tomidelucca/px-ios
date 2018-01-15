@@ -165,12 +165,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
             let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
-
-            let font = Utils.getFont(size: 14)
-            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)

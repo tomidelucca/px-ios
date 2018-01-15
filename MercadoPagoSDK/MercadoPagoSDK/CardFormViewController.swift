@@ -120,7 +120,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
                 if viewModel.showBankDeals() {
                     let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
-                    promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
+                    promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
                     self.navigationItem.rightBarButtonItem = promocionesButton
                 }
 
@@ -172,7 +172,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             if viewModel.showBankDeals() {
                 let promocionesButton: UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = NAVIGATION_BAR_TEXT_COLOR
-                promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)
                 self.navigationItem.rightBarButtonItem = promocionesButton
             }
         }
@@ -511,12 +510,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(CardFormViewController.rightArrowKeyTapped))
             let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(CardFormViewController.leftArrowKeyTapped))
-
-            let font = Utils.getFont(size: 14)
-            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)

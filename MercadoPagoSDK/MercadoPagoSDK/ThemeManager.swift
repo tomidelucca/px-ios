@@ -70,7 +70,6 @@ extension ThemeManager {
     fileprivate func customizeButtons(theme: PXTheme) {
         PXPrimaryButton.appearance().backgroundColor = theme.primaryButton().backgroundColor
         PXPrimaryButton.appearance().setTitleColor(theme.primaryButton().tintColor, for: .normal)
-        
         PXSecondaryButton.appearance().backgroundColor = theme.secondaryButton().backgroundColor
         PXSecondaryButton.appearance().setTitleColor(theme.secondaryButton().tintColor, for: .normal)
     }

@@ -98,7 +98,7 @@
     
     // Set default color or theme.
     
-    MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
+    PXMeliTheme *meliExampleTheme = [[PXMeliTheme alloc] init];
     [self.mpCheckout setTheme:meliExampleTheme];
     //[self.mpCheckout setDefaultColor:UIColor.redColor];
     
