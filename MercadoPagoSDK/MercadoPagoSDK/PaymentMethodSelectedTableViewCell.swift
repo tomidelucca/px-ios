@@ -18,7 +18,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var paymentMethodDescription: MPLabel!
 
-    @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
+    @IBOutlet weak var selectOtherPaymentMethodButton: PXSecondaryButton!
 
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
@@ -109,7 +109,6 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
             self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
             self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
-            self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
         } else {
             self.selectOtherPaymentMethodButton.isHidden = true
         }

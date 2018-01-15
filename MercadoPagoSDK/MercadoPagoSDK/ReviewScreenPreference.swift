@@ -16,7 +16,7 @@ open class ReviewScreenPreference: NSObject {
 	private var shouldDisplayChangeMethodOption = true
     var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
     var disclaimer: String?
-    var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
+    var disclaimerColor: UIColor = ThemeManager.shared.getTheme().successColor()
     var showSubitle: Bool = false
     let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
                                                             SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]

@@ -33,10 +33,9 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
     @IBOutlet weak var iconCash: UIImageView!
     @IBOutlet weak var paymentMethodDescription: MPLabel!
-
     @IBOutlet weak var acreditationTimeLabel: MPLabel!
 
-    @IBOutlet weak var changePaymentButton: MPButton!
+    @IBOutlet weak var changePaymentButton: PXSecondaryButton!
 
     @IBOutlet weak var accreditationTimeIcon: UIImageView!
 
@@ -50,6 +49,10 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
 
         self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage()
+    }
+    
+    override func prepareForReuse() {
+        self.changePaymentButton.backgroundColor = .clear
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -111,9 +114,9 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.paymentMethodDescription.attributedText = attributedTitle
 
 		if reviewScreenPreference.isChangeMethodOptionEnabled() {
-   			self.changePaymentButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
 			self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
 			self.changePaymentButton.setTitle("Cambiar medio de pago".localized, for: .normal)
+            self.changePaymentButton.backgroundColor = .clear
 		} else {
 			self.changePaymentButton.isHidden = true
 		}

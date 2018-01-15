@@ -12,11 +12,10 @@ class ConfirmPaymentTableViewCell: UITableViewCell {
 
     public static let ROW_HEIGHT = CGFloat(110)
 
-    @IBOutlet weak var confirmPaymentButton: MPButton!
+    @IBOutlet weak var confirmPaymentButton: PXPrimaryButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.confirmPaymentButton.backgroundColor = UIColor.primaryColor()
         self.confirmPaymentButton.layer.cornerRadius = 4
         self.confirmPaymentButton.titleLabel?.font = Utils.getFont(size: 16)
         self.confirmPaymentButton.setTitle("Confirmar".localized, for: .normal)
@@ -25,5 +24,4 @@ class ConfirmPaymentTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
 }

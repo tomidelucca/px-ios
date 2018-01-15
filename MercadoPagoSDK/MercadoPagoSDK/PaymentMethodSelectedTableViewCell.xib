@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,14 +20,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mediosIconoTarjeta" translatesAutoresizingMaskIntoConstraints="NO" id="7IM-bU-WwN">
-                        <rect key="frame" x="223" y="58" width="50" height="50"/>
+                        <rect key="frame" x="223" y="61" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="b5X-lv-7eD"/>
                             <constraint firstAttribute="width" constant="50" id="tAi-sB-Rl4"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6B-2G-k5B">
-                        <rect key="frame" x="33" y="128" width="438" height="28"/>
+                        <rect key="frame" x="45" y="131" width="406" height="28"/>
                         <attributedString key="attributedText">
                             <fragment content="6x $109">
                                 <attributes>
@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDj-L7-Gmd">
-                        <rect key="frame" x="154" y="210" width="188" height="21"/>
+                        <rect key="frame" x="154" y="213" width="188" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Visa terminada en: 3456">
                                 <attributes>
@@ -51,7 +51,7 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqy-D5-bms">
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yqy-D5-bms" customClass="PXSecondaryButton" customModule="MercadoPagoSDK" customModuleProvider="target">
                         <rect key="frame" x="191" y="349" width="114" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <state key="normal" title="Cambiar Pago">
@@ -59,7 +59,7 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zf5-PV-8ZU">
-                        <rect key="frame" x="208" y="156" width="81" height="21"/>
+                        <rect key="frame" x="208" y="159" width="81" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Sin interés">
                                 <attributes>
@@ -71,7 +71,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tw3-3X-flB">
-                        <rect key="frame" x="221" y="180" width="55" height="20"/>
+                        <rect key="frame" x="221" y="183" width="55" height="20"/>
                         <attributedString key="attributedText">
                             <fragment content="($ 654)">
                                 <attributes>
@@ -90,7 +90,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CFT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9H-cX-bxB">
-                        <rect key="frame" x="226" y="251" width="44" height="29"/>
+                        <rect key="frame" x="226" y="254" width="44" height="29"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -133,6 +133,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="mediosIconoTarjeta" width="80" height="80"/>
+        <image name="mediosIconoTarjeta" width="52" height="52"/>
     </resources>
 </document>
