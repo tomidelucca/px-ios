@@ -107,6 +107,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
     func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
+            self.selectOtherPaymentMethodButton.backgroundColor = .clear
             self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
             self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         } else {
