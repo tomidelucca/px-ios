@@ -36,6 +36,6 @@ open class PXHookNavigationHandler: NSObject {
     }
 
     open func hideLoading() {
-        checkout?.dismissLoading()
+        checkout?.dismissAllLoadings()
     }
 }

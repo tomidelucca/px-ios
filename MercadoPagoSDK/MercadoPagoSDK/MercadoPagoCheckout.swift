@@ -66,6 +66,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
+        self.presentLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
     }
@@ -250,17 +251,17 @@ open class MercadoPagoCheckout: NSObject {
             DispatchQueue.main.asyncAfter(deadline: when) {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
-                    self.navigationController.present(self.currentLoadingView!, animated: animated, completion: completion)
+                    self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+                    self.navigationController.present(self.currentLoadingView!, animated: true, completion: completion)
                 }
             }
         }
     }
 
-    func dismissLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
-        self.countLoadings -= 1
-        if self.currentLoadingView != nil && countLoadings == 0 {
-            self.currentLoadingView!.dismiss(animated: animated, completion: completion)
-            self.currentLoadingView?.view.alpha = 0
+    func dismissAllLoadings(animated: Bool = true){
+        self.countLoadings = 0
+        if self.currentLoadingView != nil {
+            self.currentLoadingView!.dismiss(animated: true)
             self.currentLoadingView = nil
         }
     }
@@ -287,6 +288,7 @@ open class MercadoPagoCheckout: NSObject {
         }
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
+        self.dismissAllLoadings()
     }
 
     internal func removeRootLoading() {
