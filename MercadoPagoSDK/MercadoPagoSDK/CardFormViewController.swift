@@ -24,7 +24,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     let NAVIGATION_BAR_COLOR = ThemeManager.shared.getTheme().navigationBar().backgroundColor
     let NAVIGATION_BAR_TEXT_COLOR = ThemeManager.shared.getTheme().navigationBar().tintColor
-    
+
     @IBOutlet weak var keyboardHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var cardBackground: UIView!
     var cardView: UIView!
@@ -100,7 +100,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         super.init(coder: aDecoder)
     }
     override func loadMPStyles() {
-        
+
         if self.navigationController != nil {
 
             //Navigation bar colors

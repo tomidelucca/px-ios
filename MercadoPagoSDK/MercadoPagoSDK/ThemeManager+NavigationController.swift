@@ -9,17 +9,17 @@
 import Foundation
 
 extension ThemeManager {
-    
+
     func saveNavBarStyleFor(navigationController: UINavigationController) {
         self.navigationControllerMemento = NavigationControllerMemento(navigationController: navigationController)
     }
-    
+
     func applyAppNavBarStyle(navigationController: UINavigationController) {
-        
+
         guard let navControllerMemento = self.navigationControllerMemento else {
             return
         }
-        
+
         navigationController.navigationBar.barTintColor = navControllerMemento.navBarTintColor
         navigationController.navigationBar.titleTextAttributes = navControllerMemento.navTitleTextAttributes
         navigationController.navigationBar.tintColor = navControllerMemento.navTintColor

@@ -93,4 +93,3 @@ class PXResultViewModelTest: BaseTest {
         XCTAssertEqual(scrollView?.frame.height, resultViewController.contentView.frame.height)
     }
 }
-

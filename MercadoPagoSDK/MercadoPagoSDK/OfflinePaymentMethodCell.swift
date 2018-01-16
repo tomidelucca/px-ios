@@ -48,7 +48,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage()
         self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
     }
-    
+
     override func prepareForReuse() {
         self.changePaymentButton.backgroundColor = .clear
     }
@@ -117,7 +117,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
 		} else {
 			self.changePaymentButton.isHidden = true
 		}
-        
+
         self.changePaymentButton.backgroundColor = .clear
 
         let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: paymentMethodOption, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)

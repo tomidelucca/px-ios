@@ -144,10 +144,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
         self.navigationController!.navigationBar.shadowImage = nil
         self.extendedLayoutIncludesOpaqueBars = true
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
         self.collectionSearch.allowsSelection = true
         self.getCustomerCards()
@@ -158,8 +154,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
         }
-         self.hideLoading()
-
+        self.hideLoading()
     }
 
     open override func willMove(toParentViewController parent: UIViewController?) {

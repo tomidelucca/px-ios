@@ -22,7 +22,7 @@ class PaymentVaultTitleCollectionViewCell: UICollectionViewCell, TitleCellScroll
     func fillCell() {
         title.text = "¿Cómo quieres pagar?".localized
     }
-    
+
     internal func updateTitleFontSize(toSize: CGFloat) {
         self.title.font = Utils.getFont(size: toSize)
     }
