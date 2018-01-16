@@ -12,21 +12,21 @@ import Foundation
     func navigationBar() -> PXThemeProperty
     func primaryButton() -> PXThemeProperty
     func secondaryButton() -> PXThemeProperty
-    
+
     func labelTintColor() -> UIColor
     func lightLabelTintColor() -> UIColor
     func boldLabelTintColor() -> UIColor
-    
+
     func successColor() -> UIColor
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor
     func discountColor() -> UIColor
-    
+
     func loadingComponent() -> PXThemeProperty
     func modalComponent() -> PXThemeProperty
-    
+
     func highlightBackgroundColor() -> UIColor
     func detailedBackgroundColor() -> UIColor
-    
+
     func statusBarStyle() -> UIStatusBarStyle
 }

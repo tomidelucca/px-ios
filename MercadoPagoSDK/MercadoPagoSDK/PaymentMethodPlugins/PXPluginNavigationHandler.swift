@@ -59,6 +59,6 @@ open class PXPluginNavigationHandler: NSObject {
     }
 
     open func hideLoading() {
-        checkout?.dismissAllLoadings()
+        checkout?.dismissLoading()
     }
 }

@@ -172,7 +172,7 @@ open class MercadoPagoContext: NSObject {
     open class func setAccountMoneyAvailable(accountMoneyAvailable: Bool) {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
-    
+
     @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
     open class func setDisplayDefaultLoading(flag: Bool) {
         print("setDisplayDefaultLoading - Do not use. Deprecated in Q2 - 2018")

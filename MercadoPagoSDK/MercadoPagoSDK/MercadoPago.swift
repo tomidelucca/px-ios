@@ -169,9 +169,9 @@ import UIKit
     }
 
     open class func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
-        
+
         //TODO: Chequear toda esta logica con todo el equipo. (Android and max)
-        
+
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
@@ -203,9 +203,9 @@ import UIKit
     }
 
     open class func getOfflineReviewAndConfirmImage(_ paymentMethod: PaymentMethod? = nil) -> UIImage {
-        
+
         return UIImage()
-        
+
         guard let paymentMethod = paymentMethod else {
             return UIImage()
             //return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
