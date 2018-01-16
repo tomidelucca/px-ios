@@ -31,9 +31,7 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     func renderViews() {
-        
-        self.scrollView.bounces = false
-        
+
         for view in contentView.subviews {
             view.removeFromSuperview()
         }

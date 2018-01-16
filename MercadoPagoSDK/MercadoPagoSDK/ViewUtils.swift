@@ -20,19 +20,17 @@ class ViewUtils {
 
     class func addStatusBar(_ view: UIView, color: UIColor) {
         
-        var heigth: CGFloat = 20
+        var defaultHeight: CGFloat = 20
         
-        if UIDevice().userInterfaceIdiom == .phone {
-            switch UIScreen.main.nativeBounds.height {
-                case 2436:
-                    heigth = 42
-                    break
-                default:
-                    heigth = 20
+        // iPhoneX or any device with safe area inset > 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topSafeAreaPadding = window?.safeAreaInsets.top
+            if let topSafeAreaDeltaValue = topSafeAreaPadding, topSafeAreaDeltaValue > 0 {
+                defaultHeight = topSafeAreaDeltaValue
             }
         }
-        
-        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: heigth))
+        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: defaultHeight))
         addStatusBar.backgroundColor = color
         view.addSubview(addStatusBar)
     }

@@ -27,10 +27,22 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         contentView.backgroundColor = .pxWhite
         super.init(nibName: nil, bundle: nil)
         self.view.addSubview(self.scrollView)
+
         PXLayout.pinLeft(view: scrollView, to: self.view).isActive = true
         PXLayout.pinRight(view: scrollView, to: self.view).isActive = true
-        PXLayout.pinBottom(view: scrollView, to: self.view).isActive = true
         PXLayout.pinTop(view: scrollView, to: self.view).isActive = true
+        
+        var bottomDeltaMargin: CGFloat = 0
+        // iPhoneX or any device with safe area inset > 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let bottomSafeAreaInset = window?.safeAreaInsets.bottom
+            if let bottomDeltaInset = bottomSafeAreaInset, bottomDeltaInset > 0 {
+                bottomDeltaMargin = bottomDeltaInset
+            }
+        }
+        PXLayout.pinBottom(view: scrollView, to: self.view, withMargin: -bottomDeltaMargin).isActive = true
+        scrollView.bounces = false
     }
 
     required init?(coder aDecoder: NSCoder) {
