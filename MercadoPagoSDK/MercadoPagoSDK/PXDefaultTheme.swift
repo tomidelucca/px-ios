@@ -10,19 +10,19 @@ import Foundation
 
 class PXDefaultTheme: NSObject {
     var primaryColor: UIColor?
-    
+
     override init() {
         super.init()
     }
-    
-    public init(withPrimaryColor:UIColor) {
+
+    public init(withPrimaryColor: UIColor) {
         self.primaryColor = withPrimaryColor
     }
 }
 
-//MARK: - Theme styles.
+// MARK: - Theme styles.
 extension PXDefaultTheme: PXTheme {
-    
+
     public func navigationBar() -> PXThemeProperty {
         var themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0.5411764706, blue: 0.8392156863, alpha: 1), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         if let customColor = primaryColor {
@@ -30,7 +30,7 @@ extension PXDefaultTheme: PXTheme {
         }
         return themeProperty
     }
-    
+
     public func primaryButton() -> PXThemeProperty {
         var themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0.5411764706, blue: 0.8392156863, alpha: 1), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         if let customColor = primaryColor {
@@ -38,7 +38,7 @@ extension PXDefaultTheme: PXTheme {
         }
         return themeProperty
     }
-    
+
     public func secondaryButton() -> PXThemeProperty {
         var themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor:#colorLiteral(red: 0, green: 0.5411764706, blue: 0.8392156863, alpha: 1))
         if let customColor = primaryColor {
@@ -46,35 +46,35 @@ extension PXDefaultTheme: PXTheme {
         }
         return themeProperty
     }
-    
+
     public func labelTintColor() -> UIColor {
         return #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
     }
-    
+
     public func lightLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
     }
-    
+
     public func boldLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
-    
+
     public func successColor() -> UIColor {
         return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     }
-    
+
     public func warningColor() -> UIColor {
         return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
     }
-    
+
     public func rejectedColor() -> UIColor {
         return #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
     }
-    
+
     func discountColor() -> UIColor {
         return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     }
-    
+
     public func loadingComponent() -> PXThemeProperty {
         var themeProperty = PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: #colorLiteral(red: 0, green: 0.5411764706, blue: 0.8392156863, alpha: 1))
         if let customColor = primaryColor {
@@ -82,19 +82,19 @@ extension PXDefaultTheme: PXTheme {
         }
         return themeProperty
     }
-    
+
     public func modalComponent() -> PXThemeProperty {
         return PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.95), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     }
-    
+
     public func highlightBackgroundColor() -> UIColor {
         return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
-    
+
     public func detailedBackgroundColor() -> UIColor {
         return #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
     }
-    
+
     public func statusBarStyle() -> UIStatusBarStyle {
         return .lightContent
     }

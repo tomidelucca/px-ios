@@ -147,7 +147,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         guard let navController = self.navigationController else {
             return
         }
-       
+
         ThemeManager.shared.applyAppNavBarStyle(navigationController: navController)
     }
 

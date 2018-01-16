@@ -12,7 +12,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
-    
+
     override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
@@ -62,8 +62,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         toolbar.isUserInteractionEnabled = true
 
         buttonNext = UIBarButtonItem(title: "Canejar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.rightArrowKeyTapped))
-        
-        
+
         buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
 
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
@@ -83,7 +82,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func rightArrowKeyTapped() {
-        
+
         guard let couponCode = textBox.text else {
             return
         }

@@ -228,7 +228,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
-        
+
         checkoutTable.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         checkoutTable.bounces = true
     }
