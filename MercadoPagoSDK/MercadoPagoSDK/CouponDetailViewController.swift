@@ -10,6 +10,8 @@ import UIKit
 
 open class CouponDetailViewController: MercadoPagoUIViewController {
 
+    @IBOutlet weak var exitButton: UIButton!
+    
     let cuponViewWidth: CGFloat = 256.0
     let cuponViewHeight: CGFloat = 200.0
     override open var screenName: String { get { return "DISCOUNT_SUMMARY" } }
@@ -44,6 +46,10 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
         self.couponView.layer.cornerRadius = 4
         self.couponView.layer.masksToBounds = true
         self.view.addSubview(self.couponView)
+        let exitImage = MercadoPago.getImage("white_close")
+        let templateExitImage = exitImage?.withRenderingMode(.alwaysTemplate)
+        self.exitButton.setImage(templateExitImage, for: .normal)
+        self.exitButton.tintColor = ThemeManager.shared.getTheme().navigationBar().tintColor
     }
 
     @IBAction func exit() {

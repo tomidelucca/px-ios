@@ -55,6 +55,11 @@ extension ThemeManager {
         return fontLightName
     }
 
+}
+
+//MARK: - UI design exceptions
+extension ThemeManager {
+
     func getMainColor() -> UIColor {
         if let theme = currentTheme as? PXDefaultTheme {
             if let mainColor = theme.primaryColor {
@@ -69,6 +74,13 @@ extension ThemeManager {
             return colorForIcons
         }
         return nil
+    }
+    
+    func getTintColorForReviewConfirmNavigation() -> UIColor {
+        if currentTheme is PXDefaultTheme {
+            return currentTheme.boldLabelTintColor()
+        }
+        return ThemeManager.shared.getTheme().navigationBar().tintColor
     }
 }
 

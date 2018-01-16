@@ -83,7 +83,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.navigationItem.rightBarButtonItem = nil
-        self.navBarTextColor = ThemeManager.shared.getTheme().navigationBar().tintColor
 
         self.displayBackButton()
 
@@ -121,7 +120,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.extendedLayoutIncludesOpaqueBars = true
 
-        self.navBarTextColor = ThemeManager.shared.getTheme().navigationBar().tintColor
+        self.navBarTextColor = ThemeManager.shared.getTintColorForReviewConfirmNavigation()
+        loadMPStyles()
 
         if self.shouldShowNavBar(self.checkoutTable) {
             self.showNavBar()
@@ -435,6 +435,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.checkFloatingButtonVisibility()
         self.didScrollInTable(scrollView)
+        
+        let font: UIFont = Utils.getFont(size: navBarFontSize)
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: navBarTextColor, NSFontAttributeName: font]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
     }
 
     public func invokeCallbackWithPaymentData(rowCallback: ((PaymentData) -> Void)) {
