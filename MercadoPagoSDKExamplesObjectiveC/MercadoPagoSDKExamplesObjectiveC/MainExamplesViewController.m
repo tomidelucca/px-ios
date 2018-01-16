@@ -51,9 +51,6 @@
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
-    // Set default color.
-    [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
-
     // Setear ServicePreference
     //[self setServicePreference];
 
@@ -99,8 +96,8 @@
     // Set default color or theme.
     
     PXMeliTheme *meliExampleTheme = [[PXMeliTheme alloc] init];
-    [self.mpCheckout setTheme:meliExampleTheme];
-    //[self.mpCheckout setDefaultColor:UIColor.redColor];
+    //[self.mpCheckout setTheme:meliExampleTheme];
+    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
     
     //[self setHooks];
     
@@ -308,7 +305,7 @@
 
     [summaryRow2 disableAmount];
 
-    [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+    //[reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 
     [self.mpCheckout setReviewScreenPreference:reviewPreference];
 }

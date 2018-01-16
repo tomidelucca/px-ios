@@ -18,10 +18,8 @@ class ViewUtils {
         return separatorLineView
     }
 
-    class func addStatusBar(_ view: UIView, color: UIColor) {
-        
+    class func getStatusBarHeight() -> CGFloat {
         var defaultHeight: CGFloat = 20
-        
         // iPhoneX or any device with safe area inset > 0
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.keyWindow
@@ -30,7 +28,24 @@ class ViewUtils {
                 defaultHeight = topSafeAreaDeltaValue
             }
         }
-        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: defaultHeight))
+        return defaultHeight
+    }
+    
+    class func getStatusBarHeightForScrolling() -> CGFloat {
+        var defaultHeight: CGFloat = 20
+        // iPhoneX or any device with safe area inset > 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topSafeAreaPadding = window?.safeAreaInsets.top
+            if let topSafeAreaDeltaValue = topSafeAreaPadding, topSafeAreaDeltaValue > 0 {
+                defaultHeight = 0
+            }
+        }
+        return defaultHeight
+    }
+    
+    class func addStatusBar(_ view: UIView, color: UIColor) {
+        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: getStatusBarHeight()))
         addStatusBar.backgroundColor = color
         view.addSubview(addStatusBar)
     }
