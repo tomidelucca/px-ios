@@ -11,6 +11,8 @@ import MercadoPagoPXTracking
 
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
+    
     var floatingConfirmButtonView: UIView!
     var fixedButton: UIButton?
     var floatingButton: UIButton?
@@ -127,6 +129,12 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             self.showNavBar()
         }
         self.hideLoading()
+        
+        // iPhoneX improvement.
+        let bottomInset = PXLayout.getSafeAreaBottomInset()
+        if bottomInset > 0 {
+            bottomMarginConstraint.constant = -bottomInset
+        }
     }
 
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -230,7 +238,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.checkoutTable.separatorStyle = .none
 
         checkoutTable.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
-        checkoutTable.bounces = true
     }
 
     private func getMainTitleCell(indexPath: IndexPath) -> UITableViewCell {
