@@ -19,9 +19,9 @@ class ViewUtils {
     }
 
     class func addStatusBar(_ view: UIView, color: UIColor) {
-        
+
         var defaultHeight: CGFloat = 20
-        
+
         // iPhoneX or any device with safe area inset > 0
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.keyWindow

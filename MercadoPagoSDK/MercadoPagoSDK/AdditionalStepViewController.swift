@@ -177,7 +177,7 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                         updateMercadoPagoCheckout(coupon)
                     }
                 })
- 
+
                 self.navigationController?.pushViewController(step, animated: true)
             }
 

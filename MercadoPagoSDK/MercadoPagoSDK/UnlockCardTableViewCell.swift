@@ -21,16 +21,16 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         self.background.backgroundColor = UIColor.UIColorFromRGB(0xFFF4C3)
-        
+
         self.background.layer.cornerRadius = 4
 
         self.unlockCardtextView.delegate = self
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
 
-        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String : Any]
+        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
 
         self.unlockCardtextView.linkTextAttributes = URLAttribute
 

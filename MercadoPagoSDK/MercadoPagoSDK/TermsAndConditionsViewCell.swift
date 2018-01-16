@@ -24,7 +24,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
         self.termsAndConditionsText.attributedText = TermsAndConditionsViewCell.getTyCText()
 
-        let URLAttribute = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String : Any]
+        let URLAttribute = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
 
         self.termsAndConditionsText.linkTextAttributes = URLAttribute
 

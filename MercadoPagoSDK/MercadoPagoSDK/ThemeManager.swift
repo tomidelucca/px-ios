@@ -14,47 +14,47 @@ class ThemeManager {
             initialize()
         }
     }
-    
+
     fileprivate var fontName: String = ".SFUIDisplay-Regular"
     fileprivate var fontLightName: String = ".SFUIDisplay-Light"
-    
+
     var navigationControllerMemento: NavigationControllerMemento?
-    
+
     static let shared = ThemeManager()
 }
 
-//MARK: - Public methods
+// MARK: - Public methods
 extension ThemeManager {
-    
+
     func initialize() {
         customizeNavigationBar(theme: currentTheme)
         customizeButtons(theme: currentTheme)
         customizeToolBar(theme: currentTheme)
     }
-    
+
     func setDefaultColor(color: UIColor) {
         let customTheme = PXDefaultTheme(withPrimaryColor: color)
         self.currentTheme = customTheme
     }
-        
+
     func setTheme(theme: PXTheme?) {
         if let currentTheme = theme {
             self.currentTheme = currentTheme
         }
     }
-    
+
     func getTheme() -> PXTheme {
         return currentTheme
     }
-    
+
     func getFontName() -> String {
         return fontName
     }
-    
+
     func getLightFontName() -> String {
         return fontLightName
     }
-    
+
     func getMainColor() -> UIColor {
         if let theme = currentTheme as? PXDefaultTheme {
             if let mainColor = theme.primaryColor {
@@ -63,7 +63,7 @@ extension ThemeManager {
         }
         return currentTheme.navigationBar().backgroundColor
     }
-    
+
     func getTintColorForIcons() -> UIColor? {
         if let currentTheme = ThemeManager.shared.getTheme() as? PXDefaultTheme, let colorForIcons = currentTheme.primaryColor {
             return colorForIcons
@@ -72,7 +72,7 @@ extension ThemeManager {
     }
 }
 
-//MARK: - UI Theme customization
+// MARK: - UI Theme customization
 extension ThemeManager {
     fileprivate func customizeNavigationBar(theme: PXTheme) {
         UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
@@ -80,7 +80,7 @@ extension ThemeManager {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
         PXNavigationHeaderLabel.appearance().textColor = theme.navigationBar().tintColor
     }
-    
+
     fileprivate func customizeButtons(theme: PXTheme) {
         PXPrimaryButton.appearance().backgroundColor = theme.primaryButton().backgroundColor
         PXPrimaryButton.appearance().setTitleColor(theme.primaryButton().tintColor, for: .normal)
