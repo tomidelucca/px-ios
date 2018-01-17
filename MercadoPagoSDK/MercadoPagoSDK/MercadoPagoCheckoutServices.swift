@@ -62,7 +62,6 @@ extension MercadoPagoCheckout {
         if !self.viewModel.paymentMethodPlugins.isEmpty {
             initPlugin(plugins: self.viewModel.paymentMethodPlugins, index: self.viewModel.paymentMethodPlugins.count - 1)
         } else {
-            self.dismissLoading()
             self.executeNextStep()
         }
     }
@@ -70,7 +69,6 @@ extension MercadoPagoCheckout {
     func initPlugin(plugins: [PXPaymentMethodPlugin], index: Int) {
         if index < 0 {
             DispatchQueue.main.async {
-                self.dismissLoading()
                 self.executeNextStep()
             }
         } else {
