@@ -12,6 +12,7 @@ open class PXCheckoutStore: NSObject {
 
     static let sharedInstance = PXCheckoutStore()
     private var data = [String: Any]()
+    var checkoutPreference: CheckoutPreference?
     var paymentData = PaymentData()
     var paymentOptionSelected: PaymentMethodOption?
 
@@ -36,6 +37,10 @@ open class PXCheckoutStore: NSObject {
 
     public func getPaymentOptionSelected() -> PaymentMethodOption? {
         return paymentOptionSelected
+    }
+
+    public func getCheckoutPreference() -> CheckoutPreference? {
+        return checkoutPreference
     }
 
 }

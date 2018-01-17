@@ -65,6 +65,10 @@ import Foundation
     public func detailedBackgroundColor() -> UIColor {
         return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
+    
+    public func circleBackgroundColor() -> UIColor {
+        return #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
+    }
 
     public func statusBarStyle() -> UIStatusBarStyle {
         return .default

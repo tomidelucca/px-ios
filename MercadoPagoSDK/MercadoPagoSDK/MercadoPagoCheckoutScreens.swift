@@ -15,7 +15,7 @@ extension MercadoPagoCheckout {
         self.viewModel.paymentData.clearCollectedData()
 
         // If paymentMethodsPlugins is available, disable discounts.
-        if !viewModel.paymentMethodPlugins.isEmpty && viewModel.paymentData.discount == nil {
+        if (!viewModel.paymentMethodPlugins.isEmpty || viewModel.paymentPlugin != nil) && viewModel.paymentData.discount == nil {
             MercadoPagoCheckoutViewModel.flowPreference.disableDiscount()
         }
 
@@ -206,6 +206,7 @@ extension MercadoPagoCheckout {
     }
 
     func showErrorScreen() {
+        self.dismissLoading()
         let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {[weak self] in
 
             guard let strongSelf = self else {

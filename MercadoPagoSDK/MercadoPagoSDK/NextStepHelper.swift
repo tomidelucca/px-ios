@@ -268,7 +268,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToSearchDirectDiscount() -> Bool {
-        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && paymentMethodPlugins.isEmpty
+        return isDiscountEnable() && self.checkoutPreference != nil && !self.directDiscountSearched && self.paymentData.discount == nil && self.paymentResult == nil && !paymentData.isComplete() && (paymentMethodPlugins.isEmpty && paymentPlugin == nil)
     }
 
     func needToCreatePayment() -> Bool {

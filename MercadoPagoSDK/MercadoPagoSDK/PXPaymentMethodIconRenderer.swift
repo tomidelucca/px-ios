@@ -17,8 +17,7 @@ class PXPaymentMethodIconRenderer: NSObject {
         pmIconView.translatesAutoresizingMaskIntoConstraints = false
         let background = UIView()
         background.translatesAutoresizingMaskIntoConstraints = false
-        //TODO: For MELI Skin. Change the following color to verbose skin color-component rule.
-        background.backgroundColor = UIColor.pxMediumLightGray
+        background.backgroundColor = ThemeManager.shared.getTheme().circleBackgroundColor()
         pmIconView.paymentMethodIconBackground = background
         pmIconView.addSubview(pmIconView.paymentMethodIconBackground!)
         PXLayout.matchWidth(ofView: pmIconView.paymentMethodIconBackground!).isActive = true
