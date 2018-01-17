@@ -177,9 +177,8 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                         updateMercadoPagoCheckout(coupon)
                     }
                 })
-                DispatchQueue.main.async {
-                    self.present(step, animated: false, completion: {})
-                }
+
+                self.navigationController?.pushViewController(step, animated: true)
             }
 
         }

@@ -31,9 +31,14 @@ open class MercadoPagoCheckout: NSObject {
         MercadoPagoContext.setPublicKey(publicKey)
         MercadoPagoContext.setPayerAccessToken(accessToken)
 
+        ThemeManager.shared.initialize()
+
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference : checkoutPreference, paymentData: paymentData, paymentResult: paymentResult, discount : discount)
-        DecorationPreference.saveNavBarStyleFor(navigationController: navigationController)
+
+        ThemeManager.shared.saveNavBarStyleFor(navigationController: navigationController)
+
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
+
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
@@ -41,6 +46,14 @@ open class MercadoPagoCheckout: NSObject {
             }
             viewControllerBase = newNavigationStack.last
         }
+    }
+
+    public func setTheme(_ theme: PXTheme) {
+        ThemeManager.shared.setTheme(theme: theme)
+    }
+
+    public func setDefaultColor(_ color: UIColor) {
+        ThemeManager.shared.setDefaultColor(color: color)
     }
 
     func initMercadPagoPXTracking() {
@@ -53,6 +66,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
+        self.presentLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
     }
@@ -95,6 +109,7 @@ open class MercadoPagoCheckout: NSObject {
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
     }
+
     func executeNextStep() {
 
         switch self.viewModel.nextStep() {
@@ -195,7 +210,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func finish() {
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
         removeRootLoading()
 
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
@@ -217,7 +232,8 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func cancel() {
-        DecorationPreference.applyAppNavBarDecorationPreferencesTo(navigationController: self.navigationController)
+
+        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
 
         if let callback = viewModel.callbackCancel {
             callback()
@@ -245,25 +261,25 @@ open class MercadoPagoCheckout: NSObject {
             DispatchQueue.main.asyncAfter(deadline: when) {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
-                    self.navigationController.present(self.currentLoadingView!, animated: animated, completion: completion)
+                    self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+                    self.navigationController.present(self.currentLoadingView!, animated: true, completion: completion)
                 }
             }
         }
     }
 
-    func dismissLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
-        self.countLoadings -= 1
-        if self.currentLoadingView != nil && countLoadings == 0 {
-            self.currentLoadingView!.dismiss(animated: animated, completion: completion)
-            self.currentLoadingView?.view.alpha = 0
+    func dismissLoading(animated: Bool = true) {
+        self.countLoadings = 0
+        if self.currentLoadingView != nil {
+            self.currentLoadingView!.dismiss(animated: true)
             self.currentLoadingView = nil
         }
     }
 
     internal func createCurrentLoading() {
         let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = MercadoPagoCheckoutViewModel.decorationPreference.baseColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: MercadoPagoCheckoutViewModel.decorationPreference.baseColor)
+        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
+        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
 
         vcLoading.view.addSubview(loadingInstance)
         loadingInstance.bringSubview(toFront: vcLoading.view)
@@ -282,6 +298,7 @@ open class MercadoPagoCheckout: NSObject {
         }
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
+        self.dismissLoading()
     }
 
     internal func removeRootLoading() {

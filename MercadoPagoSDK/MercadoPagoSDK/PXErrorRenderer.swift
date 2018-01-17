@@ -14,7 +14,7 @@ class PXErrorRenderer: NSObject {
     let TITLE_FONT_SIZE: CGFloat = 20.0
     let DESCRIPTION_FONT_SIZE: CGFloat = 16.0
     let ACTION_FONT_SIZE: CGFloat = 18.0
-    let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
+    let ACTION_LABEL_FONT_COLOR: UIColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
 
     func render(component: PXErrorComponent) -> PXErrorView {
         let errorBodyView = PXErrorView()

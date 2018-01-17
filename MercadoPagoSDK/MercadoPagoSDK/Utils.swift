@@ -160,14 +160,14 @@ class Utils {
         return stringToWrite
     }
     class func getFont(size: CGFloat) -> UIFont {
-        return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+        return UIFont(name: ThemeManager.shared.getFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
     }
 
     class func getLightFont(size: CGFloat) -> UIFont {
         if #available(iOS 8.2, *) {
-            return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+            return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
         } else {
-            return UIFont(name: MercadoPagoCheckoutViewModel.decorationPreference.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
+            return UIFont(name: ThemeManager.shared.getLightFontName(), size: size) ?? UIFont.systemFont(ofSize: size)
         }
     }
 

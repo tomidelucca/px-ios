@@ -29,6 +29,7 @@ open class MercadoPagoContext: NSObject {
 
     var currency: Currency!
 
+    // TODO: Deprecate/Delete in Q2. - 2018
     var display_default_loading = true
 
     var language: String = NSLocale.preferredLanguages[0]
@@ -172,8 +173,10 @@ open class MercadoPagoContext: NSObject {
         sharedInstance.account_money_available = accountMoneyAvailable
     }
 
+    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
     open class func setDisplayDefaultLoading(flag: Bool) {
-        sharedInstance.display_default_loading = flag
+        print("setDisplayDefaultLoading - Do not use. Deprecated in Q2 - 2018")
+        //sharedInstance.display_default_loading = flag
     }
 
     open class func merchantAccessToken() -> String {
@@ -195,8 +198,10 @@ open class MercadoPagoContext: NSObject {
         return sharedInstance.account_money_available
     }
 
+    @available(*, deprecated, message: "Do not use. Deprecated in Q2 - 2018.")
     open class func shouldDisplayDefaultLoading() -> Bool {
-        return sharedInstance.display_default_loading
+        return false
+        //return sharedInstance.display_default_loading
     }
 
     open class func paymentKey() -> String {

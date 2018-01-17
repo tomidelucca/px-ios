@@ -27,13 +27,13 @@ public class PXResultViewModel: NSObject {
 
     func primaryResultColor() -> UIColor {
         if isAccepted() {
-            return .pxGreenMp
+            return ThemeManager.shared.getTheme().successColor()
         }
         if isError() {
-            return .pxRedMp
+            return ThemeManager.shared.getTheme().rejectedColor()
         }
         if isWarning() {
-            return .pxOrangeMp
+            return ThemeManager.shared.getTheme().warningColor()
         }
         return .pxWhite
     }

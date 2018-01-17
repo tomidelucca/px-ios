@@ -12,8 +12,8 @@ protocol InputComponentListener {
 }
 
 class SimpleInputComponent: UIView, PXComponent {
-    let INACTIVE_BORDER_COLOR = UIColor.px_grayLines()
-    let ACTIVE_BORDER_COLOR = UIColor.px_blueMercadoPago()
+    let INACTIVE_BORDER_COLOR = UIColor.UIColorFromRGB(0xCCCCCC)
+    let ACTIVE_BORDER_COLOR = ThemeManager.shared.getTheme().secondaryButton().tintColor
     let HEIGHT: CGFloat = 83.0
     let INPUT_HEIGHT: CGFloat = 45.0
     let HORIZONTAL_MARGIN: CGFloat = 31.0
@@ -146,16 +146,14 @@ class CompositeInputComponent: SimpleInputComponent, UIPickerViewDataSource, UIP
     }
     func getPicker() -> UIPickerView {
         let pickerView = UIPickerView(frame: CGRect(x: 0, y: 150, width: self.frame.width, height: PICKER_HEIGHT))
-        pickerView.backgroundColor = UIColor.px_white()
-        pickerView.showsSelectionIndicator = true
-        pickerView.backgroundColor = UIColor.px_white()
+        pickerView.backgroundColor = UIColor.white
         pickerView.showsSelectionIndicator = true
         pickerView.dataSource = self
         pickerView.delegate = self
         return pickerView
     }
-    func getToolBar() -> UIToolbar {
-        let toolBar = UIToolbar()
+    func getToolBar() -> PXToolbar {
+        let toolBar = PXToolbar()
         toolBar.barStyle = UIBarStyle.default
         let doneButton = UIBarButtonItem(title: "OK".localized, style: .plain, target: self, action: #selector(CompositeInputComponent.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)

@@ -84,7 +84,7 @@ class PXHeaderRenderer: NSObject {
         let statusLabel = UILabel()
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.textAlignment = .center
-        statusLabel.textColor = .pxWhite
+        statusLabel.textColor = .white
         superView.addSubview(statusLabel)
         if text != nil {
             PXLayout.put(view: statusLabel, onBottomOf:upperView, withMargin: PXLayout.S_MARGIN).isActive = true
@@ -102,7 +102,7 @@ class PXHeaderRenderer: NSObject {
         messageLabel.textAlignment = .center
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.attributedText = text
-        messageLabel.textColor = .pxWhite
+        messageLabel.textColor = .white
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)

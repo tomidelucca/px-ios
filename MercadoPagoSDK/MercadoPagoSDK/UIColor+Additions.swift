@@ -82,10 +82,6 @@ extension UIColor {
         return UIColorFromRGB(0x999999)
     }
 
-    class public func px_grayLines() -> UIColor {
-        return UIColorFromRGB(0xCCCCCC)
-    }
-
     class public func grayTableSeparator() -> UIColor {
         return UIColorFromRGB(0xEFEFF4)
     }
@@ -99,10 +95,6 @@ extension UIColor {
 
     class public func installments() -> UIColor {
         return UIColorFromRGB(0x2BA2EC)
-    }
-
-    class public func systemFontColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getFontColor()
     }
 
     class public func px_redCongrats() -> UIColor {
@@ -129,7 +121,7 @@ extension UIColor {
         return UIColorFromRGB(0xf04449)
     }
     class public func primaryColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
+        return ThemeManager.shared.getMainColor()
     }
     class public func mpGreenishTeal() -> UIColor {
         return UIColorFromRGB(0x3bc280)

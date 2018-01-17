@@ -92,9 +92,13 @@ extension MercadoPagoCheckout {
         paymentPluginComponentView.frame = containerVC.view.frame
         containerVC.view.addSubview(paymentPluginComponentView)
 
+        //TODO: Change in Q2 - Payment processor by block. Not a view.
+        containerVC.view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        paymentPluginComponentView.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        
         paymentPluginComponent.renderDidFinish?()
 
-        self.navigationController.pushViewController(containerVC, animated: true)
+        self.navigationController.pushViewController(containerVC, animated: false)
     }
 }
 

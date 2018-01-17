@@ -361,5 +361,4 @@ class PXBodyComponentTest: BaseTest {
         XCTAssertEqual(actionButton.actionLink, "http://www.bancomer.com.mx")
     }
 
-
 }

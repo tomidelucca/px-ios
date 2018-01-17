@@ -20,7 +20,7 @@ class BankInsterestTableViewCell: UITableViewCell {
         mainLabel.text = "No incluye intereses bancarios".localized
         mainLabel.textAlignment = .center
         mainLabel.font = Utils.getLightFont(size: 14)
-        mainLabel.textColor = UIColor.systemFontColor()
+        mainLabel.textColor = UIColor.white
         self.selectionStyle = .none
     }
 
