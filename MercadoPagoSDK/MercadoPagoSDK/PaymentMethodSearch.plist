@@ -15,7 +15,7 @@
 	<key>prepaid_cardAzul</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjetaAzul</string>
+		<string>mediosIconoDebitCardAzul</string>
 	</dict>
 	<key>debit_card</key>
 	<dict>
@@ -25,7 +25,7 @@
 	<key>debit_cardAzul</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjetaAzul</string>
+		<string>mediosIconoDebitCardAzul</string>
 	</dict>
 	<key>bank_transfer</key>
 	<dict>
