@@ -39,6 +39,7 @@ public enum CheckoutStep: String {
     case SCREEN_HOOK_BEFORE_PAYMENT
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
+    case SCREEN_PAYMENT_PLUGIN_PAYMENT
 }
 
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
@@ -103,6 +104,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
+
+    // Payment plguin
+    var paymentPlugin: PXPaymentPluginComponent?
 
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         super.init()
@@ -179,7 +183,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let optionSelected = paymentOptionSelected {
             groupName = optionSelected.getId()
         }
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPlugins, groupName: groupName, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
+
+        _ = copyViewModelAndAssignToCheckoutStore()
+        let paymentMethodPluginsToShow = paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
             }
@@ -250,14 +258,14 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()
-        self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethods[0])
+        self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethods[0])
         self.cardToken = cardToken
     }
 
     //CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PaymentMethod?) {
         if let paymentMethod = paymentMethod {
-            self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethod)
+            self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethod)
         }
     }
 
@@ -399,7 +407,12 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
-        if needToCreatePaymentForPlugin() {
+        if needToCreatePaymentForPaymentPlugin() {
+            readyToPay = false
+            return .SCREEN_PAYMENT_PLUGIN_PAYMENT
+        }
+
+        if needToCreatePaymentForPaymentMethodPlugin() {
             readyToPay = false
             return .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
         }
@@ -703,6 +716,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if self.copy() is MercadoPagoCheckoutViewModel {
             PXCheckoutStore.sharedInstance.paymentData = self.paymentData
             PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
+            PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
             return true
         }
         return false
