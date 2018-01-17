@@ -27,6 +27,7 @@ import Foundation
 
     func highlightBackgroundColor() -> UIColor
     func detailedBackgroundColor() -> UIColor
+    func circleBackgroundColor() -> UIColor
 
     func statusBarStyle() -> UIStatusBarStyle
 }
