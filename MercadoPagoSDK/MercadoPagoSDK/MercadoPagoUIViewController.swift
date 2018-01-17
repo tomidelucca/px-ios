@@ -19,7 +19,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var shouldShowBackArrow = true
     var tracked: Bool = false
 
-    let STATUS_BAR_HEIGTH = 20.0
+    let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
 
     var hideNavBarCallback: (() -> Void)?
