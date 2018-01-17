@@ -206,6 +206,7 @@ extension MercadoPagoCheckout {
     }
 
     func showErrorScreen() {
+        self.dismissLoading()
         let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {[weak self] in
 
             guard let strongSelf = self else {
