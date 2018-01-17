@@ -46,6 +46,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Receipt
         receiptView = self.buildReceiptView()
+        receiptView.addSeparatorLineToBottom(height: 1)
         contentView.addSubview(receiptView)
         receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
