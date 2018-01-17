@@ -305,12 +305,12 @@
 	<key>pagoefectivo_atm_scotiabank_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferScotiabank</string>
+		<string>mediosScotiabank</string>
 	</dict>
 	<key>pagoefectivo_atm_interbank_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferInterbank</string>
+		<string>mediosInterbank</string>
 	</dict>
 	<key>pagoefectivo_atm_bcp_bank_transfer</key>
 	<dict>
