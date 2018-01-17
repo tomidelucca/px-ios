@@ -55,7 +55,7 @@ import Foundation
     }
 
     public func modalComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1), tintColor: #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 0.8588235294, blue: 0.08235294118, alpha: 1), tintColor: #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
     }
 
     public func highlightBackgroundColor() -> UIColor {
