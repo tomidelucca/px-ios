@@ -10,7 +10,7 @@
 	<key>prepaid_card</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjeta</string>
+		<string>mediosIconoDebitCard</string>
 	</dict>
 	<key>prepaid_cardAzul</key>
 	<dict>
@@ -20,7 +20,7 @@
 	<key>debit_card</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjeta</string>
+		<string>mediosIconoDebitCard</string>
 	</dict>
 	<key>debit_cardAzul</key>
 	<dict>
