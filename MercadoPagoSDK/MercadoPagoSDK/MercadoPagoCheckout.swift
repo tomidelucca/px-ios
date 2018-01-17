@@ -205,7 +205,9 @@ open class MercadoPagoCheckout: NSObject {
         if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
             checkoutVC.showNavBar()
             checkoutVC.viewModel = viewModel.checkoutViewModel()
-            checkoutVC.checkoutTable.reloadData()
+            if let checkoutTable = checkoutVC.checkoutTable {
+                       checkoutVC.checkoutTable.reloadData()
+            }
         }
     }
 
