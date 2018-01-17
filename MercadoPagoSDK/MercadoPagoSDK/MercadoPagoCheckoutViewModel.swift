@@ -46,7 +46,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
     static var servicePreference = ServicePreference()
-    static var decorationPreference = DecorationPreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
@@ -794,7 +793,6 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
-        MercadoPagoCheckoutViewModel.decorationPreference = DecorationPreference()
         MercadoPagoCheckoutViewModel.flowPreference = FlowPreference()
         MercadoPagoCheckoutViewModel.paymentDataCallback = nil
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil

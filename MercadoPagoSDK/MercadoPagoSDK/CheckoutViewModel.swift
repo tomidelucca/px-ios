@@ -266,8 +266,8 @@ open class CheckoutViewModel: NSObject {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
-            summary.details[SummaryType.DISCOUNT]?.titleColor = UIColor.mpGreenishTeal()
-            summary.details[SummaryType.DISCOUNT]?.amountColor = UIColor.mpGreenishTeal()
+            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().successColor()
+            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().successColor()
         }
         if let payerCost = self.paymentData.payerCost {
             let interest = payerCost.totalAmount - amount

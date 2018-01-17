@@ -190,6 +190,34 @@ class PXLayout: NSObject {
 
 }
 
+extension PXLayout {
+    static func getSafeAreaBottomInset() -> CGFloat {
+        // iPhoneX or any device with safe area inset > 0
+        var bottomDeltaMargin: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let bottomSafeAreaInset = window?.safeAreaInsets.bottom
+            if let bottomDeltaInset = bottomSafeAreaInset, bottomDeltaInset > 0 {
+                bottomDeltaMargin = bottomDeltaInset
+            }
+        }
+        return bottomDeltaMargin
+    }
+    
+    static func getSafeAreaTopInset() -> CGFloat {
+        // iPhoneX or any device with safe area inset > 0
+        var topDeltaMargin: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topSafeAreaInset = window?.safeAreaInsets.top
+            if let topDeltaInset = topSafeAreaInset, topDeltaInset > 0 {
+                topDeltaMargin = topDeltaInset
+            }
+        }
+        return topDeltaMargin
+    }
+}
+
 class ClosureSleeve {
     let closure: () -> Void
 

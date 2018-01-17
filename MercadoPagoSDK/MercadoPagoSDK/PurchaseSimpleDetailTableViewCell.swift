@@ -29,7 +29,7 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    internal func fillCell(_ title: String, amount: Double, currency: Currency, payerCost: PayerCost? = nil, addSeparatorLine: Bool = true, titleColor: UIColor = UIColor.px_grayDark(), amountColor: UIColor = UIColor.px_grayDark(), amountEnable: Bool = true, height: CGFloat) {
+    internal func fillCell(_ title: String, amount: Double, currency: Currency, payerCost: PayerCost? = nil, addSeparatorLine: Bool = true, titleColor: UIColor = ThemeManager.shared.getTheme().boldLabelTintColor(), amountColor: UIColor = ThemeManager.shared.getTheme().boldLabelTintColor(), amountEnable: Bool = true, height: CGFloat) {
 
         fillDescription(title: title, color: titleColor)
 
@@ -76,8 +76,7 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
     }
 
     private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
-        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: UIColor.px_grayBaseText(), fontSize : 24, baselineOffset : 8)
-
+        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.getTheme().boldLabelTintColor(), fontSize : 24, baselineOffset : 8)
     }
 
 }

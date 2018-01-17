@@ -26,7 +26,7 @@ class AvailableCardsDetailView: UIView {
         super.init(frame: frame)
         self.paymentMethods = paymentMethods
 
-        self.backgroundColor = UIColor.mpLightGray()
+        self.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
 
         setScrollView()
 
@@ -55,7 +55,7 @@ class AvailableCardsDetailView: UIView {
     func setTitles() {
         titleLable = MPCardFormToolbarLabel()
         titleLable.frame = getTitleLabelFrame()
-        titleLable.textColor = UIColor.px_grayDark()
+        titleLable.textColor = ThemeManager.shared.getTheme().modalComponent().tintColor
         titleLable.text = "No te preocupes, aún puedes terminar tu pago con:".localized
         titleLable.font = Utils.getFont(size: 22.0)
         titleLable.numberOfLines = 2

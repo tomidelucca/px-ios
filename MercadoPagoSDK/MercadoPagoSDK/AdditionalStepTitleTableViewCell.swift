@@ -10,28 +10,22 @@ import UIKit
 
 class AdditionalStepTitleTableViewCell: UITableViewCell, TitleCellScrollable {
 
+    @IBOutlet weak var cell: UIView!
+    @IBOutlet weak var title: PXNavigationHeaderLabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.selectionStyle = UITableViewCellSelectionStyle.none
+        // Initialization code
+    }
+
     internal func updateTitleFontSize(toSize: CGFloat) {
         self.title.font = Utils.getFont(size: toSize)
     }
 
-    @IBOutlet weak var cell: UIView!
-    @IBOutlet weak var title: UILabel!
     func setTitle(string: String!) {
         title.text = string
         title.font = Utils.getFont(size: title.font.pointSize)
-        title.textColor = UIColor.systemFontColor()
-        cell.backgroundColor = UIColor.primaryColor()
+        cell.backgroundColor = ThemeManager.shared.getMainColor()
     }
-    override func awakeFromNib() {
-        super.awakeFromNib()
-		self.selectionStyle = UITableViewCellSelectionStyle.none
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

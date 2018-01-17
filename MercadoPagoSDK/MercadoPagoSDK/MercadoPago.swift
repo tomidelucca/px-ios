@@ -169,14 +169,20 @@ import UIKit
     }
 
     open class func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
+
+        //TODO: Chequear toda esta logica con todo el equipo. (Android and max)
+
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
+        let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
 
         if defaultColor {
             description = description + "Azul"
         } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
-            description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description + "Azul" : description
+            if tintColorForIcons == nil {
+                description = description + "Azul"
+            }
         }
 
         guard let itemSelected = dictPM?.value(forKey: description) as? NSDictionary else {
@@ -186,7 +192,10 @@ import UIKit
         let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
 
         if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
-            return image?.imageWithOverlayTint(tintColor: UIColor.primaryColor())
+            if let iconsTintColor = tintColorForIcons {
+                return image?.imageWithOverlayTint(tintColor: iconsTintColor)
+            }
+            return image
         } else {
             return image
         }
@@ -194,9 +203,9 @@ import UIKit
     }
 
     open class func getOfflineReviewAndConfirmImage(_ paymentMethod: PaymentMethod? = nil) -> UIImage {
+
         guard let paymentMethod = paymentMethod else {
-            return UIImage()
-            //return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
+            return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
         }
 
         if paymentMethod.isBolbradesco {
@@ -204,7 +213,7 @@ import UIKit
         } else if paymentMethod.isAccountMoney {
             return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!
         }
-        return UIImage()
+    
         return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
     }
 

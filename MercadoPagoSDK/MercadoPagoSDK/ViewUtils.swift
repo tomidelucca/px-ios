@@ -18,8 +18,34 @@ class ViewUtils {
         return separatorLineView
     }
 
+    class func getStatusBarHeight() -> CGFloat {
+        var defaultHeight: CGFloat = 20
+        // iPhoneX or any device with safe area inset > 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topSafeAreaPadding = window?.safeAreaInsets.top
+            if let topSafeAreaDeltaValue = topSafeAreaPadding, topSafeAreaDeltaValue > 0 {
+                defaultHeight = topSafeAreaDeltaValue
+            }
+        }
+        return defaultHeight
+    }
+    
+    class func getStatusBarHeightForScrolling() -> CGFloat {
+        var defaultHeight: CGFloat = 20
+        // iPhoneX or any device with safe area inset > 0
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let topSafeAreaPadding = window?.safeAreaInsets.top
+            if let topSafeAreaDeltaValue = topSafeAreaPadding, topSafeAreaDeltaValue > 0 {
+                defaultHeight = 0
+            }
+        }
+        return defaultHeight
+    }
+    
     class func addStatusBar(_ view: UIView, color: UIColor) {
-        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 20))
+        let addStatusBar = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: getStatusBarHeight()))
         addStatusBar.backgroundColor = color
         view.addSubview(addStatusBar)
     }
@@ -32,7 +58,7 @@ class ViewUtils {
         view.addSubview(imageView)
     }
 
-    class func loadImageFromUrl(_ url: String, inView: UIView, loadingBackgroundColor: UIColor = UIColor.primaryColor(), loadingIndicatorColor: UIColor = UIColor.systemFontColor()) {
+    class func loadImageFromUrl(_ url: String, inView: UIView, loadingBackgroundColor: UIColor = UIColor.primaryColor(), loadingIndicatorColor: UIColor = UIColor.white) {
   //      LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
             let url = URL(string: url)

@@ -11,6 +11,8 @@ import MercadoPagoPXTracking
 
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
+    
     var floatingConfirmButtonView: UIView!
     var fixedButton: UIButton?
     var floatingButton: UIButton?
@@ -62,8 +64,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     override func loadMPStyles() {
-        self.setNavBarBackgroundColor(color : UIColor.px_white())
         super.loadMPStyles()
+        self.setNavBarBackgroundColor(color : ThemeManager.shared.getTheme().highlightBackgroundColor())
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -72,12 +74,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     override func showNavBar() {
-
         super.showNavBar()
-
-        if self.statusBarView == nil {
-            self.displayStatusBar()
-        }
     }
 
     var paymentEnabled = true
@@ -88,7 +85,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.navigationItem.rightBarButtonItem = nil
-        self.navBarTextColor = UIColor.primaryColor()
 
         self.displayBackButton()
 
@@ -98,7 +94,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.registerAllCells()
 
         self.displayFloatingConfirmButton()
-        self.displayStatusBar()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -127,17 +122,19 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.extendedLayoutIncludesOpaqueBars = true
 
-        self.navBarTextColor = UIColor.primaryColor()
+        self.navBarTextColor = ThemeManager.shared.getTintColorForReviewConfirmNavigation()
+        loadMPStyles()
 
         if self.shouldShowNavBar(self.checkoutTable) {
             self.showNavBar()
         }
         self.hideLoading()
-
-    }
-
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        
+        // iPhoneX improvement.
+        let bottomInset = PXLayout.getSafeAreaBottomInset()
+        if bottomInset > 0 {
+            bottomMarginConstraint.constant = -bottomInset
+        }
     }
 
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -239,13 +236,15 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.checkoutTable.delegate = self
         self.checkoutTable.dataSource = self
         self.checkoutTable.separatorStyle = .none
+
+        checkoutTable.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
     }
 
     private func getMainTitleCell(indexPath: IndexPath) -> UITableViewCell {
         let AdditionalStepTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "AdditionalStepTitleTableViewCell", for: indexPath) as! AdditionalStepTitleTableViewCell
         AdditionalStepTitleTableViewCell.setTitle(string: viewModel.reviewScreenPreference.getTitle())
-        AdditionalStepTitleTableViewCell.title.textColor = UIColor.primaryColor()
-        AdditionalStepTitleTableViewCell.cell.backgroundColor = UIColor.px_white()
+        AdditionalStepTitleTableViewCell.title.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        AdditionalStepTitleTableViewCell.cell.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         titleCell = AdditionalStepTitleTableViewCell
         return AdditionalStepTitleTableViewCell
     }
@@ -291,6 +290,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         let cell = UITableViewCell(style: .default, reuseIdentifier: "summaryComponentCell")
         cell.contentView.addSubview(self.viewModel.summaryComponent)
         cell.selectionStyle = .none
+        cell.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         return cell
     }
 
@@ -442,6 +442,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.checkFloatingButtonVisibility()
         self.didScrollInTable(scrollView)
+        
+        let font: UIFont = Utils.getFont(size: navBarFontSize)
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: navBarTextColor, NSFontAttributeName: font]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
     }
 
     public func invokeCallbackWithPaymentData(rowCallback: ((PaymentData) -> Void)) {
@@ -463,15 +467,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             return
         }
         view.removeFromSuperview()
-    }
-
-    private func displayStatusBar() {
-
-        self.statusBarView = UIView(frame: CGRect(x: 0, y: -20, width: self.view.frame.width, height: 20))
-        self.statusBarView!.backgroundColor = UIColor.grayStatusBar()
-        self.statusBarView!.tag = 1
-        self.navigationController!.navigationBar.barStyle = .blackTranslucent
-        self.navigationController!.navigationBar.addSubview(self.statusBarView!)
     }
 }
 
