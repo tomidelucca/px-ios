@@ -90,7 +90,7 @@ open class CountdownTimer: NSObject {
         }
         secondsStr += String(seconds)
 
-        return (hoursStr.characters.count > 0) ? (hoursStr + " : " + minutesStr + " : " + secondsStr) : (minutesStr + " : " + secondsStr)
+        return (hoursStr.count > 0) ? (hoursStr + " : " + minutesStr + " : " + secondsStr) : (minutesStr + " : " + secondsStr)
     }
     deinit {
         //print("Limpie el timer")

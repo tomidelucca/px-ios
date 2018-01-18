@@ -48,7 +48,7 @@ extension String {
 
     subscript (i: Int) -> String {
 
-        if self.characters.count > i {
+        if self.count > i {
             return String(self[self.characters.index(self.startIndex, offsetBy: i)])
         }
 
@@ -56,7 +56,7 @@ extension String {
     }
 
     public func lastCharacters(number: Int) -> String {
-        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number, 0))
+        let trimmedString: String = (self as NSString).substring(from: max(self.count - number, 0))
         return trimmedString
     }
 

@@ -142,7 +142,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     open func editingChanged(_ textField: UITextField) {
-        if (textBox.text?.characters.count)! > 0 {
+        if (textBox.text?.count)! > 0 {
             buttonNext.isEnabled = true
         } else {
             buttonNext.isEnabled = false

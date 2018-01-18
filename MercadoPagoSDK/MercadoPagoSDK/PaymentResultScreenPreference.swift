@@ -254,7 +254,7 @@ open class PaymentResultScreenPreference: NSObject {
     @available(*, deprecated)
     open func setRejectedIconSubtext(text: String) {
         self.rejectedIconSubtext = text
-        if text.characters.count == 0 {
+        if text.count == 0 {
             self.disableRejectedLabelText = true
         }
     }

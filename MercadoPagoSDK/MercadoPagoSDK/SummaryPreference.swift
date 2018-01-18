@@ -46,7 +46,7 @@ extension ReviewScreenPreference {
         }
     }
     public func getOneWordDescription(oneWordDescription: String) -> String {
-        if oneWordDescription.characters.count <= 0 {
+        if oneWordDescription.count <= 0 {
             return ""
         }
         if let firstWord = oneWordDescription.components(separatedBy: " ").first {

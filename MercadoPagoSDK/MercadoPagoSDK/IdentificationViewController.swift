@@ -87,13 +87,13 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if string.characters.count < 1 {
+        if string.count < 1 {
             return true
         }
         guard let identificationType = identificationType else {
             return false
         }
-        if textField.text?.characters.count == identificationType.maxLength {
+        if textField.text?.count == identificationType.maxLength {
             return false
         }
         return true
@@ -344,7 +344,7 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
 
     fileprivate func drawMask(masks: [TextMaskFormater]) {
 
-        let charactersCount = numberTextField.text?.characters.count
+        let charactersCount = numberTextField.text?.count
 
         if charactersCount! >= 1 {
             let identificationMask = masks[1]

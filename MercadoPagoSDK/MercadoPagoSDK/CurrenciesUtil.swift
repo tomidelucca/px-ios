@@ -53,7 +53,7 @@ open class CurrenciesUtil {
         ]}
 
     open class func getCurrencyFor(_ currencyId: String?) -> Currency? {
-        return (currencyId != nil && currencyId?.characters.count > 0) ? self.currenciesList[currencyId!] : nil
+        return (currencyId != nil && currencyId?.count > 0) ? self.currenciesList[currencyId!] : nil
     }
 
 }

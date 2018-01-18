@@ -98,6 +98,6 @@ extension UIView {
 
 extension String {
     func insert(_ string: String, ind: Int) -> String {
-        return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.characters.count-ind))
+        return  String(self.characters.prefix(ind)) + string + String(self.characters.suffix(self.count-ind))
     }
 }

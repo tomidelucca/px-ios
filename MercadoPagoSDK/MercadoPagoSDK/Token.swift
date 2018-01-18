@@ -63,9 +63,9 @@ open class Token: NSObject, CardInformationForm {
 
     open func getBin() -> String? {
         var bin: String? = nil
-        if firstSixDigit != nil && firstSixDigit.characters.count > 0 {
+        if firstSixDigit != nil && firstSixDigit.count > 0 {
             let range = firstSixDigit!.startIndex ..< firstSixDigit!.characters.index(firstSixDigit!.characters.startIndex, offsetBy: 6)
-            bin = firstSixDigit!.characters.count >= 6 ? firstSixDigit!.substring(with: range) : nil
+            bin = firstSixDigit!.count >= 6 ? firstSixDigit!.substring(with: range) : nil
         }
 
         return bin

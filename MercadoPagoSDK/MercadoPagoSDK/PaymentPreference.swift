@@ -159,7 +159,7 @@ open class PaymentPreference: NSObject {
             for i in 0..<pmArray.count {
                 if let pmDic = pmArray[i] as? NSDictionary {
                     let pmDicValue = pmDic.value(forKey: "id") as? String
-                    if pmDicValue != nil && pmDicValue!.characters.count > 0 {
+                    if pmDicValue != nil && pmDicValue!.count > 0 {
                         excludedPaymentMethods.insert(pmDicValue!)
                     }
                 }
@@ -172,7 +172,7 @@ open class PaymentPreference: NSObject {
             for i in 0..<ptArray.count {
                 if let ptDic = ptArray[i] as? NSDictionary {
                     let ptDicValue = ptDic.value(forKey: "id") as? String
-                    if ptDicValue != nil && ptDicValue?.characters.count > 0 {
+                    if ptDicValue != nil && ptDicValue?.count > 0 {
                         excludedPaymentTypesIds.insert(ptDicValue!)
                     }
                 }

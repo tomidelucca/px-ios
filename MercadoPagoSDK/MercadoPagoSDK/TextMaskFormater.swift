@@ -29,7 +29,7 @@ open class TextMaskFormater: NSObject {
         if remasked {
             return textMasked(textUnmasked(text))
         }
-        if text.characters.count == 0 {
+        if text.count == 0 {
             return self.emptyTextMasked()
         }
         return self.maskText(text)
@@ -74,7 +74,7 @@ open class TextMaskFormater: NSObject {
         var resultString: String = ""
         var charText: Character! = textArray[0]
         var charMask: Character!
-        if !self.completeEmptySpaces && (textToMask?.characters.count == 0) {
+        if !self.completeEmptySpaces && (textToMask?.count == 0) {
             return ""
         }
 
@@ -115,7 +115,7 @@ open class TextMaskFormater: NSObject {
                 xs.append(char)
             }
         }
-        var max = xs.characters.count - text.characters.count
+        var max = xs.count - text.count
         let x: Character = characterSpace
         if max < 0 {
            max = 0

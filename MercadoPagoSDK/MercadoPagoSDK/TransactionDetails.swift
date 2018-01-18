@@ -62,7 +62,7 @@ open class TransactionDetails: NSObject {
             obj["external_resource_url"] = self.externalResourceUrl
         }
         if self.financialInstitution != nil, let ID = self.financialInstitution?._id {
-            if String(describing: ID).characters.count >= 1 {
+            if String(describing: ID).count >= 1 {
                 obj["financial_institution"] = String(describing: ID)
             }
 
