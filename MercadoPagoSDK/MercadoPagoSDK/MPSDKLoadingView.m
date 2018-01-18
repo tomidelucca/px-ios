@@ -24,10 +24,6 @@
 	return [self initWithFrame:frame backgroundColor:[UIColor whiteColor] loadingText:nil loadingColor:nil];
 }
 
-- (id)initWithBackgroundColor:(UIColor *)color
-{
-    return [self initWithBackgroundColor:color loadingText:nil];
-}
 
 - (id)initWithFrame:(CGRect)frame backgroundColor:(UIColor *)color
 {
@@ -35,14 +31,8 @@
 }
 - (id)initWithLoadingColor:(UIColor *)loadingColor
 {
-    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    CGRect frame = [[UIScreen mainScreen] bounds];
     return [self initWithFrame:frame backgroundColor:nil loadingText:nil loadingColor:loadingColor];
-}
-
-- (id)initWithBackgroundColor:(UIColor *)color loadingText:(NSString *)text
-{
-	CGRect frame = [[UIScreen mainScreen] applicationFrame];
-	return [self initWithFrame:frame backgroundColor:color loadingText:text loadingColor:nil];
 }
 
 - (id)initWithFrame:(CGRect)frame backgroundColor:(UIColor *)color loadingText:(NSString *)text loadingColor:(UIColor *)loadingColor

@@ -19,12 +19,12 @@ typedef NS_ENUM (NSInteger, MLPXSpinnerSize) {
  */
 @interface MLPXSpinnerConfig : NSObject
 
-@property (nonatomic, strong) UIColor *primaryColor;
-@property (nonatomic, strong) UIColor *secondaryColor;
+@property (nonatomic, strong) UIColor * _Nullable primaryColor;
+@property (nonatomic, strong) UIColor * _Nullable secondaryColor;
 @property (nonatomic) MLPXSpinnerSize spinnerSize;
 
-- (id)init __attribute__((unavailable("Must use initWithSize:primaryColor:secondaryColor: instead.")));
+- (id _Nullable )init __attribute__((unavailable("Must use initWithSize:primaryColor:secondaryColor: instead.")));
 
-- (instancetype)initWithSize:(MLPXSpinnerSize)size primaryColor:(nonnull UIColor *)primaryColor secondaryColor:(nonnull UIColor *)secondaryColor;
+- (instancetype _Nullable )initWithSize:(MLPXSpinnerSize)size primaryColor:(nonnull UIColor *)primaryColor secondaryColor:(nonnull UIColor *)secondaryColor;
 
 @end
