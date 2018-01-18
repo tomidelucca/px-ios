@@ -14,6 +14,7 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     var name: String?
     var navBarTitle: String!
     @IBOutlet weak var webView: UIWebView!
+    
     init( url: URL, screenName: String, navigationBarTitle: String) {
         super.init(nibName: "WebViewController", bundle: MercadoPago.getBundle())
         self.url = url
@@ -43,11 +44,6 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
         return navBarTitle
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func loadUrl(_ url: URL) {
         let requestObj = URLRequest(url: url)
         webView.loadRequest(requestObj)
@@ -56,5 +52,4 @@ class WebViewController: MercadoPagoUIViewController, UIWebViewDelegate {
     func webViewDidFinishLoad(_ webView: UIWebView) {
         self.hideLoading()
     }
-
 }

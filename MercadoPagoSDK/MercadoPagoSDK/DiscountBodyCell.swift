@@ -14,7 +14,6 @@ class DiscountBodyCell: UIView {
     let LABEL_COLOR = ThemeManager.shared.getTheme().labelTintColor()
     let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
     let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
-    // TODO-Skins: Check con MAXI separator border color.
     let SEPARATOR_BORDER_COLOR: UIColor = UIColor.UIColorFromRGB(0x999999)
 
     let margin: CGFloat = 5.0

@@ -67,7 +67,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         }
     }
 
-    // TODO: Safe area
     open func totalContentViewHeigth() -> CGFloat {
         return UIScreen.main.bounds.height - getReserveSpace()
     }
