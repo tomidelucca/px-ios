@@ -42,7 +42,7 @@ open class TextMaskFormater: NSObject {
         } else {
             let charset: Set<Character> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
             var ints: String = ""
-            for char: Character in text.characters {
+            for char: Character in text {
                 if charset.contains(char) {
                     ints.append(char)
                 }
@@ -65,12 +65,12 @@ open class TextMaskFormater: NSObject {
     }
 
     fileprivate func maskText(_ text: String!) -> String! {
-        let maskArray = Array(mask.characters)
+        let maskArray = Array(mask)
         var textToMask = text
         if (!leftToRight)&&(completeEmptySpaces) {
             textToMask = completeWithEmptySpaces(text)
         }
-        let textArray = Array(textToMask!.characters)
+        let textArray = Array(textToMask!)
         var resultString: String = ""
         var charText: Character! = textArray[0]
         var charMask: Character!
@@ -110,7 +110,7 @@ open class TextMaskFormater: NSObject {
     fileprivate func completeWithEmptySpaces(_ text: String) -> String {
         let charset: Set<Character> = [characterSpace]
         var xs: String = ""
-        for char: Character in mask.characters {
+        for char: Character in mask {
             if charset.contains(char) {
                 xs.append(char)
             }

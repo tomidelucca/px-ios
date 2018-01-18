@@ -96,7 +96,7 @@ import UIKit
         }
 
         if (UIDevice.current.systemVersion as NSString).compare("8.0", options: NSString.CompareOptions.numeric) == ComparisonResult.orderedAscending {
-            var nameArr = name!.characters.split {$0 == "."}.map(String.init)
+            var nameArr = name!.split {$0 == "."}.map(String.init)
             let imageExtension: String = nameArr[1]
             let filePath = bundle.path(forResource: name, ofType: imageExtension)
             if filePath != nil {

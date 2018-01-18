@@ -147,7 +147,7 @@ open class CardToken: NSObject, CardInformationForm {
         if validSecurityCode != nil {
             return validSecurityCode
         } else {
-            let range = cardNumber.startIndex ..< cardNumber.characters.index(cardNumber.characters.startIndex, offsetBy: 6)
+            let range = cardNumber.startIndex ..< cardNumber.index(cardNumber.startIndex, offsetBy: 6)
              return validateSecurityCodeWithPaymentMethod(securityCode!, paymentMethod: paymentMethod, bin: cardNumber.substring(with: range))
         }
     }
@@ -276,7 +276,7 @@ open class CardToken: NSObject, CardInformationForm {
     open func normalizeYear(_ year: Int) -> Int {
         if year < 100 && year >= 0 {
             let currentYear: String = String(describing: now.year)
-            let range = currentYear.startIndex ..< currentYear.characters.index(currentYear.characters.endIndex, offsetBy: -2)
+            let range = currentYear.startIndex ..< currentYear.index(currentYear.endIndex, offsetBy: -2)
             let prefix: String = currentYear.substring(with: range)
 
 			let nsReturn: NSString = prefix.appending(String(year)) as NSString
@@ -287,7 +287,7 @@ open class CardToken: NSObject, CardInformationForm {
 
     public func checkLuhn(cardNumber: String) -> Bool {
         var sum = 0
-        let reversedCharacters = cardNumber.characters.reversed().map { String($0) }
+        let reversedCharacters = cardNumber.reversed().map { String($0) }
         for (idx, element) in reversedCharacters.enumerated() {
             guard let digit = Int(element) else { return false }
             switch ((idx % 2 == 1), digit) {
@@ -301,7 +301,7 @@ open class CardToken: NSObject, CardInformationForm {
     }
 
     open func getBin() -> String? {
-        let range =  cardNumber!.startIndex ..< cardNumber!.characters.index(cardNumber!.characters.startIndex, offsetBy: 6)
+        let range =  cardNumber!.startIndex ..< cardNumber!.index(cardNumber!.startIndex, offsetBy: 6)
         let bin: String? = cardNumber!.count >= 6 ? cardNumber!.substring(with: range) : nil
         return bin
     }
@@ -344,7 +344,7 @@ open class CardToken: NSObject, CardInformationForm {
 
         str = String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from:
             
-            String(self.expirationYear).index(before:String(self.expirationYear).characters.index(before: String(self.expirationYear).endIndex)
+            String(self.expirationYear).index(before:String(self.expirationYear).index(before: String(self.expirationYear).endIndex)
                 
         ))
 

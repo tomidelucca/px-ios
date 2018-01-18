@@ -49,7 +49,7 @@ extension String {
     subscript (i: Int) -> String {
 
         if self.count > i {
-            return String(self[self.characters.index(self.startIndex, offsetBy: i)])
+            return String(self[self.index(self.startIndex, offsetBy: i)])
         }
 
         return ""
@@ -60,9 +60,8 @@ extension String {
         return trimmedString
     }
 
-    public func indexAt(_ theInt: Int)->String.Index {
-
-        return self.characters.index(self.characters.startIndex, offsetBy: theInt)
+    public func indexAt(_ theInt: Int) ->String.Index {
+        return self.index(self.startIndex, offsetBy: theInt)
     }
 
     public func trimSpaces() -> String {

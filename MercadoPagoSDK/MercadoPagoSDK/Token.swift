@@ -64,7 +64,7 @@ open class Token: NSObject, CardInformationForm {
     open func getBin() -> String? {
         var bin: String? = nil
         if firstSixDigit != nil && firstSixDigit.count > 0 {
-            let range = firstSixDigit!.startIndex ..< firstSixDigit!.characters.index(firstSixDigit!.characters.startIndex, offsetBy: 6)
+            let range = firstSixDigit!.startIndex ..< firstSixDigit!.index(firstSixDigit!.startIndex, offsetBy: 6)
             bin = firstSixDigit!.count >= 6 ? firstSixDigit!.substring(with: range) : nil
         }
 
@@ -144,6 +144,7 @@ open class Token: NSObject, CardInformationForm {
     open func getCardExpirationDateFormated() -> String {
         return (String(expirationMonth) + String(expirationYear))
     }
+    
     open func getMaskNumber() -> String {
 
         var masknumber: String = ""
@@ -156,13 +157,14 @@ open class Token: NSObject, CardInformationForm {
         return masknumber
 
     }
+    
     open func getExpirationDateFormated() -> String {
-
         if self.expirationYear > 0 && self.expirationMonth > 0 {
-            return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).characters.index(before: String(self.expirationYear).endIndex)))
+            return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)))
         }
         return ""
     }
+    
     public func getCardBin() -> String? {
         return firstSixDigit
     }

@@ -119,7 +119,7 @@ open class CardFormViewModel: NSObject {
         if trimmedNumber.count < 6 {
             return nil
         } else {
-            let bin = trimmedNumber.substring(to: (trimmedNumber.characters.index(trimmedNumber.startIndex, offsetBy: 6)))
+            let bin = trimmedNumber.substring(to: (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6)))
             return bin
         }
     }
