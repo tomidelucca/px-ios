@@ -44,8 +44,8 @@ open class AmountInfo: NSObject {
     }
 
     open func toJSON() -> [String: Any] {
-        let thousands_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator)
-        let decimal_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator)
+        let thousands_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.thousandsSeparator) ?? ""
+        let decimal_separator: Any = self.currency == nil ? JSONHandler.null : String(self.currency!.decimalSeparator) ?? ""
         let symbol: Any = self.currency == nil ? JSONHandler.null : self.currency!.symbol
         let decimal_places: Any = self.currency == nil ? JSONHandler.null : self.currency!.decimalPlaces
 

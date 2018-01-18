@@ -433,7 +433,7 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
-        if let name = rejectedIconName {
+        if rejectedIconName != nil {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }
        return getHeaderImageFor(paymentMethod)

@@ -273,9 +273,6 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         callback(self.viewModel.getFinalPayer())
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        print(textField.text)
-    }
     var keyboardFrame: CGRect?
 
     func keyboardWasShown(_ notification: NSNotification) {

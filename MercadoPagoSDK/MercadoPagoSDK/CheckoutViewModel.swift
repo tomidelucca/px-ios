@@ -256,10 +256,10 @@ open class CheckoutViewModel: NSObject {
             }
 
         }
-        var amountPref = amount
+        
         if let discount = self.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
-            amountPref = discount.newAmount()
+
             if summary.details[SummaryType.DISCOUNT] != nil {
                  summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
             } else {

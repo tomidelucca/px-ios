@@ -9,8 +9,8 @@
 import Foundation
 
 open class PXThemeProperty: NSObject {
-    var backgroundColor: UIColor = .clear
-    var tintColor: UIColor = .clear
+    let backgroundColor: UIColor
+    let tintColor: UIColor
     public init (backgroundColor: UIColor, tintColor: UIColor) {
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor

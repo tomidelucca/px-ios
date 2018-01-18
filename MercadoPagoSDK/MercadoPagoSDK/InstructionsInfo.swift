@@ -65,9 +65,8 @@ open class InstructionsInfo: NSObject {
         if self.instructions != nil && self.instructions.count > 0 {
             let array = NSMutableArray()
             for inst in instructions {
-                if let instruction = inst.toJSON() as? [String: AnyObject] {
-                    array.add(instruction)
-                }
+                let instruction = inst.toJSON() as [String: AnyObject]
+                array.add(instruction)
             }
             obj["instructions"] = array
         }

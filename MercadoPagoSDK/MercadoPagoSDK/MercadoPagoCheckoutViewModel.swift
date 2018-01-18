@@ -173,7 +173,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func payerInfoFlow() -> PayerInfoViewModel {
-        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer)
+        let viewModel = PayerInfoViewModel(identificationTypes: self.identificationTypes!, payer: self.paymentData.payer!)
         return viewModel
     }
 
@@ -300,7 +300,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if paymentData.hasPaymentMethod() && paymentData.getPaymentMethod()!.isCard {
             self.cardToken!.cardholder!.identification = identification
         } else {
-            paymentData.payer.identification = identification
+            paymentData.payer?.identification = identification
         }
     }
 
@@ -315,7 +315,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func updateCheckoutModel(entityType: EntityType) {
-        self.paymentData.payer.entityType = entityType
+        self.paymentData.payer?.entityType = entityType
     }
 
     // MARK: PAYMENT METHOD OPTION SELECTION
@@ -532,8 +532,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         var payer = Payer()
-        if paymentData.payer != nil {
-            payer = paymentData.payer
+        if let targetPayer = paymentData.payer {
+            payer = targetPayer
         }
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)

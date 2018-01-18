@@ -77,7 +77,5 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
             return CGFloat(280)
         }
         return CGFloat(300)
-
     }
-
 }

@@ -26,7 +26,7 @@ class SummaryComponent: UIView, PXComponent {
         self.summary = summary
         super.init(frame: frame)
         self.addDetailsViews(typeDetailDictionary: summary.details)
-        var payerCost = paymentData.payerCost
+        let payerCost = paymentData.payerCost
         if payerCost != nil && (payerCost?.installments)! > 1 {
             self.addMediumMargin()
             self.addLine()
