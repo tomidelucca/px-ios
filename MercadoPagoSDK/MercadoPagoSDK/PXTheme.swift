@@ -21,6 +21,7 @@ import Foundation
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor
     func discountColor() -> UIColor
+    func payerCostNoRateColor() -> UIColor
 
     func loadingComponent() -> PXThemeProperty
     func modalComponent() -> PXThemeProperty

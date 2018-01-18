@@ -71,7 +71,11 @@ extension PXDefaultTheme: PXTheme {
         return #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
     }
 
-    func discountColor() -> UIColor {
+    public func discountColor() -> UIColor {
+        return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    }
+    
+    public func payerCostNoRateColor() -> UIColor {
         return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     }
 
