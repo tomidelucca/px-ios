@@ -161,7 +161,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
 
         textEditMaskFormater.emptyMaskElement = nil
-
     }
 
     open override func viewDidAppear(_ animated: Bool) {
