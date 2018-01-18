@@ -15,17 +15,16 @@ class JSONHandler: NSObject {
         do {
             let dict = NSMutableDictionary()
             for (key, value) in jsonDictionary {
-                if let value = value as? AnyObject {
-                    dict.setValue(value, forKey: key)
-                }
+                dict.setValue(value as AnyObject, forKey: key)
             }
             let jsonData = try JSONSerialization.data(withJSONObject: dict)
-            result = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue)  as! String
+            if let strResult = NSString(data: jsonData, encoding: String.Encoding.ascii.rawValue) as String? {
+                result = strResult
+            }
         } catch {
             print("ERROR CONVERTING ARRAY TO JSON, ERROR = \(error)")
         }
         return result
-
     }
 
     class func convertToDictionary(text: String) -> [String: Any]? {

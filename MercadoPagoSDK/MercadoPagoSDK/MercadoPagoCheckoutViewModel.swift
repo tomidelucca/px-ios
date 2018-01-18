@@ -239,7 +239,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public func cloneTokenSecurityCodeViewModel() -> SecurityCodeViewModel {
         let cardInformation = self.paymentData.token
-        var reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
+        let reason = SecurityCodeViewModel.Reason.CALL_FOR_AUTH
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 

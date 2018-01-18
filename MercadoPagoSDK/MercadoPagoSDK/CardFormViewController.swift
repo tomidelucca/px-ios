@@ -814,7 +814,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
 
         if viewModel.customerCard != nil {
-            self.viewModel.buildSavedCardToken(self.cvvLabel!.text!)
+            _ = self.viewModel.buildSavedCardToken(self.cvvLabel!.text!)
             if !viewModel.cardToken!.validate() {
                 markErrorLabel(cvvLabel!)
             }

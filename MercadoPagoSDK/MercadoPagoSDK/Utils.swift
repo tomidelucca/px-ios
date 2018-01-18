@@ -50,7 +50,7 @@ class Utils {
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = string.characters.split {$0 == "T"}.map(String.init)
+        var dateArr = string.split {$0 == "T"}.map(String.init)
         return dateFormatter.date(from: dateArr[0])
     }
 
@@ -414,6 +414,44 @@ class Utils {
         let formatterYear = DateFormatter()
         formatterYear.dateFormat = "yyyy"
         return formatterDay.string(from:date) + " de ".localized + formatterMonth.string(from:date).localized.lowercased() + " de ".localized + formatterYear.string(from:date)
+    }
+    
+    
+    func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?) {
+        
+        guard let urlString = urlStr else {return}
+        
+        let url = URL(string: urlString)
+        
+        let imageCache = NSCache<NSString, AnyObject>()
+        
+        targetImage.image = placeHolderImage
+        
+        // Get cached image
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
+            targetImage.image = cachedImage
+            return
+        }
+        
+        if let targetUrl = url {
+            
+            // Request image.
+            URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data, response, error) in
+                
+                if error != nil {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    if let remoteData = data, let image = UIImage(data: remoteData) {
+                        imageCache.setObject(image, forKey: urlString as NSString)
+                        targetImage.image = image
+                    }
+                }
+            }).resume()
+        }
+        
+        return
     }
 
 }

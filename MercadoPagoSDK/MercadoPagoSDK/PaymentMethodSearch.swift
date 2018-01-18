@@ -49,8 +49,7 @@ open class PaymentMethodSearch: Equatable {
                 }
 
             }
-                pmSearch.cards = customerCards.allValues as! [Card]
-
+            pmSearch.cards = customerCards.allValues as? [Card]
         }
 
         var customerPaymentMethods = [CustomerPaymentMethod]()

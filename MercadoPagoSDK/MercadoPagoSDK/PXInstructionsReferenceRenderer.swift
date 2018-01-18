@@ -35,8 +35,8 @@ class PXInstructionsReferenceRenderer: NSObject {
             lastView = instructionReferenceView.referenceLabel
         }
 
-        if let lastView = lastView {
-            instructionReferenceView.pinLastSubviewToBottom()
+        if lastView != nil {
+            _ = instructionReferenceView.pinLastSubviewToBottom()
         }
 
         return instructionReferenceView

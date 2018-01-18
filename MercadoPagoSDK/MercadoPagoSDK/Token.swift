@@ -115,7 +115,9 @@ open class Token: NSObject, CardInformationForm {
         let lastFour: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
         let firstSix: Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
         let cardHolderToJsonString: Any = self.cardHolder?.toJSON() ?? JSONHandler.null
-        let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc
+        
+        //TODO: Change all json parse logic. Remove fromJson, tJson. Refactor of Network layer.
+        let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc ?? ""
 
         let obj: [String: Any] = [
             "id": _id,

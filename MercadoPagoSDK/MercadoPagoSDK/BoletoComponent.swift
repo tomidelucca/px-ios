@@ -32,7 +32,7 @@ class BoletoComponent: UIView, PXComponent {
     }
 
     func setupView() {
-        var boletoImageView = UIImageView(frame: CGRect(x: 0, y:0, width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
+        let boletoImageView = UIImageView(frame: CGRect(x: 0, y:0, width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         boletoImageView.image = MercadoPago.getImage("boleto")
         self.boletoView = UIView(frame: CGRect(x: getImageX(), y: getImageY(), width: BoletoComponent.IMAGE_WIDTH, height: BoletoComponent.IMAGE_HEIGHT))
         self.boletoView.addSubview(boletoImageView)

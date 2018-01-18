@@ -132,30 +132,6 @@ import UIKit
         return screenSize
     }
 
-    open class func showAlertViewWithError(_ error: NSError?, nav: UINavigationController?) {
-        let msgDefault = "An error occurred while processing your request. Please try again."
-        var msg: String? = msgDefault
-
-        if error != nil {
-            msg = error!.userInfo["message"] as? String
-        }
-
-        MercadoPago.temporalNav = nav
-
-        let alert = UIAlertView()
-        alert.title = "MercadoPago Error"
-        alert.delegate = self
-        alert.message = "Error = \(msg != nil ? msg! : msgDefault)"
-        alert.addButton(withTitle: "OK")
-        alert.show()
-    }
-
-    open func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
-        if buttonIndex == 0 {
-            MercadoPago.temporalNav?.popViewController(animated: true)
-        }
-    }
-
     open class func getImageFor(searchItem: PaymentMethodSearchItem) -> UIImage? {
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)

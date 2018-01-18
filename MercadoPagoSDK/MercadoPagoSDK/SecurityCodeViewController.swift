@@ -26,7 +26,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
 
     override func trackInfo() {
-        var metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
+        let metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
 
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
