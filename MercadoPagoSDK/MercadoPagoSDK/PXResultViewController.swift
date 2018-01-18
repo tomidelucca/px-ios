@@ -90,7 +90,7 @@ class PXResultViewController: PXComponentContainerViewController {
                 expandBody()
             }
         }
-        bodyView.addSeparatorLineToBottom(horizontalMargin: 0, width: bodyView.frame.width, height: 1)
+        bodyView.addSeparatorLineToBottom(height: 1)
 
         self.view.layoutIfNeeded()
         self.contentView.layoutIfNeeded()

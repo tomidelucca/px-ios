@@ -33,7 +33,7 @@ extension UIView {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :self.frame.size.height - height), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
-        line.backgroundColor = UIColor.pxMediumLightGray
+        line.backgroundColor = .pxMediumLightGray
         addSubview(line)
     }
 
