@@ -126,19 +126,11 @@ class PXResultViewController: PXComponentContainerViewController {
         return bodyView.frame.height == 0
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
         self.view.layoutIfNeeded()
         renderViews()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }
 
