@@ -18,6 +18,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var shouldHideNavigationBar = false
     var shouldShowBackArrow = true
     var tracked: Bool = false
+    
+    var pluginComponentInterfase: PXPluginComponent? = nil
 
     let STATUS_BAR_HEIGTH = ViewUtils.getStatusBarHeight()
     let NAV_BAR_HEIGHT = 44.0
@@ -45,7 +47,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         UIApplication.shared.statusBarStyle = ThemeManager.shared.getTheme().statusBarStyle()
 
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -56,6 +58,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: false)
         }
+        
+        pluginComponentInterfase?.viewWillAppear?()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
@@ -65,6 +69,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
         }
+        
+        pluginComponentInterfase?.viewWillDisappear?()
     }
 
     open func totalContentViewHeigth() -> CGFloat {

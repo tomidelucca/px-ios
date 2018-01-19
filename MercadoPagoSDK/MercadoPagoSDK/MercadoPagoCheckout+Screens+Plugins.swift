@@ -26,6 +26,8 @@ extension MercadoPagoCheckout {
         guard let paymentMethodConfigPluginComponent = paymentMethodPlugin.paymentMethodConfigPlugin else {
             return
         }
+        
+        containerVC.pluginComponentInterfase = paymentMethodConfigPluginComponent
 
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
