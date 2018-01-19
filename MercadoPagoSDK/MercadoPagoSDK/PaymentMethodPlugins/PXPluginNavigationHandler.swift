@@ -45,6 +45,22 @@ open class PXPluginNavigationHandler: NSObject {
         checkout?.setPaymentResult(paymentResult: paymentResult)
         checkout?.executeNextStep()
     }
+    
+    open func didFinishPayment(status:String, statusDetail: String, receiptId: String? = nil) {
+        
+        guard let paymentData = self.checkout?.viewModel.paymentData else {
+            return
+        }
+        
+        if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
+            paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
+        }
+        
+        let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: paymentData, payerEmail: nil, id: receiptId, statementDescription: nil)
+        
+        checkout?.setPaymentResult(paymentResult: paymentResult)
+        checkout?.executeNextStep()
+    }
 
     open func showFailure(message: String, errorDetails: String, retryButtonCallback: (() -> Void)?) {
         MercadoPagoCheckoutViewModel.error = MPSDKError(message: message, errorDetail: errorDetails, retry: retryButtonCallback != nil)
