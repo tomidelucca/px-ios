@@ -47,7 +47,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         self.itemTitle.font = Utils.getFont(size: itemTitle.font.pointSize)
         self.itemDescription.font =  Utils.getFont(size: itemDescription.font.pointSize)
 
-        if item._description != nil && item._description!.characters.count > 0 {
+        if item._description != nil && item._description!.count > 0 {
             self.itemDescription.text = item._description!
         } else {
             self.itemDescription.text = ""
@@ -77,7 +77,5 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
             return CGFloat(280)
         }
         return CGFloat(300)
-
     }
-
 }

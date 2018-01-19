@@ -109,7 +109,7 @@ class PayerInfoViewModel: NSObject {
     }
 
     fileprivate func validateIdentificationNumber() -> Bool {
-        let length = currentMask?.textUnmasked(identificationNumber).characters.count
+        let length = currentMask?.textUnmasked(identificationNumber).count
         return identificationType.minLength <= length! &&  length! <= identificationType.maxLength
     }
 

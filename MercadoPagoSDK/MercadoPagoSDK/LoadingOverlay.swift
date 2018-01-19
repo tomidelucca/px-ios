@@ -41,7 +41,8 @@ open class LoadingOverlay {
         self.container.addSubview(self.activityIndicator)
 
         self.screenContainer.frame = CGRect(x : 0, y : 0, width : view.frame.width, height : view.frame.height)
-        self.screenContainer.backgroundColor = backgroundColor.withAlphaComponent(0.8)//UIColor.red//
+        self.screenContainer.backgroundColor = backgroundColor.withAlphaComponent(0.8)
+        
         self.screenContainer.addSubview(self.container)
 
         self.activityIndicator.startAnimating()
@@ -50,32 +51,20 @@ open class LoadingOverlay {
 
     open func showOverlay(_ view: UIView, backgroundColor: UIColor, indicatorColor: UIColor = UIColor.white) -> UIView {
         let loadingOverlay: UIView?
-        if MercadoPagoContext.shouldDisplayDefaultLoading() {
-            loadingOverlay = self.getDefaultLoadingOverlay(view, backgroundColor : backgroundColor, indicatorColor: indicatorColor)
-            view.addSubview(loadingOverlay!)
-            view.bringSubview(toFront: loadingOverlay!)
-        } else {
-            self.loadingContainer = MPSDKLoadingView(loading: ThemeManager.shared.getTheme().loadingComponent().tintColor)!
-            let loadingImage = MercadoPago.getImage("mpui-loading_default")
-            //self.loadingContainer.spinner = UIImageView(image: loadingImage)
 
-            view.addSubview(self.loadingContainer)
-            view.bringSubview(toFront: self.loadingContainer)
-            loadingOverlay = self.loadingContainer
-            loadingOverlay?.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        }
+        self.loadingContainer = MPSDKLoadingView(loading: ThemeManager.shared.getTheme().loadingComponent().tintColor)!
+
+        view.addSubview(self.loadingContainer)
+        view.bringSubview(toFront: self.loadingContainer)
+        loadingOverlay = self.loadingContainer
+        loadingOverlay?.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
+        
         return loadingOverlay!
     }
 
     open func hideOverlayView() {
-        if MercadoPagoContext.shouldDisplayDefaultLoading() {
-            activityIndicator.stopAnimating()
-            screenContainer.removeFromSuperview()
-        } else {
-            if self.loadingContainer != nil {
-                self.loadingContainer.removeFromSuperview()
-            }
-
+        if self.loadingContainer != nil {
+            self.loadingContainer.removeFromSuperview()
         }
     }
 }

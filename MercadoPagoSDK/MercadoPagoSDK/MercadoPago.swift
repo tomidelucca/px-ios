@@ -96,7 +96,7 @@ import UIKit
         }
 
         if (UIDevice.current.systemVersion as NSString).compare("8.0", options: NSString.CompareOptions.numeric) == ComparisonResult.orderedAscending {
-            var nameArr = name!.characters.split {$0 == "."}.map(String.init)
+            var nameArr = name!.split {$0 == "."}.map(String.init)
             let imageExtension: String = nameArr[1]
             let filePath = bundle.path(forResource: name, ofType: imageExtension)
             if filePath != nil {
@@ -130,30 +130,6 @@ import UIKit
             return CGRect(x: 0.0, y: 0.0, width: screenSize.height, height: screenSize.width)
         }
         return screenSize
-    }
-
-    open class func showAlertViewWithError(_ error: NSError?, nav: UINavigationController?) {
-        let msgDefault = "An error occurred while processing your request. Please try again."
-        var msg: String? = msgDefault
-
-        if error != nil {
-            msg = error!.userInfo["message"] as? String
-        }
-
-        MercadoPago.temporalNav = nav
-
-        let alert = UIAlertView()
-        alert.title = "MercadoPago Error"
-        alert.delegate = self
-        alert.message = "Error = \(msg != nil ? msg! : msgDefault)"
-        alert.addButton(withTitle: "OK")
-        alert.show()
-    }
-
-    open func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
-        if buttonIndex == 0 {
-            MercadoPago.temporalNav?.popViewController(animated: true)
-        }
     }
 
     open class func getImageFor(searchItem: PaymentMethodSearchItem) -> UIImage? {

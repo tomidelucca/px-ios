@@ -89,7 +89,6 @@ class PayerCostView: UIView, PXComponent {
         self.requiredHeight = self.purchaseDetailAmount.frame.size.height + 2 * VERTICAL_MARGIN
 
         if self.noRateLabel != nil {
-            let frameRate = self.noRateLabel.frame
             self.noRateLabel.frame = CGRect(x: self.purchaseDetailAmount.frame.origin.x, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: self.purchaseDetailAmount.frame.size.width, height: self.noRateLabel.requiredHeight() )
             self.requiredHeight = self.requiredHeight + VERTICAL_MARGIN + self.noRateLabel.requiredHeight()
         }

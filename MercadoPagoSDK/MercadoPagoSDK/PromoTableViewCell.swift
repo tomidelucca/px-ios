@@ -27,19 +27,11 @@ open class PromoTableViewCell: UITableViewCell {
 	}
 
 	open func setPromoInfo(_ promo: BankDeal!) {
-		let placeholderImage = "empty_tc"
+		let placeholderImage = UIImage(named: "empty_tc")
+        
 		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && !String.isNullOrEmpty(promo.url) {
-			let imgURL: URL = URL(string: promo.url!)!
-			let request: URLRequest = URLRequest(url: imgURL)
-			NSURLConnection.sendAsynchronousRequest(
-				request, queue: OperationQueue.main,
-				completionHandler: {(_: URLResponse?, data: Data?, error: Error?) -> Void in
-					if error == nil {
-						self.issuerImageView.image = UIImage(data: data!)
-					} else {
-						self.issuerImageView.image = UIImage(named: placeholderImage)
-					}
-			})
+			
+            Utils().loadImageWithCache(withUrl: promo.url, targetImage: self.issuerImageView, placeHolderImage: placeholderImage)
 		}
 
 		self.sharesSubtitle.text = promo.recommendedMessage

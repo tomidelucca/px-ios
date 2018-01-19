@@ -254,7 +254,7 @@ open class PaymentResultScreenPreference: NSObject {
     @available(*, deprecated)
     open func setRejectedIconSubtext(text: String) {
         self.rejectedIconSubtext = text
-        if text.characters.count == 0 {
+        if text.count == 0 {
             self.disableRejectedLabelText = true
         }
     }
@@ -433,7 +433,7 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
-        if let name = rejectedIconName {
+        if rejectedIconName != nil {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }
        return getHeaderImageFor(paymentMethod)

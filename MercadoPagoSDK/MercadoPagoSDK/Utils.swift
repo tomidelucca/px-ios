@@ -50,7 +50,7 @@ class Utils {
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        var dateArr = string.characters.split {$0 == "T"}.map(String.init)
+        var dateArr = string.split {$0 == "T"}.map(String.init)
         return dateFormatter.date(from: dateArr[0])
     }
 
@@ -208,13 +208,13 @@ class Utils {
             cents = formattedString.substring(from: centsIndex)
         }
 
-        if cents.isEmpty || cents.characters.count < decimalPlaces {
-            var missingZeros = decimalPlaces - cents.characters.count
+        if cents.isEmpty || cents.count < decimalPlaces {
+            var missingZeros = decimalPlaces - cents.count
             while missingZeros > 0 {
                 cents.append("0")
                 missingZeros = missingZeros - 1
             }
-        } else if cents.characters.count > decimalPlaces {
+        } else if cents.count > decimalPlaces {
             let index1 = cents.index(cents.startIndex, offsetBy: decimalPlaces)
             cents = cents.substring(to: index1)
         }
@@ -230,7 +230,7 @@ class Utils {
     class func getAmountFormatted(_ formattedString: String, thousandSeparator: String, decimalSeparator: String) -> String {
 
         let amount = self.getAmountDigits(formattedString, decimalSeparator : decimalSeparator)
-        let length = amount.characters.count
+        let length = amount.count
         if length <= 3 {
             return amount
         }
@@ -370,7 +370,7 @@ class Utils {
     internal static func getExpirationYearFromLabelText(_ mmyy: String) -> Int {
         let stringMMYY = mmyy.replacingOccurrences(of: "/", with: "")
         let validInt = Int(stringMMYY)
-        if validInt == nil || stringMMYY.characters.count < 4 {
+        if validInt == nil || stringMMYY.count < 4 {
             return 0
         }
         let floatMMYY = Float( validInt! / 100 )
@@ -414,6 +414,44 @@ class Utils {
         let formatterYear = DateFormatter()
         formatterYear.dateFormat = "yyyy"
         return formatterDay.string(from:date) + " de ".localized + formatterMonth.string(from:date).localized.lowercased() + " de ".localized + formatterYear.string(from:date)
+    }
+    
+    
+    func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?) {
+        
+        guard let urlString = urlStr else {return}
+        
+        let url = URL(string: urlString)
+        
+        let imageCache = NSCache<NSString, AnyObject>()
+        
+        targetImage.image = placeHolderImage
+        
+        // Get cached image
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
+            targetImage.image = cachedImage
+            return
+        }
+        
+        if let targetUrl = url {
+            
+            // Request image.
+            URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data, response, error) in
+                
+                if error != nil {
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    if let remoteData = data, let image = UIImage(data: remoteData) {
+                        imageCache.setObject(image, forKey: urlString as NSString)
+                        targetImage.image = image
+                    }
+                }
+            }).resume()
+        }
+        
+        return
     }
 
 }

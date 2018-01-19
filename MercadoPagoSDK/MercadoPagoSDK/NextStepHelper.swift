@@ -74,7 +74,7 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        if !pm.isOnlinePaymentMethod && (pm.isIdentificationRequired || pm.isIdentificationTypeRequired || pm.isPayerInfoRequired) && (String.isNullOrEmpty(self.paymentData.payer.identification?.number) || String.isNullOrEmpty(self.paymentData.payer.identification?.type)) {
+        if !pm.isOnlinePaymentMethod && (pm.isIdentificationRequired || pm.isIdentificationTypeRequired || pm.isPayerInfoRequired) && (String.isNullOrEmpty(self.paymentData.payer?.identification?.number) || String.isNullOrEmpty(self.paymentData.payer?.identification?.type)) {
             return true
         }
 
@@ -97,7 +97,7 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
-        if paymentData.payer.entityType == nil && pm.isEntityTypeRequired {
+        if paymentData.payer?.entityType == nil && pm.isEntityTypeRequired {
             return true
         }
         return false

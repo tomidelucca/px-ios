@@ -76,7 +76,7 @@ open class BankDeal: NSObject {
             for pm in self.paymentMethods {
                 arrayPMs.append(pm.toJSONString() + ",")
             }
-            obj["payment_methods"] = String(arrayPMs.characters.dropLast())
+            obj["payment_methods"] = String(arrayPMs.dropLast())
         }
 
         return obj
@@ -87,7 +87,7 @@ open class BankDeal: NSObject {
 		}
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
-		var dateArr = string.characters.split {$0 == "T"}.map(String.init)
+		var dateArr = string.split {$0 == "T"}.map(String.init)
 		return dateFormatter.date(from: dateArr[0])
 	}
 }

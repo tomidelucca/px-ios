@@ -61,7 +61,6 @@ open class CardFormViewModel: NSObject {
         } else {
             return nil
         }
-        return paymentMethod.paymentTypeId
     }
 
     func cvvLenght() -> Int {
@@ -117,16 +116,16 @@ open class CardFormViewModel: NSObject {
         var trimmedNumber = cardNumber.replacingOccurrences(of: " ", with: "")
         trimmedNumber = trimmedNumber.replacingOccurrences(of: String(textMaskFormater.emptyMaskElement), with: "")
 
-        if trimmedNumber.characters.count < 6 {
+        if trimmedNumber.count < 6 {
             return nil
         } else {
-            let bin = trimmedNumber.substring(to: (trimmedNumber.characters.index(trimmedNumber.startIndex, offsetBy: 6)))
+            let bin = trimmedNumber.substring(to: (trimmedNumber.index(trimmedNumber.startIndex, offsetBy: 6)))
             return bin
         }
     }
 
     func isValidInputCVV(_ text: String) -> Bool {
-        if text.characters.count > self.cvvLenght() {
+        if text.count > self.cvvLenght() {
             return false
         }
         let num = Int(text)
@@ -162,7 +161,7 @@ open class CardFormViewModel: NSObject {
 
         self.tokenHidratate(cardNumberLabel.text!, expirationDate: expirationDateLabel.text!, cvv: cvvLabel.text!, cardholderName: cardholderNameLabel.text!)
 
-        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").characters.count < self.getGuessedPM()?.secCodeLenght()) {
+        if (cvvLabel.text!.replacingOccurrences(of: "•", with: "").count < self.getGuessedPM()?.secCodeLenght()) {
             return false
         }
         let errorMethod = self.cardToken!.validateSecurityCode()
@@ -195,13 +194,11 @@ open class CardFormViewModel: NSObject {
     }
 
     func matchedPaymentMethod (_ cardNumber: String) -> [PaymentMethod]? {
+        
         if self.guessedPMS != nil {
             return self.guessedPMS
+        }
 
-        }
-        if self.paymentMethods == nil {
-            return nil
-        }
         if getBIN(cardNumber) == nil {
             return nil
         }

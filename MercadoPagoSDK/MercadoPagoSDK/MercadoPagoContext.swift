@@ -149,7 +149,7 @@ open class MercadoPagoContext: NSObject {
 
     fileprivate override init() {
         super.init()
-        MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
+        _ = MercadoPagoUIViewController.loadFont(MercadoPago.DEFAULT_FONT_NAME)
         self.setSite(Site.MLA)
     }
 

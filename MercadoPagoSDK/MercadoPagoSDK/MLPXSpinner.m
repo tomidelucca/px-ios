@@ -87,7 +87,10 @@ static const CGFloat kMLPXSpinnerAppearenceAnimationDuration = 0.3;
 {
 	self = [super initWithCoder:aDecoder];
 	if (self) {
-		self.style = MLPXSpinnerStyleBlueBig;
+        
+        MLPXSpinnerConfig *spinnerConfig = [[MLPXSpinnerConfig alloc] initWithSize:MLPXSpinnerSizeBig primaryColor:self.startColor secondaryColor:self.endColor];
+    
+        [self setUpSpinnerWithConfig:spinnerConfig];
 		[self setUpView];
 	}
 	return self;

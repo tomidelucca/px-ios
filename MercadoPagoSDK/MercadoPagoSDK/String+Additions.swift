@@ -48,21 +48,20 @@ extension String {
 
     subscript (i: Int) -> String {
 
-        if self.characters.count > i {
-            return String(self[self.characters.index(self.startIndex, offsetBy: i)])
+        if self.count > i {
+            return String(self[self.index(self.startIndex, offsetBy: i)])
         }
 
         return ""
     }
 
     public func lastCharacters(number: Int) -> String {
-        let trimmedString: String = (self as NSString).substring(from: max(self.characters.count - number, 0))
+        let trimmedString: String = (self as NSString).substring(from: max(self.count - number, 0))
         return trimmedString
     }
 
-    public func indexAt(_ theInt: Int)->String.Index {
-
-        return self.characters.index(self.characters.startIndex, offsetBy: theInt)
+    public func indexAt(_ theInt: Int) ->String.Index {
+        return self.index(self.startIndex, offsetBy: theInt)
     }
 
     public func trimSpaces() -> String {

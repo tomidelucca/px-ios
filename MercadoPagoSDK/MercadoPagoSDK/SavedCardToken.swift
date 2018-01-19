@@ -43,7 +43,7 @@ open class SavedCardToken: CardToken {
 
     open func validateSecurityCodeNumbers() -> Bool {
         let isEmptySecurityCode: Bool = String.isNullOrEmpty(self.securityCode)
-        return !isEmptySecurityCode && self.securityCode!.characters.count >= 3 && self.securityCode!.characters.count <= 4
+        return !isEmptySecurityCode && self.securityCode!.count >= 3 && self.securityCode!.count <= 4
     }
 
     open override func isCustomerPaymentMethod() -> Bool {

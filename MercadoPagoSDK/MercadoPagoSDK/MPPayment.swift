@@ -67,13 +67,13 @@ open class MPPayment: NSObject {
             "binary_mode": self.binaryMode
             ]
 
-        if self.tokenId != nil && self.tokenId?.characters.count > 0 {
+        if self.tokenId != nil && self.tokenId?.count > 0 {
             obj["token"] = self.tokenId!
         }
 
         obj["installments"] = self.installments
 
-        if self.issuerId != nil && self.issuerId?.characters.count > 0 {
+        if self.issuerId != nil && self.issuerId?.count > 0 {
             obj["issuer_id"] = self.issuerId
         }
 

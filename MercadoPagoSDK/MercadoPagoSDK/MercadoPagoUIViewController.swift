@@ -89,7 +89,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     var lastDefaultFontButton: String?
 
     static func loadFont(_ fontName: String) -> Bool {
-
         if let path = MercadoPago.getBundle()!.path(forResource: fontName, ofType: "ttf") {
             if let inData = try? Data(contentsOf: URL(fileURLWithPath: path)) {
                 var error: Unmanaged<CFError>?
@@ -97,10 +96,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 if let provider = CGDataProvider(data: cfdata!) {
                     let font = CGFont(provider)
                     if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-                        print("Failed to load font: \(error)")
+                        print("Failed to load font: \(error.debugDescription)")
                     }
                     return true
-
                 }
             }
         }
@@ -361,7 +359,7 @@ extension UINavigationBar {
 }
 extension UINavigationController {
     internal func showLoading() {
-        LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
+        _ = LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
     }
 
     internal func hideLoading() {
