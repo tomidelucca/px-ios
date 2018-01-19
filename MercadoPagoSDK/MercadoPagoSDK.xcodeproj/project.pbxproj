@@ -253,7 +253,6 @@
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
 		236251CC1EF2D518005589AB /* PaymentResultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236251CB1EF2D518005589AB /* PaymentResultTest.swift */; };
 		239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
-		23A366A7200CBF8500E69FD7 /* PXMeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */; };
 		23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */; };
@@ -879,7 +878,6 @@
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
 		236251CB1EF2D518005589AB /* PaymentResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultTest.swift; sourceTree = "<group>"; };
-		23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMeliTheme.swift; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
@@ -1687,7 +1685,6 @@
 			isa = PBXGroup;
 			children = (
 				23E2158220062E4600B968F6 /* PXDefaultTheme.swift */,
-				23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */,
 			);
 			name = Themes;
 			sourceTree = "<group>";
@@ -2735,7 +2732,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\n#swiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		531F38B15A5AD3D6E3AC8F5C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2796,7 +2793,6 @@
 				815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				0F9883971AD2AB6000F750F0 /* Token.swift in Sources */,
-				23A366A7200CBF8500E69FD7 /* PXMeliTheme.swift in Sources */,
 				15661C5C1FCDCC48007FD7B7 /* PXBodyViewModelHelper.swift in Sources */,
 				4BAA55E71DB0012300501061 /* AdditionalStepViewController.swift in Sources */,
 				155954F11F87CD200086854B /* InputComponent.swift in Sources */,
@@ -3299,9 +3295,6 @@
 				816AB5B11FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */,
 				76EC47E41C85F01D0086FA53 /* OrderTest.swift in Sources */,
 				7622E3281DF5EF0200490C4E /* CardTypeTableViewCell.swift in Sources */,
-				4B1D0AAE1FF28D1B00C88006 /* PXHookNavigationHandler.swift in Sources */,
-				FC3FC8941FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift in Sources */,
-				76BB423B1E53887A00FA44C0 /* ReviewScreenPreference.swift in Sources */,
 				4B4E23232000417B007E8FDD /* MockComponent.swift in Sources */,
 				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
 				15AE1DB81F61BCEE00B0DAF8 /* TitleValueView.swift in Sources */,

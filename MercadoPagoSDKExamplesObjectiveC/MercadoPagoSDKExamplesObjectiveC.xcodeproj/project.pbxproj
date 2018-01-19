@@ -13,6 +13,7 @@
 		23346C341FE83734005FD8C9 /* PaymentPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C2E1FE83733005FD8C9 /* PaymentPluginViewController.m */; };
 		23346C351FE83734005FD8C9 /* PaymentMethodPlugins.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23346C301FE83734005FD8C9 /* PaymentMethodPlugins.storyboard */; };
 		23346C361FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */; };
+		2385C5DA20125871002C147D /* MeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385C5D920125871002C147D /* MeliTheme.swift */; };
 		4B34DC331E5DA33100FDD295 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7EC41D2559140087C785 /* AppDelegate.m */; };
 		4B7AA9801E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
 		4B7AA9811E55E64C000902B9 /* DineroEnCuentaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */; };
@@ -45,7 +46,6 @@
 		76EF7F601D2706720087C785 /* ServicesExamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EF7F5F1D2706720087C785 /* ServicesExamplesViewController.m */; };
 		81488CC11FE93E0C003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
 		81488CC21FE94196003C35B1 /* TestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81488CC01FE93E0C003C35B1 /* TestComponent.swift */; };
-		AAF596F4A0D77796C95016D5 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 542941FB936E655430F3C821 /* Pods_MercadoPagoSDKExamplesObjectiveC.framework */; };
 		F2A12D83393CB543F92DF9FE /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +102,7 @@
 		23346C311FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentMethodPluginConfigViewController.m; sourceTree = "<group>"; };
 		23346C321FE83734005FD8C9 /* PaymentMethodPluginConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentMethodPluginConfigViewController.h; sourceTree = "<group>"; };
 		23346C331FE83734005FD8C9 /* PaymentPluginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentPluginViewController.h; sourceTree = "<group>"; };
+		2385C5D920125871002C147D /* MeliTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeliTheme.swift; sourceTree = "<group>"; };
 		2E63040F2E13FF09B0FAC07F /* Pods_MercadoPagoSDKExamplesObjectiveCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MercadoPagoSDKExamplesObjectiveCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7AA97D1E55E64C000902B9 /* DineroEnCuentaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DineroEnCuentaTableViewCell.h; sourceTree = "<group>"; };
 		4B7AA97E1E55E64C000902B9 /* DineroEnCuentaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DineroEnCuentaTableViewCell.m; sourceTree = "<group>"; };
@@ -196,6 +197,14 @@
 			name = PaymentMethodPlugins;
 			sourceTree = "<group>";
 		};
+		2385C5DB20125873002C147D /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				2385C5D920125871002C147D /* MeliTheme.swift */,
+			);
+			name = Themes;
+			sourceTree = "<group>";
+		};
 		250DBD73536A8A42B1E606E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,6 +296,7 @@
 		76EF7EBF1D2559140087C785 /* MercadoPagoSDKExamplesObjectiveC */ = {
 			isa = PBXGroup;
 			children = (
+				2385C5DB20125873002C147D /* Themes */,
 				23346C371FE83738005FD8C9 /* PaymentMethodPlugins */,
 				4B811DE71FCDD48A000611AD /* Hooks */,
 				76E6E0601D2AD29C006CE49B /* Example */,
@@ -608,6 +618,7 @@
 				76EF7F221D255C7E0087C785 /* ExampleUtils.m in Sources */,
 				76EF7F5A1D26FDB80087C785 /* MainExamplesViewController.m in Sources */,
 				4B811DF11FCDD49A000611AD /* ThirdHookViewController.m in Sources */,
+				2385C5DA20125871002C147D /* MeliTheme.swift in Sources */,
 				15C84A981D2D531E002E4988 /* MediosOffTableViewController.m in Sources */,
 				763B45021D2C02DE002E2B39 /* InstallmentsTableViewController.m in Sources */,
 				76E6E06E1D2AE529006CE49B /* SimpleVaultFormViewController.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  PXMeliTheme.swift
+//  MeliTheme.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 15/1/18.
@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import MercadoPagoSDK
 
-@objc open class PXMeliTheme: NSObject, PXTheme {
+@objc class MeliTheme: NSObject, PXTheme {
 
     public func navigationBar() -> PXThemeProperty {
         return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 0.9176470588, blue: 0.4705882353, alpha: 1), tintColor: #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1))
