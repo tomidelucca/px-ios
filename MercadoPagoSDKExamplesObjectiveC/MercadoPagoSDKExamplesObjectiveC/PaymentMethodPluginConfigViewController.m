@@ -59,6 +59,14 @@
     return self.view;
 }
 
+- (void)viewWillAppear {
+    NSLog(@"PXPlugin viewWillAppear");
+}
+
+- (void)viewWillDisappear {
+    NSLog(@"PXPlugin viewWillDisappear");
+}
+
 - (NSString * _Nullable)titleForNavigationBar {
     return @"Pagar con Bitcoin";
 }

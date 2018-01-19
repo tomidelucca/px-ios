@@ -98,7 +98,7 @@
     
     //[self setHooks];
     
-    //[self setPaymentMethodPlugins];
+    [self setPaymentMethodPlugins];
 
     [self setPaymentPlugin];
 

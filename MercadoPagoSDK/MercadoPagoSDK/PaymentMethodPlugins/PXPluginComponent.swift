@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 @objc public protocol PXConfigPluginComponent: PXPluginComponent {
     @objc optional func shouldSkip(pluginStore: PXCheckoutStore) -> Bool
     @objc optional func shouldShowBackArrow() -> Bool
@@ -20,6 +21,8 @@ import Foundation
     func render() -> UIView
     @objc optional func didReceive(pluginStore: PXCheckoutStore)
     @objc optional func renderDidFinish()
+    @objc optional func viewWillAppear()
+    @objc optional func viewWillDisappear()
     @objc optional func navigationHandlerForPlugin(navigationHandler: PXPluginNavigationHandler)
     @objc optional func titleForNavigationBar() -> String?
     @objc optional func colorForNavigationBar() -> UIColor?
