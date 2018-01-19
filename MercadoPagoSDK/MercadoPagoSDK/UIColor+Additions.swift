@@ -82,10 +82,6 @@ extension UIColor {
         return UIColorFromRGB(0x999999)
     }
 
-    class public func px_grayLines() -> UIColor {
-        return UIColorFromRGB(0xCCCCCC)
-    }
-
     class public func grayTableSeparator() -> UIColor {
         return UIColorFromRGB(0xEFEFF4)
     }
@@ -99,10 +95,6 @@ extension UIColor {
 
     class public func installments() -> UIColor {
         return UIColorFromRGB(0x2BA2EC)
-    }
-
-    class public func systemFontColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getFontColor()
     }
 
     class public func px_redCongrats() -> UIColor {
@@ -129,7 +121,7 @@ extension UIColor {
         return UIColorFromRGB(0xf04449)
     }
     class public func primaryColor() -> UIColor {
-        return MercadoPagoCheckoutViewModel.decorationPreference.getBaseColor()
+        return ThemeManager.shared.getMainColor()
     }
     class public func mpGreenishTeal() -> UIColor {
         return UIColorFromRGB(0x3bc280)
@@ -156,5 +148,47 @@ extension UIColor {
         self.getRed(&r, green: &g, blue: &b, alpha: &a)
         return UIColor(red: r+red, green: g+green, blue: b+blue, alpha: a+alpha)
     }
+}
 
+// COMPONENTS
+extension UIColor {
+    class var pxWarmGray: UIColor {
+        return UIColor(white: 153.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxBrownishGray: UIColor {
+        return UIColor(white: 102.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxBlack: UIColor {
+        return UIColor(white: 51.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxBlueMp: UIColor {
+        return UIColor(red: 0.0, green: 156.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxGreenMp: UIColor {
+        return UIColor(red: 0.0, green: 198.0 / 255.0, blue: 119.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxRedMp: UIColor {
+        return UIColor(red: 255.0 / 255.0, green: 78.0 / 255.0, blue: 85.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxOrangeMp: UIColor {
+        return UIColor(red: 255.0 / 255.0, green: 166.0 / 255.0, blue: 68.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxWhite: UIColor {
+        return UIColor(white: 255.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxLightGray: UIColor {
+        return UIColor(white: 247.0 / 255.0, alpha: 1.0)
+    }
+
+    class var pxMediumLightGray: UIColor {
+        return UIColor(red: 238.0 / 255.0, green: 238.0 / 255.0, blue: 238.0 / 255.0, alpha: 1.0)
+    }
 }

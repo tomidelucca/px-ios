@@ -22,7 +22,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let BEFORE_INPUT_TEXT = "Anterior"
 
     var currentInput: UIView!
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
     var errorLabel: MPLabel?
 
     // View Components
@@ -37,7 +37,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     init(viewModel: PayerInfoViewModel, callback: @escaping ((_ payer: Payer) -> Void)) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
-        self.view.backgroundColor = UIColor.primaryColor()
+        self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.callback = callback
         NotificationCenter.default.addObserver(self, selector: #selector(PayerInfoViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
@@ -119,8 +119,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
 
     func showToolbarError(message: String) {
-        errorLabel!.backgroundColor = UIColor.mpLightGray()
-        errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         errorLabel!.text = message
         errorLabel!.textAlignment = .center
         errorLabel!.font = errorLabel!.font.withSize(12)
@@ -160,19 +160,13 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
         if self.toolbar == nil {
             let frame =  getToolbarFrame()
 
-            let toolbar = UIToolbar(frame: frame)
+            let toolbar = PXToolbar(frame: frame)
 
             toolbar.barStyle = UIBarStyle.default
-            toolbar.backgroundColor = UIColor.mpLightGray()
-            toolbar.alpha = 1
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .done, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
             let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
-
-            let font = Utils.getFont(size: 14)
-            buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-            buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)

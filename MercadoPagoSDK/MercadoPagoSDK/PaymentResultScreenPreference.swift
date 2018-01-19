@@ -10,60 +10,148 @@ import Foundation
 
 open class PaymentResultScreenPreference: NSObject {
 
-    var approvedTitle = "¡Listo, se acreditó tu pago!".localized
-    var approvedSubtitle = ""
+    static let PENDING_CONTENT_TITLE = "¿Qué puedo hacer?"
+    static let REJECTED_CONTENT_TITLE = "¿Qué puedo hacer?"
+
+    public enum ApprovedBadge {
+        case pending
+        case check
+    }
+
+    var topCustomComponent: PXComponentizable?
+    var bottomCustomComponent: PXComponentizable?
+
+    open func setApprovedTopCustomComponent(_ component: PXComponentizable) {
+        self.topCustomComponent = component
+    }
+    open func setApprovedBottomCustomComponent(_ component: PXComponentizable) {
+        self.bottomCustomComponent = component
+    }
+    open func getApprovedTopCustomComponent() -> PXComponentizable? {
+        return self.topCustomComponent
+    }
+    open func getApprovedBottomCustomComponent() -> PXComponentizable? {
+        return self.bottomCustomComponent
+    }
+
+    // MARK: FOOTER
     var approvedSecondaryExitButtonText = ""
     var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    var approvedIconName = "MPSDK_payment_result_approved"
-    var approvedIconBundle = MercadoPago.getBundle()!
 
-    var pendingTitle = "Estamos procesando el pago".localized
-    var pendingSubtitle = ""
-    var pendingContentTitle = "¿Qué puedo hacer?".localized
-    var pendingContentText = ""
-    var pendingIconName = "MPSDK_payment_result_pending"
-    var pendingIconBundle = MercadoPago.getBundle()!
     var hidePendingSecondaryButton = false
-    var hidePendingContentText = false
-    var hidePendingContentTitle = false
-    var pendingSecondaryExitButtonText = "Pagar con otro medio".localized
+    var pendingSecondaryExitButtonText: String?
     var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
-    var rejectedTitle = "Uy, no pudimos procesar el pago".localized
+    var hideRejectedSecondaryButton = false
+    var rejectedSecondaryExitButtonText: String?
+    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+
+    var exitButtonTitle: String?
+
+    //HEADER
+    // MARK: Approved
+    var approvedBadge: ApprovedBadge? = ApprovedBadge.check
+    var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
+    var approvedSubtitle = ""
+    private var _approvedLabelText = ""
+    private var _disableApprovedLabelText = true
+    var approvedIconName = "default_item_icon"
+    var approvedIconBundle = MercadoPago.getBundle()!
+
+    // MARK: Pending
+    var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
+    var pendingSubtitle = ""
+    var pendingContentTitle = PaymentResultScreenPreference.PENDING_CONTENT_TITLE.localized
+    var pendingContentText = ""
+    private var _pendingLabelText = ""
+    private var _disablePendingLabelText = true
+    var pendingIconName = "default_item_icon"
+    var pendingIconBundle = MercadoPago.getBundle()!
+    var hidePendingContentText = false
+    var hidePendingContentTitle = false
+
+    // MARK: Rejected
+    var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
     var rejectedSubtitle = ""
-    var rejectedIconSubtext = "Algo salió mal… ".localized
-    var rejectedIconName = "MPSDK_payment_result_error"
+    var rejectedTitleSetted = false
+    private var disableRejectedLabelText = false
+    var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
-    var rejectedContentTitle = "¿Qué puedo hacer?".localized
+    var rejectedDefaultIconName: String?
+    var rejectedIconName: String?
+    var rejectedContentTitle = PaymentResultScreenPreference.REJECTED_CONTENT_TITLE.localized
     var rejectedContentText = ""
-    var hideRejectedSecondaryButton = false
     var hideRejectedContentText = false
     var hideRejectedContentTitle = false
-    var rejectedSecondaryExitButtonText = "Pagar con otro medio".localized
-    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
 
-    var exitButtonTitle = "Seguir comprando"
+    // MARK: Commons
+    var _showBadgeImage = true
+    var _showLabelText = true
+    open func showBadgeImage() {
+        self._showBadgeImage = true
+    }
+    open func hideBadgeImage() {
+        self._showBadgeImage = false
+    }
+    open func showLabelText() {
+        self._showLabelText = true
+    }
+    open func hideLabelText() {
+        self._showLabelText = false
+    }
 
+    //--
+    var pmDefaultIconName = "card_icon"
+    var pmBolbradescoIconName = "boleto_icon"
+    var pmIconBundle = MercadoPago.getBundle()!
     var statusBackgroundColor: UIColor?
-
     var hideApprovedPaymentBodyCell = false
     var hideContentCell = false
     var hideAmount = false
     var hidePaymentId = false
     var hidePaymentMethod = false
-
     var pendingAdditionalInfoCells = [MPCustomCell]()
     var approvedAdditionalInfoCells = [MPCustomCell]()
     var approvedSubHeaderCells = [MPCustomCell]()
 
-    // Sets de Approved
+    // MARK: Sets de Approved
+    open func getApprovedBadgeImage() -> UIImage? {
+        guard let badge = approvedBadge else {
+            return nil
+        }
+        if badge == ApprovedBadge.check {
+            return MercadoPago.getImage("ok_badge")
+        } else if badge == ApprovedBadge.pending {
+            return MercadoPago.getImage("pending_badge")
+        }
+        return nil
+    }
+    open func disableApprovedLabelText() {
+        self._disableApprovedLabelText = true
+    }
 
-    open func setApprovedTitle(title: String) {
+    open func setApproved(labelText: String) {
+        self._disableApprovedLabelText = false
+        self._approvedLabelText = labelText
+    }
+    open func getApprovedLabelText() -> String? {
+        if self._disableApprovedLabelText {
+            return nil
+        } else {
+            return self._approvedLabelText
+        }
+    }
+    open func setBadgeApproved(badge: ApprovedBadge) {
+        self.approvedBadge = badge
+    }
+
+    open func setApproved(title: String) {
         self.approvedTitle = title
     }
 
+    @available(*, deprecated)
     open func setApprovedSubtitle(subtitle: String) {
         self.approvedSubtitle = subtitle
     }
@@ -78,12 +166,28 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedIconBundle = bundle
     }
 
-    // Sets de Pending
+    // MARK: Sets de Pending
 
-    open func setPendingTitle(title: String) {
+    open func disablePendingLabelText() {
+        self._disablePendingLabelText = true
+    }
+
+    open func setPending(labelText: String) {
+        self._disablePendingLabelText = false
+        self._pendingLabelText = labelText
+    }
+    open func getPendingLabelText() -> String? {
+        if self._disablePendingLabelText {
+            return nil
+        } else {
+            return self._pendingLabelText
+        }
+    }
+    open func setPending(title: String) {
         self.pendingTitle = title
     }
 
+    @available(*, deprecated)
     open func setPendingSubtitle(subtitle: String) {
         self.pendingSubtitle = subtitle
     }
@@ -113,17 +217,19 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePendingContentTitle = true
     }
 
-    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
+    open func setPendingSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
         self.pendingSecondaryExitButtonText = text
         self.pendingSecondaryExitButtonCallback = callback
     }
 
-    // Sets de rejected
+    // MARK: Sets de rejected
 
-    open func setRejectedTitle(title: String) {
+    open func setRejected(title: String) {
         self.rejectedTitle = title
+        self.rejectedTitleSetted = true
     }
 
+    @available(*, deprecated)
     open func setRejectedSubtitle(subtitle: String) {
         self.rejectedSubtitle = subtitle
     }
@@ -141,8 +247,16 @@ open class PaymentResultScreenPreference: NSObject {
         self.rejectedContentTitle = title
     }
 
+    open func disableRejectedLabel() {
+        self.disableRejectedLabelText = true
+    }
+
+    @available(*, deprecated)
     open func setRejectedIconSubtext(text: String) {
         self.rejectedIconSubtext = text
+        if text.characters.count == 0 {
+            self.disableRejectedLabelText = true
+        }
     }
 
     open func disableRejectdSecondaryExitButton() {
@@ -157,7 +271,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.hideRejectedContentTitle = true
     }
 
-    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String) {
+    open func setRejectedSecondaryExitButton(callback: ((PaymentResult) -> Void)?, text: String? = nil) {
         self.rejectedSecondaryExitButtonText = text
         self.rejectedSecondaryExitButtonCallback = callback
     }
@@ -166,7 +280,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.exitButtonTitle = title
     }
 
-    // Sets cross status
+    // MARK: Sets cross status
 
     open func setStatusBackgroundColor(color: UIColor) {
         self.statusBackgroundColor = color
@@ -176,7 +290,7 @@ open class PaymentResultScreenPreference: NSObject {
         return statusBackgroundColor
     }
 
-    // Disables
+    // MARK: Disables
 
     open func disableContentCell() {
         self.hideContentCell = true
@@ -226,7 +340,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.hidePaymentMethod = false
     }
 
-    //Custom Rows
+    // MARK: Custom Rows
 
     open func setCustomPendingCells(customCells: [MPCustomCell]) {
         self.pendingAdditionalInfoCells = customCells
@@ -240,7 +354,7 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedSubHeaderCells = customCells
     }
 
-    //Approved
+    // MARK: Approved
 
     open func getApprovedTitle() -> String {
         return approvedTitle
@@ -261,7 +375,7 @@ open class PaymentResultScreenPreference: NSObject {
         return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
     }
 
-    //Pending
+    // MARK: Pending
 
     open func getPendingTitle() -> String {
         return pendingTitle
@@ -283,7 +397,7 @@ open class PaymentResultScreenPreference: NSObject {
         return pendingContentText
     }
 
-    open func getPendingSecondaryButtonText() -> String {
+    open func getPendingSecondaryButtonText() -> String? {
         return pendingSecondaryExitButtonText
     }
 
@@ -303,7 +417,7 @@ open class PaymentResultScreenPreference: NSObject {
         return hidePendingContentTitle
     }
 
-    // Rejected
+    // MARK: Rejected
 
     open func getRejectedTitle() -> String {
         return rejectedTitle
@@ -313,19 +427,31 @@ open class PaymentResultScreenPreference: NSObject {
         return rejectedSubtitle
     }
 
+    open func setHeaderRejectedIcon(name: String, bundle: Bundle) {
+        self.rejectedDefaultIconName = name
+        self.approvedIconBundle = bundle
+    }
+
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
-        guard let paymentMethod = paymentMethod else {
+        if let name = rejectedIconName {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+        }
+       return getHeaderImageFor(paymentMethod)
+    }
+
+    open func getHeaderImageFor(_ paymentMethod: PaymentMethod?) -> UIImage? {
+        guard let paymentMethod = paymentMethod else {
+            return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
         }
 
         if paymentMethod.isBolbradesco {
-            return MercadoPago.getImage(rejectedBolbradescoIconName, bundle: rejectedIconBundle)
+            return MercadoPago.getImage(pmBolbradescoIconName, bundle: pmIconBundle)
         }
 
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             return MercadoPago.getImage(rejectedPaymentMethodPluginIconName, bundle: rejectedIconBundle)
         }
-        return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
+        return MercadoPago.getImage(pmDefaultIconName, bundle: pmIconBundle)
     }
 
     open func getRejectedContetTitle() -> String {
@@ -340,7 +466,7 @@ open class PaymentResultScreenPreference: NSObject {
         return rejectedIconSubtext
     }
 
-    open func getRejectedSecondaryButtonText() -> String {
+    open func getRejectedSecondaryButtonText() -> String? {
         return rejectedSecondaryExitButtonText
     }
     open func getRejectedSecondaryButtonCallback() -> ((PaymentResult) -> Void)? {
@@ -359,8 +485,11 @@ open class PaymentResultScreenPreference: NSObject {
         return hideRejectedContentTitle
     }
 
-    open func getExitButtonTitle() -> String {
-        return exitButtonTitle.localized
+    open func getExitButtonTitle() -> String? {
+        if let title = exitButtonTitle {
+            return title.localized
+        }
+        return nil
     }
 
     open func isContentCellDisable() -> Bool {

@@ -24,7 +24,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
         self.termsAndConditionsText.attributedText = TermsAndConditionsViewCell.getTyCText()
 
-        let URLAttribute = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: UIColor.primaryColor()]
+        let URLAttribute = [NSFontAttributeName: UIFont(name:MercadoPago.DEFAULT_FONT_NAME, size: 12) ?? UIFont.systemFont(ofSize: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
 
         self.termsAndConditionsText.linkTextAttributes = URLAttribute
 
@@ -44,7 +44,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
     private static func getTyCText() -> NSMutableAttributedString {
 
         let termsAndConditionsText = "Al pagar, afirmo que soy mayor de edad y acepto los Términos y Condiciones de Mercado Pago".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: UIColor.px_grayLight()]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 12), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().labelTintColor()]
 
         let mutableAttributedString = NSMutableAttributedString(string: termsAndConditionsText, attributes: normalAttributes)
         let tycLinkRange = (termsAndConditionsText as NSString).range(of: "Términos y Condiciones".localized)

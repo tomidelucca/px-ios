@@ -184,7 +184,8 @@ class MainTableViewController: UITableViewController {
     /// Load Checkout
     func loadCheckout(showRyC: Bool = true, setPaymentDataCallback: Bool = false, paymentData: PaymentData? = nil, setPaymentDataConfirmCallback: Bool = false, paymentResult: PaymentResult? = nil) {
         let pref = self.customCheckoutPref != nil ? self.customCheckoutPref :CheckoutPreference(_id: self.prefID)
-        
+
+        MercadoPagoContext.setLanguage(language: Languages._SPANISH)
         // Example DiscountCoupon for Test
         var discountObj = DiscountCoupon()
         discountObj._id = "15098"
@@ -194,27 +195,27 @@ class MainTableViewController: UITableViewController {
         discountObj.coupon_amount = "15"
         discountObj.currency_id = "ARS"
         discountObj.amount = 5000
-        
-        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
-        
+
+        let checkout = MercadoPagoCheckout(publicKey: self.publicKey, accessToken:"", checkoutPreference: pref!, paymentData: paymentData, paymentResult: paymentResult, discount:discountObj, navigationController: self.navigationController!)
+
         // Get Payment plugin
         let paymentPlugin = PaymentMethodPluginsNavigationManager().getPaymentPlugin()
-        
+
         // Create custom payment method plugin (Bitcoin)
         let bitcoinPaymentPlugin = PXPaymentMethodPlugin(id: "bitcoin_payment", name: "Bitcoin", image: UIImage(named: "bitcoin_payment")!, description: nil, paymentPlugin: paymentPlugin)
 
         // Get Payment configuration plugin
         let paymentMethodConfigPlugin = PaymentMethodPluginsNavigationManager().getPaymentMethodConfigurationPlugin()
-        
+
         // Add Payment configuration (optional) plugin to Bitcoint payment plugin.
         bitcoinPaymentPlugin.setPaymentMethodConfig(plugin: paymentMethodConfigPlugin)
-        
+
         // Create NicoPagos custom payment method plugin
         let nicoPagosPlugin = PXPaymentMethodPlugin(id: "nico_payment", name: "Nico Pagos", image: UIImage(named: "nico_payment")!, description: nil, paymentPlugin: paymentPlugin)
         nicoPagosPlugin.setDisplayOrder(order: .BOTTOM)
-        
+
         checkout.setPaymentMethodPlugins(plugins: [bitcoinPaymentPlugin, nicoPagosPlugin])
-        
+
          // Define hooks.
         let firstHook = HooksNavigationManager().getFirstHook()
         let secondHook = HooksNavigationManager().getSecondHook()
@@ -227,7 +228,6 @@ class MainTableViewController: UITableViewController {
             let decorationPref: DecorationPreference = DecorationPreference(baseColor: UIColor.mpDefaultColor())
             MercadoPagoCheckout.setDecorationPreference(decorationPref)
         }
-        
 
         if String.isNullOrEmpty(self.configJSON) {
 
@@ -238,14 +238,14 @@ class MainTableViewController: UITableViewController {
             }
 
             showRyC ? flowPref.enableReviewAndConfirmScreen() : flowPref.disableReviewAndConfirmScreen()
-            let _ = flowPref.addHookToFlow(hook: firstHook)
-            let _ = flowPref.addHookToFlow(hook: secondHook)
-            let _ = flowPref.addHookToFlow(hook: thirdHook)
+        //    let _ = flowPref.addHookToFlow(hook: firstHook)
+         //   let _ = flowPref.addHookToFlow(hook: secondHook)
+          //  let _ = flowPref.addHookToFlow(hook: thirdHook)
             MercadoPagoCheckout.setFlowPreference(flowPref)
         } else {
-            let _ = flowPreference.addHookToFlow(hook: firstHook)
-            let _ = flowPreference.addHookToFlow(hook: secondHook)
-            let _ = flowPreference.addHookToFlow(hook: thirdHook)
+          //  let _ = flowPreference.addHookToFlow(hook: firstHook)
+           // let _ = flowPreference.addHookToFlow(hook: secondHook)
+           // let _ = flowPreference.addHookToFlow(hook: thirdHook)
             showRyC ? flowPreference.enableReviewAndConfirmScreen() : flowPreference.disableReviewAndConfirmScreen()
             MercadoPagoCheckout.setFlowPreference(flowPreference)
         }
@@ -341,7 +341,7 @@ class MainTableViewController: UITableViewController {
         case paymentData = "payment_data"
     }
 
-    func useJSONConfig(json: [String:AnyObject]) {
+    func useJSONConfig(json: [String: AnyObject]) {
 
         let startFor: String = json["start_for"] != nil ?  json["start_for"] as! String : ""
         let prefID: String = json["pref_id"] != nil ?  json["pref_id"] as! String : ""
@@ -392,9 +392,9 @@ class MainTableViewController: UITableViewController {
         return checkoutPreference
     }
 
-    func convertStringToDictionary(_ text: String) throws -> [String:AnyObject]? {
+    func convertStringToDictionary(_ text: String) throws -> [String: AnyObject]? {
         if let data = text.data(using: String.Encoding.utf8) {
-            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String:AnyObject]
+            let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: AnyObject]
             return json
         }
         return nil

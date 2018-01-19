@@ -391,12 +391,8 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let mpCheckout = MercadoPagoCheckout(publicKey: "public_key", accessToken: "access_token", checkoutPreference: checkoutPreference, paymentData: paymentDataVisa, paymentResult : paymentResult, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
 
-        // 0. Start
-        var step = mpCheckout.viewModel.nextStep()
-        XCTAssertEqual(CheckoutStep.START, step)
-
         // 1. Search Preference
-        step = mpCheckout.viewModel.nextStep()
+        var step = mpCheckout.viewModel.nextStep()
 
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
 
@@ -666,15 +662,6 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         MercadoPagoCheckoutViewModel.error = nil
 
-    }
-
-    func testCardFormManager() {
-        let checkoutPreference = MockBuilder.buildCheckoutPreference()
-        let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: UINavigationController())
-
-        let cardFormManager = mpCheckout.viewModel.cardFormManager()
-        XCTAssertTrue(cardFormManager.isKind(of: CardFormViewModel.self))
-        XCTAssertEqual(cardFormManager.amount, checkoutPreference.getAmount())
     }
 
     func testPaymentVaultViewModel() {

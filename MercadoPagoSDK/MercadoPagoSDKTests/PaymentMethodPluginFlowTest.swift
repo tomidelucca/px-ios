@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class PaymentMethodPluginFlowTest : BaseTest {
+class PaymentMethodPluginFlowTest: BaseTest {
 
     var mpCheckout: MercadoPagoCheckout!
     let flowPreference = FlowPreference()
@@ -32,8 +32,8 @@ class PaymentMethodPluginFlowTest : BaseTest {
 
         MercadoPagoCheckout.setFlowPreference(flowPreference)
 
-        let paymentMethodConfigPlugin = MockPaymentPluginViewController(shouldSkip: false)
-        let paymentMethodConfigPlugin2 = MockPaymentPluginViewController(shouldSkip: true)
+        let paymentMethodConfigPlugin = MockConfigPaymentMethodPlugin(shouldSkip: false)
+        let paymentMethodConfigPlugin2 = MockConfigPaymentMethodPlugin(shouldSkip: true)
 
         mockPaymentMethodPlugin1 = MockBuilder.buildPaymentMethodPlugin(id: "plugin1", name: "Plugin 1", configPaymentMethodPlugin: nil)
         mockPaymentMethodPlugin2 = MockBuilder.buildPaymentMethodPlugin(id: "plugin2", name: "Plugin 2", configPaymentMethodPlugin: paymentMethodConfigPlugin)
@@ -982,7 +982,6 @@ class PaymentMethodPluginFlowTest : BaseTest {
         // 1. Search Preference
         step = mpCheckout.viewModel.nextStep()
         XCTAssertEqual(CheckoutStep.SERVICE_GET_PREFERENCE, step)
-
 
         // 3. Validate preference
         step = mpCheckout.viewModel.nextStep()

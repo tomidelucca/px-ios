@@ -134,14 +134,14 @@
 
 "terminada en "="terminado em ";
 "Terminada en " = "Terminado em ";
-"¡Listo, se acreditó tu pago!" = "Pronto! O seu pagamento foi aprovado!";
+"¡Listo! Se acreditó tu pago" = "Pronto! O seu pagamento foi aprovado";
 "En tu estado de cuenta verás el cargo como %0" = "Você verá o pagamento na fatura do seu cartão de crédito como %0";
 "Te enviaremos este comprobante a %0" = "Enviaremos os dados para %0";
 
 // --Call for Auth
 
 "Ya hable con %0 y me autorizó" = "Já falei com %0 e autorizei";
-"Debes autorizar ante %p el pago de %t a MercadoPago" = "Você deve autorizar com %p o pagamento de %t ao Mercado Pago";
+"Debes autorizar ante %p el pago de %t a Mercado Pago" = "Você deve autorizar com %p o pagamento de %t ao Mercado Pago";
 "El teléfono está al dorso de tu tarjeta." = "O telefone do banco está no verso do seu cartão.";
 "cc_rejected_call_for_authorize_title" = "Não conseguiu autorizá-lo?";
 "Pagar con otro medio" = "Escolha outro meio de pagamento";
@@ -149,7 +149,7 @@
 // --Rejected
 "Por favor, intenta pagar con otro medio." = "Por favor, tente pagar de outra forma.";
 "Ingresalo nuevamente" = "Digite novamente";
-"Algo salió mal… " = "Algo deu errado… ";
+"Algo salió mal..." = "Algo deu errado… ";
 "El número de identificación es inválido" = "O número de identificação é inválido";
 "Cancelar pago" = "Cancelar pagamento";
 "rejected_high_risk_title"="Por segurança, foi necessário recusar o seu pagamento";
@@ -162,6 +162,7 @@
 "cc_rejected_bad_filled_card_number_title"="Qualquer dado de seu %0 é incorreto";
 "cc_rejected_bad_filled_security_code_title"="Qualquer dado de seu %0 é incorreto";
 "cc_rejected_bad_filled_date_title"="Qualquer dado de seu %0 é incorreto";
+"cc_rejected_plugin_pm_title" = "%0 não processou o pagamento";
 
 "rejected_high_risk_subtitle_credit_card"="SSe você quiser pagar com o dinheiro da sua conta, entre em contato com Atenção ao Cliente do Mercado Pago. \n \nOu, se preferir, escolha outro meio de pagamento.";
 "cc_rejected_insufficient_amount_subtitle_credit_card" = "Não se preocupe! Você pode escolher outros meios de pagamento.";
@@ -170,15 +171,16 @@
 "cc_rejected_duplicated_payment_subtitle_credit_card"="Se você precisar pagar novamente, use outro cartão ou outro meio de pagamento.";
 "cc_rejected_card_disabled_subtitle_credit_card"="O telefone do banco está no verso do seu cartão.";
 "cc_rejected_call_for_authorize_subtitle_credit_card" = "";
-
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
+"rejected_insufficient_data_title" = "Não foi possível processar o seu pagamento, desculpe-nos";
+"rejected_by_bank_title" = "Não foi possível processar o seu pagamento, desculpe-nos";
 
 "Uy, no pudimos procesar el pago"="Ops, não foi possível processar o seu pagamento";
 "Algún dato de tu %1$s es incorrecto."="Algún dato de tu %1$s es incorrecto.";
 "El teléfono está al dorso de tu tarjeta"="O telefone do banco está no verso do seu cartão.";
 "Debes autorizar el pago ante tu tarjeta"="Você deve autorizar o pagamento de seu cartão";
 "Debes autorizar ante %1$s el pago de " = "Você deve autorizar junto ao %1$s o pagamento do ";
-" a MercadoPago" = " o Mercado Pago";
+" a Mercado Pago" = " o Mercado Pago";
 "Ya hablé con %1$s y me autorizó" = "Já falei com %1$s e me autoriza";
 
 
@@ -264,3 +266,25 @@
 "Descuentos" = "Descontos";
 "Impuestos" = "Impostos";
 "Envío" = "Remessa";
+
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Algo deu errado...";
+
+// Receipt
+" de " = " de ";
+"Número de operación " = "Número da operação ";
+
+//Months
+"January" = "Janeiro";
+"February" = "Fevereiro";
+"March" = "Março";
+"April" = "Abril";
+"May" = "Maio";
+"June" = "Junho";
+"July" = "Julho";
+"August" = "Agosto";
+"September" = "Setembro";
+"October" = "Outubro";
+"November" = "Novembro";
+"December" = "Dezembro";

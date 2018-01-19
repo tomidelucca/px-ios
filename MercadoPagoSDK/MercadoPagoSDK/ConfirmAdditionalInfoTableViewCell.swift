@@ -14,7 +14,7 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        // Initialization code
+        self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -26,7 +26,7 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
         if let payerCost = payerCost {
 
             CFT.font = Utils.getLightFont(size: CFT.font.pointSize)
-            CFT.textColor = UIColor.px_grayDark()
+            CFT.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
 
             if let CFTValue = payerCost.getCFTValue() {
                 CFT.text = "CFT " + CFTValue

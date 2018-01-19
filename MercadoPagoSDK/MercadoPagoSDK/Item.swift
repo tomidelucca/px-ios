@@ -48,13 +48,13 @@ open class Item: NSObject {
 
     open func toJSONString() -> String {
 
-        let _id : Any = (self._id == nil) ? JSONHandler.null : self._id!
-        let title  : Any =  (self.title == nil) ? JSONHandler.null : self.title!
-        let currencyId : Any =  (self.currencyId == nil) ? JSONHandler.null : self.currencyId!
-        let categoryId : Any =  (self.categoryId == nil) ? JSONHandler.null : self.categoryId!
-        let pictureUrl : Any =  (self.pictureUrl == nil) ? JSONHandler.null : self.pictureUrl!
+        let _id: Any = (self._id == nil) ? JSONHandler.null : self._id!
+        let title: Any =  (self.title == nil) ? JSONHandler.null : self.title!
+        let currencyId: Any =  (self.currencyId == nil) ? JSONHandler.null : self.currencyId!
+        let categoryId: Any =  (self.categoryId == nil) ? JSONHandler.null : self.categoryId!
+        let pictureUrl: Any =  (self.pictureUrl == nil) ? JSONHandler.null : self.pictureUrl!
 
-        let obj: [String:Any] = [
+        let obj: [String: Any] = [
             "id": _id,
             "quantity": self.quantity,
             "unit_price": self.unitPrice,
@@ -62,7 +62,7 @@ open class Item: NSObject {
             "description": self._description,
             "currency_id": currencyId,
             "category_id": categoryId,
-            "picture_url": pictureUrl,
+            "picture_url": pictureUrl
         ]
         return JSONHandler.jsonCoding(obj)
     }

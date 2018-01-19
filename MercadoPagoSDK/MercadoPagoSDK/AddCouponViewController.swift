@@ -12,8 +12,9 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
+
     override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
     var errorLabel: MPLabel?
     var viewModel: AddCouponViewModel!
 
@@ -38,11 +39,10 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         textBox.placeholder = "Código de descuento".localized
-
     }
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.backgroundView.backgroundColor = UIColor.primaryColor()
+        self.backgroundView.backgroundColor = ThemeManager.shared.getMainColor()
         textBox.autocorrectionType = UITextAutocorrectionType.no
         setupInputAccessoryView()
         textBox.delegate = self
@@ -56,19 +56,14 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
 
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        let toolbar = PXToolbar(frame: frame)
 
         toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
 
-        buttonNext = UIBarButtonItem(title: "Canejar".localized, style: .done, target: self, action: #selector(AddCouponViewController.rightArrowKeyTapped))
-        buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
+        buttonNext = UIBarButtonItem(title: "Canejar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.rightArrowKeyTapped))
 
-         let font = Utils.getFont(size: 14)
-        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        buttonPrev = UIBarButtonItem(title: "Cancelar".localized, style: .plain, target: self, action: #selector(AddCouponViewController.leftArrowKeyTapped))
 
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
@@ -80,7 +75,6 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         self.toolbar = toolbar
         textBox.inputAccessoryView = toolbar
         buttonNext.isEnabled = false
-
     }
 
     func leftArrowKeyTapped() {
@@ -88,6 +82,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func rightArrowKeyTapped() {
+
         guard let couponCode = textBox.text else {
             return
         }
@@ -103,20 +98,17 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
             }
         }) { (errorMessage) in
             self.hideLoading()
-             self.showErrorMessage(errorMessage)
+            self.showErrorMessage(errorMessage)
         }
     }
 
     @IBAction func exit() {
         self.textBox.resignFirstResponder()
         guard let callbackCancel = self.callbackCancel else {
-            self.dismiss(animated: false, completion: nil)
+            self.navigationController?.popViewController(animated: false)
             return
         }
-        self.dismiss(animated: false) {
-            callbackCancel()
-        }
-
+        callbackCancel()
     }
 
     func executeCallback() {
@@ -130,18 +122,19 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     func callbackAndExit() {
         self.textBox.resignFirstResponder()
         self.executeCallback()
-        self.dismiss(animated: false, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 
     func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        // TODO: Implement Meli Toast component. (Meli UI library).
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        textBox.borderInactiveColor = UIColor.red
-        textBox.borderActiveColor = UIColor.red
+        textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         textBox.inputAccessoryView = errorLabel
         textBox.setNeedsDisplay()
         textBox.resignFirstResponder()
@@ -159,8 +152,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func hideErrorMessage() {
-        self.textBox.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.textBox.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textBox.inputAccessoryView = self.toolbar
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()

@@ -31,7 +31,7 @@ open class MPButton: UIButton {
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MercadoPagoUIViewController.loadFont(MercadoPagoCheckoutViewModel.decorationPreference.getFontName())
+        MercadoPagoUIViewController.loadFont(ThemeManager.shared.getFontName())
         if self.titleLabel != nil {
             if self.titleLabel!.font != nil {
                 self.titleLabel!.font = Utils.getFont(size: self.titleLabel!.font.pointSize)

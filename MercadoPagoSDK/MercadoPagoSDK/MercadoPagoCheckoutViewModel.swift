@@ -39,13 +39,13 @@ public enum CheckoutStep: String {
     case SCREEN_HOOK_BEFORE_PAYMENT
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
+    case SCREEN_PAYMENT_PLUGIN_PAYMENT
 }
 
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
     static var servicePreference = ServicePreference()
-    static var decorationPreference = DecorationPreference()
     static var flowPreference = FlowPreference()
     var reviewScreenPreference = ReviewScreenPreference()
     var paymentResultScreenPreference = PaymentResultScreenPreference()
@@ -104,6 +104,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
 
+    // Payment plguin
+    var paymentPlugin: PXPaymentPluginComponent?
+
     init(checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon?) {
         super.init()
         self.checkoutPreference = checkoutPreference
@@ -156,7 +159,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let paymentPreference = PaymentPreference()
         paymentPreference.defaultPaymentTypeId = self.paymentOptionSelected?.getId()
         // TODO : está bien que la paymentPreference se cree desde cero? puede que vengan exclusiones de entrada ya?
-        return CardFormViewModel(amount : self.getAmount(), paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+        return CardFormViewModel(paymentMethods: getPaymentMethodsForSelection(), mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
     }
 
     public func getPaymentMethodsForSelection() -> [PaymentMethod] {
@@ -179,7 +182,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if let optionSelected = paymentOptionSelected {
             groupName = optionSelected.getId()
         }
-        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPlugins, groupName: groupName, isRoot : rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
+
+        _ = copyViewModelAndAssignToCheckoutStore()
+        let paymentMethodPluginsToShow = paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+
+        return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
                 return
             }
@@ -241,19 +248,23 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return checkoutViewModel
     }
 
+    func resultViewModel() -> PXResultViewModel {
+        return PXResultViewModel(paymentResult: self.paymentResult!, amount: self.getAmount(), instructionsInfo: self.instructionsInfo, paymentResultScreenPreference: self.paymentResultScreenPreference)
+    }
+
     //SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PaymentMethod], cardToken: CardToken?) {
         self.cleanPayerCostSearch()
         self.cleanIssuerSearch()
         self.cleanIdentificationTypesSearch()
-        self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethods[0])
+        self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethods[0])
         self.cardToken = cardToken
     }
 
     //CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PaymentMethod?) {
         if let paymentMethod = paymentMethod {
-            self.paymentData.updatePaymentDataWith(paymentMethod:  paymentMethod)
+            self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethod)
         }
     }
 
@@ -395,7 +406,12 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SCREEN_HOOK_BEFORE_PAYMENT
         }
 
-        if needToCreatePaymentForPlugin() {
+        if needToCreatePaymentForPaymentPlugin() {
+            readyToPay = false
+            return .SCREEN_PAYMENT_PLUGIN_PAYMENT
+        }
+
+        if needToCreatePaymentForPaymentMethodPlugin() {
             readyToPay = false
             return .SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
         }
@@ -561,11 +577,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     internal func getAmount() -> Double {
-        return self.checkoutPreference.getAmount()
-    }
-
-    internal func getFinalAmount() -> Double {
-        if isDiscountEnable(), let discount = paymentData.discount {
+        if let payerCost = paymentData.getPayerCost() {
+            return payerCost.totalAmount
+        } else if isDiscountEnable(), let discount = paymentData.discount {
             return discount.newAmount()
         } else {
             return self.checkoutPreference.getAmount()
@@ -673,7 +687,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentApprovedScreenEnable() && paymentResult.isApproved() {
             return false
-        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isPending() {
+        } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentPendingScreenEnable() && paymentResult.isInProcess() {
             return false
         } else if !MercadoPagoCheckoutViewModel.flowPreference.isPaymentRejectedScreenEnable() && paymentResult.isRejected() {
             return false
@@ -701,6 +715,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if self.copy() is MercadoPagoCheckoutViewModel {
             PXCheckoutStore.sharedInstance.paymentData = self.paymentData
             PXCheckoutStore.sharedInstance.paymentOptionSelected = self.paymentOptionSelected
+            PXCheckoutStore.sharedInstance.checkoutPreference = self.checkoutPreference
             return true
         }
         return false
@@ -778,7 +793,6 @@ extension MercadoPagoCheckoutViewModel {
 
     static internal func clearEnviroment() {
         MercadoPagoCheckoutViewModel.servicePreference = ServicePreference()
-        MercadoPagoCheckoutViewModel.decorationPreference = DecorationPreference()
         MercadoPagoCheckoutViewModel.flowPreference = FlowPreference()
         MercadoPagoCheckoutViewModel.paymentDataCallback = nil
         MercadoPagoCheckoutViewModel.paymentDataConfirmCallback = nil

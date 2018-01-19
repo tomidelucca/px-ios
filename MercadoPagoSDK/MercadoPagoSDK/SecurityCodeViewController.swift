@@ -20,7 +20,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     var textMaskFormater: TextMaskFormater!
     var cardFront: CardFrontView!
     var ccvLabelEmpty: Bool = true
-    var toolbar: UIToolbar?
+    var toolbar: PXToolbar?
 
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_SECURITY_CODE } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
@@ -47,7 +47,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
         loadMPStyles()
         self.securityCodeTextField.placeholder = "security_code".localized
         setupInputAccessoryView()
-        self.view.backgroundColor = UIColor.primaryColor()
+        self.view.backgroundColor = ThemeManager.shared.getMainColor()
         self.cardFront = CardFrontView.init(frame: viewModel.getCardBounds())
         self.view.addSubview(cardFront)
         self.securityCodeLabel = cardFront.cardCVV
@@ -91,19 +91,13 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     func setupInputAccessoryView() {
         let frame =  CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44)
-        let toolbar = UIToolbar(frame: frame)
+        let toolbar = PXToolbar(frame: frame)
 
         toolbar.barStyle = UIBarStyle.default
-        toolbar.backgroundColor = UIColor.mpLightGray()
-        toolbar.alpha = 1
         toolbar.isUserInteractionEnabled = true
 
-        let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .done, target: self, action: #selector(self.continueAction))
+        let buttonNext = UIBarButtonItem(title: "Siguiente".localized, style: .plain, target: self, action: #selector(self.continueAction))
         let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(self.backAction))
-
-        let font = Utils.getFont(size: 14)
-        buttonNext.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        buttonPrev.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
 
         buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
         buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
@@ -169,13 +163,13 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     open func showErrorMessage(_ errorMessage: String) {
         errorLabel = MPLabel(frame: toolbar!.frame)
-        self.errorLabel!.backgroundColor = UIColor.mpLightGray()
-        self.errorLabel!.textColor = UIColor.mpRedErrorMessage()
+        self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
+        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.text = errorMessage
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        securityCodeTextField.borderInactiveColor = UIColor.red
-        securityCodeTextField.borderActiveColor = UIColor.red
+        securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
         securityCodeTextField.inputAccessoryView = errorLabel
         securityCodeTextField.setNeedsDisplay()
         securityCodeTextField.resignFirstResponder()
@@ -183,8 +177,8 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     }
     open func hideErrorMessage() {
-        self.securityCodeTextField.borderInactiveColor = UIColor(netHex: 0x3F9FDA)
-        self.securityCodeTextField.borderActiveColor = UIColor(netHex: 0x3F9FDA)
+        self.securityCodeTextField.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.securityCodeTextField.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.securityCodeTextField.inputAccessoryView = self.toolbar
         self.securityCodeTextField.setNeedsDisplay()
         self.securityCodeTextField.resignFirstResponder()

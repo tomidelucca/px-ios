@@ -15,6 +15,7 @@
 #import "FirstHookViewController.h"
 #import "SecondHookViewController.h"
 #import "ThirdHookViewController.h"
+#import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
 
@@ -38,7 +39,6 @@
 
     [MercadoPagoContext setDisplayDefaultLoadingWithFlag:NO];
 
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.opaque = YES;
 
@@ -47,12 +47,9 @@
     self.paymentResult = nil;
 
     // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithLanguage:"es"];
+    [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH_PERU];
 
     ///  PASO 1: SETEAR PREFERENCIAS
-
-    // Setear DecorationPreference
-    [self setDecorationPreference];
 
     // Setear ServicePreference
     //[self setServicePreference];
@@ -85,15 +82,25 @@
     dc.amount_off = @"30";
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
-    dc.amount = 300;
+    dc.amount = 100;
+    dc = nil;
+    //
+    self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
+    accessToken:nil
+                                                  checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8"
-    accessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"
-    checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
-
-    [self setHooks];
     
-    [self setPaymentMethodPlugins];
+    // Set default color or theme.
+    PXMeliTheme *meliExampleTheme = [[PXMeliTheme alloc] init];
+    [self.mpCheckout setTheme:meliExampleTheme];
+    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
+    
+    //[self setHooks];
+    
+    //[self setPaymentMethodPlugins];
+
+    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -103,13 +110,13 @@
 
     //Setear ReviewScreenPrefernce
     [self setReviewScreenPreference];
-    
+
     [self.mpCheckout start];
 
 }
 
 -(void)setHooks {
-    
+
     FlowPreference *flowPref = [[FlowPreference alloc] init];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"Hooks" bundle:[NSBundle mainBundle]];
@@ -126,23 +133,33 @@
 }
 
 -(void)setPaymentMethodPlugins {
-    
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
                                 @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
-    
+
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
-    
+
     PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
-    
+
     // Payment method config plugin component.
     PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
 
     [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
-    
+
     NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
-    
+
     [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
+}
+
+-(void)setPaymentPlugin {
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:
+                                @"PaymentMethodPlugins" bundle:[NSBundle mainBundle]];
+
+    PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
+
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
@@ -158,7 +175,7 @@
     paymentData.paymentMethod.paymentTypeId = @"credit_card";
     paymentData.paymentMethod.name = @"visa";
     paymentData.payerCost = [[PayerCost alloc] initWithInstallments:1 installmentRate:0 labels:nil minAllowedAmount:100 maxAllowedAmount:1000 recommendedMessage:nil installmentAmount:100 totalAmount:100];
-    
+
     self.paymentData = paymentData;
 }
 -(void)setRyCUpdate {
@@ -255,64 +272,13 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"241261722-fd934d99-cb91-48b9-880b-781a4dd2252f"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"242624092-2a26fccd-14dd-4456-9161-5f2c44532f1d"];
 }
 
 -(void)setPaymentResultScreenPreference {
-    PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
-    [resultPreference setPendingTitleWithTitle:@"¡Pagaste la recarga de SUBE de $50!"];
-    [resultPreference setExitButtonTitleWithTitle:@"Ir a Actividad"];
-    [resultPreference setPendingContentTextWithText:@"Se acreditará en un momento"];
-    [resultPreference setPendingHeaderIconWithName:@"sube" bundle:[NSBundle mainBundle]];
-    [resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
-    [resultPreference setPendingContentTitleWithTitle:@"Para acreditar tu recarga"];
-    //[resultPreference disableRejectdSecondaryExitButton];
-    [resultPreference setRejectedTitleWithTitle:@"No pudimos hacer la recarga"];
-    [resultPreference setRejectedSubtitleWithSubtitle:@"Movistar no esta disponible ahora"];
-    [resultPreference setRejectedIconSubtextWithText:@"Uppss..."];
-    [resultPreference setRejectedContentTextWithText:@"Vuelve más tarde"];
-    [resultPreference setRejectedContentTitleWithTitle:@"¿Qué hago?"];
-    [resultPreference disableApprovedReceipt];
-    //    [resultPreference disableRejectedContentTitle];
-    //    [resultPreference disableRejectedContentText];
-    //    [resultPreference setRejectedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-    //        NSLog(@"%@", paymentResult.status);
-    //    } text:@"Ir a mi activdad"];
-    //    [resultPreference disablePendingContentText];
-    //    [resultPreference disableChangePaymentMethodOptionButton];
-    [resultPreference setPendingSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-        NSLog(@"%@", paymentResult.status);
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    } text:@"Ir a mi actividad"];
-    //    [resultPreference setApprovedSecondaryExitButtonWithCallback:^(PaymentResult * paymentResult) {
-    //        NSLog(@"%@", paymentResult.status);
-    //        [self.navigationController popToRootViewControllerAnimated:NO];
-    //    } text:@"Ir a mi actividad"];
-
-
-
-    // Celdas custom de Payment Result
-
-    SubeTableViewCell *subeCell = [[[NSBundle mainBundle] loadNibNamed:@"SubeTableViewCell" owner:self options:nil] firstObject];
-    MPCustomCell *subeCongrats = [[MPCustomCell alloc] initWithCell:subeCell];
-
-    DineroEnCuentaTableViewCell *dineroEnCuenta = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
-    [dineroEnCuenta.button addTarget:self action:@selector(invokeCallbackPaymentResult:) forControlEvents:UIControlEventTouchUpInside];
-    MPCustomCell *dineroEnCuentaCustom = [[MPCustomCell alloc] initWithCell:dineroEnCuenta];
-    self.dineroEnCuentaCell = dineroEnCuentaCustom;
-
-
-    DineroEnCuentaTableViewCell *header = [[[NSBundle mainBundle] loadNibNamed:@"DineroEnCuentaTableViewCell" owner:self options:nil] firstObject];
-    header.label.text = @"AXION";
-    MPCustomCell *subHeader = [[MPCustomCell alloc] initWithCell:header];
-
-
-    [resultPreference setCustomPendingCellsWithCustomCells:[NSArray arrayWithObjects:subeCongrats, nil]];
-    [resultPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:dineroEnCuentaCustom, nil]];
-    [resultPreference setCustomApprovedSubHeaderCellWithCustomCells:[NSArray arrayWithObjects:subHeader, nil]];
+    PaymentResultScreenPreference *resultPreference = [TestComponent getPreference];
 
     [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
-
 }
 
 -(void)setReviewScreenPreference {
@@ -343,12 +309,12 @@
     SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:NO];
 
     [summaryRow disableAmount];
-    
+
     SummaryRow *summaryRow2 = [[SummaryRow alloc] initWithCustomDescription:@"Incluye interes" descriptionColor: UIColor.grayColor customAmount:0 amountColor:UIColor.redColor separatorLine:YES];
-    
+
     [summaryRow2 disableAmount];
 
-    [reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
+    //[reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
 
     [self.mpCheckout setReviewScreenPreference:reviewPreference];
 }
@@ -366,11 +332,6 @@
     [PXSDKSettings enableBetaServices];
 
     [MercadoPagoCheckout setServicePreference:servicePreference];
-}
-
--(void)setDecorationPreference {
-    DecorationPreference *decorationPreference = [[DecorationPreference alloc] initWithBaseColor:[UIColor fromHex:@"#CA254D"]];
-    [MercadoPagoCheckout setDecorationPreference:decorationPreference];
 }
 
 -(IBAction)startCardManager:(id)sender  {
@@ -415,12 +376,12 @@
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //
         [self.mpCheckout updateReviewAndConfirm];
-        
+
     }];
 }
 
 -(void)invokeCallbackPaymentResult:(MPCustomCell *)button {
-    
+
     [[self.dineroEnCuentaCell getDelegate] invokeCallbackWithPaymentResultWithRowCallback:^(PaymentResult *paymentResult) {
         NSLog(@"%@", paymentResult.status);
         [self.navigationController popToRootViewControllerAnimated:NO];

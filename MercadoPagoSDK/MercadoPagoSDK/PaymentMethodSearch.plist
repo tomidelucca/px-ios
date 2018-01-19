@@ -10,22 +10,22 @@
 	<key>prepaid_card</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjeta</string>
+		<string>mediosIconoDebitCard</string>
 	</dict>
 	<key>prepaid_cardAzul</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjetaAzul</string>
+		<string>mediosIconoDebitCardAzul</string>
 	</dict>
 	<key>debit_card</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjeta</string>
+		<string>mediosIconoDebitCard</string>
 	</dict>
 	<key>debit_cardAzul</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoTarjetaAzul</string>
+		<string>mediosIconoDebitCardAzul</string>
 	</dict>
 	<key>bank_transfer</key>
 	<dict>
@@ -175,7 +175,7 @@
 	<key>account_money</key>
 	<dict>
 		<key>image_name</key>
-		<string>mediosIconoDineroEnCuenta</string>
+		<string>mediosIconoDineroEnCuentaAzul</string>
 	</dict>
 	<key>bancomer_7eleven</key>
 	<dict>
@@ -305,22 +305,22 @@
 	<key>pagoefectivo_atm_scotiabank_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferScotiabank</string>
+		<string>mediosScotiabank</string>
 	</dict>
 	<key>pagoefectivo_atm_interbank_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferInterbank</string>
+		<string>mediosInterbank</string>
 	</dict>
 	<key>pagoefectivo_atm_bcp_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferBCP</string>
+		<string>mediosBCP</string>
 	</dict>
 	<key>pagoefectivo_atm_bbva_continental_bank_transfer</key>
 	<dict>
 		<key>image_name</key>
-		<string>bankTransferBBVAContinental</string>
+		<string>mediosBBVAContinental</string>
 	</dict>
 	<key>oca</key>
 	<dict>

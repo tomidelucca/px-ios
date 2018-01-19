@@ -36,17 +36,17 @@ class PayerCostView: UIView, PXComponent {
             self.noRateLabel = MPLabel(frame:CGRect(x: (HORIZONTAL_MARGIN * 2) +  self.purchaseDetailTitle.frame.size.width, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0 ))
             self.noRateLabel.attributedText = NSAttributedString(string : MercadoPagoCheckout.showPayerCostDescription() ? PayerCostView.NO_INTEREST_TEXT: "")
             self.noRateLabel.font = Utils.getFont(size: PayerCostView.TITLE_FONT_SIZE)
-            self.noRateLabel.textColor = UIColor.mpGreenishTeal()
+            self.noRateLabel.textColor = ThemeManager.shared.getTheme().discountColor()
             self.noRateLabel.textAlignment = .right
             self.requiredHeight = self.requiredHeight + self.noRateLabel.requiredHeight()
             self.addSubview(noRateLabel)
-        }else {
+        } else {
              self.purchaseDetailAmount = MPLabel(frame: CGRect(x: (HORIZONTAL_MARGIN * 2) +  self.purchaseDetailTitle.frame.size.width, y: VERTICAL_MARGIN, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0 ))
 
         }
 
-        self.purchaseDetailTitle.textColor = UIColor.px_grayDark()
-        self.purchaseDetailAmount.textColor = UIColor.px_grayBaseText()
+        self.purchaseDetailTitle.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        self.purchaseDetailAmount.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         self.purchaseDetailTitle.textAlignment = .left
         self.purchaseDetailAmount.textAlignment = .right
 
@@ -76,7 +76,7 @@ class PayerCostView: UIView, PXComponent {
     }
 
     private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
-        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: UIColor.px_grayDark(), fontSize : PayerCostView.VALUE_FONT_SIZE, baselineOffset : 8)
+        return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.getTheme().boldLabelTintColor(), fontSize : PayerCostView.VALUE_FONT_SIZE, baselineOffset : 8)
     }
 
     func adjustViewFrames() {

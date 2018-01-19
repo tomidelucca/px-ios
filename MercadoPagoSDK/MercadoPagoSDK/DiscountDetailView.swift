@@ -20,6 +20,8 @@ class DiscountDetailView: UIView {
 
     let fontSize: CGFloat = 18.0
     let baselineOffSet: Int = 6
+    let fontColor = ThemeManager.shared.getTheme().modalComponent().tintColor
+    let discountFontColor = ThemeManager.shared.getTheme().discountColor()
 
     var coupon: DiscountCoupon!
     var amount: Double!
@@ -48,8 +50,13 @@ class DiscountDetailView: UIView {
         if let concept = coupon.concept {
             self.discountTitle.text = concept
         }
-        self.productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color : UIColor.px_grayDark(), fontSize: fontSize, baselineOffset:baselineOffSet)
-        self.discountAmount.attributedText = Utils.getAttributedAmount(Double(coupon.coupon_amount)!, currency: currency, color : UIColor.mpGreenishTeal(), fontSize: fontSize, baselineOffset:baselineOffSet, negativeAmount: true)
-        self.totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(coupon.coupon_amount)!, currency: currency, color : UIColor.px_grayDark(), fontSize: fontSize, baselineOffset:baselineOffSet)
+
+        self.viewTitle.textColor = fontColor
+        self.productTitle.textColor = fontColor
+        self.discountTitle.textColor = discountFontColor
+        self.totalTitle.textColor = fontColor
+        self.productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color : fontColor, fontSize: fontSize, baselineOffset:baselineOffSet)
+        self.discountAmount.attributedText = Utils.getAttributedAmount(Double(coupon.coupon_amount)!, currency: currency, color : discountFontColor, fontSize: fontSize, baselineOffset:baselineOffSet, negativeAmount: true)
+        self.totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(coupon.coupon_amount)!, currency: currency, color : fontColor, fontSize: fontSize, baselineOffset:baselineOffSet)
     }
 }

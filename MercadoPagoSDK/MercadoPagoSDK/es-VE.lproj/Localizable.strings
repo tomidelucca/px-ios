@@ -39,13 +39,13 @@
 
 // -- CallForAuth
 
-"Debes autorizar ante %p el pago de %t a MercadoPago" = "Debes autorizar ante %p el pago de %t a MercadoPago";
+"Debes autorizar ante %p el pago de %t a Mercado Pago" = "Debes autorizar ante %p el pago de %t a Mercado Pago";
 "Ya hable con %0 y me autorizó" = "Ya hable con %0 y me autorizó";
 "El teléfono está al dorso de tu tarjeta." = "El teléfono está al dorso de tu tarjeta.";
 "Pagar con otro medio" = "Pagar con otro medio";
 
 // -- Approved
-"¡Listo, se acreditó tu pago!" = "¡Listo, se acreditó tu pago!";
+"¡Listo! Se acreditó tu pago" = "¡Listo! Se acreditó tu pago";
 "También enviamos el código a tu email" = "También enviamos el código a tu email";
 "Te enviaremos este comprobante a %0" = "Te enviaremos este comprobante a %0";
 "Dinero en cuenta de MercadoPago" = "Dinero en cuenta de MercadoPago";
@@ -73,7 +73,7 @@
 "cc_rejected_call_for_authorize_title" = "¿No pudiste autorizarlo?";
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
 "Cancelar pago" = "Cancelar pago";
-"Algo salió mal… " = "Algo salió mal… ";
+"Algo salió mal..." = "Algo salió mal...";
 "El número de identificación es inválido" = "El número de identificación es inválido";
 
 
@@ -87,8 +87,9 @@
 "cc_rejected_bad_filled_security_code_subtitle_credit_card"="El código de seguridad no es el correcto.";
 "cc_rejected_bad_filled_date_subtitle_credit_card"="La fecha de vencimiento no es la correcta.";
 "cc_rejected_call_for_authorize_subtitle_credit_card" = "";
-
-
+"rejected_insufficient_data_title" = "No fue posible procesar su pago";
+"rejected_by_bank_title" = "No fue posible procesar su pago";
+"cc_rejected_plugin_pm_title" = "%0 no procesó el pago";
 
 "rejected_high_risk_subtitle_debit_card"="Si quieres pagar con el dinero de tu cuenta, contáctate con Atención al Cliente de MercadoPago. O si prefieres, puedes elegir otro medio de pago.";
 "cc_rejected_insufficient_amount_subtitle_debit_card" = "¡No te desanimes! Recárgala en cualquier banco o desde tu banca electrónica e inténtalo de nuevo. O si prefieres, puedes elegir otro medio de pago.";
@@ -102,7 +103,7 @@
 "cc_rejected_call_for_authorize_subtitle_debit_card" = "";
 
 "Ingresalo nuevamente" = "Ingresalo nuevamente";
-"Algo salió mal… " = "Algo salió mal… ";
+"Algo salió mal..." = "Algo salió mal...";
 
 
 
@@ -192,7 +193,7 @@
 "El teléfono está al dorso de tu tarjeta"="El teléfono está al dorso de tu tarjeta";
 "Debes autorizar el pago ante tu tarjeta"="Debes autorizar el pago ante tu tarjeta";
 "Debes autorizar ante %1$s el pago de " = "Debes autorizar ante %1$s el pago de ";
-" a MercadoPago" = " a MercadoPago";
+" a Mercado Pago" = " a Mercado Pago";
 "Ya hablé con %1$s y me autorizó" = "Ya hablé con %1$s y me autorizó";
 
 "En menos de 1 hora te enviaremos por e-mail el resultado."="En menos de 1 hora te enviaremos por e-mail el resultado.";
@@ -251,3 +252,26 @@
 
 //Administrador de tarjetas
 "¿Con qué tarjeta?"="¿Con qué tarjeta?";
+
+// components - congrats
+"¡Apúrate a pagar!" = "¡Apúrate a pagar!";
+"Algo salió mal..." = "Algo salió mal...";
+
+
+// Receipt
+" de " = " de ";
+"Número de operación " = "Número de operación ";
+
+//Months
+"January" = "Enero";
+"February" = "Febrero";
+"March" = "Marzo";
+"April" = "Abril";
+"May" = "Mayo";
+"June" = "Junio";
+"July" = "Julio";
+"August" = "Agosto";
+"September" = "Septiembre";
+"October" = "Octubre";
+"November" = "Noviembre";
+"December" = "Diciembre";

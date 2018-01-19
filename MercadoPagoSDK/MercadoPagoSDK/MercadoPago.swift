@@ -169,14 +169,18 @@ import UIKit
     }
 
     open class func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
+
         let path = MercadoPago.getBundle()!.path(forResource: "PaymentMethodSearch", ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
         var description = withDescription
+        let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
 
         if defaultColor {
-            description = description+"Azul"
+            description = description + "Azul"
         } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
-            description = UIColor.primaryColor() == UIColor.px_blueMercadoPago() ? description+"Azul" : description
+            if tintColorForIcons == nil {
+                description = description + "Azul"
+            }
         }
 
         guard let itemSelected = dictPM?.value(forKey: description) as? NSDictionary else {
@@ -185,15 +189,18 @@ import UIKit
 
         let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
 
-        if description == "credit_card" || description == "account_money" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
-            return image?.imageWithOverlayTint(tintColor: UIColor.primaryColor())
+        if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
+            if let iconsTintColor = tintColorForIcons {
+                return image?.imageWithOverlayTint(tintColor: iconsTintColor)
+            }
+            return image
         } else {
             return image
         }
-
     }
 
     open class func getOfflineReviewAndConfirmImage(_ paymentMethod: PaymentMethod? = nil) -> UIImage {
+
         guard let paymentMethod = paymentMethod else {
             return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
         }
@@ -203,6 +210,7 @@ import UIKit
         } else if paymentMethod.isAccountMoney {
             return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!
         }
+    
         return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
     }
 

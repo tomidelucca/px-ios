@@ -21,14 +21,16 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
         self.background.backgroundColor = UIColor.UIColorFromRGB(0xFFF4C3)
+
         self.background.layer.cornerRadius = 4
 
         self.unlockCardtextView.delegate = self
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
 
-        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.primaryColor()]
+        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
 
         self.unlockCardtextView.linkTextAttributes = URLAttribute
 
@@ -47,7 +49,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
     private static func getUnlockCardText() -> NSMutableAttributedString {
 
         let unlockCardText = "Recuerda desbloquear tu tarjeta antes de confirmar el pago.".localized
-        let normalAttributes: [String:AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
+        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: UIColor.UIColorFromRGB(0xA1924C)]
 
         let mutableAttributedString = NSMutableAttributedString(string: unlockCardText, attributes: normalAttributes)
         let unlockCardLinkRange = (unlockCardText as NSString).range(of: "desbloquear tu tarjeta".localized)

@@ -11,7 +11,6 @@ import MercadoPagoServices
 
 open class MercadoPagoServicesAdapter: NSObject {
 
-
     init(servicePreference: ServicePreference? = nil) {
         super.init()
     }
@@ -21,14 +20,14 @@ open class MercadoPagoServicesAdapter: NSObject {
     }
 
     open func getInstructions(paymentId: String, paymentTypeId: String, callback : @escaping (InstructionsInfo) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
-        callback(MockBuilder.buildInstructionsInfo())
+        callback(MockBuilder.buildInstructionsInfo(paymentMethod: MockBuilder.buildPaymentMethod(paymentId)))
     }
 
     open func getPaymentMethodSearch(amount: Double, excludedPaymentTypesIds: Set<String>?, excludedPaymentMethodsIds: Set<String>?, defaultPaymentMethod: String?, payer: Payer, site: String, callback : @escaping (PaymentMethodSearch) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildPaymentMethodSearchComplete())
     }
 
-    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String : String]? = nil, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+    open func createPayment(url: String, uri: String, transactionId: String? = nil, paymentData: NSDictionary, query: [String: String]? = nil, callback : @escaping (Payment) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildPayment("visa"))
     }
 

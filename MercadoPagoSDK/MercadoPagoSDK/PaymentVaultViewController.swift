@@ -81,7 +81,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func initCommon() {
-
         self.merchantAccessToken = MercadoPagoContext.merchantAccessToken()
         self.publicKey = MercadoPagoContext.publicKey()
         self.currency = MercadoPagoContext.getCurrency()
@@ -93,7 +92,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        //self.showLoading()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateCoupon(_:)), name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil)
 
@@ -124,8 +122,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = callbackCancel
         }
 
-       self.collectionSearch.backgroundColor = UIColor.px_white()
-
+       self.collectionSearch.backgroundColor = UIColor.white
     }
 
     func updateCoupon(_ notification: Notification) {
@@ -139,16 +136,13 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         super.viewWillAppear(animated)
 
         self.hideNavBar()
-        if let button = self.navigationItem.leftBarButtonItem {
+        
+        if let _ = self.navigationItem.leftBarButtonItem {
                self.navigationItem.leftBarButtonItem!.action = #selector(invokeCallbackCancelShowingNavBar)
         }
 
         self.navigationController!.navigationBar.shadowImage = nil
         self.extendedLayoutIncludesOpaqueBars = true
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
         self.collectionSearch.allowsSelection = true
         self.getCustomerCards()
@@ -159,16 +153,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
         }
-         self.hideLoading()
-
-    }
-
-    open override func willMove(toParentViewController parent: UIViewController?) {
-        super.willMove(toParentViewController: parent)
-    }
-
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        self.hideLoading()
     }
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {
@@ -177,30 +162,24 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 self.navigationController!.popToViewController(self, animated: true)
             } else {
                 self.loadingGroups = false
-              //  self.navigationController!.popToViewController(self, animated: true)
                 self.callbackCancel!()
             }
         }
     }
 
     fileprivate func getCustomerCards() {
+        
         if self.viewModel!.shouldGetCustomerCardsInfo() {
-
-            if let customerURL = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
+            if let _ = MercadoPagoCheckoutViewModel.servicePreference.getCustomerURL() {
                 self.viewModel.mercadoPagoServicesAdapter.getCustomer(callback: { [weak self] (customer) in
-
                     self?.viewModel.customerId = customer._id
                     self?.viewModel.customerPaymentOptions = customer.cards
                     self?.loadPaymentMethodSearch()
-
                 }, failure: { (error) in
-
                     // Ir a Grupos igual
                     self.loadPaymentMethodSearch()
-
                 })
             }
-
         } else {
             self.loadPaymentMethodSearch()
         }
@@ -227,7 +206,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func registerAllCells() {
-
         let collectionSearchCell = UINib(nibName: "PaymentSearchCollectionViewCell", bundle: self.bundle)
         self.collectionSearch.register(collectionSearchCell, forCellWithReuseIdentifier: "searchCollectionCell")
 
@@ -285,7 +263,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                         updateMercadoPagoCheckout(coupon)
                     }
                 })
-                self.present(step, animated: false, completion: {})
+                self.navigationController?.pushViewController(step, animated: true)
             }
         }
     }
@@ -413,7 +391,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         let height2 = heightOfItem(indexItem: index2)
 
         return height1 > height2 ? height1 : height2
-
     }
 
     func heightOfItem(indexItem: Int) -> CGFloat {
@@ -441,12 +418,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         self.didScrollInTable(scrollView)
     }
-
-    override open func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-
  }

@@ -9,7 +9,7 @@
 import Foundation
 
 @objc
-public protocol PXHookComponent: PXComponetizable {
+public protocol PXHookComponent: PXComponentizable {
     func hookForStep() -> PXHookStep
     func render() -> UIView
     @objc optional func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool

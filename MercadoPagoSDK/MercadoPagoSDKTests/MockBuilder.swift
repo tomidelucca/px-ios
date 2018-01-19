@@ -230,8 +230,8 @@ open class MockBuilder: NSObject {
         return paymentMethodSearchItem
     }
 
-    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockPaymentPluginViewController?) -> PXPaymentMethodPlugin {
-        let paymentPlugin = MockPaymentPluginViewController(shouldSkip: shouldSkipPaymentPlugin)
+    class func buildPaymentMethodPlugin(id: String, name: String, displayOrder: PXPaymentMethodPlugin.DisplayOrder = .TOP, shouldSkipPaymentPlugin: Bool = false, configPaymentMethodPlugin: MockConfigPaymentMethodPlugin?) -> PXPaymentMethodPlugin {
+        let paymentPlugin = MockPaymentPluginViewController()
 
         let plugin = PXPaymentMethodPlugin(id: id, name: name, image: UIImage(), description: nil, paymentPlugin: paymentPlugin)
 
@@ -242,6 +242,10 @@ open class MockBuilder: NSObject {
         plugin.setDisplayOrder(order: displayOrder)
 
         return plugin
+    }
+
+    class func buildPaymentPlugin() -> PXPaymentPluginComponent {
+        return MockPaymentPluginViewController()
     }
 
     class func buildPaymentMethodSearch(groups: [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, customOptions: [CardInformation]? = nil) -> PaymentMethodSearch {
@@ -366,11 +370,20 @@ open class MockBuilder: NSObject {
     class func buildPaymentData(paymentMethod: PaymentMethod) -> PaymentData {
         let paymentData = PaymentData()
         paymentData.paymentMethod = paymentMethod
+        paymentData.token = MockBuilder.buildToken()
+        paymentData.issuer = MockBuilder.buildIssuer()
+        paymentData.payerCost = MockBuilder.buildPayerCost()
         return paymentData
     }
-    
-    class func buildInstructionsInfo() -> InstructionsInfo {
+
+    class func buildInstructionsInfo(paymentMethod: PaymentMethod) -> InstructionsInfo {
         let instructionInfoJson = MockManager.getMockFor("InstructionInfo")
+        let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
+        return intructionsInfo
+    }
+
+    class func buildCompleteInstructionsInfo() -> InstructionsInfo {
+        let instructionInfoJson = MockManager.getMockFor("InstructionInfo_complete")
         let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
         return intructionsInfo
     }
@@ -400,10 +413,10 @@ open class MockBuilder: NSObject {
         return payment
     }
 
-    class func buildPaymentResult(_ status: String? = "status", paymentMethodId: String) -> PaymentResult {
-        let pm = MockBuilder.buildPaymentMethod(paymentMethodId)
+    class func buildPaymentResult(_ status: String? = "status", statusDetail: String = "detail", paymentMethodId: String, paymentTypeId: String = "credit_card") -> PaymentResult {
+        let pm = MockBuilder.buildPaymentMethod(paymentMethodId, name: paymentMethodId, paymentTypeId: paymentTypeId)
         let paymentData = MockBuilder.buildPaymentData(paymentMethod: pm)
-        let paymentResult = PaymentResult(status: status!, statusDetail: "detail", paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
+        let paymentResult = PaymentResult(status: status!, statusDetail: statusDetail, paymentData: paymentData, payerEmail: "email", id: "id", statementDescription: "description")
         return paymentResult
     }
 

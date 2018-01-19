@@ -18,7 +18,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var paymentMethodDescription: MPLabel!
 
-    @IBOutlet weak var selectOtherPaymentMethodButton: MPButton!
+    @IBOutlet weak var selectOtherPaymentMethodButton: PXSecondaryButton!
 
     @IBOutlet weak var CFT: UILabel!
     @IBOutlet weak var noRateLabel: MPLabel!
@@ -28,7 +28,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     @IBOutlet weak var totalAmountLabel: MPLabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.backgroundColor = UIColor.px_grayBackgroundColor()
+        self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
         self.noRateLabel.text = ""
         self.noRateLabel.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
         self.totalAmountLabel.attributedText = NSAttributedString(string : "")
@@ -107,9 +107,9 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
 
     func fillChangePaymentMethodButton(reviewScreenPreference: ReviewScreenPreference) {
         if reviewScreenPreference.isChangeMethodOptionEnabled() {
+            self.selectOtherPaymentMethodButton.backgroundColor = .clear
             self.selectOtherPaymentMethodButton.setTitle("Cambiar medio de pago".localized, for: .normal)
             self.selectOtherPaymentMethodButton.titleLabel?.font = Utils.getFont(size: self.noRateLabel.font.pointSize)
-            self.selectOtherPaymentMethodButton.setTitleColor(UIColor.primaryColor(), for: UIControlState.normal)
         } else {
             self.selectOtherPaymentMethodButton.isHidden = true
         }
