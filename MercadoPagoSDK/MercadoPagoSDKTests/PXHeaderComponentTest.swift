@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 class PXHeaderComponentTest: BaseTest {
-
+/*
     // MARK: APPROVED - CARD
     func testHeaderView_approvedCardPayment_render() {
         // Given:
@@ -149,4 +149,5 @@ class PXHeaderComponentTest: BaseTest {
         XCTAssertEqual(headerView.backgroundColor, UIColor.pxGreenMp)
 
     }
+ */
 }

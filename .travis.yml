@@ -1,7 +1,7 @@
 sudo: required
 language: objective-c
 cache: cocoapods
-osx_image: xcode9.1
+osx_image: xcode9.2
 xcode_project: MercadoPagoSDK/MercadoPagoSDK.xcworkspace
 xcode_scheme: MercadoPagoSDK
 xcode_sdk: iphonesimulator
@@ -11,7 +11,7 @@ before_script:
   - cd MercadoPagoSDK
 
 branches:
-  only: 
+  only:
     - master
     - development
     - betaVersion
@@ -20,7 +20,8 @@ install:
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- pod update
+- pod repo update
+- pod install
 - cd ../scripts
 - "./run_tests_on_devices.sh"
 
