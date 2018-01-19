@@ -13,11 +13,11 @@ extension UIView {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :0), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
-        line.backgroundColor = UIColor.pxMediumLightGray
+        line.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
         addSubview(line)
     }
 
-    func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
+    func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -33,11 +33,11 @@ extension UIView {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y :self.frame.size.height - height), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)
         line.alpha = 0.6
-        line.backgroundColor = UIColor.pxMediumLightGray
+        line.backgroundColor = .UIColorFromRGB(0xEEEEEE)
         addSubview(line)
     }
 
-    func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
+    func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color
@@ -57,7 +57,7 @@ extension UIView {
         addSubview(line)
     }
 
-    func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .pxMediumLightGray) {
+    func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat = 100, color: UIColor = .UIColorFromRGB(0xEEEEEE)) {
         let line = UIView()
         line.translatesAutoresizingMaskIntoConstraints = false
         line.backgroundColor = color

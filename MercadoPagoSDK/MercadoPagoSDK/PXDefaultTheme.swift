@@ -58,6 +58,10 @@ extension PXDefaultTheme: PXTheme {
     public func boldLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
+    
+    public func highlightedLabelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
+    }
 
     public func successColor() -> UIColor {
         return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
@@ -69,10 +73,6 @@ extension PXDefaultTheme: PXTheme {
 
     public func rejectedColor() -> UIColor {
         return #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-    }
-
-    func discountColor() -> UIColor {
-        return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     }
 
     public func loadingComponent() -> PXThemeProperty {

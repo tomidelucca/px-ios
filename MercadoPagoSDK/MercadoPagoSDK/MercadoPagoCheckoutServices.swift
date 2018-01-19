@@ -194,6 +194,7 @@ extension MercadoPagoCheckout {
                     identificationViewController.showErrorMessage("Revisa este dato".localized)
                 }
             } else {
+                strongSelf.dismissLoading()
                 strongSelf.viewModel.errorInputs(error: error, errorCallback: { [weak self] (_) in
                     self?.createNewCardToken()
                 })

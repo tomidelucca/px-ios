@@ -33,6 +33,10 @@ import Foundation
     public func boldLabelTintColor() -> UIColor {
         return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     }
+    
+    public func highlightedLabelTintColor() -> UIColor {
+        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
+    }
 
     public func successColor() -> UIColor {
         return #colorLiteral(red: 0.3921568627, green: 0.7725490196, blue: 0.4549019608, alpha: 1)
@@ -44,10 +48,6 @@ import Foundation
 
     public func rejectedColor() -> UIColor {
         return #colorLiteral(red: 0.9764705882, green: 0.3764705882, blue: 0.3803921569, alpha: 1)
-    }
-
-    public func discountColor() -> UIColor {
-        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
     }
 
     public func loadingComponent() -> PXThemeProperty {
@@ -65,7 +65,7 @@ import Foundation
     public func detailedBackgroundColor() -> UIColor {
         return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
-    
+
     public func circleBackgroundColor() -> UIColor {
         return #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
     }
