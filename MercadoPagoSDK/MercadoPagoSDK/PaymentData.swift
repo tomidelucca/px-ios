@@ -18,12 +18,16 @@ public class PaymentData: NSObject {
     public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
 
+    /**
+     Este metodo deberia borrar SOLO la data recolectada atraves del flujo de Checkout,
+     i.e. la data ingresada por el payer 
+     */
     func clearCollectedData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
-        self.payer = nil
+        self.payer?.clearCollectedData() // No borrar el payer directo
         self.transactionDetails = nil
         // No borrar el descuento
     }
