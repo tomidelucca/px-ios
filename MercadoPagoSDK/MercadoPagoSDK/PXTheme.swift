@@ -16,12 +16,11 @@ import Foundation
     func labelTintColor() -> UIColor
     func lightLabelTintColor() -> UIColor
     func boldLabelTintColor() -> UIColor
+    func highlightedLabelTintColor() -> UIColor
 
     func successColor() -> UIColor
     func warningColor() -> UIColor
     func rejectedColor() -> UIColor
-    func discountColor() -> UIColor
-    func payerCostNoRateColor() -> UIColor
 
     func loadingComponent() -> PXThemeProperty
     func modalComponent() -> PXThemeProperty
