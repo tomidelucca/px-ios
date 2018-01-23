@@ -26,7 +26,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_CARD_FORM + "/" + viewModel.paymentMethod.paymentTypeId + TrackingUtil.CARD_SECURITY_CODE_VIEW } }
 
     override func trackInfo() {
-        var metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
+        let metadata: [String: String] = [TrackingUtil.METATDATA_SECURITY_CODE_VIEW_REASON: self.viewModel.reason.rawValue]
 
         MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
     }
@@ -113,7 +113,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     func continueAction() {
         securityCodeTextField.resignFirstResponder()
-        guard securityCodeTextField.text?.characters.count == viewModel.secCodeLenght() else {
+        guard securityCodeTextField.text?.count == viewModel.secCodeLenght() else {
             let errorMessage: String = ("Ingresa los %1$s números del código de seguridad".localized as NSString).replacingOccurrences(of: "%1$s", with: ((self.viewModel.secCodeLenght()) as NSNumber).stringValue)
             showErrorMessage(errorMessage)
             return
@@ -146,7 +146,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
-        if ((textField.text?.characters.count)! + string.characters.count) > viewModel.secCodeLenght() {
+        if ((textField.text?.count)! + string.count) > viewModel.secCodeLenght() {
             return false
         }
         return true
@@ -155,7 +155,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
     open func editingChanged(_ textField: UITextField) {
         hideErrorMessage()
         securityCodeLabel.text = textField.text
-        self.ccvLabelEmpty = (textField.text != nil && textField.text!.characters.count == 0)
+        self.ccvLabelEmpty = (textField.text != nil && textField.text!.count == 0)
         securityCodeLabel.textColor = self.viewModel.getPaymentMethodFontColor()
         completeCvvLabel()
 
@@ -200,7 +200,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
 
         let label = self.securityCodeLabel
         //Check for max length including the spacers we added
-        if label?.text?.characters.count == self.viewModel.secCodeLenght() {
+        if label?.text?.count == self.viewModel.secCodeLenght() {
             return false
         }
 

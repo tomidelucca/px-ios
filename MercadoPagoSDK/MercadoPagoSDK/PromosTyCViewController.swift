@@ -69,14 +69,9 @@ open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewData
 	}
 
 	func heightForTyCCellAtIndexPath(_ indexPath: IndexPath) -> CGFloat {
-
 		let sizingCell: PromoTyCDetailTableViewCell? = nil
-		var onceToken: Int = 0
-	//	_ = self.__once
-
 		self.configureTyCCell(sizingCell!, atIndexPath: indexPath)
 		return self.calculateHeightForConfiguredSizingCell(sizingCell!)
-
 	}
 
 	func calculateHeightForConfiguredSizingCell(_ sizingCell: UITableViewCell) -> CGFloat {

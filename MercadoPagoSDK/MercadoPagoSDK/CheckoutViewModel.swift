@@ -256,18 +256,18 @@ open class CheckoutViewModel: NSObject {
             }
 
         }
-        var amountPref = amount
+        
         if let discount = self.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
-            amountPref = discount.newAmount()
+
             if summary.details[SummaryType.DISCOUNT] != nil {
                  summary.addAmountDetail(detail: discountAmountDetail, type: SummaryType.DISCOUNT)
             } else {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
-            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().successColor()
-            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().successColor()
+            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
+            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
         }
         if let payerCost = self.paymentData.payerCost {
             let interest = payerCost.totalAmount - amount

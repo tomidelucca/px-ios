@@ -159,7 +159,7 @@ extension MercadoPagoCheckout {
 
     func showSecurityCodeScreen() {
         let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback : { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
-            self?.createCardToken(cardInformation: cardInformation as!  CardInformation, securityCode: securityCode)
+            self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
 
         })
         self.pushViewController(viewController : securityCodeVc, animated: true)
@@ -181,7 +181,7 @@ extension MercadoPagoCheckout {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
 
-       self.viewModel.saveOrDeleteESC()
+       _ = self.viewModel.saveOrDeleteESC()
 
         var congratsViewController: MercadoPagoUIViewController
 
@@ -270,7 +270,7 @@ extension MercadoPagoCheckout {
                 return
             }
             object.viewModel.entityTypes = nil
-            object.viewModel.paymentData.payer.entityType = nil
+            object.viewModel.paymentData.payer?.entityType = nil
         }
 
         self.navigationController.pushViewController(entityTypeStep, animated: true)

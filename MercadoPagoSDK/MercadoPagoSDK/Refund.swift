@@ -13,7 +13,7 @@ open class Refund: NSObject {
     open var dateCreated: Date!
     open var _id: Int = 0
     open var metadata: NSObject!
-    open var paymentId: Int = 0
+    open var paymentId: Int64 = 0
     open var source: String!
     open var uniqueSequenceNumber: String!
 
@@ -32,7 +32,7 @@ open class Refund: NSObject {
            refund.uniqueSequenceNumber = uniqueSequenceNumber
         }
         if let paymentId = JSONHandler.attemptParseToInt(json["payment_id"]) {
-            refund.paymentId = paymentId
+            refund.paymentId = Int64(paymentId)
         }
         if let dateCreated = JSONHandler.attemptParseToString(json["date_created"]) {
             refund.dateCreated = Utils.getDateFromString(dateCreated)

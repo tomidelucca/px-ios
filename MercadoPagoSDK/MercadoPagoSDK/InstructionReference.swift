@@ -24,7 +24,7 @@ open class InstructionReference: Equatable {
         }
         var referenceFullValue: String = value.reduce("", {($0 as String) + self.separator + $1})
         if self.separator != "" {
-            referenceFullValue = String(referenceFullValue.characters.dropFirst())
+            referenceFullValue = String(referenceFullValue.dropFirst())
         }
         return referenceFullValue
     }

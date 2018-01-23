@@ -50,36 +50,7 @@ class ViewUtils {
         view.addSubview(addStatusBar)
     }
 
-    class func addScaledImage(_ image: UIImage, inView view: UIView) {
-        let imageView = UIImageView()
-        imageView.frame = view.bounds
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = image
-        view.addSubview(imageView)
-    }
-
-    class func loadImageFromUrl(_ url: String, inView: UIView, loadingBackgroundColor: UIColor = UIColor.primaryColor(), loadingIndicatorColor: UIColor = UIColor.white) {
-  //      LoadingOverlay.shared.showOverlay(inView, backgroundColor: loadingBackgroundColor, indicatorColor: loadingIndicatorColor)
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async(execute: {
-            let url = URL(string: url)
-            if url != nil {
-                let data = try? Data(contentsOf: url!)
-                if data != nil {
-                    DispatchQueue.main.async(execute: {
-                        let image = UIImage(data: data!)
-                        if image != nil {
-                            ViewUtils.addScaledImage(image!, inView: inView)
-                        }
-                        })
-
-                }
-            }
-            LoadingOverlay.shared.hideOverlayView()
-        })
-    }
-
     class func loadImageFromUrl(_ url: String) -> UIImage? {
-
             let url = URL(string: url)
             if url != nil {
                 let data = try? Data(contentsOf: url!)

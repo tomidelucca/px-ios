@@ -248,13 +248,11 @@
 		15EEE1D91D89D477004D3A19 /* CardFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EEE1D81D89D477004D3A19 /* CardFormViewModel.swift */; };
 		15F3D7591EA65B3B00DC57AA /* CardsAdminViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F3D7581EA65B3B00DC57AA /* CardsAdminViewModelTest.swift */; };
 		15FE72921E79AAA200111A9C /* AdditionalStepTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA55F91DB0241700501061 /* AdditionalStepTitleTableViewCell.swift */; };
-		1A825570A2D1B56FF13722BD /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0BE383DF11CE371769290AC /* Pods_MercadoPagoSDK.framework */; };
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
 		236251CC1EF2D518005589AB /* PaymentResultTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236251CB1EF2D518005589AB /* PaymentResultTest.swift */; };
 		239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
-		23A366A7200CBF8500E69FD7 /* PXMeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */; };
 		23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */; };
@@ -609,13 +607,14 @@
 		81D9F92A200FE44200490DC6 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
 		81D9F92B200FE4FF00490DC6 /* PXThemeProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2158420062EFC00B968F6 /* PXThemeProperty.swift */; };
 		81D9F92C200FE50500490DC6 /* PXDefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E2158220062E4600B968F6 /* PXDefaultTheme.swift */; };
-		81D9F92D200FE50800490DC6 /* PXMeliTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */; };
+		81D9F92D200FE50800490DC6 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		81D9F92E200FE50D00490DC6 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
 		CCDD005D1DC52E4200858CF8 /* PaymentMethodSearch.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCDD005C1DC52E4100858CF8 /* PaymentMethodSearch.plist */; };
-		DFB433C2738F28879A0AD9F7 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
+		E93BAD30AEFB46F24D2E4012 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
+		F85C48C1D84A733D14FD4048 /* Pods_MercadoPagoSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0BE383DF11CE371769290AC /* Pods_MercadoPagoSDK.framework */; };
 		FC03FD791FCDE49F0006BBD6 /* PXBodyViewModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15661C5B1FCDCC47007FD7B7 /* PXBodyViewModelHelper.swift */; };
 		FC114D6B1E6DECEF00640196 /* Cellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC114D6A1E6DECEF00640196 /* Cellable.swift */; };
 		FC114D6C1E6DECEF00640196 /* Cellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC114D6A1E6DECEF00640196 /* Cellable.swift */; };
@@ -886,7 +885,6 @@
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
 		236251CB1EF2D518005589AB /* PaymentResultTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultTest.swift; sourceTree = "<group>"; };
-		23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMeliTheme.swift; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
@@ -1198,7 +1196,7 @@
 			files = (
 				81760F361FD5965F00237A81 /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B5E77461FA8F78500D813AF /* MercadoPagoServices.framework in Frameworks */,
-				1A825570A2D1B56FF13722BD /* Pods_MercadoPagoSDK.framework in Frameworks */,
+				F85C48C1D84A733D14FD4048 /* Pods_MercadoPagoSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1208,7 +1206,7 @@
 			files = (
 				4B0E72AA1FA8F9E8006A3853 /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B0E72A81FA8F9E4006A3853 /* MercadoPagoServices.framework in Frameworks */,
-				DFB433C2738F28879A0AD9F7 /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
+				E93BAD30AEFB46F24D2E4012 /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1694,7 +1692,6 @@
 			isa = PBXGroup;
 			children = (
 				23E2158220062E4600B968F6 /* PXDefaultTheme.swift */,
-				23A366A6200CBF8500E69FD7 /* PXMeliTheme.swift */,
 			);
 			name = Themes;
 			sourceTree = "<group>";
@@ -2741,7 +2738,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\n#swiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		531F38B15A5AD3D6E3AC8F5C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2802,7 +2799,6 @@
 				815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				0F9883971AD2AB6000F750F0 /* Token.swift in Sources */,
-				23A366A7200CBF8500E69FD7 /* PXMeliTheme.swift in Sources */,
 				15661C5C1FCDCC48007FD7B7 /* PXBodyViewModelHelper.swift in Sources */,
 				4BAA55E71DB0012300501061 /* AdditionalStepViewController.swift in Sources */,
 				155954F11F87CD200086854B /* InputComponent.swift in Sources */,
@@ -3061,7 +3057,7 @@
 				4B8705051EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */,
 				4B2AF5861EEF060D00925644 /* PaymentVaultTitleCollectionViewCell.swift in Sources */,
 				761B89431C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
-				81D9F92D200FE50800490DC6 /* PXMeliTheme.swift in Sources */,
+				81D9F92D200FE50800490DC6 /* BuildFile in Sources */,
 				FC3FC87F1FBE137200CF29E1 /* PXInstructionsAccreditationTimeComponent.swift in Sources */,
 				15B8B1BE1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
 				76294CF11E721BC600CEAE6D /* MercadoPagoCheckoutViewModelTest.swift in Sources */,

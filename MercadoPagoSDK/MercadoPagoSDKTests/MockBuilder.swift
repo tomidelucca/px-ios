@@ -398,6 +398,7 @@ open class MockBuilder: NSObject {
         let paymentData = PaymentData()
         paymentData.paymentMethod = MockBuilder.buildPaymentMethod(paymentMethodId)
         paymentData.issuer = MockBuilder.buildIssuer()
+        paymentData.payer = Payer(_id: "", email: "asd@asd.com", identification: nil, entityType: nil)
         paymentData.payerCost = MockBuilder.buildPayerCost(installments: installments, installmentRate: installmentRate)
         paymentData.token = MockBuilder.buildToken(withESC: withESC)
         return paymentData

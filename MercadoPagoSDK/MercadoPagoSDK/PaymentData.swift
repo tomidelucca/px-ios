@@ -14,16 +14,20 @@ public class PaymentData: NSObject {
     public var issuer: Issuer?
     public var payerCost: PayerCost?
     public var token: Token?
-    public var payer = Payer()
+    public var payer: Payer?
     public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
 
+    /**
+     Este metodo deberia borrar SOLO la data recolectada atraves del flujo de Checkout,
+     i.e. la data ingresada por el payer 
+     */
     func clearCollectedData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
         self.token = nil
-        self.payer.clearCollectedData()
+        self.payer?.clearCollectedData() // No borrar el payer directo
         self.transactionDetails = nil
         // No borrar el descuento
     }
@@ -34,11 +38,11 @@ public class PaymentData: NSObject {
             return false
         }
 
-        if paymentMethod.isEntityTypeRequired && payer.entityType == nil {
+        if paymentMethod.isEntityTypeRequired && payer?.entityType == nil {
             return false
         }
 
-        if paymentMethod.isPayerInfoRequired && payer.identification == nil {
+        if paymentMethod.isPayerInfoRequired && payer?.identification == nil {
             return false
         }
 
@@ -149,7 +153,11 @@ public class PaymentData: NSObject {
     }
 
     public func getPayer() -> Payer {
-        return payer
+        var returnedPayer = Payer()
+        if let payer = payer {
+            returnedPayer = payer
+        }
+        return returnedPayer
     }
 
     public func getPaymentMethod() -> PaymentMethod? {
@@ -162,7 +170,7 @@ public class PaymentData: NSObject {
 
     func toJSON() -> [String: Any] {
        var obj: [String: Any] = [
-            "payer": payer.toJSON()
+        "payer": payer?.toJSON() ?? ""
        ]
         if let paymentMethod = self.paymentMethod {
             obj["payment_method"] = paymentMethod.toJSON()

@@ -16,14 +16,14 @@ typedef NS_ENUM (NSInteger, MLPXSpinnerStyle) {
 	MLPXSpinnerStyleWhiteSmall
 };
 
-@interface MLPXSpinner : UIView
+@interface MLPXSpinner : UIView <CAAnimationDelegate>
 
 /**
  *  Creates a spinner with the selected style
  *
  *  @param style     spinner style
  */
-- (id)initWithStyle:(MLPXSpinnerStyle)style __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
+- (id   _Nullable )initWithStyle:(MLPXSpinnerStyle)style __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
 
 /**
  *  Creates a spinner with the selected style and text
@@ -31,7 +31,7 @@ typedef NS_ENUM (NSInteger, MLPXSpinnerStyle) {
  *  @param style     spinner style
  *  @param text      spinner text
  */
-- (id)initWithStyle:(MLPXSpinnerStyle)style text:(NSString *)text __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
+- (id _Nullable )initWithStyle:(MLPXSpinnerStyle)style text:(NSString *_Nullable)text __attribute__((deprecated("We recommend start using the initWithConfig:text: instead.")));
 
 /**
  *  Creates a spinner with the desire configuration
@@ -39,14 +39,14 @@ typedef NS_ENUM (NSInteger, MLPXSpinnerStyle) {
  *  @param config    spinner style configuration
  *  @param text      spinner text
  */
-- (id)initWithConfig:(nonnull MLPXSpinnerConfig *)config text:(NSString *)text;
+- (id _Nullable )initWithConfig:(nonnull MLPXSpinnerConfig *)config text:(NSString *_Nullable)text;
 
 /**
  *  Sets spinner text
  *
  *  @param text      spinner text
  */
-- (void)setText:(NSString *)spinnerText;
+- (void)setText:(NSString *_Nullable)spinnerText;
 
 /**
  *  Sets spinner style
@@ -60,7 +60,7 @@ typedef NS_ENUM (NSInteger, MLPXSpinnerStyle) {
  *
  *  @param config     spinner style configuration
  */
-- (void)setUpSpinnerWithConfig:(MLPXSpinnerConfig *)config;
+- (void)setUpSpinnerWithConfig:(MLPXSpinnerConfig *_Nullable)config;
 
 
 - (void)showSpinner;

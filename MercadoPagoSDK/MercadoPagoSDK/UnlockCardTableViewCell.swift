@@ -30,7 +30,7 @@ class UnlockCardTableViewCell: UITableViewCell, UITextViewDelegate {
         self.unlockCardtextView.isUserInteractionEnabled = true
         self.unlockCardtextView.attributedText = UnlockCardTableViewCell.getUnlockCardText()
 
-        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14) ?? UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
+        let URLAttribute = [NSFontAttributeName: Utils.getFont(size: 14), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().secondaryButton().tintColor] as [String: Any]
 
         self.unlockCardtextView.linkTextAttributes = URLAttribute
 

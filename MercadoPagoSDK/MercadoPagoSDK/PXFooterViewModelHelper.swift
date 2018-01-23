@@ -48,7 +48,7 @@ extension PXResultViewModel {
                 } else {
                     return PXFooterResultConstants.DEFAULT_BUTTON_TEXT
                 }
-            } else if preference.getApprovedSecondaryButtonText() != nil {
+            } else if !preference.getApprovedSecondaryButtonText().isEmpty {
                 return preference.getApprovedSecondaryButtonText()
             } else {
                 return PXFooterResultConstants.DEFAULT_BUTTON_TEXT

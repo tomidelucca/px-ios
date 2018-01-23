@@ -59,7 +59,7 @@ open class Item: NSObject {
             "quantity": self.quantity,
             "unit_price": self.unitPrice,
             "title": title,
-            "description": self._description,
+            "description": self._description ?? "",
             "currency_id": currencyId,
             "category_id": categoryId,
             "picture_url": pictureUrl

@@ -20,7 +20,8 @@ class CardAvailableView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .white
 
-        setImageView(image: MercadoPago.getImageFor(paymentMethod, forCell: true))
+        let image =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: false)
+        setImageView(image: image)
         setPaymentMethodNameLabel(name: paymentMethod.name)
     }
 

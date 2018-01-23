@@ -448,7 +448,7 @@ extension MercadoPagoServicesAdapter {
         refund.dateCreated = pxRefund.dateCreated
         refund._id = Int(pxRefund.id)!
         refund.metadata = pxRefund.metadata! as NSObject
-        refund.paymentId = pxRefund.paymentId as! Int
+        refund.paymentId = pxRefund.paymentId != nil ? pxRefund.paymentId! : 0
         refund.source = pxRefund.source
         refund.uniqueSequenceNumber = pxRefund.uniqueSecuenceNumber
         return refund
@@ -671,9 +671,12 @@ extension MercadoPagoServicesAdapter {
         customer.identification = getIdentificationFromPXIdentification(pxCustomer.identification)
         customer.lastName = pxCustomer.lastName
         customer.liveMode = pxCustomer.liveMode
-        customer.metadata = pxCustomer.metadata as! NSDictionary
         customer.phone = getPhoneFromPXPhone(pxCustomer.phone)
         customer.registrationDate = pxCustomer.registrationDate
+        
+        if let meta = pxCustomer.metadata {
+            customer.metadata = meta as NSDictionary
+        }
         return customer
     }
 
