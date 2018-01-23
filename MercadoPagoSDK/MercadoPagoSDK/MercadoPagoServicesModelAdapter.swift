@@ -363,7 +363,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount, amount: Double) -> DiscountCoupon {
         let discountCoupon = DiscountCoupon()
-        discountCoupon._id = pxDiscount.id
+        discountCoupon._id = UInt(pxDiscount.id)
         discountCoupon.name = pxDiscount.name
         discountCoupon.percent_off = pxDiscount.percentOff?.stringValue ?? "0"
         discountCoupon.amount_off = pxDiscount.amountOff?.stringValue ?? "0"
