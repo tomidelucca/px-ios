@@ -202,13 +202,13 @@ class CheckoutViewModelTest: BaseTest {
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!._id, "visa")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!._id, "id")
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!._id, 123)
         let newPaymentData = self.instanceWithCoupon!.getClearPaymentData()
 
         XCTAssertNil(newPaymentData.paymentMethod)
         XCTAssertNil(newPaymentData.payerCost)
         XCTAssertEqual(newPaymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(newPaymentData.discount!._id, "id")
+        XCTAssertEqual(newPaymentData.discount!._id, 123)
     }
 
     func getInvalidSummary() -> Summary {
