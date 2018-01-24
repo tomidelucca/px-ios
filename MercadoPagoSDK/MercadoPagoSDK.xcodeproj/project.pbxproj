@@ -1520,7 +1520,7 @@
 		15AE1DAB1F61B8BA00B0DAF8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FCF072292017839E00A6E2D6 /* Groups */,
+				FCF24589201901EF00CAF717 /* Common Components */,
 				816AB5AE1FE966B00070A932 /* Custom Component */,
 				FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */,
 				FC7BD8BE1FD98BE700D5B2C7 /* PXUtils */,
@@ -2435,21 +2435,21 @@
 			name = Body;
 			sourceTree = "<group>";
 		};
-		FCF072292017839E00A6E2D6 /* Groups */ = {
-			isa = PBXGroup;
-			children = (
-				FCF0722A201783A700A6E2D6 /* Total Row */,
-			);
-			name = Groups;
-			sourceTree = "<group>";
-		};
-		FCF0722A201783A700A6E2D6 /* Total Row */ = {
+		FCF0722A201783A700A6E2D6 /* Contained Label */ = {
 			isa = PBXGroup;
 			children = (
 				FC0F6CBB20179A01006E3EA1 /* PXContainedLabelComponent.swift */,
 				FC0F6CBD20179A08006E3EA1 /* PXContainedLabelRenderer.swift */,
 			);
-			name = "Total Row";
+			name = "Contained Label";
+			sourceTree = "<group>";
+		};
+		FCF24589201901EF00CAF717 /* Common Components */ = {
+			isa = PBXGroup;
+			children = (
+				FCF0722A201783A700A6E2D6 /* Contained Label */,
+			);
+			name = "Common Components";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
