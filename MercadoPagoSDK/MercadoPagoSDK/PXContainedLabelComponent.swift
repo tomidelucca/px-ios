@@ -14,14 +14,14 @@ open class PXContainedLabelComponent: PXComponentizable {
         return PXTotalRowRenderer().render(self)
     }
     
-    var props: PXTotalRowProps
+    var props: PXContainedLabelProps
     
-    init(props: PXTotalRowProps) {
+    init(props: PXContainedLabelProps) {
         self.props = props
     }
 }
 
-open class PXTotalRowProps: NSObject {
+open class PXContainedLabelProps: NSObject {
     var totalAmount: NSAttributedString
     init(totalAmount: NSAttributedString) {
         self.totalAmount = totalAmount

@@ -58,7 +58,7 @@ class DiscountBodyCell: UIView {
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
         attributedTitle.append(attributedAmount)
         
-        let props = PXTotalRowProps(totalAmount: attributedTitle)
+        let props = PXContainedLabelProps(totalAmount: attributedTitle)
         let component = PXContainedLabelComponent(props: props)
         let view = component.render()
         self.addSubview(view)
