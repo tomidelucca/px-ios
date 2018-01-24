@@ -98,9 +98,9 @@
     
     //[self setHooks];
     
-  //  [self setPaymentMethodPlugins];
+    [self setPaymentMethodPlugins];
 
-  //  [self setPaymentPlugin];
+    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
