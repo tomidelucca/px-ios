@@ -21,7 +21,7 @@ class DiscountCouponTest: XCTestCase {
     func testToJSON() {
 
         let discountCoupon = DiscountCoupon()
-        discountCoupon._id = "123"
+        discountCoupon._id = 123
         discountCoupon.name = "discount"
         discountCoupon.percent_off = "20"
         discountCoupon.amount_off = "200"
@@ -33,7 +33,7 @@ class DiscountCouponTest: XCTestCase {
 
         XCTAssertNotNil(discountCoupon.toJSONString())
 
-        XCTAssertEqual(discountJson["id"] as! Int, 123)
+        XCTAssertEqual(discountJson["id"] as! UInt, 123)
         XCTAssertEqual(discountJson["name"] as! String, "discount")
         XCTAssertEqual(discountJson["percent_off"] as! Int, 20)
         XCTAssertEqual(discountJson["amount_off"] as! Int, 200)

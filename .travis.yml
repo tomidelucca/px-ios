@@ -13,6 +13,7 @@ before_script:
 branches:
   only:
     - master
+    - development
     - betaVersion
 
 install:

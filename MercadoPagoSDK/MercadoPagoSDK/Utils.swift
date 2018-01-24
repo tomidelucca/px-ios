@@ -201,7 +201,12 @@ class Utils {
      returns 20
      **/
     class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
-        let range = formattedString.range(of: decimalSeparator)
+        var range = formattedString.range(of: decimalSeparator)
+        
+        if range == nil {
+            range = formattedString.range(of: ".")
+        }
+        
         var cents = ""
         if range != nil {
             let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)

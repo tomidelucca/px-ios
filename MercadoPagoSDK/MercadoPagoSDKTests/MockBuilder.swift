@@ -431,7 +431,7 @@ open class MockBuilder: NSObject {
 
     class func buildDiscount() -> DiscountCoupon {
         let discount = DiscountCoupon()
-        discount._id = "id"
+        discount._id = 123
         discount.amount_off = "20"
         discount.amount = 5
         return discount

@@ -583,7 +583,7 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
 
         let discount = DiscountCoupon()
-        discount._id = "123"
+        discount._id = 123
         discount.name = "Patito Off"
         discount.coupon_amount = "30"
         discount.amount_off = "30"
