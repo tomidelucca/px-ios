@@ -13,9 +13,10 @@ class PXContainedLabelRenderer: NSObject {
     func render(_ containedLabel: PXContainedLabelComponent) -> PXContainedLabelView {
         let containedLabelView = PXContainedLabelView()
         containedLabelView.translatesAutoresizingMaskIntoConstraints = false
+        containedLabelView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
         
-        //Total Label
-        containedLabelView.mainLabel = buildLabel(with: containedLabel.props.mainText)
+        //Label
+        containedLabelView.mainLabel = buildLabel(with: containedLabel.props.labelText)
         containedLabelView.addSubview(containedLabelView.mainLabel)
         PXLayout.centerVertically(view: containedLabelView.mainLabel).isActive = true
         PXLayout.centerHorizontally(view: containedLabelView.mainLabel).isActive = true

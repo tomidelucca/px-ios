@@ -22,9 +22,9 @@ open class PXContainedLabelComponent: PXComponentizable {
 }
 
 open class PXContainedLabelProps: NSObject {
-    var mainText: NSAttributedString
-    init(mainText: NSAttributedString) {
-        self.mainText = mainText
+    var labelText: NSAttributedString
+    init(labelText: NSAttributedString) {
+        self.labelText = labelText
     }
 }
 
