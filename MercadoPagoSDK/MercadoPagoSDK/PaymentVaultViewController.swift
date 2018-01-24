@@ -330,7 +330,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         } else if isCouponSection(section: indexPath.section) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CouponCell", for: indexPath)
             cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 15)
+            let discountBody = DiscountBodyCell(frame: CGRect(x: 0, y: 0, width : view.frame.width, height : DiscountBodyCell.HEIGHT), coupon: self.viewModel.discount, amount:self.viewModel.amount, topMargin: 20)
             discountBody.tag = 1
             cell.contentView.addSubview(discountBody)
             return cell
@@ -441,8 +441,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     public func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        if isCouponSection(section: section) || isTotalSection(section: section) {
+        if isCouponSection(section: section) {
             return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        if isTotalSection(section: section) {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         }
         if isHeaderSection(section: section) {
             return UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)

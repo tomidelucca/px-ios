@@ -36,7 +36,7 @@ class DiscountBodyCell: UIView {
             loadCouponView()
         }
         if addBorder {
-            self.layer.addBorder(edge: UIRectEdge.bottom, color: SEPARATOR_BORDER_COLOR, thickness: 0.5)
+            self.addSeparatorLineToBottom(height: 1)
         }
     }
 
@@ -167,7 +167,6 @@ class DiscountBodyCell: UIView {
         let maskLayer = CAShapeLayer()
 
         maskLayer.path = path.cgPath
-        ///   viewToRound.layer.mask = maskLayer
 
         discountAmountLabel.layer.mask = maskLayer
 
@@ -177,92 +176,4 @@ class DiscountBodyCell: UIView {
         self.addSubview(discountAmountLabel)
         self.addSubview(rightArrow)
     }
-}
-
-extension CALayer {
-    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-        let border = CALayer()
-        switch edge {
-        case UIRectEdge.top:
-            border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: thickness)
-            break
-        case UIRectEdge.bottom:
-            border.frame = CGRect.init(x: 0, y: frame.height - thickness, width: frame.width, height: thickness)
-            break
-        case UIRectEdge.left:
-            border.frame = CGRect.init(x: 0, y: 0, width: thickness, height: frame.height)
-            break
-        case UIRectEdge.right:
-            border.frame = CGRect.init(x: frame.width - thickness, y: 0, width: thickness, height: frame.height)
-            break
-        default:
-            break
-        }
-
-        border.backgroundColor = color.cgColor
-        self.addSublayer(border)
-    }
-}
-
-extension UIView {
-
-    /**
-     Rounds the given set of corners to the specified radius
-     
-     - parameter corners: Corners to round
-     - parameter radius:  Radius to round to
-     */
-    func round(corners: UIRectCorner, radius: CGFloat) {
-        _round(corners: corners, radius: radius)
-    }
-
-    /**
-     Rounds the given set of corners to the specified radius with a border
-     
-     - parameter corners:     Corners to round
-     - parameter radius:      Radius to round to
-     - parameter borderColor: The border color
-     - parameter borderWidth: The border width
-     */
-    func round(corners: UIRectCorner, radius: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
-        let mask = _round(corners: corners, radius: radius)
-        addBorder(mask: mask, borderColor: borderColor, borderWidth: borderWidth)
-    }
-
-    /**
-     Fully rounds an autolayout view (e.g. one with no known frame) with the given diameter and border
-     
-     - parameter diameter:    The view's diameter
-     - parameter borderColor: The border color
-     - parameter borderWidth: The border width
-     */
-    func fullyRound(diameter: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
-        layer.masksToBounds = true
-        layer.cornerRadius = diameter / 2
-        layer.borderWidth = borderWidth
-        layer.borderColor = borderColor.cgColor
-    }
-
-}
-
-private extension UIView {
-
-    @discardableResult func _round(corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
-        return mask
-    }
-
-    func addBorder(mask: CAShapeLayer, borderColor: UIColor, borderWidth: CGFloat) {
-        let borderLayer = CAShapeLayer()
-        borderLayer.path = mask.path
-        borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.strokeColor = borderColor.cgColor
-        borderLayer.lineWidth = borderWidth
-        borderLayer.frame = bounds
-        layer.addSublayer(borderLayer)
-    }
-
 }
