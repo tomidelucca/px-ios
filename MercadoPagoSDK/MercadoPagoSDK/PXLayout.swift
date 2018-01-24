@@ -176,13 +176,13 @@ class PXLayout: NSObject {
         return checkContraintActivation(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: superView, attribute: NSLayoutAttribute.height, multiplier: percent / 100, constant: 0))
     }
 
-    static func getScreenWidth(applyingMarginFactor percent: CGFloat = 0) -> CGFloat {
+    static func getScreenWidth(applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableWidth = screenSize.width * percent / 100
         return availableWidth
     }
 
-    static func getScreenHeight(applyingMarginFactor percent: CGFloat = 0) -> CGFloat {
+    static func getScreenHeight(applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
         let screenSize = UIScreen.main.bounds
         let availableHeight = screenSize.height * percent / 100
         return availableHeight

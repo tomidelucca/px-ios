@@ -11,7 +11,7 @@ import UIKit
 class DiscountBodyCell: UIView {
 
     let DISCOUNT_COLOR = ThemeManager.shared.getTheme().highlightedLabelTintColor()
-    let LABEL_COLOR = ThemeManager.shared.getTheme().labelTintColor()
+    let LABEL_COLOR = ThemeManager.shared.getTheme().boldLabelTintColor()
     let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
     let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
     let SEPARATOR_BORDER_COLOR: UIColor = UIColor.UIColorFromRGB(0x999999)
@@ -36,7 +36,7 @@ class DiscountBodyCell: UIView {
             loadCouponView()
         }
         if addBorder {
-            self.layer.addBorder(edge: UIRectEdge.bottom, color: SEPARATOR_BORDER_COLOR, thickness: 0.5)
+            self.addSeparatorLineToBottom(height: 1)
         }
     }
 
@@ -45,16 +45,28 @@ class DiscountBodyCell: UIView {
     }
 
     func loadNoCouponView() {
-        let currency = MercadoPagoContext.getCurrency()
         let screenWidth = frame.size.width
-        let tituloLabel = MPLabel(frame: CGRect(x: margin, y: 20, width: (frame.size.width - 2 * margin), height: 20) )
-        tituloLabel.textAlignment = .center
-         let result = NSMutableAttributedString()
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: LABEL_COLOR]
-        let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
-        result.append(total)
-        result.append(Utils.getAttributedAmount( amount, currency: currency, color : LABEL_COLOR, fontSize: 16, baselineOffset:4))
-        tituloLabel.attributedText = result
+        
+        let amountFontSize: CGFloat = 16
+        let centsFontSize: CGFloat = 12
+        let currency = MercadoPagoContext.getCurrency()
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+        
+        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+        attributedTitle.append(attributedAmount)
+        
+        let props = PXContainedLabelProps(labelText: attributedTitle)
+        let component = PXContainedLabelComponent(props: props)
+        let view = component.render()
+        self.addSubview(view)
+        PXLayout.pinTop(view: view, withMargin: 20).isActive = true
+        PXLayout.setHeight(owner: view, height: 20).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+        PXLayout.centerHorizontally(view: view).isActive = true
+        
         let couponFlag = UIImageView()
         couponFlag.image = MercadoPago.getImage("iconDiscount")
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)
@@ -81,7 +93,6 @@ class DiscountBodyCell: UIView {
          x = x + widthlabelDiscount! + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
-        self.addSubview(tituloLabel)
         self.addSubview(couponFlag)
         self.addSubview(detailLabel)
         self.addSubview(rightArrow)
@@ -156,7 +167,6 @@ class DiscountBodyCell: UIView {
         let maskLayer = CAShapeLayer()
 
         maskLayer.path = path.cgPath
-        ///   viewToRound.layer.mask = maskLayer
 
         discountAmountLabel.layer.mask = maskLayer
 
@@ -166,92 +176,4 @@ class DiscountBodyCell: UIView {
         self.addSubview(discountAmountLabel)
         self.addSubview(rightArrow)
     }
-}
-
-extension CALayer {
-    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-        let border = CALayer()
-        switch edge {
-        case UIRectEdge.top:
-            border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: thickness)
-            break
-        case UIRectEdge.bottom:
-            border.frame = CGRect.init(x: 0, y: frame.height - thickness, width: frame.width, height: thickness)
-            break
-        case UIRectEdge.left:
-            border.frame = CGRect.init(x: 0, y: 0, width: thickness, height: frame.height)
-            break
-        case UIRectEdge.right:
-            border.frame = CGRect.init(x: frame.width - thickness, y: 0, width: thickness, height: frame.height)
-            break
-        default:
-            break
-        }
-
-        border.backgroundColor = color.cgColor
-        self.addSublayer(border)
-    }
-}
-
-extension UIView {
-
-    /**
-     Rounds the given set of corners to the specified radius
-     
-     - parameter corners: Corners to round
-     - parameter radius:  Radius to round to
-     */
-    func round(corners: UIRectCorner, radius: CGFloat) {
-        _round(corners: corners, radius: radius)
-    }
-
-    /**
-     Rounds the given set of corners to the specified radius with a border
-     
-     - parameter corners:     Corners to round
-     - parameter radius:      Radius to round to
-     - parameter borderColor: The border color
-     - parameter borderWidth: The border width
-     */
-    func round(corners: UIRectCorner, radius: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
-        let mask = _round(corners: corners, radius: radius)
-        addBorder(mask: mask, borderColor: borderColor, borderWidth: borderWidth)
-    }
-
-    /**
-     Fully rounds an autolayout view (e.g. one with no known frame) with the given diameter and border
-     
-     - parameter diameter:    The view's diameter
-     - parameter borderColor: The border color
-     - parameter borderWidth: The border width
-     */
-    func fullyRound(diameter: CGFloat, borderColor: UIColor, borderWidth: CGFloat) {
-        layer.masksToBounds = true
-        layer.cornerRadius = diameter / 2
-        layer.borderWidth = borderWidth
-        layer.borderColor = borderColor.cgColor
-    }
-
-}
-
-private extension UIView {
-
-    @discardableResult func _round(corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
-        return mask
-    }
-
-    func addBorder(mask: CAShapeLayer, borderColor: UIColor, borderWidth: CGFloat) {
-        let borderLayer = CAShapeLayer()
-        borderLayer.path = mask.path
-        borderLayer.fillColor = UIColor.clear.cgColor
-        borderLayer.strokeColor = borderColor.cgColor
-        borderLayer.lineWidth = borderWidth
-        borderLayer.frame = bounds
-        layer.addSublayer(borderLayer)
-    }
-
 }
