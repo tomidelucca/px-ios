@@ -26,11 +26,11 @@ open class PXContainedActionButtonProps : NSObject {
     let backgroundColor: UIColor
     let buttonColor: UIColor
     let textColor: UIColor
-    init(title: String, action:  @escaping (() -> Void), backgroundColor: UIColor = .white, buttonColor: UIColor = .red, textColor: UIColor = .white) {
+    init(title: String, action:  @escaping (() -> Void)) {
         self.title = title
         self.action = action
-        self.backgroundColor = backgroundColor
-        self.buttonColor = buttonColor
-        self.textColor = textColor
+        self.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
+        self.buttonColor = ThemeManager.shared.getTheme().primaryButton().backgroundColor
+        self.textColor = ThemeManager.shared.getTheme().primaryButton().tintColor
     }
 }

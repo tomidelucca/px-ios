@@ -80,7 +80,7 @@ open class CheckoutViewModel: NSObject {
             return 60
 
         } else if self.isConfirmButtonCellFor(indexPath: indexPath) {
-            return ConfirmPaymentTableViewCell.ROW_HEIGHT
+            return 110 //ConfirmPaymentTableViewCell.ROW_HEIGHT : Esto va a cambiar con templetizado, lo modifico para limpiar la clase.
 
         } else if self.isItemCellFor(indexPath: indexPath) {
             return hasCustomItemCells() ? reviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
