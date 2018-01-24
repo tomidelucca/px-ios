@@ -367,7 +367,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return CGSize(width : view.frame.width, height : DiscountBodyCell.HEIGHT + 20) // Add 20 px to separate sections
         }
         if isTotalSection(section: indexPath.section) {
-            return CGSize(width : view.frame.width, height : TotalAmountCell.HEIGHT) // Add 20 px to separate sections
+            return CGSize(width : view.frame.width, height : TotalAmountCell.HEIGHT)
         }
 
         let widthPerItem = availableWidth / itemsPerRow

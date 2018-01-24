@@ -86,7 +86,7 @@ class Utils {
         return getAttributedAmount(amount, thousandSeparator: currency.thousandsSeparator, decimalSeparator: currency.decimalSeparator, currencySymbol: currency.symbol, color: color, fontSize: fontSize, centsFontSize: centsFontSize, baselineOffset: baselineOffset, negativeAmount: negativeAmount)
     }
 
-    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false) -> NSMutableAttributedString {
+    class func getAttributedAmount(_ amount: Double, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = UIColor.px_white(), fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7, negativeAmount: Bool = false, smallSymbol: Bool = false, showCents: Bool = true) -> NSMutableAttributedString {
         let cents = getCentsFormatted(String(amount), decimalSeparator: ".")
         let amount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator : thousandSeparator, decimalSeparator: ".")
 
@@ -109,7 +109,7 @@ class Utils {
         let space = NSMutableAttributedString(string: String.NON_BREAKING_LINE_SPACE, attributes: smallAttributes)
         attributedSymbol.append(space)
         attributedSymbol.append(attributedAmount)
-        if cents != "00" || fontSize < 26 {
+        if (cents != "00" || fontSize < 26) && showCents {
             attributedSymbol.append(space)
             attributedSymbol.append(attributedCents)
         }
@@ -201,7 +201,12 @@ class Utils {
      returns 20
      **/
     class func getCentsFormatted(_ formattedString: String, decimalSeparator: String, decimalPlaces: Int = MercadoPagoContext.getCurrency().getDecimalPlacesOrDefault()) -> String {
-        let range = formattedString.range(of: decimalSeparator)
+        var range = formattedString.range(of: decimalSeparator)
+        
+        if range == nil {
+            range = formattedString.range(of: ".")
+        }
+        
         var cents = ""
         if range != nil {
             let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)

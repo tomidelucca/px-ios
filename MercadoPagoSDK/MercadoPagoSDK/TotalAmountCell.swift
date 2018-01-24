@@ -49,9 +49,13 @@ class TotalAmountCell: UIView {
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+        let decimalPlaces = currency.getDecimalPlacesOrDefault()
+        
+        let cents = Utils.getCentsFormatted(amount.stringValue, decimalSeparator: decimalSeparator, decimalPlaces: decimalPlaces)
+        let mustShowCents = cents != "00"
         
         let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.TITLE_FONT_SIZE)])
-        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:self.TITLE_FONT_SIZE, centsFontSize:self.CENTS_FONT_SIZE, smallSymbol: false)
+        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:self.TITLE_FONT_SIZE, centsFontSize:self.CENTS_FONT_SIZE, baselineOffset: 3, smallSymbol: false, showCents: mustShowCents)
         attributedTitle.append(attributedAmount)
         return attributedTitle
     }
