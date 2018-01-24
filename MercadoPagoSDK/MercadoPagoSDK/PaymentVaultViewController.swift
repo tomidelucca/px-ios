@@ -352,7 +352,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             attributedTitle.append(attributedAmount)
             
             let props = PXTotalRowProps(totalAmount: attributedTitle)
-            let component = PXTotalRowComponent(props: props)
+            let component = PXContainedLabelComponent(props: props)
             let view = component.render()
             cell.contentView.addSubview(view)
             PXLayout.matchHeight(ofView: view).isActive = true

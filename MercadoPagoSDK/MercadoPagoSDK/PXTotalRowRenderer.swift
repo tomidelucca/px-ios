@@ -10,7 +10,7 @@ import UIKit
 
 class PXTotalRowRenderer: NSObject {
     
-    func render(_ totalRow: PXTotalRowComponent) -> PXTotalRowView {
+    func render(_ totalRow: PXContainedLabelComponent) -> PXTotalRowView {
         let totalRowView = PXTotalRowView()
         totalRowView.translatesAutoresizingMaskIntoConstraints = false
         

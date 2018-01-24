@@ -59,7 +59,7 @@ class DiscountBodyCell: UIView {
         attributedTitle.append(attributedAmount)
         
         let props = PXTotalRowProps(totalAmount: attributedTitle)
-        let component = PXTotalRowComponent(props: props)
+        let component = PXContainedLabelComponent(props: props)
         let view = component.render()
         self.addSubview(view)
         PXLayout.pinTop(view: view, withMargin: 20).isActive = true

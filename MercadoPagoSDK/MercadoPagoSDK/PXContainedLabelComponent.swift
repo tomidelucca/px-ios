@@ -1,5 +1,5 @@
 //
-//  PXTotalRowComponent.swift
+//  PXContainedLabelComponent.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 1/23/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PXTotalRowComponent: PXComponentizable {
+open class PXContainedLabelComponent: PXComponentizable {
     
     public func render() -> UIView {
         return PXTotalRowRenderer().render(self)
