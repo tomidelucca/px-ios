@@ -10,8 +10,8 @@ import UIKit
 
 class PXContainedLabelRenderer: NSObject {
     
-    func render(_ totalRow: PXContainedLabelComponent) -> PXTotalRowView {
-        let totalRowView = PXTotalRowView()
+    func render(_ totalRow: PXContainedLabelComponent) -> PXContainedLabelView {
+        let totalRowView = PXContainedLabelView()
         totalRowView.translatesAutoresizingMaskIntoConstraints = false
         
         //Total Label
@@ -36,7 +36,7 @@ class PXContainedLabelRenderer: NSObject {
     }
 }
 
-class PXTotalRowView: PXComponentView {
+class PXContainedLabelView: PXComponentView {
     public var totalLabel: UILabel!
 }
 
