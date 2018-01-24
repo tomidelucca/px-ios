@@ -351,7 +351,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
             attributedTitle.append(attributedAmount)
             
-            let props = PXContainedLabelProps(totalAmount: attributedTitle)
+            let props = PXContainedLabelProps(mainText: attributedTitle)
             let component = PXContainedLabelComponent(props: props)
             let view = component.render()
             cell.contentView.addSubview(view)

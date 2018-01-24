@@ -10,34 +10,34 @@ import UIKit
 
 class PXContainedLabelRenderer: NSObject {
     
-    func render(_ totalRow: PXContainedLabelComponent) -> PXContainedLabelView {
-        let totalRowView = PXContainedLabelView()
-        totalRowView.translatesAutoresizingMaskIntoConstraints = false
+    func render(_ containedLabel: PXContainedLabelComponent) -> PXContainedLabelView {
+        let containedLabelView = PXContainedLabelView()
+        containedLabelView.translatesAutoresizingMaskIntoConstraints = false
         
         //Total Label
-        totalRowView.totalLabel = buildTotalLabel(with: totalRow.props.totalAmount)
-        totalRowView.addSubview(totalRowView.totalLabel)
-        PXLayout.centerVertically(view: totalRowView.totalLabel).isActive = true
-        PXLayout.centerHorizontally(view: totalRowView.totalLabel).isActive = true
-        PXLayout.matchWidth(ofView: totalRowView.totalLabel).isActive = true
-        PXLayout.matchHeight(ofView: totalRowView.totalLabel).isActive = true
-        return totalRowView
+        containedLabelView.mainLabel = buildLabel(with: containedLabel.props.mainText)
+        containedLabelView.addSubview(containedLabelView.mainLabel)
+        PXLayout.centerVertically(view: containedLabelView.mainLabel).isActive = true
+        PXLayout.centerHorizontally(view: containedLabelView.mainLabel).isActive = true
+        PXLayout.matchWidth(ofView: containedLabelView.mainLabel).isActive = true
+        PXLayout.matchHeight(ofView: containedLabelView.mainLabel).isActive = true
+        return containedLabelView
     }
     
-    func buildTotalLabel(with text: NSAttributedString) -> UILabel {
-        let totalLabel = UILabel()
-        totalLabel.textAlignment = .center
-        totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.attributedText = text
-        totalLabel.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
-        totalLabel.lineBreakMode = .byWordWrapping
-        totalLabel.numberOfLines = 0
-        return totalLabel
+    func buildLabel(with text: NSAttributedString) -> UILabel {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = text
+        label.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        return label
     }
 }
 
 class PXContainedLabelView: PXComponentView {
-    public var totalLabel: UILabel!
+    public var mainLabel: UILabel!
 }
 
 

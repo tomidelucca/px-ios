@@ -22,9 +22,9 @@ open class PXContainedLabelComponent: PXComponentizable {
 }
 
 open class PXContainedLabelProps: NSObject {
-    var totalAmount: NSAttributedString
-    init(totalAmount: NSAttributedString) {
-        self.totalAmount = totalAmount
+    var mainText: NSAttributedString
+    init(mainText: NSAttributedString) {
+        self.mainText = mainText
     }
 }
 
