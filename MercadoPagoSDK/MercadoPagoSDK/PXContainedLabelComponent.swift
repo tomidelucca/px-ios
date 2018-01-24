@@ -11,7 +11,7 @@ import UIKit
 open class PXContainedLabelComponent: PXComponentizable {
     
     public func render() -> UIView {
-        return PXTotalRowRenderer().render(self)
+        return PXContainedLabelRenderer().render(self)
     }
     
     var props: PXContainedLabelProps

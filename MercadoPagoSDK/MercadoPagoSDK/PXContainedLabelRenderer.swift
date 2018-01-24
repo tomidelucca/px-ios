@@ -1,5 +1,5 @@
 //
-//  PXTotalRowRenderer.swift
+//  PXContainedLabelRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by AUGUSTO COLLERONE ALFONSO on 1/23/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXTotalRowRenderer: NSObject {
+class PXContainedLabelRenderer: NSObject {
     
     func render(_ totalRow: PXContainedLabelComponent) -> PXTotalRowView {
         let totalRowView = PXTotalRowView()
