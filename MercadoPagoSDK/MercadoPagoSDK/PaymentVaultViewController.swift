@@ -55,6 +55,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     fileprivate var tintColor = true
     fileprivate var loadingGroups = true
+    
+    fileprivate let TOTAL_ROW_HEIGHT: CGFloat = 42.0
 
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
 
@@ -334,10 +336,30 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return cell
         } else if isTotalSection(section: indexPath.section) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TotalAmountCell", for: indexPath)
-            cell.contentView.viewWithTag(1)?.removeFromSuperview()
-            let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: TotalAmountCell.HEIGHT)
-            let totalAmountRow = TotalAmountCell(frame: frame, amount: self.viewModel.amount)
-            cell.contentView.addSubview(totalAmountRow)
+            for view in cell.contentView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            let amountFontSize: CGFloat = 16
+            let centsFontSize: CGFloat = 12
+            let currency = MercadoPagoContext.getCurrency()
+            let currencySymbol = currency.getCurrencySymbolOrDefault()
+            let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+            let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+            let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+            
+            let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+            attributedTitle.append(attributedAmount)
+            
+            let props = PXTotalRowProps(totalAmount: attributedTitle)
+            let component = PXTotalRowComponent(props: props)
+            let view = component.render()
+            cell.contentView.addSubview(view)
+            PXLayout.matchHeight(ofView: view).isActive = true
+            PXLayout.matchWidth(ofView: view).isActive = true
+            PXLayout.centerVertically(view: view).isActive = true
+            PXLayout.centerHorizontally(view: view).isActive = true
+            view.addSeparatorLineToBottom(height: 1)
             return cell
         }
         return UICollectionViewCell()
@@ -367,7 +389,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             return CGSize(width : view.frame.width, height : DiscountBodyCell.HEIGHT + 20) // Add 20 px to separate sections
         }
         if isTotalSection(section: indexPath.section) {
-            return CGSize(width : view.frame.width, height : TotalAmountCell.HEIGHT)
+            return CGSize(width : view.frame.width, height : self.TOTAL_ROW_HEIGHT)
         }
 
         let widthPerItem = availableWidth / itemsPerRow

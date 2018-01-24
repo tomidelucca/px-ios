@@ -11,7 +11,7 @@ import UIKit
 class DiscountBodyCell: UIView {
 
     let DISCOUNT_COLOR = ThemeManager.shared.getTheme().highlightedLabelTintColor()
-    let LABEL_COLOR = ThemeManager.shared.getTheme().labelTintColor()
+    let LABEL_COLOR = ThemeManager.shared.getTheme().boldLabelTintColor()
     let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
     let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
     let SEPARATOR_BORDER_COLOR: UIColor = UIColor.UIColorFromRGB(0x999999)
@@ -45,16 +45,28 @@ class DiscountBodyCell: UIView {
     }
 
     func loadNoCouponView() {
-        let currency = MercadoPagoContext.getCurrency()
         let screenWidth = frame.size.width
-        let tituloLabel = MPLabel(frame: CGRect(x: margin, y: 20, width: (frame.size.width - 2 * margin), height: 20) )
-        tituloLabel.textAlignment = .center
-         let result = NSMutableAttributedString()
-        let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 16), NSForegroundColorAttributeName: LABEL_COLOR]
-        let total = NSMutableAttributedString(string: "Total: ".localized, attributes: normalAttributes)
-        result.append(total)
-        result.append(Utils.getAttributedAmount( amount, currency: currency, color : LABEL_COLOR, fontSize: 16, baselineOffset:4))
-        tituloLabel.attributedText = result
+        
+        let amountFontSize: CGFloat = 16
+        let centsFontSize: CGFloat = 12
+        let currency = MercadoPagoContext.getCurrency()
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
+        
+        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+        attributedTitle.append(attributedAmount)
+        
+        let props = PXTotalRowProps(totalAmount: attributedTitle)
+        let component = PXTotalRowComponent(props: props)
+        let view = component.render()
+        self.addSubview(view)
+        PXLayout.pinTop(view: view, withMargin: 20).isActive = true
+        PXLayout.setHeight(owner: view, height: 20).isActive = true
+        PXLayout.matchWidth(ofView: view).isActive = true
+        PXLayout.centerHorizontally(view: view).isActive = true
+        
         let couponFlag = UIImageView()
         couponFlag.image = MercadoPago.getImage("iconDiscount")
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)
@@ -81,7 +93,6 @@ class DiscountBodyCell: UIView {
          x = x + widthlabelDiscount! + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
-        self.addSubview(tituloLabel)
         self.addSubview(couponFlag)
         self.addSubview(detailLabel)
         self.addSubview(rightArrow)
