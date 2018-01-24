@@ -21,8 +21,6 @@ class PXTotalRowRenderer: NSObject {
         PXLayout.centerHorizontally(view: totalRowView.totalLabel).isActive = true
         PXLayout.matchWidth(ofView: totalRowView.totalLabel).isActive = true
         PXLayout.matchHeight(ofView: totalRowView.totalLabel).isActive = true
-        
-        totalRowView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
         return totalRowView
     }
     
@@ -31,7 +29,7 @@ class PXTotalRowRenderer: NSObject {
         totalLabel.textAlignment = .center
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
         totalLabel.attributedText = text
-        totalLabel.textColor = .black
+        totalLabel.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         totalLabel.lineBreakMode = .byWordWrapping
         totalLabel.numberOfLines = 0
         return totalLabel

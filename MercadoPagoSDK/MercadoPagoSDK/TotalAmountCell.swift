@@ -10,17 +10,17 @@ import UIKit
 
 class TotalAmountCell: UIView {
     static let HEIGHT: CGFloat = 42.0
-    static let TITLE_FONT_SIZE: CGFloat = 16.0
-    static let CENTS_FONT_SIZE: CGFloat = 12.0
-
-    let margin: CGFloat = 5.0
-    var topMargin: CGFloat!
+    
+    let TITLE_FONT_SIZE: CGFloat = 16.0
+    let CENTS_FONT_SIZE: CGFloat = 12.0
+    
     var amount: Double!
+    var addBottomLine: Bool!
 
-    init(frame: CGRect, amount: Double, addBorder: Bool = true, topMargin: CGFloat = 20.0) {
+    init(frame: CGRect, amount: Double, addBottomLine: Bool = true) {
         super.init(frame: frame)
         self.amount = amount
-        self.topMargin = topMargin
+        self.addBottomLine = addBottomLine
         loadTotalView()
     }
     
@@ -29,8 +29,9 @@ class TotalAmountCell: UIView {
     }
     
     func loadTotalView() {
-        let stringAmount = titleForInstructions(amount: 1309.99)
-        let props = PXTotalRowProps(totalAmount: stringAmount)
+        PXLayout.setHeight(owner: self, height: TotalAmountCell.HEIGHT).isActive = true
+        let textAmount = titleForRow(amount: self.amount)
+        let props = PXTotalRowProps(totalAmount: textAmount)
         let component = PXTotalRowComponent(props: props)
         let totalView = component.render()
         self.addSubview(totalView)
@@ -38,16 +39,19 @@ class TotalAmountCell: UIView {
         PXLayout.matchWidth(ofView: totalView).isActive = true
         PXLayout.centerVertically(view: totalView).isActive = true
         PXLayout.centerHorizontally(view: totalView).isActive = true
+        if addBottomLine {
+            totalView.addSeparatorLineToBottom(height: 1, horizontalMarginPercentage: 100)
+        }
     }
     
-    func titleForInstructions(amount: Double) -> NSMutableAttributedString {
+    func titleForRow(amount: Double) -> NSMutableAttributedString {
         let currency = MercadoPagoContext.getCurrency()
         let currencySymbol = currency.getCurrencySymbolOrDefault()
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
         
-        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: TotalAmountCell.TITLE_FONT_SIZE)])
-        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:TotalAmountCell.TITLE_FONT_SIZE, centsFontSize:TotalAmountCell.CENTS_FONT_SIZE, smallSymbol: false)
+        let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: self.TITLE_FONT_SIZE)])
+        let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize:self.TITLE_FONT_SIZE, centsFontSize:self.CENTS_FONT_SIZE, smallSymbol: false)
         attributedTitle.append(attributedAmount)
         return attributedTitle
     }
