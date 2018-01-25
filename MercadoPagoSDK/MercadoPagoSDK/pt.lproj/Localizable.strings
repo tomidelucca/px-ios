@@ -190,8 +190,8 @@
 " terminada en " = " terminado em ";
 "Revisa tu pago" = "Rever o seu pagamento";
 "Total" = "Total";
-"Cantidad : " = "Quantidade: ";
-"Precio Unitario : " = "Preço unitário: ";
+"Cantidad: " = "Quantidade: ";
+"Precio Unitario: " = "Preço unitário: ";
 "Pagas" = "Você paga";
 "Cambiar medio de pago" = "Alterar meio de pagamento";
 "Productos" = "Produtos";
