@@ -13,7 +13,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
-    let TITLE_FONT_SIZE: CGFloat = PXLayout.L_FONT
+    let TITLE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
     let DETAIL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let PM_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
