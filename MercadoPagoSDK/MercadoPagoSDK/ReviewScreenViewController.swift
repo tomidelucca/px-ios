@@ -84,7 +84,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        self.hideNavBar()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
         self.navigationItem.rightBarButtonItem = nil
@@ -101,25 +101,16 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        self.showLoading()
-
         self.titleCellHeight = 44
-
-        self.hideNavBar()
-
         self.checkoutTable.tableHeaderView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: self.checkoutTable.bounds.size.width, height: 0.01))
 
         //TODO : OJO TOKEN RECUPERABLE
         if self.viewModel.paymentData.hasPaymentMethod() {
-            //  self.checkoutTable.reloadData()
             if recover {
                 recover = false
-                //self.startRecoverCard()
             }
             if auth {
                 auth = false
-                //self.startAuthCard(self.viewModel.paymentData.token!)
             }
         }
 
@@ -131,7 +122,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         if self.shouldShowNavBar(self.checkoutTable) {
             self.showNavBar()
         }
-        self.hideLoading()
         
         // iPhoneX improvement.
         let bottomInset = PXLayout.getSafeAreaBottomInset()
