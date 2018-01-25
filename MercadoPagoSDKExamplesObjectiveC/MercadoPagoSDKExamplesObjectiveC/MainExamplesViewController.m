@@ -74,9 +74,7 @@
 
     [self setPaymentCallback];
 
-
-    DiscountCoupon* dc = [[DiscountCoupon alloc] init];
-    dc._id = @"123";
+    DiscountCoupon* dc = [[DiscountCoupon alloc] initWith_id:123];
     dc.name = @"Patito Off";
     dc.coupon_amount = @"30";
     dc.amount_off = @"30";

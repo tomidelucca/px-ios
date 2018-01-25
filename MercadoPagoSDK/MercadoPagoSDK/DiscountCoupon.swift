@@ -33,7 +33,7 @@ open class DiscountCoupon: NSObject {
      }
      */
 
-   open var _id: UInt!
+   open var _id: UInt
    open var name: String?
    open var percent_off: String = "0"
    open var amount_off: String = "0"
@@ -45,6 +45,11 @@ open class DiscountCoupon: NSObject {
 
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
+    }
+    
+    public init(_id: UInt) {
+        self._id = _id
+        super.init()
     }
 
     func toJSON() -> [String: Any] {
@@ -72,12 +77,10 @@ open class DiscountCoupon: NSObject {
     }
 
     open class func fromJSON(_ json: NSDictionary, amountWithoutDiscount: Double) -> DiscountCoupon? {
-        let discount = DiscountCoupon()
-        if json["id"] != nil && !(json["id"]! is NSNull) {
-            discount._id = json["id"] as! UInt
-        } else {
+        guard let couponId = json["id"]  else {
             return nil
         }
+        let discount = DiscountCoupon(_id:couponId as! UInt)
         if json["name"] != nil && !(json["name"]! is NSNull) {
             discount.name = json["name"] as? String
         }
