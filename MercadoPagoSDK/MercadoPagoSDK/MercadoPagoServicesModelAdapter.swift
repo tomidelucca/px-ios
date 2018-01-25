@@ -370,7 +370,7 @@ extension MercadoPagoServicesAdapter {
         discountCoupon.coupon_amount = pxDiscount.couponAmount?.stringValue ?? "0"
         discountCoupon.currency_id = pxDiscount.currencyId
         discountCoupon.concept = pxDiscount.concept
-        discountCoupon.amount = amount
+        discountCoupon.amountWithoutDiscount = amount
         return discountCoupon
     }
 
