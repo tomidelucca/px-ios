@@ -20,10 +20,10 @@ class PXHeaderRenderer: NSObject {
 
     //Image Title
     let STATUS_TITLE_HEIGHT: CGFloat = 18.0
-    static let LABEL_FONT_SIZE: CGFloat = 16.0
+    static let LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
 
     //Text
-    static let TITLE_FONT_SIZE: CGFloat = 26.0
+    static let TITLE_FONT_SIZE: CGFloat = PXLayout.XXXL_FONT
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 

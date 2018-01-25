@@ -10,9 +10,9 @@ import Foundation
 
 class PXInstructionsInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
+    let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
-    let INFO_LABEL_FONT_SIZE: CGFloat = 16.0
+    let INFO_LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let INFO_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(_ instructionsInfo: PXInstructionsInfoComponent) -> PXInstructionsInfoView {

@@ -10,7 +10,7 @@ import Foundation
 
 class PXInstructionsSecondaryInfoRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let LABEL_FONT_SIZE: CGFloat = 12.0
+    let LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
 
     func render(instructionsSecondaryInfo: PXInstructionsSecondaryInfoComponent) -> PXInstructionsSecondaryInfoView {
         let instructionsSecondaryInfoView = PXInstructionsSecondaryInfoView()

@@ -22,6 +22,18 @@ class PXLayout: NSObject {
     static let XXL_MARGIN: CGFloat = 48.0
     static let XXXL_MARGIN: CGFloat = 50.0
 
+    //Font Sizes
+    static let XXXS_FONT: CGFloat = 12.0
+    static let XXS_FONT: CGFloat = 14.0
+    static let XS_FONT: CGFloat = 16.0
+    static let S_FONT: CGFloat = 18.0
+    static let M_FONT: CGFloat = 20.0
+    static let L_FONT: CGFloat = 22.0
+    static let XL_FONT: CGFloat = 24.0
+    static let XXL_FONT: CGFloat = 26.0
+    static let XXXL_FONT: CGFloat = 26.0
+    
+    
     static let DEFAULT_CONTRAINT_ACTIVE = true
 
     static func checkContraintActivation(_ constraint: NSLayoutConstraint, withDefault isActive: Bool = DEFAULT_CONTRAINT_ACTIVE) -> NSLayoutConstraint {

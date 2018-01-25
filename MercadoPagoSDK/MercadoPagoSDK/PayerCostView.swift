@@ -14,8 +14,8 @@ class PayerCostView: UIView, PXComponent {
     private let INTER_MARGIN: CGFloat = 10.0
     private let TITLE_WIDTH_PERCENT: CGFloat = 0.5
     private let VALUE_WIDTH_PERCENT: CGFloat = 0.5
-    static private let TITLE_FONT_SIZE: CGFloat = 18.0
-    static private let VALUE_FONT_SIZE: CGFloat = 24.0
+    static private let TITLE_FONT_SIZE: CGFloat = PXLayout.S_FONT
+    static private let VALUE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
     static private let NO_INTEREST_TEXT =  "Sin interés".localized
     static private let PAY_TEXT =  "Pagas".localized
 

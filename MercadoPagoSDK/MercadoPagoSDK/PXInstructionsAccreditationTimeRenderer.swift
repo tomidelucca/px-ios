@@ -10,7 +10,7 @@ import Foundation
 
 class PXInstructionsAccreditationTimeRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = 12.0
+    let ACCREDITATION_LABEL_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     let ACCREDITATION_LABEL_FONT_COLOR: UIColor = .pxBrownishGray
 
     func render(_ instructionsAccreditationTime: PXInstructionsAccreditationTimeComponent) -> PXInstructionsAccreditationTimeView {

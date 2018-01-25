@@ -10,7 +10,7 @@ import Foundation
 
 class PXInstructionsActionRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 100.0
-    let ACTION_LABEL_FONT_SIZE: CGFloat = 16.0
+    let ACTION_LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let ACTION_LABEL_FONT_COLOR: UIColor = .px_blueMercadoPago()
 
     func render(_ instructionsAction: PXInstructionsActionComponent) -> PXInstructionsActionView {

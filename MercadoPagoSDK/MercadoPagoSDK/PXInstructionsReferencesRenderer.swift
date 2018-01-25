@@ -10,7 +10,7 @@ import Foundation
 
 class PXInstructionsReferencesRenderer: NSObject {
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
-    let TITLE_LABEL_FONT_SIZE: CGFloat = 20.0
+    let TITLE_LABEL_FONT_SIZE: CGFloat = PXLayout.M_FONT
     let TITLE_LABEL_FONT_COLOR: UIColor = .pxBlack
 
     func render(_ instructionsReferences: PXInstructionsReferencesComponent) -> PXInstructionsReferencesView {
