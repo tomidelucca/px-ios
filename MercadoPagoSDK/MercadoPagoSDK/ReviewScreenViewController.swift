@@ -36,6 +36,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     fileprivate var auth = false
 
     @IBOutlet weak var checkoutTable: UITableView!
+    
+    var floattingButton : PXContainedActionButtonView?
+    var cellButton : PXContainedActionButtonView?
 
    public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackExit :@escaping (() -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "ReviewScreenViewController", bundle: MercadoPago.getBundle())
@@ -87,13 +90,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.navigationItem.rightBarButtonItem = nil
 
         self.displayBackButton()
-
+        self.displayFloatingConfirmButton()
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
 
         self.registerAllCells()
 
-        self.displayFloatingConfirmButton()
+        
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -173,8 +176,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             return self.getTermsAndConditionsCell(indexPath: indexPath)
 
         } else if viewModel.isConfirmButtonCellFor(indexPath: indexPath) {
-            let cell = self.getConfirmPaymentButtonCell(indexPath: indexPath) as! ConfirmPaymentTableViewCell
-            self.fixedButton = cell.confirmPaymentButton
+            let cell = self.getConfirmPaymentButtonCell(indexPath: indexPath)
             return cell
 
         } else if viewModel.isExitButtonTableViewCellFor(indexPath: indexPath) {
@@ -200,9 +202,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         let purchaseDetailTableViewCell = UINib(nibName: "PurchaseDetailTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseDetailTableViewCell, forCellReuseIdentifier: "purchaseDetailTableViewCell")
 
-        let confirmPaymentTableViewCell = UINib(nibName: "ConfirmPaymentTableViewCell", bundle: self.bundle)
-        self.checkoutTable.register(confirmPaymentTableViewCell, forCellReuseIdentifier: "confirmPaymentTableViewCell")
-
+        self.checkoutTable.register(UITableViewCell.self, forCellReuseIdentifier: "confirmPaymentTableViewCell")
+        
+        
         let purchaseItemDetailTableViewCell = UINib(nibName: "PurchaseItemDetailTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseItemDetailTableViewCell, forCellReuseIdentifier: "purchaseItemDetailTableViewCell")
 
@@ -308,11 +310,23 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     private func getConfirmPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
-        let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath) as! ConfirmPaymentTableViewCell
-        confirmPaymentTableViewCell.confirmPaymentButton.addTarget(self, action: #selector(confirmPayment), for: .touchUpInside)
-        let confirmPaymentTitle = viewModel.reviewScreenPreference.getConfirmButtonText()
-        confirmPaymentTableViewCell.confirmPaymentButton.setTitle(confirmPaymentTitle, for: .normal)
+        let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath)
+        self.cellButton = buildContainedButton()
+        confirmPaymentTableViewCell.contentView.addSubview(self.cellButton!)
+        PXLayout.centerVertically(view: self.cellButton!).isActive = true
+        PXLayout.centerHorizontally(view: self.cellButton!).isActive = true
         return confirmPaymentTableViewCell
+    }
+    
+    func buildContainedButton() -> PXContainedActionButtonView {
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: viewModel.reviewScreenPreference.getConfirmButtonText(), action: {
+            self.confirmPayment()
+        }))
+        let containedButton = PXContainedActionButtonRenderer().render(component)
+        PXLayout.setHeight(owner: containedButton, height: self.viewModel.getFloatingConfirmButtonHeight()).isActive = true
+        PXLayout.setWidth(owner: containedButton, width: self.view.frame.width).isActive = true
+        containedButton.layoutIfNeeded()
+        return containedButton
     }
 
     private func getPurchaseItemDetailCell(indexPath: IndexPath) -> UITableViewCell {
@@ -391,7 +405,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     open func isConfirmButtonVisible() -> Bool {
-        guard let floatingButton = self.floatingButton, let fixedButton = self.fixedButton else {
+        guard let floatingButton = self.floattingButton, let fixedButton = self.cellButton else {
             return false
         }
         let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
@@ -400,8 +414,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     open func getFloatingButtonView() -> UIView {
-        let frame = self.viewModel.getFloatingConfirmButtonViewFrame()
-        let view = UIView(frame: frame)
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 4
@@ -411,23 +426,21 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         return view
     }
 
-    open func getFloatingButtonCell() -> UITableViewCell {
-        let indexPath = IndexPath(row: 0, section: 1)
-        let frame = self.viewModel.getFloatingConfirmButtonCellFrame()
-        let cell = self.getConfirmPaymentButtonCell(indexPath: indexPath) as! ConfirmPaymentTableViewCell
-        cell.frame = frame
-        self.floatingButton = cell.confirmPaymentButton
-        return cell
-    }
-
     open func displayFloatingConfirmButton() {
         if self.floatingConfirmButtonView != nil {
             return
         }
         self.floatingConfirmButtonView = self.getFloatingButtonView()
-        let cell = self.getFloatingButtonCell()
-        self.floatingConfirmButtonView.addSubview(cell)
         self.view.addSubview(floatingConfirmButtonView)
+        let height = self.viewModel.getFloatingConfirmButtonHeight()
+        PXLayout.setHeight(owner: self.floatingConfirmButtonView, height: height).isActive = true
+        PXLayout.setWidth(owner: self.floatingConfirmButtonView, width: self.view.frame.width).isActive = true
+        PXLayout.pinBottom(view: self.floatingConfirmButtonView).isActive = true
+        PXLayout.centerHorizontally(view: self.floatingConfirmButtonView).isActive = true
+        self.floattingButton = buildContainedButton()
+        self.floatingConfirmButtonView.addSubview(self.floattingButton!)
+        PXLayout.centerVertically(view: self.floattingButton!).isActive = true
+        PXLayout.centerHorizontally(view: self.floattingButton!).isActive = true
         self.view.bringSubview(toFront: floatingConfirmButtonView)
     }
 

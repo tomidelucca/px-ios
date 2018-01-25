@@ -64,7 +64,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
 
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.clearMercadoPagoStyle()
 
         if shouldHideNavigationBar {
             navigationController?.setNavigationBarHidden(false, animated: false)
