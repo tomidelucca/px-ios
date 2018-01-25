@@ -13,10 +13,10 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
-    let TITLE_FONT_SIZE: CGFloat = 21.0
-    let DETAIL_FONT_SIZE: CGFloat = 16.0
-    let PM_DETAIL_FONT_SIZE: CGFloat = 14.0
-    let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
+    let TITLE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
+    let DETAIL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
+    let PM_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
+    let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()

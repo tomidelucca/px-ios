@@ -74,16 +74,14 @@
 
     [self setPaymentCallback];
 
-
-    DiscountCoupon* dc = [[DiscountCoupon alloc] init];
-    dc._id = @"123";
+    DiscountCoupon* dc = [[DiscountCoupon alloc] initWith_id:123];
     dc.name = @"Patito Off";
     dc.coupon_amount = @"30";
     dc.amount_off = @"30";
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
-    dc.amount = 100;
     dc = nil;
+    dc.amountWithoutDiscount = 160;
     //
     self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"

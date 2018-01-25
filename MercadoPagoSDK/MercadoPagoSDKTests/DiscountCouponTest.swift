@@ -14,14 +14,13 @@ class DiscountCouponTest: XCTestCase {
 
     func testFromJSON() {
         let json: NSDictionary = MockManager.getMockFor("DiscountCoupon")!
-        let discountFromJSON = DiscountCoupon.fromJSON(json, amount: amount)
+        let discountFromJSON = DiscountCoupon.fromJSON(json, amountWithoutDiscount: amount)
         XCTAssertEqual(discountFromJSON, discountFromJSON)
     }
 
     func testToJSON() {
 
-        let discountCoupon = DiscountCoupon()
-        discountCoupon._id = 123
+        let discountCoupon = DiscountCoupon(_id: 123)
         discountCoupon.name = "discount"
         discountCoupon.percent_off = "20"
         discountCoupon.amount_off = "200"
@@ -44,7 +43,7 @@ class DiscountCouponTest: XCTestCase {
 
     func testToJSONFromJSON() {
         let json: NSDictionary = MockManager.getMockFor("DiscountCoupon")!
-        let discountObject: DiscountCoupon = DiscountCoupon.fromJSON(json, amount: amount)!
+        let discountObject: DiscountCoupon = DiscountCoupon.fromJSON(json, amountWithoutDiscount: amount)!
         let discountObjectJSON = discountObject.toJSON() as NSDictionary
 
         XCTAssertEqual(json["id"] as! Int, discountObjectJSON["id"] as! Int)

@@ -17,7 +17,7 @@ class SummaryComponent: UIView, PXComponent {
     let TOTAL_HEIGHT: CGFloat = 24.0
     let PAYER_COST_HEIGHT: CGFloat = 20.0
     let DISCLAIMER_HEIGHT: CGFloat = 20.0
-    let DISCLAIMER_FONT_SIZE: CGFloat = 12.0
+    let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     static let TOTAL_TITLE = "Total".localized
     var requiredHeight: CGFloat = 0.0
     let summary: Summary!

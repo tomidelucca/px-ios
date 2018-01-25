@@ -12,7 +12,7 @@ class DisclaimerView: UIView, PXComponent {
 
     private let VERTICAL_MARGIN: CGFloat = 2.0
     private let HORIZONTAL_MARGIN: CGFloat = 24.0
-    static private let FONT_SIZE: CGFloat = 14.0
+    static private let FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     private var textColor: CGColor!
 
     var disclaimerLabel: UILabel!

@@ -14,7 +14,7 @@ class TitleValueView: UIView, PXComponent {
     private let HORIZONTAL_MARGIN: CGFloat = 24.0
     private let TITLE_WIDTH_PERCENT: CGFloat = 0.5
     private let VALUE_WIDTH_PERCENT: CGFloat = 0.5
-    static private let FONT_SIZE: CGFloat = 18.0
+    static private let FONT_SIZE: CGFloat = PXLayout.S_FONT
 
     private var titleFontSize: CGFloat!
     private var valueFontSize: CGFloat!
