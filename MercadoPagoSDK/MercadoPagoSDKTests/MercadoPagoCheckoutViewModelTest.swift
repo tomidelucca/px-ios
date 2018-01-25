@@ -582,14 +582,13 @@ class MercadoPagoCheckoutViewModelTest: BaseTest {
 
         let checkoutPreference = MockBuilder.buildCheckoutPreference()
 
-        let discount = DiscountCoupon()
-        discount._id = 123
+        let discount = DiscountCoupon(_id: 123)
         discount.name = "Patito Off"
         discount.coupon_amount = "30"
         discount.amount_off = "30"
         discount.currency_id = "ARS"
         discount.concept = "Descuento de patito"
-        discount.amount = 300
+        discount.amountWithoutDiscount = 300
 
         let mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "access_token", checkoutPreference: checkoutPreference, discount: discount, navigationController: UINavigationController())
         XCTAssertNotNil(mpCheckout.viewModel)
