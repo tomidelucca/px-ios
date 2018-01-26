@@ -9,7 +9,7 @@
 import Foundation
 
 extension PXResultViewModel {
-    open func buildTopCustomComponent() -> PXComponentizable? {
+    open func buildTopCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = preference.getApprovedTopCustomComponent(), self.paymentResult.isApproved() {
             return PXCustomComponentContainer(withComponent: customComponent)
         } else {
@@ -17,7 +17,7 @@ extension PXResultViewModel {
         }
     }
 
-    open func buildBottomCustomComponent() -> PXComponentizable? {
+    open func buildBottomCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = preference.getApprovedBottomCustomComponent(), self.paymentResult.isApproved() {
             return PXCustomComponentContainer(withComponent: customComponent)
         } else {

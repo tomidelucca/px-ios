@@ -157,8 +157,8 @@ extension PXResultViewController {
     }
 
     func buildTopCustomView() -> UIView {
-        if let component = self.viewModel.buildTopCustomComponent() {
-            return component.render()
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+            return componentView
         }
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -166,8 +166,8 @@ extension PXResultViewController {
     }
 
     func buildBottomCustomView() -> UIView {
-        if let component = self.viewModel.buildBottomCustomComponent() {
-            return component.render()
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+            return componentView
         }
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

@@ -17,8 +17,8 @@ import Foundation
     @objc optional func support(pluginStore: PXCheckoutStore) -> Bool
 }
 
-@objc public protocol PXPluginComponent: PXComponentizable {
-    func render() -> UIView
+@objc public protocol PXPluginComponent: PXCustomComponentizable {
+    func render(store: PXCheckoutStore) -> UIView?
     @objc optional func didReceive(pluginStore: PXCheckoutStore)
     @objc optional func renderDidFinish()
     @objc optional func viewWillAppear()

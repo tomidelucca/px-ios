@@ -11,3 +11,7 @@ import Foundation
 public protocol PXComponentizable {
     func render() -> UIView
 }
+
+public protocol PXCustomComponentizable {
+    func render(store: PXCheckoutStore) -> UIView?
+}
