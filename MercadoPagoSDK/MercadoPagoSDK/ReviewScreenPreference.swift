@@ -69,8 +69,8 @@ open class ReviewScreenPreference: NSObject {
         self.additionalInfoCells = customCells
     }
 
-    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario :".localized
-    static let  DEFAULT_QUANTITY_TITLE = "Cantidad:".localized
+    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
+    static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
     var shouldShowQuantityRow: Bool = true
     open func hideQuantityRow() {
         self.shouldShowQuantityRow = false
