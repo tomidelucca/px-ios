@@ -35,7 +35,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     }
 
     fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {

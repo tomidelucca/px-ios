@@ -89,7 +89,7 @@ open class CheckoutViewModel: NSObject {
             if isPaymentMethodSelectedCard() {
                 return PaymentMethodSelectedTableViewCell.getCellHeight(payerCost : self.paymentData.getPayerCost(), reviewScreenPreference: reviewScreenPreference)
             }
-            return OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: self.paymentOptionSelected, reviewScreenPreference: reviewScreenPreference)
+            return OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: self.paymentOptionSelected, reviewScreenPreference: reviewScreenPreference, paymentMethod: paymentData.paymentMethod!)
 
         } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
             return reviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()

@@ -137,7 +137,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
+    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
 
     // Payment method config plugin component.
     PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
