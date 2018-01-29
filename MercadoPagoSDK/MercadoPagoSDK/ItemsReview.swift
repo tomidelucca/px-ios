@@ -10,7 +10,7 @@ import UIKit
 
 class ItemsReview: NSObject {
     var quantityTitle: String = "Productos".localized
-    var amountTitle: String = "Precio Unitario : ".localized
+    var amountTitle: String = "Precio Unitario: ".localized
     var showQuantityRow: Bool = true
     var showAmountTitle: Bool = true
 }
