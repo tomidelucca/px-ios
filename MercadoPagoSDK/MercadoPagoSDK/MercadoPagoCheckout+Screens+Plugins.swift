@@ -53,11 +53,11 @@ extension MercadoPagoCheckout {
             containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
         }
 
-        let paymentMethodConfigPluginComponentView = paymentMethodConfigPluginComponent.render()
-
-        paymentMethodConfigPluginComponentView.removeFromSuperview()
-        paymentMethodConfigPluginComponentView.frame = containerVC.view.frame
-        containerVC.view.addSubview(paymentMethodConfigPluginComponentView)
+        if let paymentMethodConfigPluginComponentView = paymentMethodConfigPluginComponent.render(store: PXCheckoutStore()) {
+            paymentMethodConfigPluginComponentView.removeFromSuperview()
+            paymentMethodConfigPluginComponentView.frame = containerVC.view.frame
+            containerVC.view.addSubview(paymentMethodConfigPluginComponentView)
+        }
 
         paymentMethodConfigPluginComponent.renderDidFinish?()
 
@@ -89,15 +89,15 @@ extension MercadoPagoCheckout {
             containerVC.shouldHideNavigationBar = !shouldShowNavigationBar
         }
 
-        let paymentPluginComponentView = paymentPluginComponent.render()
-        paymentPluginComponentView.removeFromSuperview()
-        paymentPluginComponentView.frame = containerVC.view.frame
-        containerVC.view.addSubview(paymentPluginComponentView)
+        if let paymentPluginComponentView = paymentPluginComponent.render(store: PXCheckoutStore.sharedInstance) {
+            paymentPluginComponentView.removeFromSuperview()
+            paymentPluginComponentView.frame = containerVC.view.frame
+            paymentPluginComponentView.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+            containerVC.view.addSubview(paymentPluginComponentView)
+        }
 
         //TODO: Change in Q2 - Payment processor by block. Not a view.
         containerVC.view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
-        paymentPluginComponentView.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
-        
         paymentPluginComponent.renderDidFinish?()
 
         self.navigationController.pushViewController(containerVC, animated: false)

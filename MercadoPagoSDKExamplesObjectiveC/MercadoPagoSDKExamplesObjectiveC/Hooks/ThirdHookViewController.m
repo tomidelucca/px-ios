@@ -27,7 +27,7 @@
 
 
 #pragma mark - PXHookComponent mandatory delegates.
-- (UIView * _Nonnull)render {
+- (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store {
     return self.view;
 }
 
