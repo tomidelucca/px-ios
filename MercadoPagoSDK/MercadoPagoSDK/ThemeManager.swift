@@ -30,6 +30,7 @@ extension ThemeManager {
         customizeNavigationBar(theme: currentTheme)
         customizeButtons(theme: currentTheme)
         customizeToolBar(theme: currentTheme)
+            PXMonospaceLabel.appearance().font = UIFont(name: "Courier-Bold", size: 50.0)
     }
 
     func setDefaultColor(color: UIColor) {
