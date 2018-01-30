@@ -9,9 +9,9 @@
 import Foundation
 
 @objc
-public protocol PXHookComponent: PXComponentizable {
+public protocol PXHookComponent: PXCustomComponentizable {
     func hookForStep() -> PXHookStep
-    func render() -> UIView
+    func render(store: PXCheckoutStore) -> UIView?
     @objc optional func shouldSkipHook(hookStore: PXCheckoutStore) -> Bool
     @objc optional func didReceive(hookStore: PXCheckoutStore)
     @objc optional func navigationHandlerForHook(navigationHandler: PXHookNavigationHandler)

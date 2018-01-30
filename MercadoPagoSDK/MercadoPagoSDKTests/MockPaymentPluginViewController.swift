@@ -23,7 +23,7 @@ open class MockPaymentPluginViewController: UIViewController {
 // MARK: - Plugin implementation delegates.
 extension MockPaymentPluginViewController: PXPaymentPluginComponent {
 
-    public func render() -> UIView {
+    public func render(store: PXCheckoutStore) -> UIView? {
         return self.view
     }
 }

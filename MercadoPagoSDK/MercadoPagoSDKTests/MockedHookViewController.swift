@@ -32,7 +32,7 @@ extension MockedHookViewController: PXHookComponent {
         return hookStep!
     }
 
-    public func render() -> UIView {
+    public func render(store: PXCheckoutStore) -> UIView? {
         return self.view
     }
 
