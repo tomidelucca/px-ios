@@ -99,9 +99,11 @@ class PXResultViewController: PXComponentContainerViewController {
     }
 
     func expandHeader() {
-        PXLayout.matchHeight(ofView: self.contentView, toView: self.scrollView).isActive = true
+        self.view.layoutIfNeeded()
+        self.scrollView.layoutIfNeeded()
         PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
         PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
+        PXLayout.setHeight(owner: self.contentView, height: totalContentViewHeigth()).isActive = true
     }
 
     func expandBody() {
