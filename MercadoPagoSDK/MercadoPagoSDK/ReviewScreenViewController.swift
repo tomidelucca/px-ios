@@ -301,8 +301,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     private func getConfirmPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath)
+        self.cellButton?.removeFromSuperview()
         self.cellButton = buildContainedButton()
         confirmPaymentTableViewCell.contentView.addSubview(self.cellButton!)
+        PXLayout.pinLeft(view: self.cellButton!).isActive = true
+        PXLayout.pinRight(view: self.cellButton!).isActive = true
         PXLayout.centerVertically(view: self.cellButton!).isActive = true
         PXLayout.centerHorizontally(view: self.cellButton!).isActive = true
         return confirmPaymentTableViewCell
@@ -314,7 +317,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         }))
         let containedButton = PXContainedActionButtonRenderer().render(component)
         PXLayout.setHeight(owner: containedButton, height: self.viewModel.getFloatingConfirmButtonHeight()).isActive = true
-        PXLayout.setWidth(owner: containedButton, width: self.view.frame.width).isActive = true
         containedButton.layoutIfNeeded()
         return containedButton
     }
@@ -424,11 +426,14 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.view.addSubview(floatingConfirmButtonView)
         let height = self.viewModel.getFloatingConfirmButtonHeight()
         PXLayout.setHeight(owner: self.floatingConfirmButtonView, height: height).isActive = true
-        PXLayout.setWidth(owner: self.floatingConfirmButtonView, width: self.view.frame.width).isActive = true
+        PXLayout.pinLeft(view: self.floatingConfirmButtonView).isActive = true
+        PXLayout.pinRight(view: self.floatingConfirmButtonView).isActive = true
         PXLayout.pinBottom(view: self.floatingConfirmButtonView).isActive = true
         PXLayout.centerHorizontally(view: self.floatingConfirmButtonView).isActive = true
         self.floattingButton = buildContainedButton()
         self.floatingConfirmButtonView.addSubview(self.floattingButton!)
+        PXLayout.pinLeft(view: self.floattingButton!).isActive = true
+        PXLayout.pinRight(view: self.floattingButton!).isActive = true
         PXLayout.centerVertically(view: self.floattingButton!).isActive = true
         PXLayout.centerHorizontally(view: self.floattingButton!).isActive = true
         self.view.bringSubview(toFront: floatingConfirmButtonView)

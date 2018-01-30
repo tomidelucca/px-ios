@@ -102,6 +102,8 @@ class OfflinePaymentMethodCell: UITableViewCell {
             self.accreditationTimeIcon.isHidden = true
             if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
                 self.paymentMethodDescription.attributedText  = NSAttributedString(string : paymentMethod.name, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
+                self.changePaymentButton.titleLabel?.font = Utils.getFont(size: 18)
+                self.changePaymentButton.setTitle("Cambiar medio de pago".localized, for: .normal)
                 return
             }
             self.setTitle(paymentMethodOption, attributedTitle)
