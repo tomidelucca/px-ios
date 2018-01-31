@@ -327,15 +327,18 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         } else {
             editingLabel?.text = textField.text!
             completeCvvLabel()
-
         }
 
     }
 
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        if editingLabel == nameLabel {
+        if editingLabel == cardNumberLabel {
+            self.prepareNameLabelForEdit()
+        } else if editingLabel == nameLabel {
             self.prepareExpirationLabelForEdit()
+        } else if editingLabel == expirationDateLabel {
+            self.prepareCVVLabelForEdit()
         }
         return true
     }
@@ -383,7 +386,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.text = viewModel.cardholderNameEmpty ?  "" : nameLabel!.text!.replacingOccurrences(of: " ", with: "")
         textBox.placeholder = "Nombre y apellido".localized
         self.trackStatus()
-
     }
     fileprivate func prepareExpirationLabelForEdit() {
         editingLabel = expirationDateLabel
