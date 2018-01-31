@@ -89,7 +89,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         var attributedTitle = NSMutableAttributedString(string : "Pagáras ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
         attributedTitle.append(attributedAmount)
 
-        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             attributedTitle = NSMutableAttributedString(string : "Con dinero en cuenta".localized, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
             self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
             self.acreditationTimeLabel.isHidden = true
@@ -100,11 +100,12 @@ class OfflinePaymentMethodCell: UITableViewCell {
             self.iconCash.image = paymentMethodPlugin.getImage()
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
-            self.setTitle(paymentMethodOption, attributedTitle)
-
+            attributedTitle = NSMutableAttributedString(string : paymentMethod.name, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
+            
         } else {
             self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
-            setTitle(paymentMethodOption, attributedTitle)
+            
+            self.setTitle(paymentMethodOption, attributedTitle)
 
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])
         }
@@ -120,19 +121,18 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         self.changePaymentButton.backgroundColor = .clear
 
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: paymentMethodOption, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
-        self.addSubview(separatorLine)
+        self.addSeparatorLineToBottom(height: 1)
 
         self.setNeedsUpdateConstraints()
         self.setNeedsLayout()
     }
 
-    public static func getCellHeight(paymentMethodOption: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) -> CGFloat {
+    public static func getCellHeight(paymentMethodOption: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference(), paymentMethod: PaymentMethod) -> CGFloat {
 
         var cellHeight = OfflinePaymentMethodCell.ROW_HEIGHT
         var buttonHeight: CGFloat = 48
 
-        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue {
+        if paymentMethodOption.getId() == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             cellHeight = 290
             buttonHeight = 80
         }
