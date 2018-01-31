@@ -333,13 +333,13 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        if editingLabel == cardNumberLabel {
+        if editingLabel == cardNumberLabel, validateCardNumber() {
             self.prepareNameLabelForEdit()
-        } else if editingLabel == nameLabel {
+        } else if editingLabel == nameLabel, validateCardholderName() {
             self.prepareExpirationLabelForEdit()
-        } else if editingLabel == expirationDateLabel {
+        } else if editingLabel == expirationDateLabel, validateExpirationDate() {
             self.prepareCVVLabelForEdit()
-        } else if editingLabel == cvvLabel {
+        } else if editingLabel == cvvLabel, validateCvv() {
             self.rightArrowKeyTapped()
         }
         return true
