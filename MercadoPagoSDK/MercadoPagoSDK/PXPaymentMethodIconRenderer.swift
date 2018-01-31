@@ -32,7 +32,7 @@ class PXPaymentMethodIconRenderer: NSObject {
         pmIconView.addSubview(pmIconView.paymentMethodIcon!)
         PXLayout.matchWidth(ofView: pmIconView.paymentMethodIcon!, toView: pmIconView.paymentMethodIconBackground, withPercentage: self.RADIUS_DELTA_FROM_ICON_TO_BACKGROUND).isActive = true
         PXLayout.matchHeight(ofView: pmIconView.paymentMethodIcon!, toView: pmIconView.paymentMethodIconBackground, withPercentage: self.RADIUS_DELTA_FROM_ICON_TO_BACKGROUND).isActive = true
-        PXLayout.centerVertically(view: pmIconView.paymentMethodIcon!, into: pmIconView.paymentMethodIconBackground).isActive = true
+        PXLayout.centerVertically(view: pmIconView.paymentMethodIcon!, to: pmIconView.paymentMethodIconBackground).isActive = true
         PXLayout.centerHorizontally(view: pmIconView.paymentMethodIcon!, to: pmIconView.paymentMethodIconBackground).isActive = true
 
         pmIconView.layer.masksToBounds = true

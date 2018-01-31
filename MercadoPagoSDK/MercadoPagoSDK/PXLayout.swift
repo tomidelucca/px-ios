@@ -158,7 +158,7 @@ class PXLayout: NSObject {
     }
 
     //Centrado Vertical
-    static func centerVertically(view: UIView, into container: UIView? = nil) -> NSLayoutConstraint {
+    static func centerVertically(view: UIView, to container: UIView? = nil) -> NSLayoutConstraint {
         var superView: UIView!
         if container == nil {
             superView = view.superview
