@@ -12,3 +12,7 @@ public protocol PXComponentizable {
     func render() -> UIView
 }
 
+@objc
+public protocol PXCustomComponentizable {
+    func render(store: PXCheckoutStore) -> UIView?
+}

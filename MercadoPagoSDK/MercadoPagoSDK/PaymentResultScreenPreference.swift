@@ -18,19 +18,19 @@ open class PaymentResultScreenPreference: NSObject {
         case check
     }
 
-    var topCustomComponent: PXComponentizable?
-    var bottomCustomComponent: PXComponentizable?
+    var topCustomComponent: PXCustomComponentizable?
+    var bottomCustomComponent: PXCustomComponentizable?
 
-    open func setApprovedTopCustomComponent(_ component: PXComponentizable) {
+    open func setApprovedTopCustomComponent(_ component: PXCustomComponentizable) {
         self.topCustomComponent = component
     }
-    open func setApprovedBottomCustomComponent(_ component: PXComponentizable) {
+    open func setApprovedBottomCustomComponent(_ component: PXCustomComponentizable) {
         self.bottomCustomComponent = component
     }
-    open func getApprovedTopCustomComponent() -> PXComponentizable? {
+    open func getApprovedTopCustomComponent() -> PXCustomComponentizable? {
         return self.topCustomComponent
     }
-    open func getApprovedBottomCustomComponent() -> PXComponentizable? {
+    open func getApprovedBottomCustomComponent() -> PXCustomComponentizable? {
         return self.bottomCustomComponent
     }
 

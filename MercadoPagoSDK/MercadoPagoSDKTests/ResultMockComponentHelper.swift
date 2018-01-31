@@ -75,12 +75,12 @@ public class ResultMockComponentHelper: NSObject {
 
     // Mark: Custom component builders
 
-    static func buildTopCustomComponent(resultViewModel: PXResultViewModel) -> PXComponentizable? {
+    static func buildTopCustomComponent(resultViewModel: PXResultViewModel) -> PXCustomComponentizable? {
         let topCustomComponent = resultViewModel.buildTopCustomComponent()
         return topCustomComponent
     }
 
-    static func buildBottomCustomComponent(resultViewModel: PXResultViewModel) -> PXComponentizable? {
+    static func buildBottomCustomComponent(resultViewModel: PXResultViewModel) -> PXCustomComponentizable? {
         let bottomCustomComponent = resultViewModel.buildBottomCustomComponent()
         return bottomCustomComponent
     }

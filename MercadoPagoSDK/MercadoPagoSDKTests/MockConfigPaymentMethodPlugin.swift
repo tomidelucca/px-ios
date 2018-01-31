@@ -26,7 +26,7 @@ open class MockConfigPaymentMethodPlugin: UIViewController {
 // MARK: - Plugin implementation delegates.
 extension MockConfigPaymentMethodPlugin: PXConfigPluginComponent {
 
-    public func render() -> UIView {
+    public func render(store: PXCheckoutStore) -> UIView? {
         return self.view
     }
 

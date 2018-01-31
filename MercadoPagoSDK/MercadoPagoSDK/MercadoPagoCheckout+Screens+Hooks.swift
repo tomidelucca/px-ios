@@ -42,10 +42,11 @@ extension MercadoPagoCheckout {
                 vc.shouldHideNavigationBar = !shouldShowNavigationBar
             }
 
-            let hookView = targetHook.render()
-            hookView.removeFromSuperview()
-            hookView.frame = vc.view.frame
-            vc.view.addSubview(hookView)
+            if let hookView = targetHook.render(store: PXCheckoutStore.sharedInstance) {
+                hookView.removeFromSuperview()
+                hookView.frame = vc.view.frame
+                vc.view.addSubview(hookView)
+            }
 
             targetHook.renderDidFinish?()
 

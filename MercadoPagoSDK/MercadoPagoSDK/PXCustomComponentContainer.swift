@@ -8,16 +8,20 @@
 
 import UIKit
 
-class PXCustomComponentContainer: PXComponentizable {
-    let customComponent: PXComponentizable
+class PXCustomComponentContainer: PXCustomComponentizable {
+    let customComponent: PXCustomComponentizable
 
-    init(withComponent customComponent: PXComponentizable) {
+    init(withComponent customComponent: PXCustomComponentizable) {
         self.customComponent = customComponent
     }
-    func render() -> UIView {
+    func render(store: PXCheckoutStore) -> UIView? {
         let componentView = UIView()
         componentView.translatesAutoresizingMaskIntoConstraints = false
-        let customComponentView = customComponent.render()
+        
+        guard let customComponentView = customComponent.render(store: store) else {
+            return nil
+        }
+        
         customComponentView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.setHeight(owner: customComponentView, height: customComponentView.frame.height).isActive = true
         componentView.addSubview(customComponentView)
