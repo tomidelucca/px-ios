@@ -176,8 +176,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
 
         self.showNavBar()
-
-        textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
 
         self.updateCardSkin()
@@ -243,7 +241,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         view.setNeedsUpdateConstraints()
         cardView.addSubview(cardFront!)
-
+        textBox.placeholder = getTextboxPlaceholder()
     }
     func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -327,15 +325,19 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         } else {
             editingLabel?.text = textField.text!
             completeCvvLabel()
-
         }
 
     }
 
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
-        if editingLabel == nameLabel {
+        if editingLabel == cardNumberLabel, validateCardNumber() {
+            self.prepareNameLabelForEdit()
+        } else if editingLabel == nameLabel, validateCardholderName() {
             self.prepareExpirationLabelForEdit()
+        } else if editingLabel == expirationDateLabel, validateExpirationDate() {
+            self.prepareCVVLabelForEdit()
+        } else if editingLabel == cvvLabel, validateCvv() {
+            self.rightArrowKeyTapped()
         }
         return true
     }
@@ -372,7 +374,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.becomeFirstResponder()
         textBox.text = textEditMaskFormater.textMasked(cardNumberLabel!.text?.trimSpaces())
-        textBox.placeholder = "Número de tarjeta".localized
+        textBox.placeholder = getTextboxPlaceholder()
         self.trackStatus()
     }
     fileprivate func prepareNameLabelForEdit() {
@@ -381,9 +383,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.keyboardType = UIKeyboardType.alphabet
         textBox.becomeFirstResponder()
         textBox.text = viewModel.cardholderNameEmpty ?  "" : nameLabel!.text!.replacingOccurrences(of: " ", with: "")
-        textBox.placeholder = "Nombre y apellido".localized
+        textBox.placeholder = getTextboxPlaceholder()
         self.trackStatus()
-
     }
     fileprivate func prepareExpirationLabelForEdit() {
         editingLabel = expirationDateLabel
@@ -391,7 +392,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.becomeFirstResponder()
         textBox.text = expirationLabelEmpty ?  "" : expirationDateLabel!.text
-        textBox.placeholder = "Fecha de expiración".localized
+        textBox.placeholder = getTextboxPlaceholder()
         self.trackStatus()
     }
     fileprivate func prepareCVVLabelForEdit() {
@@ -415,8 +416,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.becomeFirstResponder()
-        textBox.text = self.viewModel.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: " ", with: "")
-        textBox.placeholder = "Código de seguridad".localized
+        textBox.text = self.viewModel.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: "•", with: "")
+        textBox.placeholder = getTextboxPlaceholder()
         self.trackStatus()
     }
 
@@ -802,6 +803,19 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     fileprivate func createSavedCardToken() -> CardToken {
         let securityCode = self.viewModel.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
         return  SavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
+    }
+    
+    fileprivate func getTextboxPlaceholder() -> String {
+        if editingLabel == cardNumberLabel {
+            return "Número de tarjeta".localized
+        } else if editingLabel == nameLabel {
+            return "Nombre y apellido".localized
+        } else if editingLabel == expirationDateLabel {
+            return "Fecha de expiración".localized
+        } else if editingLabel == cvvLabel {
+            return "Código de seguridad".localized
+        }
+        return ""
     }
 
     func makeToken() {
