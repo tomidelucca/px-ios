@@ -55,6 +55,7 @@ open class PaymentResultScreenPreference: NSObject {
     var approvedSubtitle = ""
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
+    var approvedURLImage : String? = nil
     var approvedIconName = "default_item_icon"
     var approvedIconBundle = MercadoPago.getBundle()!
 
@@ -67,6 +68,7 @@ open class PaymentResultScreenPreference: NSObject {
     private var _disablePendingLabelText = true
     var pendingIconName = "default_item_icon"
     var pendingIconBundle = MercadoPago.getBundle()!
+    var pendingURLImage : String? = nil
     var hidePendingContentText = false
     var hidePendingContentTitle = false
 
@@ -80,6 +82,7 @@ open class PaymentResultScreenPreference: NSObject {
     var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
     var rejectedIconBundle = MercadoPago.getBundle()!
     var rejectedDefaultIconName: String?
+    var rejectedURLImage : String? = nil
     var rejectedIconName: String?
     var rejectedContentTitle = PaymentResultScreenPreference.REJECTED_CONTENT_TITLE.localized
     var rejectedContentText = ""
@@ -166,6 +169,10 @@ open class PaymentResultScreenPreference: NSObject {
         self.approvedIconBundle = bundle
     }
 
+    open func setApprovedHeaderIcon(stringURL : String) {
+        self.approvedURLImage = stringURL
+    }
+
     // MARK: Sets de Pending
 
     open func disablePendingLabelText() {
@@ -195,6 +202,10 @@ open class PaymentResultScreenPreference: NSObject {
     open func setPendingHeaderIcon(name: String, bundle: Bundle) {
         self.pendingIconName = name
         self.pendingIconBundle = bundle
+    }
+
+    open func setPendingHeaderIcon(stringURL : String) {
+        self.pendingURLImage = stringURL
     }
 
     open func setPendingContentText(text: String) {
@@ -239,6 +250,11 @@ open class PaymentResultScreenPreference: NSObject {
         self.rejectedIconBundle = bundle
     }
 
+    open func setRejectedHeaderIcon(stringURL : String) {
+        self.rejectedURLImage = stringURL
+    }
+
+    
     open func setRejectedContentText(text: String) {
         self.rejectedContentText = text
     }
@@ -372,6 +388,11 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getHeaderApprovedIcon() -> UIImage? {
+        if let urlImage = approvedURLImage {
+            if let image =  ViewUtils.loadImageFromUrl(urlImage) {
+                return image
+            }
+        }
         return MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle)
     }
 
@@ -386,6 +407,11 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getHeaderPendingIcon() -> UIImage? {
+        if let urlImage = self.pendingURLImage {
+            if let image =  ViewUtils.loadImageFromUrl(urlImage) {
+                return image
+            }
+        }
         return MercadoPago.getImage(pendingIconName, bundle: pendingIconBundle)
     }
 
@@ -433,6 +459,11 @@ open class PaymentResultScreenPreference: NSObject {
     }
 
     open func getHeaderRejectedIcon(_ paymentMethod: PaymentMethod?) -> UIImage? {
+        if let urlImage = self.rejectedURLImage {
+            if let image =  ViewUtils.loadImageFromUrl(urlImage) {
+                return image
+            }
+        }
         if rejectedIconName != nil {
             return MercadoPago.getImage(rejectedIconName, bundle: rejectedIconBundle)
         }
