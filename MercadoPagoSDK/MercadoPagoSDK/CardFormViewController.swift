@@ -177,7 +177,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
 
         self.showNavBar()
 
-        textBox.placeholder = "Número de tarjeta".localized
         textBox.becomeFirstResponder()
 
         self.updateCardSkin()
@@ -208,6 +207,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.addTarget(self, action: #selector(CardFormViewController.editingChanged(_:)), for: UIControlEvents.editingChanged)
         setupInputAccessoryView()
         textBox.delegate = self
+        textBox.placeholder = "Número de tarjeta".localized
         cardFront = CardFrontView()
         cardBack = CardBackView()
 
