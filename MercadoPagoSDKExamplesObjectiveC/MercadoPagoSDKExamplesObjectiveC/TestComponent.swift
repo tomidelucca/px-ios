@@ -16,6 +16,8 @@ import MercadoPagoSDK
         let bottom = TestComponent()
         let preference = PaymentResultScreenPreference()
         preference.disableApprovedReceipt()
+        preference.setApprovedHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
+        preference.setPendingHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
        // preference.setApprovedTopCustomComponent(top)
         //        preference.setApprovedBottomCustomComponent(bottom)
         return preference
