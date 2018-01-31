@@ -415,7 +415,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         textBox.resignFirstResponder()
         textBox.keyboardType = UIKeyboardType.numberPad
         textBox.becomeFirstResponder()
-        textBox.text = self.viewModel.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: " ", with: "")
+        textBox.text = self.viewModel.cvvEmpty  ?  "" : cvvLabel!.text!.replacingOccurrences(of: "•", with: "")
         textBox.placeholder = "Código de seguridad".localized
         self.trackStatus()
     }
