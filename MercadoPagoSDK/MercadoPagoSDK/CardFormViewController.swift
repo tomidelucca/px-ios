@@ -339,6 +339,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             self.prepareExpirationLabelForEdit()
         } else if editingLabel == expirationDateLabel {
             self.prepareCVVLabelForEdit()
+        } else if editingLabel == cvvLabel {
+            self.rightArrowKeyTapped()
         }
         return true
     }
