@@ -295,8 +295,7 @@ open class MercadoPagoCheckout: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         if mercadoPagoViewControllers.count == 0 {
-            self.navigationController.navigationBar.isHidden = false
-            viewController.callbackCancel = { self.cancel() }
+            goToRootViewController()
         }
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
