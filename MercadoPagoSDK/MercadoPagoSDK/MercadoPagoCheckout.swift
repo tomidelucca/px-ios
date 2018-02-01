@@ -288,20 +288,28 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
-                                    animated: Bool) {
+                                     animated: Bool, backToChechoutRoot:Bool = false) {
 
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
-      //  if mercadoPagoViewControllers.count == 0 {
-      //      self.navigationController.navigationBar.isHidden = false
-      //      viewController.callbackCancel = { self.cancel() }
-      //  }
+        if backToChechoutRoot {
+            self.navigationController.navigationBar.isHidden = false
+            viewController.callbackCancel = { self.backToCheckouitRoot() }
+        }
+        
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
     }
 
+    func backToCheckouitRoot(){
+        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
+        if !mercadoPagoViewControllers.isEmpty {
+            self.navigationController.popToViewController(mercadoPagoViewControllers[0], animated: true)
+        }
+
+    }
     internal func removeRootLoading() {
         let currentViewControllers = self.navigationController.viewControllers.filter { (vc: UIViewController) -> Bool in
             return vc != self.rootViewController
