@@ -59,6 +59,12 @@ open class PXPluginNavigationHandler: NSObject {
             return
         }
         
+        if statusDetail == RejectedStatusDetail.INVALID_ESC {
+            checkout?.viewModel.prepareForInvalidPaymentWithESC()
+            checkout?.executeNextStep()
+            return
+        }
+        
         if let paymentMethodPlugin = self.checkout?.viewModel.paymentOptionSelected as? PXPaymentMethodPlugin {
             paymentData.paymentMethod?.setExternalPaymentMethodImage(externalImage: paymentMethodPlugin.getImage())
         }
