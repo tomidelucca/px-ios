@@ -97,7 +97,16 @@ class OfflinePaymentMethodCell: UITableViewCell {
 
         } else if let paymentMethodPlugin =  paymentMethodOption as? PXPaymentMethodPlugin {
 
-            self.iconCash.image = paymentMethodPlugin.getImage()
+            let props = PXPaymentMethodIconProps(paymentMethodIcon: paymentMethodPlugin.getImage())
+            let component = PXPaymentMethodIconComponent(props: props)
+            let view = component.render()
+            self.addSubview(view)
+            PXLayout.matchWidth(ofView: view, toView: self.iconCash).isActive = true
+            PXLayout.matchHeight(ofView: view, toView: self.iconCash).isActive = true
+            PXLayout.centerHorizontally(view: view, to: self.iconCash).isActive = true
+            PXLayout.centerVertically(view: view, to: self.iconCash).isActive = true
+            view.layer.cornerRadius = self.iconCash.frame.height/2
+            self.iconCash.isHidden = true
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
             attributedTitle = NSMutableAttributedString(string : paymentMethod.name, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
