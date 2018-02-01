@@ -282,10 +282,8 @@ open class MercadoPagoCheckout: NSObject {
         let vcLoading = MPXLoadingViewController()
         vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
         let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-
         vcLoading.view.addSubview(loadingInstance)
         loadingInstance.bringSubview(toFront: vcLoading.view)
-
         self.currentLoadingView = vcLoading
     }
 
@@ -294,10 +292,11 @@ open class MercadoPagoCheckout: NSObject {
 
         viewController.hidesBottomBarWhenPushed = true
         let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
-        if mercadoPagoViewControllers.count == 0 {
-            self.navigationController.navigationBar.isHidden = false
-            viewController.callbackCancel = { self.cancel() }
-        }
+        // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
+      //  if mercadoPagoViewControllers.count == 0 {
+      //      self.navigationController.navigationBar.isHidden = false
+      //      viewController.callbackCancel = { self.cancel() }
+      //  }
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()
         self.dismissLoading()
