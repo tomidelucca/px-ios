@@ -20,6 +20,13 @@ open class PXPluginNavigationHandler: NSObject {
         guard let paymentData = self.checkout?.viewModel.paymentData else {
             return
         }
+        
+        if statusDetails == RejectedStatusDetail.INVALID_ESC {
+            checkout?.viewModel.prepareForInvalidPaymentWithESC()
+            checkout?.executeNextStep()
+            return
+        }
+        
         var statusDetailsStr = statusDetails
 
         // By definition of MVP1, we support only approved or rejected.
