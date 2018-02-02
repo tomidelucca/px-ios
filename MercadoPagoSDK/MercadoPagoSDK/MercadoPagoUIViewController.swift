@@ -214,6 +214,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     internal func executeBack() {
         if let callbackCancel = callbackCancel {
             callbackCancel()
+            return
         }
         self.navigationController!.popViewController(animated: true)
     }
