@@ -245,6 +245,7 @@ extension MercadoPagoCheckout {
                     }
                     object.viewModel.financialInstitutions = nil
                     object.viewModel.paymentData.transactionDetails?.financialInstitution = nil
+                    self?.navigationController.popViewController(animated: true)
                 }
 
                 self.navigationController.pushViewController(financialInstitutionStep, animated: true)
@@ -273,6 +274,7 @@ extension MercadoPagoCheckout {
             }
             object.viewModel.entityTypes = nil
             object.viewModel.paymentData.payer?.entityType = nil
+            self?.navigationController.popViewController(animated: true)
         }
 
         self.navigationController.pushViewController(entityTypeStep, animated: true)
