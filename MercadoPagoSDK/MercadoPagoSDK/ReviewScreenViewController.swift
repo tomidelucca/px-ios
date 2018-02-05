@@ -301,6 +301,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     private func getConfirmPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
         let confirmPaymentTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "confirmPaymentTableViewCell", for: indexPath)
+        confirmPaymentTableViewCell.selectionStyle = .none
         self.cellButton?.removeFromSuperview()
         self.cellButton = buildContainedButton()
         confirmPaymentTableViewCell.contentView.addSubview(self.cellButton!)
@@ -347,6 +348,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getCancelPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
         let exitButtonTitle = viewModel.reviewScreenPreference.getCancelButtonTitle()
+        exitButtonCell.selectionStyle = .none
         exitButtonCell.exitButton.setTitle(exitButtonTitle, for: .normal)
         exitButtonCell.exitButton.addTarget(self, action: #selector(ReviewScreenViewController.exitCheckoutFlow), for: .touchUpInside)
         return exitButtonCell
