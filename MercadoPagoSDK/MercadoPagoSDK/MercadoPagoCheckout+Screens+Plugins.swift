@@ -21,14 +21,14 @@ extension MercadoPagoCheckout {
             return
         }
 
-        let containerVC = MercadoPagoUIViewController()
+        let containerVC = PXPluginConfigViewController()
 
+        
         guard let paymentMethodConfigPluginComponent = paymentMethodPlugin.paymentMethodConfigPlugin else {
             return
         }
-        
         containerVC.pluginComponentInterface = paymentMethodConfigPluginComponent
-
+        containerVC.paymentMethodId = paymentMethodPlugin.id
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
@@ -113,3 +113,5 @@ extension MercadoPagoCheckout {
         showPaymentPluginComponent(paymentPluginComponent: paymentPluginComponent)
     }
 }
+
+

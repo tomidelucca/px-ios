@@ -585,6 +585,8 @@
 		813873821FA8DEE7002095D6 /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
 		813873831FA8E3E5002095D6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 155F58321E3923180070A0D6 /* Images.xcassets */; };
 		813873841FA8E425002095D6 /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCEB90861EB8F7F00096B1A2 /* RevampImages.xcassets */; };
+		814139BE202A052700824A10 /* PXPluginConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814139BD202A052700824A10 /* PXPluginConfigViewController.swift */; };
+		814139BF202A052700824A10 /* PXPluginConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814139BD202A052700824A10 /* PXPluginConfigViewController.swift */; };
 		815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409441FD59F1C00B245BC /* PXReceiptComponent.swift */; };
 		815409461FD59F1E00B245BC /* PXReceiptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409441FD59F1C00B245BC /* PXReceiptComponent.swift */; };
 		815409481FD5A74B00B245BC /* PXReceiptRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */; };
@@ -1109,6 +1111,7 @@
 		811B4FD1201F87A40060026A /* PXMonospaceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMonospaceLabel.swift; sourceTree = "<group>"; };
 		812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponent.swift; sourceTree = "<group>"; };
 		812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponentRenderer.swift; sourceTree = "<group>"; };
+		814139BD202A052700824A10 /* PXPluginConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPluginConfigViewController.swift; sourceTree = "<group>"; };
 		815409441FD59F1C00B245BC /* PXReceiptComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptComponent.swift; sourceTree = "<group>"; };
 		815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptRenderer.swift; sourceTree = "<group>"; };
 		816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCustomComponentContainer.swift; sourceTree = "<group>"; };
@@ -1856,6 +1859,7 @@
 				4BEF9B501FE2EAAB002ADAFF /* PXPluginNavigationHandler.swift */,
 				4BEF9B531FE2EAD8002ADAFF /* PXPaymentMethodPlugin.swift */,
 				4BEF9B561FE2EB2D002ADAFF /* PXPluginComponent.swift */,
+				814139BD202A052700824A10 /* PXPluginConfigViewController.swift */,
 			);
 			path = PaymentMethodPlugins;
 			sourceTree = "<group>";
@@ -3015,6 +3019,7 @@
 				76743C7B1C46951100120347 /* PaymentType.swift in Sources */,
 				4BAA55EF1DB0019200501061 /* PayerCostRowTableViewCell.swift in Sources */,
 				0FC4FC331B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.swift in Sources */,
+				814139BE202A052700824A10 /* PXPluginConfigViewController.swift in Sources */,
 				C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */,
 				23E2158520062EFC00B968F6 /* PXThemeProperty.swift in Sources */,
 				FC3FC8871FBE13B600CF29E1 /* PXInstructionsAccreditationCommentRenderer.swift in Sources */,
@@ -3093,6 +3098,7 @@
 				15904D5F1E0976D200B3B9FD /* MLPXSpinner.m in Sources */,
 				15904D5B1E09769700B3B9FD /* MPSDKLoadingView.m in Sources */,
 				4B8705051EDEF4E9001947FA /* MercadoPagoCheckoutExtension.swift in Sources */,
+				814139BF202A052700824A10 /* PXPluginConfigViewController.swift in Sources */,
 				4B2AF5861EEF060D00925644 /* PaymentVaultTitleCollectionViewCell.swift in Sources */,
 				761B89431C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
 				81D9F92D200FE50800490DC6 /* (null) in Sources */,
