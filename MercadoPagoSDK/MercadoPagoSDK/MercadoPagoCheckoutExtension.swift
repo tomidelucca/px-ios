@@ -82,6 +82,14 @@ extension MercadoPagoCheckout {
         MercadoPagoContext.setLanguage(language: language)
     }
 
+    open static func setLanguage(string: String) {
+        MercadoPagoContext.setLanguage(string: string)
+    }
+
+    open func getLanguage() -> String {
+        return MercadoPagoContext.getLanguage()
+    }
+
     open class func showPayerCostDescription() -> Bool {
         let path = MercadoPago.getBundle()!.path(forResource: "PayerCostPreferences", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)

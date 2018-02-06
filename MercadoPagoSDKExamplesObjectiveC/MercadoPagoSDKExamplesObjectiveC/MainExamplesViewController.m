@@ -46,9 +46,6 @@
     self.paymentData = nil;
     self.paymentResult = nil;
 
-    // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithLanguage:Languages_SPANISH_PERU];
-
     ///  PASO 1: SETEAR PREFERENCIAS
 
     // Setear ServicePreference
@@ -84,6 +81,7 @@
     dc.amountWithoutDiscount = 160;
     //
     self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
+
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
@@ -92,6 +90,7 @@
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     [self.mpCheckout setTheme:meliExampleTheme];
+
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
     
     //[self setHooks];
