@@ -20,6 +20,7 @@ import Foundation
 @objc public protocol PXPluginComponent: PXCustomComponentizable {
     func render(store: PXCheckoutStore) -> UIView?
     @objc optional func didReceive(pluginStore: PXCheckoutStore)
+    @objc optional func didReceiveLanguage(code: String)
     @objc optional func renderDidFinish()
     @objc optional func viewWillAppear()
     @objc optional func viewWillDisappear()

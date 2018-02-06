@@ -118,6 +118,11 @@ open class MercadoPagoContext: NSObject {
     open static func setLanguage(language: Languages) {
         sharedInstance.language = language.langPrefix()
     }
+
+    open static func setLanguage(string: String) {
+        sharedInstance.language = string
+    }
+
     open static func getLanguage() -> String {
         return sharedInstance.language
     }
