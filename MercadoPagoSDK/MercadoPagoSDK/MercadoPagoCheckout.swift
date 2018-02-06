@@ -9,6 +9,8 @@
 import UIKit
 import MercadoPagoPXTracking
 
+
+
 open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
@@ -108,6 +110,7 @@ open class MercadoPagoCheckout: NSObject {
         initMercadPagoPXTracking()
         MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
+        suscribeToNavigationFlow()
     }
 
     func executeNextStep() {
@@ -212,7 +215,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func finish() {
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
+
         removeRootLoading()
 
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
@@ -234,9 +237,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func cancel() {
-
-        ThemeManager.shared.applyAppNavBarStyle(navigationController: self.navigationController)
-
+        
         if let callback = viewModel.callbackCancel {
             callback()
             return
@@ -323,4 +324,17 @@ open class MercadoPagoCheckout: NSObject {
         }
     }
 
+}
+
+extension MercadoPagoCheckout: UINavigationControllerDelegate {
+    
+    fileprivate func suscribeToNavigationFlow() {
+        navigationController.delegate = self
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if !(viewController is MercadoPagoUIViewController) {
+            ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)
+        }
+    }
 }
