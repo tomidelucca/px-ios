@@ -46,9 +46,6 @@
     self.paymentData = nil;
     self.paymentResult = nil;
 
-    // Setear el idioma de la aplicación
-    [MercadoPagoContext setLanguageWithString:@"pt"];
-
     ///  PASO 1: SETEAR PREFERENCIAS
 
     // Setear ServicePreference
@@ -84,7 +81,7 @@
     dc.amountWithoutDiscount = 160;
     //
     self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
-        [MercadoPagoContext setLanguageWithLanguage:Languages_PORTUGUESE];
+
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
