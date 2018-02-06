@@ -19,16 +19,22 @@ internal class NavigationControllerMemento {
     var navBackgroundImage: UIImage?
     var navShadowImage: UIImage?
     var navBarStyle: UIBarStyle?
+    var customDelegate: UINavigationControllerDelegate?
+    var swipeBackGesture: Bool = true
 
     init(navigationController: UINavigationController) {
-        self.navBarTintColor =  navigationController.navigationBar.barTintColor
-        self.navTintColor =  navigationController.navigationBar.tintColor
-        self.navTitleTextAttributes = navigationController.navigationBar.titleTextAttributes
-        self.navIsTranslucent = navigationController.navigationBar.isTranslucent
-        self.navViewBackgroundColor = navigationController.view.backgroundColor
-        self.navBackgroundColor = navigationController.navigationBar.backgroundColor
-        self.navBackgroundImage = navigationController.navigationBar.backgroundImage(for: .default)
-        self.navShadowImage = navigationController.navigationBar.shadowImage
-        self.navBarStyle = navigationController.navigationBar.barStyle
+        navBarTintColor =  navigationController.navigationBar.barTintColor
+        navTintColor =  navigationController.navigationBar.tintColor
+        navTitleTextAttributes = navigationController.navigationBar.titleTextAttributes
+        navIsTranslucent = navigationController.navigationBar.isTranslucent
+        navViewBackgroundColor = navigationController.view.backgroundColor
+        navBackgroundColor = navigationController.navigationBar.backgroundColor
+        navBackgroundImage = navigationController.navigationBar.backgroundImage(for: .default)
+        navShadowImage = navigationController.navigationBar.shadowImage
+        navBarStyle = navigationController.navigationBar.barStyle
+        customDelegate = navigationController.delegate
+        if let backGesture = navigationController.interactivePopGestureRecognizer?.isEnabled {
+           swipeBackGesture = backGesture
+        }
     }
 }
