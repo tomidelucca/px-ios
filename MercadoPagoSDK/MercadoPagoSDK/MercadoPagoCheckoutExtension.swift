@@ -78,8 +78,17 @@ extension MercadoPagoCheckout {
         self.viewModel.callbackCancel = callback
     }
 
+    @available(*, deprecated: 4.0.0, message: "Use non-static setLanguage instead.")
     open static func setLanguage(language: Languages) {
         MercadoPagoContext.setLanguage(language: language)
+    }
+
+    open func setLanguage(language: Languages) {
+        MercadoPagoContext.setLanguage(language: language)
+    }
+
+    open func getLanguage() -> String {
+        return MercadoPagoContext.getLanguage()
     }
 
     open class func showPayerCostDescription() -> Bool {

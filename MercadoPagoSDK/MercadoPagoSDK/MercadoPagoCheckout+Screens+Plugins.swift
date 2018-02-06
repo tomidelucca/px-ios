@@ -33,8 +33,6 @@ extension MercadoPagoCheckout {
             paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
 
-        paymentMethodConfigPluginComponent.didReceiveLanguage?(code: MercadoPagoContext.getLanguage())
-
         // Create navigation handler.
         paymentMethodConfigPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
 
@@ -75,8 +73,6 @@ extension MercadoPagoCheckout {
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }
-
-        paymentPluginComponent.didReceiveLanguage?(code: MercadoPagoContext.getLanguage())
 
         // Create navigation handler.
         paymentPluginComponent.navigationHandlerForPlugin?(navigationHandler: PXPluginNavigationHandler(withCheckout: self))
