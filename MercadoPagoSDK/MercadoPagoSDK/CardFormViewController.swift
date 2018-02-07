@@ -112,7 +112,6 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
-                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.barTintColor = NAVIGATION_BAR_COLOR
                 self.navigationController?.navigationBar.removeBottomLine()
                 self.navigationController?.navigationBar.isTranslucent = false

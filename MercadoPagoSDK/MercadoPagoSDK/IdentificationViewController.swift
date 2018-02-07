@@ -52,7 +52,6 @@ open class IdentificationViewController: MercadoPagoUIViewController, UITextFiel
             if self.navigationController != nil {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
                 self.navigationItem.hidesBackButton = true
-                self.navigationController!.interactivePopGestureRecognizer?.delegate = self
                 self.navigationController?.navigationBar.tintColor = UIColor.white
                 self.navigationController?.navigationBar.barTintColor = ThemeManager.shared.getMainColor()
                 self.navigationController?.navigationBar.removeBottomLine()
