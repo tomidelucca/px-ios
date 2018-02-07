@@ -10,8 +10,8 @@ import UIKit
 
 open class ReviewScreenPreference: NSObject {
 
-    private var title = "Revisa tu pago"
-    private var confirmButtonText = "Confirmar"
+    private var title = "Revisa si está todo bien"
+    private var confirmButtonText = "Pagar"
     private var cancelButtonText = "Cancelar Pago"
 	private var shouldDisplayChangeMethodOption = true
     var details: [SummaryType: SummaryDetail] = [SummaryType: SummaryDetail]()
