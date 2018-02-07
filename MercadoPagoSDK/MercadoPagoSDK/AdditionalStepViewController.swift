@@ -62,7 +62,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
 
     override func loadMPStyles() {
         if self.navigationController != nil {
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
             self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
             self.navigationController?.navigationBar.barTintColor = UIColor.primaryColor()
             self.navigationController?.navigationBar.removeBottomLine()

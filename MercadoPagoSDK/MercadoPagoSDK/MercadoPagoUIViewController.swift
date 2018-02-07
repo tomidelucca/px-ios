@@ -122,7 +122,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
             }
             self.navigationItem.hidesBackButton = true
-            self.navigationController!.interactivePopGestureRecognizer?.delegate = self
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.removeBottomLine()
