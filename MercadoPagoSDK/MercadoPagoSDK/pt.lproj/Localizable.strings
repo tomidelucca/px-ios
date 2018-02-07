@@ -125,6 +125,7 @@
 
 // Instrucciones
 "Seguir comprando"= "Continuar comprando";
+"Continuar"= "Pronto!";
 
 //CONGRATS
 "¿Qué puedo hacer?" = "Que posso fazer?";
@@ -189,6 +190,7 @@
 //-- Revisa y confirma
 " terminada en " = " terminado em ";
 "Revisa tu pago" = "Rever o seu pagamento";
+"Revisa si está todo bien" = "Revise se está tudo correto";
 "Total" = "Total";
 "Cantidad: " = "Quantidade: ";
 "Precio Unitario: " = "Preço unitário: ";

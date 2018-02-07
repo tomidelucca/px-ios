@@ -199,6 +199,7 @@
 "¿Cómo quieres pagar?"="How do you want to pay?";
 "Términos y Condiciones"="Terms and Conditions";
 "Revisa tu pago" = "Check your payment";
+"Revisa si está todo bien" = "Check your payment";
 "Total" = "Total";
 "Cantidad: " = "Quantity: ";
 "Precio Unitario: " = "Unit price: ";
@@ -206,6 +207,7 @@
 "Cambiar pago" = "Change payment";
 "Productos" = "Products";
 "Confirmar" = "Confirm";
+"Pagar" = "Pay";
 
 "Medio de pago" = "Payment Method";
 "Operación" = "Operation";
@@ -267,6 +269,7 @@
 
 //Instrucciones
 "Seguir comprando"= "Continue shopping";
+"Continuar"= "Continue";
 
 // components - congrats
 "¡Apúrate a pagar!" = "¡Apúrate a pagar!";
