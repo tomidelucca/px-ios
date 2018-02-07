@@ -67,10 +67,9 @@ class PXResultViewModelTest: BaseTest {
         let headerView = resultViewController.headerView
         let bodyView = resultViewController.bodyView
         let footerView = resultViewController.footerView
-        let expectedHeaderHeight = scrollView!.frame.height - footerView!.frame.height
+        let expectedHeaderHeight = resultViewController.contentView.frame.height - footerView!.frame.height
         XCTAssertEqual(headerView?.frame.height, expectedHeaderHeight)
         XCTAssertEqual(bodyView?.frame.height, 0)
-        XCTAssertEqual(scrollView?.frame.height, resultViewController.contentView.frame.height)
     }
 
     /*
