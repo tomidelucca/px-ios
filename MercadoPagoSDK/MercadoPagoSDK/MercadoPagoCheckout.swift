@@ -335,6 +335,7 @@ extension MercadoPagoCheckout: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if !(viewController is MercadoPagoUIViewController) {
             ThemeManager.shared.applyAppNavBarStyle(navigationController: navigationController)
+            PXCheckoutStore.sharedInstance.clean()
         }
     }
 }
