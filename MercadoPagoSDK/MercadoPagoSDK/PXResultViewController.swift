@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
 class PXResultViewController: PXComponentContainerViewController {
 
+    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT } }
+    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT } }
+    
     let viewModel: PXResultViewModel
     var headerView: UIView!
     var receiptView: UIView!
@@ -17,7 +21,7 @@ class PXResultViewController: PXComponentContainerViewController {
     var bottomCustomView: UIView!
     var bodyView: UIView!
     var footerView: UIView!
-
+    
     init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.callback = callback
@@ -28,6 +32,29 @@ class PXResultViewController: PXComponentContainerViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func trackInfo() {
+        
+        var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
+                        TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.paymentResult.status,
+                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
+                        TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
+        if let pm = self.viewModel.paymentResult.paymentData?.getPaymentMethod() {
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
+        }
+        if let issuer = self.viewModel.paymentResult.paymentData?.getIssuer() {
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
+        }
+        
+        let finalId = "\(screenId)/\(self.viewModel.paymentResult.status)"
+        
+        var name = screenName
+        if self.viewModel.paymentResult.isCallForAuth() {
+            name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
+        }
+        
+        MPXTracker.trackScreen(screenId: finalId, screenName: name, metadata: metadata)
     }
 
     func renderViews() {

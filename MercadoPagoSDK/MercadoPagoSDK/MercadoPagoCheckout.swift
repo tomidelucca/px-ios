@@ -108,7 +108,9 @@ open class MercadoPagoCheckout: NSObject {
 
     func initialize() {
         initMercadPagoPXTracking()
-        MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
+        // Disable init:trackScreen for v4.0
+        // TODO-v4.1: Change trackScreen by trackEvent, in order to get convertion insights
+        // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         suscribeToNavigationFlow()
     }
