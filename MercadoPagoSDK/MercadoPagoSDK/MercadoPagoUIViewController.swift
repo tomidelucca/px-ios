@@ -86,7 +86,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     func trackInfo() {
-         MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
+        MPXTracker.trackScreen(screenId: screenId, screenName: screenName)
     }
 
     var lastDefaultFontLabel: String?
