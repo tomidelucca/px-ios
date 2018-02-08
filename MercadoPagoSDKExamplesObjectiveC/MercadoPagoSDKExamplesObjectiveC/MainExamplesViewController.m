@@ -147,6 +147,8 @@
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
     [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
+
+    //[self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
