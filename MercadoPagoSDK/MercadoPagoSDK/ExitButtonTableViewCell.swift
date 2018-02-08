@@ -10,7 +10,7 @@ import UIKit
 
 class ExitButtonTableViewCell: CallbackCancelTableViewCell {
 
-    static let ROW_HEIGHT = CGFloat(60)
+    static let ROW_HEIGHT = CGFloat(70)
 
     @IBOutlet weak var exitButton: PXSecondaryButton!
 

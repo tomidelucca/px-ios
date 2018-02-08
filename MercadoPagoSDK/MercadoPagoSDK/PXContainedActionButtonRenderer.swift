@@ -10,20 +10,25 @@ import UIKit
 
 class PXContainedActionButtonRenderer: NSObject {
     
-    let BUTTON_WIDTH_PERCENT_OF_SCREEN : CGFloat = 84.0
-    let BUTTON_HEIGHT : CGFloat = 50.0
+    let BUTTON_HEIGHT : CGFloat = 50
+    let BUTTON_HEIGHT_WITH_SAFE_AREA : CGFloat = 55
     
     func render(_ containedButton: PXContainedActionButtonComponent) -> PXContainedActionButtonView {
+        
         let containedButtonView =  PXContainedActionButtonView()
+        
         containedButtonView.translatesAutoresizingMaskIntoConstraints = false
         let button = self.buildButton(with: containedButton.props.action, title: containedButton.props.title, backgroundColor: containedButton.props.buttonColor, textColor: containedButton.props.textColor)
         containedButtonView.addSubview(button)
         containedButtonView.button = button
-        PXLayout.centerHorizontally(view: button).isActive = true
         PXLayout.centerVertically(view: button).isActive = true
-        PXLayout.setHeight(owner: button, height: BUTTON_HEIGHT ).isActive = true
-        PXLayout.matchWidth(ofView: button, withPercentage: BUTTON_WIDTH_PERCENT_OF_SCREEN).isActive = true
-        
+        PXLayout.pinLeft(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
+        PXLayout.pinRight(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
+        if PXLayout.getSafeAreaBottomInset() > 0 {
+            PXLayout.setHeight(owner: button, height: BUTTON_HEIGHT_WITH_SAFE_AREA).isActive = true
+        } else {
+            PXLayout.setHeight(owner: button, height: BUTTON_HEIGHT).isActive = true
+        }
         return containedButtonView
     }
     
