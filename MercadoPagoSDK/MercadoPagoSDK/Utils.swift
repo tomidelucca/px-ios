@@ -418,7 +418,13 @@ class Utils {
         formatterMonth.dateFormat = "MMMM"
         let formatterYear = DateFormatter()
         formatterYear.dateFormat = "yyyy"
-        return formatterDay.string(from:date) + " de ".localized + formatterMonth.string(from:date).localized.lowercased() + " de ".localized + formatterYear.string(from:date)
+        
+        var dayString = "10"
+        if dayString.first == "0" {
+            dayString.removeFirst()
+        }
+        
+        return dayString + " de ".localized + formatterMonth.string(from:date).localized.lowercased() + " de ".localized + formatterYear.string(from:date)
     }
     
     
