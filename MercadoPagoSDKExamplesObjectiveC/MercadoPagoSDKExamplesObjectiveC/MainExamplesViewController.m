@@ -45,6 +45,9 @@
     self.pref = nil;
     self.paymentData = nil;
     self.paymentResult = nil;
+    
+    // Setear el idioma de la aplicación
+    [MercadoPagoCheckout setLanguageWithLanguage:Languages_SPANISH_MEXICO];
 
     ///  PASO 1: SETEAR PREFERENCIAS
 
@@ -77,8 +80,8 @@
     dc.amount_off = @"30";
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
+    dc.amountWithoutDiscount = 100;
     dc = nil;
-    dc.amountWithoutDiscount = 160;
     //
     self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
 
@@ -100,13 +103,13 @@
 //    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
-    [self setPaymentResultScreenPreference];
+//    [self setPaymentResultScreenPreference];
 
     //Setear Callback Cancel
     [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+//    [self setReviewScreenPreference];
 
     [self.mpCheckout start];
 
