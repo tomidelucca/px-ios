@@ -17,7 +17,7 @@ import UIKit
     @IBOutlet weak var cardExpirationDate: MPLabel!
     @IBOutlet weak var cardName: MPLabel!
     @IBOutlet weak var cardNumber: UILabel!
-    @IBOutlet weak var cardCVV: UILabel!
+    @IBOutlet weak var cardCVV: PXMonospaceLabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)

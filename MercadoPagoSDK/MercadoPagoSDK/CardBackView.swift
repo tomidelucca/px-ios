@@ -12,7 +12,7 @@ import UIKit
 @IBDesignable open class CardBackView: UIView {
     var view: UIView!
 
-    @IBOutlet weak var cardCVV: MPLabel!
+    @IBOutlet weak var cardCVV: PXMonospaceLabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)

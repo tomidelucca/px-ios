@@ -11,7 +11,7 @@ import MercadoPagoPXTracking
 
 open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldDelegate {
 
-    var securityCodeLabel: UILabel!
+    var securityCodeLabel: PXMonospaceLabel!
     @IBOutlet weak var securityCodeTextField: HoshiTextField!
     var errorLabel: MPLabel?
     @IBOutlet weak var panelView: UIView!
