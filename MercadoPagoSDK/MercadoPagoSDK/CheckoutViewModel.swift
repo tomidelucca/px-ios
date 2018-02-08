@@ -211,7 +211,7 @@ open class CheckoutViewModel: NSObject {
     }
 
     func getFloatingConfirmButtonHeight() -> CGFloat {
-        return 80
+        return 82
     }
 
     func getFloatingConfirmButtonViewFrame() -> CGRect {
