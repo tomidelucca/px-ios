@@ -426,7 +426,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         }
         self.floatingConfirmButtonView = self.getFloatingButtonView()
         self.view.addSubview(floatingConfirmButtonView)
-        let height = self.viewModel.getFloatingConfirmButtonHeight()
+        let height = self.viewModel.getFloatingConfirmButtonHeight() + (PXLayout.getSafeAreaBottomInset() / 2)
         PXLayout.setHeight(owner: self.floatingConfirmButtonView, height: height).isActive = true
         PXLayout.pinLeft(view: self.floatingConfirmButtonView).isActive = true
         PXLayout.pinRight(view: self.floatingConfirmButtonView).isActive = true
@@ -436,8 +436,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.floatingConfirmButtonView.addSubview(self.floattingButton!)
         PXLayout.pinLeft(view: self.floattingButton!).isActive = true
         PXLayout.pinRight(view: self.floattingButton!).isActive = true
-        PXLayout.centerVertically(view: self.floattingButton!).isActive = true
+        //PXLayout.centerVertically(view: self.floattingButton!).isActive = true
         PXLayout.centerHorizontally(view: self.floattingButton!).isActive = true
+        PXLayout.pinTop(view: self.floattingButton!).isActive = true
         self.view.bringSubview(toFront: floatingConfirmButtonView)
     }
 
