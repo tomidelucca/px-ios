@@ -395,7 +395,7 @@ extension MercadoPagoCheckout {
     }
 
     func getInstructions() {
-        self.presentLoading()
+       // self.presentLoading() // Remove loading because two continue loadings doesn't work with payment plugin
 
         guard let paymentResult = self.viewModel.paymentResult else {
             fatalError("Get Instructions - Payment Result does no exist")
