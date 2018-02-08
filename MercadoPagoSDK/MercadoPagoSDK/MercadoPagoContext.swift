@@ -126,18 +126,25 @@ open class MercadoPagoContext: NSObject {
     open static func getLanguage() -> String {
         return sharedInstance.language
     }
-    open static func getLocalizedPath() -> String {
+    
+    open static func getLocalizedID() -> String {
         let bundle = MercadoPago.getBundle() ?? Bundle.main
 
         let currentLanguage = MercadoPagoContext.getLanguage()
-        if let path = bundle.path(forResource: currentLanguage, ofType : "lproj") {
-            return path
-        } else if let path = bundle.path(forResource: MercadoPagoContext.getLanguage().components(separatedBy: "-")[0], ofType : "lproj") {
-            return path
+        let currentLanguageSeparated = currentLanguage.components(separatedBy: "-")[0]
+        if bundle.path(forResource: currentLanguage, ofType : "lproj") != nil {
+            return currentLanguage
+        } else if (bundle.path(forResource: currentLanguageSeparated, ofType : "lproj") != nil) {
+            return currentLanguageSeparated
         } else {
-            let path = bundle.path(forResource: "es", ofType : "lproj")
-            return path!
+            return "es"
         }
+    }
+    
+    open static func getLocalizedPath() -> String {
+        let bundle = MercadoPago.getBundle() ?? Bundle.main
+        let pathID = getLocalizedID()
+        return bundle.path(forResource: pathID, ofType : "lproj")!
     }
 
     open static func getTermsAndConditionsSite() -> String {

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>error_body_title_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>What can I do?</string>
+	</dict>
+	<key>error_body_description_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Please try to pay with other payment method.</string>
+	</dict>
+	<key>error_body_description_pending_contingency</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>In a few hours we will notify you via e-mail if it is accredited.</string>
+	</dict>
+	<key>error_body_description_pending_review_manual</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Within the next 24 hours we will notify you via e-mail if it was accredited.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_call_for_authorize</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>The phone number is on the back of your card.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_card_disabled</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Use another payment method or call %1$s to activate your card.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_insufficient_amount</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Do not be discouraged! Recharge it in any bank or from your internet banking and try again.
+
+Or if you prefer, you can choose another payment method.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_other_reason</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Use another card or other payment method.</string>
+	</dict>
+	<key>error_body_description_rejected_by_bank</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Please try to pay with other payment method.</string>
+	</dict>
+	<key>error_body_description_rejected_insufficient_data</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Please try to pay with other payment method.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_duplicated_payment</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Don&apos;t worry, your previous payment was approved.</string>
+	</dict>
+	<key>error_body_description_cc_rejected_max_attempts</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>As you reached the limit of attempts with this card, use another payment method.</string>
+	</dict>
+	<key>error_body_description_rejected_high_risk</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Use a payment method other than a card.</string>
+	</dict>
+	<key>error_body_action_text_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Already talked and I am authorized.</string>
+	</dict>
+	<key>error_body_action_text_cc_rejected_call_for_authorize</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Already talked with %1$s and I am authorized.</string>
+	</dict>
+	<key>error_body_secondary_title_</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Could not authorize it?</string>
+	</dict>
+</dict>
+</plist>

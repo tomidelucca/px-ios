@@ -685,6 +685,10 @@
 		FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC6283F41FE1AC4A0002E93C /* PXComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */; };
 		FC7202DB1EA4FF6000A923A6 /* DiscountCouponTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */; };
+		FC73AB46202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
+		FC73AB47202B87AD00537C9F /* Localizable_pt.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB49202B87AD00537C9F /* Localizable_pt.plist */; };
+		FC73AB4D202C957F00537C9F /* Localizable_es.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB50202C957F00537C9F /* Localizable_es.plist */; };
+		FC73AB4E202C957F00537C9F /* Localizable_es.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC73AB50202C957F00537C9F /* Localizable_es.plist */; };
 		FC7BD8AA1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */; };
 		FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */; };
 		FC7BD8AD1FD5899000D5B2C7 /* PXErrorRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */; };
@@ -696,6 +700,8 @@
 		FC7E14981F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E14991F1CFB73005DCAC4 /* SecurityCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */; };
 		FC7E149B1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */; };
+		FC8A9BF4202CA38700FD7D7C /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */; };
+		FC8A9BF5202CA38700FD7D7C /* Localizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */; };
 		FC94A1CC1E93E98000D9BC17 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
 		FCA47E4C1E92925B003DB787 /* BankInsterestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */; };
 		FCA47E4D1E92925B003DB787 /* BankInsterestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCA47E4B1E92925B003DB787 /* BankInsterestTableViewCell.xib */; };
@@ -1171,6 +1177,8 @@
 		FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnlockCardTableViewCell.xib; sourceTree = "<group>"; };
 		FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentView.swift; sourceTree = "<group>"; };
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
+		FC73AB48202B87AD00537C9F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = pt.lproj/Localizable_pt.plist; sourceTree = "<group>"; };
+		FC73AB4F202C957F00537C9F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/Localizable_es.plist; sourceTree = "<group>"; };
 		FC7BD8A91FD5898700D5B2C7 /* PXErrorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorComponent.swift; sourceTree = "<group>"; };
 		FC7BD8AC1FD5899000D5B2C7 /* PXErrorRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXErrorRenderer.swift; sourceTree = "<group>"; };
 		FC7BD8B21FD6B8AF00D5B2C7 /* PXResourceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResourceProvider.swift; sourceTree = "<group>"; };
@@ -1178,6 +1186,7 @@
 		FC7E14971F1CFB73005DCAC4 /* SecurityCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModel.swift; sourceTree = "<group>"; };
 		FC7E149A1F1D0742005DCAC4 /* SecurityCodeViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityCodeViewModelTest.swift; sourceTree = "<group>"; };
 		FC814BF31E54BEE100475474 /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-PE"; path = "es-PE.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		FC8A9BF6202CA38700FD7D7C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Localizable_en.plist; sourceTree = "<group>"; };
 		FCA47E4A1E92925B003DB787 /* BankInsterestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BankInsterestTableViewCell.swift; sourceTree = "<group>"; };
 		FCA47E4B1E92925B003DB787 /* BankInsterestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankInsterestTableViewCell.xib; sourceTree = "<group>"; };
 		FCA653831E79CFD700E8D9C0 /* EntityTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EntityTypes.plist; sourceTree = "<group>"; };
@@ -1250,6 +1259,7 @@
 		0F98830C1AD2A97A00F750F0 /* MercadoPagoSDK */ = {
 			isa = PBXGroup;
 			children = (
+				FC73AB42202B877600537C9F /* Translations */,
 				4B1CA5911FFE943200F576AA /* Constants */,
 				4BEF9B4F1FE2EA4C002ADAFF /* PaymentMethodPlugins */,
 				4B811DCF1FCDCB97000611AD /* Hooks */,
@@ -2425,6 +2435,16 @@
 			name = "Instruction Action";
 			sourceTree = "<group>";
 		};
+		FC73AB42202B877600537C9F /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				FC73AB49202B87AD00537C9F /* Localizable_pt.plist */,
+				FC73AB50202C957F00537C9F /* Localizable_es.plist */,
+				FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */,
+			);
+			name = Translations;
+			sourceTree = "<group>";
+		};
 		FC7BD8A81FD5895800D5B2C7 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -2637,6 +2657,7 @@
 				76B085281CE500D100C157BF /* PaymentMethodSelectedTableViewCell.xib in Resources */,
 				4BA4DB0C1E43902900B70550 /* ConfirmAdditionalInfoTableViewCell.xib in Resources */,
 				0FC4FC351B0FB36F00CF7148 /* PromoTyCDetailTableViewCell.xib in Resources */,
+				FC73AB46202B87AD00537C9F /* Localizable_pt.plist in Resources */,
 				4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */,
 				155954ED1F87CD200086854B /* PreferenceDescriptionTableViewCell.xib in Resources */,
 				76B085061CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
@@ -2645,6 +2666,7 @@
 				0FC4FC231B0FAF0E00CF7148 /* PromoTableViewCell.xib in Resources */,
 				FCBF13541E720A6E0092B756 /* EntityTypeTableViewCell.xib in Resources */,
 				15DA7E601CD92C670068896E /* IdentificationViewController.xib in Resources */,
+				FC8A9BF4202CA38700FD7D7C /* Localizable_en.plist in Resources */,
 				534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */,
 				76062BD91C4D20C30067A14B /* PaymentVaultViewController.xib in Resources */,
 				4BAA55FC1DB0241700501061 /* AdditionalStepTitleTableViewCell.xib in Resources */,
@@ -2656,6 +2678,7 @@
 				4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */,
 				4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */,
 				76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
+				FC73AB4D202C957F00537C9F /* Localizable_es.plist in Resources */,
 				FCEB90841EB8F3FA0096B1A2 /* PayerCostPreferences.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2665,6 +2688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76FD24801C5BFEA1008C5DC0 /* CardFormViewController.xib in Resources */,
+				FC73AB47202B87AD00537C9F /* Localizable_pt.plist in Resources */,
 				766012F21CF284A600897F9D /* WebViewController.xib in Resources */,
 				813873841FA8E425002095D6 /* RevampImages.xcassets in Resources */,
 				769EC3611E1404BD0054E940 /* PaymentMethod.plist in Resources */,
@@ -2682,8 +2706,10 @@
 				0FC4FC421B0FB83700CF7148 /* PromosTyCViewController.xib in Resources */,
 				FCBF134C1E7204C30092B756 /* FinancialInstitutionTableViewCell.xib in Resources */,
 				760BD1F21C99ADE300FDA170 /* MockedResponse.plist in Resources */,
+				FC73AB4E202C957F00537C9F /* Localizable_es.plist in Resources */,
 				0F0749061AED5BAE003DD39D /* Localizable.strings in Resources */,
 				FCD647551EBB91200082A3D3 /* UnlockCardLinks.plist in Resources */,
+				FC8A9BF5202CA38700FD7D7C /* Localizable_en.plist in Resources */,
 				15B8B1B51E71DE950065DF50 /* DiscountDetailView.xib in Resources */,
 				76B085071CE2464700C157BF /* ExitButtonTableViewCell.xib in Resources */,
 				157AA6821C970BEC00CC9B43 /* TermsAndConditionsViewCell.xib in Resources */,
@@ -3465,6 +3491,30 @@
 			);
 			name = Localizable.strings;
 			path = MercadoPagoSDK;
+			sourceTree = "<group>";
+		};
+		FC73AB49202B87AD00537C9F /* Localizable_pt.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC73AB48202B87AD00537C9F /* pt */,
+			);
+			name = Localizable_pt.plist;
+			sourceTree = "<group>";
+		};
+		FC73AB50202C957F00537C9F /* Localizable_es.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC73AB4F202C957F00537C9F /* es */,
+			);
+			name = Localizable_es.plist;
+			sourceTree = "<group>";
+		};
+		FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FC8A9BF6202CA38700FD7D7C /* en */,
+			);
+			name = Localizable_en.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
