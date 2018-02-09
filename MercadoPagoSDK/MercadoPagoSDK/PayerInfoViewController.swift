@@ -14,10 +14,12 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let ACCESORY_VIEW_HEIGHT: CGFloat = 44.0
     let INPUT_VIEW_HEIGHT: CGFloat = 83.0
 
-    let NAME_INPUT_TEXT = "Nome"
-    let SURNAME_INPUT_TEXT = "Sobrenome"
-    let NUMBER_INPUT_TEXT = "Número"
-    let TYPE_INPUT_TEXT = "Tipo"
+    let NAME_INPUT_TEXT = "payer_info_name".localized_beta
+    let SURNAME_INPUT_TEXT = "payer_info_surname".localized_beta
+    let NUMBER_INPUT_TEXT = "payer_info_number".localized_beta
+    let TYPE_INPUT_TEXT = "payer_info_type".localized_beta
+    let CONTINUE_INPUT_TEXT = "card_form_next_button".localized_beta
+    let PREVIOUS_INPUT_TEXT = "card_form_previous_button".localized_beta
 
     var currentInput: UIView!
     var toolbar: PXToolbar?
@@ -79,7 +81,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
     func initFirstNameComponent() {
         let availableHeight = self.getAvailableHeight()
-        let nameText = NAME_INPUT_TEXT.localized
+        let nameText = NAME_INPUT_TEXT
         self.firstNameComponent = SimpleInputComponent(frame: getDefaultFrame(), numeric: false, placeholder: nameText, textFieldDelegate: self)
         self.firstNameComponent?.frame.origin.y = availableHeight
         self.firstNameComponent?.delegate = self
@@ -87,14 +89,14 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
     func initSecondNameComponent() {
         let availableHeight = self.getAvailableHeight()
-        let surnameText = SURNAME_INPUT_TEXT.localized
+        let surnameText = SURNAME_INPUT_TEXT
         self.secondNameComponent = SimpleInputComponent(frame: getDefaultFrame(), numeric: false, placeholder: surnameText, textFieldDelegate: self)
         self.secondNameComponent?.frame.origin.y = availableHeight
         self.secondNameComponent?.delegate = self
         self.view.addSubview(self.secondNameComponent!)
     }
     func initIdentificationComponent() {
-        let numberText = NUMBER_INPUT_TEXT.localized
+        let numberText = NUMBER_INPUT_TEXT
         let typeText = TYPE_INPUT_TEXT
         let availableHeight = self.getAvailableHeight()
         self.identificationComponent = CompositeInputComponent(frame: getDefaultFrame(), numeric: true, placeholder: numberText, dropDownPlaceholder: typeText, dropDownOptions: self.viewModel.getDropdownOptions(), textFieldDelegate: self)
@@ -163,8 +165,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
-            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: CONTINUE_INPUT_TEXT, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: PREVIOUS_INPUT_TEXT, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)

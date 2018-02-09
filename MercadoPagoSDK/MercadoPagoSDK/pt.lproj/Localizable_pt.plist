@@ -151,5 +151,33 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string>Anterior</string>
 	</dict>
+	<key>payer_info_name</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Nome</string>
+	</dict>
+	<key>payer_info_surname</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Sobrenome</string>
+	</dict>
+	<key>payer_info_number</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Número</string>
+	</dict>
+	<key>payer_info_type</key>
+	<dict>
+		<key>comment</key>
+		<string></string>
+		<key>value</key>
+		<string>Tipo</string>
+	</dict>
 </dict>
 </plist>
