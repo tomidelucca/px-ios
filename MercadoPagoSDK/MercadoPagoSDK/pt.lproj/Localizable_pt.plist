@@ -130,5 +130,26 @@ Se preferir, você pode escolher outro meio de pagamento.</string>
 		<key>value</key>
 		<string> de desconto</string>
 	</dict>
+	<key>payment_result_screen_congrats_finish_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para terminar el flujo en una pantalla de congrats</string>
+		<key>value</key>
+		<string>Pronto!</string>
+	</dict>
+	<key>card_form_next_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para pasar a la siguiente pantalla</string>
+		<key>value</key>
+		<string>Continuar</string>
+	</dict>
+	<key>card_form_previous_button</key>
+	<dict>
+		<key>comment</key>
+		<string>Acción para volver a la pantalla anterior</string>
+		<key>value</key>
+		<string>Anterior</string>
+	</dict>
 </dict>
 </plist>

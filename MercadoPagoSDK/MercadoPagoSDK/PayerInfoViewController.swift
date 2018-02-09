@@ -18,8 +18,6 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     let SURNAME_INPUT_TEXT = "Sobrenome"
     let NUMBER_INPUT_TEXT = "Número"
     let TYPE_INPUT_TEXT = "Tipo"
-    let CONTINUE_INPUT_TEXT = "Continuar"
-    let BEFORE_INPUT_TEXT = "Anterior"
 
     var currentInput: UIView!
     var toolbar: PXToolbar?
@@ -97,7 +95,7 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
     }
     func initIdentificationComponent() {
         let numberText = NUMBER_INPUT_TEXT.localized
-        let typeText = TYPE_INPUT_TEXT.localized
+        let typeText = TYPE_INPUT_TEXT
         let availableHeight = self.getAvailableHeight()
         self.identificationComponent = CompositeInputComponent(frame: getDefaultFrame(), numeric: true, placeholder: numberText, dropDownPlaceholder: typeText, dropDownOptions: self.viewModel.getDropdownOptions(), textFieldDelegate: self)
         self.identificationComponent?.frame.origin.y = availableHeight
@@ -165,8 +163,8 @@ class PayerInfoViewController: MercadoPagoUIViewController, UITextFieldDelegate,
             toolbar.barStyle = UIBarStyle.default
             toolbar.isUserInteractionEnabled = true
 
-            let buttonNext = UIBarButtonItem(title: "Continuar".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
-            let buttonPrev = UIBarButtonItem(title: "Anterior".localized, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
+            let buttonNext = UIBarButtonItem(title: "card_form_next_button".localized_beta, style: .plain, target: self, action: #selector(PayerInfoViewController.rightArrowKeyTapped))
+            let buttonPrev = UIBarButtonItem(title: "card_form_previous_button".localized_beta, style: .plain, target: self, action: #selector(PayerInfoViewController.leftArrowKeyTapped))
 
             buttonNext.setTitlePositionAdjustment(UIOffset(horizontal: UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
             buttonPrev.setTitlePositionAdjustment(UIOffset(horizontal: -UIScreen.main.bounds.size.width / 8, vertical: 0), for: UIBarMetrics.default)
