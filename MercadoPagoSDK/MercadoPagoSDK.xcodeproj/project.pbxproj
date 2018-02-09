@@ -1175,6 +1175,10 @@
 		FC3FC8921FBE13F900CF29E1 /* PXInstructionsActionRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXInstructionsActionRenderer.swift; sourceTree = "<group>"; };
 		FC45F1211E8D50F2008D4831 /* UnlockCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockCardTableViewCell.swift; sourceTree = "<group>"; };
 		FC45F1221E8D50F2008D4831 /* UnlockCardTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnlockCardTableViewCell.xib; sourceTree = "<group>"; };
+		FC61854A202DD5E3000FE1CB /* es-CO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-CO"; path = "es-CO.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC61854B202DD5E3000FE1CB /* es-PE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-PE"; path = "es-PE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC61854C202DD5E4000FE1CB /* es-UY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-UY"; path = "es-UY.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
+		FC61854D202DD5E5000FE1CB /* es-VE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "es-VE"; path = "es-VE.lproj/Localizable_es.plist"; sourceTree = "<group>"; };
 		FC6283F21FE1AC4A0002E93C /* PXComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXComponentView.swift; sourceTree = "<group>"; };
 		FC7202DA1EA4FF6000A923A6 /* DiscountCouponTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountCouponTest.swift; sourceTree = "<group>"; };
 		FC73AB48202B87AD00537C9F /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = pt.lproj/Localizable_pt.plist; sourceTree = "<group>"; };
@@ -2440,8 +2444,8 @@
 			isa = PBXGroup;
 			children = (
 				FCF723F3202CB2D9002F125C /* Localizator.swift */,
-				FC73AB49202B87AD00537C9F /* Localizable_pt.plist */,
 				FC73AB50202C957F00537C9F /* Localizable_es.plist */,
+				FC73AB49202B87AD00537C9F /* Localizable_pt.plist */,
 				FC8A9BF7202CA38700FD7D7C /* Localizable_en.plist */,
 			);
 			name = Translations;
@@ -3507,6 +3511,10 @@
 			children = (
 				FC73AB4F202C957F00537C9F /* es */,
 				FCF723F6202CCA2C002F125C /* es-MX */,
+				FC61854A202DD5E3000FE1CB /* es-CO */,
+				FC61854B202DD5E3000FE1CB /* es-PE */,
+				FC61854C202DD5E4000FE1CB /* es-UY */,
+				FC61854D202DD5E5000FE1CB /* es-VE */,
 			);
 			name = Localizable_es.plist;
 			sourceTree = "<group>";

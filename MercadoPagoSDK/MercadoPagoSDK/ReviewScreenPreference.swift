@@ -10,7 +10,7 @@ import UIKit
 
 open class ReviewScreenPreference: NSObject {
 
-    private var title = "mpsdk_review_and_confirm_title".localized_beta
+    private var title = "Revisa si está todo bien"
     private var confirmButtonText = "Pagar"
     private var cancelButtonText = "Cancelar Pago"
 	private var shouldDisplayChangeMethodOption = true

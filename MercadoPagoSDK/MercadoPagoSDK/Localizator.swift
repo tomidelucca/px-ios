@@ -35,9 +35,10 @@ private class Localizator {
     func localize(string: String) -> String {
         guard let localizedStringDictionary = localizableDictionary.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
             
-            var parentLocalizableDictionary = localizableDictionary.value(forKey: string) as? NSDictionary
-//            if let parentLocalizedStringDictionary = 
-            
+            let parentLocalizableDictionary = self.parentLocalizableDictionary.value(forKey: string) as? NSDictionary
+            if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
+                return parentLocalizedString
+            }
             assertionFailure("Missing translation for: \(string)")
             return ""
         }

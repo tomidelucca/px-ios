@@ -116,12 +116,5 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>¿No pudiste autorizarlo?</string>
 	</dict>
-	<key>mpsdk_review_and_confirm_title</key>
-	<dict>
-		<key>comment</key>
-		<string></string>
-		<key>value</key>
-		<string>¿Qué puedo hacer? en argentino</string>
-	</dict>
 </dict>
 </plist>
