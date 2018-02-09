@@ -99,7 +99,7 @@ extension MercadoPagoCheckout {
         containerVC.view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         paymentPluginComponent.renderDidFinish?()
 
-        self.navigationController.pushViewController(viewController: containerVC, animated: false)
+        self.navigationController.pushViewController(containerVC, animated: false)
     }
 }
 
