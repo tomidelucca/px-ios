@@ -22,7 +22,6 @@ extension MercadoPagoCheckout {
         }
 
         let containerVC = PXPluginConfigViewController()
-
         
         guard let paymentMethodConfigPluginComponent = paymentMethodPlugin.paymentMethodConfigPlugin else {
             return
@@ -61,7 +60,7 @@ extension MercadoPagoCheckout {
 
         paymentMethodConfigPluginComponent.renderDidFinish?()
 
-        self.navigationController.pushViewController(containerVC, animated: true)
+        self.pushViewController(viewController : containerVC, animated: true)
     }
 
     fileprivate func showPaymentPluginComponent(paymentPluginComponent: PXPluginComponent) {
@@ -100,7 +99,7 @@ extension MercadoPagoCheckout {
         containerVC.view.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         paymentPluginComponent.renderDidFinish?()
 
-        self.navigationController.pushViewController(containerVC, animated: false)
+        self.navigationController.pushViewController(viewController: containerVC, animated: false)
     }
 }
 
