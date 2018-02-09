@@ -419,7 +419,7 @@ class Utils {
         let formatterYear = DateFormatter()
         formatterYear.dateFormat = "yyyy"
         
-        var dayString = "10"
+        var dayString = formatterDay.string(from:date)
         if dayString.first == "0" {
             dayString.removeFirst()
         }

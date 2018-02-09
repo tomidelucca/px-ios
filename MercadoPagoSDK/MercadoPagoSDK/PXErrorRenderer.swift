@@ -106,6 +106,8 @@ class PXErrorRenderer: NSObject {
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = Utils.getFont(size: ACTION_FONT_SIZE)
         button.setTitleColor(ACTION_LABEL_FONT_COLOR, for: .normal)
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = .center
         button.add(for: .touchUpInside) {
             component.recoverPayment()
         }
