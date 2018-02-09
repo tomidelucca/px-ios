@@ -116,5 +116,19 @@ Or if you prefer, you can choose another payment method.</string>
 		<key>value</key>
 		<string>Could not authorize it?</string>
 	</dict>
+	<key>discount_coupon_detail_default_concept</key>
+	<dict>
+		<key>comment</key>
+		<string>Concepto Default en el modal de Discount Coupon</string>
+		<key>value</key>
+		<string>Discount</string>
+	</dict>
+	<key>discount_coupon_detail_description</key>
+	<dict>
+		<key>comment</key>
+		<string>Descripción del descuento</string>
+		<key>value</key>
+		<string> of discount</string>
+	</dict>
 </dict>
 </plist>

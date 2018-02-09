@@ -116,5 +116,19 @@ O si prefieres, puedes elegir otro medio de pago.</string>
 		<key>value</key>
 		<string>¿No pudiste autorizarlo?</string>
 	</dict>
+	<key>discount_coupon_detail_default_concept</key>
+	<dict>
+		<key>comment</key>
+		<string>Concepto Default en el modal de Discount Coupon</string>
+		<key>value</key>
+		<string>Descuento</string>
+	</dict>
+	<key>discount_coupon_detail_description</key>
+	<dict>
+		<key>comment</key>
+		<string>Descripción del descuento</string>
+		<key>value</key>
+		<string> de descuento</string>
+	</dict>
 </dict>
 </plist>

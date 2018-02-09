@@ -51,6 +51,8 @@ class DiscountDetailView: UIView {
             self.discountTitle.text = concept
         }
 
+        self.totalTitle.text = "Total".localized
+        self.productTitle.text = "Producto".localized
         self.viewTitle.textColor = fontColor
         self.productTitle.textColor = fontColor
         self.discountTitle.textColor = discountFontColor

@@ -105,7 +105,7 @@ open class DiscountCoupon: NSObject {
 
     open func getDescription() -> String {
         if getDiscountDescription() != "" {
-            return getDiscountDescription() + " de descuento".localized
+            return getDiscountDescription() + "discount_coupon_detail_description".localized_beta
         } else {
             return ""
         }
@@ -135,7 +135,7 @@ open class DiscountCoupon: NSObject {
         if let concept = self.concept {
             text = concept
         } else {
-           text  = "Descuento"
+           text  = "discount_coupon_detail_default_concept".localized_beta
         }
 
         if percent_off != "0" && percent_off != "0.0" {
