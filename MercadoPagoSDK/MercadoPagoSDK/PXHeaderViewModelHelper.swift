@@ -165,11 +165,12 @@ extension PXResultViewModel {
     }
 
     func getTitleForRejected(_ paymentMethod: PaymentMethod, _ title: String) -> NSAttributedString {
-        if let paymentMethodName = paymentMethod.name {
-            return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
-        } else {
-            return "".toAttributedString()
+        
+        guard let paymentMethodName = paymentMethod.name else {
+            return getDefaultRejectedTitle()
         }
+        
+        return NSMutableAttributedString(string: (title.localized as NSString).replacingOccurrences(of: "%0", with: "\(paymentMethodName)"), attributes: [NSFontAttributeName: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
     }
 
     func getDefaultRejectedTitle() -> NSAttributedString {
