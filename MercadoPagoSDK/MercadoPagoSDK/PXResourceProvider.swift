@@ -15,99 +15,81 @@ open class PXResourceProvider: NSObject {
     static var error_body_description_base = "error_body_description_"
     static var error_body_action_text_base = "error_body_action_text_"
     static var error_body_secondary_title_base = "error_body_secondary_title_"
-    static var spanishId = "es"
 
     static open func getTitleForErrorBody() -> String {
-        return getWord(key: error_body_title_base, statusDetail: "")
+        return error_body_title_base.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForPENDING_CONTINGENCY() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.PENDING_CONTINGENCY)
+        let key = error_body_description_base + PXPayment.StatusDetails.PENDING_CONTINGENCY
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForPENDING_REVIEW_MANUAL() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.PENDING_REVIEW_MANUAL)
+        let key = error_body_description_base + PXPayment.StatusDetails.PENDING_REVIEW_MANUAL
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_CARD_DISABLED(_ paymentMethodName: String?) -> String {
         if let paymentMethodName = paymentMethodName {
-            let string = getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_CARD_DISABLED)
-            return string.replacingOccurrences(of: "%1$s", with: paymentMethodName)
+            let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_CARD_DISABLED
+            return key.localized_beta.replacingOccurrences(of: "%1$s", with: paymentMethodName)
         } else {
-            return getWord(key: error_body_description_base, statusDetail: "")
+            return error_body_description_base.localized_beta
         }
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_AMOUNT() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_OTHER_REASON() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_OTHER_REASON)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_OTHER_REASON
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_BY_BANK() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_BY_BANK)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_BY_BANK
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_DATA() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_DUPLICATED_PAYMENT() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_MAX_ATTEMPTS() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS
+        return key.localized_beta
     }
 
     static open func getDescriptionForErrorBodyForREJECTED_HIGH_RISK() -> String {
-        return getWord(key: error_body_description_base, statusDetail: PXPayment.StatusDetails.REJECTED_HIGH_RISK)
+        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_HIGH_RISK
+        return key.localized_beta
     }
 
     static open func getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(_ paymentMethodName: String?) -> String {
+        
         if let paymentMethodName = paymentMethodName {
-            let string = getWord(key: error_body_action_text_base, statusDetail: PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
-            return string.replacingOccurrences(of: "%1$s", with: paymentMethodName)
+            let key = error_body_action_text_base + PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
+            return key.localized_beta.replacingOccurrences(of: "%1$s", with: paymentMethodName)
         } else {
-            return getWord(key: error_body_action_text_base, statusDetail: "")
+            return error_body_action_text_base.localized_beta
         }
     }
 
     static open func getSecondaryTitleForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE() -> String {
-        return getWord(key: error_body_secondary_title_base, statusDetail: "")
-    }
-
-    static open func getWord(key: String, statusDetail: String) -> String {
-        let searchKey = key + statusDetail
-        if let translation = getTranslation(for: searchKey), translation.isNotEmpty {
-            return translation
-        } else if let translation = getTranslation(for: key), translation.isNotEmpty {
-            return translation
-        } else {
-            return getTranslation(for: key, languageId: spanishId)!
-        }
-    }
-
-    static open func getTranslation(for key: String, languageId: String = MercadoPagoContext.getLanguage()) -> String? {
-        let path = MercadoPago.getBundle()!.path(forResource: "PXTranslations", ofType: "plist")
-        let dictionary = NSDictionary(contentsOfFile: path!)
-        if let keyDict = dictionary?.value(forKey: key) as? NSDictionary {
-            if let translation = keyDict.value(forKey: languageId) as? String {
-                return translation
-            } else {
-                if languageId.contains(spanishId) {
-                    if let translation = keyDict.value(forKey: spanishId) as? String {
-                        return translation
-                    }
-                }
-            }
-        }
-        return nil
+        return error_body_secondary_title_base.localized_beta
     }
 }
