@@ -39,7 +39,11 @@ private class Localizator {
             if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
                 return parentLocalizedString
             }
-            assertionFailure("Missing translation for: \(string)")
+            
+            #if DEBUG
+                assertionFailure("Missing translation for: \(string)")
+            #endif
+            
             return ""
         }
         
