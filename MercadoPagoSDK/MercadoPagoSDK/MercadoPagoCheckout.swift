@@ -307,7 +307,7 @@ open class MercadoPagoCheckout: NSObject {
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
         if backToChechoutRoot {
             self.navigationController.navigationBar.isHidden = false
-            viewController.callbackCancel = { self.backToCheckouitRoot() }
+            viewController.callbackCancel = { [weak self] in self?.backToCheckouitRoot() }
         }
         
         self.navigationController.pushViewController(viewController, animated: animated)

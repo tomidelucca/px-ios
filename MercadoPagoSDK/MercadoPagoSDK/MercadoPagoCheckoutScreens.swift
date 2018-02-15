@@ -234,9 +234,9 @@ extension MercadoPagoCheckout {
                 self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
                 self.executeNextStep()
             } else {
-                let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { (financialInstitution) in
-                    self.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
-                    self.executeNextStep()
+                let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
+                    self?.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
+                    self?.executeNextStep()
                 })
 
                 financialInstitutionStep.callbackCancel = {[weak self] in
@@ -263,9 +263,9 @@ extension MercadoPagoCheckout {
             self.executeNextStep()
         }
 
-        let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { (entityType) in
-            self.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
-            self.executeNextStep()
+        let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { [weak self]  (entityType) in
+            self?.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
+            self?.executeNextStep()
         })
 
         entityTypeStep.callbackCancel = {[weak self] in
