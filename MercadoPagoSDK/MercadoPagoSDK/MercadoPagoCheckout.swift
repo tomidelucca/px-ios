@@ -68,7 +68,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
-        self.presentLoading()
+        presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
     }
@@ -263,7 +263,7 @@ open class MercadoPagoCheckout: NSObject {
     func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
         self.countLoadings += 1
         if self.countLoadings == 1 {
-            let when = DispatchTime.now() + 0.3
+            let when = DispatchTime.now() //+ 0.3
             DispatchQueue.main.asyncAfter(deadline: when) {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
@@ -273,12 +273,20 @@ open class MercadoPagoCheckout: NSObject {
             }
         }
     }
+    
+    func presentInitLoading() {
+        self.createCurrentLoading()
+        self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+        self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
+    }
 
     func dismissLoading(animated: Bool = true) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
-            self.currentLoadingView!.dismiss(animated: true)
-            self.currentLoadingView = nil
+            self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+            self.currentLoadingView!.dismiss(animated: true, completion: {
+                self.currentLoadingView = nil
+            })
         }
     }
 
