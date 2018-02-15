@@ -479,6 +479,18 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         }
         view.removeFromSuperview()
     }
+    
+    override func didScrollInTable(_ scrollView: UIScrollView) {
+        navBarFontSize = 18
+        if let titleCell = titleCell {
+            titleCell.updateTitleFontSize(toSize: 22)
+        }
+        if self.shouldShowNavBar(scrollView) {
+            showNavBar()
+        } else {
+            hideNavBar()
+        }
+    }
 }
 
 @objc public protocol MPCustomRowDelegate {

@@ -70,6 +70,7 @@ open class ErrorViewController: MercadoPagoUIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         self.errorTitle.text = error.message
+        self.errorSubtitle.textColor = UIColor.pxBrownishGray
 
         let normalAttributes: [String: AnyObject] = [NSFontAttributeName: Utils.getFont(size: 14)]
 

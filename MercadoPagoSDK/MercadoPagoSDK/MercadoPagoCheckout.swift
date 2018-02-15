@@ -68,7 +68,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
-        self.presentLoading()
+        presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
     }
@@ -212,7 +212,7 @@ open class MercadoPagoCheckout: NSObject {
             checkoutVC.showNavBar()
             checkoutVC.viewModel = viewModel.checkoutViewModel()
             if let checkoutTable = checkoutVC.checkoutTable {
-                       checkoutVC.checkoutTable.reloadData()
+                checkoutTable.reloadData()
             }
         }
     }
@@ -263,7 +263,7 @@ open class MercadoPagoCheckout: NSObject {
     func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
         self.countLoadings += 1
         if self.countLoadings == 1 {
-            let when = DispatchTime.now() + 0.3
+            let when = DispatchTime.now() //+ 0.3
             DispatchQueue.main.asyncAfter(deadline: when) {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
@@ -273,12 +273,20 @@ open class MercadoPagoCheckout: NSObject {
             }
         }
     }
+    
+    func presentInitLoading() {
+        self.createCurrentLoading()
+        self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+        self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
+    }
 
     func dismissLoading(animated: Bool = true) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
-            self.currentLoadingView!.dismiss(animated: true)
-            self.currentLoadingView = nil
+            self.currentLoadingView?.modalTransitionStyle = .crossDissolve
+            self.currentLoadingView!.dismiss(animated: true, completion: {
+                self.currentLoadingView = nil
+            })
         }
     }
 
@@ -295,7 +303,7 @@ open class MercadoPagoCheckout: NSObject {
                                      animated: Bool, backToChechoutRoot:Bool = false) {
 
         viewController.hidesBottomBarWhenPushed = true
-        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
+        // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
         if backToChechoutRoot {
             self.navigationController.navigationBar.isHidden = false
