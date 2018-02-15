@@ -101,9 +101,9 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     public func isRejectedWithBody() -> Bool {
         return props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED) && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
-
+    
     func getCallback() -> (() -> Void) {
-        return { self.executeCallback() }
+        return { [weak self] in self?.executeCallback() }
     }
 
     func executeCallback() {

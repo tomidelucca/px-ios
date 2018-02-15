@@ -24,7 +24,7 @@ extension PXResultViewModel {
 // MARK: Build Helpers
 extension PXResultViewModel {
     func getBodyAction() -> (() -> Void) {
-        return { self.executeBodyCallback() }
+        return { [weak self]  in self?.executeBodyCallback() }
     }
 
     func executeBodyCallback() {
