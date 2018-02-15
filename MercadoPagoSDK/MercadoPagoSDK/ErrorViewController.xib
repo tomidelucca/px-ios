@@ -1,12 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorViewController" customModule="MercadoPagoSDK" customModuleProvider="target">
             <connections>
@@ -36,19 +42,12 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error_sign" translatesAutoresizingMaskIntoConstraints="NO" id="Lo5-cf-7x0">
-                    <rect key="frame" x="157.5" y="240.5" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="gqQ-qH-yFV"/>
-                        <constraint firstAttribute="width" constant="60" id="xqz-Gu-ar5"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TOU-E7-PRN" customClass="MPLabel" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="20" y="353.5" width="335.5" height="17"/>
+                    <rect key="frame" x="20" y="358.5" width="335.5" height="16"/>
                     <attributedString key="attributedText">
                         <fragment content="Vamos a solucionarlo. Intenta más tarde.">
                             <attributes>
-                                <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="NSColor" red="0.59215686270000001" green="0.59215686270000001" blue="0.59215686270000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <font key="NSFont" size="14" name="HelveticaNeue"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
@@ -67,7 +66,7 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W9v-lm-yGm" customClass="MPButton" customModule="MercadoPagoSDK" customModuleProvider="target">
-                    <rect key="frame" x="146" y="402.5" width="83" height="44"/>
+                    <rect key="frame" x="146" y="407" width="83" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="XUu-Go-aLX"/>
                     </constraints>
@@ -76,6 +75,13 @@
                         <color key="titleColor" red="0.0" green="0.61960784313725492" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="error_sign" translatesAutoresizingMaskIntoConstraints="NO" id="Lo5-cf-7x0">
+                    <rect key="frame" x="148" y="221" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="gqQ-qH-yFV"/>
+                        <constraint firstAttribute="width" constant="80" id="xqz-Gu-ar5"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -92,7 +98,7 @@
                 <constraint firstAttribute="trailing" secondItem="ODG-43-ocD" secondAttribute="trailing" constant="20" id="j1I-kq-Mv9"/>
                 <constraint firstItem="Lo5-cf-7x0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="lfk-uO-hIT"/>
                 <constraint firstItem="ODG-43-ocD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sje-DT-3Fw"/>
-                <constraint firstItem="TOU-E7-PRN" firstAttribute="top" secondItem="ODG-43-ocD" secondAttribute="bottom" constant="7" id="wPX-ki-gGk"/>
+                <constraint firstItem="TOU-E7-PRN" firstAttribute="top" secondItem="ODG-43-ocD" secondAttribute="bottom" constant="12" id="wPX-ki-gGk"/>
             </constraints>
             <point key="canvasLocation" x="259" y="246"/>
         </view>
