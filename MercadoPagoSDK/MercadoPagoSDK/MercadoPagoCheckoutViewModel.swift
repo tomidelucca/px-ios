@@ -178,17 +178,14 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return viewModel
     }
 
-    func getPluginPaymentMethodToShow() -> [PXPaymentMethodPlugin] {
-        _ = copyViewModelAndAssignToCheckoutStore()
-        let paymentMethodPluginsToShow = paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
-        return paymentMethodPluginsToShow
-    }
-
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         var groupName: String?
         if let optionSelected = paymentOptionSelected {
             groupName = optionSelected.getId()
         }
+
+        _ = copyViewModelAndAssignToCheckoutStore()
+        let paymentMethodPluginsToShow = paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
 
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
@@ -482,35 +479,21 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var search: PaymentMethodSearch?
 
-    fileprivate func autoselectOnlyPaymentMethod() {
-        guard let search = self.search else {
-            return
-        }
-
-        self.reviewScreenPreference.disableChangeMethodOption()
-        if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {
-            self.updateCheckoutModel(paymentOptionSelected: search.groups[0])
-        } else if !Array.isNullOrEmpty(search.customerPaymentMethods) && search.customerPaymentMethods?.count == 1{
-            let customOption = search.customerPaymentMethods![0] as! PaymentMethodOption
-            self.updateCheckoutModel(paymentOptionSelected: customOption)
-        } else if  !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
-            self.updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsToShow[0])
-        }
-    }
-
     public func updateCheckoutModel(paymentMethodSearch: PaymentMethodSearch) {
         self.search = paymentMethodSearch
-
-        guard let search = self.search else {
-            return
-        }
 
         // La primera vez las opciones a mostrar van a ser el root de grupos
         self.rootPaymentMethodOptions = paymentMethodSearch.groups
         self.paymentMethodOptions = self.rootPaymentMethodOptions
         self.availablePaymentMethods = paymentMethodSearch.paymentMethods
 
+        if search?.getPaymentOptionsCount() == 0 {
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            })
+        }
+
         if !Array.isNullOrEmpty(paymentMethodSearch.customerPaymentMethods) {
+
             if !MercadoPagoContext.accountMoneyAvailable() {
                 //Remover account_money como opción de pago
                 self.customPaymentOptions =  paymentMethodSearch.customerPaymentMethods!.filter({ (element: CardInformation) -> Bool in
@@ -520,18 +503,16 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
                 self.customPaymentOptions = paymentMethodSearch.customerPaymentMethods
             }
         }
-        let totalPaymentMethodSearchCount = search.getPaymentOptionsCount()
-        self.paymentMethodPluginsToShow = getPluginPaymentMethodToShow()
-        let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
 
-        if totalPaymentMethodsToShow == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
-            })
+        if self.search!.getPaymentOptionsCount() == 1 {
+            if !Array.isNullOrEmpty(self.search!.groups) && self.search!.groups.count == 1 {
+                self.updateCheckoutModel(paymentOptionSelected: self.search!.groups[0])
+            } else {
+                let customOption = self.search!.customerPaymentMethods![0] as! PaymentMethodOption
+                self.updateCheckoutModel(paymentOptionSelected: customOption)
+            }
         }
 
-        if totalPaymentMethodsToShow == 1 {
-            autoselectOnlyPaymentMethod()
-        }
     }
 
     public func updateCheckoutModel(token: Token) {
