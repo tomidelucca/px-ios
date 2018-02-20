@@ -87,7 +87,8 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
 
         })
-        self.navigationController.pushViewController(issuerStep, animated: true)
+
+        self.pushViewController(viewController: issuerStep, animated: true)
     }
 
     func showPayerCostScreen() {
@@ -248,7 +249,7 @@ extension MercadoPagoCheckout {
                     self?.navigationController.popViewController(animated: true)
                 }
 
-                self.navigationController.pushViewController(financialInstitutionStep, animated: true)
+                self.pushViewController(viewController: financialInstitutionStep, animated: true)
             }
         }
     }
@@ -277,6 +278,6 @@ extension MercadoPagoCheckout {
             self?.navigationController.popViewController(animated: true)
         }
 
-        self.navigationController.pushViewController(entityTypeStep, animated: true)
+        self.pushViewController(viewController:entityTypeStep, animated: true)
     }
 }
