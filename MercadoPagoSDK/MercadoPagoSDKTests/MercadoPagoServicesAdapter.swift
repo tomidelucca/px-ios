@@ -15,6 +15,10 @@ open class MercadoPagoServicesAdapter: NSObject {
     init(servicePreference: ServicePreference? = nil) {
         super.init()
     }
+    
+    open func createCheckoutPreference(url: String, uri: String, bodyInfo: NSDictionary? = nil, callback: @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
+        callback(MockBuilder.buildCheckoutPreference())
+    }
 
     open func getCheckoutPreference(checkoutPreferenceId: String, callback : @escaping (CheckoutPreference) -> Void, failure: @escaping ((_ error: NSError) -> Void)) {
         callback(MockBuilder.buildCheckoutPreference())
