@@ -103,15 +103,21 @@ extension MercadoPagoCheckout {
             strongSelf.executeNextStep()
         })
 
+        weak var strongPayerCostViewController = payerCostStep
+
         payerCostStep.viewModel.couponCallback = {[weak self] (discount) in
             guard let strongSelf = self else {
                 return
             }
             strongSelf.viewModel.paymentData.discount = discount
-            payerCostStep.viewModel.discount = discount
 
             strongSelf.getPayerCosts(updateCallback: {
-                payerCostStep.updateDataSource(dataSource: (strongSelf.viewModel.payerCosts)!)
+
+                guard let payerCosts = strongSelf.viewModel.payerCosts, let payerCostViewController = strongPayerCostViewController else {
+                    return
+                }
+
+                payerCostViewController.updateDataSource(dataSource: payerCosts)
             })
 
         }
