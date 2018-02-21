@@ -7,7 +7,7 @@
 //
 
 import UIKit
-protocol InputComponentListener {
+protocol InputComponentListener: NSObjectProtocol {
     func textChangedIn(component: SimpleInputComponent)
 }
 
@@ -19,9 +19,9 @@ class SimpleInputComponent: UIView, PXComponent {
     let HORIZONTAL_MARGIN: CGFloat = 31.0
     var placeholder: String?
     var numeric: Bool = false
-    var textFieldDelegate: UITextFieldDelegate!
+    weak var textFieldDelegate: UITextFieldDelegate!
     var inputTextField: HoshiTextField!
-    var delegate: InputComponentListener?
+    weak var delegate: InputComponentListener?
     init(frame: CGRect, numeric: Bool = false, placeholder: String? = nil, textFieldDelegate: UITextFieldDelegate) {
         super.init(frame: frame)
         self.numeric = numeric
