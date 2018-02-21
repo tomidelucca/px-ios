@@ -53,8 +53,8 @@ open class PromoViewController: MercadoPagoUIViewController, UITableViewDataSour
 		self.tableView.dataSource = self
 
         if self.callback == nil {
-            self.callback = {
-                self.navigationController?.popViewController(animated: true)
+            self.callback = { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }
