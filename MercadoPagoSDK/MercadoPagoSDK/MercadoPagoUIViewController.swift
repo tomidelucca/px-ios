@@ -334,7 +334,9 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     deinit {
-        //print("\(String(describing: type(of: self))) dellocated" )
+        #if DEBUG
+            print("DEINIT - \(self)")
+        #endif
     }
 
 }
@@ -344,11 +346,6 @@ extension UINavigationController {
     override open var shouldAutorotate: Bool {
         return (self.viewControllers.count > 0 && self.viewControllers.last!.shouldAutorotate)
     }
-
-    //   override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-
-    //       return self.viewControllers.last!.supportedInterfaceOrientations
-    //  }
 
 }
 
