@@ -157,9 +157,12 @@ extension MercadoPagoCheckout {
                 }
         })
 
-        checkoutVC.callbackCancel = {
-            self.viewModel.readyToPay = false
-            self.navigationController.popViewController(animated: true)
+        checkoutVC.callbackCancel = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.viewModel.readyToPay = false
+            strongSelf.navigationController.popViewController(animated: true)
         }
 
         self.pushViewController(viewController: checkoutVC, animated: true)

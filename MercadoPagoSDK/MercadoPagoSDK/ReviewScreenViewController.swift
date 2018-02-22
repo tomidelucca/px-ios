@@ -14,8 +14,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
     
     var floatingConfirmButtonView: UIView!
-    var fixedButton: UIButton?
-    var floatingButton: UIButton?
+    weak var fixedButton: UIButton?
+    weak var floatingButton: UIButton?
 
     static let kNavBarOffset = CGFloat(-64.0)
     static let kDefaultNavBarOffset = CGFloat(0.0)
@@ -37,8 +37,8 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     @IBOutlet weak var checkoutTable: UITableView!
     
-    var floattingButton : PXContainedActionButtonView?
-    var cellButton : PXContainedActionButtonView?
+    weak var floattingButton : PXContainedActionButtonView?
+    weak var cellButton : PXContainedActionButtonView?
 
    public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackExit :@escaping (() -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "ReviewScreenViewController", bundle: MercadoPago.getBundle())
@@ -48,12 +48,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.callbackExit = callbackExit
         self.callbackConfirm = callbackConfirm
     }
-
+    
     private func initCommon() {
         MercadoPagoContext.clearPaymentKey()
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
+    
     override func trackInfo() {
         guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
             return
@@ -82,6 +83,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     var paymentEnabled = true
 
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        self.displayFloatingConfirmButton()
+    }
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideNavBar()
@@ -90,13 +96,10 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.navigationItem.rightBarButtonItem = nil
 
         self.displayBackButton()
-        self.displayFloatingConfirmButton()
         self.checkoutTable.dataSource = self
         self.checkoutTable.delegate = self
 
         self.registerAllCells()
-
-        
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -314,7 +317,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     
     func buildContainedButton() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: viewModel.reviewScreenPreference.getConfirmButtonText(), action: {
-            self.confirmPayment()
+            [weak self] in self?.confirmPayment()
         }))
         let containedButton = PXContainedActionButtonRenderer().render(component)
         PXLayout.setHeight(owner: containedButton, height: self.viewModel.getFloatingConfirmButtonHeight()).isActive = true
