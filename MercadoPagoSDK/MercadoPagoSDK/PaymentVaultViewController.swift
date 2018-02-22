@@ -51,7 +51,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     var bundle = MercadoPago.getBundle()
 
-    var titleSectionReference: PaymentVaultTitleCollectionViewCell!
+    var titleSectionReference: PaymentVaultTitleCollectionViewCell?
 
     fileprivate var tintColor = true
     fileprivate var loadingGroups = true
@@ -111,13 +111,11 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.registerAllCells()
 
         if callbackCancel == nil {
-            self.callbackCancel = {() -> Void in
-                if self.navigationController?.viewControllers[0] == self {
-                    self.dismiss(animated: true, completion: {
-
-                    })
+            self.callbackCancel = { [weak self] () -> Void in
+                if let targetVC = self?.navigationController?.viewControllers[0], let currentVC = self, targetVC == currentVC {
+                    self?.dismiss(animated: true, completion: {})
                 } else {
-                    self.navigationController!.popViewController(animated: true)
+                    self?.navigationController!.popViewController(animated: true)
                 }
             }
         } else {
@@ -188,10 +186,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     fileprivate func hideNavBarCallbackDisplayTitle() -> (() -> Void) {
-        return { () -> Void in
-            if self.titleSectionReference != nil {
-                self.titleSectionReference.fillCell()
-            }
+        return { [weak self] () -> Void in
+            self?.titleSectionReference?.fillCell()
         }
     }
 
@@ -220,8 +216,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     }
 
     override func getNavigationBarTitle() -> String {
-        if self.titleSectionReference != nil {
-            self.titleSectionReference.title.text = ""
+        if let cellRef = self.titleSectionReference {
+            cellRef.title.text = ""
         }
         return "¿Cómo quieres pagar?".localized
     }

@@ -54,12 +54,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
         self.titleCellHeight = 44
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-   //     self.title = ""
-
-    }
-
     override func loadMPStyles() {
         if self.navigationController != nil {
             self.navigationController?.navigationBar.tintColor = UIColor(red: 255, green: 255, blue: 255)
@@ -167,12 +161,14 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                     self.present(step, animated: false, completion: {})
                 }
             } else {
-                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { (coupon) in
+                let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email!, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { [weak self](coupon) in
                     let couponDataDict: [String: DiscountCoupon] = ["coupon": coupon]
 
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "MPSDK_UpdateCoupon"), object: nil, userInfo: couponDataDict)
 
-                    if let updateMercadoPagoCheckout = self.viewModel.couponCallback {
+                    self?.viewModel.discount = coupon
+
+                    if let updateMercadoPagoCheckout = self?.viewModel.couponCallback {
                         updateMercadoPagoCheckout(coupon)
                     }
                 })
@@ -207,7 +203,6 @@ open class AdditionalStepViewController: MercadoPagoUIScrollViewController, UITa
                 }
             }
         }
-
     }
 
     override func getNavigationBarTitle() -> String {
