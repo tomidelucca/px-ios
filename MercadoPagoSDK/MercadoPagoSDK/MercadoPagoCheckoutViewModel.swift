@@ -40,6 +40,7 @@ public enum CheckoutStep: String {
     case SCREEN_PAYMENT_METHOD_PLUGIN_CONFIG
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
     case SCREEN_PAYMENT_PLUGIN_PAYMENT
+    case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
 }
 
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
@@ -104,6 +105,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
+    var initPaymentMethodPlugins = true
 
     // Payment plguin
     var paymentPlugin: PXPaymentPluginComponent?
@@ -380,6 +382,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if needValidatePreference() {
             preferenceValidated = true
             return .ACTION_VALIDATE_PREFERENCE
+        }
+
+        if needToInitPaymentMethodPlugins() {
+
         }
 
         if needSearch() {
