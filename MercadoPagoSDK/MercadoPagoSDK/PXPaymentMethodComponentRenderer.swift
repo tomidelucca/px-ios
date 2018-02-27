@@ -107,18 +107,18 @@ class PXPaymentMethodComponentRenderer: NSObject {
         }
         
         if let action = component.props.action {
-            let linkButton = PXSecondaryButton()
-            linkButton.translatesAutoresizingMaskIntoConstraints = false
-            linkButton.setTitle(action.label, for: .normal)
-            linkButton.add(for: .touchUpInside, action.action)
-            pmBodyView.actionButton = linkButton
-            pmBodyView.addSubview(linkButton)
+            let actionButton = PXSecondaryButton()
+            actionButton.translatesAutoresizingMaskIntoConstraints = false
+            actionButton.setTitle(action.label, for: .normal)
+            actionButton.add(for: .touchUpInside, action.action)
+            pmBodyView.actionButton = actionButton
+            pmBodyView.addSubview(actionButton)
             
-            pmBodyView.putOnBottomOfLastView(view: linkButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
+            pmBodyView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
             
-            PXLayout.pinLeft(view: linkButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.pinRight(view: linkButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
+            PXLayout.pinLeft(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinRight(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
             
         }
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
