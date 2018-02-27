@@ -75,8 +75,8 @@ extension MercadoPagoCheckout {
         } else {
             _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
             let plugin = plugins[index]
-            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance,{ success in
-                self.initPlugin(plugins: plugins, index: index - 1)
+            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance,{ [weak self] success in
+                self?.initPlugin(plugins: plugins, index: index - 1)
             })
         }
     }
@@ -92,6 +92,7 @@ extension MercadoPagoCheckout {
             }
 
             strongSelf.viewModel.updateCheckoutModel(paymentMethodSearch: paymentMethodSearch)
+            strongSelf.executeNextStep()
 
         }) { [weak self] (error) in
 
