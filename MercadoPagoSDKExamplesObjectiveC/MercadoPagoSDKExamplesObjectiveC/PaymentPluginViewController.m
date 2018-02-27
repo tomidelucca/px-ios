@@ -21,7 +21,8 @@
 }
 
 #pragma mark - Plugin implementation.
-- (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store {
+
+- (UIView * _Nullable)renderWithStore:(PXCheckoutStore * _Nonnull)store theme:(id<PXTheme> _Nonnull)theme {
     return self.view;
 }
 
