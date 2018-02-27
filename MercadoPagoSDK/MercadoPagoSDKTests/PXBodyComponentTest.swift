@@ -25,7 +25,7 @@ class PXBodyComponentTest: BaseTest {
         XCTAssertEqual(paymentMethodView.amountTitle?.text, "$ 1.000")
         XCTAssertEqual(paymentMethodView.amountDetail?.text, nil)
         XCTAssertEqual(paymentMethodView.paymentMethodDescription?.text?.localized, "visa " + "terminada en ".localized + "1234")
-        XCTAssertNil(paymentMethodView.paymentMethodDetail)
+        XCTAssertEqual(paymentMethodView.paymentMethodDetail?.text, "name")
         XCTAssertEqual(paymentMethodView.disclaimerLabel?.text?.localized, "En tu estado de cuenta verás el cargo como %0".localized.replacingOccurrences(of: "%0", with: "description"))
     }
 
