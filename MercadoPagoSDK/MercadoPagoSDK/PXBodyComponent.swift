@@ -76,7 +76,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         }
 
         // Issuer name is nil temporally
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: nil, disclaimer: disclaimerText)
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: pmDescription, paymentMethodDetail: nil, disclaimer: disclaimerText, action: nil)
 
         return PXPaymentMethodComponent(props: bodyProps)
     }
