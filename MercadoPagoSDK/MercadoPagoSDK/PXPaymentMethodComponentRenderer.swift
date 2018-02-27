@@ -13,6 +13,9 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
+    //Action Button
+    let BUTTON_HEIGHT: CGFloat = 34.0
+    
     let TITLE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
     let DETAIL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let PM_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
@@ -39,6 +42,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
         title.textColor = .pxBlack
         title.textAlignment = .center
+        title.numberOfLines = 0
         pmBodyView.putOnBottomOfLastView(view: title, withMargin: PXLayout.S_MARGIN)?.isActive = true
         PXLayout.pinLeft(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinRight(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
@@ -67,6 +71,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
             descriptionLabel.textColor = .pxBrownishGray
             descriptionLabel.textAlignment = .center
+            descriptionLabel.numberOfLines = 2
             pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
             PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
@@ -100,6 +105,22 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.pinLeft(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
             PXLayout.pinRight(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
         }
+        
+        if let action = component.props.action {
+            let linkButton = PXSecondaryButton()
+            linkButton.translatesAutoresizingMaskIntoConstraints = false
+            linkButton.setTitle(action.label, for: .normal)
+            linkButton.add(for: .touchUpInside, action.action)
+            pmBodyView.actionButton = linkButton
+            pmBodyView.addSubview(linkButton)
+            
+            pmBodyView.putOnBottomOfLastView(view: linkButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
+            
+            PXLayout.pinLeft(view: linkButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.pinRight(view: linkButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
+            PXLayout.setHeight(owner: linkButton, height: BUTTON_HEIGHT).isActive = true
+            
+        }
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
 
         return pmBodyView
@@ -113,4 +134,5 @@ class PXPaymentMethodView: PXBodyView {
     var paymentMethodDescription: UILabel?
     var paymentMethodDetail: UILabel?
     var disclaimerLabel: UILabel?
+    var actionButton: UIButton?
 }
