@@ -596,6 +596,8 @@
 		81760F361FD5965F00237A81 /* MercadoPagoPXTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */; };
 		819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88D92045CFB8001E9216 /* PXReviewViewController.swift */; };
 		819C88DB2045CFB8001E9216 /* PXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88D92045CFB8001E9216 /* PXReviewViewController.swift */; };
+		819C88DE2045DA5A001E9216 /* PXReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88DD2045DA5A001E9216 /* PXReviewViewModel.swift */; };
+		819C88DF2045DA5A001E9216 /* PXReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88DD2045DA5A001E9216 /* PXReviewViewModel.swift */; };
 		81ACC8141F9A88EF00206F7B /* PXLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* PXLayout.swift */; };
 		81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */; };
 		81ACC81C1F9A88F700206F7B /* PXResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */; };
@@ -1125,6 +1127,7 @@
 		816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCustomComponentContainer.swift; sourceTree = "<group>"; };
 		81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		819C88D92045CFB8001E9216 /* PXReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewViewController.swift; sourceTree = "<group>"; };
+		819C88DD2045DA5A001E9216 /* PXReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewViewModel.swift; sourceTree = "<group>"; };
 		81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyRenderer.swift; sourceTree = "<group>"; };
 		81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponent.swift; sourceTree = "<group>"; };
@@ -2246,6 +2249,7 @@
 			isa = PBXGroup;
 			children = (
 				819C88D92045CFB8001E9216 /* PXReviewViewController.swift */,
+				819C88DD2045DA5A001E9216 /* PXReviewViewModel.swift */,
 			);
 			name = Screen;
 			sourceTree = "<group>";
@@ -2988,6 +2992,7 @@
 				4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */,
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
 				4BB3ECE31FB37A8700AAFD38 /* URLConfigs.swift in Sources */,
+				819C88DE2045DA5A001E9216 /* PXReviewViewModel.swift in Sources */,
 				15AE1DB71F61BCEE00B0DAF8 /* TitleValueView.swift in Sources */,
 				FC6283F31FE1AC4A0002E93C /* PXComponentView.swift in Sources */,
 				4BDE2D451E37B4AC00C1D614 /* ServicePreference.swift in Sources */,
@@ -3166,6 +3171,7 @@
 				4BEFBF911F06BFB2003EA94E /* PayerCostCFTTableViewCell.swift in Sources */,
 				1510DF751FBF102D004B01C6 /* PXHeaderViewModelHelper.swift in Sources */,
 				813873801FA8DEB0002095D6 /* PXFooterRenderer.swift in Sources */,
+				819C88DF2045DA5A001E9216 /* PXReviewViewModel.swift in Sources */,
 				156A6DD01F6C7C9C00B17A20 /* SummaryTest.swift in Sources */,
 				FC3FC8741FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
 				0F9883801AD2AB6000F750F0 /* MerchantPayment.swift in Sources */,
