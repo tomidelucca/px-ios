@@ -594,6 +594,8 @@
 		816AB5B01FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */; };
 		816AB5B11FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */; };
 		81760F361FD5965F00237A81 /* MercadoPagoPXTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */; };
+		819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88D92045CFB8001E9216 /* PXReviewViewController.swift */; };
+		819C88DB2045CFB8001E9216 /* PXReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819C88D92045CFB8001E9216 /* PXReviewViewController.swift */; };
 		81ACC8141F9A88EF00206F7B /* PXLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC80D1F9A68D900206F7B /* PXLayout.swift */; };
 		81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8101F9A6A2800206F7B /* PXResultViewController.swift */; };
 		81ACC81C1F9A88F700206F7B /* PXResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8121F9A6A4700206F7B /* PXResultViewModel.swift */; };
@@ -1122,6 +1124,7 @@
 		815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptRenderer.swift; sourceTree = "<group>"; };
 		816AB5AF1FE967C80070A932 /* PXCustomComponentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCustomComponentContainer.swift; sourceTree = "<group>"; };
 		81760F371FD5965F00237A81 /* MercadoPagoPXTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MercadoPagoPXTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		819C88D92045CFB8001E9216 /* PXReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewViewController.swift; sourceTree = "<group>"; };
 		81ACC8081F9A68D800206F7B /* PXHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponent.swift; sourceTree = "<group>"; };
 		81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyRenderer.swift; sourceTree = "<group>"; };
 		81ACC80A1F9A68D900206F7B /* PXBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponent.swift; sourceTree = "<group>"; };
@@ -2239,6 +2242,14 @@
 			name = Receipt;
 			sourceTree = "<group>";
 		};
+		819C88DC2045CFDF001E9216 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				819C88D92045CFB8001E9216 /* PXReviewViewController.swift */,
+			);
+			name = Screen;
+			sourceTree = "<group>";
+		};
 		81ACC8071F9A647700206F7B /* Congrats */ = {
 			isa = PBXGroup;
 			children = (
@@ -2269,6 +2280,7 @@
 		81F090DF20177E1A008A69C1 /* ReviewAndConfirm */ = {
 			isa = PBXGroup;
 			children = (
+				819C88DC2045CFDF001E9216 /* Screen */,
 				81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */,
 				81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */,
 			);
@@ -2957,6 +2969,7 @@
 				534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */,
 				FCE865671F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift in Sources */,
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
+				819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */,
 				4BE51C201E2CFEC6004E5F7D /* DecorationPreference.swift in Sources */,
 				15DF3F831D6347BF0051C798 /* TextMaskFormater.swift in Sources */,
 				76943ED91D51405E00358442 /* InstructionsInfo.swift in Sources */,
@@ -3171,6 +3184,7 @@
 				0FC4FC401B0FB83700CF7148 /* PromosTyCViewController.swift in Sources */,
 				4BE2B16B1FCDDC5D007C58F2 /* HooksFlowTest.swift in Sources */,
 				7622E3231DF5EE3C00490C4E /* CountdownTimer.swift in Sources */,
+				819C88DB2045CFB8001E9216 /* PXReviewViewController.swift in Sources */,
 				FCAA97011E6A0E0D000612F6 /* AdditionalStepViewModel.swift in Sources */,
 				76EC47FC1C862A160086FA53 /* TokenTest.swift in Sources */,
 				4B4E231D1FFFF3E0007E8FDD /* PXCustomComponentTest.swift in Sources */,
