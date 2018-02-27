@@ -29,12 +29,3 @@ class PXFooterProps: NSObject {
         self.primaryColor = primaryColor
     }
 }
-
-class PXComponentAction: NSObject {
-    var label: String
-    var action : (() -> Void)
-    init(label: String, action:  @escaping (() -> Void)) {
-        self.label = label
-        self.action = action
-    }
-}
