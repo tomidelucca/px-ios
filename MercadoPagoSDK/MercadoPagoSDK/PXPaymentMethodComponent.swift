@@ -35,7 +35,7 @@ class PXPaymentMethodProps: NSObject {
     var disclaimer: String?
     var action: PXComponentAction?
 
-    public init(paymentMethodIcon: UIImage?, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?, action: PXComponentAction?) {
+    public init(paymentMethodIcon: UIImage?, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?, action: PXComponentAction? = nil) {
         self.paymentMethodIcon = paymentMethodIcon
         self.amountTitle = amountTitle
         self.amountDetail = amountDetail

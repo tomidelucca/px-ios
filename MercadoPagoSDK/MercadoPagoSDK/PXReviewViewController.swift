@@ -56,5 +56,48 @@ extension PXReviewViewController {
         for constraint in contentView.constraints {
             constraint.isActive = false
         }
+        
+        //Add Payment Method
+        let paymentMethodView = self.buildPaymentMethodView()
+        contentView.addSubview(paymentMethodView)
+        PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
+        PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+    }
+}
+// MARK: Create Components
+extension PXReviewViewController {
+    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        }
+        return paymentMethodImage
+    }
+    
+    func buildPaymentMethodView() -> UIView {
+        let pm = self.viewModel.paymentData!.paymentMethod!
+        
+        let image = getPaymentMethodIcon(paymentMethod: pm)
+        var amountTitle = ""
+        let paymentMethodName = pm.name ?? ""
+        
+        if pm.isCard {
+            if let lastFourDigits = (self.viewModel.paymentData.token?.lastFourDigits) {
+                amountTitle = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+            }
+        } else {
+            amountTitle = paymentMethodName
+        }
+        
+        var action = PXComponentAction(label: "Hola pulpo") {
+            print("boton tocado")
+        }
+        var amountDetail = "HSBC"
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: action)
+        
+        return PXPaymentMethodComponent(props: bodyProps).render()
     }
 }
