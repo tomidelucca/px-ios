@@ -44,7 +44,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController = navigationController
 
         if self.navigationController.viewControllers.count > 0 {
-            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:ReviewScreenViewController.self)
+            let  newNavigationStack = self.navigationController.viewControllers.filter {!$0.isKind(of:MercadoPagoUIViewController.self) || $0.isKind(of:PXReviewViewController.self)
             }
             viewControllerBase = newNavigationStack.last
         }
@@ -208,12 +208,8 @@ open class MercadoPagoCheckout: NSObject {
 
     public func updateReviewAndConfirm() {
         let currentViewController = self.navigationController.viewControllers
-        if let checkoutVC = currentViewController.last as? ReviewScreenViewController {
-            checkoutVC.showNavBar()
-            checkoutVC.viewModel = viewModel.checkoutViewModel()
-            if let checkoutTable = checkoutVC.checkoutTable {
-                checkoutTable.reloadData()
-            }
+        if let checkoutVC = currentViewController.last as? PXReviewViewController {
+            checkoutVC.update(viewModel:self.viewModel.checkoutViewModel())
         }
     }
 
