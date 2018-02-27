@@ -105,7 +105,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     // Plugins payment method.
     var paymentMethodPlugins = [PXPaymentMethodPlugin]()
     var paymentMethodPluginsToShow = [PXPaymentMethodPlugin]()
-    var initPaymentMethodPlugins = true
+    var needPaymentMethodPluginInit = true
 
     // Payment plguin
     var paymentPlugin: PXPaymentPluginComponent?
@@ -385,7 +385,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         }
 
         if needToInitPaymentMethodPlugins() {
-
+            return .SERVICE_PAYMENT_METHOD_PLUGIN_INIT
         }
 
         if needSearch() {

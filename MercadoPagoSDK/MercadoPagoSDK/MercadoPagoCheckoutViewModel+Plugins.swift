@@ -69,7 +69,10 @@ extension MercadoPagoCheckoutViewModel {
         return needToCreatePayment()
     }
 
-    func needToInitPaymentMethodPlugins() {
-        
+    func needToInitPaymentMethodPlugins() -> Bool {
+        if paymentMethodPlugins.isEmpty {
+            return false
+        }
+        return needPaymentMethodPluginInit
     }
 }
