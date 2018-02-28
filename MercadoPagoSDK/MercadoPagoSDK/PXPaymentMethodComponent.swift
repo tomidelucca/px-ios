@@ -9,6 +9,7 @@
 import UIKit
 
 public class PXPaymentMethodComponent: NSObject, PXComponentizable {
+    
     var props: PXPaymentMethodProps
 
     init(props: PXPaymentMethodProps) {
@@ -27,6 +28,7 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 }
 
 class PXPaymentMethodProps: NSObject {
+    
     var paymentMethodIcon: UIImage?
     var amountTitle: String
     var amountDetail: String?

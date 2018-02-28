@@ -11,14 +11,14 @@ import MercadoPagoPXTracking
 
 class PXReviewViewController: PXComponentContainerViewController {
     
-    //MARK: Tracking
+    // MARK: Tracking
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
-    //MARK: Definitions
+    // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
     
-    //MARK: Lifecycle - Publics
+    // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel) {
         super.init()
         self.viewModel = viewModel
@@ -35,6 +35,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     }
     
     func update(viewModel:PXReviewViewModel) {
+        // TODO: Implement reactive UI on viewModel didSet.
         self.viewModel = viewModel
     }
 }
@@ -43,62 +44,39 @@ class PXReviewViewController: PXComponentContainerViewController {
 extension PXReviewViewController {
     
     fileprivate func setupUI() {
-        renderViews()
         scrollView.backgroundColor = .white
         setNavBarBackgroundColor(color: .white)
-        navBarTextColor = .primaryColor() // TODO: Replace with Theme.
+        renderViews()
     }
     
     fileprivate func renderViews() {
         
-        for view in contentView.subviews {
-            view.removeFromSuperview()
+        if contentView.subviews.isEmpty {
+           
+            for view in contentView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            for constraint in contentView.constraints {
+                constraint.isActive = false
+            }
+            
+            addPaymentMethodComponent()
         }
-        for constraint in contentView.constraints {
-            constraint.isActive = false
+    }
+    
+    fileprivate func addPaymentMethodComponent() {
+        
+        let action = PXComponentAction(label: "Action label") {
+            print("Action called")
         }
         
-        // Add Payment Method
-        let paymentMethodView = self.buildPaymentMethodView()
+        let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)
+       
+        let paymentMethodView = paymentMethodComponent.render()
         contentView.addSubview(paymentMethodView)
         PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
         PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
         PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-    }
-}
-// MARK: Create Components
-extension PXReviewViewController {
-    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
-        // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
-            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
-        }
-        return paymentMethodImage
-    }
-    
-    func buildPaymentMethodView() -> UIView {
-        let pm = self.viewModel.paymentData!.paymentMethod!
-        
-        let image = getPaymentMethodIcon(paymentMethod: pm)
-        var amountTitle = ""
-        let paymentMethodName = pm.name ?? ""
-        
-        if pm.isCard {
-            if let lastFourDigits = (self.viewModel.paymentData.token?.lastFourDigits) {
-                amountTitle = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
-            }
-        } else {
-            amountTitle = paymentMethodName
-        }
-        
-        let action = PXComponentAction(label: "Hola pulpo") {
-            print("boton tocado")
-        }
-        let amountDetail = "HSBC"
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: action)
-        
-        return PXPaymentMethodComponent(props: bodyProps).render()
     }
 }

@@ -19,6 +19,7 @@ final class PXReviewViewModel: NSObject {
     var discount: DiscountCoupon?
     
     var reviewScreenPreference: ReviewScreenPreference!
+    
     var summaryComponent: SummaryComponent!
     
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
@@ -176,6 +177,43 @@ extension PXReviewViewModel {
         }
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
+    }
+}
+
+// MARK: - Components builders.
+extension PXReviewViewModel {
+    
+    func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent {
+        
+        let pm = paymentData!.paymentMethod!
+        
+        let image = buildPaymentMethodIcon(paymentMethod: pm)
+        var amountTitle = ""
+        let paymentMethodName = pm.name ?? ""
+        
+        if pm.isCard {
+            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+                amountTitle = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+            }
+        } else {
+            amountTitle = paymentMethodName
+        }
+        
+        let amountDetail = "HSBC"
+        
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
+        
+        return PXPaymentMethodComponent(props: bodyProps)
+    }
+    
+    fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        }
+        return paymentMethodImage
     }
 }
 
