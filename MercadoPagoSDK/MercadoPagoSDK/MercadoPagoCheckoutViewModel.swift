@@ -244,9 +244,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation!, reason: reason)
     }
 
-    public func checkoutViewModel() -> CheckoutViewModel {
-        let checkoutViewModel = CheckoutViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
-        return checkoutViewModel
+    func reviewConfirmViewModel() -> PXReviewViewModel {
+        return PXReviewViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
     }
 
     func resultViewModel() -> PXResultViewModel {

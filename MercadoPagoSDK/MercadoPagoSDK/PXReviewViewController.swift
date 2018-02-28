@@ -16,10 +16,10 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
     //MARK: Definitions
-    fileprivate var viewModel: CheckoutViewModel!
+    fileprivate var viewModel: PXReviewViewModel!
     
     //MARK: Lifecycle - Publics
-    init(viewModel: CheckoutViewModel) {
+    init(viewModel: PXReviewViewModel) {
         super.init()
         self.viewModel = viewModel
     }
@@ -34,7 +34,7 @@ class PXReviewViewController: PXComponentContainerViewController {
         setupUI()
     }
     
-    func update(viewModel:CheckoutViewModel) {
+    func update(viewModel:PXReviewViewModel) {
         self.viewModel = viewModel
     }
 }
@@ -50,6 +50,7 @@ extension PXReviewViewController {
     }
     
     fileprivate func renderViews() {
+        
         for view in contentView.subviews {
             view.removeFromSuperview()
         }
@@ -57,7 +58,7 @@ extension PXReviewViewController {
             constraint.isActive = false
         }
         
-        //Add Payment Method
+        // Add Payment Method
         let paymentMethodView = self.buildPaymentMethodView()
         contentView.addSubview(paymentMethodView)
         PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
@@ -92,10 +93,10 @@ extension PXReviewViewController {
             amountTitle = paymentMethodName
         }
         
-        var action = PXComponentAction(label: "Hola pulpo") {
+        let action = PXComponentAction(label: "Hola pulpo") {
             print("boton tocado")
         }
-        var amountDetail = "HSBC"
+        let amountDetail = "HSBC"
         let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: action)
         
         return PXPaymentMethodComponent(props: bodyProps).render()

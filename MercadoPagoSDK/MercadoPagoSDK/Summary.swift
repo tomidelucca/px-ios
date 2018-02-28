@@ -11,7 +11,7 @@ import UIKit
 class Summary: NSObject {
     var details: [SummaryType: SummaryDetail]
     var disclaimer: String?
-    var disclaimerColor: UIColor = UIColor.mpGreenishTeal()
+    var disclaimerColor: UIColor = UIColor.UIColorFromRGB(0x3bc280)
     var showSubitle: Bool = false
 
     init(details: [SummaryType: SummaryDetail]) {
@@ -35,5 +35,4 @@ class Summary: NSObject {
         }
         summaryDetail.details.append(detail)
     }
-
 }
