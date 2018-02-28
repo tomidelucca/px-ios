@@ -16,7 +16,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
     //Action Button
     let BUTTON_HEIGHT: CGFloat = 34.0
     
-    let TITLE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
+    let TITLE_FONT_SIZE: CGFloat = PXLayout.M_FONT
     let DETAIL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
     let PM_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
