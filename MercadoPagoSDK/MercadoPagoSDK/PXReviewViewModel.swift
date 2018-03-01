@@ -20,7 +20,7 @@ final class PXReviewViewModel: NSObject {
     
     var reviewScreenPreference: ReviewScreenPreference!
     
-    var summaryComponent: SummaryComponent!
+    var summaryComponent: PXSummaryComponentView!
     
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
@@ -31,7 +31,7 @@ final class PXReviewViewModel: NSObject {
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
         let screenWidth = UIScreen.main.bounds.width
-        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
+        self.summaryComponent = PXSummaryComponentView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
     }
 }
 

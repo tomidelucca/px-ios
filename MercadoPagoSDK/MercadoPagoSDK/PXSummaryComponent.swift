@@ -10,17 +10,13 @@ import Foundation
 
 class PXSummaryComponent: PXComponentizable {
     
+    var props: PXSummaryComponentProps
+    
     public func render() -> UIView {
         return PXSummaryComponentRenderer().render(self)
     }
     
-    var props: PXSummaryComponentProps
-    
     init(props: PXSummaryComponentProps) {
         self.props = props
     }
-}
-
-final class PXSummaryComponentProps : NSObject {
-    
 }
