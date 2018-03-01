@@ -10,12 +10,14 @@ import Foundation
 
 final class PXSummaryComponentProps : NSObject {
     
-    let summary: Summary
+    let width: CGFloat
+    let summaryViewModel: Summary
     let paymentData: PaymentData
     let totalAmount: Double
     
-    init(summary: Summary, paymentData: PaymentData, total: Double) {
-        self.summary = summary
+    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat) {
+        self.width = width
+        self.summaryViewModel = summaryViewModel
         self.paymentData = paymentData
         self.totalAmount = total
     }

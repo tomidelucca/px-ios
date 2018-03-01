@@ -9,6 +9,8 @@
 import Foundation
 
 class PXSummaryComponentView: UIView {
+
+    let summary: Summary!
     
     let SMALL_MARGIN_HEIGHT: CGFloat = 8.0
     let MEDIUM_MARGIN_HEIGHT: CGFloat = 12.0
@@ -20,13 +22,12 @@ class PXSummaryComponentView: UIView {
     let DISCLAIMER_HEIGHT: CGFloat = 20.0
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
     static let TOTAL_TITLE = "Total".localized
+    
     var requiredHeight: CGFloat = 0.0
     
-    let summary: Summary!
-    
-    init(frame: CGRect, summary: Summary, paymentData: PaymentData, totalAmount: Double) {
-        self.summary = summary
-        super.init(frame: frame)
+    init(width: CGFloat, summaryViewModel: Summary, paymentData: PaymentData, totalAmount: Double) {
+        self.summary = summaryViewModel
+        super.init(frame: CGRect(x: 0, y: 0, width: width, height: 0))
         self.addDetailsViews(typeDetailDictionary: summary.details)
         let payerCost = paymentData.payerCost
         if payerCost != nil && (payerCost?.installments)! > 1 {
@@ -56,25 +57,30 @@ class PXSummaryComponentView: UIView {
             self.addLargeMargin()
         }
         
+        self.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension PXSummaryComponentView {
+    
+    fileprivate func getHeight() -> CGFloat {
+        return requiredHeight
     }
     
     func shouldAddTotal() -> Bool {
         return self.summary.details.count > 1
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func getHeight() -> CGFloat {
-        return requiredHeight
-    }
-    
-    func getWeight() -> CGFloat {
-        return self.frame.size.width
+    func updateFrame() {
+        self.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: getHeight())
     }
     
     func addDetailsViews(typeDetailDictionary: [SummaryType: SummaryDetail]) {
+        
         for type in iterateEnum(SummaryType.self) {
             let frame = CGRect(x: 0.0, y: requiredHeight, width: self.frame.size.width, height: DETAILS_HEIGHT)
             if let detail = typeDetailDictionary[type] {

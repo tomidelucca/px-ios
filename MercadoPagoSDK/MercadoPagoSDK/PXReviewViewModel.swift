@@ -30,8 +30,6 @@ final class PXReviewViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
-        let screenWidth = UIScreen.main.bounds.width
-        self.summaryComponent = PXSummaryComponentView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
     }
 }
 
@@ -119,8 +117,10 @@ extension PXReviewViewModel {
         return frame
     }
     
-    func getValidSummary(amount: Double) -> Summary {
+    func getSummaryViewModel(amount: Double) -> Summary {
+        
         var summary: Summary
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
@@ -214,6 +214,18 @@ extension PXReviewViewModel {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage
+    }
+    
+    func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
+        
+        var totalAmount: Double = 0
+        if let tAmount = self.preference?.getAmount() {
+            totalAmount = tAmount
+        }
+        
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width)
+        
+        return PXSummaryComponent(props: props)
     }
 }
 

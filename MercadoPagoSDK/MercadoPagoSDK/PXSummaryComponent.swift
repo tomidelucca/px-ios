@@ -8,15 +8,30 @@
 
 import Foundation
 
-class PXSummaryComponent: PXComponentizable {
+final class PXSummaryComponent: PXComponentizable {
+
+    var reusableView: UIView?
     
-    var props: PXSummaryComponentProps
-    
-    public func render() -> UIView {
-        return PXSummaryComponentRenderer().render(self)
+    var props: PXSummaryComponentProps {
+        didSet {
+            redrawRender()
+        }
     }
     
     init(props: PXSummaryComponentProps) {
         self.props = props
+    }
+    
+    public func render() -> UIView {
+        guard let dequeueReusableView = reusableView else {
+            return PXSummaryComponentRenderer().render(self)
+        }
+        return dequeueReusableView
+    }
+}
+
+extension PXSummaryComponent {
+    fileprivate func redrawRender() {
+        reusableView = PXSummaryComponentRenderer().render(self)
     }
 }

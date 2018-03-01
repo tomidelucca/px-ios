@@ -9,15 +9,17 @@
 import UIKit
 
 class PayerCostView: UIView, PXComponent {
-    private let VERTICAL_MARGIN: CGFloat = 2.0
-    private let HORIZONTAL_MARGIN: CGFloat = 24.0
-    private let INTER_MARGIN: CGFloat = 10.0
-    private let TITLE_WIDTH_PERCENT: CGFloat = 0.5
-    private let VALUE_WIDTH_PERCENT: CGFloat = 0.5
-    static private let TITLE_FONT_SIZE: CGFloat = PXLayout.S_FONT
-    static private let VALUE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
-    static private let NO_INTEREST_TEXT =  "Sin interés".localized
-    static private let PAY_TEXT =  "Pagas".localized
+    
+    fileprivate let VERTICAL_MARGIN: CGFloat = 2.0
+    fileprivate let HORIZONTAL_MARGIN: CGFloat = 24.0
+    fileprivate let INTER_MARGIN: CGFloat = 10.0
+    fileprivate let TITLE_WIDTH_PERCENT: CGFloat = 0.5
+    fileprivate let VALUE_WIDTH_PERCENT: CGFloat = 0.5
+    
+    static fileprivate let TITLE_FONT_SIZE: CGFloat = PXLayout.S_FONT
+    static fileprivate let VALUE_FONT_SIZE: CGFloat = PXLayout.XL_FONT
+    static fileprivate let NO_INTEREST_TEXT =  "Sin interés".localized
+    static fileprivate let PAY_TEXT =  "Pagas".localized
 
     var noRateLabel: UILabel!
     var purchaseDetailTitle: UILabel!
@@ -67,18 +69,22 @@ class PayerCostView: UIView, PXComponent {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+extension PayerCostView {
+    
     func getHeight() -> CGFloat {
         return self.requiredHeight
     }
+    
     func getWeight() -> CGFloat {
         return self.frame.size.width
     }
-
-    private func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
+    
+    fileprivate func getInstallmentsAmount(payerCost: PayerCost) -> NSAttributedString {
         return Utils.getTransactionInstallmentsDescription(payerCost.installments.description, currency: MercadoPagoContext.getCurrency(), installmentAmount: payerCost.installmentAmount, color: ThemeManager.shared.getTheme().boldLabelTintColor(), fontSize : PayerCostView.VALUE_FONT_SIZE, baselineOffset : 8)
     }
-
+    
     func adjustViewFrames() {
         let frameTitle = self.purchaseDetailTitle.frame
         let frameAmount = self.purchaseDetailAmount.frame
@@ -87,11 +93,10 @@ class PayerCostView: UIView, PXComponent {
         self.purchaseDetailAmount.frame = CGRect(x: getWeight() - self.purchaseDetailAmount.frame.size.width - HORIZONTAL_MARGIN, y: frameAmount.origin.y, width: self.purchaseDetailAmount.frame.size.width, height: self.purchaseDetailAmount.frame.size.height)
         self.purchaseDetailTitle.frame =  CGRect(x: frameTitle.origin.x, y: frameTitle.origin.y, width: frameTitle.size.width, height: self.purchaseDetailAmount.frame.size.height)
         self.requiredHeight = self.purchaseDetailAmount.frame.size.height + 2 * VERTICAL_MARGIN
-
+        
         if self.noRateLabel != nil {
-            self.noRateLabel.frame = CGRect(x: self.purchaseDetailAmount.frame.origin.x, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: self.purchaseDetailAmount.frame.size.width, height: self.noRateLabel.requiredHeight() )
+            self.noRateLabel.frame = CGRect(x: -HORIZONTAL_MARGIN, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: self.frame.width, height: self.noRateLabel.requiredHeight())
             self.requiredHeight = self.requiredHeight + VERTICAL_MARGIN + self.noRateLabel.requiredHeight()
         }
     }
-
 }
