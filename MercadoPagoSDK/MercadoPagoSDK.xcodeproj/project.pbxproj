@@ -301,6 +301,8 @@
 		4B2AF5861EEF060D00925644 /* PaymentVaultTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766EE1BC1DDE232A00A4FBB3 /* PaymentVaultTitleCollectionViewCell.swift */; };
 		4B34DC3D1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */; };
 		4B40DAB01E3781EB00B65B9D /* FlowPreferenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */; };
+		4B48541C204825C0001C0921 /* PXItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B48541B204825C0001C0921 /* PXItemComponent.swift */; };
+		4B48541E204825D1001C0921 /* PXItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B48541D204825D1001C0921 /* PXItemRenderer.swift */; };
 		4B4E230D1FFFBB89007E8FDD /* PaymentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1CA5941FFE94BC00F576AA /* PaymentStatus.swift */; };
 		4B4E23101FFFE0AC007E8FDD /* PXResultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E230F1FFFE0AC007E8FDD /* PXResultConstants.swift */; };
 		4B4E23111FFFE5D4007E8FDD /* PXResultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E230F1FFFE0AC007E8FDD /* PXResultConstants.swift */; };
@@ -950,6 +952,8 @@
 		4B2AF5831EEB8F1400925644 /* CardsAdminViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsAdminViewControllerTest.swift; sourceTree = "<group>"; };
 		4B34DC3C1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentResultScreenPreferenceTest.swift; sourceTree = "<group>"; };
 		4B40DAAF1E3781EB00B65B9D /* FlowPreferenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowPreferenceTest.swift; sourceTree = "<group>"; };
+		4B48541B204825C0001C0921 /* PXItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXItemComponent.swift; sourceTree = "<group>"; };
+		4B48541D204825D1001C0921 /* PXItemRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXItemRenderer.swift; sourceTree = "<group>"; };
 		4B4E230F1FFFE0AC007E8FDD /* PXResultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultConstants.swift; sourceTree = "<group>"; };
 		4B4E23141FFFEBAC007E8FDD /* PXBodyComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBodyComponentTest.swift; sourceTree = "<group>"; };
 		4B4E23161FFFF182007E8FDD /* PXHeaderComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXHeaderComponentTest.swift; sourceTree = "<group>"; };
@@ -1832,6 +1836,15 @@
 			name = Constants;
 			sourceTree = "<group>";
 		};
+		4B48541A20482588001C0921 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				4B48541B204825C0001C0921 /* PXItemComponent.swift */,
+				4B48541D204825D1001C0921 /* PXItemRenderer.swift */,
+			);
+			name = Item;
+			sourceTree = "<group>";
+		};
 		4B4E23121FFFEB84007E8FDD /* Result */ = {
 			isa = PBXGroup;
 			children = (
@@ -2353,6 +2366,7 @@
 			isa = PBXGroup;
 			children = (
 				235A3267204B410A002D1F54 /* Title */,
+				4B48541A20482588001C0921 /* Item */,
 				231AE26E20472B3F00CB87CF /* Summary */,
 				235A3277204D6CBE002D1F54 /* TermsAndConditions */,
 				235A3275204D662D002D1F54 /* FloatingButton */,
@@ -3030,6 +3044,7 @@
 				0F9883751AD2AB6000F750F0 /* Identification.swift in Sources */,
 				FCAA97001E6A0E0D000612F6 /* AdditionalStepViewModel.swift in Sources */,
 				4BEFBF8F1F06BB20003EA94E /* PayerCostCFTTableViewCell.swift in Sources */,
+				4B48541C204825C0001C0921 /* PXItemComponent.swift in Sources */,
 				4B4E2327200062F5007E8FDD /* PXReceiptViewModelHelper.swift in Sources */,
 				FCAD2BE51E96E1370087D943 /* AdditionalStepCellFactory.swift in Sources */,
 				81ACC81C1F9A88F700206F7B /* PXResultViewModel.swift in Sources */,
@@ -3130,6 +3145,7 @@
 				76FD24811C5BFEA1008C5DC0 /* CardFrontView.swift in Sources */,
 				23A07FCC20482FEB0074CB64 /* PXSummaryComponentProps.swift in Sources */,
 				FC2A09541FEC3EF2009EFDB0 /* PXPaymentMethodIconComponent.swift in Sources */,
+				4B48541E204825D1001C0921 /* PXItemRenderer.swift in Sources */,
 				76FD24791C5BFEA1008C5DC0 /* CardBackView.swift in Sources */,
 				15AE1DBE1F672FAE00B0DAF8 /* DisclaimerView.swift in Sources */,
 				235A326B204B4185002D1F54 /* PXReviewTitleComponentProps.swift in Sources */,

@@ -123,7 +123,7 @@ extension PXReviewViewController {
 
             // Add elastic header.
             addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
-            
+
             self.view.layoutIfNeeded()
             PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
             refreshContentViewSize()
@@ -137,7 +137,17 @@ extension PXReviewViewController {
         }
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
     }
-    
+
+    fileprivate func addItemComponent() {
+        let itemComponent = viewModel.buildItemComponent()
+        let itemView = itemComponent.render()
+        contentView.addSubview(itemView)
+
+        PXLayout.pinTop(view: itemView, to: contentView).isActive = true
+        PXLayout.centerHorizontally(view: itemView).isActive = true
+        PXLayout.matchWidth(ofView: itemView).isActive = true
+    }
+
     fileprivate func isConfirmButtonVisible() -> Bool {
         guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
             return false
