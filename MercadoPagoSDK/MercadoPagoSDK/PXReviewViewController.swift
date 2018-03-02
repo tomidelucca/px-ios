@@ -62,16 +62,17 @@ extension PXReviewViewController {
             }
             
             // Add components views.
-            
             let summaryView = getSummaryComponentView()
             contentView.addSubview(summaryView)
-            PXLayout.pinTop(view: summaryView, to: contentView).isActive = true
+            PXLayout.pinTop(view: summaryView, to: contentView, withMargin: 0).isActive = true
             PXLayout.centerHorizontally(view: summaryView).isActive = true
             PXLayout.matchWidth(ofView: summaryView).isActive = true
             
             let paymentMethodView = getPaymentMethodComponentView()
-            // contentView.addSubview(paymentMethodView)
-            // TODO: Create constraints. Bottom of Summary.
+            contentView.addSubview(paymentMethodView)
+            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+            PXLayout.put(view: paymentMethodView, onBottomOf: summaryView, withMargin: 0).isActive = true
+            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
         }
     }
     
@@ -88,10 +89,8 @@ extension PXReviewViewController {
     }
     
     fileprivate func getSummaryComponentView() -> UIView {
-        let summaryComponent = viewModel.buildSummaryComponent(width: UIScreen.main.bounds.width)
-        
+        let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
         let summaryView = summaryComponent.render()
-        
         return summaryView
     }
 }

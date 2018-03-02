@@ -1,5 +1,5 @@
 //
-//  PXSummaryComponentView.swift
+//  PXSummaryFullComponentView.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 1/3/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXSummaryComponentView: UIView {
+class PXSummaryFullComponentView: PXComponentView {
 
     let summary: Summary!
     
@@ -25,9 +25,10 @@ class PXSummaryComponentView: UIView {
     
     var requiredHeight: CGFloat = 0.0
     
-    init(width: CGFloat, summaryViewModel: Summary, paymentData: PaymentData, totalAmount: Double) {
+    init(width: CGFloat, summaryViewModel: Summary, paymentData: PaymentData, totalAmount: Double, backgroundColor: UIColor) {
         self.summary = summaryViewModel
-        super.init(frame: CGRect(x: 0, y: 0, width: width, height: 0))
+        super.init()
+        self.frame = CGRect(x: 0, y: 0, width: width, height: 0)
         self.addDetailsViews(typeDetailDictionary: summary.details)
         let payerCost = paymentData.payerCost
         if payerCost != nil && (payerCost?.installments)! > 1 {
@@ -57,7 +58,7 @@ class PXSummaryComponentView: UIView {
             self.addLargeMargin()
         }
         
-        self.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        self.backgroundColor = backgroundColor
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,7 +66,7 @@ class PXSummaryComponentView: UIView {
     }
 }
 
-extension PXSummaryComponentView {
+extension PXSummaryFullComponentView {
     
     fileprivate func getHeight() -> CGFloat {
         return requiredHeight
@@ -98,7 +99,7 @@ extension PXSummaryComponentView {
     
     func addTotalView(totalAmount: Double) {
         let frame = CGRect(x: 0.0, y: requiredHeight, width: self.frame.size.width, height: DETAILS_HEIGHT)
-        let titleValueView = TitleValueView(frame: frame, titleText: PXSummaryComponentView.TOTAL_TITLE, valueDouble: totalAmount, valueEnable: true)
+        let titleValueView = TitleValueView(frame: frame, titleText: PXSummaryFullComponentView.TOTAL_TITLE, valueDouble: totalAmount, valueEnable: true)
         requiredHeight = requiredHeight + titleValueView.getHeight()
         self.addSubview(titleValueView)
     }

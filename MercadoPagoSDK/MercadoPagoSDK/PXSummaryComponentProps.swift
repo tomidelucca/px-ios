@@ -14,11 +14,17 @@ final class PXSummaryComponentProps : NSObject {
     let summaryViewModel: Summary
     let paymentData: PaymentData
     let totalAmount: Double
+    let customTitle: String?
+    let textColor: UIColor
+    let backgroundColor: UIColor
     
-    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat) {
+    init(summaryViewModel: Summary, paymentData: PaymentData, total: Double, width: CGFloat, customTitle: String?, textColor: UIColor, backgroundColor: UIColor) {
         self.width = width
         self.summaryViewModel = summaryViewModel
         self.paymentData = paymentData
         self.totalAmount = total
+        self.customTitle = customTitle
+        self.textColor = textColor
+        self.backgroundColor = backgroundColor
     }
 }

@@ -20,8 +20,6 @@ final class PXReviewViewModel: NSObject {
     
     var reviewScreenPreference: ReviewScreenPreference!
     
-    var summaryComponent: PXSummaryComponentView!
-    
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
@@ -219,11 +217,13 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
         
         var totalAmount: Double = 0
+        
         if let tAmount = self.preference?.getAmount() {
             totalAmount = tAmount
         }
         
-        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width)
+        let customTitle = preference?.items.first?.title
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         
         return PXSummaryComponent(props: props)
     }
