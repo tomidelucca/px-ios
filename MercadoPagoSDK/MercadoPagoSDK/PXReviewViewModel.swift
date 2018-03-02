@@ -203,11 +203,31 @@ extension PXReviewViewModel {
         return PXPaymentMethodComponent(props: props)
     }
 
-    func buildItemComponent() -> PXItemComponent {
-        let item: Item! = self.preference?.items[0]
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: item.title, description: item._description, quantity: item.quantity, unitAmount: item.unitPrice)
+    func buildItemComponents() -> [PXItemComponent] {
+        var pxItemComponents = [PXItemComponent]()
+        for item in self.preference!.items {
+            item._description = "bla bla "
+            if !String.isNullOrEmpty(item._description) {
+                let itemComponent: PXItemComponent = buildItemComponent(item: item)
+                pxItemComponents.append(itemComponent)
+            }
+        }
+        return pxItemComponents
+    }
+
+    fileprivate func shouldShowQuantityAndPrice(item: Item) -> Bool {
+        return preference!.items.count > 1 || item.quantity > 1
+    }
+
+    fileprivate func buildItemComponent(item: Item) -> PXItemComponent {
+        if  !shouldShowQuantityAndPrice(item: item) {
+            item.unitPrice = nil
+            item.quantity = nil
+        }
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, description: item._description, quantity: item.quantity, unitAmount: item.unitPrice)
         return PXItemComponent(props: itemProps)
     }
+
     
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue

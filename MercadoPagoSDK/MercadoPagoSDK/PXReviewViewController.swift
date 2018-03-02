@@ -19,10 +19,12 @@ class PXReviewViewController: PXComponentContainerViewController {
     var footerView : UIView!
     var floatingButtonView : UIView!
     var termsConditionView: PXTermsAndConditionView!
+    var itemViews: [UIView]!
     fileprivate var viewModel: PXReviewViewModel!
 
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
+
     
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
@@ -58,6 +60,7 @@ extension PXReviewViewController {
     
     fileprivate func renderViews() {
         if contentView.subviews.isEmpty {
+
             for view in contentView.subviews {
                 view.removeFromSuperview()
             }
@@ -77,6 +80,15 @@ extension PXReviewViewController {
             PXLayout.put(view: summaryView, onBottomOf: titleView, withMargin: 0).isActive = true
             PXLayout.centerHorizontally(view: summaryView).isActive = true
             PXLayout.matchWidth(ofView: summaryView).isActive = true
+
+            // Add item views
+            itemViews = buildItemComponents()
+            for itemView in itemViews {
+                contentView.addSubview(itemView)
+                PXLayout.pinTop(view: itemView, to: contentView).isActive = true
+                PXLayout.centerHorizontally(view: itemView).isActive = true
+                PXLayout.matchWidth(ofView: itemView).isActive = true
+            }
             
             // Add payment method view.
             let paymentMethodView = getPaymentMethodComponentView()
@@ -113,7 +125,7 @@ extension PXReviewViewController {
                 PXLayout.put(view: termsConditionView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
                 termsConditionView.delegate = self
             }
-            
+
             // Add floating button
             floatingButtonView = getFloatingButtonView()
             view.addSubview(floatingButtonView)
@@ -138,14 +150,18 @@ extension PXReviewViewController {
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
     }
 
-    fileprivate func addItemComponent() {
-        let itemComponent = viewModel.buildItemComponent()
-        let itemView = itemComponent.render()
-        contentView.addSubview(itemView)
+}
+// MARK: Component Builders
+extension PXReviewViewController {
+    fileprivate func buildItemComponents() -> [UIView] {
+        var itemViews = [UIView]()
+        let itemComponents = viewModel.buildItemComponents()
+        for items in itemComponents {
+            itemViews.append(items.render())
+        }
 
-        PXLayout.pinTop(view: itemView, to: contentView).isActive = true
-        PXLayout.centerHorizontally(view: itemView).isActive = true
-        PXLayout.matchWidth(ofView: itemView).isActive = true
+
+        return itemViews
     }
 
     fileprivate func isConfirmButtonVisible() -> Bool {

@@ -20,40 +20,65 @@ class PXItemComponent: PXComponentizable {
         self.props = props
     }
 
-    func getTitle() -> String? {
-        return props.title
+    func shouldShowDescription() -> Bool {
+        return !String.isNullOrEmpty(props.description)
     }
 
     func getDescription() -> String? {
         return props._description
     }
 
-    func getQuantity() -> String? {
-        if let quantity = props.quantity?.stringValue {
-            return "Cantidad: \(quantity)"
+    func shouldShowQuantity() -> Bool {
+        if !props.reviewScreenPreference.shouldShowQuantityRow {
+            return false
         }
-        return nil
+
+        if let quantity = props.quantity {
+            return quantity > 0
+        }
+        return false
     }
 
-    func getUnitAmount() -> String? {
-        return "Precio unitario: 20 balbal kalb albsalsba lbla dasdbal asfd,a asdasfa "
+    func getQuantity() -> String? {
+        guard let quantity = props.quantity?.stringValue else  {
+            return nil
+        }
+        return "\(props.reviewScreenPreference.getQuantityTitle()) \(quantity)"
+    }
+
+    func shouldShowUnitAmount() -> Bool {
+        if !props.reviewScreenPreference.shouldShowAmountTitle {
+            return false
+        }
+        return props.unitAmount != nil
+    }
+
+    func getUnitAmountTitle() -> String? {
+        return props.reviewScreenPreference.getAmountTitle()
+    }
+
+    func getUnitAmountPrice() -> Double? {
+        guard let unitAmount = props.unitAmount else {
+            return nil
+        }
+        return unitAmount
     }
 }
 
 final class PXItemComponentProps : NSObject {
     var imageURL: String?
-    var title: String?
     var _description: String?
     var quantity: Int?
     var unitAmount: Double?
+    var reviewScreenPreference: ReviewScreenPreference
 
 
-    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?) {
+    init(imageURL: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.imageURL = imageURL
-        self.title = title
         self._description = description
         self.quantity = quantity
         self.unitAmount = unitAmount
+        self.reviewScreenPreference = reviewScreenPreference
     }
 
 }
