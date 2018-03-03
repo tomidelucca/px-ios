@@ -61,13 +61,21 @@ extension PXReviewViewController {
                 constraint.isActive = false
             }
             
-            // Add components views.
+            // Add title view.
+            let titleView = getTitleComponentView()
+            contentView.addSubview(titleView)
+            PXLayout.pinTop(view: titleView, to: contentView, withMargin: 0).isActive = true
+            PXLayout.centerHorizontally(view: titleView).isActive = true
+            PXLayout.matchWidth(ofView: titleView).isActive = true
+            
+            // Add summary view.
             let summaryView = getSummaryComponentView()
             contentView.addSubview(summaryView)
-            PXLayout.pinTop(view: summaryView, to: contentView, withMargin: 0).isActive = true
+            PXLayout.put(view: summaryView, onBottomOf: titleView, withMargin: 0).isActive = true
             PXLayout.centerHorizontally(view: summaryView).isActive = true
             PXLayout.matchWidth(ofView: summaryView).isActive = true
             
+            // Add payment method view.
             let paymentMethodView = getPaymentMethodComponentView()
             contentView.addSubview(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
@@ -80,11 +88,8 @@ extension PXReviewViewController {
         let action = PXComponentAction(label: "Action label") {
             print("Action called")
         }
-        
         let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)
-       
         let paymentMethodView = paymentMethodComponent.render()
-        
         return paymentMethodView
     }
     
@@ -92,5 +97,10 @@ extension PXReviewViewController {
         let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
         let summaryView = summaryComponent.render()
         return summaryView
+    }
+    
+    fileprivate func getTitleComponentView() -> UIView {
+        let titleComponent = viewModel.buildTitleComponent()
+        return titleComponent.render()
     }
 }

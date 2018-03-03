@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DisclaimerView: UIView, PXComponent {
+final class DisclaimerView: UIView, PXComponent {
 
     fileprivate let VERTICAL_MARGIN: CGFloat = 2.0
     fileprivate let HORIZONTAL_MARGIN: CGFloat = 24.0

@@ -170,10 +170,13 @@ extension PXReviewViewModel {
     }
     
     func getDefaultSummary() -> Summary {
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
+        
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
+        
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
 }
@@ -199,9 +202,9 @@ extension PXReviewViewModel {
         
         let amountDetail = "HSBC"
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
         
-        return PXPaymentMethodComponent(props: bodyProps)
+        return PXPaymentMethodComponent(props: props)
     }
     
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
@@ -216,16 +219,27 @@ extension PXReviewViewModel {
     
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
         
+        var customTitle = "Productos".localized
         var totalAmount: Double = 0
         
         if let tAmount = self.preference?.getAmount() {
             totalAmount = tAmount
         }
         
-        let customTitle = preference?.items.first?.title
+        if let pref = preference, pref.items.count == 1 {
+            if let itemTitle = pref.items.first?.title {
+                customTitle = itemTitle
+            }
+        }
+        
         let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         
         return PXSummaryComponent(props: props)
+    }
+    
+    func buildTitleComponent() -> PXReviewTitleComponent {
+        let props = PXReviewTitleComponentProps(withTitle: "Revisa si está todo bien".localized, titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        return PXReviewTitleComponent(props: props)
     }
 }
 

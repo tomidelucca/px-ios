@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TitleValueView: UIView, PXComponent {
+final class TitleValueView: UIView, PXComponent {
 
     fileprivate let VERTICAL_MARGIN: CGFloat = 2.0
     fileprivate let HORIZONTAL_MARGIN: CGFloat = 24.0

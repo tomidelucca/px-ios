@@ -30,13 +30,11 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
         let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
-
     }
 
     private static func getTermsAndConditionsTextView() -> MPTextView {
         let textView = MPTextView()
         textView.isUserInteractionEnabled = true
-
         textView.attributedText = getTyCText()
         return textView
     }
@@ -66,7 +64,6 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
 
     static public func getCellHeight() -> CGFloat {
@@ -74,10 +71,8 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
         let textViewHeight = textView.contentSize.height
         return TermsAndConditionsViewCell.ROW_HEIGHT + textViewHeight
     }
-
 }
 
 protocol TermsAndConditionsDelegate {
-
     func openTermsAndConditions(_ title: String, url: URL)
 }

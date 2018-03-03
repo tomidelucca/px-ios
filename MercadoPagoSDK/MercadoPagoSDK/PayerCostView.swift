@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PayerCostView: UIView, PXComponent {
+final class PayerCostView: UIView, PXComponent {
     
     fileprivate let VERTICAL_MARGIN: CGFloat = 2.0
     fileprivate let HORIZONTAL_MARGIN: CGFloat = 24.0

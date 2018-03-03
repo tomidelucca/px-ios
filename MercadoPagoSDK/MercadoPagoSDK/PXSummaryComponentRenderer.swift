@@ -20,8 +20,8 @@ struct PXSummaryComponentRenderer {
 extension PXSummaryComponentRenderer {
     
     fileprivate func buildFullSummary(props:PXSummaryComponentProps) -> UIView {
-        let fullSummaryView = PXSummaryFullComponentView(width: props.width, summaryViewModel: props.summaryViewModel, paymentData: props.paymentData, totalAmount: props.totalAmount, backgroundColor: props.backgroundColor)
-        PXLayout.setHeight(owner: fullSummaryView, height: fullSummaryView.requiredHeight).isActive = true
+        let fullSummaryView = PXSummaryFullComponentView(width: props.width, summaryViewModel: props.summaryViewModel, paymentData: props.paymentData, totalAmount: props.totalAmount, backgroundColor: props.backgroundColor, customSummaryTitle: props.customTitle)
+        PXLayout.setHeight(owner: fullSummaryView, height: fullSummaryView.getHeight()).isActive = true
         return fullSummaryView
     }
     
@@ -29,19 +29,13 @@ extension PXSummaryComponentRenderer {
         
         let compactView = PXSummaryCompactComponentView()
         let BASELINE_OFFSET: Int = 10
-        let DEFAULT_TITLE = "Default title" //TODO: Check with UX default scenario/title.
         
         compactView.backgroundColor = props.backgroundColor
         compactView.translatesAutoresizingMaskIntoConstraints = false
         
         let amountAttributeText = Utils.getAttributedAmount(props.totalAmount, currency: MercadoPagoContext.getCurrency(), color : props.textColor, fontSize: PXLayout.XXXL_FONT, baselineOffset:BASELINE_OFFSET)
         
-        var customTitle = DEFAULT_TITLE
-        if let cTitle = props.customTitle {
-            customTitle = cTitle
-        }
-        
-        let customTitleAttributeText = NSAttributedString(string: customTitle, attributes: [NSFontAttributeName: Utils.getFont(size: PXLayout.XS_FONT)])
+        let customTitleAttributeText = NSAttributedString(string: props.customTitle, attributes: [NSFontAttributeName: Utils.getFont(size: PXLayout.XS_FONT)])
 
         let viewHeight = compactView.buildView(amountAttributeText: amountAttributeText, bottomCustomTitle: customTitleAttributeText, textColor: props.textColor, backgroundColor: props.backgroundColor)
         
