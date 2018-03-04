@@ -18,6 +18,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
     
+    fileprivate lazy var elasticHeader = UIView()
+    
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel) {
         super.init()
@@ -28,14 +30,18 @@ class PXReviewViewController: PXComponentContainerViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        scrollView.delegate = self
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.layoutIfNeeded()
         setupUI()
     }
     
-    func update(viewModel:PXReviewViewModel) {
-        // TODO: Implement reactive UI on viewModel didSet.
+    func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
 }
@@ -81,6 +87,14 @@ extension PXReviewViewController {
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.put(view: paymentMethodView, onBottomOf: summaryView, withMargin: 0).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+            
+            // Add elastic header and bounce.
+            elasticHeader.backgroundColor = summaryView.backgroundColor
+            view.insertSubview(elasticHeader, aboveSubview: contentView)
+            scrollView.bounces = true
+            
+            // TODO: Set proper content size.
+            scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: 1600)
         }
     }
     
@@ -102,5 +116,22 @@ extension PXReviewViewController {
     fileprivate func getTitleComponentView() -> UIView {
         let titleComponent = viewModel.buildTitleComponent()
         return titleComponent.render()
+    }
+}
+
+//MARK: Scroll delegate.
+extension PXReviewViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let NAVIGATIONBAR_DELTA_Y: CGFloat = 29.5
+        
+        if scrollView.contentOffset.y >= NAVIGATIONBAR_DELTA_Y {
+            title = PXReviewTitleComponentProps.DEFAULT_TITLE.localized
+        } else {
+            title = ""
+        }
+        
+        elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
     }
 }

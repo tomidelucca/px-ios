@@ -14,7 +14,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     var contentView = UIView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
-
+    
     init() {
         self.scrollView = UIScrollView()
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false

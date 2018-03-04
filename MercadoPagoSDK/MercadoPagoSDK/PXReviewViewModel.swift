@@ -238,9 +238,9 @@ extension PXReviewViewModel {
     }
     
     func buildTitleComponent() -> PXReviewTitleComponent {
-        let props = PXReviewTitleComponentProps(withTitle: "Revisa si está todo bien".localized, titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
-    }
+    }                  
 }
 
 // MARK: - Custom cells.
