@@ -10,6 +10,10 @@ import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
 
+    fileprivate lazy var elasticHeader = UIView()
+    fileprivate lazy var customNavigationTitle: String = ""
+    fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.5
+    
     var scrollView: UIScrollView!
     var contentView = UIView()
     var heightComponent: NSLayoutConstraint!
@@ -40,5 +44,30 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Elastic header.
+extension PXComponentContainerViewController: UIScrollViewDelegate {
+    
+    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, navigationDeltaY:CGFloat?=nil) {
+        elasticHeader.removeFromSuperview()
+        scrollView.delegate = self
+        customNavigationTitle = navigationCustomTitle
+        elasticHeader.backgroundColor = headerBackgroundColor
+        if let customDeltaY =  navigationDeltaY {
+            NAVIGATION_BAR_DELTA_Y = customDeltaY
+        }
+        view.insertSubview(elasticHeader, aboveSubview: contentView)
+        scrollView.bounces = true
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
+            title = customNavigationTitle
+        } else {
+            title = ""
+        }
+        elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
     }
 }
