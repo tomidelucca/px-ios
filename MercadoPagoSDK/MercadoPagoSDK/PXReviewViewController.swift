@@ -17,7 +17,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
-    
+
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel) {
         super.init()
@@ -26,11 +26,6 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scrollView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {

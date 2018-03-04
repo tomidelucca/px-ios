@@ -108,13 +108,6 @@ extension PXReviewViewModel {
         return 82
     }
     
-    func getFloatingConfirmButtonViewFrame() -> CGRect {
-        let height = self.getFloatingConfirmButtonHeight()
-        let width = UIScreen.main.bounds.width
-        let frame = CGRect(x: 0, y: UIScreen.main.bounds.maxY - height, width: width, height: height)
-        return frame
-    }
-    
     func getSummaryViewModel(amount: Double) -> Summary {
         
         var summary: Summary
@@ -240,7 +233,21 @@ extension PXReviewViewModel {
     func buildTitleComponent() -> PXReviewTitleComponent {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
-    }                  
+    }
+    
+    func buildContainedButtonView() -> PXContainedActionButtonView {
+        
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: reviewScreenPreference.getConfirmButtonText(), action: {
+            print("CONFIRM PAYMENT TAPPED")
+            //[weak self] in self?.confirmPayment()
+        }))
+        
+        let containedButton = PXContainedActionButtonRenderer().render(component)
+        PXLayout.setHeight(owner: containedButton, height: getFloatingConfirmButtonHeight()).isActive = true
+        containedButton.layoutIfNeeded()
+        
+        return containedButton
+    }
 }
 
 // MARK: - Custom cells.
