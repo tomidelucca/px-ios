@@ -17,8 +17,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let BUTTON_HEIGHT: CGFloat = 34.0
     
     let TITLE_FONT_SIZE: CGFloat = PXLayout.M_FONT
-    let DETAIL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
-    let PM_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
+    let SUBTITLE_FONT_SIZE: CGFloat = PXLayout.XS_FONT
+    let DESCRIPTION_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
@@ -53,7 +53,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.addSubview(detailLabel)
             pmBodyView.amountDetail = detailLabel
             detailLabel.text = detailText
-            detailLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            detailLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             detailLabel.textColor = .pxBrownishGray
             detailLabel.textAlignment = .center
             PXLayout.setHeight(owner: detailLabel, height: 18.0).isActive = true
@@ -68,7 +68,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.addSubview(descriptionLabel)
             pmBodyView.paymentMethodDescription = descriptionLabel
             descriptionLabel.text = paymentMethodDescription
-            descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             descriptionLabel.textColor = .pxBrownishGray
             descriptionLabel.textAlignment = .center
             descriptionLabel.numberOfLines = 2
@@ -83,7 +83,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.paymentMethodDetail = pmDetailLabel
             pmBodyView.addSubview(pmDetailLabel)
             pmDetailLabel.text = pmDetailText
-            pmDetailLabel.font = Utils.getFont(size: PM_DETAIL_FONT_SIZE)
+            pmDetailLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
             pmDetailLabel.textColor = .pxBrownishGray
             pmDetailLabel.textAlignment = .center
             pmBodyView.putOnBottomOfLastView(view: pmDetailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
