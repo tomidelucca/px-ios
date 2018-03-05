@@ -15,13 +15,22 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
+    var footerView : UIView!
+    var floatingButtonView : UIView!
+    
     // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
 
+    var callbackConfirm: ((PaymentData) -> Void)
+    var callbackExit: (() -> Void)
+    
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel) {
-        super.init()
+    init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+
         self.viewModel = viewModel
+        self.callbackConfirm = callbackConfirm
+        self.callbackExit = callbackExit
+                super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,18 +57,16 @@ extension PXReviewViewController {
         renderViews()
     }
     
+
+    
     fileprivate func renderViews() {
-        
         if contentView.subviews.isEmpty {
-           
             for view in contentView.subviews {
                 view.removeFromSuperview()
             }
-            
             for constraint in contentView.constraints {
                 constraint.isActive = false
             }
-            
             // Add title view.
             let titleView = getTitleComponentView()
             contentView.addSubview(titleView)
@@ -81,11 +88,29 @@ extension PXReviewViewController {
             PXLayout.put(view: paymentMethodView, onBottomOf: summaryView, withMargin: 0).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
             
-            // TODO: Set proper content size.
-            scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: 1600)
+            // TODO Phantom view, delete when finish the screen 🚫
+            let panthomView = UIView()
+            panthomView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(panthomView)
+            panthomView.backgroundColor = .white
+            PXLayout.matchWidth(ofView: panthomView).isActive = true
+            PXLayout.put(view: panthomView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
+            PXLayout.centerHorizontally(view: panthomView).isActive = true
+            PXLayout.setHeight(owner: panthomView, height: 600).isActive = true
+            
+            
+            //Add Footer
+            footerView = getFooterView()
+            contentView.addSubview(footerView)
+            PXLayout.matchWidth(ofView: footerView).isActive = true
+             PXLayout.put(view: footerView, onBottomOf: panthomView, withMargin: 0).isActive = true
+            PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
+            
             
             // Add floating button
-            let floatingButtonView = getFloatingButtonView()
+            floatingButtonView = getFloatingButtonView()
             view.addSubview(floatingButtonView)
             PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
             PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
@@ -93,7 +118,37 @@ extension PXReviewViewController {
 
             // Add elastic header.
             addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
+            
+            self.view.layoutIfNeeded()
+            PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
+            refreshContentviewSize()
         }
+    }
+    
+    fileprivate func refreshContentviewSize() {
+        var height : CGFloat = 0
+        for view in contentView.subviews {
+            height = height + view.frame.height
+        }
+        scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
+    }
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        if !isConfirmButtonVisible() {
+            self.floatingButtonView.alpha = 1
+        }else{
+            self.floatingButtonView.alpha = 0
+        }
+
+        
+    }
+    open func isConfirmButtonVisible() -> Bool {
+        guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
+            return false
+        }
+        let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
+        let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
+        return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
     }
     
     fileprivate func getPaymentMethodComponentView() -> UIView {
@@ -115,9 +170,12 @@ extension PXReviewViewController {
         let titleComponent = viewModel.buildTitleComponent()
         return titleComponent.render()
     }
+
     
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
-        let component = viewModel.buildFloatingButtonComponent()
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
+           self.confirmPayment()
+        }))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         containedButtonView.backgroundColor = .white
         containedButtonView.layoutIfNeeded()
@@ -126,5 +184,27 @@ extension PXReviewViewController {
         containedButtonView.layer.shadowRadius = 4
         containedButtonView.layer.shadowOpacity = 0.25
         return containedButtonView
+    }
+    
+    fileprivate func getFooterView() -> UIView {
+        let payAction = PXComponentAction(label: "Confirmar".localized) {
+            self.confirmPayment()
+        }
+        let cancelAction = PXComponentAction(label: "Cancelar".localized) {
+            self.cancelPayment()
+        }
+        let footerProps = PXFooterProps(buttonAction: payAction, linkAction: cancelAction)
+        let footerComponent = PXFooterComponent(props: footerProps)
+        return footerComponent.render()
+    }
+    
+    fileprivate func confirmPayment() {
+        self.hideNavBar()
+        self.hideBackButton()
+        self.callbackConfirm(self.viewModel.paymentData)
+    }
+    
+    fileprivate func cancelPayment() {
+        self.callbackExit()
     }
 }

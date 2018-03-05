@@ -234,14 +234,6 @@ extension PXReviewViewModel {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
     }
-    
-    func buildFloatingButtonComponent() -> PXContainedActionButtonComponent {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: reviewScreenPreference.getConfirmButtonText(), action: {
-            print("CONFIRM PAYMENT TAPPED")
-            //[weak self] in self?.confirmPayment()
-        }))
-        return component
-    }
 }
 
 // MARK: - Custom cells.
