@@ -190,7 +190,7 @@ extension PXReviewViewModel {
         let paymentMethodName = pm.name ?? ""
         let paymentMethodIssuerName = issuer?.name ?? "Otro"
         
-        let image = buildPaymentMethodIcon(paymentMethod: pm)
+        let image = PXImageService.getImageFor2(paymentMethodOption: paymentOptionSelected)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
@@ -203,7 +203,9 @@ extension PXReviewViewModel {
             }
         } else {
             title = paymentMethodName.toAttributedString()
-            accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
+            if paymentOptionSelected.getComment().isNotEmpty {
+                accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
+            }
         }
         
         // TODO: Localize "Otro"
@@ -218,17 +220,6 @@ extension PXReviewViewModel {
         let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: UIColor.pxWarmGray)
         
         return PXPaymentMethodComponent(props: bodyProps)
-    }
-    
-    fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageFor(paymentMethod, forCell: true)
-//        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
-        // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
-            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
-        }
-        return paymentMethodImage
     }
 }
 

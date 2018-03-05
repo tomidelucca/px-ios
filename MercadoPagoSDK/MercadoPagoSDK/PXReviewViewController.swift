@@ -67,8 +67,9 @@ extension PXReviewViewController {
     
     fileprivate func addPaymentMethodComponent() {
         
-        let action = PXComponentAction(label: "Action label") {
+        let action = PXComponentAction(label: "Cambiar medio de pago") {
             print("Action called")
+//            self.callbackPaymentData(self.viewModel.getClearPaymentData())
         }
         
         let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)
