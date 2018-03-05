@@ -201,7 +201,7 @@ extension PXReviewViewModel {
         
         let amountDetail = "HSBC"
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle, subtitle: amountDetail, descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, action: withAction)
         
         return PXPaymentMethodComponent(props: bodyProps)
     }

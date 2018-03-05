@@ -38,7 +38,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.translatesAutoresizingMaskIntoConstraints = false
         pmBodyView.amountTitle = title
         pmBodyView.addSubview(title)
-        title.text = component.props.amountTitle
+        title.text = component.props.title
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
         title.textColor = .pxBlack
         title.textAlignment = .center
@@ -47,7 +47,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         PXLayout.pinLeft(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinRight(view: title, withMargin: PXLayout.S_MARGIN).isActive = true
 
-        if let detailText = component.props.amountDetail {
+        if let detailText = component.props.subtitle {
             let detailLabel = UILabel()
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
@@ -62,7 +62,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.pinRight(view: detailLabel, withMargin: PXLayout.XXS_MARGIN).isActive = true
         }
 
-        if let paymentMethodDescription = component.props.paymentMethodDescription {
+        if let paymentMethodDescription = component.props.descriptionTitle {
             let descriptionLabel = UILabel()
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(descriptionLabel)
@@ -77,7 +77,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
         }
 
-        if let pmDetailText = component.props.paymentMethodDetail {
+        if let pmDetailText = component.props.descriptionDetail {
             let pmDetailLabel = UILabel()
             pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.paymentMethodDetail = pmDetailLabel
