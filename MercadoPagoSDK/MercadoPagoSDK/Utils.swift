@@ -137,6 +137,16 @@ class Utils {
         }
         return amountFotmated
     }
+    
+    class func getAccreditationTimeAttributedString(from text: String) -> NSAttributedString {
+        let clockImage = NSTextAttachment()
+        clockImage.image = MercadoPago.getImage("iconTime")
+        let clockAttributedString = NSAttributedString(attachment: clockImage)
+        let labelAttributedString = NSMutableAttributedString(string: String(describing: " " + text), attributes: nil)
+        labelAttributedString.insert(clockAttributedString, at: 0)
+        let labelTitle = labelAttributedString
+        return labelTitle
+    }
 
     class func getTransactionInstallmentsDescription(_ installments: String, currency: Currency, installmentAmount: Double, additionalString: NSAttributedString? = nil, color: UIColor? = nil, fontSize: CGFloat = 22, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let color = color ?? UIColor.lightBlue()

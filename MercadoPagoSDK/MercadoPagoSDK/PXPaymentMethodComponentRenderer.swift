@@ -38,7 +38,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         title.translatesAutoresizingMaskIntoConstraints = false
         pmBodyView.amountTitle = title
         pmBodyView.addSubview(title)
-        title.text = component.props.title
+        title.attributedText = component.props.title
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
         title.textColor = .pxBlack
         title.textAlignment = .center
@@ -52,7 +52,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             detailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(detailLabel)
             pmBodyView.amountDetail = detailLabel
-            detailLabel.text = detailText
+            detailLabel.attributedText = detailText
             detailLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             detailLabel.textColor = .pxBrownishGray
             detailLabel.textAlignment = .center
@@ -67,7 +67,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(descriptionLabel)
             pmBodyView.paymentMethodDescription = descriptionLabel
-            descriptionLabel.text = paymentMethodDescription
+            descriptionLabel.attributedText = paymentMethodDescription
             descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
             descriptionLabel.textColor = .pxBrownishGray
             descriptionLabel.textAlignment = .center
@@ -82,7 +82,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmDetailLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.paymentMethodDetail = pmDetailLabel
             pmBodyView.addSubview(pmDetailLabel)
-            pmDetailLabel.text = pmDetailText
+            pmDetailLabel.attributedText = pmDetailText
             pmDetailLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
             pmDetailLabel.textColor = .pxBrownishGray
             pmDetailLabel.textAlignment = .center
@@ -96,7 +96,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             disclaimerLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.disclaimerLabel = disclaimerLabel
             pmBodyView.addSubview(disclaimerLabel)
-            disclaimerLabel.text = disclaimer
+            disclaimerLabel.attributedText = disclaimer
             disclaimerLabel.numberOfLines = 2
             disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
             disclaimerLabel.textColor = .pxBrownishGray
@@ -121,6 +121,14 @@ class PXPaymentMethodComponentRenderer: NSObject {
             PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
             
         }
+        
+        if let backgroundColor = component.props.backgroundColor {
+            pmBodyView.backgroundColor = backgroundColor
+            if let actionButton = pmBodyView.actionButton {
+                actionButton.backgroundColor = backgroundColor
+            }
+        }
+        
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
 
         return pmBodyView

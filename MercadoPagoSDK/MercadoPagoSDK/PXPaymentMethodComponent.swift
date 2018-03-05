@@ -30,14 +30,15 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 class PXPaymentMethodProps: NSObject {
     
     var paymentMethodIcon: UIImage?
-    var title: String
-    var subtitle: String?
-    var descriptionTitle: String?
-    var descriptionDetail: String?
-    var disclaimer: String?
+    var title: NSAttributedString
+    var subtitle: NSAttributedString?
+    var descriptionTitle: NSAttributedString?
+    var descriptionDetail: NSAttributedString?
+    var disclaimer: NSAttributedString?
     var action: PXComponentAction?
+    var backgroundColor: UIColor?
 
-    public init(paymentMethodIcon: UIImage?, title: String, subtitle: String?, descriptionTitle: String?, descriptionDetail: String?, disclaimer: String?, action: PXComponentAction? = nil) {
+    public init(paymentMethodIcon: UIImage?, title: NSAttributedString, subtitle: NSAttributedString?, descriptionTitle: NSAttributedString?, descriptionDetail: NSAttributedString?, disclaimer: NSAttributedString?, action: PXComponentAction? = nil, backgroundColor: UIColor? = nil) {
         self.paymentMethodIcon = paymentMethodIcon
         self.title = title
         self.subtitle = subtitle
@@ -45,5 +46,6 @@ class PXPaymentMethodProps: NSObject {
         self.descriptionDetail = descriptionDetail
         self.disclaimer = disclaimer
         self.action = action
+        self.backgroundColor = backgroundColor
     }
 }

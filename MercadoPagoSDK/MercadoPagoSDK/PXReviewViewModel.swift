@@ -185,30 +185,45 @@ extension PXReviewViewModel {
     
     func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent {
         
-        let pm = paymentData!.paymentMethod!
+        let pm = paymentData!.getPaymentMethod()!
+        let issuer = paymentData!.getIssuer()
+        let paymentMethodName = pm.name ?? ""
+        let paymentMethodIssuerName = issuer?.name ?? "Otro"
         
         let image = buildPaymentMethodIcon(paymentMethod: pm)
-        var amountTitle = ""
-        let paymentMethodName = pm.name ?? ""
+        var title = NSAttributedString(string: "")
+        var subtitle: NSAttributedString? = nil
+        var accreditationTime: NSAttributedString? = nil
+        var action = withAction
         
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                amountTitle = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+                let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+                title = text.toAttributedString()
             }
         } else {
-            amountTitle = paymentMethodName
+            title = paymentMethodName.toAttributedString()
+            accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
         }
         
-        let amountDetail = "HSBC"
+        // TODO: Localize "Otro"
+        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && paymentMethodIssuerName != "Otro".localized {
+            subtitle = paymentMethodIssuerName.toAttributedString()
+        }
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle, subtitle: amountDetail, descriptionTitle: nil, descriptionDetail: nil, disclaimer: nil, action: withAction)
+        if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
+            action = nil
+        }
+        
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: UIColor.pxWarmGray)
         
         return PXPaymentMethodComponent(props: bodyProps)
     }
     
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageFor(paymentMethod, forCell: true)
+//        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
         // Retrieve image for payment plugin or any external payment method.
         if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
