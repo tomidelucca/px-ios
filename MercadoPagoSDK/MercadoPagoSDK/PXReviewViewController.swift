@@ -84,6 +84,13 @@ extension PXReviewViewController {
             // TODO: Set proper content size.
             scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: 1600)
             
+            // Add floating button
+            let floatingButtonView = getFloatingButtonView()
+            view.addSubview(floatingButtonView)
+            PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
+            PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+            PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+
             // Add elastic header.
             addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
         }
@@ -107,5 +114,17 @@ extension PXReviewViewController {
     fileprivate func getTitleComponentView() -> UIView {
         let titleComponent = viewModel.buildTitleComponent()
         return titleComponent.render()
+    }
+    
+    fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
+        let component = viewModel.buildFloatingButtonComponent()
+        let containedButtonView = PXContainedActionButtonRenderer().render(component)
+        containedButtonView.backgroundColor = .white
+        containedButtonView.layoutIfNeeded()
+        containedButtonView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        containedButtonView.layer.shadowColor = UIColor.black.cgColor
+        containedButtonView.layer.shadowRadius = 4
+        containedButtonView.layer.shadowOpacity = 0.25
+        return containedButtonView
     }
 }

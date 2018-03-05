@@ -1747,6 +1747,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		235A3275204D662D002D1F54 /* FloatingButton */ = {
+			isa = PBXGroup;
+			children = (
+				81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */,
+				81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */,
+			);
+			name = FloatingButton;
+			sourceTree = "<group>";
+		};
 		23A07FCD204837820074CB64 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2335,9 +2344,8 @@
 			children = (
 				235A3267204B410A002D1F54 /* Title */,
 				231AE26E20472B3F00CB87CF /* Summary */,
+				235A3275204D662D002D1F54 /* FloatingButton */,
 				819C88DC2045CFDF001E9216 /* Screen */,
-				81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */,
-				81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */,
 			);
 			name = ReviewAndConfirm;
 			sourceTree = "<group>";

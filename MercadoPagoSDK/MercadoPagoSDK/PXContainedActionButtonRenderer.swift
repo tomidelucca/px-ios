@@ -17,17 +17,21 @@ class PXContainedActionButtonRenderer: NSObject {
         let containedButtonView =  PXContainedActionButtonView()
         
         containedButtonView.translatesAutoresizingMaskIntoConstraints = false
+        
         let button = self.buildButton(with: containedButton.props.action, title: containedButton.props.title, backgroundColor: containedButton.props.buttonColor, textColor: containedButton.props.textColor)
         containedButtonView.addSubview(button)
         containedButtonView.button = button
+        
         PXLayout.pinTop(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinLeft(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinRight(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
+        
         PXLayout.setHeight(owner: button, height: BUTTON_HEIGHT).isActive = true
+        
         return containedButtonView
     }
     
-    func buildButton(with action:@escaping (() -> Void), title: String, backgroundColor: UIColor, textColor: UIColor) -> UIButton {
+    fileprivate func buildButton(with action:@escaping (() -> Void), title: String, backgroundColor: UIColor, textColor: UIColor) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 3
@@ -38,7 +42,6 @@ class PXContainedActionButtonRenderer: NSObject {
         return button
     }
 }
-
 
 class PXContainedActionButtonView: UIView {
     public var button: UIButton?

@@ -104,8 +104,8 @@ extension PXReviewViewModel {
         return newPaymentData
     }
     
-    func getFloatingConfirmButtonHeight() -> CGFloat {
-        return 82
+    func getFloatingConfirmViewHeight() -> CGFloat {
+        return 82 + PXLayout.getSafeAreaBottomInset()/2
     }
     
     func getSummaryViewModel(amount: Double) -> Summary {
@@ -235,18 +235,12 @@ extension PXReviewViewModel {
         return PXReviewTitleComponent(props: props)
     }
     
-    func buildContainedButtonView() -> PXContainedActionButtonView {
-        
+    func buildFloatingButtonComponent() -> PXContainedActionButtonComponent {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: reviewScreenPreference.getConfirmButtonText(), action: {
             print("CONFIRM PAYMENT TAPPED")
             //[weak self] in self?.confirmPayment()
         }))
-        
-        let containedButton = PXContainedActionButtonRenderer().render(component)
-        PXLayout.setHeight(owner: containedButton, height: getFloatingConfirmButtonHeight()).isActive = true
-        containedButton.layoutIfNeeded()
-        
-        return containedButton
+        return component
     }
 }
 
