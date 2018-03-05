@@ -203,28 +203,42 @@ extension PXReviewViewModel {
         return PXPaymentMethodComponent(props: props)
     }
 
+
+    // MARK: Item components builders
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
         for item in self.preference!.items {
-            item._description = "bla bla "
-            if !String.isNullOrEmpty(item._description) {
-                let itemComponent: PXItemComponent = buildItemComponent(item: item)
+            if let itemComponent = buildItemComponent(item: item) {
                 pxItemComponents.append(itemComponent)
             }
         }
         return pxItemComponents
     }
 
-    fileprivate func shouldShowQuantityAndPrice(item: Item) -> Bool {
-        return preference!.items.count > 1 || item.quantity > 1
+    fileprivate func shouldShowQuantity(item: Item) -> Bool {
+        return item.quantity > 1 // Quantity must not be shown if it is 1
     }
 
-    fileprivate func buildItemComponent(item: Item) -> PXItemComponent {
-        if  !shouldShowQuantityAndPrice(item: item) {
-            item.unitPrice = nil
-            item.quantity = nil
+    fileprivate func shouldShowPrice(item: Item) -> Bool {
+        return preference!.items.count > 1 || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+    }
+
+    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
+        if String.isNullOrEmpty(item._description) { // Item must not be shown if it has no description
+            return nil
         }
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, description: item._description, quantity: item.quantity, unitAmount: item.unitPrice)
+
+        var itemQuantiy = item.quantity
+        var itemPrice = item.unitPrice
+
+        if  !shouldShowQuantity(item: item) {
+            itemQuantiy = nil
+        }
+        if  !shouldShowPrice(item: item) {
+            itemPrice = nil
+        }
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, description: item._description, quantity: itemQuantiy, unitAmount: itemPrice)
         return PXItemComponent(props: itemProps)
     }
 

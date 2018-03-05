@@ -24,7 +24,6 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
-
     
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
@@ -59,7 +58,10 @@ extension PXReviewViewController {
     }
     
     fileprivate func renderViews() {
-        if contentView.subviews.isEmpty {
+        // TODO: Decidir que hacer con esto
+        //if contentView.contentView.subviews.isEmpty {
+
+        self.contentView.prepareforRender()
 
             for view in contentView.subviews {
                 view.removeFromSuperview()
@@ -82,12 +84,12 @@ extension PXReviewViewController {
             PXLayout.matchWidth(ofView: summaryView).isActive = true
 
             // Add item views
-            itemViews = buildItemComponents()
+            itemViews = buildItemComponentsViews()
             for itemView in itemViews {
-                contentView.addSubview(itemView)
-                PXLayout.pinTop(view: itemView, to: contentView).isActive = true
+                contentView.addSubviewToButtom(itemView)
                 PXLayout.centerHorizontally(view: itemView).isActive = true
                 PXLayout.matchWidth(ofView: itemView).isActive = true
+                itemView.addSeparatorLineToBottom(height: 1)
             }
             
             // Add payment method view.
@@ -139,7 +141,7 @@ extension PXReviewViewController {
             self.view.layoutIfNeeded()
             PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
             refreshContentViewSize()
-        }
+//        }
     }
     
     fileprivate func refreshContentViewSize() {
@@ -153,14 +155,12 @@ extension PXReviewViewController {
 }
 // MARK: Component Builders
 extension PXReviewViewController {
-    fileprivate func buildItemComponents() -> [UIView] {
+    fileprivate func buildItemComponentsViews() -> [UIView] {
         var itemViews = [UIView]()
         let itemComponents = viewModel.buildItemComponents()
         for items in itemComponents {
             itemViews.append(items.render())
         }
-
-
         return itemViews
     }
 
@@ -172,7 +172,7 @@ extension PXReviewViewController {
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
         return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
     }
-    
+
     fileprivate func getPaymentMethodComponentView() -> UIView {
         let action = PXComponentAction(label: "Action label") {
             print("Action called")
@@ -258,4 +258,5 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
     }
+
 }

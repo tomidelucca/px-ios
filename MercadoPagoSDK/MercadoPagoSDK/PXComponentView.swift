@@ -16,6 +16,10 @@ public class PXComponentView: UIView {
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        initComponent()
+    }
+
+    func initComponent() {
         self.translatesAutoresizingMaskIntoConstraints = false
         topGuideView.translatesAutoresizingMaskIntoConstraints = false
         bottomGuideView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +38,18 @@ public class PXComponentView: UIView {
         PXLayout.matchWidth(ofView: contentView).isActive = true
         PXLayout.matchWidth(ofView: topGuideView).isActive = true
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
+    }
+
+    func prepareforRender() {
+        for view in self.subviews {
+            view.removeFromSuperview()
+        }
+
+        for constraint in self.constraints {
+            constraint.isActive = false
+        }
+
+        initComponent()
     }
 
     required public init?(coder aDecoder: NSCoder) {

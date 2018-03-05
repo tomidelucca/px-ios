@@ -21,6 +21,10 @@ open class ReviewScreenPreference: NSObject {
     let summaryTitles: [SummaryType: String] = [SummaryType.PRODUCT: "Producto".localized, SummaryType.ARREARS: "Mora".localized, SummaryType.CHARGE: "Cargos".localized,
                                                             SummaryType.DISCOUNT: "Descuentos".localized, SummaryType.TAXES: "Impuestos".localized, SummaryType.SHIPPING: "Envío".localized]
     private var itemsReview: ItemsReview = ItemsReview()
+    var collectorIcon: UIImage?
+    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
+    static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
+    var shouldShowQuantityRow: Bool = true
 
     var additionalInfoCells = [MPCustomCell]()
     var customItemCells = [MPCustomCell]()
@@ -69,9 +73,14 @@ open class ReviewScreenPreference: NSObject {
         self.additionalInfoCells = customCells
     }
 
-    static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
-    static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
-    var shouldShowQuantityRow: Bool = true
+    open func setCollectorIcon(image: UIImage){
+        collectorIcon = image
+    }
+
+    open func getCollectorIcon() -> UIImage? {
+        return collectorIcon
+    }
+
     open func hideQuantityRow() {
         self.shouldShowQuantityRow = false
     }

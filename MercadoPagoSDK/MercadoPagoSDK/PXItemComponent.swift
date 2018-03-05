@@ -72,7 +72,6 @@ final class PXItemComponentProps : NSObject {
     var unitAmount: Double?
     var reviewScreenPreference: ReviewScreenPreference
 
-
     init(imageURL: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.imageURL = imageURL
         self._description = description

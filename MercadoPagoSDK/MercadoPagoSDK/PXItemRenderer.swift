@@ -12,7 +12,7 @@ struct PXItemRenderer {
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
 
     // Font sizes
-    static let DESCRIPTION_FONT_SIZE = PXLayout.XXS_FONT
+    static let DESCRIPTION_FONT_SIZE = PXLayout.M_FONT
     static let QUANTITY_FONT_SIZE = PXLayout.XS_FONT
     static let AMOUNT_FONT_SIZE = PXLayout.XS_FONT
 
@@ -34,7 +34,6 @@ struct PXItemRenderer {
         if itemComponent.shouldShowDescription() {
             itemView.itemDescription = buildDescription(with: itemComponent.getDescription())
         }
-
         if let itemDescription = itemView.itemDescription {
             itemView.addSubviewToButtom(itemDescription, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: itemDescription).isActive = true
@@ -45,7 +44,6 @@ struct PXItemRenderer {
         if itemComponent.shouldShowQuantity() {
             itemView.itemQuantity = buildQuantity(with: itemComponent.getQuantity())
         }
-
         if let itemQuantity = itemView.itemQuantity {
             itemView.addSubviewToButtom(itemQuantity, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: itemQuantity).isActive = true
@@ -56,9 +54,9 @@ struct PXItemRenderer {
         if itemComponent.shouldShowUnitAmount() {
             itemView.itemAmount = buildItemAmount(with: itemComponent.getUnitAmountPrice(), title: itemComponent.getUnitAmountTitle())
         }
-
         if let itemAmount = itemView.itemAmount {
-            itemView.addSubviewToButtom(itemAmount, withMargin: PXLayout.XXXS_MARGIN)
+            let margin = itemView.itemQuantity == nil ? PXLayout.XS_MARGIN : PXLayout.XXXS_MARGIN
+            itemView.addSubviewToButtom(itemAmount, withMargin: margin)
             PXLayout.centerHorizontally(view: itemAmount).isActive = true
             PXLayout.matchWidth(ofView: itemAmount, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
@@ -67,10 +65,13 @@ struct PXItemRenderer {
         return itemView
     }
 
-    fileprivate func buildItemImage(imageURL: String?) -> UIImageView {
+    fileprivate func buildItemImage(imageURL: String?, collectorImage: UIImage? = nil) -> UIImageView {
         let imageView = UIImageView()
 
         if let image =  ViewUtils.loadImageFromUrl(imageURL) {
+            imageView.image = image
+        }
+         else if let image =  collectorImage {
             imageView.image = image
         } else {
             imageView.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")

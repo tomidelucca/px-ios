@@ -62,7 +62,7 @@
     ///  PASO 2: SETEAR CHECKOUTPREF, PAYMENTDATA Y PAYMENTRESULT
 
     // Setear una preferencia hecha a mano
-    [self setCheckoutPref_WithId];
+    [self setCheckoutPref_CardsNotExcluded];
 
     // Setear PaymentData
     ///  PASO 3: SETEAR CALLBACK
@@ -83,7 +83,7 @@
     dc.amountWithoutDiscount = 100;
     dc = nil;
     //
-    self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
+    //self.pref._id = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
     accessToken:nil
@@ -260,11 +260,11 @@
 }
 
 -(void)setCheckoutPref_CardsNotExcluded {
-    Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:nil currencyId:@"ARS"];
-    Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:2 unitPrice:2 description:@"item description" currencyId:@"ARS"];
+    Item *item = [[Item alloc] initWith_id:@"itemId" title:@"item title" quantity:100 unitPrice:10 description:@"Alfajor" currencyId:@"ARS"];
+    Item *item2 = [[Item alloc] initWith_id:@"itemId2" title:@"item title 2" quantity:1 unitPrice:2.5 description:@"Sugus" currencyId:@"ARS"];
     Payer *payer = [[Payer alloc] initWith_id:@"payerId" email:@"payer@email.com" identification:nil entityType:nil];
 
-    NSArray *items = [NSArray arrayWithObjects:item2, item2, nil];
+    NSArray *items = [NSArray arrayWithObjects:item, item2, nil];
 
     PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
     paymentExclusions.excludedPaymentTypeIds = [NSSet setWithObjects:@"atm", @"ticket", nil];
