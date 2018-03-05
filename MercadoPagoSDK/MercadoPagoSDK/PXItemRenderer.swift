@@ -21,7 +21,7 @@ struct PXItemRenderer {
         itemView.backgroundColor = UIColor.px_grayBackgroundColor()
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
-        itemView.itemImage = buildItemImage(imageURL: itemComponent.props.imageURL)
+        itemView.itemImage = buildItemImage(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
 
         // Item icon
         if let itemImage = itemView.itemImage {
