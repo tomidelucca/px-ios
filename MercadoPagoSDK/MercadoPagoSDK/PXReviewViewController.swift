@@ -63,12 +63,6 @@ extension PXReviewViewController {
 
         self.contentView.prepareforRender()
 
-        for view in contentView.subviews {
-            view.removeFromSuperview()
-        }
-        for constraint in contentView.constraints {
-            constraint.isActive = false
-        }
         // Add title view.
         let titleView = getTitleComponentView()
         contentView.addSubview(titleView)
@@ -94,9 +88,8 @@ extension PXReviewViewController {
 
         // Add payment method view.
         let paymentMethodView = getPaymentMethodComponentView()
-        contentView.addSubview(paymentMethodView)
+        contentView.addSubviewToButtom(paymentMethodView)
         PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-        PXLayout.put(view: paymentMethodView, onBottomOf: summaryView, withMargin: 0).isActive = true
         PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
 
         // TODO Phantom view, delete when finish the screen 🚫

@@ -203,7 +203,6 @@ extension PXReviewViewModel {
         return PXPaymentMethodComponent(props: props)
     }
 
-    
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
@@ -212,6 +211,31 @@ extension PXReviewViewModel {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage
+    }
+
+    func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
+
+        var customTitle = "Productos".localized
+        var totalAmount: Double = 0
+
+        if let tAmount = self.preference?.getAmount() {
+            totalAmount = tAmount
+        }
+
+        if let pref = preference, pref.items.count == 1 {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
+                customTitle = itemTitle
+            }
+        }
+
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+
+        return PXSummaryComponent(props: props)
+    }
+
+    func buildTitleComponent() -> PXReviewTitleComponent {
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        return PXReviewTitleComponent(props: props)
     }
 }
 
@@ -282,33 +306,6 @@ extension PXReviewViewModel {
         }
         return item.unitPrice
     }
-}
-extension PXReviewViewModel {
-    func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
-        
-        var customTitle = "Productos".localized
-        var totalAmount: Double = 0
-        
-        if let tAmount = self.preference?.getAmount() {
-            totalAmount = tAmount
-        }
-        
-        if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
-                customTitle = itemTitle
-            }
-        }
-        
-        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
-        
-        return PXSummaryComponent(props: props)
-    }
-    
-    func buildTitleComponent() -> PXReviewTitleComponent {
-        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
-        return PXReviewTitleComponent(props: props)
-    }
-
 }
 
 // MARK: - Custom cells.
