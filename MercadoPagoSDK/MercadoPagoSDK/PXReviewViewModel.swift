@@ -20,8 +20,6 @@ final class PXReviewViewModel: NSObject {
     
     var reviewScreenPreference: ReviewScreenPreference!
     
-    var summaryComponent: SummaryComponent!
-    
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
@@ -30,8 +28,6 @@ final class PXReviewViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
-        let screenWidth = UIScreen.main.bounds.width
-        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
     }
 }
 
@@ -48,8 +44,11 @@ extension PXReviewViewModel {
     }
     
     func isUserLogged() -> Bool {
-        // TODO: For footer. Ver lógica de terms and conditions.
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
+    }
+    
+    func shouldShowTermsAndCondition() -> Bool {
+        return !isUserLogged()
     }
     
     func shouldShowInstallmentSummary() -> Bool {
@@ -108,19 +107,14 @@ extension PXReviewViewModel {
         return newPaymentData
     }
     
-    func getFloatingConfirmButtonHeight() -> CGFloat {
-        return 82
+    func getFloatingConfirmViewHeight() -> CGFloat {
+        return 82 + PXLayout.getSafeAreaBottomInset()/2
     }
     
-    func getFloatingConfirmButtonViewFrame() -> CGRect {
-        let height = self.getFloatingConfirmButtonHeight()
-        let width = UIScreen.main.bounds.width
-        let frame = CGRect(x: 0, y: UIScreen.main.bounds.maxY - height, width: width, height: height)
-        return frame
-    }
-    
-    func getValidSummary(amount: Double) -> Summary {
+    func getSummaryViewModel(amount: Double) -> Summary {
+        
         var summary: Summary
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
@@ -172,10 +166,13 @@ extension PXReviewViewModel {
     }
     
     func getDefaultSummary() -> Summary {
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
+        
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
+        
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
 }
@@ -201,9 +198,9 @@ extension PXReviewViewModel {
         
         let amountDetail = "HSBC"
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, amountTitle: amountTitle, amountDetail: amountDetail, paymentMethodDescription: nil, paymentMethodDetail: nil, disclaimer: nil, action: withAction)
         
-        return PXPaymentMethodComponent(props: bodyProps)
+        return PXPaymentMethodComponent(props: props)
     }
     
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
@@ -214,6 +211,31 @@ extension PXReviewViewModel {
             paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
         }
         return paymentMethodImage
+    }
+    
+    func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
+        
+        var customTitle = "Productos".localized
+        var totalAmount: Double = 0
+        
+        if let tAmount = self.preference?.getAmount() {
+            totalAmount = tAmount
+        }
+        
+        if let pref = preference, pref.items.count == 1 {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
+                customTitle = itemTitle
+            }
+        }
+        
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        
+        return PXSummaryComponent(props: props)
+    }
+    
+    func buildTitleComponent() -> PXReviewTitleComponent {
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        return PXReviewTitleComponent(props: props)
     }
 }
 

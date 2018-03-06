@@ -9,6 +9,7 @@
 import Foundation
 
 public class PXComponentView: UIView {
+    
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
     private var contentView = UIView()
