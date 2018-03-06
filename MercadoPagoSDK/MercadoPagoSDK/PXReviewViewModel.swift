@@ -190,12 +190,7 @@ extension PXReviewViewModel {
         let paymentMethodName = pm.name ?? ""
         let paymentMethodIssuerName = issuer?.name ?? "Otro"
         
-        var image = PXImageService.getIconImageFor(paymentMethod: pm)
-        if image == nil, paymentOptionSelected is PXPaymentMethodPlugin {
-            let plugin = paymentOptionSelected as! PXPaymentMethodPlugin
-            image = plugin.getImage()
-        }
-        
+        let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
