@@ -238,6 +238,23 @@ extension PXReviewViewModel {
         return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
     }
 
+    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
+        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+            return nil
+        }
+
+        let itemQuantiy = getItemQuantity(item: item)
+        let itemPrice = getItemPrice(item: item)
+        let itemTitle = getItemTitle(item: item)
+        let itemDescription = getItemDescription(item: item)
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
+        return PXItemComponent(props: itemProps)
+    }
+}
+
+// MARK: Item getters
+extension PXReviewViewModel {
     fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
         if preference!.hasMultipleItems() {
             return item.title
@@ -265,21 +282,8 @@ extension PXReviewViewModel {
         }
         return item.unitPrice
     }
-
-    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
-        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
-            return nil
-        }
-
-        let itemQuantiy = getItemQuantity(item: item)
-        let itemPrice = getItemPrice(item: item)
-        let itemTitle = getItemTitle(item: item)
-        let itemDescription = getItemDescription(item: item)
-
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
-        return PXItemComponent(props: itemProps)
-    }
-    
+}
+extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
         
         var customTitle = "Productos".localized
@@ -304,6 +308,7 @@ extension PXReviewViewModel {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
     }
+
 }
 
 // MARK: - Custom cells.

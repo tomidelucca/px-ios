@@ -19,7 +19,10 @@ class PXItemComponent: PXComponentizable {
     init(props: PXItemComponentProps) {
         self.props = props
     }
+}
 
+// MARK: Getters/ Setterss
+extension PXItemComponent {
     func shouldShowTitle() -> Bool {
         return !String.isNullOrEmpty(props.title)
     }
@@ -66,28 +69,6 @@ class PXItemComponent: PXComponentizable {
     }
 
     func getUnitAmountPrice() -> Double? {
-        guard let unitAmount = props.unitAmount else {
-            return nil
-        }
-        return unitAmount
+        return props.unitAmount
     }
-}
-
-final class PXItemComponentProps : NSObject {
-    var imageURL: String?
-    var title: String?
-    var _description: String?
-    var quantity: Int?
-    var unitAmount: Double?
-    var reviewScreenPreference: ReviewScreenPreference
-
-    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
-        self.imageURL = imageURL
-        self.title = title
-        self._description = description
-        self.quantity = quantity
-        self.unitAmount = unitAmount
-        self.reviewScreenPreference = reviewScreenPreference
-    }
-
 }

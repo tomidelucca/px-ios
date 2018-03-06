@@ -19,7 +19,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     var footerView : UIView!
     var floatingButtonView : UIView!
     var termsConditionView: PXTermsAndConditionView!
-    var itemViews: [UIView]!
+    lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
     var callbackConfirm: ((PaymentData) -> Void)

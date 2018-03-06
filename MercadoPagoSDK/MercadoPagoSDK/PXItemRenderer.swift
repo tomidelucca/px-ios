@@ -20,7 +20,7 @@ struct PXItemRenderer {
     static let QUANTITY_FONT_SIZE = PXLayout.XS_FONT
     static let AMOUNT_FONT_SIZE = PXLayout.XS_FONT
 
-    func render(_ itemComponent: PXItemComponent) -> UIView {
+    func render(_ itemComponent: PXItemComponent) -> PXItemContainerView {
         let itemView = PXItemContainerView()
         itemView.backgroundColor = UIColor.px_grayBackgroundColor()
         itemView.translatesAutoresizingMaskIntoConstraints = false
@@ -184,10 +184,3 @@ extension PXItemRenderer {
     }
 }
 
-class PXItemContainerView: PXComponentView {
-    var itemImage: UIImageView?
-    var itemTitle: UILabel?
-    var itemDescription: UILabel?
-    var itemQuantity: UILabel?
-    var itemAmount: UILabel?
-}
