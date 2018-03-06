@@ -44,8 +44,11 @@ extension PXReviewViewModel {
     }
     
     func isUserLogged() -> Bool {
-        // TODO: For footer. Ver lógica de terms and conditions.
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
+    }
+    
+    func shouldShowTermsAndCondition() -> Bool {
+        return !isUserLogged()
     }
     
     func shouldShowInstallmentSummary() -> Bool {
@@ -171,6 +174,10 @@ extension PXReviewViewModel {
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
         
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
+    }
+    
+    func getTermsConditionUrl() -> URL? {
+        return URL(string: MercadoPagoContext.getTermsAndConditionsSite())
     }
 }
 

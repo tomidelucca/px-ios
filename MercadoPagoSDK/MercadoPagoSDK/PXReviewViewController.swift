@@ -84,6 +84,15 @@ extension PXReviewViewController {
             // TODO: Set proper content size.
             scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: 1600)
             
+            // Add terms and conditions.
+            if viewModel.shouldShowTermsAndCondition() {
+                let termsConditionView = getTermsAndConditionView()
+                contentView.addSubview(termsConditionView)
+                PXLayout.matchWidth(ofView: termsConditionView).isActive = true
+                PXLayout.centerHorizontally(view: termsConditionView).isActive = true
+                PXLayout.put(view: termsConditionView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
+            }
+            
             // Add floating button
             let floatingButtonView = getFloatingButtonView()
             view.addSubview(floatingButtonView)
@@ -126,5 +135,21 @@ extension PXReviewViewController {
         containedButtonView.layer.shadowRadius = 4
         containedButtonView.layer.shadowOpacity = 0.25
         return containedButtonView
+    }
+    
+
+}
+
+//MARK: Terms and conditions.
+extension PXReviewViewController {
+    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
+        let termsAndConditionView = PXTermsAndConditionView()
+        return termsAndConditionView
+    }
+    
+    func pushTermAndConditions(_ title: String, url: URL) {
+        let webVC = WebViewController(url: url, screenName: PXTermsAndConditionView.SCREEN_NAME, navigationBarTitle: PXTermsAndConditionView.SCREEN_TITLE.localized)
+        webVC.title = title
+        self.navigationController!.pushViewController(webVC, animated: true)
     }
 }
