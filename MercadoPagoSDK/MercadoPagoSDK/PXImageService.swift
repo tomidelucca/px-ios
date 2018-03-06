@@ -21,14 +21,10 @@ open class PXImageService: NSObject {
         
         if let pm = dictPM?.value(forKey: paymentMethod._id) as? NSDictionary {
             return MercadoPago.getImage(pm.object(forKey: "image_name") as! String?)
-        } else if let pm2 = dictPM?.value(forKey: paymentMethod._id + "_" + paymentMethod.paymentTypeId) as? NSDictionary {
-            return MercadoPago.getImage(pm2.object(forKey: "image_name") as! String?)
+        } else if let pmPt = dictPM?.value(forKey: paymentMethod._id + "_" + paymentMethod.paymentTypeId) as? NSDictionary {
+            return MercadoPago.getImage(pmPt.object(forKey: "image_name") as! String?)
         }
         
         return nil
-    }
-    
-    open class func getCardFormImageFor(paymentMethod: PaymentMethod) -> UIImage? {
-        return UIImage()
     }
 }
