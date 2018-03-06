@@ -111,7 +111,7 @@ extension PXItemRenderer {
         }
 
         let font = Utils.getFont(size: PXItemRenderer.TITLE_FONT_SIZE)
-        let color = UIColor.px_grayBaseText()
+        let color = ThemeManager.shared.getTheme().boldLabelTintColor()
         return buildLabel(text: text, color: color, font: font)
     }
 
@@ -121,7 +121,7 @@ extension PXItemRenderer {
         }
 
         let font = Utils.getFont(size: PXItemRenderer.DESCRIPTION_FONT_SIZE)
-        let color = UIColor.px_grayDark()
+        let color = ThemeManager.shared.getTheme().labelTintColor()
         return buildLabel(text: text, color: color, font: font)
     }
 
@@ -131,7 +131,7 @@ extension PXItemRenderer {
         }
 
         let font = Utils.getFont(size: PXItemRenderer.QUANTITY_FONT_SIZE)
-        let color = UIColor.px_grayDark()
+        let color = ThemeManager.shared.getTheme().labelTintColor()
         return buildLabel(text: text, color: color, font: font)
     }
 
@@ -141,7 +141,7 @@ extension PXItemRenderer {
         }
 
         let font = Utils.getFont(size: PXItemRenderer.AMOUNT_FONT_SIZE)
-        let color = UIColor.px_grayDark()
+        let color = ThemeManager.shared.getTheme().labelTintColor()
 
         let unitPrice = buildAttributedUnitAmount(amount: amount, color: color, fontSize: font.pointSize)
         let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: font])
