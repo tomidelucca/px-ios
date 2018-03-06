@@ -185,12 +185,13 @@ extension PXReviewViewModel {
     
     func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent? {
         
-        guard let pm = paymentData.getPaymentMethod(), let issuer = paymentData.getIssuer() else {
+        guard let pm = paymentData.getPaymentMethod() else {
             return nil
         }
         
+        let issuer = paymentData.getIssuer()
         let paymentMethodName = pm.name ?? ""
-        let paymentMethodIssuerName = issuer.name ?? "Otro"
+        let paymentMethodIssuerName = issuer?.name ?? "Otro"
         
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
