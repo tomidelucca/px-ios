@@ -175,10 +175,6 @@ extension PXReviewViewModel {
         
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
-    
-    func getTermsConditionUrl() -> URL? {
-        return URL(string: MercadoPagoContext.getTermsAndConditionsSite())
-    }
 }
 
 // MARK: - Components builders.
@@ -227,7 +223,7 @@ extension PXReviewViewModel {
         }
         
         if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
                 customTitle = itemTitle
             }
         }
@@ -240,14 +236,6 @@ extension PXReviewViewModel {
     func buildTitleComponent() -> PXReviewTitleComponent {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
-    }
-    
-    func buildFloatingButtonComponent() -> PXContainedActionButtonComponent {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: reviewScreenPreference.getConfirmButtonText(), action: {
-            print("CONFIRM PAYMENT TAPPED")
-            //[weak self] in self?.confirmPayment()
-        }))
-        return component
     }
 }
 

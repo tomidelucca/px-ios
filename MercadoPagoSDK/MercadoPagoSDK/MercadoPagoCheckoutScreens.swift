@@ -125,7 +125,27 @@ extension MercadoPagoCheckout {
     }
 
     func showReviewAndConfirmScreen() {
-        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel())
+        //let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel())
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), callbackConfirm:   {[weak self] (paymentData: PaymentData) -> Void in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
+            if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
+                MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
+                strongSelf.finish()
+            } else {
+                strongSelf.executeNextStep()
+            }
+            }, callbackExit: { [weak self] () -> Void in
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.cancel()
+                
+        })
         /*
  
         let checkoutVC = ReviewScreenViewController(viewModel: self.viewModel.checkoutViewModel(), callbackPaymentData: { [weak self] (paymentData : PaymentData) -> Void in

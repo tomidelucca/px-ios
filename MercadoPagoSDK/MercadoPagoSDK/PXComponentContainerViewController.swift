@@ -22,6 +22,9 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     init() {
         self.scrollView = UIScrollView()
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.scrollView.delaysContentTouches = true
+        self.scrollView.canCancelContentTouches = false
+        self.scrollView.isUserInteractionEnabled = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.addSubview(contentView)
 
@@ -65,7 +68,12 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
             title = customNavigationTitle
+            navigationItem.title = title
         } else {
+            let fadeTextAnimation = CATransition()
+            fadeTextAnimation.duration = 0.5
+            fadeTextAnimation.type = kCATransitionFade
+            navigationController?.navigationBar.layer.add(fadeTextAnimation, forKey: "fadeText")
             title = ""
         }
         elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)

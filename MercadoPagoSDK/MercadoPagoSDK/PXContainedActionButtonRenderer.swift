@@ -22,6 +22,12 @@ class PXContainedActionButtonRenderer: NSObject {
         containedButtonView.addSubview(button)
         containedButtonView.button = button
         
+        containedButtonView.backgroundColor = .white
+        containedButtonView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        containedButtonView.layer.shadowColor = UIColor.black.cgColor
+        containedButtonView.layer.shadowRadius = 4
+        containedButtonView.layer.shadowOpacity = 0.25
+        
         PXLayout.pinTop(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinLeft(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
         PXLayout.pinRight(view: button, to: containedButtonView, withMargin: PXLayout.S_MARGIN).isActive = true
