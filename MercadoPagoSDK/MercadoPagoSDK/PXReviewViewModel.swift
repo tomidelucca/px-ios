@@ -198,7 +198,7 @@ extension PXReviewViewModel {
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
-        let backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
+        let backgroundColor = UIColor.px_grayBackgroundColor()
         
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
