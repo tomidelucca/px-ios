@@ -174,7 +174,11 @@ extension PXReviewViewController {
     
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
-           self.confirmPayment()
+            [weak self] in
+            guard let strongSelf = self else {
+                    return
+            }
+           strongSelf.confirmPayment()
         }))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
         containedButtonView.backgroundColor = .white
@@ -188,10 +192,18 @@ extension PXReviewViewController {
     
     fileprivate func getFooterView() -> UIView {
         let payAction = PXComponentAction(label: "Confirmar".localized) {
-            self.confirmPayment()
+            [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.confirmPayment()
         }
         let cancelAction = PXComponentAction(label: "Cancelar".localized) {
-            self.cancelPayment()
+            [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.cancelPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction, linkAction: cancelAction)
         let footerComponent = PXFooterComponent(props: footerProps)
