@@ -15,10 +15,10 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
+    // MARK: Definitions
     var footerView : UIView!
     var floatingButtonView : UIView!
-    
-    // MARK: Definitions
+    var termsConditionView: PXTermsAndConditionView!
     fileprivate var viewModel: PXReviewViewModel!
 
     var callbackConfirm: ((PaymentData) -> Void)
@@ -26,11 +26,10 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
-
         self.viewModel = viewModel
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
-                super.init()
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,8 +55,6 @@ extension PXReviewViewController {
         setNavBarBackgroundColor(color: .white)
         renderViews()
     }
-    
-
     
     fileprivate func renderViews() {
         if contentView.subviews.isEmpty {
@@ -98,7 +95,6 @@ extension PXReviewViewController {
             PXLayout.centerHorizontally(view: panthomView).isActive = true
             PXLayout.setHeight(owner: panthomView, height: 600).isActive = true
             
-            
             //Add Footer
             footerView = getFooterView()
             contentView.addSubview(footerView)
@@ -108,6 +104,15 @@ extension PXReviewViewController {
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
             
+            // Add terms and conditions.
+            if viewModel.shouldShowTermsAndCondition() {
+                termsConditionView = getTermsAndConditionView()
+                contentView.addSubview(termsConditionView)
+                PXLayout.matchWidth(ofView: termsConditionView).isActive = true
+                PXLayout.centerHorizontally(view: termsConditionView).isActive = true
+                PXLayout.put(view: termsConditionView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
+                termsConditionView.delegate = self
+            }
             
             // Add floating button
             floatingButtonView = getFloatingButtonView()
@@ -121,28 +126,19 @@ extension PXReviewViewController {
             
             self.view.layoutIfNeeded()
             PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
-            refreshContentviewSize()
+            refreshContentViewSize()
         }
     }
     
-    fileprivate func refreshContentviewSize() {
+    fileprivate func refreshContentViewSize() {
         var height : CGFloat = 0
         for view in contentView.subviews {
             height = height + view.frame.height
         }
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
     }
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-        if !isConfirmButtonVisible() {
-            self.floatingButtonView.alpha = 1
-        }else{
-            self.floatingButtonView.alpha = 0
-        }
-
-        
-    }
-    open func isConfirmButtonVisible() -> Bool {
+    
+    fileprivate func isConfirmButtonVisible() -> Bool {
         guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
             return false
         }
@@ -171,7 +167,6 @@ extension PXReviewViewController {
         return titleComponent.render()
     }
 
-    
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
             [weak self] in
@@ -181,12 +176,6 @@ extension PXReviewViewController {
            strongSelf.confirmPayment()
         }))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
-        containedButtonView.backgroundColor = .white
-        containedButtonView.layoutIfNeeded()
-        containedButtonView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        containedButtonView.layer.shadowColor = UIColor.black.cgColor
-        containedButtonView.layer.shadowRadius = 4
-        containedButtonView.layer.shadowOpacity = 0.25
         return containedButtonView
     }
     
@@ -210,6 +199,24 @@ extension PXReviewViewController {
         return footerComponent.render()
     }
     
+    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
+        let termsAndConditionView = PXTermsAndConditionView()
+        return termsAndConditionView
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        if !isConfirmButtonVisible() {
+            self.floatingButtonView.alpha = 1
+        } else {
+            self.floatingButtonView.alpha = 0
+        }
+    }
+}
+
+//MARK: Actions.
+extension PXReviewViewController: PXTermsAndConditionViewDelegate {
+    
     fileprivate func confirmPayment() {
         self.hideNavBar()
         self.hideBackButton()
@@ -218,5 +225,11 @@ extension PXReviewViewController {
     
     fileprivate func cancelPayment() {
         self.callbackExit()
+    }
+    
+    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
+        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
+        webVC.title = title
+        self.navigationController?.pushViewController(webVC, animated: true)
     }
 }

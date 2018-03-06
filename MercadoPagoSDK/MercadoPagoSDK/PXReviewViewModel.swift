@@ -44,8 +44,11 @@ extension PXReviewViewModel {
     }
     
     func isUserLogged() -> Bool {
-        // TODO: For footer. Ver lógica de terms and conditions.
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
+    }
+    
+    func shouldShowTermsAndCondition() -> Bool {
+        return !isUserLogged()
     }
     
     func shouldShowInstallmentSummary() -> Bool {
@@ -220,7 +223,7 @@ extension PXReviewViewModel {
         }
         
         if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
                 customTitle = itemTitle
             }
         }
