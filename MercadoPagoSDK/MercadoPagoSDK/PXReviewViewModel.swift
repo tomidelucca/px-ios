@@ -203,13 +203,28 @@ extension PXReviewViewModel {
         return PXPaymentMethodComponent(props: props)
     }
 
+    
+    fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        }
+        return paymentMethodImage
+    }
+}
 
-    // MARK: Item components builders
+// MARK: Item component
+extension PXReviewViewModel {
+
     func buildItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()
-        for item in self.preference!.items {
-            if let itemComponent = buildItemComponent(item: item) {
-                pxItemComponents.append(itemComponent)
+        if reviewScreenPreference.isItemsEnable() { // Items can be disable
+            for item in self.preference!.items {
+                if let itemComponent = buildItemComponent(item: item) {
+                    pxItemComponents.append(itemComponent)
+                }
             }
         }
         return pxItemComponents
@@ -220,37 +235,49 @@ extension PXReviewViewModel {
     }
 
     fileprivate func shouldShowPrice(item: Item) -> Bool {
-        return preference!.items.count > 1 || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+        return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+    }
+
+    fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
+        if preference!.hasMultipleItems() {
+            return item.title
+        }
+        return item._description
+    }
+
+    fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
+        if preference!.hasMultipleItems() {
+            return item._description
+        }
+        return nil
+    }
+
+    fileprivate func getItemQuantity(item: Item) -> Int? {
+        if  !shouldShowQuantity(item: item) {
+            return nil
+        }
+        return item.quantity
+    }
+
+    fileprivate func getItemPrice(item: Item) -> Double? {
+        if  !shouldShowPrice(item: item) {
+            return nil
+        }
+        return item.unitPrice
     }
 
     fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
-        if String.isNullOrEmpty(item._description) { // Item must not be shown if it has no description
+        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
 
-        var itemQuantiy = item.quantity
-        var itemPrice = item.unitPrice
+        let itemQuantiy = getItemQuantity(item: item)
+        let itemPrice = getItemPrice(item: item)
+        let itemTitle = getItemTitle(item: item)
+        let itemDescription = getItemDescription(item: item)
 
-        if  !shouldShowQuantity(item: item) {
-            itemQuantiy = nil
-        }
-        if  !shouldShowPrice(item: item) {
-            itemPrice = nil
-        }
-
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, description: item._description, quantity: itemQuantiy, unitAmount: itemPrice)
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
         return PXItemComponent(props: itemProps)
-    }
-
-    
-    fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
-        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
-        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
-        // Retrieve image for payment plugin or any external payment method.
-        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
-            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
-        }
-        return paymentMethodImage
     }
     
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {

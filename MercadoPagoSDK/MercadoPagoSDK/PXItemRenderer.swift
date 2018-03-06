@@ -10,9 +10,13 @@ import Foundation
 
 struct PXItemRenderer {
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
+    //Image
+    static let IMAGE_WIDTH: CGFloat = 48.0
+    static let IMAGE_HEIGHT: CGFloat = 48.0
 
     // Font sizes
-    static let DESCRIPTION_FONT_SIZE = PXLayout.M_FONT
+    static let TITLE_FONT_SIZE = PXLayout.M_FONT
+    static let DESCRIPTION_FONT_SIZE = PXLayout.XXS_FONT
     static let QUANTITY_FONT_SIZE = PXLayout.XS_FONT
     static let AMOUNT_FONT_SIZE = PXLayout.XS_FONT
 
@@ -27,7 +31,19 @@ struct PXItemRenderer {
         if let itemImage = itemView.itemImage {
             itemView.addSubview(itemImage)
             PXLayout.centerHorizontally(view: itemImage).isActive = true
+            PXLayout.setHeight(owner: itemImage, height: PXItemRenderer.IMAGE_HEIGHT).isActive = true
+            PXLayout.setWidth(owner: itemImage, width: PXItemRenderer.IMAGE_WIDTH).isActive = true
             PXLayout.pinTop(view: itemImage, withMargin: PXLayout.L_MARGIN).isActive = true
+        }
+
+        // Item Title
+        if itemComponent.shouldShowTitle() {
+            itemView.itemTitle = buildTitle(with: itemComponent.getTitle())
+        }
+        if let itemTitle = itemView.itemTitle {
+            itemView.addSubviewToButtom(itemTitle, withMargin: PXLayout.S_MARGIN)
+            PXLayout.centerHorizontally(view: itemTitle).isActive = true
+            PXLayout.matchWidth(ofView: itemTitle, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
 
         // Item description
@@ -64,12 +80,22 @@ struct PXItemRenderer {
         itemView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         return itemView
     }
+}
+
+extension PXItemRenderer {
 
     fileprivate func buildItemImage(imageURL: String?, collectorImage: UIImage? = nil) -> UIImageView {
         let imageView = UIImageView()
 
         if let image =  ViewUtils.loadImageFromUrl(imageURL) {
-            imageView.image = image
+            let circleImage = UIImageView(frame: CGRect(x: 0, y: 0, width: PXItemRenderer.IMAGE_WIDTH, height: PXItemRenderer.IMAGE_HEIGHT))
+            circleImage.image = image
+            circleImage.layer.masksToBounds = false
+            circleImage.layer.cornerRadius = circleImage.frame.height/2
+            circleImage.clipsToBounds = true
+            circleImage.translatesAutoresizingMaskIntoConstraints = false
+            circleImage.contentMode = .scaleAspectFill
+            return circleImage
         }
          else if let image =  collectorImage {
             imageView.image = image
@@ -77,6 +103,16 @@ struct PXItemRenderer {
             imageView.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")
         }
         return imageView
+    }
+
+    fileprivate func buildTitle(with text: String?) -> UILabel? {
+        guard let text = text else {
+            return nil
+        }
+
+        let font = Utils.getFont(size: PXItemRenderer.TITLE_FONT_SIZE)
+        let color = UIColor.px_grayBaseText()
+        return buildLabel(text: text, color: color, font: font)
     }
 
     fileprivate func buildDescription(with text: String?) -> UILabel? {
@@ -150,6 +186,7 @@ struct PXItemRenderer {
 
 class PXItemContainerView: PXComponentView {
     var itemImage: UIImageView?
+    var itemTitle: UILabel?
     var itemDescription: UILabel?
     var itemQuantity: UILabel?
     var itemAmount: UILabel?

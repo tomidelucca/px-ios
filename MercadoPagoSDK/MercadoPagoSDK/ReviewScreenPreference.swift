@@ -25,6 +25,7 @@ open class ReviewScreenPreference: NSObject {
     static let DEFAULT_AMOUNT_TITLE = "Precio Unitario: ".localized
     static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
     var shouldShowQuantityRow: Bool = true
+    var itemsEnable = true
 
     var additionalInfoCells = [MPCustomCell]()
     var customItemCells = [MPCustomCell]()
@@ -79,6 +80,18 @@ open class ReviewScreenPreference: NSObject {
 
     open func getCollectorIcon() -> UIImage? {
         return collectorIcon
+    }
+
+    open func isItemsEnable() -> Bool {
+        return itemsEnable
+    }
+
+    open func disableItems() {
+        self.itemsEnable = false
+    }
+
+    open func enableItems() {
+        self.itemsEnable = true
     }
 
     open func hideQuantityRow() {

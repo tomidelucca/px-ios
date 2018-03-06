@@ -20,6 +20,14 @@ class PXItemComponent: PXComponentizable {
         self.props = props
     }
 
+    func shouldShowTitle() -> Bool {
+        return !String.isNullOrEmpty(props.title)
+    }
+
+    func getTitle() -> String? {
+        return props.title
+    }
+
     func shouldShowDescription() -> Bool {
         return !String.isNullOrEmpty(props.description)
     }
@@ -67,13 +75,15 @@ class PXItemComponent: PXComponentizable {
 
 final class PXItemComponentProps : NSObject {
     var imageURL: String?
+    var title: String?
     var _description: String?
     var quantity: Int?
     var unitAmount: Double?
     var reviewScreenPreference: ReviewScreenPreference
 
-    init(imageURL: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
+    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.imageURL = imageURL
+        self.title = title
         self._description = description
         self.quantity = quantity
         self.unitAmount = unitAmount
