@@ -29,14 +29,14 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 
 class PXPaymentMethodProps: NSObject {
     
-    var paymentMethodIcon: UIImage?
-    var title: NSAttributedString
-    var subtitle: NSAttributedString?
-    var descriptionTitle: NSAttributedString?
-    var descriptionDetail: NSAttributedString?
-    var disclaimer: NSAttributedString?
-    var action: PXComponentAction?
-    var backgroundColor: UIColor?
+    let paymentMethodIcon: UIImage?
+    let title: NSAttributedString
+    let subtitle: NSAttributedString?
+    let descriptionTitle: NSAttributedString?
+    let descriptionDetail: NSAttributedString?
+    let disclaimer: NSAttributedString?
+    let action: PXComponentAction?
+    let backgroundColor: UIColor?
 
     public init(paymentMethodIcon: UIImage?, title: NSAttributedString, subtitle: NSAttributedString?, descriptionTitle: NSAttributedString?, descriptionDetail: NSAttributedString?, disclaimer: NSAttributedString?, action: PXComponentAction? = nil, backgroundColor: UIColor? = nil) {
         self.paymentMethodIcon = paymentMethodIcon

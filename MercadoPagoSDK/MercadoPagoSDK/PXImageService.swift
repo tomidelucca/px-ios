@@ -8,9 +8,9 @@
 
 import Foundation
 
-open class PXImageService: NSObject {
+final class PXImageService: NSObject {
     
-    open class func getIconImageFor(paymentMethod: PaymentMethod) -> UIImage? {
+    class func getIconImageFor(paymentMethod: PaymentMethod) -> UIImage? {
         
         guard paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue else {
             return paymentMethod.getImageForExtenalPaymentMethod()

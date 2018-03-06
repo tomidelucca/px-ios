@@ -74,12 +74,13 @@ extension PXReviewViewController {
             self.callbackPaymentData(self.viewModel.getClearPaymentData())
         }
         
-        let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)
-       
-        let paymentMethodView = paymentMethodComponent.render()
-        contentView.addSubview(paymentMethodView)
-        PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
-        PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
-        PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+        if let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action) {
+            let paymentMethodView = paymentMethodComponent.render()
+            contentView.addSubview(paymentMethodView)
+            PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
+            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+            PXLayout.pinBottom(view: paymentMethodView, to: contentView).isActive = true
+        }
     }
 }

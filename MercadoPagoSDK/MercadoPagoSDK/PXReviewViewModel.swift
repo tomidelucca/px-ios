@@ -183,18 +183,21 @@ extension PXReviewViewModel {
 // MARK: - Components builders.
 extension PXReviewViewModel {
     
-    func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent {
+    func buildPaymentMethodComponent(withAction:PXComponentAction?) -> PXPaymentMethodComponent? {
         
-        let pm = paymentData!.getPaymentMethod()!
-        let issuer = paymentData!.getIssuer()
+        guard let pm = paymentData.getPaymentMethod(), let issuer = paymentData.getIssuer() else {
+            return nil
+        }
+        
         let paymentMethodName = pm.name ?? ""
-        let paymentMethodIssuerName = issuer?.name ?? "Otro"
+        let paymentMethodIssuerName = issuer.name ?? "Otro"
         
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
+        let backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
         
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
@@ -217,7 +220,7 @@ extension PXReviewViewModel {
             action = nil
         }
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: UIColor.pxWarmGray)
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor)
         
         return PXPaymentMethodComponent(props: bodyProps)
     }
