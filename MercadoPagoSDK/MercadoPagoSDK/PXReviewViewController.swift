@@ -17,11 +17,14 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
+
+    var callbackPaymentData: ((PaymentData) -> Void)!
     
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel) {
+    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping (PaymentData) -> Void) {
         super.init()
         self.viewModel = viewModel
+        self.callbackPaymentData = callbackPaymentData
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,9 +70,8 @@ extension PXReviewViewController {
     
     fileprivate func addPaymentMethodComponent() {
         
-        let action = PXComponentAction(label: "Cambiar medio de pago") {
-            print("Action called")
-//            self.callbackPaymentData(self.viewModel.getClearPaymentData())
+        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta) {
+            self.callbackPaymentData(self.viewModel.getClearPaymentData())
         }
         
         let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)

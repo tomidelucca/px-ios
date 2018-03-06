@@ -36,14 +36,6 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
 
     func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
         let textSize: CGFloat = ACCREDITATION_LABEL_FONT_SIZE
-//        let attributes = [ NSFontAttributeName: Utils.getFont(size: textSize) ]
-//        let clockImage = NSTextAttachment()
-//        clockImage.image = MercadoPago.getImage("iconTime")
-//        let clockAttributedString = NSAttributedString(attachment: clockImage)
-//        let labelAttributedString = NSMutableAttributedString(string: String(describing: " "+text), attributes: attributes)
-//        labelAttributedString.insert(clockAttributedString, at: 0)
-//        let labelTitle = labelAttributedString
-
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
