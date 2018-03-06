@@ -44,8 +44,11 @@ extension PXReviewViewModel {
     }
     
     func isUserLogged() -> Bool {
-        // TODO: For footer. Ver lógica de terms and conditions.
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
+    }
+    
+    func shouldShowTermsAndCondition() -> Bool {
+        return !isUserLogged()
     }
     
     func shouldShowInstallmentSummary() -> Bool {
