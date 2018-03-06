@@ -220,7 +220,7 @@ extension PXReviewViewModel {
         }
         
         if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
                 customTitle = itemTitle
             }
         }

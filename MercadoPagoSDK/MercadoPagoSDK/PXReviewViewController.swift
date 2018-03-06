@@ -15,10 +15,9 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
+    // MARK: Definitions
     var footerView : UIView!
     var floatingButtonView : UIView!
-    
-    // MARK: Definitions
     fileprivate var viewModel: PXReviewViewModel!
 
     var callbackConfirm: ((PaymentData) -> Void)
@@ -26,11 +25,10 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     // MARK: Lifecycle - Publics
     init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
-
         self.viewModel = viewModel
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
-                super.init()
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,8 +54,6 @@ extension PXReviewViewController {
         setNavBarBackgroundColor(color: .white)
         renderViews()
     }
-    
-
     
     fileprivate func renderViews() {
         if contentView.subviews.isEmpty {
@@ -98,7 +94,6 @@ extension PXReviewViewController {
             PXLayout.centerHorizontally(view: panthomView).isActive = true
             PXLayout.setHeight(owner: panthomView, height: 600).isActive = true
             
-            
             //Add Footer
             footerView = getFooterView()
             contentView.addSubview(footerView)
@@ -107,7 +102,6 @@ extension PXReviewViewController {
             PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-            
             
             // Add floating button
             floatingButtonView = getFloatingButtonView()
@@ -132,17 +126,8 @@ extension PXReviewViewController {
         }
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
     }
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-        if !isConfirmButtonVisible() {
-            self.floatingButtonView.alpha = 1
-        }else{
-            self.floatingButtonView.alpha = 0
-        }
-
-        
-    }
-    open func isConfirmButtonVisible() -> Bool {
+    
+    fileprivate func isConfirmButtonVisible() -> Bool {
         guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
             return false
         }
@@ -171,18 +156,11 @@ extension PXReviewViewController {
         return titleComponent.render()
     }
 
-    
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
            self.confirmPayment()
         }))
         let containedButtonView = PXContainedActionButtonRenderer().render(component)
-        containedButtonView.backgroundColor = .white
-        containedButtonView.layoutIfNeeded()
-        containedButtonView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        containedButtonView.layer.shadowColor = UIColor.black.cgColor
-        containedButtonView.layer.shadowRadius = 4
-        containedButtonView.layer.shadowOpacity = 0.25
         return containedButtonView
     }
     
@@ -198,6 +176,18 @@ extension PXReviewViewController {
         return footerComponent.render()
     }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        if !isConfirmButtonVisible() {
+            self.floatingButtonView.alpha = 1
+        } else {
+            self.floatingButtonView.alpha = 0
+        }
+    }
+}
+
+//MARK: Actions.
+extension PXReviewViewController {
     fileprivate func confirmPayment() {
         self.hideNavBar()
         self.hideBackButton()
