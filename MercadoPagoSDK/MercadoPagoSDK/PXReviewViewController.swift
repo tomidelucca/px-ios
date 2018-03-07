@@ -77,6 +77,13 @@ extension PXReviewViewController {
         contentView.addSubviewToButtom(summaryView)
         PXLayout.centerHorizontally(view: summaryView).isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
+        
+        // Add CFT view.
+        if let cftView = getCFTComponentView() {
+            contentView.addSubviewToButtom(cftView)
+            PXLayout.centerHorizontally(view: cftView).isActive = true
+            PXLayout.matchWidth(ofView: cftView).isActive = true
+        }
 
         // Add item views
         itemViews = buildItemComponentsViews()
@@ -182,6 +189,14 @@ extension PXReviewViewController {
     fileprivate func getTitleComponentView() -> UIView {
         let titleComponent = viewModel.buildTitleComponent()
         return titleComponent.render()
+    }
+    
+    fileprivate func getCFTComponentView() -> UIView? {
+        if viewModel.hasPayerCostAddionalInfo() {
+            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.getTheme().labelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+            return cftView
+        }
+        return nil
     }
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
