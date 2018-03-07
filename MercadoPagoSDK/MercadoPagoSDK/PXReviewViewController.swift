@@ -22,12 +22,14 @@ class PXReviewViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
+    var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
     
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
         self.viewModel = viewModel
+        self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
         super.init()
@@ -86,10 +88,11 @@ extension PXReviewViewController {
         }
 
         // Add payment method view.
-        let paymentMethodView = getPaymentMethodComponentView()
-        contentView.addSubviewToButtom(paymentMethodView)
-        PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-        PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        if let paymentMethodView = getPaymentMethodComponentView() {
+            contentView.addSubviewToButtom(paymentMethodView)
+            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        }
 
         // Add terms and conditions.
         if viewModel.shouldShowTermsAndCondition() {
@@ -128,7 +131,7 @@ extension PXReviewViewController {
         //        }
 
     }
-    
+
     fileprivate func refreshContentViewSize() {
         var height : CGFloat = 0
         for view in contentView.getSubviews() {
@@ -158,13 +161,16 @@ extension PXReviewViewController {
         return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
     }
 
-    fileprivate func getPaymentMethodComponentView() -> UIView {
-        let action = PXComponentAction(label: "Action label") {
-            print("Action called")
+    fileprivate func getPaymentMethodComponentView() -> UIView? {
+        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta) {
+            self.callbackPaymentData(self.viewModel.getClearPaymentData())
         }
-        let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action)
-        let paymentMethodView = paymentMethodComponent.render()
-        return paymentMethodView
+        
+        if let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action) {
+            return paymentMethodComponent.render()
+        }
+        
+        return nil
     }
     
     fileprivate func getSummaryComponentView() -> UIView {

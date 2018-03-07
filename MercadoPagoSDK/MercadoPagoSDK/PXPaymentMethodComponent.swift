@@ -29,21 +29,23 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
 
 class PXPaymentMethodProps: NSObject {
     
-    var paymentMethodIcon: UIImage?
-    var amountTitle: String
-    var amountDetail: String?
-    var paymentMethodDescription: String?
-    var paymentMethodDetail: String?
-    var disclaimer: String?
-    var action: PXComponentAction?
+    let paymentMethodIcon: UIImage?
+    let title: NSAttributedString
+    let subtitle: NSAttributedString?
+    let descriptionTitle: NSAttributedString?
+    let descriptionDetail: NSAttributedString?
+    let disclaimer: NSAttributedString?
+    let action: PXComponentAction?
+    let backgroundColor: UIColor?
 
-    public init(paymentMethodIcon: UIImage?, amountTitle: String, amountDetail: String?, paymentMethodDescription: String?, paymentMethodDetail: String?, disclaimer: String?, action: PXComponentAction? = nil) {
+    public init(paymentMethodIcon: UIImage?, title: NSAttributedString, subtitle: NSAttributedString?, descriptionTitle: NSAttributedString?, descriptionDetail: NSAttributedString?, disclaimer: NSAttributedString?, action: PXComponentAction? = nil, backgroundColor: UIColor? = nil) {
         self.paymentMethodIcon = paymentMethodIcon
-        self.amountTitle = amountTitle
-        self.amountDetail = amountDetail
-        self.paymentMethodDescription = paymentMethodDescription
-        self.paymentMethodDetail = paymentMethodDetail
+        self.title = title
+        self.subtitle = subtitle
+        self.descriptionTitle = descriptionTitle
+        self.descriptionDetail = descriptionDetail
         self.disclaimer = disclaimer
         self.action = action
+        self.backgroundColor = backgroundColor
     }
 }
