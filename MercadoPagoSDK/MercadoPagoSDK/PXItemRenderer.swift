@@ -86,18 +86,25 @@ extension PXItemRenderer {
 
     fileprivate func buildItemImage(imageURL: String?, collectorImage: UIImage? = nil) -> UIImageView {
         let imageView = UIImageView()
-
-        if let image =  ViewUtils.loadImageFromUrl(imageURL) {
+ 
+        if imageURL != nil {
             let circleImage = UIImageView(frame: CGRect(x: 0, y: 0, width: PXItemRenderer.IMAGE_WIDTH, height: PXItemRenderer.IMAGE_HEIGHT))
-            circleImage.image = image
-            circleImage.layer.masksToBounds = false
-            circleImage.layer.cornerRadius = circleImage.frame.height/2
-            circleImage.clipsToBounds = true
-            circleImage.translatesAutoresizingMaskIntoConstraints = false
-            circleImage.contentMode = .scaleAspectFill
+            DispatchQueue.global(qos: .background).async {
+                if let image =  ViewUtils.loadImageFromUrl(imageURL) {
+                    DispatchQueue.main.async {
+                        circleImage.image = image
+                        circleImage.layer.masksToBounds = false
+                        circleImage.layer.cornerRadius = circleImage.frame.height/2
+                        circleImage.clipsToBounds = true
+                        circleImage.translatesAutoresizingMaskIntoConstraints = false
+                        circleImage.contentMode = .scaleAspectFill
+                    }
+                } else {
+                   circleImage.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")
+                }
+            }
             return circleImage
-        }
-         else if let image =  collectorImage {
+        } else if let image =  collectorImage {
             imageView.image = image
         } else {
             imageView.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")

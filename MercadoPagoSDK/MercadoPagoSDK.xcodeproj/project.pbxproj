@@ -403,6 +403,7 @@
 		4BFD451F1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD451D1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.swift */; };
 		4BFD45201E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BFD451E1E4220BB006F9F62 /* TotalPayerCostRowTableViewCell.xib */; };
 		4BFD90C21F58554C00ABC348 /* DateExtensionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD90C11F58554C00ABC348 /* DateExtensionTest.swift */; };
+		5155E205547D832563EFBE2B /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
 		534D841E1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D841D1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift */; };
 		534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534D841F1F546FA000C2C6F9 /* AvailableCardsViewController.swift */; };
 		534D84241F5480F800C2C6F9 /* AvailableCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534D84231F5480F800C2C6F9 /* AvailableCardsViewController.xib */; };
@@ -1270,6 +1271,7 @@
 			files = (
 				4B0E72AA1FA8F9E8006A3853 /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B0E72A81FA8F9E4006A3853 /* MercadoPagoServices.framework in Frameworks */,
+				5155E205547D832563EFBE2B /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

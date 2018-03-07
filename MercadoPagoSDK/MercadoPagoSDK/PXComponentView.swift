@@ -107,4 +107,8 @@ public class PXComponentView: UIView {
         }
         return nil
     }
+    
+    func getSubviews() -> [UIView] {
+        return self.contentView.subviews
+    }
 }

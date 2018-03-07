@@ -66,14 +66,13 @@ extension PXReviewViewController {
         // Add title view.
         let titleView = getTitleComponentView()
         contentView.addSubview(titleView)
-        PXLayout.pinTop(view: titleView, to: contentView, withMargin: 0).isActive = true
+        PXLayout.pinTop(view: titleView).isActive = true
         PXLayout.centerHorizontally(view: titleView).isActive = true
         PXLayout.matchWidth(ofView: titleView).isActive = true
 
         // Add summary view.
         let summaryView = getSummaryComponentView()
-        contentView.addSubview(summaryView)
-        PXLayout.put(view: summaryView, onBottomOf: titleView, withMargin: 0).isActive = true
+        contentView.addSubviewToButtom(summaryView)
         PXLayout.centerHorizontally(view: summaryView).isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
 
@@ -92,34 +91,25 @@ extension PXReviewViewController {
         PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
         PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
 
-        // TODO Phantom view, delete when finish the screen 🚫
-        let panthomView = UIView()
-        panthomView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(panthomView)
-        panthomView.backgroundColor = .white
-        PXLayout.matchWidth(ofView: panthomView).isActive = true
-        PXLayout.put(view: panthomView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: panthomView).isActive = true
-        PXLayout.setHeight(owner: panthomView, height: 600).isActive = true
-
-        //Add Footer
-        footerView = getFooterView()
-        contentView.addSubview(footerView)
-        PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.put(view: footerView, onBottomOf: panthomView, withMargin: 0).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
-        self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-
         // Add terms and conditions.
         if viewModel.shouldShowTermsAndCondition() {
             termsConditionView = getTermsAndConditionView()
             contentView.addSubview(termsConditionView)
             PXLayout.matchWidth(ofView: termsConditionView).isActive = true
             PXLayout.centerHorizontally(view: termsConditionView).isActive = true
-            PXLayout.put(view: termsConditionView, onBottomOf: paymentMethodView, withMargin: 0).isActive = true
+            contentView.addSubviewToButtom(termsConditionView)
             termsConditionView.delegate = self
         }
+
+        //Add Footer
+        footerView = getFooterView()
+        contentView.addSubviewToButtom(footerView)
+        PXLayout.matchWidth(ofView: footerView).isActive = true
+        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+        self.view.layoutIfNeeded()
+        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
+
+ 
 
         // Add floating button
         floatingButtonView = getFloatingButtonView()
@@ -132,6 +122,7 @@ extension PXReviewViewController {
         addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
 
         self.view.layoutIfNeeded()
+        PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
         PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
         refreshContentViewSize()
         //        }
@@ -140,7 +131,7 @@ extension PXReviewViewController {
     
     fileprivate func refreshContentViewSize() {
         var height : CGFloat = 0
-        for view in contentView.subviews {
+        for view in contentView.getSubviews() {
             height = height + view.frame.height
         }
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
