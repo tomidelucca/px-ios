@@ -16,6 +16,10 @@ public class PXComponentView: UIView {
 
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        initComponent()
+    }
+
+    func initComponent() {
         self.translatesAutoresizingMaskIntoConstraints = false
         topGuideView.translatesAutoresizingMaskIntoConstraints = false
         bottomGuideView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,12 +40,31 @@ public class PXComponentView: UIView {
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
     }
 
+    func prepareforRender() {
+        for view in self.subviews {
+            view.removeFromSuperview()
+        }
+
+        for constraint in self.constraints {
+            constraint.isActive = false
+        }
+
+        initComponent()
+    }
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override public func addSubview(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
+    }
+
+    public func addSubviewToButtom(_ view: UIView, withMargin margin: CGFloat = 0) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(view)
+        putOnBottomOfLastView(view: view, withMargin: margin)
     }
 
     override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
@@ -83,5 +106,9 @@ public class PXComponentView: UIView {
             }
         }
         return nil
+    }
+    
+    func getSubviews() -> [UIView] {
+        return self.contentView.subviews
     }
 }

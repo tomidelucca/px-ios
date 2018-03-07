@@ -15,7 +15,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.5
     
     var scrollView: UIScrollView!
-    var contentView = UIView()
+    var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
     

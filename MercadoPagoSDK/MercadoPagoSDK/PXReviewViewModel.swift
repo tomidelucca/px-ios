@@ -206,7 +206,7 @@ extension PXReviewViewModel {
         
         return PXPaymentMethodComponent(props: props)
     }
-    
+
     fileprivate func buildPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
         let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
         var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod._id, defaultColor: defaultColor)
@@ -216,30 +216,99 @@ extension PXReviewViewModel {
         }
         return paymentMethodImage
     }
-    
+
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
-        
+
         var customTitle = "Productos".localized
         var totalAmount: Double = 0
-        
+
         if let tAmount = self.preference?.getAmount() {
             totalAmount = tAmount
         }
-        
+
         if let pref = preference, pref.items.count == 1 {
             if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
                 customTitle = itemTitle
             }
         }
-        
+
         let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
-        
+
         return PXSummaryComponent(props: props)
     }
-    
+
     func buildTitleComponent() -> PXReviewTitleComponent {
         let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
+    }
+}
+
+// MARK: Item component
+extension PXReviewViewModel {
+
+    func buildItemComponents() -> [PXItemComponent] {
+        var pxItemComponents = [PXItemComponent]()
+        if reviewScreenPreference.isItemsEnable() { // Items can be disable
+            for item in self.preference!.items {
+                if let itemComponent = buildItemComponent(item: item) {
+                    pxItemComponents.append(itemComponent)
+                }
+            }
+        }
+        return pxItemComponents
+    }
+
+    fileprivate func shouldShowQuantity(item: Item) -> Bool {
+        return item.quantity > 1 // Quantity must not be shown if it is 1
+    }
+
+    fileprivate func shouldShowPrice(item: Item) -> Bool {
+        return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+    }
+
+    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
+        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+            return nil
+        }
+
+        let itemQuantiy = getItemQuantity(item: item)
+        let itemPrice = getItemPrice(item: item)
+        let itemTitle = getItemTitle(item: item)
+        let itemDescription = getItemDescription(item: item)
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
+        return PXItemComponent(props: itemProps)
+    }
+}
+
+// MARK: Item getters
+extension PXReviewViewModel {
+    fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
+        if preference!.hasMultipleItems() {
+            return item.title
+        }
+        return item._description
+    }
+
+    fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
+        if preference!.hasMultipleItems() {
+            return item._description
+        }
+        return nil
+    }
+
+    fileprivate func getItemQuantity(item: Item) -> Int? {
+        if  !shouldShowQuantity(item: item) {
+            return nil
+        }
+        return item.quantity
+    }
+
+    fileprivate func getItemPrice(item: Item) -> Double? {
+        if  !shouldShowPrice(item: item) {
+            return nil
+        }
+        return item.unitPrice
     }
 }
 
