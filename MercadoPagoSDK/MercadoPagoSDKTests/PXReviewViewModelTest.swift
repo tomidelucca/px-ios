@@ -1,5 +1,5 @@
 //
-//  CheckoutViewModelTest.swift
+//  PXReviewViewModelTest.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 4/18/17.
@@ -8,21 +8,24 @@
 
 import XCTest
 @testable import MercadoPagoSDK
-class CheckoutViewModelTest: BaseTest {
 
-    var instance: CheckoutViewModel?
-    var instanceWithCoupon: CheckoutViewModel?
-    var instanceWithCustomSummaryRow: CheckoutViewModel?
+class PXReviewViewModelTest: BaseTest {
+
+    var instance: PXReviewViewModel?
+    var instanceWithCoupon: PXReviewViewModel?
+    var instanceWithCustomSummaryRow: PXReviewViewModel?
 
     var paymentData: PaymentData = PaymentData()
 
     let mockPaymentMethodSearchItem = MockBuilder.buildPaymentMethodSearchItem("paymentMethodId")
 
     override func setUp() {
+        
         let checkoutPref = CheckoutPreference()
+        
         checkoutPref.items = [Item(_id: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
 
-        self.instance = CheckoutViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
+        self.instance = PXReviewViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
         paymentData = MockBuilder.buildPaymentData(paymentMethodId: "visa", paymentMethodName: "Visa", paymentMethodTypeId: "credit_card")
         paymentData.payerCost = MockBuilder.buildInstallment().payerCosts[1]
@@ -30,52 +33,11 @@ class CheckoutViewModelTest: BaseTest {
         paymentData.discount = MockBuilder.buildDiscount()
         paymentData.payer = MockBuilder.buildPayer("id")
 
-        self.instanceWithCoupon = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
+        self.instanceWithCoupon = PXReviewViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
         let reviewScreenPreference = ReviewScreenPreference()
 
-        self.instanceWithCustomSummaryRow = CheckoutViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference)
-    }
-
-    func testCells() {
-        XCTAssertTrue(self.instance!.isTitleCellFor(indexPath: IndexPath(row: 0, section: 0)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 0)), 60)
-
-        XCTAssertTrue(self.instance!.isPaymentMethodCellFor(indexPath: IndexPath(row: 0, section: 3)))
-
-        XCTAssertTrue(self.instance!.isItemCellFor(indexPath: IndexPath(row: 1, section: 2)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 2)), PurchaseItemDetailTableViewCell.getCellHeight(item: self.instance!.preference!.items[0]))
-
-        MercadoPagoContext.setPayerAccessToken("")
-
-        XCTAssertTrue(self.instance!.isTermsAndConditionsViewCellFor(indexPath: IndexPath(row: 0, section: 5)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 5)), TermsAndConditionsViewCell.getCellHeight())
-
-        XCTAssertTrue(self.instance!.isExitButtonTableViewCellFor(indexPath: IndexPath(row: 2, section: 5)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 5)), ExitButtonTableViewCell.ROW_HEIGHT)
-
-        MercadoPagoContext.setPayerAccessToken("sarasa")
-
-        XCTAssertTrue(self.instance!.isExitButtonTableViewCellFor(indexPath: IndexPath(row: 1, section: 5)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 1, section: 5)), ExitButtonTableViewCell.ROW_HEIGHT)
-
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 2, section: 100)), 0)
-
-    }
-
-    func testNumberOfRowsInSection() {
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 0), 1)
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), self.instance!.preference!.items.count)
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 3), 1)
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 4), self.instance!.numberOfCustomAdditionalCells())
-
-        MercadoPagoContext.setPayerAccessToken("")
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 5), 3)
-
-        MercadoPagoContext.setPayerAccessToken("sarasa")
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 5), 2)
-
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 100), 0)
+        self.instanceWithCustomSummaryRow = PXReviewViewModel(checkoutPreference: CheckoutPreference(), paymentData: paymentData, paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption, reviewScreenPreference: reviewScreenPreference)
     }
 
     func testIsLogged() {
@@ -88,7 +50,7 @@ class CheckoutViewModelTest: BaseTest {
 
     func testIsPaymentMethodSelectedCard() {
 
-        XCTAssertFalse(self.instance!.isPaymentMethodSelectedCard())
+    XCTAssertFalse(self.instance!.isPaymentMethodSelectedCard())
 
         self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("rapipago", name: "rapipago", paymentTypeId: PaymentTypeId.TICKET.rawValue)
         XCTAssertFalse(self.instance!.isPaymentMethodSelectedCard())
@@ -98,14 +60,6 @@ class CheckoutViewModelTest: BaseTest {
 
         self.instance!.paymentData.paymentMethod = MockBuilder.buildPaymentMethod("debmaster", name: "master", paymentTypeId: PaymentTypeId.DEBIT_CARD.rawValue)
         XCTAssertTrue(self.instance!.isPaymentMethodSelectedCard())
-    }
-
-    func testNumberOfSections() {
-        let preference = MockBuilder.buildCheckoutPreference()
-        self.instance!.preference = preference
-
-        XCTAssertEqual(6, self.instance!.numberOfSections())
-
     }
 
     func testIsPaymentMethodSelected() {
@@ -173,31 +127,6 @@ class CheckoutViewModelTest: BaseTest {
         XCTAssertTrue(self.instance!.shouldDisplayNoRate())
     }
 
-    func testAddtitionalCustomCells() {
-        XCTAssertEqual(self.instance!.numberOfCustomAdditionalCells(), 0)
-
-        let reviewScreenPreference = ReviewScreenPreference()
-        reviewScreenPreference.setAddionalInfoCells(customCells: [MPCustomCell(cell: UITableViewCell())])
-        self.instance!.reviewScreenPreference = reviewScreenPreference
-
-        XCTAssertEqual(self.instance!.numberOfCustomAdditionalCells(), 1)
-        XCTAssertTrue(self.instance!.isAddtionalCustomCellsFor(indexPath: IndexPath(row: 0, section: 4)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 4)), reviewScreenPreference.additionalInfoCells[0].getHeight())
-    }
-
-    func testItemCustomCells() {
-        XCTAssertEqual(self.instance!.numberOfCustomItemCells(), 0)
-
-        let reviewScreenPreference = ReviewScreenPreference()
-        reviewScreenPreference.setCustomItemCell(customCell: [MPCustomCell(cell: UITableViewCell())])
-        self.instance!.reviewScreenPreference = reviewScreenPreference
-
-        XCTAssertEqual(self.instance!.numberOfCustomItemCells(), 1)
-        XCTAssertEqual(self.instance!.numberOfRowsInSection(section: 2), 1)
-        XCTAssertTrue(self.instance!.isItemCellFor(indexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(self.instance!.heightForRow(IndexPath(row: 0, section: 2)), reviewScreenPreference.customItemCells[0].getHeight())
-    }
-
     func testCleanPaymentData() {
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!._id, "visa")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
@@ -212,43 +141,63 @@ class CheckoutViewModelTest: BaseTest {
     }
 
     func getInvalidSummary() -> Summary {
-        var preference = ReviewScreenPreference()
+        let preference = ReviewScreenPreference()
         preference.addSummaryProductDetail(amount: 1000)
         preference.addSummaryProductDetail(amount: 20)
         preference.addSummaryTaxesDetail(amount: 190)
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
+    
     func getValidSummary() -> Summary {
-        var preference = ReviewScreenPreference()
+        let preference = ReviewScreenPreference()
         preference.addSummaryProductDetail(amount: 500)
         preference.addSummaryProductDetail(amount: 200)
         preference.addSummaryTaxesDetail(amount: 200)
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
+    
     func getValidSummaryWithoutProductDetail() -> Summary {
-        var preference = ReviewScreenPreference()
+        let preference = ReviewScreenPreference()
         preference.addSummaryTaxesDetail(amount: 900)
         preference.addSummaryShippingDetail(amount: 100)
         return Summary(details: preference.details)
     }
+    
+    // TODO: Move to summary tests.
     func testInvalidSummary() {
         instance?.reviewScreenPreference.details = getInvalidSummary().details
-        var summary = instance?.getValidSummary(amount: 1000.0)
-        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        let summary = instance?.getSummaryViewModel(amount: 1000.0)
+        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
         XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
     }
+    
     func testValidSummary() {
         instance?.reviewScreenPreference.details = getValidSummary().details
-        var summary = instance?.getValidSummary(amount: 1000.0)
-        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        let summary = instance?.getSummaryViewModel(amount: 1000.0)
+        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
         XCTAssertEqual(summaryComponent.requiredHeight, 179.0)
     }
+    
     func testValidSummaryWithoutProductDetail() {
         instance?.reviewScreenPreference.details = getValidSummaryWithoutProductDetail().details
-        var summary = instance?.getValidSummary(amount: 1000.0)
-        var summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
+        let summary = instance?.getSummaryViewModel(amount: 1000.0)
+        let summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: 320.0, height: 0), summary: summary!, paymentData: PaymentData(), totalAmount: 1000)
         XCTAssertEqual(summaryComponent.requiredHeight, 73.5)
+    }
+}
+
+// MARK: Terms and conditions.
+extension PXReviewViewModelTest {
+    
+    func testShouldShowTermsAndConditions() {
+        MercadoPagoContext.setPayerAccessToken("")
+        XCTAssertTrue(self.instance!.shouldShowTermsAndCondition())
+    }
+    
+    func testShouldHideTermsAndConditions() {
+        MercadoPagoContext.setPayerAccessToken("123")
+        XCTAssertFalse(self.instance!.shouldShowTermsAndCondition())
     }
 }

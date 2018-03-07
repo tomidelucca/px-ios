@@ -1,37 +1,37 @@
 //
-//  PXSummaryComponent.swift
+//  PXReviewTitleComponent.swift
 //  MercadoPagoSDK
 //
-//  Created by Juan sebastian Sanzone on 28/2/18.
+//  Created by Juan sebastian Sanzone on 3/3/18.
 //  Copyright © 2018 MercadoPago. All rights reserved.
 //
 
 import Foundation
 
-final class PXSummaryComponent: PXComponentizable {
-
+final class PXReviewTitleComponent: PXComponentizable {
+    
     fileprivate var reusableView: UIView?
     
-    var props: PXSummaryComponentProps {
+    var props: PXReviewTitleComponentProps {
         didSet {
             redrawRender()
         }
     }
     
-    init(props: PXSummaryComponentProps) {
+    init(props: PXReviewTitleComponentProps) {
         self.props = props
     }
     
     public func render() -> UIView {
         guard let dequeueReusableView = reusableView else {
-            return PXSummaryComponentRenderer().render(self)
+            return PXReviewTitleComponentRenderer().render(self)
         }
         return dequeueReusableView
     }
 }
 
-extension PXSummaryComponent {
+extension PXReviewTitleComponent {
     fileprivate func redrawRender() {
-        reusableView = PXSummaryComponentRenderer().render(self)
+        reusableView = PXReviewTitleComponentRenderer().render(self)
     }
 }

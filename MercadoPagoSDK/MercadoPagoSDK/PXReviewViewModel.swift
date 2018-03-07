@@ -20,8 +20,6 @@ final class PXReviewViewModel: NSObject {
     
     var reviewScreenPreference: ReviewScreenPreference!
     
-    var summaryComponent: SummaryComponent!
-    
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
         self.preference = checkoutPreference
@@ -30,8 +28,6 @@ final class PXReviewViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
-        let screenWidth = UIScreen.main.bounds.width
-        self.summaryComponent = SummaryComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 0), summary: self.getValidSummary(amount: checkoutPreference.getAmount()), paymentData: self.paymentData, totalAmount:(self.preference?.getAmount())!)
     }
 }
 
@@ -48,8 +44,15 @@ extension PXReviewViewModel {
     }
     
     func isUserLogged() -> Bool {
-        // TODO: For footer. Ver lógica de terms and conditions.
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
+    }
+    
+    func isPreferenceLoaded() -> Bool {
+        return self.preference != nil
+    }
+    
+    func shouldShowTermsAndCondition() -> Bool {
+        return !isUserLogged()
     }
     
     func shouldShowInstallmentSummary() -> Bool {
@@ -108,19 +111,14 @@ extension PXReviewViewModel {
         return newPaymentData
     }
     
-    func getFloatingConfirmButtonHeight() -> CGFloat {
-        return 82
+    func getFloatingConfirmViewHeight() -> CGFloat {
+        return 82 + PXLayout.getSafeAreaBottomInset()/2
     }
     
-    func getFloatingConfirmButtonViewFrame() -> CGRect {
-        let height = self.getFloatingConfirmButtonHeight()
-        let width = UIScreen.main.bounds.width
-        let frame = CGRect(x: 0, y: UIScreen.main.bounds.maxY - height, width: width, height: height)
-        return frame
-    }
-    
-    func getValidSummary(amount: Double) -> Summary {
+    func getSummaryViewModel(amount: Double) -> Summary {
+        
         var summary: Summary
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
@@ -172,10 +170,13 @@ extension PXReviewViewModel {
     }
     
     func getDefaultSummary() -> Summary {
+        
         guard let choPref = self.preference else {
             return Summary(details: [:])
         }
+        
         let productSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.PRODUCT]!, detail: SummaryItemDetail(amount: choPref.getAmount()))
+        
         return Summary(details:[SummaryType.PRODUCT: productSummaryDetail])
     }
 }
@@ -221,9 +222,103 @@ extension PXReviewViewModel {
             action = nil
         }
         
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor)
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor)
         
-        return PXPaymentMethodComponent(props: bodyProps)
+        return PXPaymentMethodComponent(props: props)
+    }
+
+    func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
+
+        var customTitle = "Productos".localized
+        var totalAmount: Double = 0
+
+        if let tAmount = self.preference?.getAmount() {
+            totalAmount = tAmount
+        }
+
+        if let pref = preference, pref.items.count == 1 {
+            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
+                customTitle = itemTitle
+            }
+        }
+
+        let props = PXSummaryComponentProps(summaryViewModel: getSummaryViewModel(amount: totalAmount), paymentData: paymentData, total: totalAmount, width: width, customTitle: customTitle, textColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+
+        return PXSummaryComponent(props: props)
+    }
+
+    func buildTitleComponent() -> PXReviewTitleComponent {
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        return PXReviewTitleComponent(props: props)
+    }
+}
+
+// MARK: Item component
+extension PXReviewViewModel {
+
+    func buildItemComponents() -> [PXItemComponent] {
+        var pxItemComponents = [PXItemComponent]()
+        if reviewScreenPreference.isItemsEnable() { // Items can be disable
+            for item in self.preference!.items {
+                if let itemComponent = buildItemComponent(item: item) {
+                    pxItemComponents.append(itemComponent)
+                }
+            }
+        }
+        return pxItemComponents
+    }
+
+    fileprivate func shouldShowQuantity(item: Item) -> Bool {
+        return item.quantity > 1 // Quantity must not be shown if it is 1
+    }
+
+    fileprivate func shouldShowPrice(item: Item) -> Bool {
+        return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
+    }
+
+    fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
+        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+            return nil
+        }
+
+        let itemQuantiy = getItemQuantity(item: item)
+        let itemPrice = getItemPrice(item: item)
+        let itemTitle = getItemTitle(item: item)
+        let itemDescription = getItemDescription(item: item)
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
+        return PXItemComponent(props: itemProps)
+    }
+}
+
+// MARK: Item getters
+extension PXReviewViewModel {
+    fileprivate func getItemTitle(item: Item) -> String? { // Return item real title if it has multiple items, if not return description
+        if preference!.hasMultipleItems() {
+            return item.title
+        }
+        return item._description
+    }
+
+    fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
+        if preference!.hasMultipleItems() {
+            return item._description
+        }
+        return nil
+    }
+
+    fileprivate func getItemQuantity(item: Item) -> Int? {
+        if  !shouldShowQuantity(item: item) {
+            return nil
+        }
+        return item.quantity
+    }
+
+    fileprivate func getItemPrice(item: Item) -> Double? {
+        if  !shouldShowPrice(item: item) {
+            return nil
+        }
+        return item.unitPrice
     }
 }
 

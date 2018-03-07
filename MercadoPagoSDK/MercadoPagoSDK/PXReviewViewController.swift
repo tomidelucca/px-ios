@@ -16,15 +16,23 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
     
     // MARK: Definitions
+    var footerView : UIView!
+    var floatingButtonView : UIView!
+    var termsConditionView: PXTermsAndConditionView!
+    lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
 
-    var callbackPaymentData: ((PaymentData) -> Void)!
+    var callbackPaymentData: ((PaymentData) -> Void)
+    var callbackConfirm: ((PaymentData) -> Void)
+    var callbackExit: (() -> Void)
     
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping (PaymentData) -> Void) {
-        super.init()
+    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
+        self.callbackConfirm = callbackConfirm
+        self.callbackExit = callbackExit
+        super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,8 +45,7 @@ class PXReviewViewController: PXComponentContainerViewController {
         setupUI()
     }
     
-    func update(viewModel:PXReviewViewModel) {
-        // TODO: Implement reactive UI on viewModel didSet.
+    func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
 }
@@ -53,34 +60,194 @@ extension PXReviewViewController {
     }
     
     fileprivate func renderViews() {
-        
-        if contentView.subviews.isEmpty {
-           
-            for view in contentView.subviews {
-                view.removeFromSuperview()
-            }
-            
-            for constraint in contentView.constraints {
-                constraint.isActive = false
-            }
-            
-            addPaymentMethodComponent()
+        // TODO: Decidir que hacer con esto
+        //if contentView.contentView.subviews.isEmpty {
+
+        self.contentView.prepareforRender()
+
+        // Add title view.
+        let titleView = getTitleComponentView()
+        contentView.addSubview(titleView)
+        PXLayout.pinTop(view: titleView).isActive = true
+        PXLayout.centerHorizontally(view: titleView).isActive = true
+        PXLayout.matchWidth(ofView: titleView).isActive = true
+
+        // Add summary view.
+        let summaryView = getSummaryComponentView()
+        contentView.addSubviewToButtom(summaryView)
+        PXLayout.centerHorizontally(view: summaryView).isActive = true
+        PXLayout.matchWidth(ofView: summaryView).isActive = true
+
+        // Add item views
+        itemViews = buildItemComponentsViews()
+        for itemView in itemViews {
+            contentView.addSubviewToButtom(itemView)
+            PXLayout.centerHorizontally(view: itemView).isActive = true
+            PXLayout.matchWidth(ofView: itemView).isActive = true
+            itemView.addSeparatorLineToBottom(height: 1)
         }
+
+        // Add payment method view.
+        if let paymentMethodView = getPaymentMethodComponentView() {
+            contentView.addSubviewToButtom(paymentMethodView)
+            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
+            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        }
+
+        // Add terms and conditions.
+        if viewModel.shouldShowTermsAndCondition() {
+            termsConditionView = getTermsAndConditionView()
+            contentView.addSubview(termsConditionView)
+            PXLayout.matchWidth(ofView: termsConditionView).isActive = true
+            PXLayout.centerHorizontally(view: termsConditionView).isActive = true
+            contentView.addSubviewToButtom(termsConditionView)
+            termsConditionView.delegate = self
+        }
+
+        //Add Footer
+        footerView = getFooterView()
+        contentView.addSubviewToButtom(footerView)
+        PXLayout.matchWidth(ofView: footerView).isActive = true
+        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+        self.view.layoutIfNeeded()
+        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
+
+ 
+
+        // Add floating button
+        floatingButtonView = getFloatingButtonView()
+        view.addSubview(floatingButtonView)
+        PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
+        PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+
+        // Add elastic header.
+        addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
+
+        self.view.layoutIfNeeded()
+        PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
+        refreshContentViewSize()
+        //        }
+
     }
-    
-    fileprivate func addPaymentMethodComponent() {
-        
+
+    fileprivate func refreshContentViewSize() {
+        var height : CGFloat = 0
+        for view in contentView.getSubviews() {
+            height = height + view.frame.height
+        }
+        scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
+    }
+
+}
+// MARK: Component Builders
+extension PXReviewViewController {
+    fileprivate func buildItemComponentsViews() -> [UIView] {
+        var itemViews = [UIView]()
+        let itemComponents = viewModel.buildItemComponents()
+        for items in itemComponents {
+            itemViews.append(items.render())
+        }
+        return itemViews
+    }
+
+    fileprivate func isConfirmButtonVisible() -> Bool {
+        guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
+            return false
+        }
+        let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
+        let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
+        return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
+    }
+
+    fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta) {
             self.callbackPaymentData(self.viewModel.getClearPaymentData())
         }
         
         if let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction:action) {
-            let paymentMethodView = paymentMethodComponent.render()
-            contentView.addSubview(paymentMethodView)
-            PXLayout.pinTop(view: paymentMethodView, to: contentView).isActive = true
-            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
-            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-            PXLayout.pinBottom(view: paymentMethodView, to: contentView).isActive = true
+            return paymentMethodComponent.render()
+        }
+        
+        return nil
+    }
+    
+    fileprivate func getSummaryComponentView() -> UIView {
+        let summaryComponent = viewModel.buildSummaryComponent(width: PXLayout.getScreenWidth())
+        let summaryView = summaryComponent.render()
+        return summaryView
+    }
+    
+    fileprivate func getTitleComponentView() -> UIView {
+        let titleComponent = viewModel.buildTitleComponent()
+        return titleComponent.render()
+    }
+
+    fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
+            [weak self] in
+            guard let strongSelf = self else {
+                    return
+            }
+           strongSelf.confirmPayment()
+        }))
+        let containedButtonView = PXContainedActionButtonRenderer().render(component)
+        return containedButtonView
+    }
+    
+    fileprivate func getFooterView() -> UIView {
+        let payAction = PXComponentAction(label: "Confirmar".localized) {
+            [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.confirmPayment()
+        }
+        let cancelAction = PXComponentAction(label: "Cancelar".localized) {
+            [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.cancelPayment()
+        }
+        let footerProps = PXFooterProps(buttonAction: payAction, linkAction: cancelAction)
+        let footerComponent = PXFooterComponent(props: footerProps)
+        return footerComponent.render()
+    }
+    
+    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
+        let termsAndConditionView = PXTermsAndConditionView()
+        return termsAndConditionView
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+        if !isConfirmButtonVisible() {
+            self.floatingButtonView.alpha = 1
+        } else {
+            self.floatingButtonView.alpha = 0
         }
     }
+}
+
+//MARK: Actions.
+extension PXReviewViewController: PXTermsAndConditionViewDelegate {
+    
+    fileprivate func confirmPayment() {
+        self.hideNavBar()
+        self.hideBackButton()
+        self.callbackConfirm(self.viewModel.paymentData)
+    }
+    
+    fileprivate func cancelPayment() {
+        self.callbackExit()
+    }
+    
+    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
+        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
+        webVC.title = title
+        self.navigationController?.pushViewController(webVC, animated: true)
+    }
+
 }
