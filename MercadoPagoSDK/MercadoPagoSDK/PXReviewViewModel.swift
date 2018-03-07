@@ -47,6 +47,10 @@ extension PXReviewViewModel {
         return !String.isNullOrEmpty(MercadoPagoContext.payerAccessToken())
     }
     
+    func isPreferenceLoaded() -> Bool {
+        return self.preference != nil
+    }
+    
     func shouldShowTermsAndCondition() -> Bool {
         return !isUserLogged()
     }
