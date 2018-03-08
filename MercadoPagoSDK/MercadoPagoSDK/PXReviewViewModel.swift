@@ -192,7 +192,7 @@ extension PXReviewViewModel {
         
         let issuer = paymentData.getIssuer()
         let paymentMethodName = pm.name ?? ""
-        let paymentMethodIssuerName = issuer?.name ?? "Otro"
+        var paymentMethodIssuerName = issuer?.name ?? ""
         
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
@@ -213,8 +213,7 @@ extension PXReviewViewModel {
             }
         }
         
-        // TODO: Localize "Otro"
-        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && paymentMethodIssuerName != "Otro".localized {
+        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
             subtitle = paymentMethodIssuerName.toAttributedString()
         }
         
