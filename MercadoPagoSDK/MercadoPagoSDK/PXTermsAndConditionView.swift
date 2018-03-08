@@ -32,10 +32,11 @@ final class PXTermsAndConditionView: PXComponentView {
         termsAndConditionsText.delegate = self
         termsAndConditionsText.translatesAutoresizingMaskIntoConstraints = false
         termsAndConditionsText.attributedText = getTyCText()
+        termsAndConditionsText.isUserInteractionEnabled = false
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tap.delegate = self
-        termsAndConditionsText.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)
     
         addSubview(termsAndConditionsText)
         
