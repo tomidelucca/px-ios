@@ -109,7 +109,7 @@
     [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-//    [self setReviewScreenPreference];
+    [self setReviewScreenPreference];
 
     [self.mpCheckout start];
 
@@ -278,47 +278,16 @@
 }
 
 -(void)setPaymentResultScreenPreference {
-    PaymentResultScreenPreference *resultPreference = [TestComponent getPreference];
+    PaymentResultScreenPreference *resultPreference = [TestComponent getPaymentResultPreference];
 
     [self.mpCheckout setPaymentResultScreenPreference:resultPreference];
 }
 
 -(void)setReviewScreenPreference {
-    // Setear celdas custom para RyC
-
-    CustomTableViewCell *cargaSubeCell = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-    cargaSubeCell.label.text = @"Carga SUBE";
-    [cargaSubeCell.button setTitle:@"Cambiar" forState:UIControlStateNormal];
-    [cargaSubeCell.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
-
-    CustomTableViewCell *cargaSubeCell2 = [[[NSBundle mainBundle] loadNibNamed:@"CustomTableViewCell" owner:self options:nil] firstObject];
-    cargaSubeCell2.label.text = @"Carga SUBE";
-    [cargaSubeCell2.button setTitle:@"Cambiar" forState:UIControlStateNormal];
-    [cargaSubeCell2.button addTarget:self action:@selector(invokeCallback:) forControlEvents:UIControlEventTouchUpInside];
-
-    MPCustomCell *customCargaSube = [[MPCustomCell alloc] initWithCell:cargaSubeCell];
-    MPCustomCell *customCargaSube2 = [[MPCustomCell alloc] initWithCell:cargaSubeCell2];
-    self.customCell = customCargaSube;
-
-    // Setear Revisa y confima Preference
-
-    ReviewScreenPreference *reviewPreference = [[ReviewScreenPreference alloc] init];
-    [reviewPreference setTitleWithTitle:@"Recarga tu SUBE"];
-    [reviewPreference setConfirmButtonTextWithConfirmButtonText:@"Confirmar recarga"];
-    [reviewPreference setCancelButtonTextWithCancelButtonText:@"Cancelar recarga"];
-    //[ReviewScreenPreference addCustomItemCellWithCustomCell:customCargaSube];
-
-    SummaryRow *summaryRow = [[SummaryRow alloc] initWithCustomDescription:@"Comisión BACEN" descriptionColor: UIColor.brownColor customAmount:20.0 amountColor:UIColor.redColor separatorLine:NO];
-
-    [summaryRow disableAmount];
-
-    SummaryRow *summaryRow2 = [[SummaryRow alloc] initWithCustomDescription:@"Incluye interes" descriptionColor: UIColor.grayColor customAmount:0 amountColor:UIColor.redColor separatorLine:YES];
-
-    [summaryRow2 disableAmount];
-
-    //[reviewPreference setAddionalInfoCellsWithCustomCells:[NSArray arrayWithObjects:customCargaSube2, customCargaSube, nil]];
-
-    [self.mpCheckout setReviewScreenPreference:reviewPreference];
+    
+    ReviewScreenPreference *resultPreference = [TestComponent getReviewScreenPreference];
+    
+    [self.mpCheckout setReviewScreenPreference:resultPreference];
 }
 
 -(void)setServicePreference {

@@ -321,26 +321,21 @@ extension PXReviewViewModel {
     }
 }
 
-// MARK: - Custom cells.
-// TODO: Remove.
+// MARK: Custom Components
 extension PXReviewViewModel {
-    
-    // Custom cells.
-    func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(reviewScreenPreference.additionalInfoCells) {
-            return reviewScreenPreference.additionalInfoCells.count
+
+    open func buildTopCustomComponent() -> PXCustomComponentizable? {
+        if let customComponent = reviewScreenPreference.getPaymentMethodTopCustomComponent() {
+            return PXCustomComponentContainer(withComponent: customComponent)
         }
-        return 0
+        return nil
     }
     
-    func numberOfCustomItemCells() -> Int {
-        if hasCustomItemCells() {
-            return reviewScreenPreference.customItemCells.count
+    open func buildBottomCustomComponent() -> PXCustomComponentizable? {
+        if let customComponent = reviewScreenPreference.getPaymentMethodBottomCustomComponent() {
+            return PXCustomComponentContainer(withComponent: customComponent)
         }
-        return 0
+        return nil
     }
     
-    func hasCustomItemCells() -> Bool {
-        return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
-    }
 }

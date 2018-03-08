@@ -91,12 +91,29 @@ extension PXReviewViewController {
             PXLayout.matchWidth(ofView: itemView).isActive = true
             itemView.addSeparatorLineToBottom(height: 1)
         }
-
+        
+        // Top Custom View
+        if let topCustomView = getTopCustomView() {
+            topCustomView.addSeparatorLineToBottom(height: 1)
+            contentView.addSubviewToButtom(topCustomView)
+            PXLayout.matchWidth(ofView: topCustomView).isActive = true
+            PXLayout.centerHorizontally(view: topCustomView).isActive = true
+        }
+        
         // Add payment method view.
         if let paymentMethodView = getPaymentMethodComponentView() {
             contentView.addSubviewToButtom(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+        }
+        
+        // Bottom Custom View
+        if let bottomCustomView = getBottomCustomView() {
+            bottomCustomView.addSeparatorLineToTop(height: 1)
+            bottomCustomView.addSeparatorLineToBottom(height: 1)
+            contentView.addSubviewToButtom(bottomCustomView)
+            PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
+            PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
         }
 
         // Add terms and conditions.
@@ -222,6 +239,20 @@ extension PXReviewViewController {
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
+    }
+    
+    fileprivate func getTopCustomView() -> UIView? {
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+            return componentView
+        }
+        return nil
+    }
+    
+    fileprivate func getBottomCustomView() -> UIView? {
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+            return componentView
+        }
+        return nil
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {

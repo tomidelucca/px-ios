@@ -11,7 +11,7 @@ import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
 
-    static public func getPreference() -> PaymentResultScreenPreference {
+    static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
         let top = TestComponent()
         let bottom = TestComponent()
         let preference = PaymentResultScreenPreference()
@@ -22,11 +22,30 @@ import MercadoPagoSDK
         //        preference.setApprovedBottomCustomComponent(bottom)
         return preference
     }
-
+    
+    static public func getReviewScreenPreference() -> ReviewScreenPreference {
+        let top = TestComponent()
+        let bottom = TestComponent()
+        let preference = ReviewScreenPreference()
+        preference.setPaymentMethodTopCustomComponent(top)
+        preference.setPaymentMethodBottomCustomComponent(bottom)
+//        preference.disableItems()
+//        preference.disableChangeMethodOption()
+        return preference
+    }
+    
     public func render(store: PXCheckoutStore) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
+        let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
+        let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .red
+        let label = UILabel(frame: frame)
+        label.text = "Custom Component"
+        label.font = label.font.withSize(20)
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
+        label.textColor = .black
+        view.addSubview(label)
         return view
     }
 }

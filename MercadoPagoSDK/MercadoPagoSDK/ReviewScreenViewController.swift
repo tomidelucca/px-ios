@@ -256,11 +256,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell {
-        return makeCellWith(customCell: viewModel.reviewScreenPreference.additionalInfoCells[indexPath.row], indentifier: "CustomAppCell")
+        return UITableViewCell()
     }
 
     private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell {
-        return makeCellWith(customCell: viewModel.reviewScreenPreference.customItemCells[indexPath.row], indentifier: "CustomItemCell")
+        return UITableViewCell()
     }
 
     private func makeCellWith(customCell: MPCustomCell, indentifier: String) -> UITableViewCell {
