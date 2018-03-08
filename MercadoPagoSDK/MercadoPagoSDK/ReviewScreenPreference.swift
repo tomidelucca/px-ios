@@ -27,8 +27,8 @@ open class ReviewScreenPreference: NSObject {
     var shouldShowQuantityRow: Bool = true
     var itemsEnable = true
     
-    var topCustomComponent: PXCustomComponentizable?
-    var bottomCustomComponent: PXCustomComponentizable?
+    private var topCustomComponent: PXCustomComponentizable?
+    private var bottomCustomComponent: PXCustomComponentizable?
     
     open func setPaymentMethodTopCustomComponent(_ component: PXCustomComponentizable) {
         self.topCustomComponent = component

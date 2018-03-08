@@ -324,14 +324,14 @@ extension PXReviewViewModel {
 // MARK: Custom Components
 extension PXReviewViewModel {
 
-    open func buildTopCustomComponent() -> PXCustomComponentizable? {
+    func buildTopCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = reviewScreenPreference.getPaymentMethodTopCustomComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil
     }
     
-    open func buildBottomCustomComponent() -> PXCustomComponentizable? {
+    func buildBottomCustomComponent() -> PXCustomComponentizable? {
         if let customComponent = reviewScreenPreference.getPaymentMethodBottomCustomComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
