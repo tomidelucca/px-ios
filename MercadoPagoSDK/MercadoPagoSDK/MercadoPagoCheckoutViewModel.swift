@@ -80,7 +80,8 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     var paymentData = PaymentData()
     var payment: Payment?
     var paymentResult: PaymentResult?
-
+    var businessResult: PXBusinessResult?
+    
     open var payerCosts: [PayerCost]?
     open var issuers: [Issuer]?
     open var entityTypes: [EntityType]?

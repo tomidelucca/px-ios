@@ -14,7 +14,7 @@ class PXResultViewController: PXComponentContainerViewController {
     override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_PAYMENT_RESULT } }
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT } }
     
-    let viewModel: PXResultViewModel
+    let viewModel: PXResultViewModelInterface
     var headerView: UIView!
     var receiptView: UIView!
     var topCustomView: UIView!
@@ -24,7 +24,7 @@ class PXResultViewController: PXComponentContainerViewController {
     
     init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
-        self.viewModel.callback = callback
+        self.viewModel.setCallback(callback: callback)
         super.init()
         self.scrollView.backgroundColor = viewModel.primaryResultColor()
         self.shouldHideNavigationBar = true
@@ -37,20 +37,20 @@ class PXResultViewController: PXComponentContainerViewController {
     override func trackInfo() {
         
         var metadata = [TrackingUtil.METADATA_PAYMENT_IS_EXPRESS: TrackingUtil.IS_EXPRESS_DEFAULT_VALUE,
-                        TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.paymentResult.status,
-                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.paymentResult.statusDetail,
-                        TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.paymentResult._id]
-        if let pm = self.viewModel.paymentResult.paymentData?.getPaymentMethod() {
+                        TrackingUtil.METADATA_PAYMENT_STATUS: self.viewModel.getPaymentStatus(),
+                        TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.getPaymentStatusDetail(),
+                        TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.getPaymentId()]
+        if let pm = self.viewModel.getPaymentData().paymentMethod {
             metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
         }
-        if let issuer = self.viewModel.paymentResult.paymentData?.getIssuer() {
+        if let issuer = self.viewModel.getPaymentData().issuer {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
         
-        let finalId = "\(screenId)/\(self.viewModel.paymentResult.status)"
+        let finalId = "\(screenId)/\(self.viewModel.getPaymentStatus())"
         
         var name = screenName
-        if self.viewModel.paymentResult.isCallForAuth() {
+        if self.viewModel.isCallForAuth() {
             name = TrackingUtil.SCREEN_NAME_PAYMENT_RESULT_CALL_FOR_AUTH
         }
         
@@ -175,13 +175,17 @@ extension PXResultViewController {
         return footerComponent.render()
     }
 
-    func buildReceiptView() -> UIView {
-        let receiptComponent = viewModel.buildReceiptComponent()
+    func buildReceiptView() -> UIView? {
+        guard let receiptComponent  = viewModel.buildReceiptComponent() else {
+            return nil
+        }
         return receiptComponent.render()
     }
 
-    func buildBodyView() -> UIView {
-        let bodyComponent = viewModel.buildBodyComponent()
+    func buildBodyView() -> UIView? {
+        guard let bodyComponent  = viewModel.buildBodyComponent() else {
+            return nil
+        }
         return bodyComponent.render()
     }
 
