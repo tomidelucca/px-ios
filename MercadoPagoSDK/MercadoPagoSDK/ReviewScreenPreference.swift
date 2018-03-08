@@ -26,16 +26,21 @@ open class ReviewScreenPreference: NSObject {
     static let  DEFAULT_QUANTITY_TITLE = "Cantidad: ".localized
     var shouldShowQuantityRow: Bool = true
     var itemsEnable = true
-
-    var additionalInfoCells = [MPCustomCell]()
-    var customItemCells = [MPCustomCell]()
-
-    open func setTitle(title: String) {
-        self.title = title
+    
+    private var topCustomComponent: PXCustomComponentizable?
+    private var bottomCustomComponent: PXCustomComponentizable?
+    
+    open func setPaymentMethodTopCustomComponent(_ component: PXCustomComponentizable) {
+        self.topCustomComponent = component
     }
-
-    open func getTitle() -> String {
-        return title.localized
+    open func setPaymentMethodBottomCustomComponent(_ component: PXCustomComponentizable) {
+        self.bottomCustomComponent = component
+    }
+    open func getPaymentMethodTopCustomComponent() -> PXCustomComponentizable? {
+        return self.topCustomComponent
+    }
+    open func getPaymentMethodBottomCustomComponent() -> PXCustomComponentizable? {
+        return self.bottomCustomComponent
     }
 
     open func setConfirmButtonText(confirmButtonText: String) {
@@ -65,14 +70,6 @@ open class ReviewScreenPreference: NSObject {
 	open func enableChangeMethodOption() {
 		self.shouldDisplayChangeMethodOption = true
 	}
-
-    open func setCustomItemCell(customCell: [MPCustomCell]) {
-        self.customItemCells = customCell
-    }
-
-    open func setAddionalInfoCells(customCells: [MPCustomCell]) {
-        self.additionalInfoCells = customCells
-    }
 
     open func setCollectorIcon(image: UIImage){
         collectorIcon = image

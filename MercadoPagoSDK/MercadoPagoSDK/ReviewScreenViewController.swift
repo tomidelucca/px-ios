@@ -237,7 +237,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     private func getMainTitleCell(indexPath: IndexPath) -> UITableViewCell {
         let AdditionalStepTitleTableViewCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "AdditionalStepTitleTableViewCell", for: indexPath) as! AdditionalStepTitleTableViewCell
-        AdditionalStepTitleTableViewCell.setTitle(string: viewModel.reviewScreenPreference.getTitle())
+        AdditionalStepTitleTableViewCell.setTitle(string: "Titulo")
         AdditionalStepTitleTableViewCell.title.textColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         AdditionalStepTitleTableViewCell.cell.backgroundColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
         titleCell = AdditionalStepTitleTableViewCell
@@ -256,11 +256,11 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
 
     private func getCustomAdditionalCell(indexPath: IndexPath) -> UITableViewCell {
-        return makeCellWith(customCell: viewModel.reviewScreenPreference.additionalInfoCells[indexPath.row], indentifier: "CustomAppCell")
+        return UITableViewCell()
     }
 
     private func getCustomItemCell(indexPath: IndexPath) -> UITableViewCell {
-        return makeCellWith(customCell: viewModel.reviewScreenPreference.customItemCells[indexPath.row], indentifier: "CustomItemCell")
+        return UITableViewCell()
     }
 
     private func makeCellWith(customCell: MPCustomCell, indentifier: String) -> UITableViewCell {
@@ -396,7 +396,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
             if self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset || self.checkoutTable.contentOffset.y == ReviewScreenViewController.kNavBarOffset {
                 return ""
             }
-            return viewModel.reviewScreenPreference.getTitle()
+            return "Titulo"
         }
         return ""
     }

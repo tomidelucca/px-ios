@@ -83,7 +83,7 @@ open class CheckoutViewModel: NSObject {
             return 110 //ConfirmPaymentTableViewCell.ROW_HEIGHT : Esto va a cambiar con templetizado, lo modifico para limpiar la clase.
 
         } else if self.isItemCellFor(indexPath: indexPath) {
-            return hasCustomItemCells() ? reviewScreenPreference.customItemCells[indexPath.row].getHeight() : PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
+            return PurchaseItemDetailTableViewCell.getCellHeight(item: self.preference!.items[indexPath.row])
 
         } else if self.isPaymentMethodCellFor(indexPath: indexPath) {
             if isPaymentMethodSelectedCard() {
@@ -92,7 +92,7 @@ open class CheckoutViewModel: NSObject {
             return OfflinePaymentMethodCell.getCellHeight(paymentMethodOption: self.paymentOptionSelected, reviewScreenPreference: reviewScreenPreference, paymentMethod: paymentData.paymentMethod!)
 
         } else if self.isAddtionalCustomCellsFor(indexPath: indexPath) {
-            return reviewScreenPreference.additionalInfoCells[indexPath.row].getHeight()
+            return 0.0
 
         } else if isTermsAndConditionsViewCellFor(indexPath: indexPath) {
             return TermsAndConditionsViewCell.getCellHeight()
@@ -119,21 +119,22 @@ open class CheckoutViewModel: NSObject {
     }
 
     func numberOfCustomAdditionalCells() -> Int {
-        if !Array.isNullOrEmpty(reviewScreenPreference.additionalInfoCells) {
-            return reviewScreenPreference.additionalInfoCells.count
-        }
+//        if !Array.isNullOrEmpty(reviewScreenPreference.additionalInfoCells) {
+//            return reviewScreenPreference.additionalInfoCells.count
+//        }
         return 0
     }
 
     func numberOfCustomItemCells() -> Int {
-        if hasCustomItemCells() {
-            return reviewScreenPreference.customItemCells.count
-        }
+//        if hasCustomItemCells() {
+//            return reviewScreenPreference.customItemCells.count
+//        }
         return 0
     }
 
     func hasCustomItemCells() -> Bool {
-        return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
+//        return !Array.isNullOrEmpty(reviewScreenPreference.customItemCells)
+        return false
     }
 
     func getTotalAmount() -> Double {

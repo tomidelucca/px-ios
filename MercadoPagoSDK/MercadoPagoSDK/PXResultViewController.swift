@@ -81,6 +81,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Top Custom Component
         topCustomView = buildTopCustomView()
+        topCustomView.clipsToBounds = true
         contentView.addSubview(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
@@ -105,6 +106,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Bottom Custom Component
         bottomCustomView = buildBottomCustomView()
+        bottomCustomView.clipsToBounds = true
         contentView.addSubview(bottomCustomView)
         PXLayout.put(view: bottomCustomView, onBottomOf: bodyView).isActive = true
         PXLayout.put(view: bottomCustomView, aboveOf: footerView).isActive = true
