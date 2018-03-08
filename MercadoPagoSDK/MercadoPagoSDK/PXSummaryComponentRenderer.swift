@@ -11,9 +11,10 @@ import Foundation
 struct PXSummaryComponentRenderer {
     
     func render(_ summaryComponent: PXSummaryComponent) -> UIView {
-        // TODO: Check defaults logic for compact or full summary with UX.
-        guard let payerCost = summaryComponent.props.paymentData.getPayerCost(), payerCost.installments > 1 else { return buildCompactSummary(props: summaryComponent.props) }
-        return buildFullSummary(props: summaryComponent.props)
+        if summaryComponent.props.summaryViewModel.details.count > 1 {
+            return buildFullSummary(props: summaryComponent.props)
+        }
+        return buildCompactSummary(props: summaryComponent.props)
     }
 }
 
