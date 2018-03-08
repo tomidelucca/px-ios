@@ -65,6 +65,15 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         scrollView.bounces = true
     }
     
+    func refreshContentViewSize() {
+        var height : CGFloat = 0
+        for view in contentView.getSubviews() {
+            height = height + view.frame.height
+        }
+        PXLayout.setHeight(owner: contentView, height: height)
+        scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
             title = customNavigationTitle

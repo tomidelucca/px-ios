@@ -60,9 +60,7 @@ extension PXReviewViewController {
     }
     
     fileprivate func renderViews() {
-        // TODO: Decidir que hacer con esto
-        //if contentView.contentView.subviews.isEmpty {
-
+        
         self.contentView.prepareforRender()
 
         // Add title view.
@@ -119,8 +117,6 @@ extension PXReviewViewController {
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
- 
-
         // Add floating button
         floatingButtonView = getFloatingButtonView()
         view.addSubview(floatingButtonView)
@@ -134,22 +130,14 @@ extension PXReviewViewController {
         self.view.layoutIfNeeded()
         PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
         PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
-        refreshContentViewSize()
-        //        }
-
+        
+        super.refreshContentViewSize()
     }
-
-    fileprivate func refreshContentViewSize() {
-        var height : CGFloat = 0
-        for view in contentView.getSubviews() {
-            height = height + view.frame.height
-        }
-        scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
-    }
-
 }
+
 // MARK: Component Builders
 extension PXReviewViewController {
+    
     fileprivate func buildItemComponentsViews() -> [UIView] {
         var itemViews = [UIView]()
         let itemComponents = viewModel.buildItemComponents()
@@ -264,5 +252,4 @@ extension PXReviewViewController: PXTermsAndConditionViewDelegate {
         webVC.title = title
         self.navigationController?.pushViewController(webVC, animated: true)
     }
-
 }
