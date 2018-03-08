@@ -43,14 +43,6 @@ open class ReviewScreenPreference: NSObject {
         return self.bottomCustomComponent
     }
 
-    open func setTitle(title: String) {
-        self.title = title
-    }
-
-    open func getTitle() -> String {
-        return title.localized
-    }
-
     open func setConfirmButtonText(confirmButtonText: String) {
         self.confirmButtonText = confirmButtonText
     }
