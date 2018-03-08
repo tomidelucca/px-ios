@@ -41,8 +41,8 @@ class PXReviewViewController: PXComponentContainerViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.layoutIfNeeded()
         setupUI()
+        self.view.layoutIfNeeded()
     }
     
     func update(viewModel: PXReviewViewModel) {
@@ -54,9 +54,9 @@ class PXReviewViewController: PXComponentContainerViewController {
 extension PXReviewViewController {
     
     fileprivate func setupUI() {
-        scrollView.backgroundColor = .white
-        setNavBarBackgroundColor(color: .white)
-        renderViews()
+        if contentView.getSubviews().isEmpty {
+            renderViews()
+        }
     }
     
     fileprivate func renderViews() {

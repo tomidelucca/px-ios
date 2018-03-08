@@ -21,6 +21,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     
     init() {
         self.scrollView = UIScrollView()
+        self.scrollView.backgroundColor = .white
         self.scrollView.translatesAutoresizingMaskIntoConstraints = false
         self.scrollView.delaysContentTouches = true
         self.scrollView.canCancelContentTouches = false
@@ -43,6 +44,11 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
         
         PXLayout.pinBottom(view: scrollView, to: self.view, withMargin: -bottomDeltaMargin).isActive = true
         scrollView.bounces = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleNavigationBarEffect(scrollView)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -70,12 +76,17 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         for view in contentView.getSubviews() {
             height = height + view.frame.height
         }
-        PXLayout.setHeight(owner: contentView, height: height)
+        PXLayout.setHeight(owner: contentView, height: height).isActive = true
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
+        handleNavigationBarEffect(scrollView)
+        elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
+    }
+    
+    fileprivate func handleNavigationBarEffect(_ targetScrollView: UIScrollView) {
+        if targetScrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
             title = customNavigationTitle
             navigationItem.title = title
         } else {
@@ -85,6 +96,5 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
             navigationController?.navigationBar.layer.add(fadeTextAnimation, forKey: "fadeText")
             title = ""
         }
-        elasticHeader.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: -scrollView.contentOffset.y)
     }
 }
