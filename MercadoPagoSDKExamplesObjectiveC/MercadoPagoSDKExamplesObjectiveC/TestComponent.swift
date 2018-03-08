@@ -40,12 +40,18 @@ import MercadoPagoSDK
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .red
         let label = UILabel(frame: frame)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Custom Component"
         label.font = label.font.withSize(20)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         label.textColor = .black
         view.addSubview(label)
+        
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+        
+        NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
+        
         return view
     }
 }
