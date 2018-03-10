@@ -593,6 +593,8 @@
 		813B4125205189FC00B6D886 /* PXResultViewModelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B4123205189FC00B6D886 /* PXResultViewModelInterface.swift */; };
 		813B412A2051C3DB00B6D886 /* BusinessResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B41292051C3DB00B6D886 /* BusinessResultViewModel.swift */; };
 		813B412B2051C3DB00B6D886 /* BusinessResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B41292051C3DB00B6D886 /* BusinessResultViewModel.swift */; };
+		813B41352054793B00B6D886 /* PXBusinessResultBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B41342054793B00B6D886 /* PXBusinessResultBodyComponent.swift */; };
+		813B41362054793B00B6D886 /* PXBusinessResultBodyComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B41342054793B00B6D886 /* PXBusinessResultBodyComponent.swift */; };
 		814139BE202A052700824A10 /* PXPluginConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814139BD202A052700824A10 /* PXPluginConfigViewController.swift */; };
 		814139BF202A052700824A10 /* PXPluginConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814139BD202A052700824A10 /* PXPluginConfigViewController.swift */; };
 		815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815409441FD59F1C00B245BC /* PXReceiptComponent.swift */; };
@@ -1128,6 +1130,7 @@
 		813B4120205184F200B6D886 /* PXAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAction.swift; sourceTree = "<group>"; };
 		813B4123205189FC00B6D886 /* PXResultViewModelInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewModelInterface.swift; sourceTree = "<group>"; };
 		813B41292051C3DB00B6D886 /* BusinessResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessResultViewModel.swift; sourceTree = "<group>"; };
+		813B41342054793B00B6D886 /* PXBusinessResultBodyComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBusinessResultBodyComponent.swift; sourceTree = "<group>"; };
 		814139BD202A052700824A10 /* PXPluginConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPluginConfigViewController.swift; sourceTree = "<group>"; };
 		815409441FD59F1C00B245BC /* PXReceiptComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptComponent.swift; sourceTree = "<group>"; };
 		815409471FD5A74B00B245BC /* PXReceiptRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReceiptRenderer.swift; sourceTree = "<group>"; };
@@ -2508,6 +2511,7 @@
 				FC3FC8471FBCC95C00CF29E1 /* Instructions */,
 				812BA9BC1FC8B1F800FF32C2 /* Payment Method */,
 				FC7BD8A81FD5895800D5B2C7 /* Error */,
+				813B41342054793B00B6D886 /* PXBusinessResultBodyComponent.swift */,
 			);
 			name = Body;
 			sourceTree = "<group>";
@@ -2954,6 +2958,7 @@
 				4BAA55EB1DB0015800501061 /* AdditionalStepCardTableViewCell.swift in Sources */,
 				FC3FC8811FBE138100CF29E1 /* PXInstructionsAccreditationTimeRenderer.swift in Sources */,
 				15B8B1BD1E71DEAE0065DF50 /* AddCouponViewModel.swift in Sources */,
+				813B41352054793B00B6D886 /* PXBusinessResultBodyComponent.swift in Sources */,
 				158F17701D34141B00E7EBDA /* MercadoPagoContext.swift in Sources */,
 				FC114D6B1E6DECEF00640196 /* Cellable.swift in Sources */,
 				0F9883831AD2AB6000F750F0 /* Payer.swift in Sources */,
@@ -3359,6 +3364,7 @@
 				239A9C161F0FFA7100C338C7 /* Cause.swift in Sources */,
 				76743C791C46866D00120347 /* CheckoutPreference.swift in Sources */,
 				FC45F1241E8D50F2008D4831 /* UnlockCardTableViewCell.swift in Sources */,
+				813B41362054793B00B6D886 /* PXBusinessResultBodyComponent.swift in Sources */,
 				FC3FC88B1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
 				FC7BD8AB1FD5898700D5B2C7 /* PXErrorComponent.swift in Sources */,
 				76EC47D21C85E77A0086FA53 /* CurrencyTest.swift in Sources */,

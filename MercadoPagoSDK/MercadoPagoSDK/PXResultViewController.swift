@@ -78,8 +78,7 @@ class PXResultViewController: PXComponentContainerViewController {
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: receiptView, height: receiptView.frame.height).isActive = true
         }
-       
-        
+  
         //Add Top Custom Component
         self.topCustomView = buildTopCustomView()
         if let topCustomView = self.topCustomView {
@@ -89,8 +88,6 @@ class PXResultViewController: PXComponentContainerViewController {
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         }
-        
-        
         
         //Add Body
         self.bodyView = self.buildBodyView()

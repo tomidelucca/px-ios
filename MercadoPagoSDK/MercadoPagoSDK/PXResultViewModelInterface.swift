@@ -20,7 +20,7 @@ protocol PXResultViewModelInterface {
     func buildHeaderComponent() -> PXHeaderComponent
     func buildFooterComponent() -> PXFooterComponent
     func buildReceiptComponent() -> PXReceiptComponent?
-    func buildBodyComponent() -> PXBodyComponent?
+    func buildBodyComponent() -> PXComponentizable?
     func buildTopCustomComponent() -> PXCustomComponentizable?
     func buildBottomCustomComponent() -> PXCustomComponentizable?
 }

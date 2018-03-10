@@ -89,8 +89,11 @@ class BusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return PXReceiptComponent(props: recieptProps)
     }
     
-    func buildBodyComponent() -> PXBodyComponent? {
-        return nil
+    func buildBodyComponent() -> PXComponentizable? {
+        guard let labelInstruction = self.businessResult.instructionText else {
+            return nil
+        }
+        return PXBusinessResultBodyComponent(instructionLabel: labelInstruction)
     }
     
     func buildTopCustomComponent() -> PXCustomComponentizable? {
