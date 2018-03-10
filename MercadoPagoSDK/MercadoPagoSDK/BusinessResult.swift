@@ -12,6 +12,7 @@ enum PXBusinessResultStatus: String {
     case APPROVED = "APPROVED"
     case REJECTED = "REJECTED"
     case PENDING = "PENDING"
+    case IN_PROGRESS = "IN PROGRESS"
 }
 
 /*
@@ -22,6 +23,7 @@ class PXBusinessResult: NSObject {
 
     var status : PXBusinessResultStatus // APPROVED REJECTED PENDING
     var titleResult : String // Titluo de Congrats
+    var subTitleResult : String? // Sub Titluo de Congrats
     var relatedIcon : UIImage  // Icono de Congrats
     var principalAction : PXAction? // Boton principal (Azul)
     var secundaryAction : PXAction? // Boton secundario (link) - Si no se setea usamos nuestro default
@@ -34,12 +36,13 @@ class PXBusinessResult: NSObject {
     var receiptId: String? = nil
     //------
     
-    init(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil, status : PXBusinessResultStatus, titleResult : String, relatedIcon : UIImage, principalAction : PXAction? = nil, secundaryAction : PXAction? = nil, instructionText : String? = nil /*, showPaymentMethod : Bool = false*/ ) { // De momento no dejamos configurar el showPaymentMethod
+    init(paymentStatus: PXPaymentMethodPlugin.RemotePaymentStatus, statusDetails: String = "", receiptId: String? = nil, status : PXBusinessResultStatus, titleResult : String,subTitleResult :String? = nil, relatedIcon : UIImage, principalAction : PXAction? = nil, secundaryAction : PXAction? = nil, instructionText : String? = nil /*, showPaymentMethod : Bool = false*/ ) { // De momento no dejamos configurar el showPaymentMethod
         self.paymentStatus = paymentStatus
         self.statusDetails = statusDetails
         self.receiptId = receiptId
         self.status = status
         self.titleResult = titleResult
+        self.subTitleResult = subTitleResult
         self.relatedIcon = relatedIcon
         self.principalAction = principalAction
         self.secundaryAction = secundaryAction
