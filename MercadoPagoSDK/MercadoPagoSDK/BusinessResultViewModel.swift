@@ -71,7 +71,7 @@ class BusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
     }
     func buildHeaderComponent() -> PXHeaderComponent {
-        let headerProps = PXHeaderProps(labelText: nil, title: businessResult.titleResult.toAttributedString(), backgroundColor: primaryResultColor(), productImage: businessResult.relatedIcon, statusImage: getBadgeImage())
+        let headerProps = PXHeaderProps(labelText: businessResult.titleResult.toAttributedString(), title: (businessResult.subTitleResult?.toAttributedString())!, backgroundColor: primaryResultColor(), productImage: businessResult.relatedIcon, statusImage: getBadgeImage())
         return PXHeaderComponent(props: headerProps)
     }
     
