@@ -111,4 +111,14 @@ public class PXComponentView: UIView {
     func getSubviews() -> [UIView] {
         return self.contentView.subviews
     }
+    var heightConstraint : NSLayoutConstraint?
+    func fixHeight(height : CGFloat){
+        if let heightConstraint = self.heightConstraint {
+            heightConstraint.constant = height
+        }else {
+            self.heightConstraint = PXLayout.setHeight(owner: self, height: height)
+            self.heightConstraint?.isActive = true
+        }
+        self.layoutIfNeeded()
+    }
 }

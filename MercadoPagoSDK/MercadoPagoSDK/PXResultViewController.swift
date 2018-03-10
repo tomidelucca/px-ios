@@ -75,6 +75,8 @@ class PXResultViewController: PXComponentContainerViewController {
             receiptView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToButtom(receiptView)
             PXLayout.matchWidth(ofView: receiptView).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: receiptView, height: receiptView.frame.height).isActive = true
         }
        
         
@@ -84,6 +86,8 @@ class PXResultViewController: PXComponentContainerViewController {
             topCustomView.clipsToBounds = true
             contentView.addSubviewToButtom(topCustomView)
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         }
         
         
@@ -104,6 +108,9 @@ class PXResultViewController: PXComponentContainerViewController {
             bottomCustomView.clipsToBounds = true
             contentView.addSubviewToButtom(bottomCustomView)
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
+
         }
    
         //Add Footer
@@ -125,9 +132,6 @@ class PXResultViewController: PXComponentContainerViewController {
                 expandBody()
             }
         }
-        self.view.layoutIfNeeded()
-        self.contentView.layoutIfNeeded()
-        self.view.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
         super.refreshContentViewSize()
     }
@@ -136,27 +140,28 @@ class PXResultViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
         if let bodyView = self.bodyView {
-            PXLayout.setHeight(owner: bodyView, height: 0.0).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: bodyView, height: bodyView.frame.height).isActive = true
         }
-        if let receiptView = self.receiptView {
-            PXLayout.setHeight(owner: receiptView, height: 0.0).isActive = true
+        let fixedHeight = totalContentViewHeigth() - self.contentView.frame.height
+        guard let headerView = self.headerView else {
+            return
         }
-        PXLayout.setHeight(owner: self.contentView, height: totalContentViewHeigth()).isActive = true
+        PXLayout.setHeight(owner: headerView, height: headerView.frame.height + fixedHeight).isActive = true
+        super.refreshContentViewSize()
     }
     
     func expandBody() {
+        if let headerView = self.headerView {
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: headerView, height: headerView.frame.height).isActive = true
+        }
+        let fixedHeight = totalContentViewHeigth() - self.contentView.frame.height
         guard let bodyView = self.bodyView else {
             return
         }
-        self.view.layoutIfNeeded()
-        self.scrollView.layoutIfNeeded()
-        let headerHeight = self.headerView != nil ? self.headerView?.frame.height : 0
-        let footerHeight = self.footerView != nil ? self.footerView?.frame.height : 0
-        let receiptHeight = self.receiptView != nil ? self.receiptView?.frame.height : 0
-        let topCustomViewHeight = self.topCustomView != nil ? self.topCustomView?.frame.height : 0
-        let bottomCustomViewHeight = self.bottomCustomView != nil ? self.bottomCustomView?.frame.height : 0
-        let restHeight = totalContentViewHeigth() - footerHeight! - headerHeight! - receiptHeight! - topCustomViewHeight! - bottomCustomViewHeight!
-        PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
+        PXLayout.setHeight(owner: bodyView, height: bodyView.frame.height + fixedHeight).isActive = true
+        super.refreshContentViewSize()
     }
     
     func isEmptySpaceOnScreen() -> Bool {
@@ -166,7 +171,10 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func shouldExpandHeader() -> Bool {
         self.view.layoutIfNeeded()
-        return bodyView?.frame.height == 0
+        guard let bodyView = self.bodyView else {
+            return true
+        }
+        return bodyView.frame.height == 0
     }
     
     override func viewWillAppear(_ animated: Bool) {

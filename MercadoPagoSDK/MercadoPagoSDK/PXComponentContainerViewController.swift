@@ -76,8 +76,9 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         for view in contentView.getSubviews() {
             height = height + view.frame.height
         }
-        PXLayout.setHeight(owner: contentView, height: height).isActive = true
+        contentView.fixHeight(height: height)
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
+        self.view.layoutIfNeeded()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
