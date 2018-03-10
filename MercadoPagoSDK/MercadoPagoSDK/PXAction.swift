@@ -8,10 +8,10 @@
 
 import UIKit
 
-class PXAction: NSObject {
+open class PXAction: NSObject {
     var label: String
     var action : (() -> Void)
-    init(label: String, action:  @escaping (() -> Void)) {
+    public init(label: String, action:  @escaping (() -> Void)) {
         self.label = label
         self.action = action
     }

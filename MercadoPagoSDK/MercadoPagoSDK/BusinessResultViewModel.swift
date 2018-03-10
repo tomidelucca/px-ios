@@ -43,11 +43,11 @@ class BusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
     
     func getPaymentStatus() -> String {
-        return businessResult.status.rawValue
+        return businessResult.status.getDescription()
     }
     
     func getPaymentStatusDetail() -> String {
-        return businessResult.status.rawValue
+        return businessResult.status.getDescription()
     }
     
     func getPaymentId() -> String? {

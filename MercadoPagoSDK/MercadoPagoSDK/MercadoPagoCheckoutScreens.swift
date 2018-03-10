@@ -189,6 +189,10 @@ extension MercadoPagoCheckout {
 
     func showPaymentResultScreen() {
 
+        if self.viewModel.businessResult != nil {
+            self.showBusinessResultScreen()
+            return
+        }
         if self.viewModel.paymentResult == nil {
             self.viewModel.paymentResult = PaymentResult(payment: self.viewModel.payment!, paymentData: self.viewModel.paymentData)
         }
@@ -215,6 +219,16 @@ extension MercadoPagoCheckout {
         })
         self.pushViewController(viewController : congratsViewController, animated: false)
 
+    }
+    
+    func showBusinessResultScreen() {
+        
+        var viewModel = BusinessResultViewModel(businessResult: self.viewModel.businessResult!, paymentData: self.viewModel.paymentData)
+        var congratsViewController = PXResultViewController(viewModel: viewModel) { (resultcode) in
+            print("okidok")
+        }
+        self.pushViewController(viewController : congratsViewController, animated: false)
+        
     }
 
     func showErrorScreen() {

@@ -15,14 +15,14 @@ class PXResultViewController: PXComponentContainerViewController {
     override open var screenId: String { get { return TrackingUtil.SCREEN_ID_PAYMENT_RESULT } }
     
     let viewModel: PXResultViewModelInterface
-    var headerView: UIView!
-    var receiptView: UIView!
-    var topCustomView: UIView!
-    var bottomCustomView: UIView!
-    var bodyView: UIView!
-    var footerView: UIView!
+    var headerView: UIView?
+    var receiptView: UIView?
+    var topCustomView: UIView?
+    var bottomCustomView: UIView?
+    var bodyView: UIView?
+    var footerView: UIView?
     
-    init(viewModel: PXResultViewModel, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
+    init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
         self.viewModel.setCallback(callback: callback)
         super.init()
@@ -62,48 +62,60 @@ class PXResultViewController: PXComponentContainerViewController {
         self.contentView.prepareforRender()
         
         //Add Header
-        headerView = self.buildHeaderView()
-        contentView.addSubview(headerView)
-        PXLayout.pinTop(view: headerView, to: contentView).isActive = true
-        PXLayout.matchWidth(ofView: headerView).isActive = true
-        
+        self.headerView = self.buildHeaderView()
+        if let headerView = self.headerView {
+            contentView.addSubview(headerView)
+            PXLayout.pinTop(view: headerView, to: contentView).isActive = true
+            PXLayout.matchWidth(ofView: headerView).isActive = true
+        }
+
         //Add Receipt
-        receiptView = self.buildReceiptView()
-        receiptView.addSeparatorLineToBottom(height: 1)
-        contentView.addSubviewToButtom(receiptView)
-        PXLayout.matchWidth(ofView: receiptView).isActive = true
+        self.receiptView = self.buildReceiptView()
+        if let receiptView = self.receiptView {
+            receiptView.addSeparatorLineToBottom(height: 1)
+            contentView.addSubviewToButtom(receiptView)
+            PXLayout.matchWidth(ofView: receiptView).isActive = true
+        }
+       
         
         //Add Top Custom Component
-        topCustomView = buildTopCustomView()
-        topCustomView.clipsToBounds = true
-        contentView.addSubviewToButtom(topCustomView)
-        PXLayout.matchWidth(ofView: topCustomView).isActive = true
+        self.topCustomView = buildTopCustomView()
+        if let topCustomView = self.topCustomView {
+            topCustomView.clipsToBounds = true
+            contentView.addSubviewToButtom(topCustomView)
+            PXLayout.matchWidth(ofView: topCustomView).isActive = true
+        }
+        
         
         
         //Add Body
-        bodyView = self.buildBodyView()
-        contentView.addSubviewToButtom(bodyView)
-        PXLayout.matchWidth(ofView: bodyView).isActive = true
-        PXLayout.centerHorizontally(view: bodyView).isActive = true
-        self.view.layoutIfNeeded()
+        self.bodyView = self.buildBodyView()
+        if let bodyView = self.bodyView {
+            contentView.addSubviewToButtom(bodyView)
+            PXLayout.matchWidth(ofView: bodyView).isActive = true
+            PXLayout.centerHorizontally(view: bodyView).isActive = true
+            bodyView.addSeparatorLineToBottom(height: 1)
+        }
+        
         
         //Add Bottom Custom Component
-        bottomCustomView = buildBottomCustomView()
-        bottomCustomView.clipsToBounds = true
-        contentView.addSubviewToButtom(bottomCustomView)
-
-        PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
-        
-        
-        
+        self.bottomCustomView = buildBottomCustomView()
+        if let bottomCustomView = self.bottomCustomView{
+            bottomCustomView.clipsToBounds = true
+            contentView.addSubviewToButtom(bottomCustomView)
+            PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
+        }
+   
         //Add Footer
-        footerView = self.buildFooterView()
-        contentView.addSubviewToButtom(footerView)
-        PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
-        self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-        
+        self.footerView = self.buildFooterView()
+        if let footerView = self.footerView {
+            contentView.addSubviewToButtom(footerView)
+            PXLayout.matchWidth(ofView: footerView).isActive = true
+            PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+            self.view.layoutIfNeeded()
+            PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
+        }
+
         PXLayout.pinLastSubviewToBottom(view: contentView)?.isActive = true
         super.refreshContentViewSize()
         if isEmptySpaceOnScreen() {
@@ -113,8 +125,6 @@ class PXResultViewController: PXComponentContainerViewController {
                 expandBody()
             }
         }
-        bodyView.addSeparatorLineToBottom(height: 1)
-   
         self.view.layoutIfNeeded()
         self.contentView.layoutIfNeeded()
         self.view.layoutIfNeeded()
@@ -125,20 +135,27 @@ class PXResultViewController: PXComponentContainerViewController {
     func expandHeader() {
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
-        PXLayout.setHeight(owner: self.bodyView, height: 0.0).isActive = true
-        PXLayout.setHeight(owner: self.receiptView, height: 0.0).isActive = true
+        if let bodyView = self.bodyView {
+            PXLayout.setHeight(owner: bodyView, height: 0.0).isActive = true
+        }
+        if let receiptView = self.receiptView {
+            PXLayout.setHeight(owner: receiptView, height: 0.0).isActive = true
+        }
         PXLayout.setHeight(owner: self.contentView, height: totalContentViewHeigth()).isActive = true
     }
     
     func expandBody() {
+        guard let bodyView = self.bodyView else {
+            return
+        }
         self.view.layoutIfNeeded()
         self.scrollView.layoutIfNeeded()
-        let headerHeight = self.headerView.frame.height
-        let footerHeight = self.footerView.frame.height
-        let receiptHeight = self.receiptView.frame.height
-        let topCustomViewHeight = self.topCustomView.frame.height
-        let bottomCustomViewHeight = self.bottomCustomView.frame.height
-        let restHeight = totalContentViewHeigth() - footerHeight - headerHeight - receiptHeight - topCustomViewHeight - bottomCustomViewHeight
+        let headerHeight = self.headerView != nil ? self.headerView?.frame.height : 0
+        let footerHeight = self.footerView != nil ? self.footerView?.frame.height : 0
+        let receiptHeight = self.receiptView != nil ? self.receiptView?.frame.height : 0
+        let topCustomViewHeight = self.topCustomView != nil ? self.topCustomView?.frame.height : 0
+        let bottomCustomViewHeight = self.bottomCustomView != nil ? self.bottomCustomView?.frame.height : 0
+        let restHeight = totalContentViewHeigth() - footerHeight! - headerHeight! - receiptHeight! - topCustomViewHeight! - bottomCustomViewHeight!
         PXLayout.setHeight(owner: bodyView, height: restHeight).isActive = true
     }
     
@@ -149,7 +166,7 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func shouldExpandHeader() -> Bool {
         self.view.layoutIfNeeded()
-        return bodyView.frame.height == 0
+        return bodyView?.frame.height == 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
