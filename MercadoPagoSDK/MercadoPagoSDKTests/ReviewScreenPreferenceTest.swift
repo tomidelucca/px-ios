@@ -25,16 +25,6 @@ class ReviewScreenPreferenceTest: BaseTest {
         self.mpCheckout = MercadoPagoCheckout(publicKey: "PK_MLA", accessToken: "", checkoutPreference: checkoutPreference, navigationController: navControllerInstance)
     }
 
-    func testSetTitle() {
-
-        XCTAssertEqual(reviewScreenPreference.getTitle(), "Revisa si está todo bien".localized)
-
-        reviewScreenPreference.setTitle(title: "1")
-        self.mpCheckout.setReviewScreenPreference(reviewScreenPreference)
-
-        XCTAssertEqual(self.mpCheckout.viewModel.reviewScreenPreference.getTitle(), "1")
-    }
-
     func testSetConfirmButtonText() {
 
         XCTAssertEqual(reviewScreenPreference.getConfirmButtonText(), "Pagar".localized)

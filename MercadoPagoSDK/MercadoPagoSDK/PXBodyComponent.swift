@@ -68,12 +68,11 @@ open class PXBodyComponent: NSObject, PXComponentizable {
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
             }
+            if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
+                descriptionDetail = paymentMethodIssuerName.toAttributedString()
+            }
         } else {
             pmDescription = paymentMethodName
-        }
-        
-        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
-            descriptionDetail = paymentMethodIssuerName.toAttributedString()
         }
 
         var disclaimerText: String? = nil
