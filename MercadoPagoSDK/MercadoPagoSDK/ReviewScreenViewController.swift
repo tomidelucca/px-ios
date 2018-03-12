@@ -59,12 +59,12 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
             return
         }
-        var metadata = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethod._id]
+        var metadata: [String: String] = [TrackingUtil.METADATA_SHIPPING_INFO: TrackingUtil.HAS_SHIPPING_DEFAULT_VALUE, TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentMethod.paymentTypeId, TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentMethod._id]
 
         if let issuer = self.viewModel.paymentData.getIssuer() {
             metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
         }
-        MPXTracker.trackScreen(screenId: screenId, screenName: screenName, metadata: metadata)
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: metadata)
     }
 
     override func loadMPStyles() {

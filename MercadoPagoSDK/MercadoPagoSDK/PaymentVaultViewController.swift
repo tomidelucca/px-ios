@@ -79,7 +79,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         if let groupName = groupName {
             finalId = screenId + "/" + groupName
         }
-        MPXTracker.trackScreen(screenId: finalId, screenName: screenName)
+        MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
     }
 
     fileprivate func initCommon() {
