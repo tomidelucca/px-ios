@@ -23,6 +23,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
 
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
+        pmBodyView.backgroundColor = component.props.backgroundColor
         pmBodyView.translatesAutoresizingMaskIntoConstraints = false
         let paymentMethodIcon = component.getPaymentMethodIconComponent()
         pmBodyView.paymentMethodIcon = paymentMethodIcon.render()
@@ -40,7 +41,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
         pmBodyView.addSubview(title)
         title.attributedText = component.props.title
         title.font = Utils.getFont(size: TITLE_FONT_SIZE)
-        title.textColor = .pxBlack
+        title.textColor = component.props.boldLabelColor
         title.textAlignment = .center
         title.numberOfLines = 0
         pmBodyView.putOnBottomOfLastView(view: title, withMargin: PXLayout.S_MARGIN)?.isActive = true
@@ -54,7 +55,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.amountDetail = detailLabel
             detailLabel.attributedText = detailText
             detailLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
-            detailLabel.textColor = .pxBrownishGray
+            detailLabel.textColor = component.props.lightLabelColor
             detailLabel.textAlignment = .center
             PXLayout.setHeight(owner: detailLabel, height: 18.0).isActive = true
             pmBodyView.putOnBottomOfLastView(view: detailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
@@ -69,7 +70,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.paymentMethodDescription = descriptionLabel
             descriptionLabel.attributedText = paymentMethodDescription
             descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
-            descriptionLabel.textColor = .pxBrownishGray
+            descriptionLabel.textColor = component.props.lightLabelColor
             descriptionLabel.textAlignment = .center
             descriptionLabel.numberOfLines = 2
             pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
@@ -84,7 +85,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             pmBodyView.addSubview(pmDetailLabel)
             pmDetailLabel.attributedText = pmDetailText
             pmDetailLabel.font = Utils.getFont(size: DESCRIPTION_DETAIL_FONT_SIZE)
-            pmDetailLabel.textColor = .pxBrownishGray
+            pmDetailLabel.textColor = component.props.lightLabelColor
             pmDetailLabel.textAlignment = .center
             pmBodyView.putOnBottomOfLastView(view: pmDetailLabel, withMargin: PXLayout.XXS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: pmDetailLabel, withMargin:  PXLayout.XXS_MARGIN).isActive = true
@@ -99,7 +100,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
             disclaimerLabel.attributedText = disclaimer
             disclaimerLabel.numberOfLines = 2
             disclaimerLabel.font = Utils.getFont(size: DISCLAIMER_FONT_SIZE)
-            disclaimerLabel.textColor = .pxBrownishGray
+            disclaimerLabel.textColor = component.props.lightLabelColor
             disclaimerLabel.textAlignment = .center
             pmBodyView.putOnBottomOfLastView(view: disclaimerLabel, withMargin: PXLayout.M_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: disclaimerLabel, withMargin:  PXLayout.XS_MARGIN).isActive = true
@@ -113,20 +114,13 @@ class PXPaymentMethodComponentRenderer: NSObject {
             actionButton.add(for: .touchUpInside, action.action)
             pmBodyView.actionButton = actionButton
             pmBodyView.addSubview(actionButton)
+            actionButton.backgroundColor = .clear
             
             pmBodyView.putOnBottomOfLastView(view: actionButton, withMargin: PXLayout.S_MARGIN)?.isActive = true
             
             PXLayout.pinLeft(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: actionButton, withMargin:  PXLayout.XXS_MARGIN).isActive = true
             PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
-            
-        }
-        
-        if let backgroundColor = component.props.backgroundColor {
-            pmBodyView.backgroundColor = backgroundColor
-            if let actionButton = pmBodyView.actionButton {
-                actionButton.backgroundColor = backgroundColor
-            }
         }
         
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
@@ -142,5 +136,5 @@ class PXPaymentMethodView: PXBodyView {
     var paymentMethodDescription: UILabel?
     var paymentMethodDetail: UILabel?
     var disclaimerLabel: UILabel?
-    var actionButton: UIButton?
+    var actionButton: PXSecondaryButton?
 }

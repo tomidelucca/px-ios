@@ -77,9 +77,9 @@ extension ThemeManager {
         return nil
     }
     
-    func getTintColorForReviewConfirmNavigation() -> UIColor {
+    func getTitleColorForReviewConfirmNavigation() -> UIColor {
         if currentTheme is PXDefaultTheme {
-            return currentTheme.boldLabelTintColor()
+            return currentTheme.navigationBar().backgroundColor
         }
         return ThemeManager.shared.getTheme().navigationBar().tintColor
     }

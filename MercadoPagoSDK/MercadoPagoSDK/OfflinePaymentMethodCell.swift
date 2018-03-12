@@ -46,7 +46,7 @@ class OfflinePaymentMethodCell: UITableViewCell {
         self.accreditationTimeIcon.tintColor = ThemeManager.shared.getTheme().labelTintColor()
         self.accreditationTimeIcon.image = image
         self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage()
-        self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
+        self.contentView.backgroundColor = .white
     }
 
     override func prepareForReuse() {

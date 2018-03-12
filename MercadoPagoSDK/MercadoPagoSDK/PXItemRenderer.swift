@@ -22,7 +22,7 @@ struct PXItemRenderer {
 
     func render(_ itemComponent: PXItemComponent) -> PXItemContainerView {
         let itemView = PXItemContainerView()
-        itemView.backgroundColor = UIColor.px_grayBackgroundColor()
+        itemView.backgroundColor = itemComponent.props.backgroundColor
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
         itemView.itemImage = buildItemImage(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
@@ -38,7 +38,7 @@ struct PXItemRenderer {
 
         // Item Title
         if itemComponent.shouldShowTitle() {
-            itemView.itemTitle = buildTitle(with: itemComponent.getTitle())
+            itemView.itemTitle = buildTitle(with: itemComponent.getTitle(), labelColor: itemComponent.props.boldLabelColor)
         }
         if let itemTitle = itemView.itemTitle {
             itemView.addSubviewToButtom(itemTitle, withMargin: PXLayout.S_MARGIN)
@@ -48,7 +48,7 @@ struct PXItemRenderer {
 
         // Item description
         if itemComponent.shouldShowDescription() {
-            itemView.itemDescription = buildDescription(with: itemComponent.getDescription())
+            itemView.itemDescription = buildDescription(with: itemComponent.getDescription(), labelColor: itemComponent.props.lightLabelColor)
         }
         if let itemDescription = itemView.itemDescription {
             itemView.addSubviewToButtom(itemDescription, withMargin: PXLayout.XS_MARGIN)
@@ -58,7 +58,7 @@ struct PXItemRenderer {
 
         // Item quantity
         if itemComponent.shouldShowQuantity() {
-            itemView.itemQuantity = buildQuantity(with: itemComponent.getQuantity())
+            itemView.itemQuantity = buildQuantity(with: itemComponent.getQuantity(), labelColor: itemComponent.props.lightLabelColor)
         }
         if let itemQuantity = itemView.itemQuantity {
             itemView.addSubviewToButtom(itemQuantity, withMargin: PXLayout.XS_MARGIN)
@@ -68,7 +68,7 @@ struct PXItemRenderer {
 
         // Item amount
         if itemComponent.shouldShowUnitAmount() {
-            itemView.itemAmount = buildItemAmount(with: itemComponent.getUnitAmountPrice(), title: itemComponent.getUnitAmountTitle())
+            itemView.itemAmount = buildItemAmount(with: itemComponent.getUnitAmountPrice(), title: itemComponent.getUnitAmountTitle(), labelColor: itemComponent.props.lightLabelColor)
         }
         if let itemAmount = itemView.itemAmount {
             let margin = itemView.itemQuantity == nil ? PXLayout.XS_MARGIN : PXLayout.XXXS_MARGIN
@@ -112,49 +112,45 @@ extension PXItemRenderer {
         return imageView
     }
 
-    fileprivate func buildTitle(with text: String?) -> UILabel? {
+    fileprivate func buildTitle(with text: String?, labelColor: UIColor) -> UILabel? {
         guard let text = text else {
             return nil
         }
 
         let font = Utils.getFont(size: PXItemRenderer.TITLE_FONT_SIZE)
-        let color = ThemeManager.shared.getTheme().boldLabelTintColor()
-        return buildLabel(text: text, color: color, font: font)
+        return buildLabel(text: text, color: labelColor, font: font)
     }
 
-    fileprivate func buildDescription(with text: String?) -> UILabel? {
+    fileprivate func buildDescription(with text: String?, labelColor: UIColor) -> UILabel? {
         guard let text = text else {
             return nil
         }
 
         let font = Utils.getFont(size: PXItemRenderer.DESCRIPTION_FONT_SIZE)
-        let color = ThemeManager.shared.getTheme().labelTintColor()
-        return buildLabel(text: text, color: color, font: font)
+        return buildLabel(text: text, color: labelColor, font: font)
     }
 
-    func buildQuantity(with text: String?) -> UILabel? {
+    func buildQuantity(with text: String?, labelColor: UIColor) -> UILabel? {
         guard let text = text else {
             return nil
         }
 
         let font = Utils.getFont(size: PXItemRenderer.QUANTITY_FONT_SIZE)
-        let color = ThemeManager.shared.getTheme().labelTintColor()
-        return buildLabel(text: text, color: color, font: font)
+        return buildLabel(text: text, color: labelColor, font: font)
     }
 
-    fileprivate func buildItemAmount(with amount: Double?, title: String?) -> UILabel? {
+    fileprivate func buildItemAmount(with amount: Double?, title: String?, labelColor: UIColor) -> UILabel? {
         guard let title = title, let amount = amount else {
             return nil
         }
 
         let font = Utils.getFont(size: PXItemRenderer.AMOUNT_FONT_SIZE)
-        let color = ThemeManager.shared.getTheme().labelTintColor()
 
-        let unitPrice = buildAttributedUnitAmount(amount: amount, color: color, fontSize: font.pointSize)
+        let unitPrice = buildAttributedUnitAmount(amount: amount, color: labelColor, fontSize: font.pointSize)
         let unitPriceTitle = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: font])
         unitPriceTitle.append(unitPrice)
 
-        return buildLabel(attributedText: unitPriceTitle, color: color, font: font)
+        return buildLabel(attributedText: unitPriceTitle, color: labelColor, font: font)
     }
 
     fileprivate func buildAttributedUnitAmount(amount: Double, color: UIColor, fontSize: CGFloat) -> NSAttributedString {

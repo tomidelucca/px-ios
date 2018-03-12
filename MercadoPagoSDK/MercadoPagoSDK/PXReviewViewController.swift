@@ -47,6 +47,10 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
@@ -56,6 +60,10 @@ class PXReviewViewController: PXComponentContainerViewController {
 extension PXReviewViewController {
     
     fileprivate func setupUI() {
+        navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
+        loadMPStyles()
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         if contentView.getSubviews().isEmpty {
             renderViews()
         }
