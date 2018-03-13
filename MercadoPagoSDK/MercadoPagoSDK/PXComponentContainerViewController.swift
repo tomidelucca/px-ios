@@ -13,15 +13,14 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
     fileprivate lazy var elasticHeader = UIView()
     fileprivate lazy var customNavigationTitle: String = ""
     fileprivate lazy var secondaryCustomNavigationTitle: String = ""
-    fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.5
+    fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.8
     fileprivate lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
+    fileprivate lazy var navigationTitleStatusStep: Int = 0
     
     var scrollView: UIScrollView!
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
-    
-    var navigationStatusStep: Int = 0
     
     init() {
         self.scrollView = UIScrollView()
@@ -83,7 +82,7 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         scrollView.bounces = true
         
         let titleView = ViewUtils.getCustomNavigationTitleLabel(textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), font: Utils.getFont(size: PXLayout.S_FONT), titleText: "")
-        self.navigationItem.titleView = titleView
+        navigationItem.titleView = titleView
     }
     
     func refreshContentViewSize() {
@@ -103,54 +102,29 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
     fileprivate func handleNavigationBarEffect(_ targetScrollView: UIScrollView) {
         
         let offset = targetScrollView.contentOffset.y
+        let STATUS_TITLE_BREAKPOINT: Int = 2
         
         if offset >= NAVIGATION_BAR_DELTA_Y {
-            if NAVIGATION_BAR_SECONDARY_DELTA_Y != 0 && offset >= NAVIGATION_BAR_SECONDARY_DELTA_Y {
-                
-                if let currentTitle = title, currentTitle != secondaryCustomNavigationTitle {
-                  
-                    /*
-                    let titleAnimation = CATransition()
-                    titleAnimation.duration = 0.3
-                    titleAnimation.type = kCATransitionPush
-                    titleAnimation.subtype = kCATransitionFromTop
-                    titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    
-                    navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
-                    (navigationItem.titleView as? UILabel)?.text = secondaryCustomNavigationTitle
-                    (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
-                    // I added this to autosize the title after setting new text
-                    (navigationItem.titleView as? UILabel)?.sizeToFit()*/
-                }
-        
-            } else {
-                
-                /*
-                if navigationStatusStep == 0 {
-                    navigationStatusStep = 1
-                    let titleAnimation = CATransition()
-                    titleAnimation.duration = 0.5
-                    titleAnimation.type = kCATransitionPush
-                    titleAnimation.subtype = kCATransitionFromTop
-                    titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
-                    (navigationItem.titleView as? UILabel)?.sizeToFit()
-                    (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
-                }*/
-            }
-            
-        } else {
-            //if navigationStatusStep != 0 {
-                navigationStatusStep = 0
+            if navigationTitleStatusStep < STATUS_TITLE_BREAKPOINT {
                 let titleAnimation = CATransition()
                 titleAnimation.duration = 0.5
                 titleAnimation.type = kCATransitionPush
-                titleAnimation.subtype = kCATransitionFromBottom
+                titleAnimation.subtype = kCATransitionFromTop
                 titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
                 navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
                 (navigationItem.titleView as? UILabel)?.sizeToFit()
+                (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
+                navigationTitleStatusStep = navigationTitleStatusStep + 1
+            }
+        } else {
+            if navigationTitleStatusStep >= STATUS_TITLE_BREAKPOINT {
+                navigationTitleStatusStep = 0
+                let fadeOutTextAnimation = CATransition()
+                fadeOutTextAnimation.duration = 0.3
+                fadeOutTextAnimation.type = kCATransitionFade
+                (navigationItem.titleView as? UILabel)?.layer.add(fadeOutTextAnimation, forKey: "fadeOutText")
                 (navigationItem.titleView as? UILabel)?.text = ""
-            //}
+            }
         }
     }
 }

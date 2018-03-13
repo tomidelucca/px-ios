@@ -98,7 +98,7 @@ extension PXItemRenderer {
     fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
             return (imageURL, nil)
-        } else if let image =  collectorImage {
+        } else if let image = collectorImage {
             return (nil, image)
         } else {
             return (nil, MercadoPago.getImage("MPSDK_review_iconoCarrito"))
