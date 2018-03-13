@@ -59,30 +59,25 @@ class PXResultViewController: PXComponentContainerViewController {
 
     func renderViews() {
 
-        for view in contentView.subviews {
-            view.removeFromSuperview()
-        }
-        for constraint in contentView.constraints {
-            constraint.isActive = false
-        }
+        self.contentView.prepareforRender()
+
         //Add Header
         headerView = self.buildHeaderView()
         contentView.addSubview(headerView)
-        PXLayout.pinTop(view: headerView, to: contentView).isActive = true
+        PXLayout.pinTop(view: headerView).isActive = true
         PXLayout.matchWidth(ofView: headerView).isActive = true
 
         //Add Receipt
         receiptView = self.buildReceiptView()
+        contentView.addSubviewToButtom(receiptView)
         receiptView.addSeparatorLineToBottom(height: 1)
-        contentView.addSubview(receiptView)
-        receiptView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.matchWidth(ofView: receiptView).isActive = true
 
         //Add Top Custom Component
         topCustomView = buildTopCustomView()
         topCustomView.clipsToBounds = true
-        contentView.addSubview(topCustomView)
+        contentView.addSubviewToButtom(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
 
@@ -90,8 +85,8 @@ class PXResultViewController: PXComponentContainerViewController {
         footerView = self.buildFooterView()
         contentView.addSubview(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.pinBottom(view: footerView, to: contentView).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+        PXLayout.pinBottom(view: footerView).isActive = true
+        PXLayout.centerHorizontally(view: footerView).isActive = true
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
@@ -160,6 +155,8 @@ class PXResultViewController: PXComponentContainerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         renderViews()
     }

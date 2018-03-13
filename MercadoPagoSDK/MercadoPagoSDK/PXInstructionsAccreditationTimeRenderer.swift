@@ -37,7 +37,7 @@ class PXInstructionsAccreditationTimeRenderer: NSObject {
     func buildTitleLabel(with text: String, in superView: UIView) -> UILabel {
         let textSize: CGFloat = ACCREDITATION_LABEL_FONT_SIZE
         let titleLabel = UILabel()
-        let attributedText = Utils.getAccreditationTimeAttributedString(from: text)
+        let attributedText = Utils.getAccreditationTimeAttributedString(from: text, fontSize: textSize)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
