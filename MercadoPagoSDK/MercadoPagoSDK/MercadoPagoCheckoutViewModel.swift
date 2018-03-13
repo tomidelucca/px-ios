@@ -186,6 +186,29 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
     }
 
+    fileprivate func getPaymentMethodsOptions(_ paymentMethodPluginsToShow: [PXPaymentMethodPlugin]) -> String {
+        var paymentMethodsOptions = ""
+        guard let paymentMethods = search?.paymentMethods, let customPaymentOptions = customPaymentOptions else {
+            return paymentMethodsOptions
+        }
+
+        for paymentMethod in paymentMethods {
+            if let id = paymentMethod._id, let paymentTypeId = paymentMethod.paymentTypeId {
+                paymentMethodsOptions += "\(id):\(paymentTypeId)|"
+            }
+        }
+
+        for customCard in customPaymentOptions {
+            paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())|"
+        }
+
+        for paymentMethodPlugin in paymentMethodPluginsToShow {
+            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\("payment_method_plugin")|"
+        }
+        paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
+        return paymentMethodsOptions
+    }
+
     func paymentVaultViewModel() -> PaymentVaultViewModel {
         var groupName: String?
         if let optionSelected = paymentOptionSelected {
@@ -194,6 +217,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         _ = copyViewModelAndAssignToCheckoutStore()
         let paymentMethodPluginsToShow = paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
+
+        // Get payment methods options for tracking in PaymentVault
+        let paymentMethodsOptions = getPaymentMethodsOptions(paymentMethodPluginsToShow)
+        PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS, value: paymentMethodsOptions)
 
         return PaymentVaultViewModel(amount: self.getAmount(), paymentPrefence: getPaymentPreferences(), paymentMethodOptions: self.paymentMethodOptions!, customerPaymentOptions: self.customPaymentOptions, paymentMethodPlugins: paymentMethodPluginsToShow, groupName: groupName, isRoot: rootVC, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter, couponCallback: {[weak self] (discount) in
             guard let object = self else {
