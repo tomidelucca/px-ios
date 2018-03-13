@@ -93,7 +93,9 @@ class BusinessResultViewModel: NSObject, PXResultViewModelInterface {
         guard let labelInstruction = self.businessResult.instructionText else {
             return nil
         }
-        return PXBusinessResultBodyComponent(instructionLabel: labelInstruction)
+        let props = PXErrorProps(status: self.businessResult.status.getDescription(), statusDetail: "", paymentMethodName: nil, action: {}, customMessage: labelInstruction)
+        
+        return PXErrorComponent(props: props)
     }
     
     func buildTopCustomComponent() -> PXCustomComponentizable? {

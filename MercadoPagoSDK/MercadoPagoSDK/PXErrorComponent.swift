@@ -24,6 +24,9 @@ public class PXErrorComponent: NSObject, PXComponentizable {
     }
 
     public func getDescription() -> String {
+        if let customMessage = self.props.customMessage {
+            return customMessage
+        }
         if self.props.status.elementsEqual(PXPayment.Status.PENDING) || self.props.status.elementsEqual(PXPayment.Status.IN_PROCESS) {
             if self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) {
                 return PXResourceProvider.getDescriptionForErrorBodyForPENDING_CONTINGENCY()
@@ -67,6 +70,9 @@ public class PXErrorComponent: NSObject, PXComponentizable {
     }
 
     public func hasTitle() -> Bool {
+        if self.props.customMessage != nil {
+            return true
+        }
         return !self.props.statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT)
     }
 
@@ -84,11 +90,13 @@ class PXErrorProps: NSObject {
     var statusDetail: String
     var paymentMethodName: String?
     var action : (() -> Void)
+    var customMessage: String?
 
-    init(status: String, statusDetail: String, paymentMethodName: String?, action:  @escaping (() -> Void)) {
+    init(status: String, statusDetail: String, paymentMethodName: String? = nil, action:  @escaping (() -> Void), customMessage: String? = nil) {
         self.status = status
         self.statusDetail = statusDetail
         self.paymentMethodName = paymentMethodName
         self.action = action
+        self.customMessage = customMessage
     }
 }
