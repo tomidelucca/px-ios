@@ -62,7 +62,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 // MARK: Elastic header.
 extension PXComponentContainerViewController: UIScrollViewDelegate {
     
-    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, navigationSecondaryTitle: String?=nil, navigationDeltaY:CGFloat?=nil, navigationSecondaryDeltaY:CGFloat?=nil) {
+    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, textColor: UIColor, navigationSecondaryTitle: String?=nil, navigationDeltaY:CGFloat?=nil, navigationSecondaryDeltaY:CGFloat?=nil) {
         elasticHeader.removeFromSuperview()
         scrollView.delegate = self
         customNavigationTitle = navigationCustomTitle
@@ -78,10 +78,11 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         } else {
             secondaryCustomNavigationTitle = navigationCustomTitle
         }
+        
         view.insertSubview(elasticHeader, aboveSubview: contentView)
         scrollView.bounces = true
         
-        let titleView = ViewUtils.getCustomNavigationTitleLabel(textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), font: Utils.getFont(size: PXLayout.S_FONT), titleText: "")
+        let titleView = ViewUtils.getCustomNavigationTitleLabel(textColor: textColor, font: Utils.getFont(size: PXLayout.S_FONT), titleText: "")
         navigationItem.titleView = titleView
     }
     
