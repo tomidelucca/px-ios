@@ -30,28 +30,28 @@ import UIKit
  */
 open class PXBusinessResult: NSObject {
 
-    var status : PXBusinessResultStatus // APPROVED REJECTED PENDING
-    var titleResult : String // Titluo de Congrats
-    var subTitleResult : String? // Sub Titluo de Congrats
-    var relatedIcon : UIImage  // Icono de Congrats
-    var principalAction : PXAction? // Boton principal (Azul)
-    var secundaryAction : PXAction // Boton secundario (link) - Obligatoria
-    var instructionText : String? // Texto
-    /* De momento es inaccesible */private var showPaymentMethod : Bool = false // Si quiere que muestre la celda de PM
+    var status: PXBusinessResultStatus // APPROVED REJECTED PENDING
+    var title: String // Titluo de Congrats
+    var subtitle: String? // Sub Titluo de Congrats
+    var icon: UIImage  // Icono de Congrats
+    var mainAction: PXAction? // Boton principal (Azul)
+    var secondaryAction: PXAction // Boton secundario (link) - Obligatoria
+    var helpMessage: String? // Texto
+    /* De momento es inaccesible */private var showPaymentMethod: Bool = false // Si quiere que muestre la celda de PM
     
     //Datos que actualmente devuelve la procesadora de pagos
     var receiptId: String? = nil
     //------
     
-    public init(receiptId: String? = nil, status : PXBusinessResultStatus, titleResult : String,subTitleResult :String? = nil, relatedIcon : UIImage, principalAction : PXAction? = nil, secundaryAction : PXAction, instructionText : String? = nil /*, showPaymentMethod : Bool = false*/ ) { // De momento no dejamos configurar el showPaymentMethod
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage, mainAction: PXAction? = nil, secondaryAction: PXAction, helpMessage: String? = nil /*, showPaymentMethod : Bool = false*/ ) { // De momento no dejamos configurar el showPaymentMethod
         self.receiptId = receiptId
         self.status = status
-        self.titleResult = titleResult
-        self.subTitleResult = subTitleResult
-        self.relatedIcon = relatedIcon
-        self.principalAction = principalAction
-        self.secundaryAction = secundaryAction
-        self.instructionText = instructionText
+        self.title = title
+        self.subtitle = subtitle
+        self.icon = icon
+        self.mainAction = mainAction
+        self.secondaryAction = secondaryAction
+        self.helpMessage = helpMessage
         super.init()
     }    
 }
