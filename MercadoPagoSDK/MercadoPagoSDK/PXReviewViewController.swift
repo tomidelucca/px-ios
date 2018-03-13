@@ -47,10 +47,6 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.view.layoutIfNeeded()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
