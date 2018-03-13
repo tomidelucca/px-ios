@@ -150,7 +150,7 @@ extension PXReviewViewController {
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         // Add elastic header.
-        addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized)
+        addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, navigationSecondaryTitle: "$60", navigationSecondaryDeltaY: 96.0)
 
         self.view.layoutIfNeeded()
         PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
@@ -265,6 +265,9 @@ extension PXReviewViewController {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
+        
+        print(scrollView.contentOffset.y)
+        
         if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
         } else {

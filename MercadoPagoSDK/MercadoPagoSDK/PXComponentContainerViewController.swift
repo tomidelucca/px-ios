@@ -12,12 +12,16 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 
     fileprivate lazy var elasticHeader = UIView()
     fileprivate lazy var customNavigationTitle: String = ""
+    fileprivate lazy var secondaryCustomNavigationTitle: String = ""
     fileprivate lazy var NAVIGATION_BAR_DELTA_Y: CGFloat = 29.5
+    fileprivate lazy var NAVIGATION_BAR_SECONDARY_DELTA_Y: CGFloat = 0
     
     var scrollView: UIScrollView!
     var contentView = PXComponentView()
     var heightComponent: NSLayoutConstraint!
     var lastViewConstraint: NSLayoutConstraint!
+    
+    var navigationStatusStep: Int = 0
     
     init() {
         self.scrollView = UIScrollView()
@@ -59,7 +63,7 @@ class PXComponentContainerViewController: MercadoPagoUIViewController {
 // MARK: Elastic header.
 extension PXComponentContainerViewController: UIScrollViewDelegate {
     
-    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, navigationDeltaY:CGFloat?=nil) {
+    func addElasticHeader(headerBackgroundColor: UIColor?, navigationCustomTitle:String, navigationSecondaryTitle: String?=nil, navigationDeltaY:CGFloat?=nil, navigationSecondaryDeltaY:CGFloat?=nil) {
         elasticHeader.removeFromSuperview()
         scrollView.delegate = self
         customNavigationTitle = navigationCustomTitle
@@ -67,8 +71,19 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         if let customDeltaY =  navigationDeltaY {
             NAVIGATION_BAR_DELTA_Y = customDeltaY
         }
+        if let customSecondaryDeltaY = navigationSecondaryDeltaY {
+            NAVIGATION_BAR_SECONDARY_DELTA_Y = customSecondaryDeltaY
+        }
+        if let secondaryTitle = navigationSecondaryTitle {
+            secondaryCustomNavigationTitle = secondaryTitle
+        } else {
+            secondaryCustomNavigationTitle = navigationCustomTitle
+        }
         view.insertSubview(elasticHeader, aboveSubview: contentView)
         scrollView.bounces = true
+        
+        let titleView = ViewUtils.getCustomNavigationTitleLabel(textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), font: Utils.getFont(size: PXLayout.S_FONT), titleText: "")
+        self.navigationItem.titleView = titleView
     }
     
     func refreshContentViewSize() {
@@ -86,15 +101,56 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
     }
     
     fileprivate func handleNavigationBarEffect(_ targetScrollView: UIScrollView) {
-        if targetScrollView.contentOffset.y >= NAVIGATION_BAR_DELTA_Y {
-            title = customNavigationTitle
-            navigationItem.title = title
+        
+        let offset = targetScrollView.contentOffset.y
+        
+        if offset >= NAVIGATION_BAR_DELTA_Y {
+            if NAVIGATION_BAR_SECONDARY_DELTA_Y != 0 && offset >= NAVIGATION_BAR_SECONDARY_DELTA_Y {
+                
+                if let currentTitle = title, currentTitle != secondaryCustomNavigationTitle {
+                  
+                    /*
+                    let titleAnimation = CATransition()
+                    titleAnimation.duration = 0.3
+                    titleAnimation.type = kCATransitionPush
+                    titleAnimation.subtype = kCATransitionFromTop
+                    titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    
+                    navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
+                    (navigationItem.titleView as? UILabel)?.text = secondaryCustomNavigationTitle
+                    (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
+                    // I added this to autosize the title after setting new text
+                    (navigationItem.titleView as? UILabel)?.sizeToFit()*/
+                }
+        
+            } else {
+                
+                /*
+                if navigationStatusStep == 0 {
+                    navigationStatusStep = 1
+                    let titleAnimation = CATransition()
+                    titleAnimation.duration = 0.5
+                    titleAnimation.type = kCATransitionPush
+                    titleAnimation.subtype = kCATransitionFromTop
+                    titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+                    navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
+                    (navigationItem.titleView as? UILabel)?.sizeToFit()
+                    (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
+                }*/
+            }
+            
         } else {
-            let fadeTextAnimation = CATransition()
-            fadeTextAnimation.duration = 0.5
-            fadeTextAnimation.type = kCATransitionFade
-            navigationController?.navigationBar.layer.add(fadeTextAnimation, forKey: "fadeText")
-            title = ""
+            //if navigationStatusStep != 0 {
+                navigationStatusStep = 0
+                let titleAnimation = CATransition()
+                titleAnimation.duration = 0.5
+                titleAnimation.type = kCATransitionPush
+                titleAnimation.subtype = kCATransitionFromBottom
+                titleAnimation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+                navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
+                (navigationItem.titleView as? UILabel)?.sizeToFit()
+                (navigationItem.titleView as? UILabel)?.text = ""
+            //}
         }
     }
 }
