@@ -192,7 +192,7 @@ extension PXReviewViewModel {
         
         let issuer = paymentData.getIssuer()
         let paymentMethodName = pm.name ?? ""
-        var paymentMethodIssuerName = issuer?.name ?? ""
+        let paymentMethodIssuerName = issuer?.name ?? ""
         
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")

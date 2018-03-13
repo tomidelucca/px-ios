@@ -138,11 +138,15 @@ class Utils {
         return amountFotmated
     }
     
-    class func getAccreditationTimeAttributedString(from text: String) -> NSAttributedString {
+    class func getAccreditationTimeAttributedString(from text: String, fontSize: CGFloat? = nil) -> NSAttributedString {
         let clockImage = NSTextAttachment()
+        var attributes: [String:Any]? = nil
+        if let fontSize = fontSize {
+            attributes = [NSFontAttributeName: Utils.getFont(size: fontSize)]
+        }
         clockImage.image = MercadoPago.getImage("iconTime")
         let clockAttributedString = NSAttributedString(attachment: clockImage)
-        let labelAttributedString = NSMutableAttributedString(string: String(describing: " " + text), attributes: nil)
+        let labelAttributedString = NSMutableAttributedString(string: String(describing: " " + text), attributes: attributes)
         labelAttributedString.insert(clockAttributedString, at: 0)
         let labelTitle = labelAttributedString
         return labelTitle

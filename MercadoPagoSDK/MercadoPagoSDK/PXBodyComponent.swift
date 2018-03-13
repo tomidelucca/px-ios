@@ -57,14 +57,19 @@ open class PXBodyComponent: NSObject, PXComponentizable {
                 amountDetail = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)
             }
         }
-        var issuerName: String?
         var pmDescription: String = ""
         let paymentMethodName = pm.name ?? ""
+        
+        let issuer = self.props.paymentResult.paymentData?.getIssuer()
+        let paymentMethodIssuerName = issuer?.name ?? ""
+        var descriptionDetail: NSAttributedString? = nil
 
         if pm.isCard {
-            issuerName = self.props.paymentResult.paymentData?.issuer?.name
             if let lastFourDigits = (self.props.paymentResult.paymentData?.token?.lastFourDigits) {
                 pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+            }
+            if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
+                descriptionDetail = paymentMethodIssuerName.toAttributedString()
             }
         } else {
             pmDescription = paymentMethodName
@@ -75,8 +80,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
 
-        // Issuer name is nil temporally
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: nil, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor())
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor())
 
         return PXPaymentMethodComponent(props: bodyProps)
     }

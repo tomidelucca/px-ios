@@ -228,7 +228,7 @@ class MercadoPagoCheckoutTest: BaseTest {
         XCTAssertNotNil(self.mpCheckout?.viewModel.paymentData.paymentMethod)
         XCTAssertEqual(self.mpCheckout?.navigationController.viewControllers.count, 1)
         let lastVC = self.mpCheckout!.navigationController.viewControllers[0]
-        XCTAssertTrue(lastVC.isKind(of: ReviewScreenViewController.self))
+        XCTAssertTrue(lastVC.isKind(of: PXReviewViewController.self))
     }
 
     func testDisplayPaymentResult_onlinePayment() {
