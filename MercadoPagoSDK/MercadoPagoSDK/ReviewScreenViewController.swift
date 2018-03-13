@@ -119,7 +119,6 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
         self.extendedLayoutIncludesOpaqueBars = true
 
-        self.navBarTextColor = ThemeManager.shared.getTintColorForReviewConfirmNavigation()
         loadMPStyles()
 
         if self.shouldShowNavBar(self.checkoutTable) {

@@ -147,8 +147,8 @@ extension PXReviewViewModel {
                 let discountSummaryDetail = SummaryDetail(title: self.reviewScreenPreference.summaryTitles[SummaryType.DISCOUNT]!, detail: discountAmountDetail)
                 summary.addSummaryDetail(summaryDetail:discountSummaryDetail, type: SummaryType.DISCOUNT)
             }
-            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
-            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
+            summary.details[SummaryType.DISCOUNT]?.titleColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
+            summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
         }
         if let payerCost = self.paymentData.payerCost {
             let interest = payerCost.totalAmount - amount
@@ -199,7 +199,9 @@ extension PXReviewViewModel {
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
-        let backgroundColor = UIColor.px_grayBackgroundColor()
+        let backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
+        let lightLabelColor = ThemeManager.shared.getTheme().lightLabelTintColor()
+        let boldLabelColor = ThemeManager.shared.getTheme().boldLabelTintColor()
         
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
@@ -221,7 +223,7 @@ extension PXReviewViewModel {
             action = nil
         }
         
-        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor)
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)
         
         return PXPaymentMethodComponent(props: props)
     }
@@ -247,7 +249,7 @@ extension PXReviewViewModel {
     }
 
     func buildTitleComponent() -> PXReviewTitleComponent {
-        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTheme().boldLabelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+        let props = PXReviewTitleComponentProps(titleColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
         return PXReviewTitleComponent(props: props)
     }
 }
@@ -285,7 +287,7 @@ extension PXReviewViewModel {
         let itemTitle = getItemTitle(item: item)
         let itemDescription = getItemDescription(item: item)
 
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice)
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
         return PXItemComponent(props: itemProps)
     }
 }

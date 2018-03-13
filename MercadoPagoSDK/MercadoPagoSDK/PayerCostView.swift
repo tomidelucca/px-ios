@@ -38,7 +38,7 @@ final class PayerCostView: UIView, PXComponent {
             self.noRateLabel = MPLabel(frame:CGRect(x: (HORIZONTAL_MARGIN * 2) +  self.purchaseDetailTitle.frame.size.width, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0 ))
             self.noRateLabel.attributedText = NSAttributedString(string : MercadoPagoCheckout.showPayerCostDescription() ? PayerCostView.NO_INTEREST_TEXT: "")
             self.noRateLabel.font = Utils.getFont(size: PayerCostView.TITLE_FONT_SIZE)
-            self.noRateLabel.textColor = ThemeManager.shared.getTheme().highlightedLabelTintColor()
+            self.noRateLabel.textColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
             self.noRateLabel.textAlignment = .right
             self.requiredHeight = self.requiredHeight + self.noRateLabel.requiredHeight()
             self.addSubview(noRateLabel)

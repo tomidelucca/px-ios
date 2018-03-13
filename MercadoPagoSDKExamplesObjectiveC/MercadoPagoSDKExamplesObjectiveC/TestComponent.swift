@@ -38,7 +38,7 @@ import MercadoPagoSDK
         let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         let label = UILabel(frame: frame)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Custom Component"
