@@ -1,5 +1,5 @@
 //
-//  BusinessResultViewModel.swift
+//  PXBusinessResultViewModel.swift
 //  MercadoPagoSDK
 //
 //  Created by Demian Tejo on 8/3/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BusinessResultViewModel: NSObject, PXResultViewModelInterface {
+class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     
     let businessResult : PXBusinessResult
     let paymentData : PaymentData
