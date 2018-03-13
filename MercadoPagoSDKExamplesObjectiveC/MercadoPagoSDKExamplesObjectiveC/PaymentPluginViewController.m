@@ -33,13 +33,14 @@
     dispatch_time_t tm = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC));
     dispatch_after(tm, dispatch_get_main_queue(), ^(void){
         [self.pluginNavigationHandler hideLoading];
-        PXAction* popeame = [[PXAction alloc] initWithLabel:@"Popeame to root" action:^{
+        PXAction* popeame = [[PXAction alloc] initWithLabel:@"Cancelar" action:^{
             [self.pluginNavigationHandler cancel];
        }];
-        PXAction* printeaEnConsola = [[PXAction alloc] initWithLabel:@"Printeame en consola" action:^{
+        PXAction* printeaEnConsola = [[PXAction alloc] initWithLabel:@"Intentar nuevamente" action:^{
             NSLog(@"print !!! action!!");
         }];
-        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"12345" status:PXBusinessResultStatusAPPROVED titleResult:@"Ninja Style" subTitleResult:@"El buen ninja nunca falla" relatedIcon:[UIImage imageNamed:@"Ninja"] principalAction:printeaEnConsola secundaryAction:popeame instructionText:@"blah blab blah"];
+        
+        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"12345" status:PXBusinessResultStatusREJECTED title:@"Falló la recarga" subtitle:@"Claro no pudo procesar tu recarga" icon:[UIImage imageNamed:@"claro_logo"] mainAction:printeaEnConsola secondaryAction:popeame helpMessage:@"Intenta mas tarde"];
         [self.pluginNavigationHandler didFinishPaymentWithBusinessResult:businessResult];
        // [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusAPPROVED statusDetails:@"" receiptId:nil];
     });

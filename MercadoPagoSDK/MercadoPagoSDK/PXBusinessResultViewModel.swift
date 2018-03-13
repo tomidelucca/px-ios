@@ -71,12 +71,12 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
     }
     func buildHeaderComponent() -> PXHeaderComponent {
-        let headerProps = PXHeaderProps(labelText: businessResult.titleResult.toAttributedString(), title: (businessResult.subTitleResult?.toAttributedString())!, backgroundColor: primaryResultColor(), productImage: businessResult.relatedIcon, statusImage: getBadgeImage())
+        let headerProps = PXHeaderProps(labelText: businessResult.title.toAttributedString(), title: (businessResult.subtitle?.toAttributedString())!, backgroundColor: primaryResultColor(), productImage: businessResult.icon, statusImage: getBadgeImage())
         return PXHeaderComponent(props: headerProps)
     }
     
     func buildFooterComponent() -> PXFooterComponent {
-        let footerProps = PXFooterProps(buttonAction: businessResult.principalAction, linkAction: businessResult.secundaryAction)
+        let footerProps = PXFooterProps(buttonAction: businessResult.mainAction, linkAction: businessResult.secondaryAction)
         return PXFooterComponent(props: footerProps)
     }
     
@@ -90,7 +90,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
     
     func buildBodyComponent() -> PXComponentizable? {
-        guard let labelInstruction = self.businessResult.instructionText else {
+        guard let labelInstruction = self.businessResult.helpMessage else {
             return nil
         }
         let props = PXErrorProps(status: self.businessResult.status.getDescription(), statusDetail: "", paymentMethodName: nil, action: {}, customMessage: labelInstruction)
