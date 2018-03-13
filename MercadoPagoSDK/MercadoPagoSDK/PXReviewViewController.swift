@@ -213,10 +213,9 @@ extension PXReviewViewController {
     }
 
     fileprivate func getFloatingButtonView() -> PXContainedActionButtonView {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
-            [weak self] in
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: { [weak self] in
             guard let strongSelf = self else {
-                    return
+                return
             }
            strongSelf.confirmPayment()
         }))
@@ -225,8 +224,7 @@ extension PXReviewViewController {
     }
     
     fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) {
-            [weak self] in
+        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
             guard let strongSelf = self else {
                 return
             }
@@ -276,7 +274,21 @@ extension PXReviewViewController {
 //MARK: Actions.
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
     
+    fileprivate func trackConfirmActionEvent() {
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: viewModel.paymentData.paymentMethod?._id ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: viewModel.paymentData.paymentMethod?.paymentTypeId ?? ""]
+
+        if let customerCard = viewModel.paymentOptionSelected as? CustomerPaymentMethod {
+            properties[TrackingUtil.METADATA_CARD_ID] = customerCard._id
+        }
+        if let installments = viewModel.paymentData.payerCost?.installments {
+            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
+        }
+
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
+    }
+
     fileprivate func confirmPayment() {
+        trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.paymentData)

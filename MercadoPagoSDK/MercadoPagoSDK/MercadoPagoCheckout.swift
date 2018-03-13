@@ -61,6 +61,9 @@ open class MercadoPagoCheckout: NSObject {
     func initMercadPagoPXTracking() {
         MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
         MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
+        MPXTracker.sharedInstance.startNewFlow()
+        // TODO: Remove this
+        MPXTracker.sharedInstance.setEnvironment(environment: MPXTrackingEnvironment.staging)
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
@@ -93,7 +96,8 @@ open class MercadoPagoCheckout: NSObject {
     public func getPXCheckoutStore() -> PXCheckoutStore {
         _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
         return PXCheckoutStore.sharedInstance
-        }
+    }
+
     public func setPaymentPlugin(paymentPlugin: PXPaymentPluginComponent) {
         self.viewModel.paymentPlugin = paymentPlugin
     }
