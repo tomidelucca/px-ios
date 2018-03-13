@@ -586,7 +586,7 @@
 		813873821FA8DEE7002095D6 /* PXBodyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81ACC8091F9A68D800206F7B /* PXBodyRenderer.swift */; };
 		813873831FA8E3E5002095D6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 155F58321E3923180070A0D6 /* Images.xcassets */; };
 		813873841FA8E425002095D6 /* RevampImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCEB90861EB8F7F00096B1A2 /* RevampImages.xcassets */; };
-		813B411F2051837800B6D886 /* BusinessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B411E2051837800B6D886 /* BusinessResult.swift */; };
+		813B411F2051837800B6D886 /* PXBusinessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B411E2051837800B6D886 /* PXBusinessResult.swift */; };
 		813B4121205184F200B6D886 /* PXAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B4120205184F200B6D886 /* PXAction.swift */; };
 		813B4122205184F200B6D886 /* PXAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B4120205184F200B6D886 /* PXAction.swift */; };
 		813B4124205189FC00B6D886 /* PXResultViewModelInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813B4123205189FC00B6D886 /* PXResultViewModelInterface.swift */; };
@@ -1126,7 +1126,7 @@
 		811B4FD1201F87A40060026A /* PXMonospaceLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXMonospaceLabel.swift; sourceTree = "<group>"; };
 		812BA9BD1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponent.swift; sourceTree = "<group>"; };
 		812BA9C01FC8B25D00FF32C2 /* PXPaymentMethodComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPaymentMethodComponentRenderer.swift; sourceTree = "<group>"; };
-		813B411E2051837800B6D886 /* BusinessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessResult.swift; sourceTree = "<group>"; };
+		813B411E2051837800B6D886 /* PXBusinessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXBusinessResult.swift; sourceTree = "<group>"; };
 		813B4120205184F200B6D886 /* PXAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXAction.swift; sourceTree = "<group>"; };
 		813B4123205189FC00B6D886 /* PXResultViewModelInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXResultViewModelInterface.swift; sourceTree = "<group>"; };
 		813B41292051C3DB00B6D886 /* BusinessResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessResultViewModel.swift; sourceTree = "<group>"; };
@@ -1371,7 +1371,7 @@
 				4BDE2D441E37B4AC00C1D614 /* ServicePreference.swift */,
 				4B8D73501E780F8F009C1209 /* SummaryRow.swift */,
 				4B08CD9C1F20F66700FE800A /* SavedESCCardToken.swift */,
-				813B411E2051837800B6D886 /* BusinessResult.swift */,
+				813B411E2051837800B6D886 /* PXBusinessResult.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3009,7 +3009,7 @@
 				4BEF9B5A1FE2ECD2002ADAFF /* MercadoPagoCheckoutViewModel+Plugins.swift in Sources */,
 				534D841E1F546F7E00C2C6F9 /* AvailableCardsDetailView.swift in Sources */,
 				816AB5B01FE967C80070A932 /* PXCustomComponentContainer.swift in Sources */,
-				813B411F2051837800B6D886 /* BusinessResult.swift in Sources */,
+				813B411F2051837800B6D886 /* PXBusinessResult.swift in Sources */,
 				4B277F661E38DD7700AF5DF8 /* NSDictionary+Additions.swift in Sources */,
 				4B59F02B1E36676100B5837B /* FlowPreference.swift in Sources */,
 				7656CA171C7644F10043BDB2 /* Instruction.swift in Sources */,
