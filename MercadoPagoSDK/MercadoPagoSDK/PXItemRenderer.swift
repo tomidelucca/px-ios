@@ -19,16 +19,27 @@ struct PXItemRenderer {
     static let DESCRIPTION_FONT_SIZE = PXLayout.XXS_FONT
     static let QUANTITY_FONT_SIZE = PXLayout.XS_FONT
     static let AMOUNT_FONT_SIZE = PXLayout.XS_FONT
-
+    
     func render(_ itemComponent: PXItemComponent) -> PXItemContainerView {
         let itemView = PXItemContainerView()
         itemView.backgroundColor = itemComponent.props.backgroundColor
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
-        itemView.itemImage = buildItemImage(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
+        let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
+        
+        itemView.itemImage = UIImageView()
 
         // Item icon
         if let itemImage = itemView.itemImage {
+            
+            if let url = imageUrl  {
+                buildCircle(targetImageView: itemImage)
+                itemImage.backgroundColor = ThemeManager.shared.getPlaceHolderColor()
+                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil)
+            } else {
+                itemImage.image = imageObj
+            }
+            
             itemView.addSubview(itemImage)
             PXLayout.centerHorizontally(view: itemImage).isActive = true
             PXLayout.setHeight(owner: itemImage, height: PXItemRenderer.IMAGE_HEIGHT).isActive = true
@@ -84,34 +95,16 @@ struct PXItemRenderer {
 
 extension PXItemRenderer {
 
-    fileprivate func buildItemImage(imageURL: String?, collectorImage: UIImage? = nil) -> UIImageView {
-        let imageView = UIImageView()
- 
+    fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
-            let circleImage = UIImageView(frame: CGRect(x: 0, y: 0, width: PXItemRenderer.IMAGE_WIDTH, height: PXItemRenderer.IMAGE_HEIGHT))
-            DispatchQueue.global(qos: .background).async {
-                if let image =  ViewUtils.loadImageFromUrl(imageURL) {
-                    DispatchQueue.main.async {
-                        circleImage.image = image
-                        circleImage.layer.masksToBounds = false
-                        circleImage.layer.cornerRadius = circleImage.frame.height/2
-                        circleImage.clipsToBounds = true
-                        circleImage.translatesAutoresizingMaskIntoConstraints = false
-                        circleImage.contentMode = .scaleAspectFill
-                    }
-                } else {
-                   circleImage.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")
-                }
-            }
-            return circleImage
-        } else if let image =  collectorImage {
-            imageView.image = image
+            return (imageURL, nil)
+        } else if let image = collectorImage {
+            return (nil, image)
         } else {
-            imageView.image = MercadoPago.getImage("MPSDK_review_iconoCarrito")
+            return (nil, MercadoPago.getImage("MPSDK_review_iconoCarrito"))
         }
-        return imageView
     }
-
+    
     fileprivate func buildTitle(with text: String?, labelColor: UIColor) -> UILabel? {
         guard let text = text else {
             return nil
@@ -184,6 +177,14 @@ extension PXItemRenderer {
         let height = UILabel.requiredHeight(forAttributedText: attributedText, withFont: font, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         return label
+    }
+    
+    fileprivate func buildCircle(targetImageView:UIImageView?) {
+        targetImageView?.layer.masksToBounds = false
+        targetImageView?.layer.cornerRadius = PXItemRenderer.IMAGE_HEIGHT/2
+        targetImageView?.clipsToBounds = true
+        targetImageView?.translatesAutoresizingMaskIntoConstraints = false
+        targetImageView?.contentMode = .scaleAspectFill
     }
 }
 
