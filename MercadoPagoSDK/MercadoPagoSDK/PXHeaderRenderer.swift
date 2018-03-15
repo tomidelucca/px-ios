@@ -68,7 +68,7 @@ class PXHeaderRenderer: NSObject {
         circleImage.translatesAutoresizingMaskIntoConstraints = false
         circleImage.image = image
         circleImage.contentMode = .scaleAspectFill
-        circleImage.backgroundColor = .white
+        circleImage.backgroundColor = .clear
         PXLayout.setHeight(owner: circleImage, height: IMAGE_WIDTH).isActive = true
         PXLayout.setWidth(owner: circleImage, width: IMAGE_HEIGHT).isActive = true
         return circleImage
