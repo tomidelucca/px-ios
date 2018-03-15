@@ -188,22 +188,23 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     fileprivate func getPaymentMethodsOptions(_ paymentMethodPluginsToShow: [PXPaymentMethodPlugin]) -> String {
         var paymentMethodsOptions = ""
-        guard let paymentMethods = search?.paymentMethods, let customPaymentOptions = customPaymentOptions else {
-            return paymentMethodsOptions
-        }
 
-        for paymentMethod in paymentMethods {
-            if let id = paymentMethod._id, let paymentTypeId = paymentMethod.paymentTypeId {
-                paymentMethodsOptions += "\(id):\(paymentTypeId)|"
+        if let paymentMethods = search?.paymentMethods {
+            for paymentMethod in paymentMethods {
+                if let id = paymentMethod._id, let paymentTypeId = paymentMethod.paymentTypeId {
+                    paymentMethodsOptions += "\(id):\(paymentTypeId)|"
+                }
             }
         }
 
-        for customCard in customPaymentOptions {
-            paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())|"
+        if let customPaymentOptions = customPaymentOptions {
+            for customCard in customPaymentOptions {
+                paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())|"
+            }
         }
 
         for paymentMethodPlugin in paymentMethodPluginsToShow {
-            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\("payment_method_plugin")|"
+            paymentMethodsOptions += "\(paymentMethodPlugin.getId()):\(PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue)|"
         }
         paymentMethodsOptions = String(paymentMethodsOptions.dropLast())
         return paymentMethodsOptions
