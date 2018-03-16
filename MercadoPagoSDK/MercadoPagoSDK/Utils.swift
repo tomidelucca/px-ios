@@ -442,7 +442,7 @@ class Utils {
     }
     
     
-    func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?) {
+    func loadImageWithCache(withUrl urlStr: String?, targetImage: UIImageView, placeHolderImage: UIImage?, fallbackImage: UIImage?) {
         
         guard let urlString = urlStr else {return}
         
@@ -464,13 +464,33 @@ class Utils {
             URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data, response, error) in
                 
                 if error != nil {
+                    DispatchQueue.main.async {
+                        if let fallbackImage = fallbackImage {
+                            UIView.transition(with: targetImage,
+                                              duration:0.5,
+                                              options: .transitionCrossDissolve,
+                                              animations: { targetImage.image = fallbackImage },
+                                              completion: nil)
+                        }
+                    }
                     return
                 }
                 
                 DispatchQueue.main.async {
                     if let remoteData = data, let image = UIImage(data: remoteData) {
                         imageCache.setObject(image, forKey: urlString as NSString)
-                        targetImage.image = image
+                        UIView.transition(with: targetImage,
+                                          duration:0.5,
+                                          options: .transitionCrossDissolve,
+                                          animations: { targetImage.image = image },
+                                          completion: nil)
+
+                    } else if let fallbackImage = fallbackImage {
+                        UIView.transition(with: targetImage,
+                                          duration:0.5,
+                                          options: .transitionCrossDissolve,
+                                          animations: { targetImage.image = fallbackImage },
+                                          completion: nil)
                     }
                 }
             }).resume()

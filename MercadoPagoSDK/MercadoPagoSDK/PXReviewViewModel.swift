@@ -277,6 +277,10 @@ extension PXReviewViewModel {
         return preference!.hasMultipleItems() || item.quantity > 1 // Price must not be shown if quantity is 1 and there are no more products
     }
 
+    fileprivate func shouldShowCollectorIcon() -> Bool {
+        return !preference!.hasMultipleItems() && reviewScreenPreference.getCollectorIcon() != nil
+    }
+
     fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
         if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
@@ -286,8 +290,13 @@ extension PXReviewViewModel {
         let itemPrice = getItemPrice(item: item)
         let itemTitle = getItemTitle(item: item)
         let itemDescription = getItemDescription(item: item)
+        let collectorIcon = getCollectorIcon()
+        let amountTitle = reviewScreenPreference.amountTitle
+        let quantityTile = reviewScreenPreference.quantityTitle
 
-        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+        let itemTheme: PXItemComponentProps.itemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+
+        let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)
     }
 }
@@ -320,6 +329,13 @@ extension PXReviewViewModel {
             return nil
         }
         return item.unitPrice
+    }
+
+    fileprivate func getCollectorIcon() -> UIImage? {
+        if !shouldShowCollectorIcon() {
+            return nil
+        }
+        return reviewScreenPreference.getCollectorIcon()
     }
 }
 

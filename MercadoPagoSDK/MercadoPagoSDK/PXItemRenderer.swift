@@ -25,7 +25,7 @@ struct PXItemRenderer {
         itemView.backgroundColor = itemComponent.props.backgroundColor
         itemView.translatesAutoresizingMaskIntoConstraints = false
 
-        let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.reviewScreenPreference.getCollectorIcon())
+        let (imageUrl, imageObj) = buildItemImageUrl(imageURL: itemComponent.props.imageURL, collectorImage: itemComponent.props.collectorImage)
         
         itemView.itemImage = UIImageView()
 
@@ -35,7 +35,7 @@ struct PXItemRenderer {
             if let url = imageUrl  {
                 buildCircle(targetImageView: itemImage)
                 itemImage.backgroundColor = ThemeManager.shared.getPlaceHolderColor()
-                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil)
+                Utils().loadImageWithCache(withUrl: url, targetImage: itemImage, placeHolderImage: nil, fallbackImage: imageObj)
             } else {
                 itemImage.image = imageObj
             }
@@ -97,7 +97,7 @@ extension PXItemRenderer {
 
     fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
-            return (imageURL, nil)
+            return (imageURL, collectorImage ?? MercadoPago.getImage("MPSDK_review_iconoCarrito"))
         } else if let image = collectorImage {
             return (nil, image)
         } else {
@@ -156,11 +156,11 @@ extension PXItemRenderer {
         label.textAlignment = .center
         label.text = text
         label.textColor = color
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
         label.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forText: text, withFont: font, inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forText: text, withFont: font, inNumberOfLines: 3, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         return label
     }
@@ -170,11 +170,11 @@ extension PXItemRenderer {
         label.textAlignment = .center
         label.textColor = color
         label.attributedText = attributedText
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
         label.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
-        let height = UILabel.requiredHeight(forAttributedText: attributedText, withFont: font, inWidth: screenWidth)
+        let height = UILabel.requiredHeight(forAttributedText: attributedText, withFont: font, inNumberOfLines: 3, inWidth: screenWidth)
         PXLayout.setHeight(owner: label, height: height).isActive = true
         return label
     }
