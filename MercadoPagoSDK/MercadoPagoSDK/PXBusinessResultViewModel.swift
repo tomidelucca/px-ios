@@ -32,6 +32,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             return ThemeManager.shared.getTheme().rejectedColor()
         case .PENDING:
             return ThemeManager.shared.getTheme().warningColor()
+        case .IN_PROGRESS:
+            return ThemeManager.shared.getTheme().warningColor()
         default:
              return .pxWhite
         }
@@ -65,7 +67,9 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         case .REJECTED:
             return MercadoPago.getImage("error_badge")
         case .PENDING:
-            return MercadoPago.getImage("pending_badge")
+            return MercadoPago.getImage("orange_pending_badge")
+        case .IN_PROGRESS:
+            return MercadoPago.getImage("orange_pending_badge")
         default:
             return nil
         }
