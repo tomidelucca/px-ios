@@ -40,10 +40,10 @@ extension PXItemComponent {
     }
 
     func shouldShowQuantity() -> Bool {
-        if let quantity = props.quantity {
-            return quantity > 0
+        guard let quantity = props.quantity else {
+            return false
         }
-        return false
+        return quantity > 0
     }
 
     func getQuantity() -> String? {
