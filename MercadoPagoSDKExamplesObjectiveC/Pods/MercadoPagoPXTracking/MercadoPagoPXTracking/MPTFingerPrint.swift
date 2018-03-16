@@ -98,7 +98,7 @@ class ScreenTrackInfo {
         self.screenId = json["screen_id"] as! String
         self.timestamp = json["timestamp"] as! Int64
         self.type = json["type"] as! String
-        self.metadata = json["metadata"] as! [String:Any]
+        self.metadata = json["metadata"] as? [String:Any] ?? [:]
     }
     func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
