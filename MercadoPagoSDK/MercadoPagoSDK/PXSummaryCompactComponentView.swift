@@ -30,10 +30,10 @@ extension PXSummaryCompactComponentView {
         
         let (tLabel, cLabel) = buildLabels(amountText: amountAttributeText, customText: bottomCustomTitle, in: self, textColor: textColor)
         
-        let titleHeight = UILabel.requiredHeight(forAttributedText: amountAttributeText, withFont: Utils.getFont(size: PXSummaryCompactComponentView.TITLE_FONT_SIZE), inNumberOfLines: 1, inWidth: screenWidth)
+        let titleHeight = UILabel.requiredHeight(forAttributedText: amountAttributeText, withFont: Utils.getFont(size: PXSummaryCompactComponentView.TITLE_FONT_SIZE), inNumberOfLines: tLabel.numberOfLines, inWidth: screenWidth)
         PXLayout.setHeight(owner: tLabel, height: titleHeight).isActive = true
         
-        let customTitleHeight = UILabel.requiredHeight(forAttributedText: bottomCustomTitle, withFont: Utils.getFont(size: PXSummaryCompactComponentView.CUSTOM_TITLE_FONT_SIZE), inNumberOfLines: 3, inWidth: screenWidth)
+        let customTitleHeight = UILabel.requiredHeight(forAttributedText: bottomCustomTitle, withFont: Utils.getFont(size: PXSummaryCompactComponentView.CUSTOM_TITLE_FONT_SIZE), inNumberOfLines: cLabel.numberOfLines, inWidth: screenWidth)
         PXLayout.setHeight(owner: cLabel, height: customTitleHeight).isActive = true
         
         totalLabel = tLabel
