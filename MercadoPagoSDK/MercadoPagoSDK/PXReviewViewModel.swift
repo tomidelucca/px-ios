@@ -18,7 +18,7 @@ final class PXReviewViewModel: NSObject {
     var paymentOptionSelected: PaymentMethodOption
     var discount: DiscountCoupon?
     
-    var reviewScreenPreference: ReviewScreenPreference!
+    var reviewScreenPreference: ReviewScreenPreference
     
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         PXReviewViewModel.CUSTOMER_ID = ""
@@ -162,9 +162,9 @@ extension PXReviewViewModel {
                 }
             }
         }
-        if let disclaimer = self.reviewScreenPreference.disclaimer {
+        if let disclaimer = self.reviewScreenPreference.getDisclaimerText() {
             summary.disclaimer = disclaimer
-            summary.disclaimerColor = self.reviewScreenPreference.disclaimerColor
+            summary.disclaimerColor = self.reviewScreenPreference.getDisclaimerTextColor()
         }
         return summary
     }
@@ -343,14 +343,14 @@ extension PXReviewViewModel {
 extension PXReviewViewModel {
 
     func buildTopCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getPaymentMethodTopCustomComponent() {
+        if let customComponent = reviewScreenPreference.getTopComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil
     }
     
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        if let customComponent = reviewScreenPreference.getPaymentMethodBottomCustomComponent() {
+        if let customComponent = reviewScreenPreference.getBottomComponent() {
             return PXCustomComponentContainer(withComponent: customComponent)
         }
         return nil

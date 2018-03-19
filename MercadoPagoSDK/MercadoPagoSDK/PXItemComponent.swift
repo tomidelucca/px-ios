@@ -54,6 +54,7 @@ extension PXItemComponent {
     }
 
     func shouldShowUnitAmount() -> Bool {
+
         return props.unitAmount != nil
     }
 
