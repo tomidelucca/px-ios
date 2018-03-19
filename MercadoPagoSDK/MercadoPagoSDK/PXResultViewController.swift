@@ -21,6 +21,7 @@ class PXResultViewController: PXComponentContainerViewController {
     var bottomCustomView: UIView?
     var bodyView: UIView?
     var footerView: UIView?
+    var bodyComponent: PXComponentizable?
     
     init(viewModel: PXResultViewModelInterface, callback : @escaping ( _ status: PaymentResult.CongratsState) -> Void) {
         self.viewModel = viewModel
@@ -198,9 +199,10 @@ extension PXResultViewController {
         let receiptComponent = viewModel.buildReceiptComponent()
         return receiptComponent?.render()
     }
-    
+
     func buildBodyView() -> UIView? {
         let bodyComponent = viewModel.buildBodyComponent()
+        self.bodyComponent = bodyComponent
         return bodyComponent?.render()
     }
     
@@ -222,4 +224,3 @@ extension PXResultViewController {
         return view
     }
 }
-

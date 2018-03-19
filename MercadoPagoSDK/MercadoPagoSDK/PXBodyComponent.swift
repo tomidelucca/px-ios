@@ -90,21 +90,21 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         let statusDetail = props.paymentResult.statusDetail
         let paymentMethodName = props.paymentResult.paymentData?.paymentMethod?.name
         
-        let title = getTitle()
-        let message = getDescription(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
-        let secondaryTitle = getSecondaryTitle(status: status, statusDetail: statusDetail)
-        let action = getAction(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
+        let title = getErrorTitle()
+        let message = getErrorMessage(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
+        let secondaryTitle = getErrorSecondaryTitle(status: status, statusDetail: statusDetail)
+        let action = getErrorAction(status: status, statusDetail: statusDetail, paymentMethodName: paymentMethodName)
         
         let errorProps = PXErrorProps(title: title.toAttributedString(), message: message?.toAttributedString(), secondaryTitle: secondaryTitle?.toAttributedString(), action: action)
         let errorComponent = PXErrorComponent(props: errorProps)
         return errorComponent
     }
     
-    public func getTitle() -> String {
+    public func getErrorTitle() -> String {
         return PXResourceProvider.getTitleForErrorBody()
     }
     
-    public func getDescription(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
+    public func getErrorMessage(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
         if status.elementsEqual(PXPayment.Status.PENDING) || status.elementsEqual(PXPayment.Status.IN_PROCESS) {
             if statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) {
                 return PXResourceProvider.getDescriptionForErrorBodyForPENDING_CONTINGENCY()
@@ -135,7 +135,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
     
-    public func getAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
+    public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)
             let action = PXAction(label: actionText, action: getCallback())
@@ -144,7 +144,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
 
-    public func getSecondaryTitle(status: String, statusDetail: String) -> String? {
+    public func getErrorSecondaryTitle(status: String, statusDetail: String) -> String? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             return PXResourceProvider.getSecondaryTitleForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE()
         }
@@ -165,7 +165,13 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     }
     
     func getCallback() -> (() -> Void) {
-        return { [weak self] in self?.executeCallback() }
+        return {
+            [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.executeCallback()
+        }
     }
 
     func executeCallback() {
