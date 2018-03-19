@@ -282,9 +282,9 @@ open class CheckoutViewModel: NSObject {
                 }
             }
         }
-        if let disclaimer = self.reviewScreenPreference.disclaimer {
+        if let disclaimer = self.reviewScreenPreference.getDisclaimerText() {
             summary.disclaimer = disclaimer
-            summary.disclaimerColor = self.reviewScreenPreference.disclaimerColor
+            summary.disclaimerColor = self.reviewScreenPreference.getDisclaimerTextColor()
         }
         return summary
     }

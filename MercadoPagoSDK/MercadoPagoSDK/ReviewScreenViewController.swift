@@ -315,7 +315,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     }
     
     func buildContainedButton() -> PXContainedActionButtonView {
-        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: viewModel.reviewScreenPreference.getConfirmButtonText(), action: {
+        let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
             [weak self] in self?.confirmPayment()
         }))
         let containedButton = PXContainedActionButtonRenderer().render(component)
@@ -327,7 +327,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     private func getPurchaseItemDetailCell(indexPath: IndexPath) -> UITableViewCell {
         let currency = MercadoPagoContext.getCurrency()
         let purchaseItemDetailCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "purchaseItemDetailTableViewCell", for: indexPath) as! PurchaseItemDetailTableViewCell
-        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.reviewScreenPreference.shouldShowQuantityRow, amountTittleHidden: !self.viewModel.reviewScreenPreference.shouldShowAmountTitle, quantityTitle: self.viewModel.reviewScreenPreference.getQuantityTitle(), amountTitle: self.viewModel.reviewScreenPreference.getAmountTitle())
+        purchaseItemDetailCell.fillCell(item: self.viewModel.preference!.items[indexPath.row], currency: currency, quantityHidden: !self.viewModel.reviewScreenPreference.shouldShowQuantityRow(), amountTittleHidden: !self.viewModel.reviewScreenPreference.shouldShowAmountTitle(), quantityTitle: self.viewModel.reviewScreenPreference.getQuantityLabel(), amountTitle: self.viewModel.reviewScreenPreference.getAmountTitle())
         return purchaseItemDetailCell
     }
 
@@ -349,7 +349,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
 
     private func getCancelPaymentButtonCell(indexPath: IndexPath) -> UITableViewCell {
         let exitButtonCell = self.checkoutTable.dequeueReusableCell(withIdentifier: "exitButtonCell", for: indexPath) as! ExitButtonTableViewCell
-        let exitButtonTitle = viewModel.reviewScreenPreference.getCancelButtonTitle()
+        let exitButtonTitle = "Cancelar".localized
         exitButtonCell.selectionStyle = .none
         exitButtonCell.exitButton.setTitle(exitButtonTitle, for: .normal)
         exitButtonCell.exitButton.addTarget(self, action: #selector(ReviewScreenViewController.exitCheckoutFlow), for: .touchUpInside)
