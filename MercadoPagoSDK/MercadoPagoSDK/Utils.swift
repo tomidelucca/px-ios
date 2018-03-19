@@ -465,13 +465,7 @@ class Utils {
                 
                 if error != nil {
                     DispatchQueue.main.async {
-                        if let fallbackImage = fallbackImage {
-                            UIView.transition(with: targetImage,
-                                              duration:0.5,
-                                              options: .transitionCrossDissolve,
-                                              animations: { targetImage.image = fallbackImage },
-                                              completion: nil)
-                        }
+                        targetImage.image = fallbackImage
                     }
                     return
                 }
@@ -479,18 +473,10 @@ class Utils {
                 DispatchQueue.main.async {
                     if let remoteData = data, let image = UIImage(data: remoteData) {
                         imageCache.setObject(image, forKey: urlString as NSString)
-                        UIView.transition(with: targetImage,
-                                          duration:0.5,
-                                          options: .transitionCrossDissolve,
-                                          animations: { targetImage.image = image },
-                                          completion: nil)
+                        targetImage.image = image
 
                     } else if let fallbackImage = fallbackImage {
-                        UIView.transition(with: targetImage,
-                                          duration:0.5,
-                                          options: .transitionCrossDissolve,
-                                          animations: { targetImage.image = fallbackImage },
-                                          completion: nil)
+                        targetImage.image = fallbackImage
                     }
                 }
             }).resume()
