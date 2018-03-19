@@ -38,13 +38,13 @@ class PXErrorRenderer: NSObject {
         
         //Secondary Title
         if let secondaryTitle = component.props.secondaryTitle {
-            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: secondaryTitle, in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
             errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
+            errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: secondaryTitle, in: errorBodyView, onBottomOf: errorBodyView.middleDivider)
             errorBodyView.bottomDivider = buildBottomDivider(in: errorBodyView, onBottomOf: errorBodyView.secondaryTitleLabel)
             errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
+        } else {
+            errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         }
-        
-        errorBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true
         
         return errorBodyView
     }
@@ -56,8 +56,8 @@ class PXErrorRenderer: NSObject {
         label.textAlignment = .center
         label.textColor = .pxBlack
         label.numberOfLines = 0
-        label.font = font
         label.attributedText = text
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
         
@@ -78,8 +78,8 @@ class PXErrorRenderer: NSObject {
         label.textAlignment = .center
         label.textColor = .pxBrownishGray
         label.numberOfLines = 0
-        label.font = font
         label.attributedText = text
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
         
@@ -132,7 +132,7 @@ class PXErrorRenderer: NSObject {
         label.textColor = .pxBlack
         label.numberOfLines = 0
         label.attributedText = text
-        
+        label.font = font
         label.lineBreakMode = .byWordWrapping
         superView.addSubview(label)
         
