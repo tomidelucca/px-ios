@@ -198,7 +198,7 @@ extension PXResultViewController {
         let receiptComponent = viewModel.buildReceiptComponent()
         return receiptComponent?.render()
     }
-    
+
     func buildBodyView() -> UIView? {
         let bodyComponent = viewModel.buildBodyComponent()
         return bodyComponent?.render()
@@ -222,4 +222,3 @@ extension PXResultViewController {
         return view
     }
 }
-

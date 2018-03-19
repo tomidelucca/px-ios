@@ -97,7 +97,9 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         guard let labelInstruction = self.businessResult.helpMessage else {
             return nil
         }
-        let props = PXErrorProps(status: self.businessResult.status.getDescription(), statusDetail: "", paymentMethodName: nil, action: {}, customMessage: labelInstruction)
+        
+        let title = PXResourceProvider.getTitleForErrorBody()
+        let props = PXErrorProps(title: title.toAttributedString(), message: labelInstruction.toAttributedString())
         
         return PXErrorComponent(props: props)
     }
