@@ -14,7 +14,7 @@ final class PXSummaryCompactComponentView: PXComponentView {
     
     fileprivate let PERCENT_SCREEN_WIDTH: CGFloat = 86
     fileprivate let TOP_BOTTOM_MARGIN: CGFloat = PXLayout.L_MARGIN
-    fileprivate let INTER_MARGIN: CGFloat = 9
+    fileprivate let INTER_MARGIN: CGFloat = PXLayout.XXS_MARGIN
     
     fileprivate var totalLabel: UILabel?
     fileprivate var customTextLabel: UILabel?
