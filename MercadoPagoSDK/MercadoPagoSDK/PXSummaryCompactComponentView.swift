@@ -59,7 +59,7 @@ extension PXSummaryCompactComponentView {
         let customTitleLabel = UILabel()
         customTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         customTitleLabel.textAlignment = .center
-        customTitleLabel.numberOfLines = 3
+        customTitleLabel.numberOfLines = 2
         customTitleLabel.lineBreakMode = .byTruncatingTail
         customTitleLabel.attributedText = customText
         customTitleLabel.textColor = textColor
