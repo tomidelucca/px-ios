@@ -294,7 +294,7 @@ extension PXReviewViewModel {
         let amountTitle = reviewScreenPreference.amountTitle
         let quantityTile = reviewScreenPreference.quantityTitle
 
-        let itemTheme: PXItemComponentProps.itemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
+        let itemTheme: PXItemComponentProps.ItemTheme = (backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor())
 
         let itemProps = PXItemComponentProps(imageURL: item.pictureUrl, title: itemTitle, description: itemDescription, quantity: itemQuantiy, unitAmount: itemPrice, amountTitle: amountTitle, quantityTitle: quantityTile, collectorImage: collectorIcon, itemTheme: itemTheme)
         return PXItemComponent(props: itemProps)

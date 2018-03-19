@@ -21,9 +21,9 @@ final class PXItemComponentProps : NSObject {
     let boldLabelColor: UIColor
     let lightLabelColor: UIColor
 
-    typealias itemTheme = (backgroundColor: UIColor, boldLabelColor: UIColor, lightLabelColor: UIColor)
+    typealias ItemTheme = (backgroundColor: UIColor, boldLabelColor: UIColor, lightLabelColor: UIColor)
 
-    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, amountTitle: String, quantityTitle: String, collectorImage: UIImage? , itemTheme: itemTheme) {
+    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, amountTitle: String, quantityTitle: String, collectorImage: UIImage? , itemTheme: ItemTheme) {
         self.imageURL = imageURL
         self.title = title
         self._description = description

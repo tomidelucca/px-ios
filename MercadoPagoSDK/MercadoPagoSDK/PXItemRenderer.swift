@@ -157,7 +157,7 @@ extension PXItemRenderer {
         label.text = text
         label.textColor = color
         label.lineBreakMode = .byTruncatingTail
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         label.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
         let height = UILabel.requiredHeight(forText: text, withFont: font, inNumberOfLines: 3, inWidth: screenWidth)
@@ -171,7 +171,7 @@ extension PXItemRenderer {
         label.textColor = color
         label.attributedText = attributedText
         label.lineBreakMode = .byTruncatingTail
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         label.font = font
         let screenWidth = PXLayout.getScreenWidth(applyingMarginFactor: CONTENT_WIDTH_PERCENT)
         let height = UILabel.requiredHeight(forAttributedText: attributedText, withFont: font, inNumberOfLines: 3, inWidth: screenWidth)
