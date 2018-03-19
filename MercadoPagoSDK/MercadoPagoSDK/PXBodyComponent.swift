@@ -105,31 +105,37 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     }
     
     public func getErrorMessage(status: String, statusDetail: String, paymentMethodName: String?) -> String? {
-        if status.elementsEqual(PXPayment.Status.PENDING) || status.elementsEqual(PXPayment.Status.IN_PROCESS) {
-            if statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_CONTINGENCY) {
+        if status == PXPayment.Status.PENDING || status == PXPayment.Status.IN_PROCESS {
+            switch statusDetail {
+            case PXPayment.StatusDetails.PENDING_CONTINGENCY:
                 return PXResourceProvider.getDescriptionForErrorBodyForPENDING_CONTINGENCY()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.PENDING_REVIEW_MANUAL) {
+            case PXPayment.StatusDetails.PENDING_REVIEW_MANUAL:
                 return PXResourceProvider.getDescriptionForErrorBodyForPENDING_REVIEW_MANUAL()
+            default:
+                return nil
             }
-        } else if status.elementsEqual(PXPayment.Status.REJECTED) {
-            if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE) {
+        } else if status == PXPayment.Status.REJECTED {
+            switch statusDetail {
+            case PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CARD_DISABLED) {
+            case PXPayment.StatusDetails.REJECTED_CARD_DISABLED:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_CARD_DISABLED(paymentMethodName)
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT) {
+            case PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_AMOUNT()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_OTHER_REASON) {
+            case PXPayment.StatusDetails.REJECTED_OTHER_REASON:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_OTHER_REASON()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_BY_BANK) {
+            case PXPayment.StatusDetails.REJECTED_BY_BANK:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_BY_BANK()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA) {
+            case PXPayment.StatusDetails.REJECTED_INSUFFICIENT_DATA:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_INSUFFICIENT_DATA()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT) {
+            case PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_DUPLICATED_PAYMENT()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS) {
+            case PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_MAX_ATTEMPTS()
-            } else if statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_HIGH_RISK) {
+            case PXPayment.StatusDetails.REJECTED_HIGH_RISK:
                 return PXResourceProvider.getDescriptionForErrorBodyForREJECTED_HIGH_RISK()
+            default:
+                return nil
             }
         }
         return nil
@@ -152,16 +158,16 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     }
 
     public func isCallForAuthorize(status: String, statusDetail: String) -> Bool {
-        return status.elementsEqual(PXPayment.Status.REJECTED) && statusDetail.elementsEqual(PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE)
+        return status == PXPayment.Status.REJECTED && statusDetail == PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
     }
 
     public func isPendingWithBody() -> Bool {
-        let hasPendingStatus = props.paymentResult.status.elementsEqual(PXPayment.Status.PENDING) || props.paymentResult.status.elementsEqual(PXPayment.Status.IN_PROCESS)
+        let hasPendingStatus = props.paymentResult.status == PXPayment.Status.PENDING || props.paymentResult.status == PXPayment.Status.IN_PROCESS
         return hasPendingStatus && pendingStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
 
     public func isRejectedWithBody() -> Bool {
-        return props.paymentResult.status.elementsEqual(PXPayment.Status.REJECTED) && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
+        return props.paymentResult.status == PXPayment.Status.REJECTED && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
     }
     
     func getCallback() -> (() -> Void) {
