@@ -69,7 +69,7 @@ class PXResultViewController: PXComponentContainerViewController {
 
         //Add Receipt
         receiptView = self.buildReceiptView()
-        contentView.addSubviewToButtom(receiptView)
+        contentView.addSubviewToBottom(receiptView)
         receiptView.addSeparatorLineToBottom(height: 1)
         PXLayout.put(view: receiptView, onBottomOf: headerView).isActive = true
         PXLayout.matchWidth(ofView: receiptView).isActive = true
@@ -77,7 +77,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Top Custom Component
         topCustomView = buildTopCustomView()
         topCustomView.clipsToBounds = true
-        contentView.addSubviewToButtom(topCustomView)
+        contentView.addSubviewToBottom(topCustomView)
         PXLayout.put(view: topCustomView, onBottomOf: receiptView).isActive = true
         PXLayout.matchWidth(ofView: topCustomView).isActive = true
 

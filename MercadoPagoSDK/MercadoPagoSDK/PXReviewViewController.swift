@@ -78,13 +78,13 @@ extension PXReviewViewController {
 
         // Add summary view.
         let summaryView = getSummaryComponentView()
-        contentView.addSubviewToButtom(summaryView)
+        contentView.addSubviewToBottom(summaryView)
         PXLayout.centerHorizontally(view: summaryView).isActive = true
         PXLayout.matchWidth(ofView: summaryView).isActive = true
         
         // Add CFT view.
         if let cftView = getCFTComponentView() {
-            contentView.addSubviewToButtom(cftView)
+            contentView.addSubviewToBottom(cftView)
             PXLayout.centerHorizontally(view: cftView).isActive = true
             PXLayout.matchWidth(ofView: cftView).isActive = true
         }
@@ -92,7 +92,7 @@ extension PXReviewViewController {
         // Add item views
         itemViews = buildItemComponentsViews()
         for itemView in itemViews {
-            contentView.addSubviewToButtom(itemView)
+            contentView.addSubviewToBottom(itemView)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
             itemView.addSeparatorLineToBottom(height: 1)
@@ -102,14 +102,14 @@ extension PXReviewViewController {
         if let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
             topCustomView.clipsToBounds = true
-            contentView.addSubviewToButtom(topCustomView)
+            contentView.addSubviewToBottom(topCustomView)
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
             PXLayout.centerHorizontally(view: topCustomView).isActive = true
         }
         
         // Add payment method view.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            contentView.addSubviewToButtom(paymentMethodView)
+            contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
         }
@@ -119,7 +119,7 @@ extension PXReviewViewController {
             bottomCustomView.addSeparatorLineToTop(height: 1)
             bottomCustomView.addSeparatorLineToBottom(height: 1)
             bottomCustomView.clipsToBounds = true
-            contentView.addSubviewToButtom(bottomCustomView)
+            contentView.addSubviewToBottom(bottomCustomView)
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             PXLayout.centerHorizontally(view: bottomCustomView).isActive = true
         }
@@ -130,13 +130,13 @@ extension PXReviewViewController {
             contentView.addSubview(termsConditionView)
             PXLayout.matchWidth(ofView: termsConditionView).isActive = true
             PXLayout.centerHorizontally(view: termsConditionView).isActive = true
-            contentView.addSubviewToButtom(termsConditionView)
+            contentView.addSubviewToBottom(termsConditionView)
             termsConditionView.delegate = self
         }
 
         //Add Footer
         footerView = getFooterView()
-        contentView.addSubviewToButtom(footerView)
+        contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()

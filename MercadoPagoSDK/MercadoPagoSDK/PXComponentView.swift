@@ -61,7 +61,7 @@ public class PXComponentView: UIView {
         self.contentView.addSubview(view)
     }
 
-    public func addSubviewToButtom(_ view: UIView, withMargin margin: CGFloat = 0) {
+    public func addSubviewToBottom(_ view: UIView, withMargin margin: CGFloat = 0) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
         putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
