@@ -88,7 +88,7 @@ class PXResultViewController: PXComponentContainerViewController {
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
         }
-        
+      
         //Add Body
         self.bodyView = self.buildBodyView()
         if let bodyView = self.bodyView {
@@ -98,7 +98,6 @@ class PXResultViewController: PXComponentContainerViewController {
             bodyView.addSeparatorLineToBottom(height: 1)
         }
         
-        
         //Add Bottom Custom Component
         self.bottomCustomView = buildBottomCustomView()
         if let bottomCustomView = self.bottomCustomView{
@@ -107,7 +106,6 @@ class PXResultViewController: PXComponentContainerViewController {
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
-
         }
    
         //Add Footer
@@ -129,6 +127,7 @@ class PXResultViewController: PXComponentContainerViewController {
                 expandBody()
             }
         }
+      
         self.scrollView.contentSize = CGSize(width: self.scrollView.frame.width, height: self.contentView.frame.height)
         super.refreshContentViewSize()
     }
@@ -177,6 +176,8 @@ class PXResultViewController: PXComponentContainerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ViewUtils.addStatusBar(self.view, color: viewModel.primaryResultColor())
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         renderViews()
     }

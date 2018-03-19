@@ -14,7 +14,7 @@ class ConfirmAdditionalInfoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        self.contentView.backgroundColor = ThemeManager.shared.getTheme().detailedBackgroundColor()
+        self.contentView.backgroundColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
