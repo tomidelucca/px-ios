@@ -52,7 +52,7 @@ struct PXItemRenderer {
             itemView.itemTitle = buildTitle(with: itemComponent.getTitle(), labelColor: itemComponent.props.boldLabelColor)
         }
         if let itemTitle = itemView.itemTitle {
-            itemView.addSubviewToBottom(itemTitle, withMargin: PXLayout.S_MARGIN)
+            itemView.addSubviewToButtom(itemTitle, withMargin: PXLayout.S_MARGIN)
             PXLayout.centerHorizontally(view: itemTitle).isActive = true
             PXLayout.matchWidth(ofView: itemTitle, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
@@ -62,7 +62,7 @@ struct PXItemRenderer {
             itemView.itemDescription = buildDescription(with: itemComponent.getDescription(), labelColor: itemComponent.props.lightLabelColor)
         }
         if let itemDescription = itemView.itemDescription {
-            itemView.addSubviewToBottom(itemDescription, withMargin: PXLayout.XS_MARGIN)
+            itemView.addSubviewToButtom(itemDescription, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: itemDescription).isActive = true
             PXLayout.matchWidth(ofView: itemDescription, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
@@ -72,7 +72,7 @@ struct PXItemRenderer {
             itemView.itemQuantity = buildQuantity(with: itemComponent.getQuantity(), labelColor: itemComponent.props.lightLabelColor)
         }
         if let itemQuantity = itemView.itemQuantity {
-            itemView.addSubviewToBottom(itemQuantity, withMargin: PXLayout.XS_MARGIN)
+            itemView.addSubviewToButtom(itemQuantity, withMargin: PXLayout.XS_MARGIN)
             PXLayout.centerHorizontally(view: itemQuantity).isActive = true
             PXLayout.matchWidth(ofView: itemQuantity, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
@@ -83,7 +83,7 @@ struct PXItemRenderer {
         }
         if let itemAmount = itemView.itemAmount {
             let margin = itemView.itemQuantity == nil ? PXLayout.XS_MARGIN : PXLayout.XXXS_MARGIN
-            itemView.addSubviewToBottom(itemAmount, withMargin: margin)
+            itemView.addSubviewToButtom(itemAmount, withMargin: margin)
             PXLayout.centerHorizontally(view: itemAmount).isActive = true
             PXLayout.matchWidth(ofView: itemAmount, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
