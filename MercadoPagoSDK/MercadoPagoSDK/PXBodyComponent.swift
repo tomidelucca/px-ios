@@ -144,7 +144,7 @@ open class PXBodyComponent: NSObject, PXComponentizable {
     public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)
-            let action = PXAction(label: actionText, action: getCallback())
+            let action = PXAction(label: actionText, action: self.props.callback)
             return action
         }
         return nil
@@ -168,20 +168,6 @@ open class PXBodyComponent: NSObject, PXComponentizable {
 
     public func isRejectedWithBody() -> Bool {
         return props.paymentResult.status == PXPayment.Status.REJECTED && rejectedStatusDetailsWithBody.contains(props.paymentResult.statusDetail)
-    }
-    
-    func getCallback() -> (() -> Void) {
-        return {
-            [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.executeCallback()
-        }
-    }
-
-    func executeCallback() {
-        self.props.callback()
     }
 
     public func render() -> UIView {
