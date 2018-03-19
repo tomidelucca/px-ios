@@ -12,8 +12,8 @@ import MercadoPagoSDK
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
 
     static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
-        let top = TestComponent()
-        let bottom = TestComponent()
+        //let top = TestComponent()
+        //let bottom = TestComponent()
         let preference = PaymentResultScreenPreference()
         preference.disableApprovedReceipt()
         preference.setApprovedHeaderIcon(stringURL: "https://i.pinimg.com/736x/16/6a/54/166a54b720bf9763dbce64e4cb52fa17--phoenix-band-nail-fashion.jpg")
@@ -27,10 +27,20 @@ import MercadoPagoSDK
         let top = TestComponent()
         let bottom = TestComponent()
         let preference = ReviewScreenPreference()
-        preference.setPaymentMethodTopCustomComponent(top)
-        preference.setPaymentMethodBottomCustomComponent(bottom)
+        preference.setTopComponent(top)
+        preference.setBottomComponent(bottom)
 //        preference.disableItems()
 //        preference.disableChangeMethodOption()
+        
+        // Not getting.
+        preference.setSummaryProductTitle(productTitle: "Produc title from ReviewScreenPreference")
+        preference.setAmountTitle(title: "Amount title from RSP")
+        
+        // Design note. (Solo en full) y 1 linea.
+        preference.setDisclaimerText(text: "Disclamer text from RSP")
+        preference.addSummaryDiscountDetail(amount: 10)
+        preference.addSummaryTaxesDetail(amount: 12)
+        
         return preference
     }
     

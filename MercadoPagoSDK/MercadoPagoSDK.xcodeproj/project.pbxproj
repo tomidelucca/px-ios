@@ -195,8 +195,6 @@
 		15AE1D9E1F60763400B0DAF8 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D9C1F60763400B0DAF8 /* Summary.swift */; };
 		15AE1DA01F607BA000B0DAF8 /* ItemsReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */; };
 		15AE1DA11F607BA000B0DAF8 /* ItemsReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */; };
-		15AE1DA61F60807900B0DAF8 /* SummaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */; };
-		15AE1DA71F60807900B0DAF8 /* SummaryPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */; };
 		15AE1DA91F608BB500B0DAF8 /* SummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */; };
 		15AE1DAA1F608BB500B0DAF8 /* SummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */; };
 		15AE1DAD1F61B98200B0DAF8 /* PXComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */; };
@@ -906,7 +904,6 @@
 		15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDetail.swift; sourceTree = "<group>"; };
 		15AE1D9C1F60763400B0DAF8 /* Summary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
 		15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsReview.swift; sourceTree = "<group>"; };
-		15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryPreference.swift; sourceTree = "<group>"; };
 		15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryType.swift; sourceTree = "<group>"; };
 		15AE1DAC1F61B98200B0DAF8 /* PXComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXComponent.swift; sourceTree = "<group>"; };
 		15AE1DAF1F61BAC200B0DAF8 /* SummaryComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryComponent.swift; sourceTree = "<group>"; };
@@ -1598,7 +1595,6 @@
 				15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */,
 				15AE1D9C1F60763400B0DAF8 /* Summary.swift */,
 				15AE1D9F1F607BA000B0DAF8 /* ItemsReview.swift */,
-				15AE1DA51F60807900B0DAF8 /* SummaryPreference.swift */,
 				15AE1DA81F608BB500B0DAF8 /* SummaryType.swift */,
 			);
 			name = "Summary Component";
@@ -3204,7 +3200,6 @@
 				15AE1DBE1F672FAE00B0DAF8 /* DisclaimerView.swift in Sources */,
 				235A326B204B4185002D1F54 /* PXReviewTitleComponentProps.swift in Sources */,
 				15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */,
-				15AE1DA61F60807900B0DAF8 /* SummaryPreference.swift in Sources */,
 				FC3FC8901FBE13E800CF29E1 /* PXInstructionsActionComponent.swift in Sources */,
 				FC3FC8491FBCC98F00CF29E1 /* PXInstructionsSubtitleComponent.swift in Sources */,
 				23A07FCF204837AB0074CB64 /* PXSummaryFullComponentView.swift in Sources */,
@@ -3507,7 +3502,6 @@
 				76062BC81C4D1F220067A14B /* PaymentMethodSearchItem.swift in Sources */,
 				153AEB2D1D382983008A3338 /* PaymentVaultViewController.swift in Sources */,
 				FC3FC8691FBE118100CF29E1 /* PXInstructionsReferencesRenderer.swift in Sources */,
-				15AE1DA71F60807900B0DAF8 /* SummaryPreference.swift in Sources */,
 				4B34DC3D1E5F06B000FDD295 /* PaymentResultScreenPreferenceTest.swift in Sources */,
 				4BEFBF931F06C13A003EA94E /* AdditionalStepCellFactoryTest.swift in Sources */,
 				76EC47C41C85DCA10086FA53 /* AddressTest.swift in Sources */,
