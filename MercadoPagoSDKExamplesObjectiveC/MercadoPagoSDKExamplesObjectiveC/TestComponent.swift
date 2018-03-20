@@ -58,7 +58,7 @@ import MercadoPagoSDK
         preference.setAmountTitle(title: "Amount title from RSP")
         
         // Design note. (Solo en full) y 1 linea.
-        preference.setDisclaimerText(text: "Disclamer text from RSP")
+        //preference.setDisclaimerText(text: "Disclamer text from RSP")
         preference.addSummaryDiscountDetail(amount: 10)
         preference.addSummaryTaxesDetail(amount: 12)
         

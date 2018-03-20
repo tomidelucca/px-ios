@@ -2,7 +2,7 @@
 //  PaymentResult.swift
 //  MercadoPagoSDK
 //
-//  Created by Eden Torres on 2/14/17.
+//  Created by Eden Torres on 2/14/17.x
 //  Copyright © 2017 MercadoPago. All rights reserved.
 //
 
