@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 @objc public class TestComponent: NSObject, PXCustomComponentizable {
-
+    
     static public func getPaymentResultPreference() -> PaymentResultScreenPreference {
         //let top = TestComponent()
         //let bottom = TestComponent()
@@ -24,7 +24,7 @@ import MercadoPagoSDK
     }
 
     public func render(store: PXCheckoutStore, theme: PXTheme) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 100))
+        let frame = CGRect(x: 0, y: 0, width: 500, height: 100)
         let view = UIView(frame: frame)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -38,6 +38,7 @@ import MercadoPagoSDK
         view.addSubview(label)
         
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+        
         NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
         
         return view

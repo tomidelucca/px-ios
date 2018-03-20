@@ -56,7 +56,7 @@ class PXBodyComponentTest: BaseTest {
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(bodyView.frame.height, 0)
+        XCTAssertEqual(bodyView?.frame.height, 0)
     }
 
     func testBodyView_rejectedC4AuthCardPayment_render() throws {
@@ -145,7 +145,7 @@ class PXBodyComponentTest: BaseTest {
         let bodyView = ResultMockComponentHelper.buildBodyView(resultViewModel: resultViewModel)
 
         // Then:
-        XCTAssertEqual(bodyView.frame.height, 0)
+        XCTAssertEqual(bodyView?.frame.height, 0)
     }
 
     func testBodyView_pendingContingencyCardPayment_render() throws {

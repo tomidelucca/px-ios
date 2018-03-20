@@ -145,10 +145,10 @@ open class PXBodyComponent: NSObject, PXComponentizable {
         return nil
     }
     
-    public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXAction? {
+    public func getErrorAction(status: String, statusDetail: String, paymentMethodName: String?) -> PXComponentAction? {
         if isCallForAuthorize(status: status, statusDetail: statusDetail) {
             let actionText = PXResourceProvider.getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(paymentMethodName)
-            let action = PXAction(label: actionText, action: self.props.callback)
+            let action = PXComponentAction(label: actionText, action: self.props.callback)
             return action
         }
         return nil

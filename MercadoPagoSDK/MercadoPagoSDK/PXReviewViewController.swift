@@ -250,14 +250,14 @@ extension PXReviewViewController {
     }
     
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
             return componentView
         }
         return nil
     }
     
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance) {
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
             return componentView
         }
         return nil

@@ -65,12 +65,6 @@ public class PXComponentView: UIView {
         putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
     }
     
-    public func addSubviewToButtom(_ view: UIView, withMargin margin: CGFloat = 0) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(view)
-        putOnBottomOfLastView(view: view, withMargin: margin)
-    }
-    
     override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
         self.topGuideView.addSeparatorLineToTop(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
