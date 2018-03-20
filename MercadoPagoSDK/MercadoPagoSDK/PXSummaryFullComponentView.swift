@@ -34,19 +34,19 @@ final class PXSummaryFullComponentView: PXComponentView {
         self.addDetailsViews(typeDetailDictionary: summary.details)
         let payerCost = paymentData.payerCost
         if payerCost != nil && (payerCost?.installments)! > 1 {
-            self.addMediumMargin()
+            self.addSmallMargin()
             self.addLine()
-            self.addMediumMargin()
+            self.addSmallMargin()
             self.addPayerCost(payerCost: payerCost!)
-            self.addMediumMargin()
+            self.addSmallMargin()
             self.addLine()
-            self.addMediumMargin()
+            self.addSmallMargin()
             self.addTotalView(totalAmount: (payerCost?.totalAmount)!)
         }
-        self.addLargeMargin()
+        self.addMediumMargin()
         if let disclaimer = summary.disclaimer {
             self.addDisclaimerView(text: disclaimer, color: summary.disclaimerColor)
-            self.addLargeMargin()
+            self.addMediumMargin()
         }
         
         self.backgroundColor = backgroundColor

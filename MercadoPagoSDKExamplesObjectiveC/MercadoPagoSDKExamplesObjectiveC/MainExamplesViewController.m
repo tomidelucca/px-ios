@@ -83,7 +83,7 @@
     dc.amountWithoutDiscount = 100;
     dc = nil;
 
-    self.pref._id = @"243962506-5cda11bd-da04-4d17-9ed4-b7bb1f52a119";
+    self.pref._id = @"243962506-e8314fc2-7abc-42d0-bf07-325b1f861ca8";
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
     accessToken:nil
