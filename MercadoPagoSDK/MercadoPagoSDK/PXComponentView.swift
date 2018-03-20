@@ -40,7 +40,7 @@ public class PXComponentView: UIView {
         PXLayout.matchWidth(ofView: bottomGuideView).isActive = true
     }
 
-    func prepareforRender() {
+    func prepareForRender() {
         for view in self.subviews {
             view.removeFromSuperview()
         }

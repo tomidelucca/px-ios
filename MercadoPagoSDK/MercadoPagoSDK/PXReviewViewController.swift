@@ -67,7 +67,7 @@ extension PXReviewViewController {
     
     fileprivate func renderViews() {
         
-        self.contentView.prepareforRender()
+        self.contentView.prepareForRender()
 
         // Add title view.
         let titleView = getTitleComponentView()

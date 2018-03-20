@@ -59,7 +59,7 @@ class PXResultViewController: PXComponentContainerViewController {
     
     func renderViews() {
         
-        self.contentView.prepareforRender()
+        self.contentView.prepareForRender()
         
         //Add Header
         self.headerView = self.buildHeaderView()
