@@ -73,7 +73,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.receiptView = self.buildReceiptView()
         if let receiptView = self.receiptView {
             receiptView.addSeparatorLineToBottom(height: 1)
-            contentView.addSubviewToButtom(receiptView)
+            contentView.addSubviewToBottom(receiptView)
             PXLayout.matchWidth(ofView: receiptView).isActive = true
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: receiptView, height: receiptView.frame.height).isActive = true
@@ -83,7 +83,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.topCustomView = buildTopCustomView()
         if let topCustomView = self.topCustomView {
             topCustomView.clipsToBounds = true
-            contentView.addSubviewToButtom(topCustomView)
+            contentView.addSubviewToBottom(topCustomView)
             PXLayout.matchWidth(ofView: topCustomView).isActive = true
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: topCustomView, height: topCustomView.frame.height).isActive = true
@@ -92,7 +92,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Body
         self.bodyView = self.buildBodyView()
         if let bodyView = self.bodyView {
-            contentView.addSubviewToButtom(bodyView)
+            contentView.addSubviewToBottom(bodyView)
             PXLayout.matchWidth(ofView: bodyView).isActive = true
             PXLayout.centerHorizontally(view: bodyView).isActive = true
             bodyView.addSeparatorLineToBottom(height: 1)
@@ -102,7 +102,7 @@ class PXResultViewController: PXComponentContainerViewController {
         self.bottomCustomView = buildBottomCustomView()
         if let bottomCustomView = self.bottomCustomView{
             bottomCustomView.clipsToBounds = true
-            contentView.addSubviewToButtom(bottomCustomView)
+            contentView.addSubviewToBottom(bottomCustomView)
             PXLayout.matchWidth(ofView: bottomCustomView).isActive = true
             self.view.layoutIfNeeded()
             PXLayout.setHeight(owner: bottomCustomView, height: bottomCustomView.frame.height).isActive = true
@@ -111,7 +111,7 @@ class PXResultViewController: PXComponentContainerViewController {
         //Add Footer
         self.footerView = self.buildFooterView()
         if let footerView = self.footerView {
-            contentView.addSubviewToButtom(footerView)
+            contentView.addSubviewToBottom(footerView)
             PXLayout.matchWidth(ofView: footerView).isActive = true
             PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
             self.view.layoutIfNeeded()
