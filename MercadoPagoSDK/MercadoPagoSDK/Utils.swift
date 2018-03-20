@@ -481,6 +481,10 @@ class Utils {
                 }
             }).resume()
         }
+
+        else if let fallbackImage = fallbackImage {
+            targetImage.image = fallbackImage
+        }
         
         return
     }
