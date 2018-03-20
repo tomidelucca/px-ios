@@ -68,11 +68,12 @@ class PXPaymentMethodComponentRenderer: NSObject {
             descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
             pmBodyView.addSubview(descriptionLabel)
             pmBodyView.paymentMethodDescription = descriptionLabel
+            descriptionLabel.text = paymentMethodDescription
             descriptionLabel.attributedText = paymentMethodDescription
-            descriptionLabel.font = Utils.getFont(size: SUBTITLE_FONT_SIZE)
+            descriptionLabel.font = Utils.getFont(size: DETAIL_FONT_SIZE)
+            descriptionLabel.numberOfLines = 2
             descriptionLabel.textColor = component.props.lightLabelColor
             descriptionLabel.textAlignment = .center
-            descriptionLabel.numberOfLines = 2
             pmBodyView.putOnBottomOfLastView(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN)?.isActive = true
             PXLayout.pinLeft(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true
             PXLayout.pinRight(view: descriptionLabel, withMargin: PXLayout.XS_MARGIN).isActive = true

@@ -19,6 +19,7 @@ class PXFooterComponent: NSObject, PXComponentizable {
         return PXFooterRenderer().render(self)
     }
 }
+
 class PXFooterProps: NSObject {
     var buttonAction: PXComponentAction?
     var linkAction: PXComponentAction?

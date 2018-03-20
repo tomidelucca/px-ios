@@ -49,6 +49,7 @@ class PXFooterRenderer: NSObject {
         }
         return fooView
     }
+
     func buildPrincipalButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let button = PXPrimaryButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +58,7 @@ class PXFooterRenderer: NSObject {
         button.add(for: .touchUpInside, footerAction.action)
         return button
     }
+  
     func buildLinkButton(with footerAction: PXComponentAction, color: UIColor? = .pxBlueMp) -> UIButton {
         let linkButton = PXSecondaryButton()
         linkButton.translatesAutoresizingMaskIntoConstraints = false
