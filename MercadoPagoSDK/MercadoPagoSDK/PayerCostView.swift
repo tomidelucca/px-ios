@@ -40,7 +40,7 @@ final class PayerCostView: UIView, PXComponent {
             self.noRateLabel.font = Utils.getFont(size: PayerCostView.TITLE_FONT_SIZE)
             self.noRateLabel.textColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
             self.noRateLabel.textAlignment = .right
-            self.requiredHeight = self.requiredHeight + self.noRateLabel.requiredHeight()
+            self.requiredHeight += self.noRateLabel.requiredHeight()
             self.addSubview(noRateLabel)
         } else {
              self.purchaseDetailAmount = MPLabel(frame: CGRect(x: (HORIZONTAL_MARGIN * 2) +  self.purchaseDetailTitle.frame.size.width, y: VERTICAL_MARGIN, width: (self.getWeight() - 3 * HORIZONTAL_MARGIN)/2, height: 0 ))
@@ -55,7 +55,7 @@ final class PayerCostView: UIView, PXComponent {
         self.removeFromSuperview()
         let purchaseAmount = getInstallmentsAmount(payerCost: payerCost)
         self.purchaseDetailAmount.attributedText = purchaseAmount
-        self.requiredHeight = self.requiredHeight + self.purchaseDetailAmount.requiredHeight()
+        self.requiredHeight += self.purchaseDetailAmount.requiredHeight()
         if PurchaseDetailTableViewCell.separatorLine != nil {
             PurchaseDetailTableViewCell.separatorLine!.removeFromSuperview()
         }
@@ -96,7 +96,7 @@ extension PayerCostView {
 
         if self.noRateLabel != nil {
             self.noRateLabel.frame = CGRect(x: -HORIZONTAL_MARGIN, y: VERTICAL_MARGIN * 2 + self.purchaseDetailAmount.frame.size.height, width: self.frame.width, height: self.noRateLabel.requiredHeight())
-            self.requiredHeight = self.requiredHeight + VERTICAL_MARGIN + self.noRateLabel.requiredHeight()
+            self.requiredHeight += VERTICAL_MARGIN + self.noRateLabel.requiredHeight()
         }
     }
 }

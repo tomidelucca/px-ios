@@ -46,7 +46,7 @@ class AvailableCardsDetailView: UIView {
 
         for paymentMethod in paymentMethods {
             scrollCards.addSubview(getCardAvailableView(y: y, paymentMethod: paymentMethod))
-            y = y + AvailableCardsDetailView.ITEMS_HEIGHT
+            y += AvailableCardsDetailView.ITEMS_HEIGHT
         }
 
         self.addSubview(scrollCards)

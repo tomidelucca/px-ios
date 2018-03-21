@@ -76,7 +76,7 @@ extension PXSummaryFullComponentView {
 
                 var value: Double = detail.getTotalAmount()
                 if type == SummaryType.DISCOUNT {
-                    value = value * (-1)
+                    value *= (-1)
                 }
 
                 var titleValueView = TitleValueView(frame: frame, titleText: detail.title, valueDouble: value, colorTitle: detail.titleColor, colorValue: detail.amountColor, valueEnable: true)
@@ -87,7 +87,7 @@ extension PXSummaryFullComponentView {
 
                 self.addSmallMargin()
                 self.addSubview(titleValueView)
-                requiredHeight = requiredHeight + titleValueView.getHeight()
+                requiredHeight += titleValueView.getHeight()
             }
         }
     }
@@ -95,7 +95,7 @@ extension PXSummaryFullComponentView {
     fileprivate func addTotalView(totalAmount: Double) {
         let frame = CGRect(x: 0.0, y: requiredHeight, width: self.frame.size.width, height: DETAILS_HEIGHT)
         let titleValueView = TitleValueView(frame: frame, titleText: PXSummaryFullComponentView.TOTAL_TITLE, valueDouble: totalAmount, valueEnable: true)
-        requiredHeight = requiredHeight + titleValueView.getHeight()
+        requiredHeight += titleValueView.getHeight()
         self.addSubview(titleValueView)
     }
 
@@ -103,13 +103,13 @@ extension PXSummaryFullComponentView {
         let payerCostView = PayerCostView(frame: CGRect(x: 0, y: requiredHeight, width: self.frame.size.width, height: PAYER_COST_HEIGHT), payerCost: payerCost)
         self.addSubview(payerCostView)
         payerCostView.frame =  CGRect(x: 0, y: requiredHeight, width: self.frame.size.width, height: payerCostView.getHeight())
-        requiredHeight = requiredHeight + payerCostView.getHeight()
+        requiredHeight += payerCostView.getHeight()
     }
 
     fileprivate func addDisclaimerView(text: String, color: UIColor) {
         let disclaimerView = DisclaimerView(frame: CGRect(x: 0, y: requiredHeight, width: self.frame.size.width, height: DISCLAIMER_HEIGHT), disclaimerText: text, colorText: color, disclaimerFontSize: DISCLAIMER_FONT_SIZE)
         self.addSubview(disclaimerView)
-        self.requiredHeight = self.requiredHeight + disclaimerView.getHeight()
+        self.requiredHeight += disclaimerView.getHeight()
     }
 
     fileprivate func iterateEnum<T: Hashable>(_: T.Type) -> AnyIterator<T> {
@@ -135,11 +135,11 @@ extension PXSummaryFullComponentView {
     }
 
     fileprivate func addMargin(height: CGFloat) {
-        self.requiredHeight = self.requiredHeight + height
+        self.requiredHeight += height
     }
 
     fileprivate func addLine() {
         self.addLine(y: self.requiredHeight, horizontalMargin: HORIZONTAL_MARGIN, width: self.frame.size.width - 2 * HORIZONTAL_MARGIN, height: 1)
-        self.requiredHeight = self.requiredHeight + 1.0
+        self.requiredHeight += 1.0
     }
 }

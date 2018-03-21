@@ -152,10 +152,10 @@ import UIKit
         let tintColorForIcons = ThemeManager.shared.getTintColorForIcons()
 
         if defaultColor {
-            description = description + "Azul"
+            description += "Azul"
         } else if PaymentType.allPaymentIDs.contains(description) || description == "cards" || description.contains("bolbradesco") {
             if tintColorForIcons == nil {
-                description = description + "Azul"
+                description += "Azul"
             }
         }
 

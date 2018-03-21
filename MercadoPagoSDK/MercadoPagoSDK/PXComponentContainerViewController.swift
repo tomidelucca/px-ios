@@ -88,7 +88,7 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
     func refreshContentViewSize() {
         var height: CGFloat = 0
         for view in contentView.getSubviews() {
-            height = height + view.frame.height
+            height += view.frame.height
         }
 
         contentView.fixHeight(height: height)
@@ -117,7 +117,7 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
                 navigationItem.titleView?.layer.add(titleAnimation, forKey: "changeTitle")
                 (navigationItem.titleView as? UILabel)?.sizeToFit()
                 (navigationItem.titleView as? UILabel)?.text = customNavigationTitle
-                navigationTitleStatusStep = navigationTitleStatusStep + 1
+                navigationTitleStatusStep += 1
             }
         } else {
             if navigationTitleStatusStep >= STATUS_TITLE_BREAKPOINT {

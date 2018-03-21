@@ -87,10 +87,10 @@ class DiscountBodyCell: UIView {
         var x = (screenWidth - totalViewWidth) / 2
         let frameFlag = CGRect(x: x, y: (margin * 2 + 40), width: 20, height: 20)
         couponFlag.frame = frameFlag
-        x = x + 20 + margin
+        x += 20 + margin
         let frameLabel = CGRect(x: x, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-         x = x + widthlabelDiscount! + margin
+        x += widthlabelDiscount! + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
         self.addSubview(couponFlag)
@@ -150,13 +150,13 @@ class DiscountBodyCell: UIView {
         var x = (screenWidth - totalViewWidth) / 2
         let frameLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x = x + widthlabelDiscount! + margin
+        x += widthlabelDiscount! + margin
         let framePic = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
         picFlag.frame = framePic
-        x = x + 10
+        x += 10
         let frameAmountLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
         discountAmountLabel.frame = frameAmountLabel
-        x = x + widthlabelAmount + margin
+        x += widthlabelAmount + margin
         let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
 

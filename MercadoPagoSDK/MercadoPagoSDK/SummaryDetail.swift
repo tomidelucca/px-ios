@@ -17,7 +17,7 @@ class SummaryDetail: NSObject {
     func getTotalAmount() -> Double {
         var sum: Double = 0
         for detail in details {
-            sum = sum + detail.amount
+            sum += detail.amount
         }
         return sum
     }

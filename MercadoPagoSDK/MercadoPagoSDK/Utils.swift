@@ -125,7 +125,7 @@ class Utils {
         let entireAmount = getAmountFormatted(String(describing: Int(amount)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
         var amountFotmated = entireAmount
         if !cents.isEmpty {
-              amountFotmated = amountFotmated + decimalSeparator + cents
+              amountFotmated += decimalSeparator + cents
               amountFotmated = amountFotmated.replacingOccurrences(of: decimalSeparator + "00", with: "")
         }
 

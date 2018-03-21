@@ -243,9 +243,9 @@ extension ReviewScreenPreference {
         for summaryType in details.keys {
             if let detailAmount = details[summaryType]?.getTotalAmount() {
                 if summaryType == SummaryType.DISCOUNT {
-                    totalAmount = totalAmount - detailAmount
+                    totalAmount -= detailAmount
                 } else {
-                    totalAmount = totalAmount + detailAmount
+                    totalAmount += detailAmount
                 }
             }
         }

@@ -70,7 +70,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     override func trackInfo() {
         var finalId = screenId
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId = finalId + "/" + cardType
+            finalId += "/" + cardType
         }
         MPXTracker.sharedInstance.trackScreen(screenId: finalId, screenName: screenName)
         self.trackStatus()
@@ -80,7 +80,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         var finalId = screenId
 
         if let cardType = self.viewModel.getPaymentMethodTypeId() {
-            finalId = finalId + "/" + cardType
+            finalId += "/" + cardType
         }
 
         if editingLabel === cardNumberLabel {

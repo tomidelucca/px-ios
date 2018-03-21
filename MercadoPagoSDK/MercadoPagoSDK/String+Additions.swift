@@ -76,7 +76,7 @@ extension String {
             if self.isEmpty {
                 self = key + "=" + value!
             } else {
-                self = self + "&" + key + "=" + value!
+                self += "&" + key + "=" + value!
             }
         }
     }

@@ -57,7 +57,7 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
         var absoluteAmount = amount
         var isNegative = false
         if absoluteAmount < 0 {
-            absoluteAmount = absoluteAmount * -1
+            absoluteAmount *= -1
             isNegative = true
         }
         if payerCost != nil {
