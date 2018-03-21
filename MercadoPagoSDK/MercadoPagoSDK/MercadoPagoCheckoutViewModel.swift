@@ -186,6 +186,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return paymentMethodPlugins.filter{$0.mustShowPaymentMethodPlugin(PXCheckoutStore.sharedInstance) == true}
     }
 
+    // Returns lists of all payment option available
     fileprivate func getPaymentMethodsOptions(_ paymentMethodPluginsToShow: [PXPaymentMethodPlugin]) -> String {
         var paymentMethodsOptions = ""
 
@@ -199,7 +200,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if let customPaymentOptions = customPaymentOptions {
             for customCard in customPaymentOptions {
-                paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())|"
+                paymentMethodsOptions += "\(customCard.getPaymentMethodId()):\(customCard.getPaymentTypeId()):\(customCard.getCardId())"
+                if mpESCManager.getESC(cardId: customCard.getCardId()) != nil {
+                    paymentMethodsOptions += ":ESC"
+                }
+                paymentMethodsOptions += "|"
             }
         }
 
