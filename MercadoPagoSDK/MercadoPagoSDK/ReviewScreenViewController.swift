@@ -12,7 +12,7 @@ import MercadoPagoPXTracking
 open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITableViewDataSource, UITableViewDelegate, TermsAndConditionsDelegate, MPCustomRowDelegate, UnlockCardDelegate {
 
     @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
-    
+
     var floatingConfirmButtonView: UIView!
     weak var fixedButton: UIButton?
     weak var floatingButton: UIButton?
@@ -36,9 +36,9 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     fileprivate var auth = false
 
     @IBOutlet weak var checkoutTable: UITableView!
-    
-    weak var floattingButton : PXContainedActionButtonView?
-    weak var cellButton : PXContainedActionButtonView?
+
+    weak var floattingButton: PXContainedActionButtonView?
+    weak var cellButton: PXContainedActionButtonView?
 
    public init(viewModel: CheckoutViewModel, callbackPaymentData : @escaping (PaymentData) -> Void, callbackExit :@escaping (() -> Void), callbackConfirm : @escaping (PaymentData) -> Void) {
         super.init(nibName: "ReviewScreenViewController", bundle: MercadoPago.getBundle())
@@ -48,13 +48,13 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.callbackExit = callbackExit
         self.callbackConfirm = callbackConfirm
     }
-    
+
     private func initCommon() {
         MercadoPagoContext.clearPaymentKey()
         self.publicKey = MercadoPagoContext.publicKey()
         self.accessToken = MercadoPagoContext.merchantAccessToken()
     }
-    
+
     override func trackInfo() {
         guard let paymentMethod = self.viewModel.paymentData.getPaymentMethod() else {
             return
@@ -87,7 +87,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         super.viewDidLoad()
         self.displayFloatingConfirmButton()
     }
-    
+
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.hideNavBar()
@@ -124,7 +124,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         if self.shouldShowNavBar(self.checkoutTable) {
             self.showNavBar()
         }
-        
+
         // iPhoneX improvement.
         let bottomInset = PXLayout.getSafeAreaBottomInset()
         if bottomInset > 0 {
@@ -195,8 +195,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         self.checkoutTable.register(purchaseDetailTableViewCell, forCellReuseIdentifier: "purchaseDetailTableViewCell")
 
         self.checkoutTable.register(UITableViewCell.self, forCellReuseIdentifier: "confirmPaymentTableViewCell")
-        
-        
+
         let purchaseItemDetailTableViewCell = UINib(nibName: "PurchaseItemDetailTableViewCell", bundle: self.bundle)
         self.checkoutTable.register(purchaseItemDetailTableViewCell, forCellReuseIdentifier: "purchaseItemDetailTableViewCell")
 
@@ -313,7 +312,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         PXLayout.centerHorizontally(view: self.cellButton!).isActive = true
         return confirmPaymentTableViewCell
     }
-    
+
     func buildContainedButton() -> PXContainedActionButtonView {
         let component = PXContainedActionButtonComponent(props: PXContainedActionButtonProps(title: "Confirmar".localized, action: {
             [weak self] in self?.confirmPayment()
@@ -455,7 +454,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.checkFloatingButtonVisibility()
         self.didScrollInTable(scrollView)
-        
+
         let font: UIFont = Utils.getFont(size: navBarFontSize)
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: navBarTextColor, NSFontAttributeName: font]
         self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
@@ -481,7 +480,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         }
         view.removeFromSuperview()
     }
-    
+
     override func didScrollInTable(_ scrollView: UIScrollView) {
         navBarFontSize = 18
         if let titleCell = titleCell {

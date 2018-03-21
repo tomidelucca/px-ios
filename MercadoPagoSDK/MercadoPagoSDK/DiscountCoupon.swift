@@ -47,14 +47,14 @@ open class DiscountCoupon: NSObject {
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
-    
+
     public init(_id: UInt) {
         self._id = _id
         super.init()
     }
 
     func toJSON() -> [String: Any] {
-        
+
         var obj: [String: Any] = [
             "id": self._id,
             "percent_off": Int(self.percent_off) != nil ? Int(self.percent_off)! : 0,
@@ -73,7 +73,7 @@ open class DiscountCoupon: NSObject {
         if let concept = self.concept {
             obj["concept"] = concept
         }
-        
+
         if let campaignId = self.campaignId {
             obj["campaign_id"] = campaignId
         }

@@ -257,7 +257,7 @@ open class CheckoutViewModel: NSObject {
             }
 
         }
-        
+
         if let discount = self.paymentData.discount {
             let discountAmountDetail = SummaryItemDetail(name: discount.description, amount: Double(discount.coupon_amount)!)
 

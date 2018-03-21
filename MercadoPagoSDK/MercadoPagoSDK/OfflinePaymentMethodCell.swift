@@ -110,10 +110,10 @@ class OfflinePaymentMethodCell: UITableViewCell {
             self.acreditationTimeLabel.isHidden = true
             self.accreditationTimeIcon.isHidden = true
             attributedTitle = NSMutableAttributedString(string : paymentMethod.name, attributes: [NSFontAttributeName: Utils.getFont(size: 20), NSForegroundColorAttributeName: ThemeManager.shared.getTheme().boldLabelTintColor()])
-            
+
         } else {
             self.iconCash.image = MercadoPago.getOfflineReviewAndConfirmImage(paymentMethod)
-            
+
             self.setTitle(paymentMethodOption, attributedTitle)
 
             self.acreditationTimeLabel.attributedText = NSMutableAttributedString(string: paymentMethodOption.getComment(), attributes: [NSFontAttributeName: Utils.getFont(size: 12)])

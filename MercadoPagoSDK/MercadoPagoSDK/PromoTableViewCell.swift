@@ -28,9 +28,9 @@ open class PromoTableViewCell: UITableViewCell {
 
 	open func setPromoInfo(_ promo: BankDeal!) {
 		let placeholderImage = UIImage(named: "empty_tc")
-        
+
 		if promo != nil && promo!.issuer != nil && promo!.issuer!._id != nil && !String.isNullOrEmpty(promo.url) {
-			
+
             Utils().loadImageWithCache(withUrl: promo.url, targetImage: self.issuerImageView, placeHolderImage: placeholderImage, fallbackImage: nil)
 		}
 

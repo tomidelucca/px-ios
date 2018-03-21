@@ -46,7 +46,7 @@ class DiscountBodyCell: UIView {
 
     func loadNoCouponView() {
         let screenWidth = frame.size.width
-        
+
         let amountFontSize: CGFloat = 16
         let centsFontSize: CGFloat = 12
         let currency = MercadoPagoContext.getCurrency()
@@ -54,10 +54,10 @@ class DiscountBodyCell: UIView {
         let thousandSeparator = currency.getThousandsSeparatorOrDefault()
         let decimalSeparator = currency.getDecimalSeparatorOrDefault()
         let attributedTitle = NSMutableAttributedString(string: "Total: ".localized, attributes: [NSFontAttributeName: Utils.getFont(size: amountFontSize)])
-        
+
         let attributedAmount = Utils.getAttributedAmount(amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
         attributedTitle.append(attributedAmount)
-        
+
         let props = PXContainedLabelProps(labelText: attributedTitle)
         let component = PXContainedLabelComponent(props: props)
         let view = component.render()
@@ -66,7 +66,7 @@ class DiscountBodyCell: UIView {
         PXLayout.setHeight(owner: view, height: 20).isActive = true
         PXLayout.matchWidth(ofView: view).isActive = true
         PXLayout.centerHorizontally(view: view).isActive = true
-        
+
         let couponFlag = UIImageView()
         couponFlag.image = MercadoPago.getImage("iconDiscount")
         couponFlag.image = couponFlag.image?.withRenderingMode(.alwaysTemplate)

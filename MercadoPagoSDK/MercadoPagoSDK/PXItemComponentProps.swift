@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PXItemComponentProps : NSObject {
+final class PXItemComponentProps: NSObject {
     var imageURL: String?
     var title: String?
     var _description: String?
@@ -23,7 +23,7 @@ final class PXItemComponentProps : NSObject {
 
     typealias ItemTheme = (backgroundColor: UIColor, boldLabelColor: UIColor, lightLabelColor: UIColor)
 
-    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, amountTitle: String, quantityTitle: String, collectorImage: UIImage? , itemTheme: ItemTheme) {
+    init(imageURL: String?, title: String?, description: String?, quantity: Int?, unitAmount: Double?, amountTitle: String, quantityTitle: String, collectorImage: UIImage?, itemTheme: ItemTheme) {
         self.imageURL = imageURL
         self.title = title
         self._description = description

@@ -115,7 +115,7 @@ open class Token: NSObject, CardInformationForm {
         let lastFour: Any = self.lastFourDigits == nil ? JSONHandler.null : self.lastFourDigits
         let firstSix: Any =  self.firstSixDigit == nil ? JSONHandler.null : self.firstSixDigit
         let cardHolderToJsonString: Any = self.cardHolder?.toJSON() ?? JSONHandler.null
-        
+
         //TODO: Change all json parse logic. Remove fromJson, tJson. Refactor of Network layer.
         let esc: Any = String.isNullOrEmpty(self.esc) ? JSONHandler.null : self.esc ?? ""
 
@@ -144,27 +144,27 @@ open class Token: NSObject, CardInformationForm {
     open func getCardExpirationDateFormated() -> String {
         return (String(expirationMonth) + String(expirationYear))
     }
-    
+
     open func getMaskNumber() -> String {
 
         var masknumber: String = ""
 
         for _ in 0...cardNumberLength-4 {
-           masknumber = masknumber + "X"
+           masknumber += "X"
         }
 
-           masknumber = masknumber + lastFourDigits
+           masknumber += lastFourDigits
         return masknumber
 
     }
-    
+
     open func getExpirationDateFormated() -> String {
         if self.expirationYear > 0 && self.expirationMonth > 0 {
             return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)))
         }
         return ""
     }
-    
+
     public func getCardBin() -> String? {
         return firstSixDigit
     }

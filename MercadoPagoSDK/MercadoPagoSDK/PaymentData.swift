@@ -147,7 +147,7 @@ public class PaymentData: NSObject {
     public func getPayerCost() -> PayerCost? {
         return payerCost
     }
-    
+
     public func getNumberOfInstallments() -> Int {
         guard let installments = payerCost?.installments else {
             return 0
@@ -201,6 +201,5 @@ public class PaymentData: NSObject {
 
         return obj
     }
-
 
 }

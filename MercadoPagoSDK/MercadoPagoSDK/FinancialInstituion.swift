@@ -20,7 +20,7 @@ open class FinancialInstitution: NSObject, Cellable {
         if let _id = JSONHandler.attemptParseToString(json["id"])?.numberValue, let iid = _id as? Int {
             financialInstitution._id = iid
         }
-        
+
         if let description = JSONHandler.attemptParseToString(json["description"]) {
             financialInstitution._description = description
         }

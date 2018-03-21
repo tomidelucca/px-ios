@@ -20,7 +20,7 @@ open class Issuer: NSObject, Cellable {
         if let id = json["id"] as? String {
             issuer._id = JSONHandler.attemptParseToString(id)
         }
-        
+
         if let name = JSONHandler.attemptParseToString(json["name"]) {
             issuer.name = name
         }

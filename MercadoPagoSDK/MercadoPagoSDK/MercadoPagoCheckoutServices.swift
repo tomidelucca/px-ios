@@ -75,12 +75,11 @@ extension MercadoPagoCheckout {
         } else {
             _ = self.viewModel.copyViewModelAndAssignToCheckoutStore()
             let plugin = plugins[index]
-            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance,{ [weak self] success in
+            plugin.initPaymentMethodPlugin(PXCheckoutStore.sharedInstance, { [weak self] success in
                 self?.initPlugin(plugins: plugins, index: index - 1)
             })
         }
     }
-
 
     func getPaymentMethodSearch() {
         self.presentLoading()

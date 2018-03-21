@@ -47,7 +47,7 @@ extension PXItemComponent {
     }
 
     func getQuantity() -> String? {
-        guard let quantity = props.quantity?.stringValue else  {
+        guard let quantity = props.quantity?.stringValue else {
             return nil
         }
         return "\(props.quantityTitle) \(quantity)"

@@ -186,7 +186,7 @@ import UIKit
         } else if paymentMethod.isAccountMoney {
             return MercadoPago.getImage("MPSDK_review_dineroEnCuenta")!
         }
-    
+
         return MercadoPago.getImage("MPSDK_review_iconoDineroEnEfectivo")!
     }
 

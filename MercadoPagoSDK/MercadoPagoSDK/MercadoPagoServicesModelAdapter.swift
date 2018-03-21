@@ -674,7 +674,7 @@ extension MercadoPagoServicesAdapter {
         customer.liveMode = pxCustomer.liveMode
         customer.phone = getPhoneFromPXPhone(pxCustomer.phone)
         customer.registrationDate = pxCustomer.registrationDate
-        
+
         if let meta = pxCustomer.metadata {
             customer.metadata = meta as NSDictionary
         }

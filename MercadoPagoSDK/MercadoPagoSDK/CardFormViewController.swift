@@ -803,7 +803,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         let securityCode = self.viewModel.customerCard!.isSecurityCodeRequired() ? self.cvvLabel?.text : nil
         return  SavedCardToken(card: viewModel.customerCard!, securityCode: securityCode, securityCodeRequired: self.viewModel.customerCard!.isSecurityCodeRequired())
     }
-    
+
     fileprivate func getTextboxPlaceholder() -> String {
         if editingLabel == cardNumberLabel {
             return "Número de tarjeta".localized
