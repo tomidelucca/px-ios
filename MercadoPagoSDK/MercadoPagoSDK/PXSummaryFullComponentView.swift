@@ -42,13 +42,23 @@ final class PXSummaryFullComponentView: PXComponentView {
             self.addLine()
             self.addSmallMargin()
             self.addTotalView(totalAmount: (payerCost?.totalAmount)!)
+        } else {
+            var amount = totalAmount
+            if let discount = paymentData.discount {
+                amount = discount.newAmount()
+            }
+            self.addSmallMargin()
+            if shouldAddTotal() {
+                self.addLine()
+                self.addSmallMargin()
+                self.addTotalView(totalAmount: amount)
+            }
         }
         self.addMediumMargin()
         if let disclaimer = summary.disclaimer {
             self.addDisclaimerView(text: disclaimer, color: summary.disclaimerColor)
             self.addMediumMargin()
         }
-        
         self.backgroundColor = backgroundColor
     }
     
