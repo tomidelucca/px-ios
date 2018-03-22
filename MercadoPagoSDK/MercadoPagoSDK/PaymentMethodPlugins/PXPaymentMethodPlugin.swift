@@ -28,7 +28,7 @@ open class PXPaymentMethodPlugin: NSObject {
     var paymentPlugin: PXPaymentPluginComponent
     var paymentMethodConfigPlugin: PXConfigPluginComponent?
     var displayOrder = DisplayOrder.TOP
-    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool)->Void) -> Void = {store, callback in
+    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
         callback(true)
     }
 
