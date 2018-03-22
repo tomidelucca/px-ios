@@ -82,7 +82,7 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 100;
     dc = nil;
-
+  
     self.pref._id = @"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44";
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7"
