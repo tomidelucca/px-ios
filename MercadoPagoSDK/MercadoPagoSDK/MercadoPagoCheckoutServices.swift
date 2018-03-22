@@ -115,7 +115,7 @@ extension MercadoPagoCheckout {
             return
         }
         let bin = self.viewModel.cardToken?.getBin()
-        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod._id, bin: bin, callback: { [weak self] (issuers) in
+        self.viewModel.mercadoPagoServicesAdapter.getIssuers(paymentMethodId: paymentMethod.paymentMethodId, bin: bin, callback: { [weak self] (issuers) in
 
             guard let strongSelf = self else {
                 return
@@ -275,7 +275,7 @@ extension MercadoPagoCheckout {
 
     func cloneCardToken(token: Token, securityCode: String) {
         self.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token._id, securityCode: securityCode, callback: { [weak self] (token) in
+        self.viewModel.mercadoPagoServicesAdapter.cloneToken(tokenId: token.tokenId, securityCode: securityCode, callback: { [weak self] (token) in
 
             guard let strongSelf = self else {
                 return
@@ -307,7 +307,7 @@ extension MercadoPagoCheckout {
 
         let bin = self.viewModel.cardToken?.getBin()
 
-        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod._id, callback: { [weak self] (installments) in
+        self.viewModel.mercadoPagoServicesAdapter.getInstallments(bin: bin, amount: self.viewModel.getAmount(), issuer: self.viewModel.paymentData.getIssuer(), paymentMethodId: paymentMethod.paymentMethodId, callback: { [weak self] (installments) in
 
             guard let strongSelf = self else {
                 return
@@ -401,7 +401,7 @@ extension MercadoPagoCheckout {
             fatalError("Get Instructions - Payment Result does no exist")
         }
 
-        guard let paymentId = paymentResult._id else {
+        guard let paymentId = paymentResult.paymentId else {
            fatalError("Get Instructions - Payment Id does no exist")
         }
 

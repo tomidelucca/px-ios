@@ -155,7 +155,7 @@ open class CheckoutViewModel: NSObject {
         let path = MercadoPago.getBundle()!.path(forResource: "UnlockCardLinks", ofType: "plist")
         let dictionary = NSDictionary(contentsOfFile: path!)
         let site = MercadoPagoContext.getSite()
-        guard let issuerID = self.paymentData.getIssuer()?._id else {
+        guard let issuerID = self.paymentData.getIssuer()?.issuerId else {
             return nil
         }
         let searchString: String = site + "_" + "\(issuerID)"

@@ -40,10 +40,10 @@ class PXResultViewController: PXComponentContainerViewController {
                         TrackingUtil.METADATA_PAYMENT_STATUS_DETAIL: self.viewModel.getPaymentStatusDetail(),
                         TrackingUtil.METADATA_PAYMENT_ID: self.viewModel.getPaymentId() ?? ""]
         if let pm = self.viewModel.getPaymentData().getPaymentMethod() {
-            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm._id
+            metadata[TrackingUtil.METADATA_PAYMENT_METHOD_ID] = pm.paymentMethodId
         }
         if let issuer = self.viewModel.getPaymentData().getIssuer() {
-            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer._id
+            metadata[TrackingUtil.METADATA_ISSUER_ID] = issuer.issuerId
         }
 
         let finalId = "\(screenId)/\(self.viewModel.getPaymentStatus())"

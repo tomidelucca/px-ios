@@ -192,7 +192,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if let paymentMethods = search?.paymentMethods {
             for paymentMethod in paymentMethods {
-                if let id = paymentMethod._id, let paymentTypeId = paymentMethod.paymentTypeId {
+                if let id = paymentMethod.paymentMethodId, let paymentTypeId = paymentMethod.paymentTypeId {
                     paymentMethodsOptions += "\(id):\(paymentTypeId)|"
                 }
             }
@@ -581,9 +581,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     public class func createMPPayment(preferenceId: String, paymentData: PaymentData, customerId: String? = nil, binaryMode: Bool) -> MPPayment {
 
-        let issuerId: String = paymentData.hasIssuer() ? paymentData.getIssuer()!._id! : ""
+        let issuerId: String = paymentData.hasIssuer() ? paymentData.getIssuer()!.issuerId! : ""
 
-        let tokenId: String = paymentData.hasToken() ? paymentData.getToken()!._id : ""
+        let tokenId: String = paymentData.hasToken() ? paymentData.getToken()!.tokenId : ""
 
         let installments = paymentData.hasPayerCost() ? paymentData.getPayerCost()!.installments : 0
 
@@ -599,7 +599,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let isBlacklabelPayment = paymentData.hasToken() && paymentData.getToken()!.cardId != nil && String.isNullOrEmpty(customerId)
 
-        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!._id, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
+        let mpPayment = MPPaymentFactory.createMPPayment(preferenceId: preferenceId, publicKey: MercadoPagoContext.publicKey(), paymentMethodId: paymentData.getPaymentMethod()!.paymentMethodId, installments: installments, issuerId: issuerId, tokenId: tokenId, customerId: customerId, isBlacklabelPayment: isBlacklabelPayment, transactionDetails: transactionDetails, payer: payer, binaryMode: binaryMode)
         return mpPayment
     }
 
@@ -710,7 +710,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
             for ET in entityTypesKeys {
                 let entityType = EntityType()
-                entityType._id = ET as! String
+                entityType.entityTypeId = ET as! String
                 entityType.name = (siteETsDictionary.value(forKey: ET as! String) as! String!).localized
 
                 entityTypes.append(entityType)

@@ -50,7 +50,7 @@ public class PaymentData: NSObject {
             return false
         }
 
-        if paymentMethod._id == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
+        if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
 

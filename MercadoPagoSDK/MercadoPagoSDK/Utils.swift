@@ -364,8 +364,8 @@ class Utils {
         var paymentTypeSelected = ""
 
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PaymentMethod) -> Bool in
-            if paymentMethodId.startsWith(paymentMethod._id) {
-                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod._id)
+            if paymentMethodId.startsWith(paymentMethod.paymentMethodId) {
+                let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.paymentMethodId)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
                     paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)

@@ -39,7 +39,7 @@ open class Payment: NSObject {
     open var _description: String!
     open var externalReference: String!
     open var feesDetails: [FeesDetail]!
-    open var _id: String = ""
+    open var paymentId: String = ""
     open var installments: Int = 0
     open var liveMode: Bool!
     open var metadata: NSObject!
@@ -70,7 +70,7 @@ open class Payment: NSObject {
         let payment: Payment = Payment()
 
         if let _id = JSONHandler.attemptParseToString(json["id"]) {
-            payment._id = _id
+            payment.paymentId = _id
         }
         if let binaryMode = JSONHandler.attemptParseToBool(json["binary_mode"]) {
             payment.binaryMode = binaryMode
@@ -184,7 +184,7 @@ open class Payment: NSObject {
 
     open func toJSONString() -> String {
         let obj: [String: Any] = [
-            "id": String(describing: self._id),
+            "id": String(describing: self.paymentId),
             "transaction_amount": self.transactionAmount,
             "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId": self.issuerId,
@@ -229,7 +229,7 @@ public func ==(obj1: Payment, obj2: Payment) -> Bool {
    // obj1.metadata == obj2.metadata &&
   //  obj1.liveMode == obj2.liveMode &&
     obj1.installments == obj2.installments &&
-    obj1._id == obj2._id &&
+    obj1.paymentId == obj2.paymentId &&
     obj1.feesDetails == obj2.feesDetails &&
     obj1.externalReference == obj2.externalReference &&
     obj1._description == obj2._description &&

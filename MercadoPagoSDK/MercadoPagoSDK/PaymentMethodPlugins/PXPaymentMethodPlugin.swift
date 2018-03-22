@@ -32,7 +32,7 @@ open class PXPaymentMethodPlugin: NSObject {
         callback(true)
     }
 
-    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {h in return true}
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = {shouldShowPlugin in return true}
 
     public init (id: String, name: String, image: UIImage, description: String?, paymentPlugin: PXPaymentPluginComponent) {
         self.id = id

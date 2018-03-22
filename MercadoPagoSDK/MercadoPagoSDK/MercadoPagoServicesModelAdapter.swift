@@ -68,7 +68,7 @@ extension MercadoPagoServicesAdapter {
         let description: String = pxItem._description ?? ""
         let currencyId: String = pxItem.currencyId ?? "ARS"
         let picture_URL: String = pxItem.pictureUrl ?? ""
-        let item = Item(_id: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
+        let item = Item(itemId: id, title: title, quantity: quantity, unitPrice: unitPrice, description: description, currencyId: currencyId)
         item.pictureUrl = picture_URL
         return item
     }
@@ -218,7 +218,7 @@ extension MercadoPagoServicesAdapter {
         let dueDate: Date = pxToken.dueDate ?? Date()
         let cardholder = getCardholderFromPXCardHolder(pxToken.cardholder)
         let esc = pxToken.esc
-        let token = Token(_id: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
+        let token = Token(tokenId: id, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status, usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigits, securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate, dueDate: dueDate, cardHolder: cardholder)
         token.esc = esc
         return token
     }
@@ -266,7 +266,7 @@ extension MercadoPagoServicesAdapter {
     open func getPaymentMethodFromPXPaymentMethod(_ pxPaymentMethod: PXPaymentMethod?) -> PaymentMethod {
         let paymentMethod = PaymentMethod()
         if let pxPaymentMethod = pxPaymentMethod {
-            paymentMethod._id = pxPaymentMethod.id
+            paymentMethod.paymentMethodId = pxPaymentMethod.id
             paymentMethod.name = pxPaymentMethod.name
             paymentMethod.paymentTypeId = pxPaymentMethod.paymentTypeId
             if let pxSettings = pxPaymentMethod.settings {
@@ -309,7 +309,7 @@ extension MercadoPagoServicesAdapter {
     open func getFinancialInstitutionFromPXFinancialInstitution(_ pxFinancialInstitution: PXFinancialInstitution?) -> FinancialInstitution {
         if let pxFinancialInstitution = pxFinancialInstitution {
             let financialInstitution = FinancialInstitution()
-            financialInstitution._id = Int(pxFinancialInstitution.id)
+            financialInstitution.financialInstitutionId = Int(pxFinancialInstitution.id)
             financialInstitution._description = pxFinancialInstitution._description
             return financialInstitution
         } else {
@@ -355,7 +355,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getIdentificationTypeFromPXIdentificationType(_ pxIdentificationType: PXIdentificationType) -> IdentificationType {
         let identificationType = IdentificationType()
-        identificationType._id = pxIdentificationType.id
+        identificationType.identificationTypeId = pxIdentificationType.id
         identificationType.name = pxIdentificationType.name
         identificationType.type = pxIdentificationType.type
         identificationType.minLength = pxIdentificationType.minLength ?? 0
@@ -395,7 +395,7 @@ extension MercadoPagoServicesAdapter {
             }
         }
 
-        payment._id = pxPayment.id.stringValue
+        payment.paymentId = pxPayment.id.stringValue
         payment.installments = pxPayment.installments ?? 1
         payment.liveMode = pxPayment.liveMode
         payment.metadata = pxPayment.metadata! as NSObject
@@ -438,7 +438,7 @@ extension MercadoPagoServicesAdapter {
     open func getOrderFromPXOrder(_ pxOrder: PXOrder?) -> Order {
         let order = Order()
         if let pxOrder = pxOrder {
-            order._id = Int(pxOrder.id ?? "0") ?? 0 //TODO AUGUSTO: ARREGLAR ESTO
+            order.orderId = Int(pxOrder.id ?? "0") ?? 0 //TODO AUGUSTO: ARREGLAR ESTO
             order.type = pxOrder.type
         }
         return order
@@ -447,7 +447,7 @@ extension MercadoPagoServicesAdapter {
     open func getRefundFromPXRefund(_ pxRefund: PXRefund) -> Refund {
         let refund = Refund()
         refund.dateCreated = pxRefund.dateCreated
-        refund._id = Int(pxRefund.id)!
+        refund.refundId = Int(pxRefund.id)!
         refund.metadata = pxRefund.metadata! as NSObject
         refund.paymentId = pxRefund.paymentId != nil ? pxRefund.paymentId! : 0
         refund.source = pxRefund.source
@@ -472,17 +472,17 @@ extension MercadoPagoServicesAdapter {
     open func getFinancialInstitutionFromId(_ financialInstitutionId: String?) -> FinancialInstitution {
         let financialInstitution = FinancialInstitution()
         if let financialInstitutionId = financialInstitutionId {
-            financialInstitution._id = Int(financialInstitutionId)
+            financialInstitution.financialInstitutionId = Int(financialInstitutionId)
         }
         return financialInstitution
     }
 
     open func getPXPayerFromPayer(_ payer: Payer) -> PXPayer {
         let pxPayer = PXPayer(id: "String", accessToken: "String", identification: nil, type: nil, entityType: nil, email: nil, firstName: nil, lastName: nil)
-        pxPayer.id = payer._id
+        pxPayer.id = payer.payerId
         pxPayer.accessToken = MercadoPagoContext.payerAccessToken()
         pxPayer.identification = getPXIdentificationFromIdentification(payer.identification)
-        pxPayer.entityType = payer.entityType?._id
+        pxPayer.entityType = payer.entityType?.entityTypeId
         pxPayer.email = payer.email
         pxPayer.firstName = payer.name
         pxPayer.lastName = payer.surname
@@ -493,7 +493,7 @@ extension MercadoPagoServicesAdapter {
         let payer = Payer()
         if let pxPayer = pxPayer {
             payer.email = pxPayer.email
-            payer._id = pxPayer.id
+            payer.payerId = pxPayer.id
             payer.identification = getIdentificationFromPXIdentification(pxPayer.identification)
             payer.entityType = getEntityTypeFromId(pxPayer.entityType)
             payer.name = pxPayer.firstName
@@ -526,7 +526,7 @@ extension MercadoPagoServicesAdapter {
     open func getEntityTypeFromId(_ entityTypeId: String?) -> EntityType? {
         if let entityTypeId = entityTypeId {
             let entityType = EntityType()
-            entityType._id = entityTypeId
+            entityType.entityTypeId = entityTypeId
             entityType.name = ""
             return entityType
         } else {
@@ -566,7 +566,7 @@ extension MercadoPagoServicesAdapter {
             for pxCustomOptionSearchItem in pxPaymentMethodSearchCustomOptionSearchItems {
                 let customerPaymentMethod = getCustomerPaymentMethodFromPXCustomOptionSearchItem(pxCustomOptionSearchItem)
                 if let paymentMethodSearchCards = paymentMethodSearch.cards {
-                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.idCard == customerPaymentMethod._id})
+                    var filteredCustomerCard = paymentMethodSearchCards.filter({return $0.idCard == customerPaymentMethod.customerPaymentMethodId})
                     if !Array.isNullOrEmpty(filteredCustomerCard) {
                         customerPaymentMethod.card = filteredCustomerCard[0]
                     }
@@ -704,7 +704,7 @@ extension MercadoPagoServicesAdapter {
     open func getIssuerFromPXIssuer(_ pxIssuer: PXIssuer?) -> Issuer {
         let issuer = Issuer()
         if let pxIssuer = pxIssuer {
-            issuer._id = pxIssuer.id
+            issuer.issuerId = pxIssuer.id
             issuer.name = pxIssuer.name
         }
         return issuer

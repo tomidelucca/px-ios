@@ -90,19 +90,19 @@ open class PaymentResultScreenPreference: NSObject {
     var hideRejectedContentTitle = false
 
     // MARK: Commons
-    var _showBadgeImage = true
-    var _showLabelText = true
-    open func showBadgeImage() {
-        self._showBadgeImage = true
+    var showBadgeImage = true
+    var showLabelText = true
+    open func shouldShowBadgeImage() {
+        self.showBadgeImage = true
     }
     open func hideBadgeImage() {
-        self._showBadgeImage = false
+        self.showBadgeImage = false
     }
-    open func showLabelText() {
-        self._showLabelText = true
+    open func shouldShowLabelText() {
+        self.showLabelText = true
     }
     open func hideLabelText() {
-        self._showLabelText = false
+        self.showLabelText = false
     }
 
     //--

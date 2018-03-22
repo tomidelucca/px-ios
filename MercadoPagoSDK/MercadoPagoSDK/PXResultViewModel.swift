@@ -27,7 +27,7 @@ public class PXResultViewModel: PXResultViewModelInterface {
     }
 
     func getPaymentId() -> String? {
-        return self.paymentResult._id
+        return self.paymentResult.paymentId
     }
     func isCallForAuth() -> Bool {
         return self.paymentResult.isCallForAuth()

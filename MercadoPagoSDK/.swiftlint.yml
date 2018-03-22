@@ -61,7 +61,7 @@ identifier_name:
     - "_"
     excluded:
     - url
-    - _description
+    # - _description
 
 file_length:
   warning: 900

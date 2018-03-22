@@ -10,7 +10,7 @@ import UIKit
 
 open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption {
 
-    var _id: String!
+    var customerPaymentMethodId: String!
     var _description: String!
     var paymentMethodId: String!
     var paymentMethodTypeId: String!
@@ -25,7 +25,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     }
 
     public init(id: String, paymentMethodId: String, paymentMethodTypeId: String, description: String) {
-        self._id = id
+        self.customerPaymentMethodId = id
         self.paymentMethodId = paymentMethodId
         self.paymentMethodTypeId = paymentMethodTypeId
         self._description = description
@@ -35,7 +35,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
         let  customerPaymentMethod = CustomerPaymentMethod()
 
         if json["id"] != nil && !(json["id"]! is NSNull) {
-            customerPaymentMethod._id = json["id"] as! String
+            customerPaymentMethod.customerPaymentMethodId = json["id"] as! String
         }
 
         if json["description"] != nil && !(json["description"]! is NSNull) {
@@ -63,7 +63,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
 
     open func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
-            "_id": self._id,
+            "_id": self.customerPaymentMethodId,
             "_description": self._description == nil ? "" : self._description!,
             "payment_method_id": self.paymentMethodId,
             "payment_method_type": self.paymentMethodTypeId
@@ -85,7 +85,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     }
 
     open func getCardId() -> String {
-        return self._id
+        return self.customerPaymentMethodId
     }
 
     open func getCardSecurityCode() -> SecurityCode {
@@ -153,7 +153,7 @@ open class CustomerPaymentMethod: NSObject, CardInformation, PaymentMethodOption
     }
 
     public func getId() -> String {
-        return self._id
+        return self.customerPaymentMethodId
     }
 
     public func isCustomerPaymentMethod() -> Bool {

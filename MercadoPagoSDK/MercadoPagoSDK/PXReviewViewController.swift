@@ -275,10 +275,10 @@ extension PXReviewViewController {
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: viewModel.paymentData.paymentMethod?._id ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: viewModel.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: viewModel.preference?.getAmount().stringValue ?? ""]
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: viewModel.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: viewModel.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: viewModel.preference?.getAmount().stringValue ?? ""]
 
         if let customerCard = viewModel.paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingUtil.METADATA_CARD_ID] = customerCard._id
+            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
         }
         if let installments = viewModel.paymentData.payerCost?.installments {
             properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
