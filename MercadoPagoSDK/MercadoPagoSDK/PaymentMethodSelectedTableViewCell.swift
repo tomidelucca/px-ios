@@ -116,7 +116,7 @@ class PaymentMethodSelectedTableViewCell: UITableViewCell {
     }
 
     func fillSeparatorLine(payerCost: PayerCost? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, posY: PaymentMethodSelectedTableViewCell.getCellHeight(payerCost: payerCost, reviewScreenPreference: reviewScreenPreference) - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
     }
 

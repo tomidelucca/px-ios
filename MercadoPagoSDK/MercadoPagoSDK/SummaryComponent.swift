@@ -128,7 +128,7 @@ class SummaryComponent: UIView, PXComponent {
         self.requiredHeight += height
     }
     func addLine() {
-        self.addLine(y: self.requiredHeight, horizontalMargin: HORIZONTAL_MARGIN, width: self.frame.size.width - 2 * HORIZONTAL_MARGIN, height: 1)
+        self.addLine(posY: self.requiredHeight, horizontalMargin: HORIZONTAL_MARGIN, width: self.frame.size.width - 2 * HORIZONTAL_MARGIN, height: 1)
         self.requiredHeight += 1.0
     }
 }

@@ -138,7 +138,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             }
             self.paymentData.discount = discount
         }
-        if !String.isNullOrEmpty(self.checkoutPreference._id) {
+        if !String.isNullOrEmpty(self.checkoutPreference.preferenceId) {
             needLoadPreference = true
         } else {
             self.paymentData.payer = self.checkoutPreference.getPayer()

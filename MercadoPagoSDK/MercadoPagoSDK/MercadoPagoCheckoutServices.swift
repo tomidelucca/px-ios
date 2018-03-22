@@ -12,7 +12,7 @@ extension MercadoPagoCheckout {
 
     func getCheckoutPreference() {
         self.presentLoading()
-        self.viewModel.mercadoPagoServicesAdapter.getCheckoutPreference(checkoutPreferenceId: self.viewModel.checkoutPreference._id, callback: { [weak self] (checkoutPreference) in
+        self.viewModel.mercadoPagoServicesAdapter.getCheckoutPreference(checkoutPreferenceId: self.viewModel.checkoutPreference.preferenceId, callback: { [weak self] (checkoutPreference) in
 
             guard let strongSelf = self else {
                 return
@@ -345,7 +345,7 @@ extension MercadoPagoCheckout {
 
         var paymentBody: [String: Any]
         if MercadoPagoCheckoutViewModel.servicePreference.isUsingDeafaultPaymentSettings() {
-            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference._id, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
+            let mpPayment = MercadoPagoCheckoutViewModel.createMPPayment(preferenceId: self.viewModel.checkoutPreference.preferenceId, paymentData: self.viewModel.paymentData, binaryMode: self.viewModel.binaryMode)
             paymentBody = mpPayment.toJSON()
         } else {
             paymentBody = self.viewModel.paymentData.toJSON()

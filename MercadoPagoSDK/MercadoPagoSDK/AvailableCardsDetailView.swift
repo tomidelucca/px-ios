@@ -45,7 +45,7 @@ class AvailableCardsDetailView: UIView {
         var y: CGFloat = AvailableCardsDetailView.HEADER_SCROLL_HEIGHT
 
         for paymentMethod in paymentMethods {
-            scrollCards.addSubview(getCardAvailableView(y: y, paymentMethod: paymentMethod))
+            scrollCards.addSubview(getCardAvailableView(posY: y, paymentMethod: paymentMethod))
             y += AvailableCardsDetailView.ITEMS_HEIGHT
         }
 
@@ -79,8 +79,8 @@ class AvailableCardsDetailView: UIView {
         return headerView
     }
 
-    func getCardAvailableView(y: CGFloat, paymentMethod: PaymentMethod) -> CardAvailableView {
-        return CardAvailableView(frame: CGRect(x: 0, y: y, width: self.frame.size.width, height: AvailableCardsDetailView.ITEMS_HEIGHT), paymentMethod: paymentMethod)
+    func getCardAvailableView(posY: CGFloat, paymentMethod: PaymentMethod) -> CardAvailableView {
+        return CardAvailableView(frame: CGRect(x: 0, y: posY, width: self.frame.size.width, height: AvailableCardsDetailView.ITEMS_HEIGHT), paymentMethod: paymentMethod)
     }
 
     func getTitleLabelFrame() -> CGRect {

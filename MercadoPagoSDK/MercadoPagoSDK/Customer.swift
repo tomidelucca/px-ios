@@ -18,7 +18,7 @@ open class Customer: NSObject {
     open var dateLastUpdated: Date?
     open var email: String?
     open var firstName: String?
-    open var _id: String?
+    open var customerId: String?
     open var identification: Identification?
     open var lastName: String?
     open var liveMode: Bool?
@@ -28,7 +28,7 @@ open class Customer: NSObject {
 
     open class func fromJSON(_ json: NSDictionary) -> Customer {
         let customer: Customer = Customer()
-        customer._id = json["id"] as! String!
+        customer.customerId = json["id"] as! String!
         customer.liveMode = json["live_mode"] as? Bool
         customer.email = json["email"] as? String
         customer.firstName = json["first_name"] as? String
@@ -69,7 +69,7 @@ open class Customer: NSObject {
         let email: Any =  self.email == nil ? JSONHandler.null : self.email!
         let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
         let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
-        let id: Any =   self._id == nil ? JSONHandler.null : self._id!
+        let id: Any =   self.customerId == nil ? JSONHandler.null : self.customerId!
         let identification: Any = self.identification == nil ? JSONHandler.null : self.identification!.toJSON()
         let address: Any = self.address == nil ? JSONHandler.null : self.address!.toJSON()
         let liveMode: Any = self.liveMode == nil ? JSONHandler.null : self.liveMode!
@@ -112,7 +112,7 @@ public func ==(obj1: Customer, obj2: Customer) -> Bool {
             obj1.dateLastUpdated == obj2.dateLastUpdated &&
             obj1.email == obj2.email &&
             obj1.firstName == obj2.firstName &&
-            obj1._id == obj2._id &&
+            obj1.customerId == obj2.customerId &&
             obj1.identification == obj2.identification &&
             obj1.lastName == obj2.lastName &&
             obj1.liveMode == obj2.liveMode &&

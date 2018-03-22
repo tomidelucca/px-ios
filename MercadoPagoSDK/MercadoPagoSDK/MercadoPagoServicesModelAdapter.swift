@@ -19,7 +19,7 @@ extension MercadoPagoServicesAdapter {
     }
 
     open func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
-        let id: String = currency._id
+        let id: String = currency.currencyId
         let description: String = currency._description
         let symbol: String = currency.symbol
         let decimalPlaces: Int = currency.decimalPlaces
@@ -37,7 +37,7 @@ extension MercadoPagoServicesAdapter {
             let decimalPlaces: Int = pxCurrency.decimalPlaces ?? 2
             let decimalSeparator: String = pxCurrency.decimalSeparator ?? ","
             let thousandSeparator: String = pxCurrency.thousandSeparator ?? "."
-            let currency = Currency(_id: _id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
+            let currency = Currency(currencyId: _id, description: description, symbol: symbol, decimalPlaces: decimalPlaces, decimalSeparator: decimalSeparator, thousandSeparator: thousandSeparator)
             return currency
         }
         return Currency()
@@ -45,7 +45,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getCheckoutPreferenceFromPXCheckoutPreference(_ pxCheckoutPreference: PXCheckoutPreference) -> CheckoutPreference {
         let checkoutPreference = CheckoutPreference()
-        checkoutPreference._id = pxCheckoutPreference.id
+        checkoutPreference.preferenceId = pxCheckoutPreference.id
         if let pxCheckoutPreferenceItems = pxCheckoutPreference.items {
             for pxItem in pxCheckoutPreferenceItems {
                 let item = getItemFromPXItem(pxItem)
@@ -364,7 +364,7 @@ extension MercadoPagoServicesAdapter {
     }
 
     open func getDiscountCouponFromPXDiscount(_ pxDiscount: PXDiscount, amount: Double) -> DiscountCoupon {
-        let discountCoupon = DiscountCoupon(_id: UInt(pxDiscount.id) ?? 0)
+        let discountCoupon = DiscountCoupon(discountId: UInt(pxDiscount.id) ?? 0)
         discountCoupon.name = pxDiscount.name
         discountCoupon.percent_off = pxDiscount.percentOff?.stringValue ?? "0"
         discountCoupon.amount_off = pxDiscount.amountOff?.stringValue ?? "0"
@@ -668,7 +668,7 @@ extension MercadoPagoServicesAdapter {
         customer.dateLastUpdated = pxCustomer.dateLastUpdated
         customer.email = pxCustomer.email
         customer.firstName = pxCustomer.firstName
-        customer._id = pxCustomer.id
+        customer.customerId = pxCustomer.id
         customer.identification = getIdentificationFromPXIdentification(pxCustomer.identification)
         customer.lastName = pxCustomer.lastName
         customer.liveMode = pxCustomer.liveMode

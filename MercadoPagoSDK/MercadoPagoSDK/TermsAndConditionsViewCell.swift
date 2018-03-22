@@ -28,7 +28,7 @@ class TermsAndConditionsViewCell: UITableViewCell, UITextViewDelegate {
 
         self.termsAndConditionsText.linkTextAttributes = URLAttribute
 
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, posY: TermsAndConditionsViewCell.getCellHeight() - 1, width: UIScreen.main.bounds.width, height: 1)
         self.addSubview(separatorLine)
     }
 

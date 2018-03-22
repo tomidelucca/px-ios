@@ -10,7 +10,7 @@ import Foundation
 
 open class Currency: NSObject {
 
-    open var _id: String!
+    open var currencyId: String!
     open var _description: String!
     open var symbol: String!
     open var decimalPlaces: Int!
@@ -21,9 +21,9 @@ open class Currency: NSObject {
         super.init()
     }
 
-    public init(_id: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
+    public init(currencyId: String, description: String, symbol: String, decimalPlaces: Int, decimalSeparator: String, thousandSeparator: String) {
         super.init()
-        self._id = _id
+        self.currencyId = currencyId
         self._description = description
         self.symbol = symbol
         self.decimalPlaces = decimalPlaces

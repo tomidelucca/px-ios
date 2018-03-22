@@ -70,7 +70,7 @@ class PurchaseSimpleDetailTableViewCell: UITableViewCell {
 
     func addSeperatorLine(addLine: Bool, height: CGFloat) {
         if addLine {
-            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, y: height - 1, width: self.frame.width - 42, height: 1)
+            let separatorLine = ViewUtils.getTableCellSeparatorLineView(21, posY: height - 1, width: self.frame.width - 42, height: 1)
             self.addSubview(separatorLine)
         }
     }

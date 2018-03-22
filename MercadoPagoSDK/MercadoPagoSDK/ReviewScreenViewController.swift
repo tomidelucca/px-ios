@@ -272,7 +272,7 @@ open class ReviewScreenViewController: MercadoPagoUIScrollViewController, UITabl
         cell.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         cell.contentView.addSubview(customView)
         cell.selectionStyle = .none
-        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, y: customCell.getHeight()-1, width: screenWidth, height: 1)
+        let separatorLine = ViewUtils.getTableCellSeparatorLineView(0, posY: customCell.getHeight()-1, width: screenWidth, height: 1)
         cell.addSubview(separatorLine)
         cell.contentView.backgroundColor = customView.backgroundColor
         cell.clipsToBounds = true
