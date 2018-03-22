@@ -17,7 +17,6 @@ final class PXReviewViewModel: NSObject {
     var paymentData: PaymentData!
     var paymentOptionSelected: PaymentMethodOption
     var discount: DiscountCoupon?
-    
     var reviewScreenPreference: ReviewScreenPreference
     
     public init(checkoutPreference: CheckoutPreference, paymentData: PaymentData, paymentOptionSelected: PaymentMethodOption, discount: DiscountCoupon? = nil, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
@@ -237,9 +236,13 @@ extension PXReviewViewModel {
             totalAmount = tAmount
         }
 
-        if let pref = preference, pref.items.count == 1 {
-            if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
-                customTitle = itemTitle
+        if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
+            customTitle = prefDetail.title
+        } else {
+            if let pref = preference, pref.items.count == 1 {
+                if let itemTitle = pref.items.first?.title, itemTitle.count > 0 {
+                    customTitle = itemTitle
+                }
             }
         }
 

@@ -50,17 +50,13 @@ import MercadoPagoSDK
         let preference = ReviewScreenPreference()
         preference.setTopComponent(top)
         preference.setBottomComponent(bottom)
-//        preference.disableItems()
-//        preference.disableChangeMethodOption()
+        // preference.disableItems()
+        // preference.disableChangeMethodOption()
         
-        // Not getting.
-        preference.setSummaryProductTitle(productTitle: "Produc title from ReviewScreenPreference")
-        preference.setAmountTitle(title: "Amount title from RSP")
+        // preference.setSummaryProductTitle(productTitle: "Product title from ReviewScreenPreference")
+        // preference.setAmountTitle(title: "Amount title from RSP")
         
-        // Design note. (Solo en full) y 1 linea.
         //preference.setDisclaimerText(text: "Disclamer text from RSP")
-        preference.addSummaryDiscountDetail(amount: 10)
-        preference.addSummaryTaxesDetail(amount: 12)
         
         return preference
     }
