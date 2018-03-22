@@ -20,7 +20,7 @@ open class Item: NSObject {
     open var quantity: Int!
     open var unitPrice: Double!
     open var title: String?
-    open var _description: String?
+    open var itemDescription: String?
     open var currencyId: String!
     open var categoryId: String?
     open var pictureUrl: String?
@@ -42,7 +42,7 @@ open class Item: NSObject {
         self.title = title
         self.quantity = quantity
         self.unitPrice = unitPrice
-        self._description = description ?? ""
+        self.itemDescription = description ?? ""
         self.currencyId = currencyId
     }
 
@@ -59,7 +59,7 @@ open class Item: NSObject {
             "quantity": self.quantity,
             "unit_price": self.unitPrice,
             "title": title,
-            "description": self._description ?? "",
+            "description": self.itemDescription ?? "",
             "currency_id": currencyId,
             "category_id": categoryId,
             "picture_url": pictureUrl
@@ -82,7 +82,7 @@ open class Item: NSObject {
             item.title = title
         }
         if let description = JSONHandler.attemptParseToString(json["description"]) {
-            item._description = description
+            item.itemDescription = description
         }
 
         item.currencyId = JSONHandler.getValue(of: String.self, key: "currency_id", from: json)

@@ -17,7 +17,7 @@ class FinancialInstitutionTableViewCell: UITableViewCell {
             financialInstitutionImage.image = image
         } else {
             financialInstitutionImage.image = nil
-            textLabel?.text = financialInstitution._description
+            textLabel?.text = financialInstitution.financialInstitutionDescription
             textLabel?.textAlignment = .center
         }
     }

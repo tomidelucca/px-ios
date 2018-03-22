@@ -36,7 +36,7 @@ open class Payment: NSObject {
     open var dateApproved: Date!
     open var dateCreated: Date!
     open var dateLastUpdated: Date!
-    open var _description: String!
+    open var paymentDescription: String!
     open var externalReference: String!
     open var feesDetails: [FeesDetail]!
     open var paymentId: String = ""
@@ -94,7 +94,7 @@ open class Payment: NSObject {
             payment.dateApproved = Utils.getDateFromString(dateApproved)
         }
         if let _description = JSONHandler.attemptParseToString(json["description"]) {
-            payment._description = _description
+            payment.paymentDescription = _description
         }
         if let externalReference = JSONHandler.attemptParseToString(json["external_reference"]) {
             payment.externalReference = externalReference
@@ -188,7 +188,7 @@ open class Payment: NSObject {
             "transaction_amount": self.transactionAmount,
             "tokenId": self.tokenId == nil ? "" : self.tokenId!,
             "issuerId": self.issuerId,
-            "description": self._description,
+            "description": self.paymentDescription,
             "installments": self.installments == 0 ? 0 : self.installments,
             "payment_method_id": self.paymentMethodId,
             "status": self.status,
@@ -232,7 +232,7 @@ public func ==(obj1: Payment, obj2: Payment) -> Bool {
     obj1.paymentId == obj2.paymentId &&
     obj1.feesDetails == obj2.feesDetails &&
     obj1.externalReference == obj2.externalReference &&
-    obj1._description == obj2._description &&
+    obj1.paymentDescription == obj2.paymentDescription &&
    // obj1.dateLastUpdated == obj2.dateLastUpdated &&
     //obj1.dateCreated == obj2.dateCreated &&
   //  obj1.dateApproved == obj2.dateApproved &&

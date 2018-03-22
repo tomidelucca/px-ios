@@ -13,7 +13,7 @@ open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?
     open var defaultCard: String?
-    open var _description: String?
+    open var customerDescription: String?
     open var dateCreated: Date?
     open var dateLastUpdated: Date?
     open var email: String?
@@ -33,7 +33,7 @@ open class Customer: NSObject {
         customer.email = json["email"] as? String
         customer.firstName = json["first_name"] as? String
         customer.lastName = json["last_name"] as? String
-        customer._description = json["description"] as? String
+        customer.customerDescription = json["description"] as? String
 
         if let identificationDic = json["identification"] as? NSDictionary {
             customer.identification = Identification.fromJSON(identificationDic)
@@ -65,7 +65,7 @@ open class Customer: NSObject {
 
     open func toJSONString() -> String {
         let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
-        let description: Any =   self._description == nil ? JSONHandler.null : self._description!
+        let description: Any =   self.customerDescription == nil ? JSONHandler.null : self.customerDescription!
         let email: Any =  self.email == nil ? JSONHandler.null : self.email!
         let firstName: Any =   self.firstName == nil ? JSONHandler.null : self.firstName!
         let lastName: Any =   self.lastName == nil ? JSONHandler.null : self.lastName!
@@ -107,7 +107,7 @@ public func ==(obj1: Customer, obj2: Customer) -> Bool {
         obj1.address! == obj2.address! &&
             obj1.cards! == obj2.cards! &&
             obj1.defaultCard! == obj2.defaultCard! &&
-            obj1._description == obj2._description &&
+            obj1.customerDescription == obj2.customerDescription &&
             obj1.dateCreated == obj2.dateCreated &&
             obj1.dateLastUpdated == obj2.dateLastUpdated &&
             obj1.email == obj2.email &&

@@ -20,7 +20,7 @@ extension MercadoPagoServicesAdapter {
 
     open func getPXCurrencyFromCurrency(_ currency: Currency) -> PXCurrency {
         let id: String = currency.currencyId
-        let description: String = currency._description
+        let description: String = currency.currencyDescription
         let symbol: String = currency.symbol
         let decimalPlaces: Int = currency.decimalPlaces
         let decimalSeparator: String = currency.decimalSeparator
@@ -310,7 +310,7 @@ extension MercadoPagoServicesAdapter {
         if let pxFinancialInstitution = pxFinancialInstitution {
             let financialInstitution = FinancialInstitution()
             financialInstitution.financialInstitutionId = Int(pxFinancialInstitution.id)
-            financialInstitution._description = pxFinancialInstitution._description
+            financialInstitution.financialInstitutionDescription = pxFinancialInstitution._description
             return financialInstitution
         } else {
             let financialInstitution = FinancialInstitution()
@@ -385,7 +385,7 @@ extension MercadoPagoServicesAdapter {
         payment.dateApproved = pxPayment.dateApproved
         payment.dateCreated = pxPayment.dateCreated
         payment.dateLastUpdated = pxPayment.dateLastUpdated
-        payment._description = pxPayment._description
+        payment.paymentDescription = pxPayment._description
         payment.externalReference = pxPayment.externalReference
 
         if let pxPaymentFeeDetails = pxPayment.feeDetails {
@@ -595,7 +595,7 @@ extension MercadoPagoServicesAdapter {
         let paymentMethodSearchItem = PaymentMethodSearchItem()
         paymentMethodSearchItem.idPaymentMethodSearchItem = pxPaymentMethodSearchItem.id
         paymentMethodSearchItem.type = getPaymentMethodSearchItemTypeFromString(pxPaymentMethodSearchItem.type)
-        paymentMethodSearchItem._description = pxPaymentMethodSearchItem._description
+        paymentMethodSearchItem.paymentMethodSearchItemDescription = pxPaymentMethodSearchItem._description
         paymentMethodSearchItem.comment = pxPaymentMethodSearchItem.comment
         paymentMethodSearchItem.childrenHeader = pxPaymentMethodSearchItem.childrenHeader
 
@@ -663,7 +663,7 @@ extension MercadoPagoServicesAdapter {
         }
 
         customer.defaultCard = pxCustomer.defaultCard
-        customer._description = pxCustomer._description
+        customer.customerDescription = pxCustomer._description
         customer.dateCreated = pxCustomer.dateCreated
         customer.dateLastUpdated = pxCustomer.dateLastUpdated
         customer.email = pxCustomer.email

@@ -12,7 +12,7 @@ open class FinancialInstitution: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.financialInstitution
     open var financialInstitutionId: Int?
-    open var _description: String?
+    open var financialInstitutionDescription: String?
 
     open class func fromJSON(_ json: NSDictionary) -> FinancialInstitution {
         let financialInstitution: FinancialInstitution = FinancialInstitution()
@@ -22,7 +22,7 @@ open class FinancialInstitution: NSObject, Cellable {
         }
 
         if let description = JSONHandler.attemptParseToString(json["description"]) {
-            financialInstitution._description = description
+            financialInstitution.financialInstitutionDescription = description
         }
 
         return financialInstitution
@@ -34,7 +34,7 @@ open class FinancialInstitution: NSObject, Cellable {
 
     open func toJSON() -> [String: Any] {
         let id: Any = self.financialInstitutionId == nil ? JSONHandler.null : self.financialInstitutionId!
-        let description: Any = self._description == nil ? JSONHandler.null : self._description!
+        let description: Any = self.financialInstitutionDescription == nil ? JSONHandler.null : self.financialInstitutionDescription!
         let obj: [String: Any] = [
             "id": id,
             "description": description

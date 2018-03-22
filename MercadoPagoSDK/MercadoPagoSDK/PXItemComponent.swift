@@ -36,7 +36,7 @@ extension PXItemComponent {
     }
 
     func getDescription() -> String? {
-        return props._description
+        return props.itemDescription
     }
 
     func shouldShowQuantity() -> Bool {

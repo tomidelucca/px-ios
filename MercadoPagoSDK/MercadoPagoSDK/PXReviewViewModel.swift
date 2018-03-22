@@ -282,7 +282,7 @@ extension PXReviewViewModel {
     }
 
     fileprivate func buildItemComponent(item: Item) -> PXItemComponent? {
-        if String.isNullOrEmpty(item._description) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
+        if String.isNullOrEmpty(item.itemDescription) && !preference!.hasMultipleItems() { // Item must not be shown if it has no description and it's one
             return nil
         }
 
@@ -307,12 +307,12 @@ extension PXReviewViewModel {
         if preference!.hasMultipleItems() {
             return item.title
         }
-        return item._description
+        return item.itemDescription
     }
 
     fileprivate func getItemDescription(item: Item) -> String? { // Returns only if it has multiple items
         if preference!.hasMultipleItems() {
-            return item._description
+            return item.itemDescription
         }
         return nil
     }

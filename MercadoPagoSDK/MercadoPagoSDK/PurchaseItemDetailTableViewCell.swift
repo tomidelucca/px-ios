@@ -47,8 +47,8 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
         self.itemTitle.font = Utils.getFont(size: itemTitle.font.pointSize)
         self.itemDescription.font =  Utils.getFont(size: itemDescription.font.pointSize)
 
-        if item._description != nil && item._description!.count > 0 {
-            self.itemDescription.text = item._description!
+        if item.itemDescription != nil && item.itemDescription!.count > 0 {
+            self.itemDescription.text = item.itemDescription!
         } else {
             self.itemDescription.text = ""
             self.titleDescriptionConstraint.constant = 0
@@ -73,7 +73,7 @@ class PurchaseItemDetailTableViewCell: UITableViewCell {
     }
 
     static func getCellHeight(item: Item) -> CGFloat {
-        if String.isNullOrEmpty(item._description) {
+        if String.isNullOrEmpty(item.itemDescription) {
             return CGFloat(280)
         }
         return CGFloat(300)
