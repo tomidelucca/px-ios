@@ -23,7 +23,7 @@ class PXReviewViewModelTest: BaseTest {
 
         let checkoutPref = CheckoutPreference()
 
-        checkoutPref.items = [Item(_id: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
+        checkoutPref.items = [Item(itemId: "12", title: "test", quantity: 1, unitPrice: 1000.0, description: "dummy", currencyId: "ARG")]
 
         self.instance = PXReviewViewModel(checkoutPreference: checkoutPref, paymentData: PaymentData(), paymentOptionSelected: mockPaymentMethodSearchItem as PaymentMethodOption)
 
@@ -74,14 +74,6 @@ class PXReviewViewModelTest: BaseTest {
 
     }
 
-    func testIsPreferenceLoaded() {
-        XCTAssertTrue(self.instance!.isPreferenceLoaded())
-
-        let preference = MockBuilder.buildCheckoutPreference()
-        self.instance!.preference = preference
-        XCTAssertTrue(self.instance!.isPreferenceLoaded())
-    }
-
     func testGetTotalAmount() {
         let paymentMethodCreditCard = MockBuilder.buildPaymentMethod("master", name: "master", paymentTypeId: PaymentTypeId.CREDIT_CARD.rawValue)
         self.instance!.paymentData.paymentMethod = paymentMethodCreditCard
@@ -128,16 +120,16 @@ class PXReviewViewModelTest: BaseTest {
     }
 
     func testCleanPaymentData() {
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!._id, "visa")
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.paymentMethod!.paymentMethodId, "visa")
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payerCost!.installments, 3)
         XCTAssertEqual(self.instanceWithCoupon!.paymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!._id, 123)
+        XCTAssertEqual(self.instanceWithCoupon!.paymentData.discount!.discountId, 123)
         let newPaymentData = self.instanceWithCoupon!.getClearPaymentData()
 
         XCTAssertNil(newPaymentData.paymentMethod)
         XCTAssertNil(newPaymentData.payerCost)
         XCTAssertEqual(newPaymentData.payer?.email, "thisisanem@il.com")
-        XCTAssertEqual(newPaymentData.discount!._id, 123)
+        XCTAssertEqual(newPaymentData.discount!.discountId, 123)
     }
 
     func getInvalidSummary() -> Summary {

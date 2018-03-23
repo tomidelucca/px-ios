@@ -77,7 +77,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     override func trackInfo() {
         let paymentMethodsOptions = PXTrackingStore.sharedInstance.getData(forKey: PXTrackingStore.PAYMENT_METHOD_OPTIONS) ?? ""
         let properties: [String: String] = [TrackingUtil.METADATA_OPTIONS: paymentMethodsOptions]
-
         var finalId = screenId
         if let groupName = groupName {
             finalId = screenId + "/" + groupName

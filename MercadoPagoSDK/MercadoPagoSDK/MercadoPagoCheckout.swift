@@ -60,9 +60,6 @@ open class MercadoPagoCheckout: NSObject {
         MPXTracker.setPublicKey(MercadoPagoContext.sharedInstance.publicKey())
         MPXTracker.setSdkVersion(MercadoPagoContext.sharedInstance.sdkVersion())
         MPXTracker.sharedInstance.startNewFlow()
-        // TODO: Remove this
-//        PXTrackingSettings.enableBetaServices()
-//        MPXTracker.sharedInstance.setEnvironment(environment: MPXTrackingEnvironment.staging)
     }
 
     public func setBinaryMode(_ binaryMode: Bool) {
