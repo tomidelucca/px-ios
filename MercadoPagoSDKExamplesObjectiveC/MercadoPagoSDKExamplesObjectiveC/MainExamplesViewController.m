@@ -75,13 +75,16 @@
     [self setPaymentCallback];
 
     DiscountCoupon* dc = [[DiscountCoupon alloc] initWithDiscountId:123];
+    
+    NSNumber *externalDiscount = [NSNumber numberWithDouble:2.00];
+    
     dc.name = @"Patito Off";
-    dc.coupon_amount = @"30";
-    dc.amount_off = @"30";
+    dc.coupon_amount = [externalDiscount stringValue];
+    dc.amount_off = [externalDiscount stringValue];
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 60;
-    dc = nil;
+    //dc = nil;
 
     self.pref.preferenceId = @"243966003-0812580b-6082-4104-9bce-1a4c48a5bc44";
 
