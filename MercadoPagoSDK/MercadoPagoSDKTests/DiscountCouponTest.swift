@@ -12,11 +12,6 @@ class DiscountCouponTest: XCTestCase {
 
     let amount = 1000.0
 
-    func testFromJSON() {
-        let json: NSDictionary = MockManager.getMockFor("DiscountCoupon")!
-        let discountFromJSON = DiscountCoupon.fromJSON(json, amountWithoutDiscount: amount)
-        XCTAssertEqual(discountFromJSON, discountFromJSON)
-    }
 
     func testToJSON() {
 

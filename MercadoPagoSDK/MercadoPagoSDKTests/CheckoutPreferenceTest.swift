@@ -27,7 +27,6 @@ class CheckoutPreferenceTest: XCTestCase {
             "id": "id" as AnyObject
             ]
 
-        let preferenceResult = CheckoutPreference.fromJSON(NSDictionary(dictionary: obj))
         XCTAssertEqual(preferenceResult.preferenceId, "id")
     }
 

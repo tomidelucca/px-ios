@@ -86,7 +86,6 @@ open class MockBuilder: NSObject {
         let preference = CheckoutPreference()
         preference.preferenceId = PREF_ID_NO_EXCLUSIONS
         preference.items = [self.buildItem("itemId", quantity: 1, unitPrice: 2559), self.buildItem("itemId2", quantity: 2, unitPrice: 10)]
-        preference.payer = Payer.fromJSON(MockManager.getMockFor("Payer")!)
         return preference
     }
 
@@ -111,10 +110,7 @@ open class MockBuilder: NSObject {
     }
 
     class func buildPaymentMethod(_ id: String, name: String? = "", paymentTypeId: String? = "credit_card", multipleSettings: Bool? = false) -> PaymentMethod {
-        var paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethod")!)
-        if multipleSettings == true {
-            paymentMethod = PaymentMethod.fromJSON(MockManager.getMockFor("PaymentMethodMultipleSettings")!)
-        }
+        let paymentMethod = PaymentMethod()
         paymentMethod.paymentMethodId = id
         paymentMethod.name = name
         paymentMethod.paymentTypeId = paymentTypeId
@@ -379,13 +375,11 @@ open class MockBuilder: NSObject {
 
     class func buildInstructionsInfo(paymentMethod: PaymentMethod) -> InstructionsInfo {
         let instructionInfoJson = MockManager.getMockFor("InstructionInfo")
-        let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
         return intructionsInfo
     }
 
     class func buildCompleteInstructionsInfo() -> InstructionsInfo {
         let instructionInfoJson = MockManager.getMockFor("InstructionInfo_complete")
-        let intructionsInfo = InstructionsInfo.fromJSON(instructionInfoJson!)
         return intructionsInfo
     }
 

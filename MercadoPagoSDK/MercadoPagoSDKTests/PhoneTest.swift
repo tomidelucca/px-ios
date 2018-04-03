@@ -6,13 +6,3 @@
 //  Copyright © 2016 MercadoPago. All rights reserved.
 //
 
-import XCTest
-
-class PhoneTest: BaseTest {
-
-    func testFromJSON() {
-        let json: NSDictionary = MockManager.getMockFor("Phone")!
-        let phoneTypeFromJSON = Phone.fromJSON(json)
-        XCTAssertEqual(phoneTypeFromJSON, phoneTypeFromJSON)
-    }
-}
