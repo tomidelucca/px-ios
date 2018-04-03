@@ -25,7 +25,7 @@ open class PaymentMethodSearchItem: Equatable, PaymentOptionDrawable, PaymentMet
             pmSearchItem.idPaymentMethodSearchItem = _id
         }
         if let type = JSONHandler.attemptParseToString(json["type"]) {
-            pmSearchItem.type = PaymentMethodSearchItemType(rawValue:type)
+            pmSearchItem.type = PaymentMethodSearchItemType(rawValue: type)
         }
         if let description = JSONHandler.attemptParseToString(json["description"]) {
             pmSearchItem.paymentMethodSearchItemDescription = description
@@ -127,7 +127,7 @@ public enum PaymentMethodSearchItemType: String {
     case PAYMENT_METHOD = "payment_method"
 }
 
-public func ==(obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> Bool {
+public func == (obj1: PaymentMethodSearchItem, obj2: PaymentMethodSearchItem) -> Bool {
     let areEqual =
     obj1.idPaymentMethodSearchItem == obj2.idPaymentMethodSearchItem &&
     obj1.type == obj2.type &&

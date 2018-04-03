@@ -45,11 +45,9 @@ open class Identification: NSObject {
     }
 }
 
-public func ==(obj1: Identification, obj2: Identification) -> Bool {
-
+public func == (obj1: Identification, obj2: Identification) -> Bool {
     let areEqual =
         obj1.type == obj2.type &&
         obj1.number == obj2.number
-
     return areEqual
 }
