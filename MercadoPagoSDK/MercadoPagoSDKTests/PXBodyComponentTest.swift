@@ -108,7 +108,7 @@ class PXBodyComponentTest: BaseTest {
         let errorView = try require(bodyView as? PXErrorView)
 
         // Then:
-        XCTAssertNil(errorView.titleLabel)
+        XCTAssertNotNil(errorView.titleLabel)
         XCTAssertNotNil(errorView.descriptionLabel)
         XCTAssertEqual(errorView.descriptionLabel?.text, PXResourceProvider.getDescriptionForErrorBodyForREJECTED_DUPLICATED_PAYMENT())
         XCTAssertNil(errorView.actionButton)
