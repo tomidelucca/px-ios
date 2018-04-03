@@ -17,23 +17,6 @@ class CheckoutPreferenceTest: XCTestCase {
         self.preference = MockBuilder.buildCheckoutPreference()
     }
 
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    func testFromJSON() {
-
-        let obj: [String: AnyObject] = [
-            "id": "id" as AnyObject
-            ]
-
-        XCTAssertEqual(preferenceResult.preferenceId, "id")
-    }
-
-    func testToJSON() {
-
-    }
-
     func testGetAmount() {
         preference?.items?.removeAll()
         XCTAssertEqual(preference?.getAmount(), 0)
