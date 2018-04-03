@@ -56,7 +56,7 @@ open class Token: NSObject, CardInformationForm {
                  securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
                  dueDate: Date?, cardHolder: Cardholder?) {
         self.init(tokenId: tokenId, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status,
-              usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits : lastFourDigits, firstSixDigit : firstSixDigit,
+              usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit : firstSixDigit,
               securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate,
               dueDate: dueDate, cardHolder: cardHolder, esc: nil)
     }
