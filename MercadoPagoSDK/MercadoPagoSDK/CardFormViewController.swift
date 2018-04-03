@@ -49,6 +49,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     var textEditMaskFormater = TextMaskFormater(mask: "XXXX XXXX XXXX XXXX", completeEmptySpaces :false)
 
     static public var showBankDeals = true
+    private var isShowingTextBoxMessage = false
 
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
@@ -307,7 +308,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     open func editingChanged(_ textField: UITextField) {
-        hideMessage()
+        if isShowingTextBoxMessage {
+            hideMessage()
+        }
         if editingLabel == cardNumberLabel {
             showOnlyOneCardMessage()
             editingLabel?.text = textMaskFormater.textMasked(textEditMaskFormater.textUnmasked(textField.text!))
@@ -562,6 +565,8 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func setTextBox(isError: Bool, inputAccessoryView: UIView) {
+        isShowingTextBoxMessage = true
+ 
         if isError {
             textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
             textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
@@ -583,6 +588,7 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
     }
 
     func hideMessage() {
+        isShowingTextBoxMessage = false
         self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
         setupToolbarButtons()
@@ -711,7 +717,9 @@ open class CardFormViewController: MercadoPagoUIViewController, UITextFieldDeleg
         }
         if textEditMaskFormater.textUnmasked(textBox.text).count>=6 || viewModel.customerCard != nil ||
             viewModel.cardToken != nil {
-            hideMessage()
+            if isShowingTextBoxMessage {
+                hideMessage()
+            }
             let pmMatched = self.viewModel.matchedPaymentMethod(self.cardNumberLabel!.text!)
             viewModel.guessedPMS = pmMatched
             let bin = viewModel.getBIN(self.cardNumberLabel!.text!)
