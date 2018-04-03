@@ -142,7 +142,14 @@ extension PXReviewViewModel {
             summary.details[SummaryType.DISCOUNT]?.amountColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
         }
         if let payerCost = self.paymentData.payerCost {
-            let interest = payerCost.totalAmount - amount
+            var interest = 0.0
+            
+            if let discountAmount = self.paymentData.discount?.coupon_amount, let discountValue = Double(discountAmount) {
+                interest = payerCost.totalAmount - (amount - discountValue)
+            } else {
+                interest = payerCost.totalAmount - amount
+            }
+            
             if interest > 0 {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {
