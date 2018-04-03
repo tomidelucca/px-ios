@@ -92,14 +92,12 @@ open class BankDeal: NSObject {
 	}
 }
 
-public func ==(obj1: BankDeal, obj2: BankDeal) -> Bool {
+public func == (obj1: BankDeal, obj2: BankDeal) -> Bool {
     let areEqual =
     obj1.promoId == obj2.promoId &&
     obj1.issuer == obj2.issuer &&
     obj1.recommendedMessage == obj2.recommendedMessage &&
     obj1.paymentMethods == obj2.paymentMethods &&
-  //  obj1.legals == obj2.legals &&
     obj1.url == obj2.url
-
     return areEqual
 }

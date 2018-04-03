@@ -217,7 +217,7 @@ extension PXReviewViewModel {
     func buildSummaryComponent(width: CGFloat) -> PXSummaryComponent {
 
         var customTitle = "Productos".localized
-        var totalAmount: Double = self.preference.getAmount()
+        let totalAmount: Double = self.preference.getAmount()
 
         if let prefDetail = reviewScreenPreference.details[SummaryType.PRODUCT], !prefDetail.title.isEmpty {
             customTitle = prefDetail.title
