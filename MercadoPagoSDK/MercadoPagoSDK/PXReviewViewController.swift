@@ -50,6 +50,11 @@ class PXReviewViewController: PXComponentContainerViewController {
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkFloatingButtonVisibility()
+    }
 }
 
 // MARK: UI Methods
