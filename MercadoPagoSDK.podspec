@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK"
-  s.version          = "4.0.0.beta.14"
+  s.version          = "4.0.0.beta.17"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
     s.dependency 'MercadoPagoPXTracking', '2.1.0'
     s.dependency 'MercadoPagoServices', '1.0.6'
   end
-  
+
 end
