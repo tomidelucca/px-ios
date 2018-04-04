@@ -17,8 +17,8 @@ extension String {
 		if bundle == nil {
 			bundle = Bundle.main
 		}
-        let languageBundle = Bundle(path : MercadoPagoContext.getLocalizedPath())
-        return languageBundle!.localizedString(forKey: self, value : "", table : nil)
+        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
+        return languageBundle!.localizedString(forKey: self, value: "", table : nil)
 
 	}
 
