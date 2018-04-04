@@ -74,7 +74,7 @@ class ForceTrackStrategy: TrackingStrategy { // V2
 
     func trackScreen(screenTrack: ScreenTrackInfo) {
         TrackStorageManager.persist(screenTrackInfo: screenTrack)
-        attemptSendTrackInfo(force:true)
+        attemptSendTrackInfo(force: true)
     }
 
     func canSendTrack() -> Bool {

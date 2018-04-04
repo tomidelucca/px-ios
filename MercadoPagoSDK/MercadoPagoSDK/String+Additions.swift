@@ -18,7 +18,7 @@ extension String {
 			bundle = Bundle.main
 		}
         let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
-        return languageBundle!.localizedString(forKey: self, value: "", table : nil)
+        return languageBundle!.localizedString(forKey: self, value: "", table: nil)
 
 	}
 

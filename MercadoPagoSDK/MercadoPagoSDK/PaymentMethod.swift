@@ -67,14 +67,14 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open var isCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
     open var isCreditCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
@@ -82,14 +82,14 @@ open class PaymentMethod: NSObject, Cellable {
     }
 
     open var isPrepaidCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
     open var isDebitCard: Bool {
-        if let paymentTypeId = PaymentTypeId(rawValue : self.paymentTypeId) {
+        if let paymentTypeId = PaymentTypeId(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false

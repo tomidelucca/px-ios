@@ -168,7 +168,7 @@ open class CardsAdminViewController: MercadoPagoUIScrollViewController, UICollec
             cell.fillCell(drawablePaymentOption: self.viewModel.cards![indexPath.row])
 
         } else if self.viewModel.isExtraOptionItemFor(indexPath: indexPath) {
-            cell.fillCell(optionText:self.viewModel.extraOptionTitle!)
+            cell.fillCell(optionText: self.viewModel.extraOptionTitle!)
         }
         return cell
     }

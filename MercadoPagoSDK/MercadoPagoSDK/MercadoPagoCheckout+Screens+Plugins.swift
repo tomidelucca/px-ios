@@ -60,7 +60,7 @@ extension MercadoPagoCheckout {
 
         paymentMethodConfigPluginComponent.renderDidFinish?()
 
-        self.pushViewController(viewController : containerVC, animated: true)
+        self.pushViewController(viewController: containerVC, animated: true)
     }
 
     fileprivate func showPaymentPluginComponent(paymentPluginComponent: PXPluginComponent) {

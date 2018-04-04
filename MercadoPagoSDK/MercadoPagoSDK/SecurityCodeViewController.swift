@@ -118,7 +118,7 @@ open class SecurityCodeViewController: MercadoPagoUIViewController, UITextFieldD
             showErrorMessage(errorMessage)
             return
         }
-        self.viewModel.executeCallback(secCode:  securityCodeTextField.text)
+        self.viewModel.executeCallback(secCode: securityCodeTextField.text)
     }
 
     func backAction() {
