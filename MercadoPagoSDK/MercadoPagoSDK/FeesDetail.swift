@@ -14,7 +14,6 @@ open class FeesDetail: NSObject {
     open var feePayer: String!
     open var type: String!
 
-
     func isFinancingFeeType() -> Bool {
         return self.type == "financing_fee"
     }

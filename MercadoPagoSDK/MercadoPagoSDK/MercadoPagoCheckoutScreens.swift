@@ -74,7 +74,7 @@ extension MercadoPagoCheckout {
             strongSelf.viewModel.updateCheckoutModel(payer: payer)
             strongSelf.executeNextStep()
         }
-        self.pushViewController(viewController : vc, animated: true)
+        self.pushViewController(viewController: vc, animated: true)
     }
 
     func showIssuersScreen() {
@@ -223,7 +223,7 @@ extension MercadoPagoCheckout {
             return
         }
         let viewModel = PXBusinessResultViewModel(businessResult: businessResult, paymentData: self.viewModel.paymentData)
-        let congratsViewController = PXResultViewController(viewModel: viewModel) { (resultcode) in}
+        let congratsViewController = PXResultViewController(viewModel: viewModel) { _ in}
         self.pushViewController(viewController: congratsViewController, animated: false)
 
     }
