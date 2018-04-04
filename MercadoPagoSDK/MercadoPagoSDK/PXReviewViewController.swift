@@ -50,6 +50,11 @@ class PXReviewViewController: PXComponentContainerViewController {
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkFloatingButtonVisibility()
+    }
 }
 
 // MARK: UI Methods
@@ -109,6 +114,7 @@ extension PXReviewViewController {
 
         // Add payment method view.
         if let paymentMethodView = getPaymentMethodComponentView() {
+            paymentMethodView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
             PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
@@ -116,7 +122,6 @@ extension PXReviewViewController {
 
         // Bottom Custom View
         if let bottomCustomView = getBottomCustomView() {
-            bottomCustomView.addSeparatorLineToTop(height: 1)
             bottomCustomView.addSeparatorLineToBottom(height: 1)
             bottomCustomView.clipsToBounds = true
             contentView.addSubviewToBottom(bottomCustomView)
@@ -157,6 +162,7 @@ extension PXReviewViewController {
         PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
 
         super.refreshContentViewSize()
+        self.checkFloatingButtonVisibility()
     }
 }
 
@@ -262,8 +268,13 @@ extension PXReviewViewController {
         return nil
     }
 
+    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
+        self.checkFloatingButtonVisibility()
+    }
+    
+    func checkFloatingButtonVisibility(){
         if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
         } else {
