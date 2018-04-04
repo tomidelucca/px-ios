@@ -13,7 +13,7 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textBox: HoshiTextField!
 
-    override open var screenName: String { get { return "DISCOUNT_INPUT_CODE" } }
+    override open var screenName: String { return "DISCOUNT_INPUT_CODE" }
     var toolbar: PXToolbar?
     var errorLabel: MPLabel?
     var viewModel: AddCouponViewModel!

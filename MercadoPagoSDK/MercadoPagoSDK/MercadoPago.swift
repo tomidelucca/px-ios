@@ -87,7 +87,7 @@ import UIKit
     }
 
     open class func getBundle() -> Bundle? {
-       return Bundle(for:MercadoPago.self)
+       return Bundle(for: MercadoPago.self)
     }
 
     open class func getImage(_ name: String?, bundle: Bundle) -> UIImage? {
@@ -105,7 +105,7 @@ import UIKit
                 return nil
             }
         }
-        return UIImage(named:name!, in: bundle, compatibleWith:nil)
+        return UIImage(named: name!, in: bundle, compatibleWith: nil)
 
     }
 
@@ -140,8 +140,11 @@ import UIKit
             return nil
         }
 
-            return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        if let imageName = itemSelected.object(forKey: "image_name") as? String {
+            return MercadoPago.getImage(imageName)
+        }
 
+        return nil
     }
 
     open class func getImageForPaymentMethod(withDescription: String, defaultColor: Bool = false) -> UIImage? {
@@ -163,7 +166,7 @@ import UIKit
             return nil
         }
 
-        let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
+        let image = MercadoPago.getImage(itemSelected.object(forKey: "image_name") as? String)
 
         if description == "credit_card" || description == "prepaid_card" || description == "debit_card" || description == "bank_transfer" || description == "ticket" || description == "cards" || description.contains("bolbradesco") {
             if let iconsTintColor = tintColorForIcons {
@@ -198,8 +201,10 @@ import UIKit
             return nil
         }
 
-        return MercadoPago.getImage(itemSelected.object(forKey: "image_name") as! String?)
-
+        if let imageName = itemSelected.object(forKey: "image_name") as? String {
+            return MercadoPago.getImage(imageName)
+        }
+        return nil
     }
 
     open class func getImageFor(_ paymentMethod: PaymentMethod, forCell: Bool? = false) -> UIImage? {

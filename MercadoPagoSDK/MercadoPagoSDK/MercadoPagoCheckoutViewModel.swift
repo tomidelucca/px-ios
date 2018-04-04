@@ -286,7 +286,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(checkoutPreference: self.checkoutPreference, paymentData : self.paymentData, paymentOptionSelected : self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+        return PXReviewViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentOptionSelected: self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
     }
 
     func resultViewModel() -> PXResultViewModel {
@@ -660,7 +660,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentMethodId))
         } else {
             let cardInformation = (self.paymentOptionSelected as! CardInformation)
-            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId:cardInformation.getPaymentMethodId())
+            let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
             self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
@@ -710,10 +710,11 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
             for ET in entityTypesKeys {
                 let entityType = EntityType()
-                entityType.entityTypeId = ET as! String
-                entityType.name = (siteETsDictionary.value(forKey: ET as! String) as! String!).localized
-
-                entityTypes.append(entityType)
+                if let etKey = ET as? String, let etValue = siteETsDictionary.value(forKey: etKey) as? String {
+                    entityType.entityTypeId = etKey
+                    entityType.name = etValue.localized
+                    entityTypes.append(entityType)
+                }
             }
 
             return entityTypes
