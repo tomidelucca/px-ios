@@ -460,7 +460,7 @@ class Utils {
         if let targetUrl = url {
 
             // Request image.
-            URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data ,_ , error) in
+            URLSession.shared.dataTask(with: targetUrl, completionHandler: { (data, _, error) in
 
                 if error != nil {
                     DispatchQueue.main.async {

@@ -107,10 +107,8 @@ open class PaymentMethod: NSObject, Cellable {
 
     open func isAdditionalInfoNeeded(_ param: String!) -> Bool {
         if additionalInfoNeeded != nil && additionalInfoNeeded.count > 0 {
-            for info in additionalInfoNeeded {
-                if info == param {
-                    return true
-                }
+            for info in additionalInfoNeeded where info == param {
+                return true
             }
         }
         return false

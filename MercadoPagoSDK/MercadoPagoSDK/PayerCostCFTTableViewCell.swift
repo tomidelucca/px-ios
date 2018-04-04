@@ -35,7 +35,7 @@ class PayerCostCFTTableViewCell: UITableViewCell {
             self.totalLabel.textColor = UIColor.mpGreenishTeal()
 
         } else if payerCost.installments != 1 {
-            let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: UIColor.px_grayBaseText(), fontSize: 14, baselineOffset : 4)
+            let attributedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: UIColor.px_grayBaseText(), fontSize: 14, baselineOffset: 4)
             let attributedAmountFinal = NSMutableAttributedString(string: "(")
             attributedAmountFinal.append(attributedAmount)
             attributedAmountFinal.append(NSAttributedString(string: ")"))

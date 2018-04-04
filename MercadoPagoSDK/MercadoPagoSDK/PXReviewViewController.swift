@@ -12,8 +12,8 @@ import MercadoPagoPXTracking
 class PXReviewViewController: PXComponentContainerViewController {
 
     // MARK: Tracking
-    override open var screenName: String { get { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM } }
-    override open var screenId: String { get { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM } }
+    override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
+    override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
     // MARK: Definitions
     var footerView: UIView!

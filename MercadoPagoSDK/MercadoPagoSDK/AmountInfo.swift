@@ -16,7 +16,7 @@ open class AmountInfo: NSObject {
     override init() {
         super.init()
     }
-    
+
     open func toJSONString() -> String {
        return JSONHandler.jsonCoding(self.toJSON())
     }

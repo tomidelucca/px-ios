@@ -67,7 +67,6 @@ open class Installment: NSObject {
     }
 
     open func containsInstallment(_ installment: Int) -> PayerCost? {
-        
         for pc in payerCosts! where pc.installments == installment {
                 return pc
         }

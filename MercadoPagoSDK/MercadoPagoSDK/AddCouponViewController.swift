@@ -96,10 +96,10 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
                 })
                 self.present(couponDetailVC, animated: false, completion: {})
             }
-        }) { (errorMessage) in
+        }, failure: { (errorMessage) in
             self.hideLoading()
             self.showErrorMessage(errorMessage)
-        }
+        })
     }
 
     @IBAction func exit() {
