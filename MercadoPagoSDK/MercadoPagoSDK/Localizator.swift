@@ -13,7 +13,7 @@ private class Localizator {
     static let sharedInstance = Localizator()
 
     lazy var localizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path : MercadoPagoContext.getLocalizedPath())
+        let languageBundle = Bundle(path: MercadoPagoContext.getLocalizedPath())
         let languageID = MercadoPagoContext.getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
@@ -23,7 +23,7 @@ private class Localizator {
     }()
 
     lazy var parentLocalizableDictionary: NSDictionary! = {
-        let languageBundle = Bundle(path : MercadoPagoContext.getParentLocalizedPath())
+        let languageBundle = Bundle(path: MercadoPagoContext.getParentLocalizedPath())
         let languageID = MercadoPagoContext.getParentLanguageID()
 
         if let path = languageBundle?.path(forResource: "Localizable_\(languageID)", ofType: "plist") {
