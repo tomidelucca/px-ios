@@ -167,12 +167,12 @@ open class CheckoutPreference: NSObject {
         }
         let currencyIdAllItems = items[0].currencyId
 
-        for (_, value) in items.enumerated() {
-            if value.currencyId != currencyIdAllItems {
+        for item in items {
+            if item.currencyId != currencyIdAllItems {
                 return "Los items tienen diferente moneda".localized
             }
 
-            if let error = value.validate() {
+            if let error = item.validate() {
                 return error
             }
         }

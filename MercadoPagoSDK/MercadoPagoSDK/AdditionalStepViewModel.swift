@@ -267,7 +267,7 @@ class CardTypeAdditionalStepViewModel: AdditionalStepViewModel {
     }
 }
 
-class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
+class FinancialInstitutionViewModel: AdditionalStepViewModel {
 
     override open var screenName: String { return "FINANCIAL_INSTITUTION" }
 
@@ -277,7 +277,7 @@ class FinancialInstitutionAdditionalStepViewModel: AdditionalStepViewModel {
 
 }
 
-class EntityTypeAdditionalStepViewModel: AdditionalStepViewModel {
+class EntityTypeViewModel: AdditionalStepViewModel {
 
     override var maxFontSize: CGFloat { return 21 }
 

@@ -50,7 +50,7 @@ class PXReviewViewController: PXComponentContainerViewController {
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.checkFloatingButtonVisibility()
@@ -268,13 +268,12 @@ extension PXReviewViewController {
         return nil
     }
 
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }
-    
-    func checkFloatingButtonVisibility(){
+
+    func checkFloatingButtonVisibility() {
         if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
         } else {

@@ -143,13 +143,13 @@ extension PXReviewViewModel {
         }
         if let payerCost = self.paymentData.payerCost {
             var interest = 0.0
-            
+
             if let discountAmount = self.paymentData.discount?.coupon_amount, let discountValue = Double(discountAmount) {
                 interest = payerCost.totalAmount - (amount - discountValue)
             } else {
                 interest = payerCost.totalAmount - amount
             }
-            
+
             if interest > 0 {
                 let interestAmountDetail = SummaryItemDetail(amount: interest)
                 if summary.details[SummaryType.CHARGE] != nil {

@@ -44,20 +44,20 @@ import UIKit
         return -4
     }
 
-    open func publicKey() -> String! {
-        return self.pk
+    open func getPublicKey() -> String! {
+        return self.publicKey
     }
 
     let BIN_LENGTH: Int = 6
 
     open var privateKey: String?
-    open var pk: String!
+    open var publicKey: String!
 
     open var paymentMethodId: String?
     open var paymentTypeId: String?
 
     public init (publicKey: String) {
-        self.pk = publicKey
+        self.publicKey = publicKey
     }
 
     static var temporalNav: UINavigationController?
@@ -69,7 +69,7 @@ import UIKit
                 fatalError("keyType must be 'public_key' or 'private_key'.")
             } else {
                 if keyType == MercadoPago.PUBLIC_KEY {
-                    self.pk = key
+                    self.publicKey = key
                 } else if keyType == MercadoPago.PUBLIC_KEY {
                     self.privateKey = key
                 }

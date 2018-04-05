@@ -81,7 +81,7 @@ extension PXTermsAndConditionView {
         style.alignment = .center
         style.lineSpacing = CGFloat(3)
 
-        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, mutableAttributedString.length))
+        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSRange(location: 0, length: mutableAttributedString.length))
 
         return mutableAttributedString
     }

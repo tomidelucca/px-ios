@@ -413,10 +413,10 @@ class Utils {
         return 0
     }
 
-    internal static func getSetting<T>(identifier: String) -> T {
+    internal static func getSetting<T>(identifier: String) -> T? {
         let path = MercadoPago.getBundle()!.path(forResource: Utils.kSdkSettingsFile, ofType: "plist")
         let dictPM = NSDictionary(contentsOfFile: path!)
-        return dictPM![identifier] as! T
+        return dictPM![identifier] as? T
     }
 
     static func isTesting() -> Bool {
