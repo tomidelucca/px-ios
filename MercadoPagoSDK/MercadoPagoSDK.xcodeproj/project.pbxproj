@@ -3257,7 +3257,6 @@
 				76EC47F61C8619E70086FA53 /* SavedCardTokenTest.swift in Sources */,
 				237A1A042050048A00B0C2D2 /* PayerCostView.swift in Sources */,
 				FCCC11F71FCF2D5A0001A591 /* PXResultViewModelTest.swift in Sources */,
-				76EC47DC1C85E9A50086FA53 /* InstallmentTest.swift in Sources */,
 				237A19FD2050047B00B0C2D2 /* PXSummaryComponent.swift in Sources */,
 				0F98835E1AD2AB6000F750F0 /* Card.swift in Sources */,
 				23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */,
