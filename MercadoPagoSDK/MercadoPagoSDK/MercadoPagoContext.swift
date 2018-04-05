@@ -93,7 +93,7 @@ open class MercadoPagoContext: NSObject {
         let siteConfig = MercadoPagoContext.siteIdsSettings[site.rawValue]
         if siteConfig != nil {
             self.site = site
-            self.termsAndConditionsSite = siteConfig!["termsconditions"] as! String
+            self.termsAndConditionsSite = siteConfig!["termsconditions"] as? String ?? ""
             let currency = CurrenciesUtil.getCurrencyFor(siteConfig!["currency"] as? String)
             if currency != nil {
                 self.currency = currency!

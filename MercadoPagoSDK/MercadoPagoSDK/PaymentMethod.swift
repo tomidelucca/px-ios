@@ -32,8 +32,8 @@ open class PaymentMethod: NSObject, Cellable {
         super.init()
     }
 
-    public init(id: String, name: String, paymentTypeId: String) {
-        self.paymentMethodId = id
+    public init(paymentMethodId: String, name: String, paymentTypeId: String) {
+        self.paymentMethodId = paymentMethodId
         self.name = name
         self.paymentTypeId = paymentTypeId
     }
@@ -275,19 +275,15 @@ open class PaymentMethod: NSObject, Cellable {
                 return false
             }
         }
-        if (paymentPreference?.excludedPaymentTypeIds) != nil {
-            for (_, value) in (paymentPreference?.excludedPaymentTypeIds!.enumerated())! {
-                if value == self.paymentTypeId {
-                    return false
-                }
+        if let excludedPaymentTypeIds = paymentPreference?.excludedPaymentTypeIds {
+            for excludedPaymentType in excludedPaymentTypeIds where excludedPaymentType == self.paymentTypeId {
+                return false
             }
         }
 
-        if (paymentPreference?.excludedPaymentMethodIds) != nil {
-            for (_, value) in (paymentPreference?.excludedPaymentMethodIds!.enumerated())! {
-                if value == self.paymentMethodId {
-                    return false
-                }
+        if let excludedPaymentMethodIds = paymentPreference?.excludedPaymentMethodIds {
+            for excludedPaymentMethodId  in excludedPaymentMethodIds where excludedPaymentMethodId == self.paymentMethodId {
+                return false
             }
         }
 

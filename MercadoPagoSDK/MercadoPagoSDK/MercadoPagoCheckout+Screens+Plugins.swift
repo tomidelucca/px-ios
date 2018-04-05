@@ -27,7 +27,7 @@ extension MercadoPagoCheckout {
             return
         }
         containerVC.pluginComponentInterface = paymentMethodConfigPluginComponent
-        containerVC.paymentMethodId = paymentMethodPlugin.id
+        containerVC.paymentMethodId = paymentMethodPlugin.getId()
         if self.viewModel.copyViewModelAndAssignToCheckoutStore() {
             paymentMethodConfigPluginComponent.didReceive?(pluginStore: PXCheckoutStore.sharedInstance)
         }

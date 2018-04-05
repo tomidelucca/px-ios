@@ -79,12 +79,13 @@ extension MercadoPagoCheckout {
 
     func showIssuersScreen() {
         let issuerStep = AdditionalStepViewController(viewModel: self.viewModel.issuerViewModel(), callback: { [weak self](issuer) in
-            guard let strongSelf = self else {
-                return
+
+            guard let issuer = issuer as? Issuer else {
+                fatalError("Cannot convert issuer to type Issuer")
             }
 
-            strongSelf.viewModel.updateCheckoutModel(issuer: issuer as! Issuer)
-            strongSelf.executeNextStep()
+            self?.viewModel.updateCheckoutModel(issuer: issuer)
+            self?.executeNextStep()
 
         })
 
@@ -95,12 +96,12 @@ extension MercadoPagoCheckout {
         let payerCostViewModel = self.viewModel.payerCostViewModel()
 
         let payerCostStep = AdditionalStepViewController(viewModel: payerCostViewModel, callback: { [weak self] (payerCost) in
-            guard let strongSelf = self else {
-                return
+            guard let payerCost = payerCost as? PayerCost else {
+                fatalError("Cannot convert payerCost to type PayerCost")
             }
 
-            strongSelf.viewModel.updateCheckoutModel(payerCost: payerCost as! PayerCost)
-            strongSelf.executeNextStep()
+            self?.viewModel.updateCheckoutModel(payerCost: payerCost)
+            self?.executeNextStep()
         })
 
         weak var strongPayerCostViewController = payerCostStep
@@ -255,9 +256,13 @@ extension MercadoPagoCheckout {
                 self.viewModel.updateCheckoutModel(financialInstitution: financialInstitutions[0])
                 self.executeNextStep()
             } else {
-                let financialInstitutionStep = AdditionalStepViewController(viewModel: self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
-                    self?.viewModel.updateCheckoutModel(financialInstitution: (financialInstitution as! FinancialInstitution))
-                    self?.executeNextStep()
+                let financialInstitutionStep = AdditionalStepViewController(viewModel:
+                    self.viewModel.financialInstitutionViewModel(), callback: { [weak self] (financialInstitution) in
+                        guard let financialInstitution = financialInstitution as? FinancialInstitution else {
+                            fatalError("Cannot convert entityType to type EntityType")
+                        }
+                        self?.viewModel.updateCheckoutModel(financialInstitution: financialInstitution)
+                        self?.executeNextStep()
                 })
 
                 financialInstitutionStep.callbackCancel = {[weak self] in
@@ -285,7 +290,12 @@ extension MercadoPagoCheckout {
         }
 
         let entityTypeStep = AdditionalStepViewController(viewModel: self.viewModel.entityTypeViewModel(), callback: { [weak self]  (entityType) in
-            self?.viewModel.updateCheckoutModel(entityType: (entityType as! EntityType))
+
+            guard let entityType = entityType as? EntityType else {
+                fatalError("Cannot convert entityType to type EntityType")
+            }
+
+            self?.viewModel.updateCheckoutModel(entityType: entityType)
             self?.executeNextStep()
         })
 
