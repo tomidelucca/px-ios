@@ -49,8 +49,8 @@ open class MercadoPagoContext: NSObject {
         return  "iOS"
     }
 
-    open func sdkVersion() -> String! {
-        let sdkVersion: String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion)
+    open func sdkVersion() -> String {
+        let sdkVersion: String = Utils.getSetting(identifier: MercadoPagoContext.kSdkVersion) ?? ""
         return sdkVersion
     }
 

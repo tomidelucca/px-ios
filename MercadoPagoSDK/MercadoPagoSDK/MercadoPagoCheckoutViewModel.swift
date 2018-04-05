@@ -269,7 +269,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
-        let cardInformation = self.paymentOptionSelected as! CardInformation
+        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+            fatalError("Cannot conver payment option selected to CardInformation")
+        }
         var reason: SecurityCodeViewModel.Reason
         if paymentResult != nil && paymentResult!.isInvalidESC() {
             reason = SecurityCodeViewModel.Reason.INVALID_ESC
@@ -533,7 +535,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {
             self.updateCheckoutModel(paymentOptionSelected: search.groups[0])
         } else if !Array.isNullOrEmpty(search.customerPaymentMethods) && search.customerPaymentMethods?.count == 1 {
-            let customOption = search.customerPaymentMethods![0] as! PaymentMethodOption
+            guard let customOption = search.customerPaymentMethods![0] as? PaymentMethodOption else {
+                fatalError("Cannot conver customerPaymentMethod to PaymentMethodOption")
+            }
             self.updateCheckoutModel(paymentOptionSelected: customOption)
         } else if  !Array.isNullOrEmpty(paymentMethodPluginsToShow) && paymentMethodPluginsToShow.count == 1 {
             self.updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsToShow[0])
@@ -678,7 +682,9 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: paymentOptionSelected!.getId()))
         } else {
             // Se necesita completar información faltante de settings y pm para custom payment options
-            let cardInformation = (self.paymentOptionSelected as! CardInformation)
+            guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+                fatalError("Cannot convert paymentOptionSelected to CardInformation")
+            }
             let paymentMethod = Utils.findPaymentMethod(self.availablePaymentMethods!, paymentMethodId: cardInformation.getPaymentMethodId())
             cardInformation.setupPaymentMethodSettings(paymentMethod.settings)
             cardInformation.setupPaymentMethod(paymentMethod)
