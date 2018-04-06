@@ -224,7 +224,7 @@ class Utils {
         var cents = ""
         if range != nil {
             let centsIndex = formattedString.index(range!.lowerBound, offsetBy: 1)
-            cents = formattedString.substring(from: centsIndex)
+            cents = String(formattedString[centsIndex...])
         }
 
         if cents.isEmpty || cents.count < decimalPlaces {
@@ -235,7 +235,7 @@ class Utils {
             }
         } else if cents.count > decimalPlaces {
             let index1 = cents.index(cents.startIndex, offsetBy: decimalPlaces)
-            cents = cents.substring(to: index1)
+            cents = String(cents[..<index1])
         }
 
         return cents
@@ -270,7 +270,7 @@ class Utils {
     class func getAmountDigits(_ formattedString: String, decimalSeparator: String) -> String {
         let range = formattedString.range(of: decimalSeparator)
         if range != nil {
-            return formattedString.substring(to: range!.lowerBound)
+            return String(formattedString[..<range!.lowerBound])
         }
         if Double(formattedString) != nil {
             return formattedString
@@ -368,7 +368,7 @@ class Utils {
                 let paymentTypeIdRange = paymentMethodId.range(of: paymentMethod.paymentMethodId)
                 // Override paymentTypeId if neccesary
                 if paymentTypeIdRange != nil {
-                    paymentTypeSelected = paymentMethodId.substring(from: paymentTypeIdRange!.upperBound)
+                    paymentTypeSelected = String(paymentMethodId[paymentTypeIdRange!.upperBound...])
                     if !String.isNullOrEmpty(paymentTypeSelected) {
                         paymentTypeSelected.remove(at: paymentTypeSelected.startIndex)
                     }

@@ -92,7 +92,7 @@ import Foundation
         var bin: String? = nil
         if firstSixDigit != nil && firstSixDigit.count > 0 {
             let range = firstSixDigit!.startIndex ..< firstSixDigit!.index(firstSixDigit!.startIndex, offsetBy: 6)
-            bin = firstSixDigit!.count >= 6 ? firstSixDigit!.substring(with: range) : nil
+            bin = firstSixDigit!.count >= 6 ? String(firstSixDigit![range]) : nil
         }
 
         return bin
@@ -154,7 +154,13 @@ import Foundation
 
     open func getExpirationDateFormated() -> String {
         if self.expirationYear > 0 && self.expirationMonth > 0 {
-            return String(self.expirationMonth) + "/" + String(self.expirationYear).substring(from: String(self.expirationYear).index(before: String(self.expirationYear).index(before: String(self.expirationYear).endIndex)))
+
+            let expirationMonth = self.expirationMonth.stringValue
+            let expirationYear = self.expirationYear.stringValue
+
+            let range = expirationYear.index(before: expirationYear.index(before: expirationYear.endIndex))
+
+            return expirationMonth + "/" + String(expirationYear[range...])
         }
         return ""
     }

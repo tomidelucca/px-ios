@@ -134,10 +134,12 @@ extension PXResultViewModel {
         let amountRange = instructionsInfo.getInstruction()!.title.range(of: currencySymbol + " " + amountStr + decimalSeparator + centsStr)
 
         if let range = amountRange {
-            let attributedTitle = NSMutableAttributedString(string: (instructionsInfo.instructions[0].title.substring(to: (range.lowerBound))), attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            let lowerBoundTitle = String(instructionsInfo.instructions[0].title[..<range.lowerBound])
+            let attributedTitle = NSMutableAttributedString(string: lowerBoundTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             let attributedAmount = Utils.getAttributedAmount(instructionsInfo.amountInfo.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: UIColor.px_white(), fontSize: PXHeaderRenderer.TITLE_FONT_SIZE, centsFontSize: PXHeaderRenderer.TITLE_FONT_SIZE/2, smallSymbol: true)
             attributedTitle.append(attributedAmount)
-            let endingTitle = NSAttributedString(string: (instructionsInfo.instructions[0].title.substring(from: (range.upperBound))), attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
+            let upperBoundTitle = String(instructionsInfo.instructions[0].title[range.upperBound...])
+            let endingTitle = NSAttributedString(string: upperBoundTitle, attributes: [NSAttributedStringKey.font: Utils.getFont(size: PXHeaderRenderer.TITLE_FONT_SIZE)])
             attributedTitle.append(endingTitle)
 
             return attributedTitle
