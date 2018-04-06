@@ -28,10 +28,7 @@ open class Token: NSObject, CardInformationForm {
 
     open var cardHolder: Cardholder?
 
-	public init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!,
-        usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!,
-		securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
-		dueDate: Date?, cardHolder: Cardholder?, esc: String? = nil) {
+	public init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: Cardholder?, esc: String? = nil) {
 			self.tokenId = tokenId
 			self.publicKey = publicKey
 			self.cardId = cardId
@@ -51,7 +48,6 @@ open class Token: NSObject, CardInformationForm {
             self.esc = esc
 	}
 
-    
     open class func fromJSON(_ json: NSDictionary) -> Token {
                 let literalJson = json
                 let _id = JSONHandler.attemptParseToString(literalJson["id"])
@@ -85,13 +81,10 @@ open class Token: NSObject, CardInformationForm {
                     dueDate: dueDate, cardHolder: cardHolder, esc: esc)
             }
     
-    
-    public convenience init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!,
-                 usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!,
-                 securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!,
-                 dueDate: Date?, cardHolder: Cardholder?) {
+    public convenience init (tokenId: String, publicKey: String?, cardId: String!, luhnValidation: String!, status: String!, usedDate: String!, cardNumberLength: Int, creationDate: Date!, lastFourDigits: String!, firstSixDigit: String!, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, lastModifiedDate: Date!, dueDate: Date?, cardHolder: Cardholder?) {
+
         self.init(tokenId: tokenId, publicKey: publicKey, cardId: cardId, luhnValidation: luhnValidation, status: status,
-              usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit : firstSixDigit,
+              usedDate: usedDate, cardNumberLength: cardNumberLength, creationDate: creationDate, lastFourDigits: lastFourDigits, firstSixDigit: firstSixDigit,
               securityCodeLength: securityCodeLength, expirationMonth: expirationMonth, expirationYear: expirationYear, lastModifiedDate: lastModifiedDate,
               dueDate: dueDate, cardHolder: cardHolder, esc: nil)
     }

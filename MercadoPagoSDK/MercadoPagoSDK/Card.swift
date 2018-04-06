@@ -180,7 +180,7 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     /** PaymentMethodOption implementation */
 
     public func getId() -> String {
-        return String(describing : self.idCard)
+        return String(describing: self.idCard)
     }
 
     public func getChildren() -> [PaymentMethodOption]? {

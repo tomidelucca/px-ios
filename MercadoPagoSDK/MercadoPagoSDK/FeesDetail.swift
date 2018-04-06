@@ -14,6 +14,7 @@ open class FeesDetail: NSObject {
     open var feePayer: String!
     open var type: String!
 
+
     open class func fromJSON(_ json: NSDictionary) -> FeesDetail {
                 let fd: FeesDetail = FeesDetail()
                 if let type = JSONHandler.attemptParseToString(json["type"]) {

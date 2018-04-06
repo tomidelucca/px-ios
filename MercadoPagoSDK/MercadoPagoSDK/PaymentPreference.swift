@@ -104,10 +104,8 @@ open class PaymentPreference: NSObject {
             return payerCostList.first
         }
 
-            for payercost in payerCostList {
-                if payercost.installments == defaultInstallments {
-                    return payercost
-                }
+            for payercost in payerCostList where payercost.installments == defaultInstallments {
+                return payercost
             }
 
         if (payerCostList.first?.installments <= maxAcceptedInstallments)

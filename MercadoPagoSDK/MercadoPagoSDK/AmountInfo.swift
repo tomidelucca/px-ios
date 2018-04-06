@@ -16,6 +16,7 @@ open class AmountInfo: NSObject {
     override init() {
         super.init()
     }
+
     
     open class func fromJSON(_ json: NSDictionary) -> AmountInfo {
                 let amountInfo: AmountInfo = AmountInfo()
@@ -39,6 +40,7 @@ open class AmountInfo: NSObject {
                 return amountInfo
             }
     
+
     open func toJSONString() -> String {
        return JSONHandler.jsonCoding(self.toJSON())
     }
