@@ -19,6 +19,7 @@ import Foundation
                 identification.number = json["number"] as? String
                 return identification
             }
+
     public init (type: String? = nil, number: String? = nil) {
         self.type = type
         self.number = number

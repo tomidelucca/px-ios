@@ -20,6 +20,7 @@ import Foundation
         let groupsOptionsCount = (self.groups != nil) ? self.groups!.count : 0
         return customOptionsCount + groupsOptionsCount
     }
+
     open class func fromJSON(_ json: NSDictionary) -> PaymentMethodSearch {
         let pmSearch = PaymentMethodSearch()
         var groups = [PaymentMethodSearchItem]()

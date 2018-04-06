@@ -31,6 +31,7 @@ import UIKit
         }
         return instructionsInfo
     }
+
     open func hasSecundaryInformation() -> Bool {
         if instructions.isEmpty {
             return false

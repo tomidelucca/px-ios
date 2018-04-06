@@ -26,6 +26,7 @@ import Foundation
 
         return entityType
     }
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }

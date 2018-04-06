@@ -26,6 +26,7 @@ import Foundation
                 setting.securityCode = SecurityCode.fromJSON(json["security_code"]! as! NSDictionary)
                 return setting
             }
+
     open class func getSettingByBin(_ settings: [Setting]!, bin: String!) -> [Setting]? {
         var selectedSetting = [Setting] ()
         if settings != nil && settings.count > 0 {

@@ -62,6 +62,7 @@ import UIKit
                     }
                 return card
             }
+
     public func getIssuer() -> Issuer? {
         return self.issuer
     }

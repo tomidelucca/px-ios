@@ -46,6 +46,7 @@ import Foundation
         }
         return transactionDetails
     }
+
     public init(financialInstitution: FinancialInstitution? = nil) {
         self.financialInstitution = financialInstitution
     }

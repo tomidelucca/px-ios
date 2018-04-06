@@ -46,6 +46,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                 if let issuerDic = json["issuer"] as? NSDictionary {
                         installment.issuer = Issuer.fromJSON(issuerDic)
                     }
+
                 var payerCosts: [PayerCost] = [PayerCost]()
                 if let payerCostsArray = json["payer_costs"] as? NSArray {
                         for i in 0..<payerCostsArray.count {

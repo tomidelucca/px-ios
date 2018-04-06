@@ -24,6 +24,7 @@ import Foundation
                 if let name = JSONHandler.attemptParseToString(json["name"]) {
                         issuer.name = name
                     }
+
                 return issuer
             }
 

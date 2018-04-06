@@ -27,6 +27,7 @@ import UIKit
                 if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
                         preference.siteId = siteId
                     }
+
                 if let payerDic = json["payer"] as? NSDictionary {
                         preference.payer = Payer.fromJSON(payerDic)
                     }

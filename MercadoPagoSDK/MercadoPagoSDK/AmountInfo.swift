@@ -16,6 +16,7 @@ import UIKit
     override init() {
         super.init()
     }
+
     open class func fromJSON(_ json: NSDictionary) -> AmountInfo {
 
         let amountInfo: AmountInfo = AmountInfo()

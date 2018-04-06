@@ -81,6 +81,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
                             }
                         preferencePaymentMethods.excludedPaymentTypeIds = Set<String>(excludedPaymentTypesIds)
                     }
+
                 if let defaultPaymentMethodId = JSONHandler.attemptParseToString(json["default_payment_method_id"]) {
                         preferencePaymentMethods.defaultPaymentMethodId = defaultPaymentMethodId
                     }

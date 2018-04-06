@@ -72,6 +72,7 @@ import Foundation
                 if let pictureUrl = JSONHandler.attemptParseToString(json["picture_url"]) {
                         item.pictureUrl = pictureUrl
                     }
+
                 return item
             }
 

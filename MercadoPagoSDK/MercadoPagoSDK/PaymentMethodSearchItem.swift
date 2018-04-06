@@ -106,6 +106,7 @@ import UIKit
                 if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]) {
                         pmSearchItem.childrenHeader = childrenHeader
                     }
+
                 var children = [PaymentMethodSearchItem]()
                 if let childrenJson = json["children"] as? NSArray {
                         for i in 0..<childrenJson.count {

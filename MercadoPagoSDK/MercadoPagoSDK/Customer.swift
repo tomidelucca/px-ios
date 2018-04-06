@@ -62,6 +62,7 @@ import UIKit
         customer.cards = cards.isEmpty ? nil : cards
         return customer
     }
+
     open func toJSONString() -> String {
         let defaultCard: Any =  self.defaultCard == nil ? JSONHandler.null : self.defaultCard!
         let description: Any =   self.customerDescription == nil ? JSONHandler.null : self.customerDescription!

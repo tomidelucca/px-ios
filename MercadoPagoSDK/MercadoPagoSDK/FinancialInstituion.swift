@@ -24,6 +24,7 @@ import Foundation
         }
         return financialInstitution
     }
+
     open func toJSONString() -> String {
         return JSONHandler.jsonCoding(toJSON())
     }
