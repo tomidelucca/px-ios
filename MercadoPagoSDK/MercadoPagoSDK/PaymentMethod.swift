@@ -38,6 +38,86 @@ open class PaymentMethod: NSObject, Cellable {
         self.paymentTypeId = paymentTypeId
     }
 
+    open class func fromJSON(_ json: NSDictionary) -> PaymentMethod {
+                let paymentMethod: PaymentMethod = PaymentMethod()
+                paymentMethod.paymentMethodId = json["id"] as? String
+                paymentMethod.name = json["name"] as? String
+        
+                if json["payment_type_id"] != nil && !(json["payment_type_id"]! is NSNull) {
+                        paymentMethod.paymentTypeId = json["payment_type_id"] as! String
+                    }
+        
+                if json["status"] != nil && !(json["status"]! is NSNull) {
+                        paymentMethod.status = json["status"] as! String
+                    }
+        
+                if json["secure_thumbnail"] != nil && !(json["secure_thumbnail"]! is NSNull) {
+                        paymentMethod.secureThumbnail = json["secure_thumbnail"] as! String
+                    }
+        
+                if json["thumbnail"] != nil && !(json["thumbnail"]! is NSNull) {
+                        paymentMethod.thumbnail = json["thumbnail"] as! String
+                    }
+        
+                if json["deferred_capture"] != nil && !(json["deferred_capture"]! is NSNull) {
+                        paymentMethod.deferredCapture = json["deferred_capture"] as! String
+                    }
+        
+                if json["max_allowed_amount"] != nil && !(json["max_allowed_amount"]! is NSNull) {
+                        paymentMethod.maxAllowedAmount = json["max_allowed_amount"] as! Double
+                }
+        
+                if json["max_allowed_amount"] != nil && !(json["max_allowed_amount"]! is NSNull) {
+                        paymentMethod.maxAllowedAmount = json["max_allowed_amount"] as! Double
+                    }
+        
+                if json["min_allowed_amount"] != nil && !(json["min_allowed_amount"]! is NSNull) {
+                        paymentMethod.minAllowedAmount = json["min_allowed_amount"] as! Double
+                    }
+        
+                if json["merchant_account_id"] != nil && !(json["merchant_account_id"]! is NSNull) {
+                        paymentMethod.merchantAccountId = json["merchant_account_id"] as? String
+                    }
+        
+                var settings: [Setting] = [Setting]()
+                if let settingsArray = json["settings"] as? NSArray {
+                        for i in 0..<settingsArray.count {
+                                if let settingDic = settingsArray[i] as? NSDictionary {
+                                        settings.append(Setting.fromJSON(settingDic))
+                                    }
+                            }
+                    }
+                paymentMethod.settings = settings.isEmpty ? nil : settings
+        
+                var additionalInfoNeeded: [String] = [String]()
+                if let additionalInfoNeededArray = json["additional_info_needed"] as? NSArray {
+                        for i in 0..<additionalInfoNeededArray.count {
+                                if let additionalInfoNeededStr = additionalInfoNeededArray[i] as? String {
+                                        additionalInfoNeeded.append(additionalInfoNeededStr)
+                                    }
+                            }
+                    }
+                paymentMethod.additionalInfoNeeded = additionalInfoNeeded
+        
+                if let accreditationTime = json["accreditation_time"] as? Int {
+                        paymentMethod.accreditationTime = accreditationTime
+                    }
+        
+                var financialInstitutions: [FinancialInstitution] = [FinancialInstitution]()
+        
+                if let financialInstitutionsArray = json["financial_institutions"] as? NSArray {
+                       for i in 0..<financialInstitutionsArray.count {
+                                if let financialInstitutionsDic = financialInstitutionsArray[i] as? NSDictionary {
+                                        financialInstitutions.append(FinancialInstitution.fromJSON(financialInstitutionsDic))
+                                    }
+                            }
+                    }
+        
+                paymentMethod.financialInstitutions = financialInstitutions.isEmpty ? nil : financialInstitutions
+        
+                return paymentMethod
+            }
+    
     open var isIssuerRequired: Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }

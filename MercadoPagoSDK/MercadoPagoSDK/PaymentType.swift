@@ -36,6 +36,17 @@ public enum PaymentTypeId: String {
     case BOLBRADESCO = "bolbradesco"
     case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
 
+    
+    public static func fromJSON(_ json: NSDictionary) -> PaymentType {
+                let paymentType = PaymentType()
+        
+                if let _id = JSONHandler.attemptParseToString(json["id"]) {
+                        paymentType.paymentTypeId = PaymentTypeId(rawValue: _id)
+                    }
+                return paymentType
+            }
+    
+    
     public func isCard() -> Bool {
         return self == PaymentTypeId.DEBIT_CARD || self == PaymentTypeId.CREDIT_CARD || self == PaymentTypeId.PREPAID_CARD
     }

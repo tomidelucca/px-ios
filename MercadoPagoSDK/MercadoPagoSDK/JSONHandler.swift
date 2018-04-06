@@ -36,7 +36,35 @@ class JSONHandler: NSObject {
         }
         return result
     }
-
+    class func attemptParseToBool(_ anyobject: Any?) -> Bool? {
+        if anyobject is Bool {
+            return anyobject as! Bool?
+        }
+        guard let string = attemptParseToString(anyobject) else {
+            return nil
+        }
+        return string.toBool()
+    }
+    
+    class func attemptParseToDouble(_ anyobject: Any?, defaultReturn: Double? = nil) -> Double? {
+        
+        guard let string = attemptParseToString(anyobject) else {
+            return defaultReturn
+        }
+        return Double(string) ?? defaultReturn
+    }
+    
+    class func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
     class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String? {
 
         guard anyobject != nil, let string = (anyobject! as AnyObject).description else {
