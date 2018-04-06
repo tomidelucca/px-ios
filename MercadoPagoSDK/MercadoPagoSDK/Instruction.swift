@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class Instruction: NSObject {
+@objcMembers open class Instruction: NSObject {
 
     open var title: String = ""
     open var subtitle: String?

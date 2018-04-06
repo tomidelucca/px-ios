@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class CardToken: NSObject, CardInformationForm {
+@objcMembers open class CardToken: NSObject, CardInformationForm {
 
     let MIN_LENGTH_NUMBER: Int = 10
     let MAX_LENGTH_NUMBER: Int = 19
@@ -355,7 +355,7 @@ open class CardToken: NSObject, CardInformationForm {
     }
     open func getCardLastForDigits() -> String? {
         let index = cardNumber?.count
-        return cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)]
+        return String(cardNumber![cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-4)...cardNumber!.index(cardNumber!.startIndex, offsetBy: index!-1)])
     }
     public func getCardBin() -> String? {
         return getBin()

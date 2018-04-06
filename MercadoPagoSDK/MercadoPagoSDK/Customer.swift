@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class Customer: NSObject {
+@objcMembers open class Customer: NSObject {
     open var address: Address?
     open var cards: [Card]?
     open var defaultCard: String?

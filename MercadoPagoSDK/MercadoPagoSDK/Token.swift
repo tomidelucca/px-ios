@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Token: NSObject, CardInformationForm {
+@objcMembers open class Token: NSObject, CardInformationForm {
 	open var tokenId: String!
 	open var publicKey: String?
 	open var cardId: String!

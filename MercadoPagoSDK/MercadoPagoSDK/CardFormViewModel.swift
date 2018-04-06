@@ -18,6 +18,7 @@ private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+@objcMembers
 open class CardFormViewModel: NSObject {
 
     var paymentMethods: [PaymentMethod]

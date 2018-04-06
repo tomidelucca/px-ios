@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class PayerCost: NSObject, Cellable {
+@objcMembers open class PayerCost: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.payerCost
     open var installments: Int = 0

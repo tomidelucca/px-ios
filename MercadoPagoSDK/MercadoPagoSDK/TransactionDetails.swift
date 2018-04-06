@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class TransactionDetails: NSObject {
+@objcMembers open class TransactionDetails: NSObject {
     open var couponAmount: Double?
     open var externalResourceUrl: String?
     open var financialInstitution: FinancialInstitution?

@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Setting: NSObject {
+@objcMembers open class Setting: NSObject {
     open var binMask: BinMask!
     open var cardNumber: CardNumber!
     open var securityCode: SecurityCode!

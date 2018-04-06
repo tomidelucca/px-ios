@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class CheckoutPreference: NSObject {
+@objcMembers open class CheckoutPreference: NSObject {
 
     open var preferenceId: String!
     open var items: [Item]!

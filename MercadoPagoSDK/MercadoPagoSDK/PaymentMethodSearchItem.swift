@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
+@objcMembers open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMethodOption {
 
     open var idPaymentMethodSearchItem: String!
     open var type: PaymentMethodSearchItemType!

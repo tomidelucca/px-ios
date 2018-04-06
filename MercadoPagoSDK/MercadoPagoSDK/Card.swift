@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-open class Card: NSObject, CardInformation, PaymentMethodOption {
+@objcMembers open class Card: NSObject, CardInformation, PaymentMethodOption {
 
     open var cardHolder: Cardholder?
     open var customerId: String?

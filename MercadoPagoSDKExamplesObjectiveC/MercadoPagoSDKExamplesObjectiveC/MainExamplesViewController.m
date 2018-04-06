@@ -89,7 +89,7 @@
     self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c";
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2"
-    accessToken:nil
+    accessToken:@"APP_USR-1094487241196549-081708-4bc39f94fd147e7ce839c230c93261cb__LA_LC__-145698489"
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
     

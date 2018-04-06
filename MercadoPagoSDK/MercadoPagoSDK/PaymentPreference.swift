@@ -36,7 +36,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-open class PaymentPreference: NSObject {
+@objcMembers open class PaymentPreference: NSObject {
 
     open var excludedPaymentMethodIds: Set<String>?
     open var excludedPaymentTypeIds: Set<String>?

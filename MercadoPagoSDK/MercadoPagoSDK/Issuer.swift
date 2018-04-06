@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Issuer: NSObject, Cellable {
+@objcMembers open class Issuer: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.issuer
     open var issuerId: String?

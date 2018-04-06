@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class InstructionsInfo: NSObject {
+@objcMembers open class InstructionsInfo: NSObject {
 
     var amountInfo: AmountInfo!
     var instructions: [Instruction]!

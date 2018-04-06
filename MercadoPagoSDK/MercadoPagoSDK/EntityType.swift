@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class EntityType: NSObject, Cellable {
+@objcMembers open class EntityType: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.entityType
     open var entityTypeId: String!

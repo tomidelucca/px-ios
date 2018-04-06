@@ -27,7 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-open class Installment: NSObject {
+@objcMembers open class Installment: NSObject {
     open var issuer: Issuer!
     open var payerCosts: [PayerCost]!
     open var paymentMethodId: String!

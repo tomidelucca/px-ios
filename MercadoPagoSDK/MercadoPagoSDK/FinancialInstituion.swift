@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class FinancialInstitution: NSObject, Cellable {
+@objcMembers open class FinancialInstitution: NSObject, Cellable {
 
     public var objectType: ObjectTypes = ObjectTypes.financialInstitution
     open var financialInstitutionId: Int?

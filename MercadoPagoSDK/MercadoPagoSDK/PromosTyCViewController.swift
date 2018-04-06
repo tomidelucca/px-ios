@@ -8,6 +8,7 @@
 
 import UIKit
 
+@objcMembers
 open class PromosTyCViewController: MercadoPagoUIViewController, UITableViewDataSource, UITableViewDelegate {
 
     /*

@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class InstructionReference: NSObject {
+@objcMembers open class InstructionReference: NSObject {
 
     var label: String!
     var value: [String]!

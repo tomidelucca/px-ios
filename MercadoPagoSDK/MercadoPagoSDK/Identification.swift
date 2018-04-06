@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Identification: NSObject {
+@objcMembers open class Identification: NSObject {
 
     open var type: String?
     open var number: String?

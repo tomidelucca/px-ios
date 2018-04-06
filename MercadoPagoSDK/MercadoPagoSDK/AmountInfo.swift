@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class AmountInfo: NSObject {
+@objcMembers open class AmountInfo: NSObject {
 
     var amount: Double!
     var currency: Currency!

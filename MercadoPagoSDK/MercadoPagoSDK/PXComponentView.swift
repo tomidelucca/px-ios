@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PXComponentView: UIView {
+@objcMembers public class PXComponentView: UIView {
 
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
@@ -63,18 +63,6 @@ public class PXComponentView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(view)
         putOnBottomOfLastView(view: view, withMargin: margin)?.isActive = true
-    }
-
-    override func addSeparatorLineToTop(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
-        self.topGuideView.addSeparatorLineToTop(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
-    }
-
-    override func addSeparatorLineToBottom(height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor = .pxMediumLightGray) {
-        self.bottomGuideView.addSeparatorLineToBottom(height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
-    }
-
-    override func addLine(yCoordinate: CGFloat, height: CGFloat, horizontalMarginPercentage: CGFloat, color: UIColor) {
-        super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 
     //Pin first content view subview to top
