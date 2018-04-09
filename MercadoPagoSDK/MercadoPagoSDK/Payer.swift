@@ -59,7 +59,6 @@ open class Payer: NSObject {
         return payer
     }
 
-
     func clearCollectedData() {
         self.entityType = nil
         self.identification = nil
