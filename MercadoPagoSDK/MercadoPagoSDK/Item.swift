@@ -45,12 +45,12 @@ open class Item: NSObject {
         self.itemDescription = description ?? ""
         self.currencyId = currencyId
     }
-    
+
     open class func fromJSON(_ json: NSDictionary) -> Item {
                 let item = Item()
-        
+
                 item.itemId = JSONHandler.getValue(of: String.self, key: "id", from: json)
-        
+
                 if let quantity = JSONHandler.attemptParseToInt(json["quantity"]) {
                         item.quantity = quantity
                     }
@@ -63,16 +63,15 @@ open class Item: NSObject {
                 if let description = JSONHandler.attemptParseToString(json["description"]) {
                         item.itemDescription = description
                     }
-        
+
                 item.currencyId = JSONHandler.getValue(of: String.self, key: "currency_id", from: json)
-        
+
                 if let categoryId = JSONHandler.attemptParseToString(json["category_id"]) {
                         item.categoryId = categoryId
                     }
                 if let pictureUrl = JSONHandler.attemptParseToString(json["picture_url"]) {
                         item.pictureUrl = pictureUrl
                     }
-        
                 return item
             }
 

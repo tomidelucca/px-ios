@@ -14,7 +14,6 @@ open class FeesDetail: NSObject {
     open var feePayer: String!
     open var type: String!
 
-
     open class func fromJSON(_ json: NSDictionary) -> FeesDetail {
                 let fd: FeesDetail = FeesDetail()
                 if let type = JSONHandler.attemptParseToString(json["type"]) {
@@ -31,7 +30,7 @@ open class FeesDetail: NSObject {
                     }
                 return fd
             }
-    
+
     func isFinancingFeeType() -> Bool {
         return self.type == "financing_fee"
     }
@@ -46,5 +45,4 @@ open class FeesDetail: NSObject {
             ]
         return JSONHandler.jsonCoding(obj)
     }
-
 }

@@ -84,10 +84,10 @@ open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMeth
     public func getComment() -> String {
         return self.comment ?? ""
     }
-    
+
     open class func fromJSON(_ json: NSDictionary) -> PaymentMethodSearchItem {
               let pmSearchItem = PaymentMethodSearchItem()
-        
+
                if let _id = JSONHandler.attemptParseToString(json["id"]) {
                         pmSearchItem.idPaymentMethodSearchItem = _id
                     }
@@ -106,7 +106,6 @@ open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMeth
                 if let childrenHeader = JSONHandler.attemptParseToString(json["children_header"]) {
                         pmSearchItem.childrenHeader = childrenHeader
                     }
-        
                 var children = [PaymentMethodSearchItem]()
                 if let childrenJson = json["children"] as? NSArray {
                         for i in 0..<childrenJson.count {
@@ -116,10 +115,8 @@ open class PaymentMethodSearchItem: NSObject, PaymentOptionDrawable, PaymentMeth
                             }
                         pmSearchItem.children = children
                     }
-        
                 return pmSearchItem
             }
-    
 }
 
 public enum PaymentMethodSearchItemType: String {

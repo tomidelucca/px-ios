@@ -24,7 +24,6 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
     open var issuer: Issuer?
     open var securityCode: SecurityCode?
 
-    
     open class func fromJSON(_ json: NSDictionary) -> Card {
                 let card: Card = Card()
                 if let customerId = JSONHandler.attemptParseToString(json["customer_id"]) {
@@ -63,8 +62,6 @@ open class Card: NSObject, CardInformation, PaymentMethodOption {
                     }
                 return card
             }
-    
-    
     public func getIssuer() -> Issuer? {
         return self.issuer
     }

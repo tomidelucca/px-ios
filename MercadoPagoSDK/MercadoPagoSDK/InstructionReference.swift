@@ -20,7 +20,6 @@ open class InstructionReference: NSObject {
                 if json["label"] != nil && !(json["label"]! is NSNull) {
                         reference.label = json["label"] as! String
                     }
-        
                 if json["field_value"] != nil && !(json["field_value"]! is NSNull) {
                         reference.value = [String]()
                         if let values = json["field_value"] as? NSArray {
@@ -29,18 +28,18 @@ open class InstructionReference: NSObject {
                                     }
                             }
                     }
-        
+
                 if json["separator"] !=  nil && !(json["separator"]! is NSNull) {
                         reference.separator = json["separator"] as! String
                     }
-        
+
                 if json["comment"] !=  nil && !(json["comment"]! is NSNull) {
                         reference.comment = json["comment"] as? String
                     }
-        
+
                 return reference
             }
-    
+
     open func getFullReferenceValue() -> String {
         if String.isNullOrEmpty(separator) {
             self.separator = ""

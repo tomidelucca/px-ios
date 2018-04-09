@@ -65,10 +65,10 @@ open class Payment: NSObject {
     override public init() {
         super.init()
     }
-    
+
     open class func fromJSON(_ json: NSDictionary) -> Payment {
                 let payment: Payment = Payment()
-        
+
                 if let _id = JSONHandler.attemptParseToString(json["id"]) {
                         payment.paymentId = _id
                     }
@@ -154,7 +154,7 @@ open class Payment: NSObject {
                 if let transactionAmount = JSONHandler.attemptParseToDouble(json["transaction_amount"]) {
                         payment.transactionAmount = transactionAmount
                     }
-        
+
                 if let transactionAmountRefunded = JSONHandler.attemptParseToDouble(json["transaction_amount_refunded"]) {
                         payment.transactionAmountRefunded = transactionAmountRefunded
                     }
@@ -170,15 +170,15 @@ open class Payment: NSObject {
                 if let differentialPricingId = JSONHandler.attemptParseToString(json["differential_pricing_id"])?.numberValue {
                         payment.differentialPricingId = differentialPricingId
                     }
-        
+
                 if let issuerId = JSONHandler.attemptParseToInt(json["issuer_id"]) {
                         payment.issuerId = issuerId
                    }
-        
+
                 if let tokenId = JSONHandler.attemptParseToString(json["token"]) {
                         payment.tokenId = tokenId
                     }
-        
+
                 return payment
             }
 

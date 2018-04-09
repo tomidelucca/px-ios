@@ -670,7 +670,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             self.paymentData.updatePaymentDataWith(paymentMethod: cardInformation.getPaymentMethod())
             self.paymentData.updatePaymentDataWith(issuer: cardInformation.getIssuer())
         }
-
     }
 
     func hasCustomPaymentOptions() -> Bool {

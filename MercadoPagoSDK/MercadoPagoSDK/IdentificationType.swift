@@ -9,13 +9,13 @@
 import Foundation
 
 open class IdentificationType: NSObject {
+
     open var identificationTypeId: String?
     open var name: String?
     open var type: String?
     open var minLength: Int = 0
     open var maxLength: Int = 0
 
-    
     open class func fromJSON(_ json: NSDictionary) -> IdentificationType {
                 let identificationType: IdentificationType = IdentificationType()
                 if let identificationTypeId = JSONHandler.attemptParseToString(json["id"]) {
@@ -35,8 +35,7 @@ open class IdentificationType: NSObject {
                     }
                 return identificationType
         }
-    
-    
+
     open func toJSONString() -> String {
 
         let identificationTypeId: Any = self.identificationTypeId != nil ? JSONHandler.null : self.identificationTypeId!
