@@ -18,21 +18,19 @@ open class CheckoutPreference: NSObject {
     open var expirationDateFrom: Date?
     open var expirationDateTo: Date?
 
-    
     open class func fromJSON(_ json: NSDictionary) -> CheckoutPreference {
                 let preference: CheckoutPreference = CheckoutPreference()
-        
+
                 if let _id = JSONHandler.attemptParseToString(json["id"]) {
                         preference.preferenceId = _id
                     }
                 if let siteId = JSONHandler.attemptParseToString(json["site_id"]) {
                         preference.siteId = siteId
                     }
-        
                 if let payerDic = json["payer"] as? NSDictionary {
                         preference.payer = Payer.fromJSON(payerDic)
                     }
-        
+
                 var items = [Item]()
                 if let itemsArray = json["items"] as? NSArray {
                         for i in 0..<itemsArray.count {
@@ -40,18 +38,17 @@ open class CheckoutPreference: NSObject {
                                         items.append(Item.fromJSON(itemDic))
                                 }
                             }
-            
+
                         preference.items = items
                     }
-        
+
                 if let paymentPreference = json["payment_methods"] as? NSDictionary {
                         preference.paymentPreference = PaymentPreference.fromJSON(paymentPreference)
                     }
-        
+
                 return preference
             }
-    
-    
+
     public init(preferenceId: String) {
         self.preferenceId = preferenceId
     }
@@ -259,20 +256,6 @@ open class CheckoutPreference: NSObject {
         }
         return amount
     }
-
-    /*open func getTitle() -> String {
-        
-        if self.items.count > 1 {
-            var title = self.items.reduce("", { (result, element) -> String in
-                return element.title + ", " + result
-            })
-            let index = title.index(title.endIndex, offsetBy: -2)
-            title.remove(at: index)
-            return title
-        }
-        
-        return self.items[0].title
-    }*/
 }
 
 public func == (obj1: CheckoutPreference, obj2: CheckoutPreference) -> Bool {

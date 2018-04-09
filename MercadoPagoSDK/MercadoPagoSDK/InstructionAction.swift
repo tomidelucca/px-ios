@@ -18,18 +18,14 @@ open class InstructionAction: NSObject {
                     if json["label"] != nil && !(json["label"]! is NSNull) {
                         action.label = json["label"] as! String
                     }
-        
                 if json["url"] != nil && !(json["url"]! is NSNull) {
                         action.url = json["url"] as! String
                     }
-        
                 if json["tag"] !=  nil && !(json["tag"]! is NSNull) {
                         action.tag = json["tag"] as! String
                     }
                 return action
             }
-
-    
 }
 
 public enum ActionTag: String {

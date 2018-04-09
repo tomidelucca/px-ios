@@ -16,18 +16,17 @@ open class Issuer: NSObject, Cellable {
 
     open class func fromJSON(_ json: NSDictionary) -> Issuer {
                 let issuer: Issuer = Issuer()
-        
+
                 if let id = json["id"] as? String {
                         issuer.issuerId = JSONHandler.attemptParseToString(id)
                     }
-        
+
                 if let name = JSONHandler.attemptParseToString(json["name"]) {
                         issuer.name = name
                     }
-        
                 return issuer
             }
-    
+
     open func toJSONString() -> String {
        return JSONHandler.jsonCoding(toJSON())
     }
