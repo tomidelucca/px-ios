@@ -152,6 +152,7 @@ extension PXReviewViewController {
         view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         // Add elastic header.

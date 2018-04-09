@@ -235,6 +235,10 @@
 		232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		232FA92C1F06D30F002F7E39 /* Cause.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA92B1F06D30F002F7E39 /* Cause.swift */; };
 		233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */; };
+		2352B753207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
+		2352B754207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */; };
+		2352B756207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */; };
+		2352B757207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */; };
 		235A3269204B4147002D1F54 /* PXReviewTitleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235A3268204B4147002D1F54 /* PXReviewTitleComponent.swift */; };
 		235A326B204B4185002D1F54 /* PXReviewTitleComponentProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235A326A204B4185002D1F54 /* PXReviewTitleComponentProps.swift */; };
 		235A326D204B424C002D1F54 /* PXReviewTitleComponentRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235A326C204B424C002D1F54 /* PXReviewTitleComponentRenderer.swift */; };
@@ -876,6 +880,8 @@
 		232FA9291F06D2E2002F7E39 /* ApiException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiException.swift; sourceTree = "<group>"; };
 		232FA92B1F06D30F002F7E39 /* Cause.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cause.swift; sourceTree = "<group>"; };
 		233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXThemeObjects.swift; sourceTree = "<group>"; };
+		2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPrimaryButton.swift; sourceTree = "<group>"; };
+		2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecondaryButton.swift; sourceTree = "<group>"; };
 		235A3268204B4147002D1F54 /* PXReviewTitleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponent.swift; sourceTree = "<group>"; };
 		235A326A204B4185002D1F54 /* PXReviewTitleComponentProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponentProps.swift; sourceTree = "<group>"; };
 		235A326C204B424C002D1F54 /* PXReviewTitleComponentRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXReviewTitleComponentRenderer.swift; sourceTree = "<group>"; };
@@ -1722,6 +1728,8 @@
 				23E2157D2005360600B968F6 /* PXTheme.swift */,
 				23E2158420062EFC00B968F6 /* PXThemeProperty.swift */,
 				233E0D812007DE5F00A8FCE4 /* PXThemeObjects.swift */,
+				2352B752207BD0F900CE46E5 /* PXPrimaryButton.swift */,
+				2352B755207BD10B00CE46E5 /* PXSecondaryButton.swift */,
 				23E2158120062DD700B968F6 /* Themes */,
 				23E2158620062F9000B968F6 /* ThemeManager.swift */,
 				23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */,
@@ -2755,11 +2763,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MercadoPagoSDKTests/Pods-MercadoPagoSDKTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
+				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
+				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoPXTracking/MercadoPagoPXTracking.framework",
 				"${BUILT_PRODUCTS_DIR}/MercadoPagoServices/MercadoPagoServices.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoPXTracking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MercadoPagoServices.framework",
 			);
@@ -2959,9 +2973,11 @@
 				4B08CDAE1F224CA600FE800A /* MercadoPagoESCImplementation.swift in Sources */,
 				7656CA1A1C7645450043BDB2 /* InstructionReference.swift in Sources */,
 				0F9883851AD2AB6000F750F0 /* PayerCost.swift in Sources */,
+				2352B753207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */,
 				FC3FC8681FBE118100CF29E1 /* PXInstructionsReferencesRenderer.swift in Sources */,
 				FC3FC8651FBE117200CF29E1 /* PXInstructionsReferencesComponent.swift in Sources */,
 				534D84201F546FA000C2C6F9 /* AvailableCardsViewController.swift in Sources */,
+				2352B756207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */,
 				FCE865671F9E61A6000EF023 /* MercadoPagoServicesAdapter.swift in Sources */,
 				0FC4FC2D1B0FB32400CF7148 /* PromoEmptyTableViewCell.swift in Sources */,
 				819C88DA2045CFB8001E9216 /* PXReviewViewController.swift in Sources */,
@@ -3241,6 +3257,7 @@
 				15D79A081CA986E300623A84 /* MPTextField.swift in Sources */,
 				4BEF9B581FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
 				4B4E231F20004093007E8FDD /* XCTestCase+Additions.swift in Sources */,
+				2352B754207BD0F900CE46E5 /* PXPrimaryButton.swift in Sources */,
 				156A743D1F59CE61006BC4A7 /* AvailableCardsDetailView.swift in Sources */,
 				4B7624BB2073C8E500252A0D /* PromoTyCDetailTableViewCell.swift in Sources */,
 				237A19FB2050047300B0C2D2 /* PXReviewTitleComponentRenderer.swift in Sources */,
@@ -3395,6 +3412,7 @@
 				4B4E23232000417B007E8FDD /* MockComponent.swift in Sources */,
 				76EC48001C862A820086FA53 /* PromoTest.swift in Sources */,
 				76EC48081C862B160086FA53 /* InstructionReferenceTest.swift in Sources */,
+				2352B757207BD10B00CE46E5 /* PXSecondaryButton.swift in Sources */,
 				0F9883981AD2AB6000F750F0 /* Token.swift in Sources */,
 				7622E3241DF5EE5400490C4E /* JSONHandler.swift in Sources */,
 				15D79A051CA96D6400623A84 /* MPLabel.swift in Sources */,

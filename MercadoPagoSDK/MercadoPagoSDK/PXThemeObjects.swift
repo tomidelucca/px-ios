@@ -25,6 +25,4 @@ open class PXNavigationHeaderLabel: UILabel {
     }
 }
 
-open class PXPrimaryButton: UIButton {}
-open class PXSecondaryButton: UIButton {}
 open class PXToolbar: UIToolbar {}
