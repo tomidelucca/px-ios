@@ -30,7 +30,7 @@ open class PXContainedActionButtonProps: NSObject {
         self.title = title
         self.action = action
         self.backgroundColor = .white
-        self.buttonColor = ThemeManager.shared.getTheme().primaryButton().backgroundColor
-        self.textColor = ThemeManager.shared.getTheme().primaryButton().tintColor
+        self.buttonColor = .clear //TODO: Remove
+        self.textColor = .clear //TODO: Remove
     }
 }

@@ -52,12 +52,12 @@ open class LoadingOverlay {
     open func showOverlay(_ view: UIView, backgroundColor: UIColor, indicatorColor: UIColor = UIColor.white) -> UIView {
         let loadingOverlay: UIView?
 
-        self.loadingContainer = MPSDKLoadingView(loading: ThemeManager.shared.getTheme().loadingComponent().tintColor)!
+        self.loadingContainer = MPSDKLoadingView(loading: ThemeManager.shared.loadingComponent().tintColor)!
 
         view.addSubview(self.loadingContainer)
         view.bringSubview(toFront: self.loadingContainer)
         loadingOverlay = self.loadingContainer
-        loadingOverlay?.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
+        loadingOverlay?.backgroundColor = ThemeManager.shared.loadingComponent().backgroundColor
 
         return loadingOverlay!
     }

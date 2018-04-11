@@ -27,15 +27,14 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         switch self.businessResult.status {
         case .APPROVED:
-            return ThemeManager.shared.getTheme().successColor()
+            return ThemeManager.shared.successColor()
         case .REJECTED:
-            return ThemeManager.shared.getTheme().rejectedColor()
+            return ThemeManager.shared.rejectedColor()
         case .PENDING:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         case .IN_PROGRESS:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         }
-
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {

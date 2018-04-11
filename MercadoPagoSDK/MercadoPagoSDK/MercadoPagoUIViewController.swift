@@ -12,7 +12,7 @@ import MercadoPagoPXTracking
 open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
     open var callbackCancel: (() -> Void)?
-    var navBarTextColor = ThemeManager.shared.getTheme().navigationBar().tintColor
+    var navBarTextColor = ThemeManager.shared.navigationBar().tintColor
     private var navBarBackgroundColor = ThemeManager.shared.getMainColor()
     var shouldDisplayBackButton = false
     var shouldHideNavigationBar = false
@@ -48,7 +48,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        UIApplication.shared.statusBarStyle = ThemeManager.shared.getTheme().statusBarStyle()
+        UIApplication.shared.statusBarStyle = ThemeManager.shared.statusBarStyle()
 
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 
@@ -219,7 +219,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func showLoading() {
-        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
+        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
         self.view.bringSubview(toFront: self.loadingInstance!)
     }
 
@@ -297,7 +297,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             }
 
             let font: UIFont = Utils.getFont(size: navBarFontSize)
-            let titleDict: NSDictionary = [NSForegroundColorAttributeName: ThemeManager.shared.getTheme().navigationBar().tintColor, NSFontAttributeName: font]
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: ThemeManager.shared.navigationBar().tintColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String: AnyObject]
         }
 
@@ -361,7 +361,7 @@ extension UINavigationBar {
 }
 extension UINavigationController {
     internal func showLoading() {
-        _ = LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
+        _ = LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
     }
 
     internal func hideLoading() {

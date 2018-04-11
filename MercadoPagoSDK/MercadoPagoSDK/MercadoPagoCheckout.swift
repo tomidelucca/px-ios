@@ -51,12 +51,10 @@ open class MercadoPagoCheckout: NSObject {
 
     public func setTheme(_ theme: PXTheme) {
         ThemeManager.shared.setTheme(theme: theme)
-
-        MLStyleSheetManager.styleSheet = MLStyleSheetDefault()
+        //MLStyleSheetManager.styleSheet = MLStyleSheetDefault()
     }
 
     public func setDefaultColor(_ color: UIColor) {
-
         ThemeManager.shared.setDefaultColor(color: color)
     }
 
@@ -294,8 +292,8 @@ open class MercadoPagoCheckout: NSObject {
 
     internal func createCurrentLoading() {
         let vcLoading = MPXLoadingViewController()
-        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
+        vcLoading.view.backgroundColor = ThemeManager.shared.loadingComponent().backgroundColor
+        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
         vcLoading.view.addSubview(loadingInstance)
         loadingInstance.bringSubview(toFront: vcLoading.view)
         self.currentLoadingView = vcLoading

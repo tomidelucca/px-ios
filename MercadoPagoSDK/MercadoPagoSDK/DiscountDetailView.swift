@@ -10,6 +10,8 @@ import UIKit
 
 class DiscountDetailView: UIView {
 
+    //TODO: Replace with Modal MLUI Component
+
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var productTitle: UILabel!
     @IBOutlet weak var productAmount: UILabel!
@@ -20,8 +22,8 @@ class DiscountDetailView: UIView {
 
     let fontSize: CGFloat = 18.0
     let baselineOffSet: Int = 6
-    let fontColor = ThemeManager.shared.getTheme().modalComponent().tintColor
-    let discountFontColor = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
+    let fontColor = ThemeManager.shared.boldLabelTintColor()
+    let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
 
     var coupon: DiscountCoupon!
     var amount: Double!

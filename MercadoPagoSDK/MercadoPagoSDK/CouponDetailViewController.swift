@@ -36,7 +36,7 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = ThemeManager.shared.getTheme().modalComponent().backgroundColor
+        self.view.backgroundColor = ThemeManager.shared.modalComponent().backgroundColor
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
         let screenWidth = screenSize.width
@@ -49,7 +49,7 @@ open class CouponDetailViewController: MercadoPagoUIViewController {
         let exitImage = MercadoPago.getImage("white_close")
         let templateExitImage = exitImage?.withRenderingMode(.alwaysTemplate)
         self.exitButton.setImage(templateExitImage, for: .normal)
-        self.exitButton.tintColor = ThemeManager.shared.getTheme().navigationBar().tintColor
+        self.exitButton.tintColor = ThemeManager.shared.navigationBar().tintColor
     }
 
     @IBAction func exit() {

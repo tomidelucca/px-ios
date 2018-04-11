@@ -50,13 +50,13 @@ public class PXResultViewModel: PXResultViewModelInterface {
 
     func primaryResultColor() -> UIColor {
         if isAccepted() {
-            return ThemeManager.shared.getTheme().successColor()
+            return ThemeManager.shared.successColor()
         }
         if isError() {
-            return ThemeManager.shared.getTheme().rejectedColor()
+            return ThemeManager.shared.rejectedColor()
         }
         if isWarning() {
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         }
         return .pxWhite
     }

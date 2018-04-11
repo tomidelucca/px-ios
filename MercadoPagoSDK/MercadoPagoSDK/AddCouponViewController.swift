@@ -129,12 +129,12 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         errorLabel = MPLabel(frame: toolbar!.frame)
         // TODO: Implement Meli Toast component. (Meli UI library).
         self.errorLabel!.backgroundColor = UIColor.UIColorFromRGB(0xEEEEEE)
-        self.errorLabel!.textColor = ThemeManager.shared.getTheme().rejectedColor()
+        self.errorLabel!.textColor = ThemeManager.shared.rejectedColor()
         self.errorLabel!.text = errorMessage
         self.errorLabel!.textAlignment = .center
         self.errorLabel!.font = self.errorLabel!.font.withSize(12)
-        textBox.borderInactiveColor = ThemeManager.shared.getTheme().rejectedColor()
-        textBox.borderActiveColor = ThemeManager.shared.getTheme().rejectedColor()
+        textBox.borderInactiveColor = ThemeManager.shared.rejectedColor()
+        textBox.borderActiveColor = ThemeManager.shared.rejectedColor()
         textBox.inputAccessoryView = errorLabel
         textBox.setNeedsDisplay()
         textBox.resignFirstResponder()
@@ -152,8 +152,8 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
     }
 
     func hideErrorMessage() {
-        self.textBox.borderInactiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
-        self.textBox.borderActiveColor = ThemeManager.shared.getTheme().secondaryButton().tintColor
+        self.textBox.borderInactiveColor = ThemeManager.shared.secondaryColor()
+        self.textBox.borderActiveColor = ThemeManager.shared.secondaryColor()
         self.textBox.inputAccessoryView = self.toolbar
         self.textBox.setNeedsDisplay()
         self.textBox.resignFirstResponder()

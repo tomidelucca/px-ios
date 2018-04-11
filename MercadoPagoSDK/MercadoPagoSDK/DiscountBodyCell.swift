@@ -10,10 +10,10 @@ import UIKit
 
 class DiscountBodyCell: UIView {
 
-    let DISCOUNT_COLOR = ThemeManager.shared.getTheme().noTaxAndDiscountLabelTintColor()
-    let LABEL_COLOR = ThemeManager.shared.getTheme().boldLabelTintColor()
-    let ACCENT_LINK = ThemeManager.shared.getTheme().secondaryButton().tintColor
-    let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.getTheme().primaryButton().tintColor
+    let DISCOUNT_COLOR = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
+    let LABEL_COLOR = ThemeManager.shared.boldLabelTintColor()
+    let ACCENT_LINK = ThemeManager.shared.secondaryColor()
+    let PRIMARY_BUTTON_TEXT_COLOR = ThemeManager.shared.whiteColor()
     let SEPARATOR_BORDER_COLOR: UIColor = UIColor.UIColorFromRGB(0x999999)
 
     let margin: CGFloat = 5.0
