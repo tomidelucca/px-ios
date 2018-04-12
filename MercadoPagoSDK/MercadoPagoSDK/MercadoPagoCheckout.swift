@@ -233,7 +233,7 @@ open class MercadoPagoCheckout: NSObject {
 
         } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
             finishFlowCallback(self.viewModel.payment)
-            return
+           // return
         }
 
         goToRootViewController()
