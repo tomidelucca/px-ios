@@ -12,10 +12,12 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     let businessResult: PXBusinessResult
     let paymentData: PaymentData
+    let amount: Double
 
-    init(businessResult: PXBusinessResult, paymentData: PaymentData) {
+    init(businessResult: PXBusinessResult, paymentData: PaymentData, amount: Double) {
         self.businessResult = businessResult
         self.paymentData = paymentData
+        self.amount = amount
         super.init()
     }
 
@@ -90,16 +92,74 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
+        if self.businessResult.showPaymentMethod {
+            return getPaymentMethodComponent()
+        } else {
+          return getHelpMessageComponent()
+        }
+    }
+
+    func getHelpMessageComponent() -> PXErrorComponent? {
         guard let labelInstruction = self.businessResult.helpMessage else {
             return nil
         }
-
+        
         let title = PXResourceProvider.getTitleForErrorBody()
         let props = PXErrorProps(title: title.toAttributedString(), message: labelInstruction.toAttributedString())
-
+        
         return PXErrorComponent(props: props)
     }
-
+    public func getPaymentMethodComponent() -> PXPaymentMethodComponent {
+        let pm = self.paymentData.paymentMethod!
+        
+        let image = getPaymentMethodIcon(paymentMethod: pm)
+        let currency = MercadoPagoContext.getCurrency()
+        var amountTitle = Utils.getAmountFormated(amount: self.amount, forCurrency: currency)
+        var amountDetail: String?
+        if let payerCost = self.paymentData.payerCost {
+            if payerCost.installments > 1 {
+                amountTitle = String(payerCost.installments) + "x " + Utils.getAmountFormated(amount: payerCost.installmentAmount, forCurrency: currency)
+                amountDetail = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency, addingParenthesis: true)
+            }
+        }
+        var pmDescription: String = ""
+        let paymentMethodName = pm.name ?? ""
+        
+        let issuer = self.paymentData.getIssuer()
+        let paymentMethodIssuerName = issuer?.name ?? ""
+        var descriptionDetail: NSAttributedString? = nil
+        
+        if pm.isCard {
+            if let lastFourDigits = (self.paymentData.token?.lastFourDigits) {
+                pmDescription = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
+            }
+            if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
+                descriptionDetail = paymentMethodIssuerName.toAttributedString()
+            }
+        } else {
+            pmDescription = paymentMethodName
+        }
+        
+        var disclaimerText: String? = nil
+        if let statementDescription = self.businessResult.paymentMethodDisclaimer {
+            disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
+        }
+        
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor())
+        
+        return PXPaymentMethodComponent(props: bodyProps)
+    }
+    
+    fileprivate func getPaymentMethodIcon(paymentMethod: PaymentMethod) -> UIImage? {
+        let defaultColor = paymentMethod.paymentTypeId == PaymentTypeId.ACCOUNT_MONEY.rawValue && paymentMethod.paymentTypeId != PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue
+        var paymentMethodImage: UIImage? =  MercadoPago.getImageForPaymentMethod(withDescription: paymentMethod.paymentMethodId, defaultColor: defaultColor)
+        // Retrieve image for payment plugin or any external payment method.
+        if paymentMethod.paymentTypeId == PaymentTypeId.PAYMENT_METHOD_PLUGIN.rawValue {
+            paymentMethodImage = paymentMethod.getImageForExtenalPaymentMethod()
+        }
+        return paymentMethodImage
+    }
+    
     func buildTopCustomComponent() -> PXCustomComponentizable? {
         return nil
     }
