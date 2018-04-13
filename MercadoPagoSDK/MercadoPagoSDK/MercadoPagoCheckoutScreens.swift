@@ -247,8 +247,11 @@ extension MercadoPagoCheckout {
                 self.viewModel.errorCallback?()
             })
         }
-        self.dismissLoading {
-            self.navigationController.present(errorStep, animated: true, completion: {})
+        self.dismissLoading {  [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.navigationController.present(errorStep, animated: true, completion: {})
         }
         
     }
