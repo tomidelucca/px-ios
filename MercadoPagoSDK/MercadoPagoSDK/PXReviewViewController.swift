@@ -16,8 +16,6 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
     // MARK: Definitions
-    var footerView: UIView!
-    var floatingButtonView: UIView!
     var termsConditionView: PXTermsAndConditionView!
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
@@ -49,11 +47,6 @@ class PXReviewViewController: PXComponentContainerViewController {
 
     func update(viewModel: PXReviewViewModel) {
         self.viewModel = viewModel
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.checkFloatingButtonVisibility()
     }
 }
 
@@ -139,16 +132,8 @@ extension PXReviewViewController {
             termsConditionView.delegate = self
         }
 
-        //Add Footer
-        footerView = getFooterView()
-        contentView.addSubviewToBottom(footerView)
-        PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
-        self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-
         // Add floating button
-        floatingButtonView = getFloatingButtonView()
+        let floatingButtonView: UIView = getFloatingButtonView()
         view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
@@ -161,8 +146,9 @@ extension PXReviewViewController {
         PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
         PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
 
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonView.frame.height, right: 0)
+        
         super.refreshContentViewSize()
-        self.checkFloatingButtonVisibility()
     }
 }
 
@@ -176,15 +162,6 @@ extension PXReviewViewController {
             itemViews.append(items.render())
         }
         return itemViews
-    }
-
-    fileprivate func isConfirmButtonVisible() -> Bool {
-        guard let floatingButton = self.floatingButtonView, let fixedButton = self.footerView else {
-            return false
-        }
-        let floatingButtonCoordinates = floatingButton.convert(CGPoint.zero, from: self.view.window)
-        let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
-        return fixedButtonCoordinates.y >= floatingButtonCoordinates.y
     }
 
     fileprivate func getPaymentMethodComponentView() -> UIView? {
@@ -230,25 +207,6 @@ extension PXReviewViewController {
         return containedButtonView
     }
 
-    fileprivate func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
-        }
-        let cancelAction = PXComponentAction(label: "Cancelar".localized) {
-            [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.cancelPayment()
-        }
-        let footerProps = PXFooterProps(buttonAction: payAction, linkAction: cancelAction)
-        let footerComponent = PXFooterComponent(props: footerProps)
-        return footerComponent.render()
-    }
-
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
@@ -266,19 +224,6 @@ extension PXReviewViewController {
             return componentView
         }
         return nil
-    }
-
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        super.scrollViewDidScroll(scrollView)
-        self.checkFloatingButtonVisibility()
-    }
-
-    func checkFloatingButtonVisibility() {
-        if !isConfirmButtonVisible() {
-            self.floatingButtonView.alpha = 1
-        } else {
-            self.floatingButtonView.alpha = 0
-        }
     }
 }
 
