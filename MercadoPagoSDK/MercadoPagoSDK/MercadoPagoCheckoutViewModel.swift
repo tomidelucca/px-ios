@@ -532,8 +532,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         if !search.paymentMethods.isEmpty, !search.paymentMethods[0].isCard {
             self.reviewScreenPreference.disableChangeMethodOption()
-        } else {
-            self.reviewScreenPreference.setChangeMethodText("review_change_payment_method_action_card")
         }
 
         if !Array.isNullOrEmpty(search.groups) && search.groups.count == 1 {

@@ -15,7 +15,6 @@ open class ReviewScreenPreference: NSObject {
     fileprivate var quantityRowVisible: Bool = true
     fileprivate var displayAmountTitle: Bool = true
 
-    fileprivate var changeMethodText = "review_change_payment_method_action"
     fileprivate var amountTitle = DEFAULT_AMOUNT_TITLE
     fileprivate var quantityTitle = DEFAULT_QUANTITY_TITLE
     fileprivate var collectorIcon: UIImage?
@@ -40,14 +39,6 @@ extension ReviewScreenPreference {
 
     open func enableChangeMethodOption() {
         self.shouldDisplayChangeMethodOption = true
-    }
-
-    open func setChangeMethodText(_ text: String ) {
-        self.changeMethodText = text
-    }
-
-    open func getChangeMethodText() -> String {
-        return changeMethodText
     }
 }
 
