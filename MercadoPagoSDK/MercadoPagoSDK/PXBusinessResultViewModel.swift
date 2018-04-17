@@ -184,24 +184,24 @@ class PXBusinessResultBodyComponent : PXComponentizable {
         self.helpMessageComponent = helpMessageComponent
     }
     func render() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        let bodyView = UIView()
+        bodyView.translatesAutoresizingMaskIntoConstraints = false
         if let helpMessage = self.helpMessageComponent {
-            let view1 = helpMessage.render()
-            view.addSubview(view1)
-            PXLayout.pinLeft(view: view1).isActive = true
-            PXLayout.pinRight(view: view1).isActive = true
+            let helpView = helpMessage.render()
+            bodyView.addSubview(helpView)
+            PXLayout.pinLeft(view: helpView).isActive = true
+            PXLayout.pinRight(view: helpView).isActive = true
         }
         if let paymentMethodComponent = self.paymentMethodComponent {
-            let view2 = paymentMethodComponent.render()
-            view.addSubview(view2)
-            PXLayout.put(view: view2, onBottomOfLastViewOf: view)?.isActive = true
-            PXLayout.pinLeft(view: view2).isActive = true
-            PXLayout.pinRight(view: view2).isActive = true
+            let pmView = paymentMethodComponent.render()
+            bodyView.addSubview(pmView)
+            PXLayout.put(view: pmView, onBottomOfLastViewOf: bodyView)?.isActive = true
+            PXLayout.pinLeft(view: pmView).isActive = true
+            PXLayout.pinRight(view: pmView).isActive = true
         }
-        PXLayout.pinFirstSubviewToTop(view: view)?.isActive = true
-        PXLayout.pinLastSubviewToBottom(view: view)?.isActive = true
-        return view
+        PXLayout.pinFirstSubviewToTop(view: bodyView)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: bodyView)?.isActive = true
+        return bodyView
     }
     
     
