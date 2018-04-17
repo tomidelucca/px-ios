@@ -105,7 +105,7 @@
     
     //[self setPaymentMethodPlugins];
 
-//    [self setPaymentPlugin];
+    [self setPaymentPlugin];
 
     // Setear PaymentResultScreenPreference
 //    [self setPaymentResultScreenPreference];
@@ -156,7 +156,7 @@
 
     [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-    //[self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
