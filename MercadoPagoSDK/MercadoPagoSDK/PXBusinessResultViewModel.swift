@@ -92,11 +92,16 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBodyComponent() -> PXComponentizable? {
+        var pmComponent : PXComponentizable? = nil
+        var helpComponent : PXComponentizable? = nil
         if self.businessResult.showPaymentMethod {
-            return getPaymentMethodComponent()
-        } else {
-          return getHelpMessageComponent()
+            pmComponent =  getPaymentMethodComponent()
         }
+        if (self.businessResult.helpMessage != nil) {
+            helpComponent = getHelpMessageComponent()
+        }
+        
+        return PXBusinessResultBodyComponent(paymentMethodComponent: pmComponent, helpMessageComponent: helpComponent)
     }
 
     func getHelpMessageComponent() -> PXErrorComponent? {
@@ -141,7 +146,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
         
         var disclaimerText: String? = nil
-        if let statementDescription = self.businessResult.paymentMethodDisclaimer {
+        if let statementDescription = self.businessResult.statementDescription {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
         
@@ -168,4 +173,36 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         return nil
     }
 
+}
+
+class PXBusinessResultBodyComponent : PXComponentizable {
+    var paymentMethodComponent : PXComponentizable?
+    var helpMessageComponent : PXComponentizable?
+    
+    init(paymentMethodComponent : PXComponentizable?, helpMessageComponent : PXComponentizable?) {
+        self.paymentMethodComponent = paymentMethodComponent
+        self.helpMessageComponent = helpMessageComponent
+    }
+    func render() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if let helpMessage = self.helpMessageComponent {
+            let view1 = helpMessage.render()
+            view.addSubview(view1)
+            PXLayout.pinLeft(view: view1).isActive = true
+            PXLayout.pinRight(view: view1).isActive = true
+        }
+        if let paymentMethodComponent = self.paymentMethodComponent {
+            let view2 = paymentMethodComponent.render()
+            view.addSubview(view2)
+            PXLayout.put(view: view2, onBottomOfLastViewOf: view)?.isActive = true
+            PXLayout.pinLeft(view: view2).isActive = true
+            PXLayout.pinRight(view: view2).isActive = true
+        }
+        PXLayout.pinFirstSubviewToTop(view: view)?.isActive = true
+        PXLayout.pinLastSubviewToBottom(view: view)?.isActive = true
+        return view
+    }
+    
+    
 }

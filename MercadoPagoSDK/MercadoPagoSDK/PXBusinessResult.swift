@@ -38,14 +38,14 @@ open class PXBusinessResult: NSObject {
     var secondaryAction: PXComponentAction // Boton secundario (link) - Obligatoria
     var helpMessage: String? // Texto
     var showPaymentMethod: Bool = false // Si quiere que muestre la celda de PM
-
-    var paymentMethodDisclaimer: String?
+//paymentMethodVisible
+    var statementDescription : String?
     
     //Datos que actualmente devuelve la procesadora de pagos
     var receiptId: String?
     //------
 
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction, helpMessage: String? = nil , showPaymentMethod : Bool = false, paymentMethodDisclaimer: String? = nil) {
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction, helpMessage: String? = nil , showPaymentMethod : Bool = false, statementDescription: String? = nil) {
         self.receiptId = receiptId
         self.status = status
         self.title = title
@@ -55,7 +55,7 @@ open class PXBusinessResult: NSObject {
         self.secondaryAction = secondaryAction
         self.helpMessage = helpMessage
         self.showPaymentMethod = showPaymentMethod
-        self.paymentMethodDisclaimer = paymentMethodDisclaimer
+        self.statementDescription = statementDescription
         super.init()
     }
 }

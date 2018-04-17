@@ -42,7 +42,7 @@
             NSLog(@"print !!! action!!");
         }];
         
-        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"12345" status:PXBusinessResultStatusREJECTED title:@"Claro no pudo procesar tu recarga" subtitle:@"Falló la recarga" icon:[UIImage imageNamed:@"claro_logo"] mainAction:printeaEnConsola secondaryAction:popeame helpMessage:@"Intenta mas tarde" showPaymentMethod:YES paymentMethodDisclaimer:@"Mercado Garpo"];
+        PXBusinessResult* businessResult = [[PXBusinessResult alloc] initWithReceiptId:@"12345" status:PXBusinessResultStatusAPPROVED title:@"Claro pudo procesar tu recarga" subtitle:nil icon:[UIImage imageNamed:@"claro_logo"] mainAction:printeaEnConsola secondaryAction:popeame helpMessage:@"Essssaaaaa" showPaymentMethod:YES statementDescription:@"Tu vieja"];
         [self.pluginNavigationHandler didFinishPaymentWithBusinessResult:businessResult];
 
        // [self.pluginNavigationHandler didFinishPaymentWithPaymentStatus:RemotePaymentStatusAPPROVED statusDetails:@"" receiptId:nil];
