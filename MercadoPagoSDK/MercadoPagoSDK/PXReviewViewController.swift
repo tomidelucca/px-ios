@@ -188,7 +188,7 @@ extension PXReviewViewController {
     }
 
     fileprivate func getPaymentMethodComponentView() -> UIView? {
-        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
+        let action = PXComponentAction(label: self.viewModel.reviewScreenPreference.getChangeMethodText().localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
                 self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
             }
