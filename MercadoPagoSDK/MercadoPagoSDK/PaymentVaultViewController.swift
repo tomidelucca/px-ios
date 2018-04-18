@@ -337,8 +337,8 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
                 view.removeFromSuperview()
             }
 
-            let amountFontSize: CGFloat = 16
-            let centsFontSize: CGFloat = 12
+            let amountFontSize: CGFloat = PXLayout.XS_FONT
+            let centsFontSize: CGFloat = PXLayout.XXXS_FONT
             let currency = MercadoPagoContext.getCurrency()
             let currencySymbol = currency.getCurrencySymbolOrDefault()
             let thousandSeparator = currency.getThousandsSeparatorOrDefault()
