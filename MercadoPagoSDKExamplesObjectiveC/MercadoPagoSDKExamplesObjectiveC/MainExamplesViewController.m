@@ -87,10 +87,11 @@
     dc = nil;
 
    // self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
-    self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c"; // Error
-    
+   // self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c"; // Error
+    self.pref.preferenceId = @"243966003-faedce8f-ee83-40a7-b8e6-bba34928383d"; // Error
     //self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2" // Error
+   // self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2" // Error
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-0d933ff3-b803-4999-a211-8b3c7d5c7c03"
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
@@ -154,9 +155,9 @@
     NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
-    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
+    //[self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
@@ -166,7 +167,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
