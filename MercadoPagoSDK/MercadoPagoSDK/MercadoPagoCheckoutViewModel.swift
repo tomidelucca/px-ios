@@ -43,6 +43,7 @@ public enum CheckoutStep: String {
     case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
 }
 
+@objcMembers
 open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var startedCheckout = false
@@ -574,7 +575,7 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         let totalPaymentMethodsToShow =  totalPaymentMethodSearchCount + paymentMethodPluginsToShow.count
 
         if totalPaymentMethodsToShow == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { (_) in
+            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
             })
         } else if totalPaymentMethodsToShow == 1 {
             autoselectOnlyPaymentMethod()

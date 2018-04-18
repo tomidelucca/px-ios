@@ -27,7 +27,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-open class MPPayment: NSObject {
+@objcMembers open class MPPayment: NSObject {
 
     open var preferenceId: String!
     open var publicKey: String!
@@ -89,7 +89,7 @@ open class MPPayment: NSObject {
     }
 }
 
-open class CustomerPayment: MPPayment {
+@objcMembers open class CustomerPayment: MPPayment {
 
     open var customerId: String!
 
@@ -106,7 +106,7 @@ open class CustomerPayment: MPPayment {
 
 }
 
-open class BlacklabelPayment: MPPayment {
+@objcMembers open class BlacklabelPayment: MPPayment {
 
     open override func toJSON() -> [String: Any] {
         // Override payer object with groupsPayer (which includes AT in its body)

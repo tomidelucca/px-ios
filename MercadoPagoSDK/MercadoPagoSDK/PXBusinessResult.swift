@@ -28,7 +28,7 @@ import UIKit
  Esta clase representa un resultado de pago de negocio.
  Por ejemplo, cuando hay un error al momento de realizar un pago que tiene que ver con el negocio y no con el payment method.
  */
-open class PXBusinessResult: NSObject {
+@objcMembers open class PXBusinessResult: NSObject {
 
     var status: PXBusinessResultStatus // APPROVED REJECTED PENDING
     var title: String // Titluo de Congrats
