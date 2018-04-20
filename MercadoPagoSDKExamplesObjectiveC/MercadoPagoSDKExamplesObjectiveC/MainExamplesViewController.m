@@ -96,7 +96,7 @@
     
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
-    [self.mpCheckout setTheme:meliExampleTheme];
+   // [self.mpCheckout setTheme:meliExampleTheme];
 
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
     
@@ -113,7 +113,7 @@
     [self setVoidCallback];
 
     //Setear ReviewScreenPrefernce
-    [self setReviewScreenPreference];
+ //   [self setReviewScreenPreference];
 
     [self.mpCheckout start];
 
