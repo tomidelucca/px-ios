@@ -49,6 +49,9 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
     var enableBinaryMode = false
     
     var language: String = NSLocale.preferredLanguages[0]
+
+    var timerManager: PXTimerManager?
+    var redirectSeconds: Int?
     
     open class var PUBLIC_KEY : String {
         return "public_key"
@@ -421,7 +424,19 @@ open class MercadoPagoContext : NSObject, MPTrackerDelegate {
             return MercadoPagoContext.publicKey()
         }
     }
-    
 }
 
+//MARK: - Timer
+extension MercadoPagoContext {
 
+    func setCheckoutTimer(seconds: Int, timeOutCallback: (() -> Void)?) {
+        if seconds > 0 {
+            timerManager = PXTimerManager(withSeconds: seconds, callback: timeOutCallback)
+            timerManager?.startTimer()
+        }
+    }
+
+    func setCheckoutRedirect(secondsToRedirect: Int) {
+        redirectSeconds = secondsToRedirect
+    }
+}

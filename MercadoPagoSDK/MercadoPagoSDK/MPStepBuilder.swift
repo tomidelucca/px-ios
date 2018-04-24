@@ -82,14 +82,11 @@ open class MPStepBuilder : NSObject {
         }
         
     }
-    
 
     open class func startPaymentCongratsStep(_ payment: Payment, paymentMethod : PaymentMethod,
                          callback : @escaping (_ payment : Payment, _ status : CongratsState) -> Void) -> CongratsRevampViewController {
-        
-      MercadoPagoContext.initFlavor2()
+        MercadoPagoContext.initFlavor2()
         return CongratsRevampViewController(payment: payment, paymentMethod : paymentMethod, callback : callback)
-
     }
     
     open class func startInstructionsStep(_ payment: Payment, paymentTypeId : String,

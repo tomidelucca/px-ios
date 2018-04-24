@@ -127,7 +127,7 @@ open class CardFormViewController: MercadoPagoUIViewController , UITextFieldDele
         super.viewDidAppear(animated)
         
         if self.navigationController != nil {
-            if self.timer == nil && cardFormManager.showBankDeals(){
+            if cardFormManager.showBankDeals() && MercadoPagoContext.sharedInstance.timerManager == nil {
                 let promocionesButton : UIBarButtonItem = UIBarButtonItem(title: "Ver promociones".localized, style: UIBarButtonItemStyle.plain, target: self, action: #selector(CardFormViewController.verPromociones))
                 promocionesButton.tintColor = UIColor.systemFontColor()
                 promocionesButton.setTitleTextAttributes([NSFontAttributeName: Utils.getFont(size: 20)], for: .normal)

@@ -17,11 +17,16 @@ class FooterTableViewCell: CallbackCancelTableViewCell {
         self.button.addTarget(self, action: #selector(invokeCallback), for: .touchUpInside)
         self.button.titleLabel?.font = Utils.getFont(size: 16)
     }
+
     func fillCell(payment: Payment){
         if payment.statusDetail.contains("cc_rejected_bad_filled"){
             self.button.setTitle("Cancelar pago".localized, for: UIControlState.normal)
         } else{
             self.button.setTitle("Continuar".localized, for: UIControlState.normal)
         }
+    }
+
+    func hideButton() {
+        button.isHidden = true
     }
 }

@@ -13,6 +13,8 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
     @IBOutlet weak var tableView: UITableView!
     var bundle = MercadoPago.getBundle()
     var viewModel: CongratsViewModel!
+
+    private var redirectSeconds: Int = 0
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +44,17 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
         self.tableView.register(callFAuthNib, forCellReuseIdentifier: "callFAuthNib")
         let footerNib = UINib(nibName: "FooterTableViewCell", bundle: self.bundle)
         self.tableView.register(footerNib, forCellReuseIdentifier: "footerNib")
+
+        if let seconds = MercadoPagoContext.sharedInstance.redirectSeconds, seconds > 0 {
+            redirectSeconds = seconds
+            perform(#selector(dismissCallback), with: self, afterDelay: Double(redirectSeconds))
+        }
     }
-    
+
+    @objc func dismissCallback() {
+        self.viewModel.callback(self.viewModel.payment, MPStepBuilder.CongratsState.ok)
+    }
+
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if self.navigationController != nil && self.navigationController?.navigationBar != nil {
@@ -141,21 +152,15 @@ open class CongratsRevampViewController: MercadoPagoUIViewController, UITableVie
             if self.viewModel.approved(){
                 ViewUtils.drawBottomLine(y: footerNib.contentView.frame.minY, width: UIScreen.main.bounds.width, inView: footerNib.contentView)
             }
+
+            if redirectSeconds > 0 {
+                footerNib.hideButton()
+            }
             return footerNib
         }
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    
 }
+
 class CongratsViewModel : NSObject, MPPaymentTrackInformer{
     var color: UIColor!
     var payment: Payment!

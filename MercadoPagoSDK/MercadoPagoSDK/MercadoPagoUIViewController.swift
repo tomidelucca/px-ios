@@ -8,10 +8,9 @@
 
 import UIKit
 
-open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate, TimerDelegate {
+open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    open var callbackCancel : ((Void) -> Void)? 
-    public var timer : CountdownTimer?
+    open var callbackCancel : ((Void) -> Void)?
     var navBarTextColor = UIColor.systemFontColor()
     var navBarBackgroundColor = UIColor.primaryColor()
     var shouldDisplayBackButton = false
@@ -21,35 +20,24 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open var screenName : String { get{ return "NO_ESPECIFICADO" } }
     
     var loadingInstance : UIView?
-    
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
-        self.loadMPStyles()
-    }
 
     var lastDefaultFontLabel : String?
     var lastDefaultFontTextField : String?
     var lastDefaultFontButton : String?
+
     var timerLabel : MPLabel?
-    
+    var timerOverNavigationBar = false
+
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        MPTracker.trackScreenName(MercadoPagoContext.sharedInstance, screenName: screenName)
+        self.loadMPStyles()
+        timerOverNavigationBar = true
+    }
+
     override open func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
-        if CountdownTimer.getInstance().hasTimer() {
-            self.timer = CountdownTimer.getInstance()
-            self.timer!.delegate = self
-            self.timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
-            self.timerLabel!.backgroundColor = self.navBarBackgroundColor
-            self.timerLabel!.textColor = self.navBarTextColor
-            self.timerLabel!.textAlignment = .right
-            self.timerLabel!.isHidden = self.loadingInstance != nil
-            let button = UIButton(type: UIButtonType.custom)
-            button.frame = CGRect(x: 0, y: 0, width: 56, height: 20)
-            button.addSubview(timerLabel!)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-           
-        }
+        shouldShowTimer()
     }
     
     static func loadFont(_ fontName: String) -> Bool {
@@ -75,19 +63,15 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
         UIApplication.shared.statusBarStyle = .lightContent
-        
         self.loadMPStyles()
         hideTimer()
-        
+        MercadoPagoContext.sharedInstance.timerManager?.changesDelegate = self
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.clearMercadoPagoStyle()
-  
-        
     }
     
     internal func loadMPStyles(){
@@ -135,8 +119,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationController?.navigationBar.titleTextAttributes = nil
         self.navigationController?.navigationBar.barTintColor = nil
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
-        
-      
     }
     
     internal func invokeCallbackCancel(){
@@ -275,17 +257,10 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             self.present(errorVC, animated: true, completion: {})
         }
     }
-    
-    open func updateTimer() {
-        if self.timerLabel != nil {
-            self.timerLabel!.text = self.timer!.getCurrentTiming()
-            self.timerLabel!.isHidden = self.loadingInstance != nil
-            
-        }
-    }
+
     var navBarFontSize: CGFloat = 18
+
     func showNavBar() {
-        
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
@@ -300,8 +275,11 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             let font : UIFont = Utils.getFont(size: navBarFontSize)
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: self.navBarTextColor, NSFontAttributeName: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
+
+            if timerOverNavigationBar {
+                shouldShowTimer()
+            }
         }
-        
     }
     
     func hideNavBar(){
@@ -373,5 +351,26 @@ extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
+    }
+}
+
+extension MercadoPagoUIViewController: PXTimerChangesDelegate {
+
+    func timerValueDidChange(timerDisplayValue: String) {
+        timerLabel?.text = timerDisplayValue
+    }
+
+    func shouldShowTimer() {
+        if let timerManager = MercadoPagoContext.sharedInstance.timerManager, timerManager.isRunning {
+            timerLabel = MPLabel(frame: CGRect(x: 0, y: 0, width: 56, height: 20))
+            timerLabel!.backgroundColor = self.navBarBackgroundColor
+            timerLabel!.textColor = self.navBarTextColor
+            timerLabel!.textAlignment = .right
+            timerLabel!.isHidden = self.loadingInstance != nil
+            let button = UIButton(type: UIButtonType.custom)
+            button.frame = CGRect(x: 0, y: 0, width: 56, height: 20)
+            button.addSubview(timerLabel!)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        }
     }
 }

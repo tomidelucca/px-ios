@@ -51,8 +51,7 @@ open class MPFlowBuilder : NSObject {
         
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
-    
-    
+
     open class func startPaymentVaultViewController(_ amount : Double, paymentPreference : PaymentPreference? = nil, paymentMethodSearch : PaymentMethodSearch, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token?, _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
         var paymentVault : PaymentVaultViewController?
@@ -80,8 +79,7 @@ open class MPFlowBuilder : NSObject {
         paymentVault.modalTransitionStyle = .crossDissolve
         return MPFlowController.createNavigationControllerWith(paymentVault)
     }
-    
-    
+
     open class func startCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil,
                                   callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
@@ -94,7 +92,6 @@ open class MPFlowBuilder : NSObject {
 
         }
     }
-    
     
     open class func startDefaultCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation? = nil, paymentMethods : [PaymentMethod]? = nil, token: Token? = nil, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         MercadoPagoContext.initFlavor2()
@@ -151,13 +148,8 @@ open class MPFlowBuilder : NSObject {
         
         cardVC!.modalTransitionStyle = .crossDissolve
         return cardVC!
-        
     }
-    
 
-    
-    
-    
     open class func startCustomerCardFlow(_ paymentPreference: PaymentPreference? = nil, amount: Double, cardInformation : CardInformation!, callback: @escaping (_ paymentMethod: PaymentMethod, _ token: Token? ,  _ issuer: Issuer?, _ payerCost: PayerCost?) -> Void, callbackCancel : ((Void) -> Void)? = nil) -> UINavigationController {
         let mpNav =  UINavigationController()
         var pcvc : CardAdditionalStep!
@@ -177,41 +169,12 @@ open class MPFlowBuilder : NSObject {
         
         return mpNav
     }
-    
-    
 
+    open class func setCheckoutTimer(seconds: Int, timeOutCallback: (() -> Void)?) {
+        MercadoPagoContext.sharedInstance.setCheckoutTimer(seconds: seconds, timeOutCallback: timeOutCallback)
+    }
+
+    open class func setCheckoutRedirect(secondsToRedirect: Int) {
+        MercadoPagoContext.sharedInstance.setCheckoutRedirect(secondsToRedirect: secondsToRedirect)
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
