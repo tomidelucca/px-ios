@@ -53,7 +53,6 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
-        // Nothing to do
     }
 
     func getPaymentStatus() -> String {
@@ -91,7 +90,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildFooterComponent() -> PXFooterComponent {
-        let footerProps = PXFooterProps(buttonAction: businessResult.mainAction, linkAction: businessResult.secondaryAction)
+        var linkAction = businessResult.secondaryAction != nil ? businessResult.secondaryAction : PXCloseLinkAction()
+        let footerProps = PXFooterProps(buttonAction: businessResult.mainAction, linkAction: linkAction)
         return PXFooterComponent(props: footerProps)
     }
 
