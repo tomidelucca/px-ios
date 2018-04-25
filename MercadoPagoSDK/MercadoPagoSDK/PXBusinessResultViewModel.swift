@@ -22,6 +22,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     let paymentData: PaymentData
     let amount: Double
 
+    //Default Image
+    var approvedIconName = "default_item_icon"
+    var approvedIconBundle = MercadoPago.getBundle()!
+
     init(businessResult: PXBusinessResult, paymentData: PaymentData, amount: Double) {
         self.businessResult = businessResult
         self.paymentData = paymentData
@@ -81,7 +85,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
     }
     func buildHeaderComponent() -> PXHeaderComponent {
-        let headerProps = PXHeaderProps(labelText: businessResult.subtitle?.toAttributedString(), title: businessResult.title.toAttributedString(), backgroundColor: primaryResultColor(), productImage: businessResult.icon, statusImage: getBadgeImage())
+        let headerImage = getHeaderIcon()
+        let headerProps = PXHeaderProps(labelText: businessResult.subtitle?.toAttributedString(), title: businessResult.title.toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage())
         return PXHeaderComponent(props: headerProps)
     }
 
@@ -178,6 +183,19 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
+        return nil
+    }
+
+    func getHeaderIcon() -> UIImage? {
+        if let brIcon = businessResult.icon {
+            return brIcon
+        } else if let brImageUrl = businessResult.imageUrl {
+            if let image =  ViewUtils.loadImageFromUrl(brImageUrl) {
+                return image
+            }
+        } else if let defaultImage = MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle) {
+            return defaultImage
+        }
         return nil
     }
 
