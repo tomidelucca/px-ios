@@ -187,12 +187,12 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getHeaderIcon() -> UIImage? {
-        if let brIcon = businessResult.icon {
-            return brIcon
-        } else if let brImageUrl = businessResult.imageUrl {
+        if let brImageUrl = businessResult.imageUrl {
             if let image =  ViewUtils.loadImageFromUrl(brImageUrl) {
                 return image
             }
+        } else if let brIcon = businessResult.icon {
+            return brIcon
         } else if let defaultImage = MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle) {
             return defaultImage
         }
