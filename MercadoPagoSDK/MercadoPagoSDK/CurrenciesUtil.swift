@@ -49,7 +49,7 @@ open class CurrenciesUtil {
         "COP": Currency(currencyId: "COP", description: "Peso colombiano", symbol: "$", decimalPlaces: 0, decimalSeparator: "", thousandSeparator: "."),
 
 		//Venezuela
-        "VEF": Currency(currencyId: "VEF", description: "Bolivar fuerte", symbol: "BsF", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
+        "VEF": Currency(currencyId: "VEF", description: "Bolívares Soberanos", symbol: "BsS", decimalPlaces: 2, decimalSeparator: ",", thousandSeparator: ".")
 
         ]}
 
