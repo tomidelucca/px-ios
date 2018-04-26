@@ -9,24 +9,28 @@
 import Foundation
 
 struct PXNotificationManager {
-    static fileprivate let attempToCloseNotification = Notification.Name(rawValue:"PXAttempToCloseNotification")
+  
 }
 
 extension PXNotificationManager {
     struct suscribeTo {
-        static func attempToCloseNotification(_ observer: Any, selector: Selector) {
+        static func attempToClose(_ observer: Any, selector: Selector) {
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer)
-            notificationCenter.addObserver(observer, selector: selector, name: PXNotificationManager.attempToCloseNotification, object: nil)
+            notificationCenter.addObserver(observer, selector: selector, name: .attempToClose, object: nil)
         }
     }
 }
 
 extension PXNotificationManager {
     struct post  {
-        static func attempToCloseNotification() {
+        static func attempToClose() {
             let notificationCenter = NotificationCenter.default
-            notificationCenter.post(name: PXNotificationManager.attempToCloseNotification, object: nil)
+            notificationCenter.post(name: .attempToClose, object: nil)
         }
     }
+}
+
+internal extension NSNotification.Name {
+      static let attempToClose = Notification.Name(rawValue:"PXAttempToClose")
 }

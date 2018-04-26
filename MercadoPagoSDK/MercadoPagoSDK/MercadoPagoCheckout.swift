@@ -115,7 +115,7 @@ open class MercadoPagoCheckout: NSObject {
         // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         suscribeToNavigationFlow()
-        PXNotificationManager.suscribeTo.attempToCloseNotification(self, selector: #selector(closeCheckoutFromNotification))
+        PXNotificationManager.suscribeTo.attempToClose(self, selector: #selector(closeCheckout))
     }
 
     func executeNextStep() {
@@ -251,7 +251,7 @@ open class MercadoPagoCheckout: NSObject {
         goToRootViewController()
     }
     @objc
-    func closeCheckoutFromNotification(){
+    func closeCheckout(){
         cancel()
     }
 
