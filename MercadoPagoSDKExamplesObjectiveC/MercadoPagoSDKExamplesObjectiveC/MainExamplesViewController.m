@@ -18,8 +18,10 @@
 #import "MercadoPagoSDKExamplesObjectiveC-Swift.h"
 #import "PaymentMethodPluginConfigViewController.h"
 #import "PaymentPluginViewController.h"
+#import "MLMyMPPXTrackListener.h"
 
 @import MercadoPagoSDK;
+@import MercadoPagoPXTracking;
 
 
 @implementation MainExamplesViewController
@@ -87,9 +89,11 @@
     dc = nil;
 
     self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
-   // self.pref.preferenceId = @"241261708-cd353b1b-940f-493b-b960-10106a24203c"; // Error;
+
+    [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
+
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
-   // self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"APP_USR-2e257493-3b80-4b71-8547-c841d035e8f2" // Error
+
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
