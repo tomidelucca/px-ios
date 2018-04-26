@@ -169,6 +169,8 @@
 		15904D5E1E0976C500B3B9FD /* MLPXSpinnerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 15904D501E09748C00B3B9FD /* MLPXSpinnerConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		15904D5F1E0976D200B3B9FD /* MLPXSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D4E1E09748C00B3B9FD /* MLPXSpinner.m */; };
 		15904D601E0976DB00B3B9FD /* MLPXSpinnerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */; };
+		15919BD92091266A008B5D47 /* PXNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15919BD82091266A008B5D47 /* PXNotificationManager.swift */; };
+		15919BDB2091299F008B5D47 /* PXCloseLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15919BDA2091299F008B5D47 /* PXCloseLinkAction.swift */; };
 		15A7B18C1C88B2E4007D0C4E /* MockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18B1C88B2E4007D0C4E /* MockManager.swift */; };
 		15AB88F01DDA03C40034C380 /* CardFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FD24721C5BFEA1008C5DC0 /* CardFormViewController.swift */; };
 		15AE1D971F60733700B0DAF8 /* SummaryItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */; };
@@ -833,6 +835,8 @@
 		15904D511E09748C00B3B9FD /* MLPXSpinnerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPXSpinnerConfig.m; sourceTree = "<group>"; };
 		15904D521E09748C00B3B9FD /* MPSDKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSDKLoadingView.h; sourceTree = "<group>"; };
 		15904D531E09748C00B3B9FD /* MPSDKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSDKLoadingView.m; sourceTree = "<group>"; };
+		15919BD82091266A008B5D47 /* PXNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXNotificationManager.swift; sourceTree = "<group>"; };
+		15919BDA2091299F008B5D47 /* PXCloseLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCloseLinkAction.swift; sourceTree = "<group>"; };
 		15A7B18B1C88B2E4007D0C4E /* MockManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockManager.swift; sourceTree = "<group>"; };
 		15AE1D961F60733700B0DAF8 /* SummaryItemDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryItemDetail.swift; sourceTree = "<group>"; };
 		15AE1D991F6073AB00B0DAF8 /* SummaryDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryDetail.swift; sourceTree = "<group>"; };
@@ -1441,6 +1445,7 @@
 				4BEF9B591FE2ECD2002ADAFF /* MercadoPagoCheckoutViewModel+Plugins.swift */,
 				4BEF9B5C1FE2EFF1002ADAFF /* MercadoPagoCheckout+Screens+Plugins.swift */,
 				4BEF9B5F1FE2F01E002ADAFF /* MercadoPagoCheckout+Screens+Hooks.swift */,
+				15919BD82091266A008B5D47 /* PXNotificationManager.swift */,
 			);
 			name = MercadoPagoCheckout;
 			sourceTree = "<group>";
@@ -2322,6 +2327,7 @@
 			isa = PBXGroup;
 			children = (
 				FC239AFF2045D01800286B01 /* PXComponentAction.swift */,
+				15919BDA2091299F008B5D47 /* PXCloseLinkAction.swift */,
 			);
 			name = "Component Action";
 			sourceTree = "<group>";
@@ -2859,6 +2865,7 @@
 				813B4124205189FC00B6D886 /* PXResultViewModelInterface.swift in Sources */,
 				761B89421C637DBD0015D0BE /* PurchaseDetailTableViewCell.swift in Sources */,
 				23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */,
+				15919BD92091266A008B5D47 /* PXNotificationManager.swift in Sources */,
 				815409451FD59F1C00B245BC /* PXReceiptComponent.swift in Sources */,
 				0F9883691AD2AB6000F750F0 /* Currency.swift in Sources */,
 				0F9883971AD2AB6000F750F0 /* Token.swift in Sources */,
@@ -2921,6 +2928,7 @@
 				0F9883711AD2AB6000F750F0 /* FeesDetail.swift in Sources */,
 				FCBF13491E7204C30092B756 /* FinancialInstitutionTableViewCell.swift in Sources */,
 				FC3FC88A1FBE13C900CF29E1 /* PXInstructionsActionsComponent.swift in Sources */,
+				15919BDB2091299F008B5D47 /* PXCloseLinkAction.swift in Sources */,
 				4B760D11204EEC78001E4976 /* PXItemContainerView.swift in Sources */,
 				0FC4FC211B0FAF0E00CF7148 /* PromoTableViewCell.swift in Sources */,
 				23F5FEE7205078A9005382E9 /* PXCFTComponentView.swift in Sources */,
