@@ -93,6 +93,7 @@
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-93c0061e-ba7d-479c-9d52-c60b0af58a91"
+
     accessToken:nil
                                                   checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:dc navigationController:self.navigationController];
 
@@ -168,7 +169,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
