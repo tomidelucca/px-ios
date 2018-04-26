@@ -94,8 +94,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         self.tintColor = tintColor
         
         self.callbackCancel = callbackCancel
-        
-        
     }
     
     fileprivate func initCommon(){
@@ -139,7 +137,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             self.callbackCancel = {(Void) -> Void in
                 if self.navigationController?.viewControllers[0] == self {
                     self.dismiss(animated: true, completion: {
-                        
+                        MercadoPagoContext.sharedInstance.timerManager?.stopTimer()
                     })
                 } else {
                     self.navigationController!.popViewController(animated: true)
@@ -147,6 +145,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             }
         } else {
             self.callbackCancel = callbackCancel
+            MercadoPagoContext.sharedInstance.timerManager?.stopTimer()
         }
 
        self.collectionSearch.backgroundColor = UIColor.px_white()
@@ -642,6 +641,5 @@ class PaymentVaultViewModel : NSObject {
         }
 
     }
-    
 }
 

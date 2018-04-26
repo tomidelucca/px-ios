@@ -10,27 +10,27 @@
 #import "ExampleUtils.h"
 @import MercadoPagoSDK;
 
-
 @implementation MainExamplesViewController
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[MercadoPagoContext setPublicKey:TEST_PUBLIC_KEY];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)checkoutFlow:(id)sender {
 
-    
     UINavigationController *choFlow = [MPFlowBuilder startCheckoutViewController:PREF_ID_NO_EXCLUSIONS callback:^(Payment *payment) {
     } callbackCancel:nil];
+
+    // Example set checkout timer with custom action.
+    [MPFlowBuilder setCheckoutTimerWithSeconds:50 timeOutCallback:^{
+        [choFlow dismissViewControllerAnimated:YES completion:nil];
+    }];
+
+    // Example set redirect time out (Congrats screen)
+    [MPFlowBuilder setCheckoutRedirectWithSecondsToRedirect:10];
+
     [self presentViewController:choFlow animated:YES completion:^{}];
 }
-
 
 @end

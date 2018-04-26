@@ -203,7 +203,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
                 }, failure: { (error) in
                     self.requestFailure(error, callback: {}, callbackCancel:
                         {
-                            self.navigationController!.dismiss(animated: true, completion: {
+                            self.navigationController?.dismiss(animated: true, completion: {
                             })})
             })
         } else {
@@ -269,6 +269,7 @@ open class CheckoutViewController: MercadoPagoUIScrollViewController, UITableVie
         self.hideBackButton()
         self.hideTimer()
         self.showLoading()
+        MercadoPagoContext.sharedInstance.timerManager?.stopTimer()
         if self.viewModel.isPaymentMethodSelectedCard(){
             self.confirmPaymentOn()
         } else {
