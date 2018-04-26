@@ -145,7 +145,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             }
         } else {
             self.callbackCancel = callbackCancel
-            MercadoPagoContext.sharedInstance.timerManager?.stopTimer()
         }
 
        self.collectionSearch.backgroundColor = UIColor.px_white()
