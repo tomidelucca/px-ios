@@ -23,8 +23,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     let amount: Double
 
     //Default Image
-    var approvedIconName = "default_item_icon"
-    var approvedIconBundle = MercadoPago.getBundle()!
+    private lazy var approvedIconName = "default_item_icon"
+    private lazy var approvedIconBundle = MercadoPago.getBundle()
 
     init(businessResult: PXBusinessResult, paymentData: PaymentData, amount: Double) {
         self.businessResult = businessResult
@@ -90,7 +90,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func buildFooterComponent() -> PXFooterComponent {
-        var linkAction = businessResult.secondaryAction != nil ? businessResult.secondaryAction : PXCloseLinkAction()
+        let linkAction = businessResult.secondaryAction != nil ? businessResult.secondaryAction : PXCloseLinkAction()
         let footerProps = PXFooterProps(buttonAction: businessResult.mainAction, linkAction: linkAction)
         return PXFooterComponent(props: footerProps)
     }
@@ -193,7 +193,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
             }
         } else if let brIcon = businessResult.icon {
             return brIcon
-        } else if let defaultImage = MercadoPago.getImage(approvedIconName, bundle: approvedIconBundle) {
+        } else if let defaultBundle = approvedIconBundle, let defaultImage = MercadoPago.getImage(approvedIconName, bundle: defaultBundle) {
             return defaultImage
         }
         return nil
@@ -229,6 +229,4 @@ class PXBusinessResultBodyComponent : PXComponentizable {
         PXLayout.pinLastSubviewToBottom(view: bodyView)?.isActive = true
         return bodyView
     }
-    
-    
 }
