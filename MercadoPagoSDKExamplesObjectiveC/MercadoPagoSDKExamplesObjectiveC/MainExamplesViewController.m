@@ -87,7 +87,7 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 60;
     dc = nil;
-
+    
     self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
 
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
@@ -169,7 +169,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {
