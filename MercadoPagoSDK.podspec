@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name             = "MercadoPagoSDK"
-  s.version          = "2.2.11.1"
+  s.version          = "2.2.11.2"
   s.summary          = "MercadoPagoSDK"
   s.homepage         = "https://www.mercadopago.com"
   s.license          = { :type => "MIT", :file => "LICENSE" }
-  s.author           = { "Matias Gualino" => "matias.gualino@mercadolibre.com" }
+  s.author           = { "Mercadopago" => "px_nativo@mercadolibre.com" }
   s.source           = { :git => "https://github.com/mercadopago/px-ios.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '8.0'
