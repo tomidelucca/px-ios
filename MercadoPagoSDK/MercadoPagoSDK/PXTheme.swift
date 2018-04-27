@@ -18,4 +18,7 @@ import Foundation
     func detailedBackgroundColor() -> UIColor
 
     func statusBarStyle() -> UIStatusBarStyle
+
+    @objc optional func fontName() -> String?
+    @objc optional func lightFontName() -> String?
 }

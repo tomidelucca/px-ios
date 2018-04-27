@@ -18,7 +18,7 @@ class ThemeManager {
             initialize()
         }
     }
-
+  
     fileprivate var currentStylesheet = MLStyleSheetManager.styleSheet
     fileprivate let fontName: String = ".SFUIDisplay-Regular"
     fileprivate let fontLightName: String = ".SFUIDisplay-Light"
@@ -44,6 +44,12 @@ extension ThemeManager {
     func setTheme(theme: PXTheme?) {
         if let currentTheme = theme {
             self.currentTheme = currentTheme
+            if let externalFont = currentTheme.fontName?() {
+                fontName = externalFont
+            }
+            if let externalLightFont = currentTheme.lightFontName?() {
+                fontLightName = externalLightFont
+            }
         }
     }
 

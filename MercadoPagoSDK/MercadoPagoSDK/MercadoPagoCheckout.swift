@@ -10,6 +10,7 @@ import UIKit
 import MercadoPagoPXTracking
 import MLUI
 
+@objcMembers
 open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
@@ -116,6 +117,7 @@ open class MercadoPagoCheckout: NSObject {
         // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
         suscribeToNavigationFlow()
+        PXNotificationManager.SuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout, selector: #selector(closeCheckout))
     }
 
     func executeNextStep() {
@@ -190,7 +192,7 @@ open class MercadoPagoCheckout: NSObject {
     func validatePreference() {
         let errorMessage = self.viewModel.checkoutPreference.validate()
         if errorMessage != nil {
-            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { (_) -> Void in })
+            self.viewModel.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: errorMessage!, retry: false), errorCallback: { () -> Void in })
         }
         self.executeNextStep()
     }
@@ -232,8 +234,10 @@ open class MercadoPagoCheckout: NSObject {
         } else if let payment = self.viewModel.payment, let paymentCallback = MercadoPagoCheckoutViewModel.paymentCallback {
             paymentCallback(payment)
             return
+
         } else if let finishFlowCallback = MercadoPagoCheckoutViewModel.finishFlowCallback {
             finishFlowCallback(self.viewModel.payment)
+            return
         }
 
         goToRootViewController()
@@ -247,6 +251,11 @@ open class MercadoPagoCheckout: NSObject {
         }
 
         goToRootViewController()
+    }
+    @objc
+    func closeCheckout(){
+        PXNotificationManager.UnsuscribeTo.attemptToClose(self)
+        cancel()
     }
 
     public func goToRootViewController() {
@@ -280,12 +289,15 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(animated: Bool = true) {
+    func dismissLoading(animated: Bool = true, finishCallback:(()-> Void)? = nil) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve
-            self.currentLoadingView!.dismiss(animated: true, completion: {
+            self.currentLoadingView!.dismiss(animated: animated, completion: {
                 self.currentLoadingView = nil
+                if let callback = finishCallback {
+                    callback()
+                }
             })
         }
     }
