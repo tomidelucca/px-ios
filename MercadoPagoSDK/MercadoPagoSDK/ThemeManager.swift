@@ -20,8 +20,8 @@ class ThemeManager {
     }
   
     fileprivate var currentStylesheet = MLStyleSheetManager.styleSheet
-    fileprivate let fontName: String = ".SFUIDisplay-Regular"
-    fileprivate let fontLightName: String = ".SFUIDisplay-Light"
+    fileprivate var fontName: String = ".SFUIDisplay-Regular"
+    fileprivate var fontLightName: String = ".SFUIDisplay-Light"
 
     var navigationControllerMemento: NavigationControllerMemento?
 }
