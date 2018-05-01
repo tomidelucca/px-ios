@@ -12,8 +12,6 @@ import Foundation
     func navigationBar() -> PXThemeProperty
     func loadingComponent() -> PXThemeProperty
 
-    func noTaxAndDiscountLabelTintColor() -> UIColor
-    func warningColor() -> UIColor
     func highlightBackgroundColor() -> UIColor
     func detailedBackgroundColor() -> UIColor
 

@@ -68,10 +68,6 @@ extension ThemeManager {
 
 extension ThemeManager {
 
-    func placeHolderColor() -> UIColor {
-        return UIColor(red: 0.80, green: 0.80, blue: 0.80, alpha: 1.0)
-    }
-
     func boldLabelTintColor() -> UIColor {
         return currentStylesheet.darkGreyColor
     }
@@ -103,6 +99,21 @@ extension ThemeManager {
     func secondaryColor() -> UIColor {
         return currentStylesheet.secondaryColor
     }
+
+    func warningColor() -> UIColor {
+        // TODO: Replace with currentStylesheet.warningColor
+        // (Blocked by New Meli UI Version)
+        return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+    }
+
+    func placeHolderColor() -> UIColor {
+        return #colorLiteral(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+    }
+
+    func noTaxAndDiscountLabelTintColor() -> UIColor {
+        // TODO: Get the proper green for all scenarios. (Blocked by UX Check)
+        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
+    }
 }
 
 // MARK: - UI design exceptions
@@ -114,14 +125,6 @@ extension ThemeManager: PXTheme {
 
     func loadingComponent() -> PXThemeProperty {
         return currentTheme.loadingComponent()
-    }
-
-    func noTaxAndDiscountLabelTintColor() -> UIColor {
-        return currentTheme.noTaxAndDiscountLabelTintColor()
-    }
-
-    func warningColor() -> UIColor {
-        return currentTheme.warningColor()
     }
 
     func highlightBackgroundColor() -> UIColor {

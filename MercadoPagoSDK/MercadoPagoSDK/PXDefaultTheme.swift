@@ -41,14 +41,6 @@ extension PXDefaultTheme: PXTheme {
         return themeProperty
     }
 
-    public func noTaxAndDiscountLabelTintColor() -> UIColor {
-        return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
-    }
-
-    public func warningColor() -> UIColor {
-        return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
-    }
-
     public func highlightBackgroundColor() -> UIColor {
         return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
