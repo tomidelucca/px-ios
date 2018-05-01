@@ -18,7 +18,7 @@ class ThemeManager {
             initialize()
         }
     }
-  
+
     fileprivate var currentStylesheet = MLStyleSheetManager.styleSheet
     fileprivate var fontName: String = ".SFUIDisplay-Regular"
     fileprivate var fontLightName: String = ".SFUIDisplay-Light"
@@ -172,7 +172,7 @@ extension ThemeManager {
         PXNavigationHeaderLabel.appearance().textColor = theme.navigationBar().tintColor
     }
 
-    fileprivate func customizeToolBar(tintColor:UIColor, backgroundColor: UIColor) {
+    fileprivate func customizeToolBar(tintColor: UIColor, backgroundColor: UIColor) {
         PXToolbar.appearance().tintColor = tintColor
         PXToolbar.appearance().backgroundColor = backgroundColor
         PXToolbar.appearance().alpha = 1
