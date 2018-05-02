@@ -86,7 +86,7 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 60;
-    dc = nil;
+    //dc = nil;
     
     self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
 
@@ -101,9 +101,8 @@
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     MPTheme *mpExampleTheme = [[MPTheme alloc] init];
-    //[self.mpCheckout setTheme:mpExampleTheme];
-
-    [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
+    [self.mpCheckout setTheme:meliExampleTheme];
+    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.79 green:0.15 blue:0.30 alpha:1.0]];
     
     //[self setHooks];
     

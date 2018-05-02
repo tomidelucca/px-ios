@@ -8,6 +8,7 @@
 
 import UIKit
 import MercadoPagoPXTracking
+import MLUI
 
 @objcMembers
 open class ErrorViewController: MercadoPagoUIViewController {
@@ -18,9 +19,9 @@ open class ErrorViewController: MercadoPagoUIViewController {
 
     @IBOutlet internal weak var errorIcon: UIImageView!
 
-    @IBOutlet weak var exitButton: MPButton!
+    @IBOutlet weak var exitButton: UIButton!
 
-    @IBOutlet weak var retryButton: MPButton!
+    @IBOutlet weak var retryButton: UIButton!
 
     var error: MPSDKError!
     var callback: (() -> Void)?
@@ -82,8 +83,12 @@ open class ErrorViewController: MercadoPagoUIViewController {
 
         self.errorSubtitle.attributedText = NSAttributedString(string: error.errorDetail, attributes: normalAttributes)
         self.exitButton.addTarget(self, action: #selector(ErrorViewController.invokeExitCallback), for: .touchUpInside)
+
         self.exitButton.setTitle("Salir".localized, for: .normal)
         self.retryButton.setTitle("Reintentar".localized, for: .normal)
+
+        self.exitButton.setTitleColor(ThemeManager.shared.getAccentColor(), for: .normal)
+        self.retryButton.setTitleColor(ThemeManager.shared.getAccentColor(), for: .normal)
 
         if self.error.retry! {
             self.retryButton.addTarget(self, action: #selector(ErrorViewController.invokeCallback), for: .touchUpInside)
