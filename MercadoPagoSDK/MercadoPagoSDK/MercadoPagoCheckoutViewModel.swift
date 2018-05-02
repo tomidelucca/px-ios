@@ -585,6 +585,24 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         } else if totalPaymentMethodsToShow == 1 {
             autoselectOnlyPaymentMethod()
         }
+
+        // One tap
+        if paymentMethodSearch.hasCheckoutDefaultOption() {
+            let customOptionsFound = customPaymentOptions!.filter { (cardInformation: CardInformation) -> Bool in
+                return cardInformation.getCardId() == paymentMethodSearch.checkoutExpressOption
+            }
+            if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
+                updateCheckoutModel(paymentOptionSelected: customerPaymentOption)
+            }
+            let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
+                return paymentMethodPlugin.getId() == paymentMethodSearch.checkoutExpressOption
+            }
+            if !paymentMethodPluginsFound.isEmpty {
+                updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsFound[0])
+            }
+
+            //paymentMethodSearch.deleteCheckoutDefaultOption()
+        }
     }
 
     public func updateCheckoutModel(token: Token) {

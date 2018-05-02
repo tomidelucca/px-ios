@@ -24,12 +24,6 @@ extension MercadoPagoCheckoutViewModel {
             return true
         }
 
-        // One tap
-        if search!.hasCheckoutDefaultOption() {
-            updateCheckoutModel(paymentOptionSelected: search!.customerPaymentMethods![0] as! PaymentMethodOption)
-            return true
-        }
-
         guard let selectedType = self.paymentOptionSelected else {
                 return false
         }
@@ -325,7 +319,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToCreatePayment() -> Bool {
-        if paymentData.isComplete() && paymentData.hasToken() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
+        if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay
         }
         return false
