@@ -32,8 +32,8 @@ extension ThemeManager {
     func initialize() {
         currentStylesheet = MLStyleSheetManager.styleSheet
         customizeNavigationBar(theme: currentTheme)
-        customizeToolBar(tintColor: getMainColor(), backgroundColor: currentStylesheet.greyColor)
-            PXMonospaceLabel.appearance().font = UIFont(name: "Courier-Bold", size: 50.0)
+        customizeToolBar()
+        PXMonospaceLabel.appearance().font = UIFont(name: "Courier-Bold", size: 50.0)
     }
 
     func setDefaultColor(color: UIColor) {
@@ -69,10 +69,14 @@ extension ThemeManager {
 extension ThemeManager {
 
     func boldLabelTintColor() -> UIColor {
-        return currentStylesheet.darkGreyColor
+        return currentStylesheet.blackColor
     }
 
     func labelTintColor() -> UIColor {
+        return currentStylesheet.darkGreyColor
+    }
+
+    func midLabelTintColor() -> UIColor {
         return currentStylesheet.midGreyColor
     }
 
@@ -150,6 +154,13 @@ extension ThemeManager: PXTheme {
         return currentTheme.navigationBar().backgroundColor
     }
 
+    func getAccentColor() -> UIColor {
+        if let theme = currentTheme as? PXDefaultTheme {
+            return theme.primaryColor
+        }
+        return currentStylesheet.secondaryColor
+    }
+
     func getTintColorForIcons() -> UIColor? {
         if currentTheme is PXDefaultTheme {
             return getMainColor()
@@ -161,7 +172,7 @@ extension ThemeManager: PXTheme {
         if currentTheme is PXDefaultTheme {
             return getMainColor()
         }
-        return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1) //TODO: Check with UX.
+        return boldLabelTintColor()
     }
 
     func modalComponent() -> PXThemeProperty {
@@ -179,9 +190,9 @@ extension ThemeManager {
         PXNavigationHeaderLabel.appearance().textColor = theme.navigationBar().tintColor
     }
 
-    fileprivate func customizeToolBar(tintColor: UIColor, backgroundColor: UIColor) {
-        PXToolbar.appearance().tintColor = tintColor
-        PXToolbar.appearance().backgroundColor = backgroundColor
+    fileprivate func customizeToolBar() {
+        PXToolbar.appearance().tintColor = getAccentColor()
+        PXToolbar.appearance().backgroundColor = lightLabelTintColor()
         PXToolbar.appearance().alpha = 1
     }
 }

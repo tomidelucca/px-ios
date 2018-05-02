@@ -193,7 +193,7 @@ extension PXReviewViewModel {
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
         let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
-        let lightLabelColor = ThemeManager.shared.lightLabelTintColor()
+        let lightLabelColor = ThemeManager.shared.labelTintColor()
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
 
         if pm.isCard {
