@@ -13,7 +13,7 @@ class ThemeManager {
 
     static let shared = ThemeManager()
 
-    fileprivate var currentTheme: PXTheme = PXDefaultTheme() {
+    fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: .clear) {
         didSet {
             initialize()
         }
@@ -38,18 +38,18 @@ extension ThemeManager {
 
     func setDefaultColor(color: UIColor) {
         let customTheme = PXDefaultTheme(withPrimaryColor: color)
+        let customStyleSheet = PXDefaultMLStyleSheet(withPrimaryColor: color)
+        MLStyleSheetManager.styleSheet = customStyleSheet
         self.currentTheme = customTheme
     }
 
-    func setTheme(theme: PXTheme?) {
-        if let currentTheme = theme {
-            self.currentTheme = currentTheme
-            if let externalFont = currentTheme.fontName?() {
-                fontName = externalFont
-            }
-            if let externalLightFont = currentTheme.lightFontName?() {
-                fontLightName = externalLightFont
-            }
+    func setTheme(theme: PXTheme) {
+        self.currentTheme = theme
+        if let externalFont = theme.fontName?() {
+            fontName = externalFont
+        }
+        if let externalLightFont = theme.lightFontName?() {
+            fontLightName = externalLightFont
         }
     }
 
@@ -93,7 +93,7 @@ extension ThemeManager {
     }
 
     func successColor() -> UIColor {
-        return currentStylesheet.secondaryColor
+        return currentStylesheet.successColor
     }
 
     func secondaryColor() -> UIColor {
@@ -110,8 +110,12 @@ extension ThemeManager {
         return #colorLiteral(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
     }
 
+    func iconCircleBackgroundColor() -> UIColor {
+        return #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
+    }
+
     func noTaxAndDiscountLabelTintColor() -> UIColor {
-        // TODO: Get the proper green for all scenarios. (Blocked by UX Check)
+        // TODO: Check with UX.
         return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
     }
 }
@@ -140,14 +144,14 @@ extension ThemeManager: PXTheme {
     }
 
     func getMainColor() -> UIColor {
-        if let theme = currentTheme as? PXDefaultTheme, let mainColor = theme.primaryColor {
-            return mainColor
+        if let theme = currentTheme as? PXDefaultTheme {
+            return theme.primaryColor
         }
         return currentTheme.navigationBar().backgroundColor
     }
 
     func getTintColorForIcons() -> UIColor? {
-        if currentStylesheet is MLStyleSheetDefault {
+        if currentTheme is PXDefaultTheme {
             return getMainColor()
         }
         return nil
@@ -155,9 +159,9 @@ extension ThemeManager: PXTheme {
 
     func getTitleColorForReviewConfirmNavigation() -> UIColor {
         if currentTheme is PXDefaultTheme {
-            return currentTheme.navigationBar().backgroundColor
+            return getMainColor()
         }
-        return currentTheme.navigationBar().tintColor
+        return #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1) //TODO: Check with UX.
     }
 
     func modalComponent() -> PXThemeProperty {

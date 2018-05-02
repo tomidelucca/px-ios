@@ -33,7 +33,7 @@ class CardAvailableView: UIView {
         paymentMethodNameLabel.frame = self.getFrameToLabel()
         paymentMethodNameLabel.text = name
         paymentMethodNameLabel.font = Utils.getFont(size: 16)
-        paymentMethodNameLabel.textColor = ThemeManager.shared.modalComponent().tintColor
+        paymentMethodNameLabel.textColor = ThemeManager.shared.boldLabelTintColor()
         self.addSubview(paymentMethodNameLabel)
     }
 

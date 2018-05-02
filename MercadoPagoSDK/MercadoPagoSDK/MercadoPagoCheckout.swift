@@ -52,7 +52,6 @@ open class MercadoPagoCheckout: NSObject {
 
     public func setTheme(_ theme: PXTheme) {
         ThemeManager.shared.setTheme(theme: theme)
-        //MLStyleSheetManager.styleSheet = MLStyleSheetDefault()
     }
 
     public func setDefaultColor(_ color: UIColor) {

@@ -1,31 +1,22 @@
 //
-//  PXDefaultTheme.swift
+//  MPTheme.swift
 //  MercadoPagoSDK
 //
-//  Created by Juan sebastian Sanzone on 10/1/18.
+//  Created by Juan sebastian Sanzone on 1/5/18.
 //  Copyright © 2018 MercadoPago. All rights reserved.
 //
 
 import Foundation
+import MercadoPagoSDK
 
-class PXDefaultTheme: NSObject {
-
-    let primaryColor: UIColor
-
-    public init(withPrimaryColor: UIColor) {
-        self.primaryColor = withPrimaryColor
-    }
-}
-
-// MARK: - Theme styles.
-extension PXDefaultTheme: PXTheme {
+@objc class MPTheme: NSObject, PXTheme {
 
     public func navigationBar() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: primaryColor, tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1), tintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), selectedColor: .clear)
     }
 
     public func loadingComponent() -> PXThemeProperty {
-        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: primaryColor, selectedColor: .clear)
+        return PXThemeProperty(backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), tintColor: #colorLiteral(red: 0, green: 0.6117647059, blue: 0.9333333333, alpha: 1), selectedColor: .clear)
     }
 
     public func highlightBackgroundColor() -> UIColor {
