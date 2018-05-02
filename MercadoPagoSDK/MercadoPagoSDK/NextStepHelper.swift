@@ -24,6 +24,12 @@ extension MercadoPagoCheckoutViewModel {
             return true
         }
 
+        // One tap
+        if search!.hasCheckoutDefaultOption() {
+            updateCheckoutModel(paymentOptionSelected: search!.customerPaymentMethods![0] as! PaymentMethodOption)
+            return true
+        }
+
         guard let selectedType = self.paymentOptionSelected else {
                 return false
         }
@@ -171,11 +177,16 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needSecurityCode() -> Bool {
+
         guard let pmSelected = self.paymentOptionSelected else {
             return false
         }
 
         guard let pm = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+
+        if search!.hasCheckoutDefaultOption() && !readyToPay {
             return false
         }
 
@@ -194,20 +205,27 @@ extension MercadoPagoCheckoutViewModel {
         guard let pm = self.paymentData.getPaymentMethod() else {
             return false
         }
+
+        if search!.hasCheckoutDefaultOption() && !readyToPay {
+            return false
+        }
+
         //Note: this is being used only for new cards, saved cards tokenization is
         //made in MercadoPagoCheckout#collectSecurityCode().
-
         let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
 
         let newCard = !paymentData.hasToken() && pm.isCard && self.cardToken != nil
         let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
 
-        return newCard || savedCardWithESC
+        return (newCard || savedCardWithESC)
     }
 
     func needReviewAndConfirm() -> Bool {
-
         guard self.paymentOptionSelected != nil else {
+            return false
+        }
+
+        if readyToPay {
             return false
         }
 
@@ -220,6 +238,38 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         if self.initWithPaymentData && paymentData.isComplete() {
+            initWithPaymentData = false
+            return true
+        }
+
+        if paymentData.isComplete() {
+            return MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable()
+        }
+        return false
+    }
+
+    func needReviewAndConfirmForOneTap() -> Bool {
+        guard self.paymentOptionSelected != nil else {
+            return false
+        }
+
+        if !search!.hasCheckoutDefaultOption() {
+            return false
+        }
+
+        if readyToPay {
+            return false
+        }
+
+        if paymentResult != nil {
+            return false
+        }
+
+        if self.isCheckoutComplete() {
+            return false
+        }
+
+        if paymentData.isComplete(shouldCheckForToken: false) {
             initWithPaymentData = false
             return true
         }
@@ -275,7 +325,7 @@ extension MercadoPagoCheckoutViewModel {
     }
 
     func needToCreatePayment() -> Bool {
-        if paymentData.isComplete() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
+        if paymentData.isComplete() && paymentData.hasToken() && MercadoPagoCheckoutViewModel.paymentDataConfirmCallback == nil && MercadoPagoCheckoutViewModel.paymentDataCallback == nil {
             return readyToPay
         }
         return false

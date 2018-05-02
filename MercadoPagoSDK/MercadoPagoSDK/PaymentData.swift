@@ -18,6 +18,8 @@ import UIKit
     public var transactionDetails: TransactionDetails?
     public var discount: DiscountCoupon?
 
+    private let paymentTypesWithoutInstallments = [PaymentTypeId.DEBIT_CARD.rawValue, PaymentTypeId.PREPAID_CARD.rawValue]
+
     /**
      Este metodo deberia borrar SOLO la data recolectada atraves del flujo de Checkout,
      i.e. la data ingresada por el payer 
@@ -32,7 +34,7 @@ import UIKit
         // No borrar el descuento
     }
 
-    func isComplete() -> Bool {
+    func isComplete(shouldCheckForToken: Bool = true) -> Bool {
 
         guard let paymentMethod = self.paymentMethod else {
             return false
@@ -58,14 +60,14 @@ import UIKit
             return false
         }
 
-        if paymentMethod.isCard && (token == nil || payerCost == nil) {
-
-            if (paymentMethod.paymentTypeId == PaymentTypeId.DEBIT_CARD.rawValue || paymentMethod.paymentTypeId == PaymentTypeId.PREPAID_CARD.rawValue ) && token != nil {
-                return true
-            }
+        if paymentMethod.isCard && payerCost == nil &&
+            !paymentTypesWithoutInstallments.contains(paymentMethod.paymentTypeId) {
             return false
         }
 
+        if paymentMethod.isCard && !hasToken() && shouldCheckForToken {
+            return false
+        }
         return true
     }
 

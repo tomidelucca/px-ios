@@ -165,11 +165,55 @@ extension MercadoPagoCheckout {
         self.pushViewController(viewController: reviewVC, animated: true)
     }
 
+    func showReviewAndConfirmScreenForOneTap() {
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
+
+            // One tap
+
+            if !paymentData.hasPaymentMethod() {
+                strongSelf.viewModel.search!.deleteCheckoutDefaultOption()
+            }
+
+            if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
+                MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
+            }
+            strongSelf.executeNextStep()
+
+            }, callbackConfirm: { [weak self] (paymentData: PaymentData) in
+
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
+
+                if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
+                    MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
+                    strongSelf.finish()
+                } else {
+                    strongSelf.executeNextStep()
+                }
+
+            }, callbackExit: { [weak self] () -> Void in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.cancel()
+        })
+
+        self.pushViewController(viewController: reviewVC, animated: true)
+    }
+
     func showSecurityCodeScreen() {
 
         let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
             self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
-
         })
         self.pushViewController(viewController: securityCodeVc, animated: true, backToChechoutRoot: true)
 

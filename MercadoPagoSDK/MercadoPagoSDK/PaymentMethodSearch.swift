@@ -14,6 +14,7 @@ import Foundation
     var customerPaymentMethods: [CardInformation]?
     var cards: [Card]?
     var defaultOption: PaymentMethodSearchItem?
+    var checkoutExpressOption: String?
 
     func getPaymentOptionsCount() -> Int {
         let customOptionsCount = (self.customerPaymentMethods != nil) ? self.customerPaymentMethods!.count : 0
@@ -75,5 +76,15 @@ import Foundation
             pmSearch.defaultOption = defaultPaymentMethodOption
         }
         return pmSearch
+    }
+}
+// MARK: One tap
+extension PaymentMethodSearch {
+    func hasCheckoutDefaultOption() -> Bool {
+        return !String.isNullOrEmpty(checkoutExpressOption)
+    }
+
+    func deleteCheckoutDefaultOption() {
+        checkoutExpressOption = nil
     }
 }
