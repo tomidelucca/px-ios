@@ -15,23 +15,23 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
-    
     var footerView: UIView!
     var floatingButtonView: UIView!
-    
-    
+
     // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXReviewViewModel!
+    fileprivate var showCustomComponents: Bool
 
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
     var callbackExit: (() -> Void)
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXReviewViewModel, showCustomComponents: Bool = true, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
         self.viewModel = viewModel
+        self.showCustomComponents = showCustomComponents
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackExit = callbackExit
@@ -103,7 +103,7 @@ extension PXReviewViewController {
         }
 
         // Top Custom View
-        if let topCustomView = getTopCustomView() {
+        if showCustomComponents, let topCustomView = getTopCustomView() {
             topCustomView.addSeparatorLineToBottom(height: 1)
             topCustomView.clipsToBounds = true
             contentView.addSubviewToBottom(topCustomView)
@@ -120,7 +120,7 @@ extension PXReviewViewController {
         }
 
         // Bottom Custom View
-        if let bottomCustomView = getBottomCustomView() {
+        if showCustomComponents, let bottomCustomView = getBottomCustomView() {
             bottomCustomView.addSeparatorLineToBottom(height: 1)
             bottomCustomView.clipsToBounds = true
             contentView.addSubviewToBottom(bottomCustomView)
@@ -145,8 +145,7 @@ extension PXReviewViewController {
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-        
-        
+
         // Add floating button
         floatingButtonView = getFloatingButtonView()
         view.addSubview(floatingButtonView)
@@ -186,7 +185,7 @@ extension PXReviewViewController {
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
         return fixedButtonCoordinates.y > floatingButtonCoordinates.y
     }
-    
+
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
@@ -241,7 +240,7 @@ extension PXReviewViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
-    
+
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
@@ -264,7 +263,7 @@ extension PXReviewViewController {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }
-    
+
     func checkFloatingButtonVisibility() {
        if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1

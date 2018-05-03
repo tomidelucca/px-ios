@@ -23,8 +23,6 @@ open class MercadoPagoCheckout: NSObject {
     internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
-    var entro = false
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
@@ -253,7 +251,7 @@ open class MercadoPagoCheckout: NSObject {
         goToRootViewController()
     }
     @objc
-    func closeCheckout(){
+    func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
@@ -289,7 +287,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(animated: Bool = true, finishCallback:(()-> Void)? = nil) {
+    func dismissLoading(animated: Bool = true, finishCallback:(() -> Void)? = nil) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve
@@ -317,10 +315,12 @@ open class MercadoPagoCheckout: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
-        if backToChechoutRoot {
-            self.navigationController.navigationBar.isHidden = false
-            viewController.callbackCancel = { [weak self] in self?.backToCheckouitRoot() }
-        }
+
+        // One tap: Ver como modificar esto
+//        if backToChechoutRoot {
+//            self.navigationController.navigationBar.isHidden = false
+//            viewController.callbackCancel = { [weak self] in self?.backToCheckouitRoot() }
+//        }
 
         self.navigationController.pushViewController(viewController, animated: animated)
         self.cleanCompletedCheckoutsFromNavigationStack()

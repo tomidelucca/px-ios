@@ -38,14 +38,14 @@ import UIKit
     var secondaryAction: PXComponentAction? // Boton secundario (link)
     var helpMessage: String? // Texto
     var showPaymentMethod: Bool = false // Si quiere que muestre la celda de PM
-    var statementDescription : String?
+    var statementDescription: String?
     var imageUrl: String?
-    
+
     //Datos que actualmente devuelve la procesadora de pagos
     var receiptId: String?
     //------
 
-    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil , showPaymentMethod : Bool = false, statementDescription: String? = nil, imageUrl: String? = nil) {
+    public init(receiptId: String? = nil, status: PXBusinessResultStatus, title: String, subtitle: String? = nil, icon: UIImage? = nil, mainAction: PXComponentAction? = nil, secondaryAction: PXComponentAction?, helpMessage: String? = nil, showPaymentMethod: Bool = false, statementDescription: String? = nil, imageUrl: String? = nil) {
         self.receiptId = receiptId
         self.status = status
         self.title = title

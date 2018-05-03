@@ -166,18 +166,17 @@ extension MercadoPagoCheckout {
     }
 
     func showReviewAndConfirmScreenForOneTap() {
-        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), showCustomComponents: false, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
             guard let strongSelf = self else {
                 return
             }
 
-            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
-
             // One tap
-
             if !paymentData.hasPaymentMethod() {
                 strongSelf.viewModel.search!.deleteCheckoutDefaultOption()
             }
+
+            strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
 
             if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
                 MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
@@ -297,7 +296,7 @@ extension MercadoPagoCheckout {
             }
             strongSelf.navigationController.present(errorStep, animated: true, completion: {})
         }
-        
+
     }
 
     func showFinancialInstitutionsScreen() {

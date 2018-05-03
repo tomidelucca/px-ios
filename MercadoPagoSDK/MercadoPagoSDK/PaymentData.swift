@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers public class PaymentData: NSObject {
+@objcMembers public class PaymentData: NSObject, NSCopying {
 
     public var paymentMethod: PaymentMethod?
     public var issuer: Issuer?
@@ -34,6 +34,18 @@ import UIKit
         // No borrar el descuento
     }
 
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copyObj = PaymentData()
+        copyObj.paymentMethod = paymentMethod
+        copyObj.issuer = issuer
+        copyObj.payerCost = payerCost
+        copyObj.token = token
+        copyObj.payerCost = payerCost
+        copyObj.transactionDetails = transactionDetails
+        copyObj.discount = discount
+        return copyObj
+    }
+
     func isComplete(shouldCheckForToken: Bool = true) -> Bool {
 
         guard let paymentMethod = self.paymentMethod else {
@@ -55,7 +67,7 @@ import UIKit
         if paymentMethod.paymentMethodId == PaymentTypeId.ACCOUNT_MONEY.rawValue || !paymentMethod.isOnlinePaymentMethod {
             return true
         }
-        
+
         if paymentMethod.isIssuerRequired && self.issuer == nil {
             return false
         }

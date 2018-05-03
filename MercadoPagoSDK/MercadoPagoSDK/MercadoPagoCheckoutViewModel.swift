@@ -588,20 +588,29 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         // One tap
         if paymentMethodSearch.hasCheckoutDefaultOption() {
+            var selectedPaymentOption: PaymentMethodOption?
             let customOptionsFound = customPaymentOptions!.filter { (cardInformation: CardInformation) -> Bool in
                 return cardInformation.getCardId() == paymentMethodSearch.checkoutExpressOption
             }
             if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
-                updateCheckoutModel(paymentOptionSelected: customerPaymentOption)
+                selectedPaymentOption = customerPaymentOption
+                if customOptionsFound[0].getPaymentTypeId() == PaymentTypeId.CREDIT_CARD.rawValue {
+                    // Ver esto
+                    checkoutPreference.setDefaultInstallments(1)
+                }
             }
-            let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
+            let paymentMethodPluginsFound = paymentMethodPluginsToShow.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
                 return paymentMethodPlugin.getId() == paymentMethodSearch.checkoutExpressOption
             }
             if !paymentMethodPluginsFound.isEmpty {
-                updateCheckoutModel(paymentOptionSelected: paymentMethodPluginsFound[0])
+                selectedPaymentOption = paymentMethodPluginsFound[0]
             }
 
-            //paymentMethodSearch.deleteCheckoutDefaultOption()
+            if let selectedPaymentOption = selectedPaymentOption {
+                updateCheckoutModel(paymentOptionSelected: selectedPaymentOption)
+            } else {
+                paymentMethodSearch.deleteCheckoutDefaultOption()
+            }
         }
     }
 
@@ -650,7 +659,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         } else {
             self.readyToPay = true
         }
-
     }
 
     public func updateCheckoutModel(payment: Payment) {

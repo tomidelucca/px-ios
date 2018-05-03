@@ -28,7 +28,7 @@ open class PXNavigationHeaderLabel: UILabel {
 
 open class PXPrimaryButton: UIButton {
     public override init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         self.titleLabel?.font = Utils.getFont(size: 18)
     }
 
@@ -38,7 +38,7 @@ open class PXPrimaryButton: UIButton {
 }
 open class PXSecondaryButton: UIButton {
     public override init(frame: CGRect) {
-        super.init(frame:frame)
+        super.init(frame: frame)
         self.titleLabel?.font = Utils.getFont(size: 18)
     }
 
