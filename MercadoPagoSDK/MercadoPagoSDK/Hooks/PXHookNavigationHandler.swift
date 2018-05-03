@@ -32,10 +32,10 @@ open class PXHookNavigationHandler: NSObject {
     }
 
     open func showLoading() {
-        checkout?.presentLoading()
+        checkout?.pxNavigationController.presentLoading()
     }
 
     open func hideLoading() {
-        checkout?.dismissLoading()
+        checkout?.pxNavigationController.dismissLoading()
     }
 }

@@ -351,7 +351,7 @@
 
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //
-        [self.mpCheckout updateReviewAndConfirm];
+        //[self.mpCheckout updateReviewAndConfirm];
 
     }];
 }
