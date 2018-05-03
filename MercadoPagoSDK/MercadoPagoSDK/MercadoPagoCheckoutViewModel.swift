@@ -893,3 +893,31 @@ extension MercadoPagoCheckoutViewModel {
         MercadoPagoCheckoutViewModel.error = nil
     }
 }
+
+public enum OneTapFlowSteps: String {
+    case START
+    case ACTION_FINISH
+    case SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
+    case SCREEN_PAYER_COST
+    case SERVICE_CREATE_CARD_TOKEN
+    case SCREEN_SECURITY_CODE
+}
+
+class OneTapFlowViewModel: NSObject {
+    public func nextStep() -> OneTapFlowSteps {
+        if needReviewAndConfirmForOneTap() {
+            return .SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
+        }
+
+        if needSecurityCode() {
+            return .SCREEN_SECURITY_CODE
+        }
+
+        if needCreateToken() {
+            return .SERVICE_CREATE_CARD_TOKEN
+        }
+    }
+}
+
+extension OneTapFlowViewModel {
+}

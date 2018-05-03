@@ -216,7 +216,6 @@ open class MercadoPagoCheckout: NSObject {
             callback()
             return
         }
-
         pxNavigationController.goToRootViewController()
     }
     @objc func closeCheckout() {
