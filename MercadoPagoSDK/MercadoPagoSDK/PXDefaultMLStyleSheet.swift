@@ -20,6 +20,7 @@ class PXDefaultMLStyleSheet: NSObject, MLStyleSheetProtocol {
     var modalTintColor: UIColor
 
     var successColor: UIColor = MLStyleSheetDefault().successColor
+    var warningColor: UIColor = MLStyleSheetDefault().warningColor
     var errorColor: UIColor = MLStyleSheetDefault().errorColor
     var blackColor: UIColor = MLStyleSheetDefault().blackColor
     var darkGreyColor: UIColor = MLStyleSheetDefault().darkGreyColor

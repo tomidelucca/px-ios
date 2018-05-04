@@ -9,9 +9,7 @@
 import Foundation
 
 class PXDefaultTheme: NSObject {
-
     let primaryColor: UIColor
-
     public init(withPrimaryColor: UIColor) {
         self.primaryColor = withPrimaryColor
     }

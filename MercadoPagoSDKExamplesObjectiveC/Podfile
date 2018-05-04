@@ -9,7 +9,7 @@ target 'MercadoPagoSDKExamplesObjectiveC' do
     pod 'MercadoPagoPXTracking', '2.1.2'
     pod 'MercadoPagoServices', '1.0.8'
   # UI
-    pod 'MLUI', '3.2.0'
+    pod 'MLUI', :git => 'https://github.com/juansanzone/fury_mobile-ios-ui.git', :branch => 'mlui-v3.2.1'
 
   target 'MercadoPagoSDKExamplesObjectiveCTests' do
     inherit! :search_paths

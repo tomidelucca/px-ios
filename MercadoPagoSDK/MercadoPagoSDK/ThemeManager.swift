@@ -13,7 +13,7 @@ class ThemeManager {
 
     static let shared = ThemeManager()
 
-    fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: .clear) {
+    fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: #colorLiteral(red:0.57, green:0.05, blue:0.30, alpha:1.0)) {
         didSet {
             initialize()
         }
@@ -92,34 +92,31 @@ extension ThemeManager {
         return currentStylesheet.whiteColor
     }
 
-    func rejectedColor() -> UIColor {
-        return currentStylesheet.errorColor
-    }
-
     func successColor() -> UIColor {
         return currentStylesheet.successColor
+    }
+
+    func warningColor() -> UIColor {
+        return currentStylesheet.warningColor
+    }
+
+    func rejectedColor() -> UIColor {
+        return currentStylesheet.errorColor
     }
 
     func secondaryColor() -> UIColor {
         return currentStylesheet.secondaryColor
     }
 
-    func warningColor() -> UIColor {
-        // TODO: Replace with currentStylesheet.warningColor
-        // (Blocked by New Meli UI Version)
-        return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
-    }
-
     func placeHolderColor() -> UIColor {
         return #colorLiteral(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
     }
 
-    func iconCircleBackgroundColor() -> UIColor {
+    func iconBackgroundColor() -> UIColor {
         return #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
     }
 
     func noTaxAndDiscountLabelTintColor() -> UIColor {
-        // TODO: Check with UX.
         return #colorLiteral(red: 0.2235294118, green: 0.7098039216, blue: 0.2901960784, alpha: 1)
     }
 }
@@ -169,9 +166,15 @@ extension ThemeManager: PXTheme {
     }
 
     func getTitleColorForReviewConfirmNavigation() -> UIColor {
+
         if currentTheme is PXDefaultTheme {
             return getMainColor()
         }
+
+        if let highlightNavigationTint = currentTheme.highlightNavigationTintColor?() {
+            return highlightNavigationTint
+        }
+
         return boldLabelTintColor()
     }
 

@@ -17,6 +17,8 @@ import Foundation
 
     func statusBarStyle() -> UIStatusBarStyle
 
+    @objc optional func highlightNavigationTintColor() -> UIColor?
+
     @objc optional func fontName() -> String?
     @objc optional func lightFontName() -> String?
 }

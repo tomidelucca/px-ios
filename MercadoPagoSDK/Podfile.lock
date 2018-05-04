@@ -100,7 +100,17 @@ PODS:
 DEPENDENCIES:
   - MercadoPagoPXTracking (= 2.1.2)
   - MercadoPagoServices (= 1.0.8)
-  - MLUI (= 3.2.0)
+  - MLUI (from `https://github.com/juansanzone/fury_mobile-ios-ui.git`, branch `mlui-v3.2.1`)
+
+EXTERNAL SOURCES:
+  MLUI:
+    :branch: mlui-v3.2.1
+    :git: https://github.com/juansanzone/fury_mobile-ios-ui.git
+
+CHECKOUT OPTIONS:
+  MLUI:
+    :commit: 17ef116e909d8d8694a651c7a04f67c49f245df1
+    :git: https://github.com/juansanzone/fury_mobile-ios-ui.git
 
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
@@ -109,6 +119,6 @@ SPEC CHECKSUMS:
   MercadoPagoServices: b5fa6e7cf3f36998b441ff4a29974747ec379eb5
   MLUI: e06d95c55a27480a7948667af812b1702c0ebf39
 
-PODFILE CHECKSUM: b0f095f607bb11a80785c4d2f7bbfe42ed585bfb
+PODFILE CHECKSUM: 30a9e16043baae103fb579d4ebf820a811eacb8f
 
 COCOAPODS: 1.4.0
