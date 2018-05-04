@@ -10,7 +10,7 @@ target 'MercadoPagoSDK' do
   pod 'MercadoPagoServices', '1.0.8'
   
   # MELI UI
-  pod 'MLUI', :git => 'https://github.com/juansanzone/fury_mobile-ios-ui.git', :branch => 'mlui-v3.2.1'
+  pod 'MLUI', :git => 'git@github.com:mercadolibre/fury_mobile-ios-ui.git', :branch => 'develop'
 
   target 'MercadoPagoSDKTests' do
     inherit! :search_paths
