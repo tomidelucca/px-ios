@@ -23,8 +23,6 @@ open class MercadoPagoCheckout: NSObject {
 
     private var rootViewController: UIViewController?
 
-    var entro = false
-
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
         MercadoPagoCheckoutViewModel.flowPreference.removeHooks()
