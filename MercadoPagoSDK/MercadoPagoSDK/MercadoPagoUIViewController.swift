@@ -30,7 +30,8 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     open var screenName: String { return TrackingUtil.NO_NAME_SCREEN }
     open var screenId: String { return TrackingUtil.NO_SCREEN_ID }
 
-    var loadingInstance: UIView?
+    var loadingView: UIView?
+    var fistResponder: UITextField?
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -217,12 +218,17 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
         self.navigationController!.popViewController(animated: true)
     }
 
-    internal func showLoading() {
-        self.loadingInstance = LoadingOverlay.shared.showOverlay(self.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
-        self.view.bringSubview(toFront: self.loadingInstance!)
+    internal func hideLoading() {
+        PXLoadingComponent.shared.hideView()
+        loadingView = nil
     }
 
-    var fistResponder: UITextField?
+    internal func showLoading() {
+        loadingView = PXLoadingComponent.shared.showInView(view)
+        if let lView = loadingView {
+            view.bringSubview(toFront: lView)
+        }
+    }
 
     internal func hideKeyboard(_ view: UIView) -> Bool {
         if let textField = view as? UITextField {
@@ -244,11 +250,6 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
             fistResponder?.becomeFirstResponder()
         }
         fistResponder = nil
-    }
-
-    internal func hideLoading() {
-        LoadingOverlay.shared.hideOverlayView()
-        self.loadingInstance = nil
     }
 
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -357,15 +358,6 @@ extension UINavigationBar {
         self.setValue(false, forKey: "hidesShadow")
     }
 
-}
-extension UINavigationController {
-    internal func showLoading() {
-        _ = LoadingOverlay.shared.showOverlay(self.visibleViewController!.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
-    }
-
-    internal func hideLoading() {
-        LoadingOverlay.shared.hideOverlayView()
-    }
 }
 
 extension UIImage {

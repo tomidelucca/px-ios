@@ -452,7 +452,7 @@
 		7622E3411DF5F64000490C4E /* MercadoPagoSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F98830F1AD2A97A00F750F0 /* MercadoPagoSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76294CF11E721BC600CEAE6D /* MercadoPagoCheckoutViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76294CF01E721BC600CEAE6D /* MercadoPagoCheckoutViewModelTest.swift */; };
 		762B57391E008DEB00EF3EE4 /* PaymentMethod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 762B57381E008DEB00EF3EE4 /* PaymentMethod.plist */; };
-		763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */; };
+		763AD8081CD3FE1F0039E09B /* PXLoadingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763AD8071CD3FE1F0039E09B /* PXLoadingComponent.swift */; };
 		76445ADB1CC921B5008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
 		76445ADC1CC93998008EE68E /* ViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76445ADA1CC921B5008EE68E /* ViewUtils.swift */; };
 		76445AEF1CCA73B2008EE68E /* MockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A7B18B1C88B2E4007D0C4E /* MockManager.swift */; };
@@ -1016,7 +1016,7 @@
 		76294CF01E721BC600CEAE6D /* MercadoPagoCheckoutViewModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoCheckoutViewModelTest.swift; sourceTree = "<group>"; };
 		762B57381E008DEB00EF3EE4 /* PaymentMethod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PaymentMethod.plist; sourceTree = "<group>"; };
 		762B8C1C1D19752A00A86097 /* MercadoPagoContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MercadoPagoContext.swift; sourceTree = "<group>"; };
-		763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		763AD8071CD3FE1F0039E09B /* PXLoadingComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXLoadingComponent.swift; sourceTree = "<group>"; };
 		76445ADA1CC921B5008EE68E /* ViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewUtils.swift; sourceTree = "<group>"; };
 		76445AF51CCF9847008EE68E /* MPPayment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPPayment.swift; sourceTree = "<group>"; };
 		7656CA161C7644F10043BDB2 /* Instruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instruction.swift; sourceTree = "<group>"; };
@@ -2034,7 +2034,7 @@
 				15904D4C1E09735700B3B9FD /* New Loading */,
 				157420F41DF881770041171E /* UIView+RotateView.h */,
 				157420F51DF881770041171E /* UIView+RotateView.m */,
-				763AD8071CD3FE1F0039E09B /* LoadingOverlay.swift */,
+				763AD8071CD3FE1F0039E09B /* PXLoadingComponent.swift */,
 				766012ED1CF284A600897F9D /* WebViewController.swift */,
 				766012EE1CF284A600897F9D /* WebViewController.xib */,
 			);
@@ -3010,7 +3010,7 @@
 				4B1CA5951FFE94BC00F576AA /* PaymentStatus.swift in Sources */,
 				0F9883631AD2AB6000F750F0 /* CardNumber.swift in Sources */,
 				4BEF9B571FE2EB2D002ADAFF /* PXPluginComponent.swift in Sources */,
-				763AD8081CD3FE1F0039E09B /* LoadingOverlay.swift in Sources */,
+				763AD8081CD3FE1F0039E09B /* PXLoadingComponent.swift in Sources */,
 				231AE27020472C1400CB87CF /* PXSummaryComponent.swift in Sources */,
 				0F98836D1AD2AB6000F750F0 /* Device.swift in Sources */,
 				81ACC8221F9A88F700206F7B /* PXHeaderRenderer.swift in Sources */,

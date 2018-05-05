@@ -101,7 +101,7 @@
     // Set default color or theme.
     MeliTheme *meliExampleTheme = [[MeliTheme alloc] init];
     MPTheme *mpExampleTheme = [[MPTheme alloc] init];
-    [self.mpCheckout setTheme: mpExampleTheme];
+    [self.mpCheckout setTheme: meliExampleTheme];
 
     // CDP color.
     //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
