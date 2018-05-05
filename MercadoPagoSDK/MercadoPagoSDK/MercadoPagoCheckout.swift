@@ -21,7 +21,6 @@ open class MercadoPagoCheckout: NSObject {
 
     private var currentLoadingView: UIViewController?
 
-    internal static var firstViewControllerPushed = false
     private var rootViewController: UIViewController?
 
     var entro = false
@@ -302,7 +301,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     internal func createCurrentLoading() {
-        let vcLoading = MPXLoadingViewController()
+        let vcLoading = PXLoadingViewController()
         vcLoading.view.backgroundColor = ThemeManager.shared.loadingComponent().backgroundColor
         let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.loadingComponent().tintColor)
         vcLoading.view.addSubview(loadingInstance)

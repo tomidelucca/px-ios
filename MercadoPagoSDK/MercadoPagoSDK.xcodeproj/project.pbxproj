@@ -491,8 +491,8 @@
 		76743C7C1C4695EA00120347 /* PaymentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76743C7A1C46951100120347 /* PaymentType.swift */; };
 		767C9CD41E266BF000BB4662 /* ExtensionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C9CD31E266BF000BB4662 /* ExtensionsTest.swift */; };
 		767C9CD61E266C0600BB4662 /* MPPaymentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767C9CD51E266C0600BB4662 /* MPPaymentTest.swift */; };
-		767D8DCF1E5554460004FCA9 /* MPXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */; };
-		767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */; };
+		767D8DCF1E5554460004FCA9 /* PXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* PXLoadingViewController.swift */; };
+		767D8DD41E55FA420004FCA9 /* PXLoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767D8DCE1E5554460004FCA9 /* PXLoadingViewController.swift */; };
 		76943ED91D51405E00358442 /* InstructionsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76943ED81D51405E00358442 /* InstructionsInfo.swift */; };
 		769A73611DF736D30089A1BF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE3E37E1AE706B600C27B97 /* Utils.swift */; };
 		769EC35C1E130D860054E940 /* CardViewModelManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769EC35B1E130D860054E940 /* CardViewModelManagerTest.swift */; };
@@ -1040,7 +1040,7 @@
 		76743C7A1C46951100120347 /* PaymentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentType.swift; sourceTree = "<group>"; };
 		767C9CD31E266BF000BB4662 /* ExtensionsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsTest.swift; sourceTree = "<group>"; };
 		767C9CD51E266C0600BB4662 /* MPPaymentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPPaymentTest.swift; sourceTree = "<group>"; };
-		767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPXLoadingViewController.swift; sourceTree = "<group>"; };
+		767D8DCE1E5554460004FCA9 /* PXLoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PXLoadingViewController.swift; sourceTree = "<group>"; };
 		76943ED81D51405E00358442 /* InstructionsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsInfo.swift; sourceTree = "<group>"; };
 		769EC35B1E130D860054E940 /* CardViewModelManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModelManagerTest.swift; sourceTree = "<group>"; };
 		76AA2E331CBD8BCA006D0678 /* MPTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPTextView.swift; sourceTree = "<group>"; };
@@ -1656,7 +1656,7 @@
 				761B89391C625C130015D0BE /* MercadoPagoUIViewController.swift */,
 				76B0850B1CE2669C00C157BF /* CallbackCancelDelegate.swift */,
 				76128AC01DD10BA600D3B3CD /* MercadoPagoUIScrollViewController.swift */,
-				767D8DCE1E5554460004FCA9 /* MPXLoadingViewController.swift */,
+				767D8DCE1E5554460004FCA9 /* PXLoadingViewController.swift */,
 				811B4FD1201F87A40060026A /* PXMonospaceLabel.swift */,
 			);
 			name = Base;
@@ -3134,7 +3134,7 @@
 				766012EF1CF284A600897F9D /* WebViewController.swift in Sources */,
 				4B53C5EB1E4A2D0200D6190A /* MPCellContentProvider.swift in Sources */,
 				FC3FC8731FBE122000CF29E1 /* PXInstructionsTertiaryInfoComponent.swift in Sources */,
-				767D8DCF1E5554460004FCA9 /* MPXLoadingViewController.swift in Sources */,
+				767D8DCF1E5554460004FCA9 /* PXLoadingViewController.swift in Sources */,
 				76743C781C45A24600120347 /* PaymentPreference.swift in Sources */,
 				0F9883951AD2AB6000F750F0 /* Setting.swift in Sources */,
 				7619E93B1DF05E2900CEFAC1 /* Array+Extension.swift in Sources */,
@@ -3491,7 +3491,7 @@
 				23BC73851F0E84FB00B19C1A /* CauseTest.swift in Sources */,
 				FC3FC84D1FBCC9B600CF29E1 /* PXInstructionsSubtitleRenderer.swift in Sources */,
 				76CA7C721E01EA8C009080B3 /* UIView+RotateView.m in Sources */,
-				767D8DD41E55FA420004FCA9 /* MPXLoadingViewController.swift in Sources */,
+				767D8DD41E55FA420004FCA9 /* PXLoadingViewController.swift in Sources */,
 				81D9F92A200FE44200490DC6 /* PXThemeObjects.swift in Sources */,
 				15B8B1C21E71DEBD0065DF50 /* CouponDetailViewController.swift in Sources */,
 				4B4E231B1FFFF374007E8FDD /* PXReceiptComponentTest.swift in Sources */,
