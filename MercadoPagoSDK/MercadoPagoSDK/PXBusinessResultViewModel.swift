@@ -179,11 +179,17 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
     
     func buildTopCustomComponent() -> PXCustomComponentizable? {
-        return nil
+        guard let view = self.businessResult.topCustomView else {
+            return nil
+        }
+        return PXCustomComponent(view: view)
     }
 
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        return nil
+        guard let view = self.businessResult.bottomCustomView else {
+            return nil
+        }
+        return PXCustomComponent(view: view)
     }
 
     func getHeaderIcon() -> UIImage? {
