@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MLUI
 
 final class PXLoadingComponent {
 
@@ -18,9 +19,19 @@ final class PXLoadingComponent {
 
     func showInView(_ view: UIView) -> UIView {
 
-        view.backgroundColor = backgroundColor
+        let spnConfig = MLSpinnerConfig(size: .big, primaryColor: tintColor, secondaryColor: tintColor)
+        let spinner = MLSpinner(config: spnConfig, text: nil)
 
-        //loadingContainer = MPSDKLoadingView(loading: tintColor)!
+        loadingContainer = UIView()
+        loadingContainer.frame = view.frame
+        loadingContainer.addSubview(spinner)
+
+        PXLayout.centerHorizontally(view: spinner).isActive = true
+        PXLayout.centerVertically(view: spinner).isActive = true
+
+        spinner.show()
+
+        view.backgroundColor = backgroundColor
         loadingContainer.backgroundColor = backgroundColor
 
         view.addSubview(loadingContainer)
@@ -29,7 +40,7 @@ final class PXLoadingComponent {
         return loadingContainer
     }
 
-    func hideView() {
+    func hide() {
         loadingContainer.removeFromSuperview()
     }
 }

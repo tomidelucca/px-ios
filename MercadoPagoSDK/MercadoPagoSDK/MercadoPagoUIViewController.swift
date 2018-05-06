@@ -219,7 +219,7 @@ open class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDel
     }
 
     internal func hideLoading() {
-        PXLoadingComponent.shared.hideView()
+        PXLoadingComponent.shared.hide()
         loadingView = nil
     }
 
