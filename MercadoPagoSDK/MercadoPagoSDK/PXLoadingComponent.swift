@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MLUI
 
 final class PXLoadingComponent {
 
@@ -19,8 +18,7 @@ final class PXLoadingComponent {
 
     func showInView(_ view: UIView) -> UIView {
 
-        let spnConfig = MLSpinnerConfig(size: .big, primaryColor: tintColor, secondaryColor: tintColor)
-        let spinner = MLSpinner(config: spnConfig, text: nil)
+        let spinner = PXComponentFactory.Spinner.new(color1: tintColor, color2: tintColor)
 
         loadingContainer = UIView()
         loadingContainer.frame = view.frame
