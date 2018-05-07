@@ -15,8 +15,8 @@ import MercadoPagoSDK
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         let screenSize = UIScreen.main.bounds
-        PXLayout.setWidth(owner: view, width: screenSize.width).isActive = true
-        PXLayout.setHeight(owner: view, height: 80).isActive = true
+        NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: screenSize.width).isActive = true
+        NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
         let textLabel = UILabel()
         textLabel.lineBreakMode = .byWordWrapping
         textLabel.numberOfLines = 0
@@ -24,10 +24,10 @@ import MercadoPagoSDK
         textLabel.text = "Sumaste 150 Km YPF Serviclub con tu carga. ¡Ya tienes 2.500 km!"
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(textLabel)
-        PXLayout.matchHeight(ofView: textLabel,toView: view, withPercentage: 80).isActive = true
-        PXLayout.matchWidth(ofView: textLabel,toView: view, withPercentage: 90).isActive = true
-        PXLayout.centerVertically(view: textLabel).isActive = true
-        PXLayout.centerHorizontally(view: textLabel).isActive = true
+        NSLayoutConstraint(item: textLabel, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.width, multiplier: 80 / 100, constant: 0).isActive = true
+        NSLayoutConstraint(item: textLabel, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.height, multiplier: 90 / 100, constant: 0).isActive = true
+        NSLayoutConstraint(item: textLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: textLabel, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
         return view
     }
     
