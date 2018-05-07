@@ -8,7 +8,6 @@
 
 import UIKit
 import MercadoPagoPXTracking
-import MLUI
 
 @objcMembers
 open class ErrorViewController: MercadoPagoUIViewController {
