@@ -92,10 +92,10 @@ open class AddCouponViewController: MercadoPagoUIViewController, UITextFieldDele
         self.viewModel.getCoupon(code: couponCode, success: { () in
             self.hideLoading()
             if let coupon = self.viewModel.coupon {
-                let couponDetailVC =  CouponDetailViewController(coupon: coupon, callbackCancel: { [weak self]  () in
+                let couponDetailVC = CouponDetailViewController(coupon: coupon)
+                PXComponentFactory.Modal.show(viewController: couponDetailVC, title: coupon.getDescription(), dismissBlock: { [weak self]  () in
                     self?.callbackAndExit()
                 })
-                self.present(couponDetailVC, animated: false, completion: {})
             }
         }, failure: { (errorMessage) in
             self.hideLoading()

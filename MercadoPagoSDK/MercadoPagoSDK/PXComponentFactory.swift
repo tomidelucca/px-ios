@@ -19,6 +19,10 @@ struct PXComponentFactory {
                 MLModal.show(with: viewController)
             }
         }
+
+        static func show(viewController: UIViewController, title: String, dismissBlock: @escaping (() -> Void)) {
+            MLModal.show(with: viewController, title: title, actionTitle: "", actionBlock: {}, secondaryActionTitle: "", secondaryActionBlock: {}, dismiss: dismissBlock, enableScroll: false)
+        }
     }
 
     struct Loading {
