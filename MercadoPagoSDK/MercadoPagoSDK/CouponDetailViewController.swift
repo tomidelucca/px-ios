@@ -26,9 +26,8 @@ final class CouponDetailViewController: MercadoPagoUIViewController {
     private let fontColor = ThemeManager.shared.boldLabelTintColor()
     private let discountFontColor = ThemeManager.shared.noTaxAndDiscountLabelTintColor()
 
-    init(coupon: DiscountCoupon, callbackCancel: (() -> Void)? = nil) {
+    init(coupon: DiscountCoupon) {
         super.init(nibName: "CouponDetailViewController", bundle: MercadoPago.getBundle())
-        self.callbackCancel = callbackCancel
         dCoupon = coupon
     }
 
@@ -66,18 +65,5 @@ extension CouponDetailViewController {
         productAmount.attributedText = Utils.getAttributedAmount(amount, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
         discountAmount.attributedText = Utils.getAttributedAmount(Double(discountCoupon.coupon_amount)!, currency: currency, color: discountFontColor, fontSize: fontSize, baselineOffset: baselineOffSet, negativeAmount: true)
         totalAmount.attributedText = Utils.getAttributedAmount( amount - Double(discountCoupon.coupon_amount)!, currency: currency, color: fontColor, fontSize: fontSize, baselineOffset: baselineOffSet)
-    }
-}
-
-// MARK: Actions
-extension CouponDetailViewController {
-    func exit() {
-        guard let callbackCancel = self.callbackCancel else {
-            self.dismiss(animated: false, completion: nil)
-            return
-        }
-        self.dismiss(animated: false) {
-            callbackCancel()
-        }
     }
 }
