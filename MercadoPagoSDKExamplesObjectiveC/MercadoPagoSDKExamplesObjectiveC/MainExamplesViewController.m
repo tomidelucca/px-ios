@@ -106,7 +106,7 @@
     
     //[self setHooks];
     
-    //[self setPaymentMethodPlugins];
+    [self setPaymentMethodPlugins];
 
     [self setPaymentPlugin];
 
@@ -159,7 +159,7 @@
 
     //[self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
-   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentPlugin {
@@ -169,7 +169,7 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-   // [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
+    [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
 
 -(void)setPaymentResult {

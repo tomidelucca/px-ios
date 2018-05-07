@@ -39,7 +39,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
     func primaryResultColor() -> UIColor {
 
-        switch self.businessResult.status {
+        switch self.businessResult.getStatus() {
         case .APPROVED:
             return ThemeManager.shared.getTheme().successColor()
         case .REJECTED:
@@ -56,15 +56,15 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getPaymentStatus() -> String {
-        return businessResult.status.getDescription()
+        return businessResult.getStatus().getDescription()
     }
 
     func getPaymentStatusDetail() -> String {
-        return businessResult.status.getDescription()
+        return businessResult.getStatus().getDescription()
     }
 
     func getPaymentId() -> String? {
-       return  businessResult.receiptId
+       return  businessResult.getReceiptId()
     }
 
     func isCallForAuth() -> Bool {
@@ -72,7 +72,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getBadgeImage() -> UIImage? {
-        switch self.businessResult.status {
+        switch self.businessResult.getStatus() {
         case .APPROVED:
             return MercadoPago.getImage("ok_badge")
         case .REJECTED:
@@ -85,18 +85,18 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
     func buildHeaderComponent() -> PXHeaderComponent {
         let headerImage = getHeaderIcon()
-        let headerProps = PXHeaderProps(labelText: businessResult.subtitle?.toAttributedString(), title: businessResult.title.toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage())
+        let headerProps = PXHeaderProps(labelText: businessResult.getSubTitle()?.toAttributedString(), title: businessResult.getTitle().toAttributedString(), backgroundColor: primaryResultColor(), productImage: headerImage, statusImage: getBadgeImage())
         return PXHeaderComponent(props: headerProps)
     }
 
     func buildFooterComponent() -> PXFooterComponent {
-        let linkAction = businessResult.secondaryAction != nil ? businessResult.secondaryAction : PXCloseLinkAction()
-        let footerProps = PXFooterProps(buttonAction: businessResult.mainAction, linkAction: linkAction)
+        let linkAction = businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
+        let footerProps = PXFooterProps(buttonAction: businessResult.getMainAction(), linkAction: linkAction)
         return PXFooterComponent(props: footerProps)
     }
 
     func buildReceiptComponent() -> PXReceiptComponent? {
-        guard let recieptId = businessResult.receiptId else {
+        guard let recieptId = businessResult.getReceiptId() else {
             return nil
         }
         let date = Date()
@@ -107,10 +107,10 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     func buildBodyComponent() -> PXComponentizable? {
         var pmComponent : PXComponentizable? = nil
         var helpComponent : PXComponentizable? = nil
-        if self.businessResult.showPaymentMethod {
+        if self.businessResult.mustShowPaymentMethod() {
             pmComponent =  getPaymentMethodComponent()
         }
-        if (self.businessResult.helpMessage != nil) {
+        if (self.businessResult.getHelpMessage() != nil) {
             helpComponent = getHelpMessageComponent()
         }
         
@@ -118,7 +118,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
 
     func getHelpMessageComponent() -> PXErrorComponent? {
-        guard let labelInstruction = self.businessResult.helpMessage else {
+        guard let labelInstruction = self.businessResult.getHelpMessage() else {
             return nil
         }
         
@@ -159,7 +159,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         }
         
         var disclaimerText: String? = nil
-        if let statementDescription = self.businessResult.statementDescription {
+        if let statementDescription = self.businessResult.getStatementDescription() {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
         
@@ -179,19 +179,25 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
     }
     
     func buildTopCustomComponent() -> PXCustomComponentizable? {
-        return nil
+        guard let view = self.businessResult.getTopCustomView() else {
+            return nil
+        }
+        return PXCustomComponent(view: view)
     }
 
     func buildBottomCustomComponent() -> PXCustomComponentizable? {
-        return nil
+        guard let view = self.businessResult.getBottomCustomView() else {
+            return nil
+        }
+        return PXCustomComponent(view: view)
     }
 
     func getHeaderIcon() -> UIImage? {
-        if let brImageUrl = businessResult.imageUrl {
+        if let brImageUrl = businessResult.getImageUrl() {
             if let image =  ViewUtils.loadImageFromUrl(brImageUrl) {
                 return image
             }
-        } else if let brIcon = businessResult.icon {
+        } else if let brIcon = businessResult.getIcon() {
             return brIcon
         } else if let defaultBundle = approvedIconBundle, let defaultImage = MercadoPago.getImage(approvedIconName, bundle: defaultBundle) {
             return defaultImage
