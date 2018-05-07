@@ -37,4 +37,18 @@ struct PXComponentFactory {
             return MLSpinner(config: spinnerConfig, text: nil)
         }
     }
+
+    struct SnackBar {
+        static func showShortDurationMessage(message: String) {
+            MLSnackbar.show(withTitle: message, type: .default(), duration: .short)
+        }
+
+        static func showLongDurationMessage(message: String) {
+            MLSnackbar.show(withTitle: message, type: .default(), duration: .long)
+        }
+
+        static func showPersistentMessage(message: String) {
+            MLSnackbar.show(withTitle: message, type: .default(), duration: .indefinitely)
+        }
+    }
 }
