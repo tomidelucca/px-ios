@@ -8,7 +8,6 @@
 
 import UIKit
 import MercadoPagoPXTracking
-import MLUI
 
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {

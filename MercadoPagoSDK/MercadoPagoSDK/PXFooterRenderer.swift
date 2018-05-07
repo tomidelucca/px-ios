@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MLUI
 
 class PXFooterRenderer: NSObject {
 
