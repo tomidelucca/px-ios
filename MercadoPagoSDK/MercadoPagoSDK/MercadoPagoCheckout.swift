@@ -170,6 +170,8 @@ open class MercadoPagoCheckout: NSObject {
             self.showPaymentPluginScreen()
         case .SERVICE_PAYMENT_METHOD_PLUGIN_INIT:
             self.initPaymentMethodPlugins()
+        case .FLOW_ONE_TAP:
+            self.startOneTapFlow()
         default: break
         }
     }
@@ -207,7 +209,6 @@ open class MercadoPagoCheckout: NSObject {
             finishFlowCallback(self.viewModel.payment)
             return
         }
-
         pxNavigationController.goToRootViewController()
     }
 
@@ -221,5 +222,79 @@ open class MercadoPagoCheckout: NSObject {
     @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
+    }
+}
+
+class OneTapFlow: NSObject {
+    let viewModel: OneTapFlowViewModel
+    let pxNavigationController: PXNavigationController
+    let finishCallback: ((PaymentData) -> Void)
+    let cancelCallback: (() -> Void)
+    let exitCallback: (() -> Void)
+
+    init(navigationController: PXNavigationController, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, finish: @escaping ((PaymentData) -> Void), cancel: @escaping (() -> Void), exit: @escaping (() -> Void)) {
+        pxNavigationController = navigationController
+        finishCallback = finish
+        cancelCallback = cancel
+        exitCallback = exit
+        viewModel = OneTapFlowViewModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected)
+    }
+    deinit {
+        print("deinit")
+    }
+
+    func start() {
+        executeNextStep()
+    }
+
+    func executeNextStep() {
+        switch self.viewModel.nextStep() {
+        case .SCREEN_REVIEW_AND_CONFIRM_ONE_TAP:
+            self.showReviewAndConfirmScreenForOneTap()
+        case .SCREEN_PAYER_COST:
+            self.showPayerCostScreen()
+        case .SCREEN_SECURITY_CODE:
+            self.showSecurityCodeScreen()
+        case .SERVICE_GET_PAYER_COSTS:
+            self.getPayerCosts()
+        case .ACTION_FINISH:
+            self.finish()
+        }
+    }
+
+    // Cancelar one tap - Cambiar medio de pago
+    func cancel() {
+        cancelCallback()
+    }
+
+    // Finalizar el flujo de one tap - Seguir con el checkout
+    func finish() {
+        finishCallback(viewModel.paymentData)
+    }
+
+    // Salir del flujo - Desde una pantalla de error, etc.
+    func exit() {
+        exitCallback()
+    }
+}
+
+extension OneTapFlow {
+    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
+        var selectedPaymentOption: PaymentMethodOption?
+        if search.hasCheckoutDefaultOption() {
+            let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
+                return paymentMethodPlugin.getId() == search.checkoutExpressOption
+            }
+            if !paymentMethodPluginsFound.isEmpty {
+                selectedPaymentOption = paymentMethodPluginsFound[0]
+            } else {
+                let customOptionsFound = search.customerPaymentMethods!.filter { (cardInformation: CardInformation) -> Bool in
+                    return cardInformation.getCardId() == search.checkoutExpressOption
+                }
+                if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
+                    selectedPaymentOption = customerPaymentOption
+                }}
+        }
+        return selectedPaymentOption
     }
 }

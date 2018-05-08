@@ -42,6 +42,7 @@ public enum CheckoutStep: String {
     case SCREEN_PAYMENT_METHOD_PLUGIN_PAYMENT
     case SCREEN_PAYMENT_PLUGIN_PAYMENT
     case SERVICE_PAYMENT_METHOD_PLUGIN_INIT
+    case FLOW_ONE_TAP
 }
 
 @objcMembers
@@ -434,6 +435,10 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             return .SERVICE_GET_PAYMENT_METHODS
         }
 
+        if needOneTapFlow() {
+            return .FLOW_ONE_TAP
+        }
+
         if !isPaymentTypeSelected() {
             return .SCREEN_PAYMENT_METHOD_SELECTION
         }
@@ -584,33 +589,6 @@ open class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
             })
         } else if totalPaymentMethodsToShow == 1 {
             autoselectOnlyPaymentMethod()
-        }
-
-        // One tap
-        if paymentMethodSearch.hasCheckoutDefaultOption() {
-            var selectedPaymentOption: PaymentMethodOption?
-            let customOptionsFound = customPaymentOptions!.filter { (cardInformation: CardInformation) -> Bool in
-                return cardInformation.getCardId() == paymentMethodSearch.checkoutExpressOption
-            }
-            if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
-                selectedPaymentOption = customerPaymentOption
-                if customOptionsFound[0].getPaymentTypeId() == PaymentTypeId.CREDIT_CARD.rawValue {
-                    // Ver esto
-                    checkoutPreference.setDefaultInstallments(1)
-                }
-            }
-            let paymentMethodPluginsFound = paymentMethodPluginsToShow.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
-                return paymentMethodPlugin.getId() == paymentMethodSearch.checkoutExpressOption
-            }
-            if !paymentMethodPluginsFound.isEmpty {
-                selectedPaymentOption = paymentMethodPluginsFound[0]
-            }
-
-            if let selectedPaymentOption = selectedPaymentOption {
-                updateCheckoutModel(paymentOptionSelected: selectedPaymentOption)
-            } else {
-                paymentMethodSearch.deleteCheckoutDefaultOption()
-            }
         }
     }
 
@@ -894,17 +872,42 @@ extension MercadoPagoCheckoutViewModel {
     }
 }
 
-public enum OneTapFlowSteps: String {
-    case START
-    case ACTION_FINISH
-    case SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
-    case SCREEN_PAYER_COST
-    case SERVICE_CREATE_CARD_TOKEN
-    case SCREEN_SECURITY_CODE
-}
-
 class OneTapFlowViewModel: NSObject {
-    public func nextStep() -> OneTapFlowSteps {
+
+    public enum Steps: String {
+        case ACTION_FINISH
+        case SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
+        case SCREEN_PAYER_COST
+        case SCREEN_SECURITY_CODE
+        case SERVICE_GET_PAYER_COSTS
+    }
+
+    var paymentData: PaymentData
+    let checkoutPreference: CheckoutPreference
+    var paymentOptionSelected: PaymentMethodOption?
+    let search: PaymentMethodSearch
+    var readyToPay: Bool = false
+    var payerCosts: [PayerCost]?
+
+    var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+    var reviewScreenPreference = ReviewScreenPreference()
+    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
+
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
+        self.paymentData = paymentData.copy() as! PaymentData
+        self.checkoutPreference = checkoutPreference
+        self.search = search
+        self.paymentOptionSelected = paymentOptionSelected
+    }
+    public func nextStep() -> Steps {
+        if needChosePayerCost() {
+            return .SERVICE_GET_PAYER_COSTS
+        }
+
+        if needPayerCostSelectionScreen() {
+            return .SCREEN_PAYER_COST
+        }
+
         if needReviewAndConfirmForOneTap() {
             return .SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
         }
@@ -912,12 +915,61 @@ class OneTapFlowViewModel: NSObject {
         if needSecurityCode() {
             return .SCREEN_SECURITY_CODE
         }
-
-        if needCreateToken() {
-            return .SERVICE_CREATE_CARD_TOKEN
-        }
+        return .ACTION_FINISH
     }
 }
 
 extension OneTapFlowViewModel {
+
+    public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
+        guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
+            fatalError("Cannot conver payment option selected to CardInformation")
+        }
+
+        let reason = SecurityCodeViewModel.Reason.SAVED_CARD
+        return SecurityCodeViewModel(paymentMethod: self.paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
+    }
+
+    func reviewConfirmViewModel() -> PXReviewViewModel {
+        return PXReviewViewModel(checkoutPreference: self.checkoutPreference, paymentData: self.paymentData, paymentOptionSelected: self.paymentOptionSelected!, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+    }
+
+    public func payerCostViewModel() -> AdditionalStepViewModel {
+        var paymentMethod: PaymentMethod = PaymentMethod()
+        if let pm = self.paymentData.getPaymentMethod() {
+            paymentMethod = pm
+        }
+
+        guard let cardInformation = paymentOptionSelected as? CardInformationForm else {
+            fatalError("Cannot conver payment option selected to CardInformation")
+        }
+
+        return PayerCostAdditionalStepViewModel(amount: self.getAmount(), token: cardInformation, paymentMethod: paymentMethod, dataSource: payerCosts!, discount: self.paymentData.discount, email: self.checkoutPreference.payer.email, mercadoPagoServicesAdapter: mercadoPagoServicesAdapter)
+    }
+}
+
+extension OneTapFlowViewModel {
+    func updateCheckoutModel(paymentData: PaymentData) {
+        self.paymentData = paymentData
+        self.readyToPay = true
+    }
+
+    public func updateCheckoutModel(token: Token) {
+        self.paymentData.updatePaymentDataWith(token: token)
+    }
+
+    public func updateCheckoutModel(payerCost: PayerCost) {
+        self.paymentData.updatePaymentDataWith(payerCost: payerCost)
+        self.paymentData.cleanToken()
+    }
+
+    internal func getAmount() -> Double {
+        if let payerCost = paymentData.getPayerCost() {
+            return payerCost.totalAmount
+        } else if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
+            return discount.newAmount()
+        } else {
+            return self.checkoutPreference.getAmount()
+        }
+    }
 }

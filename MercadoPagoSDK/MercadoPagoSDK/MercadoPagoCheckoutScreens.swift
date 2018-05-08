@@ -275,26 +275,8 @@ extension MercadoPagoCheckout {
     }
 
     func showErrorScreen() {
-        let errorStep = ErrorViewController(error: MercadoPagoCheckoutViewModel.error, callback: nil, callbackCancel: {[weak self] in
-
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.finish()
-        })
-
+        pxNavigationController.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: self.viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
-        errorStep.callback = {
-            self.pxNavigationController.navigationController.dismiss(animated: true, completion: {
-                self.viewModel.errorCallback?()
-            })
-        }
-        self.pxNavigationController.dismissLoading {  [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.pxNavigationController.navigationController.present(errorStep, animated: true, completion: {})
-        }
 
     }
 
@@ -359,5 +341,98 @@ extension MercadoPagoCheckout {
         }
 
         self.pxNavigationController.pushViewController(viewController: entityTypeStep, animated: true)
+    }
+
+    func startOneTapFlow() {
+        guard let search = viewModel.search, let paymentOtionSelected = viewModel.paymentOptionSelected else {
+            return
+        }
+        let onetapFlow = OneTapFlow(navigationController: pxNavigationController, paymentData: viewModel.paymentData, checkoutPreference: viewModel.checkoutPreference, search: search, paymentOptionSelected: paymentOtionSelected, finish: { [weak self] (paymentData) in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
+                strongSelf.executeNextStep()
+
+            }, cancel: { [weak self] in
+                self?.viewModel.prepareForNewSelection()
+                self?.executeNextStep()
+            }, exit: {
+                [weak self] in
+                self?.finish()
+        })
+        onetapFlow.start()
+    }
+}
+
+extension OneTapFlow {
+    func showReviewAndConfirmScreenForOneTap() {
+        let reviewVC = PXReviewViewController(viewModel: self.viewModel.reviewConfirmViewModel(), showCustomComponents: false, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
+
+            // One tap
+            if let search = self?.viewModel.search {
+                search.deleteCheckoutDefaultOption()
+            }
+            self?.cancel()
+
+            if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
+                MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
+            }
+            return
+
+            }, callbackConfirm: {(paymentData: PaymentData) in
+                self.viewModel.updateCheckoutModel(paymentData: paymentData)
+
+                if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
+                    MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
+                    self.finish()
+                } else {
+                    self.executeNextStep()
+                }
+
+            }, callbackExit: { [weak self] () -> Void in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.cancel()
+        })
+
+        self.pxNavigationController.pushViewController(viewController: reviewVC, animated: true)
+    }
+
+    func showSecurityCodeScreen() {
+        let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
+            self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
+        })
+        self.pxNavigationController.pushViewController(viewController: securityCodeVc, animated: true)
+    }
+
+    func showPayerCostScreen() {
+        let payerCostStep = AdditionalStepViewController(viewModel: self.viewModel.payerCostViewModel(), callback: { (payerCost) in
+            guard let payerCost = payerCost as? PayerCost else {
+                fatalError("Cannot convert payerCost to type PayerCost")
+            }
+
+            self.viewModel.updateCheckoutModel(payerCost: payerCost)
+            self.executeNextStep()
+        })
+
+        weak var strongPayerCostViewController = payerCostStep
+
+        payerCostStep.viewModel.couponCallback = {[weak self] (discount) in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.viewModel.paymentData.discount = discount
+            strongSelf.getPayerCosts(updateCallback: {
+
+                guard let payerCosts = strongSelf.viewModel.payerCosts, let payerCostViewController = strongPayerCostViewController else {
+                    return
+                }
+                payerCostViewController.updateDataSource(dataSource: payerCosts)
+            })
+
+        }
+        self.pxNavigationController.pushViewController(viewController: payerCostStep, animated: true)
     }
 }

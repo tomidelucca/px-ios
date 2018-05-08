@@ -57,7 +57,7 @@ class PXNavigationController: NSObject {
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(animated: Bool = true, finishCallback:(()-> Void)? = nil) {
+    func dismissLoading(animated: Bool = true, finishCallback:(() -> Void)? = nil) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve
@@ -77,6 +77,18 @@ class PXNavigationController: NSObject {
         vcLoading.view.addSubview(loadingInstance)
         loadingInstance.bringSubview(toFront: vcLoading.view)
         self.currentLoadingView = vcLoading
+    }
+
+    internal func showErrorScreen(error: MPSDKError?, callbackCancel: (() -> Void)?, errorCallback: (() -> Void)?) {
+        let errorVC = ErrorViewController(error: error, callback: nil, callbackCancel: callbackCancel)
+        errorVC.callback = {
+            self.navigationController.dismiss(animated: true, completion: {
+                errorCallback?()
+            })
+        }
+        dismissLoading {  [weak self] in
+            self?.navigationController.present(errorVC, animated: true, completion: {})
+        }
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
