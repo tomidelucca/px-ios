@@ -251,7 +251,7 @@ open class MercadoPagoCheckout: NSObject {
         goToRootViewController()
     }
     @objc
-    func closeCheckout(){
+    func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }
@@ -287,7 +287,7 @@ open class MercadoPagoCheckout: NSObject {
         self.navigationController.present(self.currentLoadingView!, animated: false, completion: nil)
     }
 
-    func dismissLoading(animated: Bool = true, finishCallback:(()-> Void)? = nil) {
+    func dismissLoading(animated: Bool = true, finishCallback:(() -> Void)? = nil) {
         self.countLoadings = 0
         if self.currentLoadingView != nil {
             self.currentLoadingView?.modalTransitionStyle = .crossDissolve

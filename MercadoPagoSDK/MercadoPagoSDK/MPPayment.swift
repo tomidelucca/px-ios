@@ -39,7 +39,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     open var binaryMode: Bool = false
     open var transactionDetails: TransactionDetails?
     open var discount: DiscountCoupon?
-    
+
     override init() {
         super.init()
     }
