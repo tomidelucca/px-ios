@@ -46,9 +46,9 @@ class CardAvailableView: UIView {
 
     func getFrameToLabel() -> CGRect {
         let heightImage: CGFloat = frame.size.height - (2*marginHeigh)
-        let x: CGFloat = (imageMargin*2) + imageWidth
-        let labelWidth: CGFloat = frame.size.width - x - marginHeigh
-        return CGRect(x: x, y: marginHeigh, width: labelWidth, height: heightImage)
+        let xPos: CGFloat = (imageMargin*2) + imageWidth
+        let labelWidth: CGFloat = frame.size.width - xPos - marginHeigh
+        return CGRect(x: xPos, y: marginHeigh, width: labelWidth, height: heightImage)
     }
 
     func getFrameOfImage() -> CGRect {

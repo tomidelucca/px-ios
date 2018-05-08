@@ -41,18 +41,18 @@ open class PromoTableViewCell: UITableViewCell {
 			if promo!.paymentMethods!.count == 1 {
 				self.paymentMethodsSubtitle.text = promo!.paymentMethods[0].name
 			} else {
-				var s = ""
-				var i = 0
-				for pm in promo.paymentMethods {
-					s += pm.name
-					if i == promo.paymentMethods.count - 2 {
-						s += " y ".localized
-					} else if i < promo.paymentMethods.count - 1 {
-						s += ", "
+				var str = ""
+				var index = 0
+				for paymentMethod in promo.paymentMethods {
+					str += paymentMethod.name
+					if index == promo.paymentMethods.count - 2 {
+						str += " y ".localized
+					} else if index < promo.paymentMethods.count - 1 {
+						str += ", "
 					}
-					i += 1
+					index += 1
 				}
-				self.paymentMethodsSubtitle.text = s
+				self.paymentMethodsSubtitle.text = str
 			}
 		} else {
 			self.paymentMethodsSubtitle.text = ""

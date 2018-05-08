@@ -9,8 +9,8 @@
 import UIKit
 private func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
+  case let (l__?, r__?):
+    return l__ < r__
   case (nil, _?):
     return true
   default:
