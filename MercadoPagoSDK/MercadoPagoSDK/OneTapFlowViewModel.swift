@@ -21,12 +21,12 @@ class OneTapFlowViewModel: NSObject {
     var readyToPay: Bool = false
     var payerCosts: [PayerCost]?
 
-    var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    var reviewScreenPreference = ReviewScreenPreference()
+    let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
+    let reviewScreenPreference = ReviewScreenPreference()
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
     init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
-        self.paymentData = paymentData.copy() as! PaymentData
+        self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
@@ -81,6 +81,7 @@ extension OneTapFlowViewModel {
         guard let payerCosts = payerCosts else {
             return
         }
+        // Guarda todas las payerCosts que vengan de backend en one tap. En v1 solamente viene una
         self.payerCosts = payerCosts
         if let first = payerCosts.first, payerCosts.count == 1, paymentOptionSelected.isCard() {
             self.paymentData.updatePaymentDataWith(payerCost: first)

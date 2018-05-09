@@ -14,7 +14,7 @@ open class MercadoPagoCheckout: NSObject {
 
     static var currentCheckout: MercadoPagoCheckout?
     var viewModel: MercadoPagoCheckoutViewModel
-    var pxNavigationController: PXNavigationController
+    var pxNavigationHandler: PXNavigationHandler
 
     public init(publicKey: String, accessToken: String, checkoutPreference: CheckoutPreference, paymentData: PaymentData?, paymentResult: PaymentResult?, discount: DiscountCoupon? = nil, navigationController: UINavigationController) {
 
@@ -31,7 +31,7 @@ open class MercadoPagoCheckout: NSObject {
 
         MercadoPagoCheckoutViewModel.flowPreference.disableESC()
 
-        pxNavigationController = PXNavigationController(navigationController: navigationController)
+        pxNavigationHandler = PXNavigationHandler(navigationController: navigationController)
     }
 
     public func setTheme(_ theme: PXTheme) {
@@ -53,7 +53,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     public func start() {
-        pxNavigationController.presentInitLoading()
+        pxNavigationHandler.presentInitLoading()
         MercadoPagoCheckout.currentCheckout = self
         executeNextStep()
     }
@@ -90,7 +90,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func executePreviousStep(animated: Bool = true) {
-        self.pxNavigationController.navigationController.popViewController(animated: animated)
+        self.pxNavigationHandler.navigationController.popViewController(animated: animated)
     }
 
     func initialize() {
@@ -99,7 +99,7 @@ open class MercadoPagoCheckout: NSObject {
         // TODO-v4.1: Change trackScreen by trackEvent, in order to get convertion insights
         // MPXTracker.trackScreen(screenId: TrackingUtil.SCREEN_ID_CHECKOUT, screenName: TrackingUtil.SCREEN_NAME_CHECKOUT)
         executeNextStep()
-        pxNavigationController.suscribeToNavigationFlow()
+        pxNavigationHandler.suscribeToNavigationFlow()
         PXNotificationManager.SuscribeTo.attemptToClose(MercadoPagoCheckout.currentCheckout, selector: #selector(closeCheckout))
     }
 
@@ -189,7 +189,7 @@ open class MercadoPagoCheckout: NSObject {
     }
 
     func finish() {
-        pxNavigationController.removeRootLoading()
+        pxNavigationHandler.removeRootLoading()
 
         if self.viewModel.paymentData.isComplete() && !MercadoPagoCheckoutViewModel.flowPreference.isReviewAndConfirmScreenEnable() && MercadoPagoCheckoutViewModel.paymentDataCallback != nil && !self.viewModel.isCheckoutComplete() {
             MercadoPagoCheckoutViewModel.paymentDataCallback!(self.viewModel.paymentData)
@@ -207,7 +207,7 @@ open class MercadoPagoCheckout: NSObject {
             finishFlowCallback(self.viewModel.payment)
             return
         }
-        pxNavigationController.goToRootViewController()
+        pxNavigationHandler.goToRootViewController()
     }
 
     func cancel() {
@@ -215,7 +215,7 @@ open class MercadoPagoCheckout: NSObject {
             callback()
             return
         }
-        pxNavigationController.goToRootViewController()
+        pxNavigationHandler.goToRootViewController()
     }
     @objc func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)

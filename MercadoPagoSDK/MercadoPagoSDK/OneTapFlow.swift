@@ -9,16 +9,16 @@
 import Foundation
 class OneTapFlow: NSObject {
     let viewModel: OneTapFlowViewModel
-    let pxNavigationController: PXNavigationController
-    let finishCallback: ((PaymentData) -> Void)
-    let cancelCallback: (() -> Void)
-    let exitCallback: (() -> Void)
+    let pxNavigationHandler: PXNavigationHandler
+    let finishOneTapCallback: ((PaymentData) -> Void)
+    let cancelOneTapCallback: (() -> Void)
+    let exitCheckoutCallback: (() -> Void)
 
-    init(navigationController: PXNavigationController, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, finish: @escaping ((PaymentData) -> Void), cancel: @escaping (() -> Void), exit: @escaping (() -> Void)) {
-        pxNavigationController = navigationController
-        finishCallback = finish
-        cancelCallback = cancel
-        exitCallback = exit
+    init(navigationController: PXNavigationHandler, paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, finishOneTap: @escaping ((PaymentData) -> Void), cancelOneTap: @escaping (() -> Void), exitCheckout: @escaping (() -> Void)) {
+        pxNavigationHandler = navigationController
+        finishOneTapCallback = finishOneTap
+        cancelOneTapCallback = cancelOneTap
+        exitCheckoutCallback = exitCheckout
         viewModel = OneTapFlowViewModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected)
     }
     deinit {
@@ -44,21 +44,27 @@ class OneTapFlow: NSObject {
 
     // Cancelar one tap - Cambiar medio de pago
     func cancel() {
-        cancelCallback()
+        cancelOneTapCallback()
     }
 
     // Finalizar el flujo de one tap - Seguir con el checkout
     func finish() {
-        finishCallback(viewModel.paymentData)
+        finishOneTapCallback(viewModel.paymentData)
     }
 
     // Salir del flujo - Desde una pantalla de error, etc.
     func exit() {
-        exitCallback()
+        exitCheckoutCallback()
     }
 }
 
 extension OneTapFlow {
+    /// Returns a auto selected payment option from a paymentMethodSearch object. If no option can be selected it returns nil
+    ///
+    /// - Parameters:
+    ///   - search: payment method search item
+    ///   - paymentMethodPlugins: payment Methods plugins that can be show
+    /// - Returns: selected payment option if possible
     static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
@@ -74,7 +80,7 @@ extension OneTapFlow {
                     return cardInformation.getCardId() == search.checkoutExpressOption
                 }
                 if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
-                    // Checkea que el campo de cuotas no venga vacio para credito y debito. Ver si con debito tiene sentido
+                    // Checks if card has installments
                     if customerPaymentOption.isCard() {
                         if !Array.isNullOrEmpty(search.defaultInstallments) {
                             selectedPaymentOption = customerPaymentOption

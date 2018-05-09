@@ -92,15 +92,15 @@ open class PXPluginNavigationHandler: NSObject {
     }
 
     open func nextAndRemoveCurrentScreenFromStack() {
-        guard let currentViewController = self.checkout?.pxNavigationController.navigationController.viewControllers.last else {
+        guard let currentViewController = self.checkout?.pxNavigationHandler.navigationController.viewControllers.last else {
             checkout?.executeNextStep()
             return
         }
 
         checkout?.executeNextStep()
 
-        if let indexOfLastViewController = self.checkout?.pxNavigationController.navigationController.viewControllers.index(of: currentViewController) {
-            self.checkout?.pxNavigationController.navigationController.viewControllers.remove(at: indexOfLastViewController)
+        if let indexOfLastViewController = self.checkout?.pxNavigationHandler.navigationController.viewControllers.index(of: currentViewController) {
+            self.checkout?.pxNavigationHandler.navigationController.viewControllers.remove(at: indexOfLastViewController)
         }
     }
 
@@ -109,10 +109,10 @@ open class PXPluginNavigationHandler: NSObject {
     }
 
     open func showLoading() {
-        checkout?.pxNavigationController.presentLoading()
+        checkout?.pxNavigationHandler.presentLoading()
     }
 
     open func hideLoading() {
-        checkout?.pxNavigationController.dismissLoading()
+        checkout?.pxNavigationHandler.dismissLoading()
     }
 }

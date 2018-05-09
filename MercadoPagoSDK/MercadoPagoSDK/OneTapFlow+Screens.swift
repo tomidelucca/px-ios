@@ -11,7 +11,7 @@ extension OneTapFlow {
     func showReviewAndConfirmScreenForOneTap() {
         let reviewVC = PXReviewViewController(viewModel: viewModel.reviewConfirmViewModel(), showCustomComponents: false, callbackPaymentData: { [weak self] (paymentData: PaymentData) in
 
-            // One tap
+            // Change payment method callback
             if let search = self?.viewModel.search {
                 search.deleteCheckoutDefaultOption()
             }
@@ -39,13 +39,13 @@ extension OneTapFlow {
             strongSelf.cancel()
         })
 
-        self.pxNavigationController.pushViewController(viewController: reviewVC, animated: true)
+        self.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
     }
 
     func showSecurityCodeScreen() {
         let securityCodeVc = SecurityCodeViewController(viewModel: viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
             self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
         })
-        self.pxNavigationController.pushViewController(viewController: securityCodeVc, animated: true)
+        self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true)
     }
 }

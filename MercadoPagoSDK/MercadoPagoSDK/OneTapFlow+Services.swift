@@ -30,7 +30,7 @@ extension OneTapFlow {
     }
 
     func createSavedCardToken(cardInformation: CardInformation, securityCode: String) {
-        self.pxNavigationController.presentLoading()
+        self.pxNavigationHandler.presentLoading()
 
         let cardInformation = viewModel.paymentOptionSelected as! CardInformation
         let saveCardToken = SavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
@@ -45,14 +45,14 @@ extension OneTapFlow {
 
             }, failure: { [weak self] (error) in
                 let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
-                self?.pxNavigationController.showErrorScreen(error: error, callbackCancel: self?.exitCallback, errorCallback: { [weak self] () in
+                self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.exitCheckoutCallback, errorCallback: { [weak self] () in
                     self?.createSavedCardToken(cardInformation: cardInformation, securityCode: securityCode)
                 })
         })
     }
 
     func createSavedESCCardToken(savedESCCardToken: SavedESCCardToken) {
-        self.pxNavigationController.presentLoading()
+        self.pxNavigationHandler.presentLoading()
         self.viewModel.mercadoPagoServicesAdapter.createToken(savedESCCardToken: savedESCCardToken, callback: { [weak self] (token) in
 
             if token.lastFourDigits.isEmpty {
@@ -71,7 +71,7 @@ extension OneTapFlow {
                     self?.viewModel.mpESCManager.deleteESC(cardId: savedESCCardToken.cardId)
                 }
 
-                self?.pxNavigationController.showErrorScreen(error: error, callbackCancel: self?.exitCallback, errorCallback: { [weak self] () in
+                self?.pxNavigationHandler.showErrorScreen(error: error, callbackCancel: self?.exitCheckoutCallback, errorCallback: { [weak self] () in
                     self?.createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
                 })
         })

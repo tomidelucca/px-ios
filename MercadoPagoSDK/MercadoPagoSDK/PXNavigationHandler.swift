@@ -1,5 +1,5 @@
 //
-//  PXNavigationController.swift
+//  PXNavigationHandler.swift
 //  MercadoPagoSDK
 //
 //  Created by Eden Torres on 03/05/2018.
@@ -9,7 +9,7 @@
 import Foundation
 import Foundation
 
-class PXNavigationController: NSObject {
+class PXNavigationHandler: NSObject {
 
     var countLoadings: Int = 0
     var navigationController: UINavigationController!
@@ -87,7 +87,7 @@ class PXNavigationController: NSObject {
     }
 
     internal func pushViewController(viewController: MercadoPagoUIViewController,
-                                     animated: Bool, backToChechoutRoot: Bool = false) {
+                                     animated: Bool, backToFirstPaymentVault: Bool = false) {
 
         viewController.hidesBottomBarWhenPushed = true
         // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
@@ -138,7 +138,7 @@ class PXNavigationController: NSObject {
     }
 }
 
-extension PXNavigationController: UINavigationControllerDelegate {
+extension PXNavigationHandler: UINavigationControllerDelegate {
 
     func suscribeToNavigationFlow() {
         navigationController.delegate = self
