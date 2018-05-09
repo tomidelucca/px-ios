@@ -8,10 +8,8 @@
 
 import Foundation
 
-struct PXNotificationManager {}
+struct PXNotificationManager {
 
-internal extension NSNotification.Name {
-    static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
 }
 
 extension PXNotificationManager {
@@ -39,4 +37,8 @@ extension PXNotificationManager {
             notificationCenter.post(name: .attemptToClose, object: nil)
         }
     }
+}
+
+internal extension NSNotification.Name {
+      static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
 }

@@ -11,7 +11,7 @@ import UIKit
 class PXCustomComponent: PXCustomComponentizable, PXComponentizable {
 
     let view: UIView
-    
+
     func render() -> UIView {
         return view
     }

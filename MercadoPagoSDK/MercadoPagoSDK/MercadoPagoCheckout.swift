@@ -248,7 +248,7 @@ open class MercadoPagoCheckout: NSObject {
         goToRootViewController()
     }
     @objc
-    func closeCheckout(){
+    func closeCheckout() {
         PXNotificationManager.UnsuscribeTo.attemptToClose(self)
         cancel()
     }

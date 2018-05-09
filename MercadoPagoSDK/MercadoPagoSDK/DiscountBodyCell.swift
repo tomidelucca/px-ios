@@ -84,14 +84,14 @@ class DiscountBodyCell: UIView {
         detailLabel.font = Utils.getFont(size: 16)
         let widthlabelDiscount = detailLabel.attributedText?.widthWithConstrainedHeight(height: 18)
         let totalViewWidth = widthlabelDiscount! + 20 + 8 + 2 * margin
-        var x = (screenWidth - totalViewWidth) / 2
-        let frameFlag = CGRect(x: x, y: (margin * 2 + 40), width: 20, height: 20)
+        var xPos = (screenWidth - totalViewWidth) / 2
+        let frameFlag = CGRect(x: xPos, y: (margin * 2 + 40), width: 20, height: 20)
         couponFlag.frame = frameFlag
-        x += 20 + margin
-        let frameLabel = CGRect(x: x, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
+        xPos += 20 + margin
+        let frameLabel = CGRect(x: xPos, y: (margin * 2 + 40), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x += widthlabelDiscount! + margin
-        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + 40), width: 8, height: 12)
+        xPos += widthlabelDiscount! + margin
+        let frameArrow = CGRect(x: xPos, y: 4 + (margin * 2 + 40), width: 8, height: 12)
         rightArrow.frame = frameArrow
         self.addSubview(couponFlag)
         self.addSubview(detailLabel)
@@ -148,17 +148,17 @@ class DiscountBodyCell: UIView {
         let widthlabelDiscount = detailLabel.attributedText?.widthWithConstrainedHeight(height: 18)
         let widthlabelAmount = (discountAmountLabel.attributedText?.widthWithConstrainedHeight(height: 12))! + 10
         let totalViewWidth = widthlabelDiscount! + widthlabelAmount + 10 + 8 + 2 * margin
-        var x = (screenWidth - totalViewWidth) / 2
-        let frameLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
+        var xPos = (screenWidth - totalViewWidth) / 2
+        let frameLabel = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: widthlabelDiscount!, height: 18)
         detailLabel.frame = frameLabel
-        x += widthlabelDiscount! + margin
-        let framePic = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
+        xPos += widthlabelDiscount! + margin
+        let framePic = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: 10, height: 19)
         picFlag.frame = framePic
-        x += 10
-        let frameAmountLabel = CGRect(x: x, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
+        xPos += 10
+        let frameAmountLabel = CGRect(x: xPos, y: (margin * 2 + topMargin + 20), width: widthlabelAmount, height: 19)
         discountAmountLabel.frame = frameAmountLabel
-        x += widthlabelAmount + margin
-        let frameArrow = CGRect(x: x, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
+        xPos += widthlabelAmount + margin
+        let frameArrow = CGRect(x: xPos, y: 4 + (margin * 2 + topMargin + 20), width: 8, height: 12)
         rightArrow.frame = frameArrow
 
         let path = UIBezierPath(roundedRect: discountAmountLabel.bounds,

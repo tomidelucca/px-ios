@@ -15,11 +15,9 @@ class PXReviewViewController: PXComponentContainerViewController {
     override open var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
     override open var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
-    
     var footerView: UIView!
     var floatingButtonView: UIView!
-    
-    
+
     // MARK: Definitions
     var termsConditionView: PXTermsAndConditionView!
     lazy var itemViews = [UIView]()
@@ -145,8 +143,7 @@ extension PXReviewViewController {
         PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-        
-        
+
         // Add floating button
         floatingButtonView = getFloatingButtonView()
         view.addSubview(floatingButtonView)
@@ -187,7 +184,7 @@ extension PXReviewViewController {
         let fixedButtonCoordinates = fixedButton.convert(CGPoint.zero, from: self.view.window)
         return fixedButtonCoordinates.y > floatingButtonCoordinates.y
     }
-    
+
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
@@ -242,7 +239,7 @@ extension PXReviewViewController {
         let footerComponent = PXFooterComponent(props: footerProps)
         return footerComponent.render()
     }
-    
+
     fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
         let termsAndConditionView = PXTermsAndConditionView()
         return termsAndConditionView
@@ -265,7 +262,7 @@ extension PXReviewViewController {
         super.scrollViewDidScroll(scrollView)
         self.checkFloatingButtonVisibility()
     }
-    
+
     func checkFloatingButtonVisibility() {
        if !isConfirmButtonVisible() {
             self.floatingButtonView.alpha = 1
