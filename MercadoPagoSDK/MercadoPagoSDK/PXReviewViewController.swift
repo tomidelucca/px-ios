@@ -60,7 +60,7 @@ extension PXReviewViewController {
     fileprivate func setupUI() {
         navBarTextColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         loadMPStyles()
-        navigationController?.navigationBar.barTintColor = ThemeManager.shared.getTheme().highlightBackgroundColor()
+        navigationController?.navigationBar.barTintColor = ThemeManager.shared.highlightBackgroundColor()
         navigationItem.leftBarButtonItem?.tintColor = ThemeManager.shared.getTitleColorForReviewConfirmNavigation()
         if contentView.getSubviews().isEmpty {
             renderViews()
@@ -149,6 +149,7 @@ extension PXReviewViewController {
         view.addSubview(floatingButtonView)
         PXLayout.setHeight(owner: floatingButtonView, height: viewModel.getFloatingConfirmViewHeight()).isActive = true
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
 
         // Add elastic header.
@@ -210,7 +211,7 @@ extension PXReviewViewController {
 
     fileprivate func getCFTComponentView() -> UIView? {
         if viewModel.hasPayerCostAddionalInfo() {
-            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.getTheme().labelTintColor(), backgroundColor: ThemeManager.shared.getTheme().highlightBackgroundColor())
+            let cftView = PXCFTComponentView(withCFTValue: viewModel.paymentData.payerCost?.getCFTValue(), titleColor: ThemeManager.shared.labelTintColor(), backgroundColor: ThemeManager.shared.highlightBackgroundColor())
             return cftView
         }
         return nil
@@ -245,14 +246,14 @@ extension PXReviewViewController {
     }
 
     fileprivate func getTopCustomView() -> UIView? {
-        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildTopCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil
     }
 
     fileprivate func getBottomCustomView() -> UIView? {
-        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getTheme()) {
+        if let component = self.viewModel.buildBottomCustomComponent(), let componentView = component.render(store: PXCheckoutStore.sharedInstance, theme: ThemeManager.shared.getCurrentTheme()) {
             return componentView
         }
         return nil

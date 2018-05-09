@@ -23,5 +23,4 @@ class PXCustomComponent: PXCustomComponentizable, PXComponentizable {
     init(view: UIView) {
         self.view = view
     }
-
 }

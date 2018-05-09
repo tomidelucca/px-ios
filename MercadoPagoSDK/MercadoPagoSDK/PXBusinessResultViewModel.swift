@@ -40,15 +40,14 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
 
         switch self.businessResult.getStatus() {
         case .APPROVED:
-            return ThemeManager.shared.getTheme().successColor()
+            return ThemeManager.shared.successColor()
         case .REJECTED:
-            return ThemeManager.shared.getTheme().rejectedColor()
+            return ThemeManager.shared.rejectedColor()
         case .PENDING:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         case .IN_PROGRESS:
-            return ThemeManager.shared.getTheme().warningColor()
+            return ThemeManager.shared.warningColor()
         }
-
     }
 
     func setCallback(callback: @escaping (PaymentResult.CongratsState) -> Void) {
@@ -109,6 +108,7 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         if self.businessResult.mustShowPaymentMethod() {
             pmComponent =  getPaymentMethodComponent()
         }
+
         if (self.businessResult.getHelpMessage() != nil) {
             helpComponent = getHelpMessageComponent()
         }
@@ -161,9 +161,8 @@ class PXBusinessResultViewModel: NSObject, PXResultViewModelInterface {
         if let statementDescription = self.businessResult.getStatementDescription() {
             disclaimerText =  ("En tu estado de cuenta verás el cargo como %0".localized as NSString).replacingOccurrences(of: "%0", with: "\(statementDescription)")
         }
-
-        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.getTheme().detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.getTheme().labelTintColor(), boldLabelColor: ThemeManager.shared.getTheme().boldLabelTintColor())
-
+      
+        let bodyProps = PXPaymentMethodProps(paymentMethodIcon: image, title: amountTitle.toAttributedString(), subtitle: amountDetail?.toAttributedString(), descriptionTitle: pmDescription.toAttributedString(), descriptionDetail: descriptionDetail, disclaimer: disclaimerText?.toAttributedString(), backgroundColor: ThemeManager.shared.detailedBackgroundColor(), lightLabelColor: ThemeManager.shared.labelTintColor(), boldLabelColor: ThemeManager.shared.boldLabelTintColor())
         return PXPaymentMethodComponent(props: bodyProps)
     }
 
@@ -214,6 +213,7 @@ class PXBusinessResultBodyComponent: PXComponentizable {
         self.paymentMethodComponent = paymentMethodComponent
         self.helpMessageComponent = helpMessageComponent
     }
+
     func render() -> UIView {
         let bodyView = UIView()
         bodyView.translatesAutoresizingMaskIntoConstraints = false
