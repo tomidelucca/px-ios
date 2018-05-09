@@ -578,6 +578,8 @@ extension MercadoPagoServicesAdapter {
         if let pxDefaultOption = pxPaymentMethodSearch.defaultOption {
             paymentMethodSearch.defaultOption = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxDefaultOption)
         }
+
+        // Esto es temporal hasta que se defina la respuesta de back
         paymentMethodSearch.checkoutExpressOption = pxPaymentMethodSearch.checkoutExpressOption
 
         if let pxPayerCosts = pxPaymentMethodSearch.defaultInstallments {

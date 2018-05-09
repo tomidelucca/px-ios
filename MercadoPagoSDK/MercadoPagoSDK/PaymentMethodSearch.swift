@@ -14,6 +14,7 @@ import Foundation
     var customerPaymentMethods: [CardInformation]?
     var cards: [Card]?
     var defaultOption: PaymentMethodSearchItem?
+    // Temporal - falta definir la firma de back
     var checkoutExpressOption: String?
     var defaultInstallments: [PayerCost]?
 

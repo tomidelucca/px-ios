@@ -17,14 +17,6 @@ extension MercadoPagoCheckoutViewModel {
 
         let hasPaymentWithInvalidESC = paymentData.hasPaymentMethod() && !paymentData.hasToken() && paymentResult != nil && paymentResult!.isInvalidESC()
 
-        // One tap // Caso borde
-//        if search != nil && search!.hasCheckoutDefaultOption() && self.paymentData.isComplete(shouldCheckForToken: false) {
-//            if self.paymentOptionSelected == nil {
-//                self.setPaymentOptionSelected()
-//            }
-//            return true
-//        }
-
         if (self.paymentData.isComplete() || hasPaymentWithInvalidESC) && (self.search != nil) {
             if self.paymentOptionSelected == nil {
                 self.setPaymentOptionSelected()
