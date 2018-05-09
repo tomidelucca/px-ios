@@ -580,6 +580,14 @@ extension MercadoPagoServicesAdapter {
         }
         paymentMethodSearch.checkoutExpressOption = pxPaymentMethodSearch.checkoutExpressOption
 
+        if let pxPayerCosts = pxPaymentMethodSearch.defaultInstallments {
+            paymentMethodSearch.defaultInstallments = []
+            for pxPayerCost in pxPayerCosts {
+                let payerCost = getPayerCostFromPXPayerCost(pxPayerCost)
+                paymentMethodSearch.defaultInstallments = Array.safeAppend(paymentMethodSearch.defaultInstallments, payerCost)
+            }
+        }
+
         return paymentMethodSearch
     }
 

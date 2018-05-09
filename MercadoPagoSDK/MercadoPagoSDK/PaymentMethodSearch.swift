@@ -15,6 +15,7 @@ import Foundation
     var cards: [Card]?
     var defaultOption: PaymentMethodSearchItem?
     var checkoutExpressOption: String?
+    var defaultInstallments: [PayerCost]?
 
     func getPaymentOptionsCount() -> Int {
         let customOptionsCount = (self.customerPaymentMethods != nil) ? self.customerPaymentMethods!.count : 0
