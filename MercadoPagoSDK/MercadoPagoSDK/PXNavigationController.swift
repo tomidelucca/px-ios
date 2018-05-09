@@ -71,12 +71,7 @@ class PXNavigationController: NSObject {
     }
 
     internal func createCurrentLoading() {
-        let vcLoading = MercadoPagoUIViewController()
-        vcLoading.view.backgroundColor = ThemeManager.shared.getTheme().loadingComponent().backgroundColor
-        let loadingInstance = LoadingOverlay.shared.showOverlay(vcLoading.view, backgroundColor: ThemeManager.shared.getTheme().loadingComponent().backgroundColor, indicatorColor: ThemeManager.shared.getTheme().loadingComponent().tintColor)
-        vcLoading.view.addSubview(loadingInstance)
-        loadingInstance.bringSubview(toFront: vcLoading.view)
-        self.currentLoadingView = vcLoading
+        self.currentLoadingView = PXLoadingViewController()
     }
 
     internal func showErrorScreen(error: MPSDKError?, callbackCancel: (() -> Void)?, errorCallback: (() -> Void)?) {
