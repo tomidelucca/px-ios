@@ -101,7 +101,7 @@ extension PXReviewViewModel {
     }
 
     func getClearPaymentData() -> PaymentData {
-        let newPaymentData: PaymentData = paymentData.copy() as! PaymentData
+        let newPaymentData: PaymentData = paymentData.copy() as? PaymentData ?? paymentData
         newPaymentData.clearCollectedData()
         return newPaymentData
     }
