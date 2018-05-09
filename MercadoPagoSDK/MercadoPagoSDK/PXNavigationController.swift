@@ -99,7 +99,7 @@ class PXNavigationController: NSObject {
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
         if backToChechoutRoot {
             self.navigationController.navigationBar.isHidden = false
-            viewController.callbackCancel = { [weak self] in self?.backToCheckoutRoot() }
+            viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }
         }
 
         self.navigationController.pushViewController(viewController, animated: animated)
@@ -111,10 +111,12 @@ class PXNavigationController: NSObject {
         navigationController.popViewController(animated: animated)
     }
 
-    func backToCheckoutRoot() {
-        let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self)}
-        if !mercadoPagoViewControllers.isEmpty {
-            self.navigationController.popToViewController(mercadoPagoViewControllers[0], animated: true)
+    func backToFirstPaymentVaultViewController() {
+        let mercadoPagoPaymentVaultViewController = self.navigationController.viewControllers.filter {$0.isKind(of: MercadoPagoUIViewController.self) && $0.isKind(of: PaymentVaultViewController.self)}
+        if !mercadoPagoPaymentVaultViewController.isEmpty {
+            self.navigationController.popToViewController(mercadoPagoPaymentVaultViewController[0], animated: true)
+        } else {
+            navigationController.popViewController(animated: true)
         }
 
     }

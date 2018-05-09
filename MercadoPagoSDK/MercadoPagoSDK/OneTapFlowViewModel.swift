@@ -8,7 +8,7 @@
 
 import Foundation
 class OneTapFlowViewModel: NSObject {
-    public enum Steps: String {
+    enum Steps: String {
         case ACTION_FINISH
         case SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
         case SCREEN_SECURITY_CODE
@@ -23,7 +23,7 @@ class OneTapFlowViewModel: NSObject {
 
     var mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
     var reviewScreenPreference = ReviewScreenPreference()
-    var mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
+    let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
     init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
         self.paymentData = paymentData.copy() as! PaymentData
@@ -38,7 +38,6 @@ class OneTapFlowViewModel: NSObject {
         if needReviewAndConfirmForOneTap() {
             return .SCREEN_REVIEW_AND_CONFIRM_ONE_TAP
         }
-
         if needSecurityCode() {
             return .SCREEN_SECURITY_CODE
         }
