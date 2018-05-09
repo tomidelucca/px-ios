@@ -92,7 +92,7 @@ class PXNavigationHandler: NSObject {
         viewController.hidesBottomBarWhenPushed = true
         // let mercadoPagoViewControllers = self.navigationController.viewControllers.filter {$0.isKind(of:MercadoPagoUIViewController.self)}
         // Se remueve el comportamiento custom para el back. Ahora el back respeta el stack de navegacion, no hace popToX view controller
-        if backToChechoutRoot {
+        if backToFirstPaymentVault {
             self.navigationController.navigationBar.isHidden = false
             viewController.callbackCancel = { [weak self] in self?.backToFirstPaymentVaultViewController() }
         }

@@ -10,7 +10,7 @@ import UIKit
 import MercadoPagoSDK
 
 @objc class CustomComponentText: NSObject, PXComponentizable {
-    let HEIGHT : CGFloat = 80.0
+    let HEIGHT: CGFloat = 80.0
     func render() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +30,5 @@ import MercadoPagoSDK
         NSLayoutConstraint(item: textLabel, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0).isActive = true
         return view
     }
-    
 
 }

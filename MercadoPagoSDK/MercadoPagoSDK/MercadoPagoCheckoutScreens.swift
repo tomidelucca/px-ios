@@ -170,7 +170,7 @@ extension MercadoPagoCheckout {
         let securityCodeVc = SecurityCodeViewController(viewModel: self.viewModel.savedCardSecurityCodeViewModel(), collectSecurityCodeCallback: { [weak self] (cardInformation: CardInformationForm, securityCode: String) -> Void in
             self?.createCardToken(cardInformation: cardInformation as? CardInformation, securityCode: securityCode)
         })
-        self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToChechoutRoot: true)
+        self.pxNavigationHandler.pushViewController(viewController: securityCodeVc, animated: true, backToFirstPaymentVault: true)
     }
 
     func collectSecurityCodeForRetry() {
@@ -309,7 +309,7 @@ extension MercadoPagoCheckout {
             }
             strongSelf.viewModel.updateCheckoutModel(paymentData: paymentData)
             strongSelf.executeNextStep()
-            
+
             }, cancelOneTap: { [weak self] in
                 self?.viewModel.prepareForNewSelection()
                 self?.executeNextStep()

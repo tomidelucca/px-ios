@@ -43,6 +43,7 @@ import UIKit
         copyObj.payerCost = payerCost
         copyObj.transactionDetails = transactionDetails
         copyObj.discount = discount
+        copyObj.payer = payer
         return copyObj
     }
 
