@@ -142,8 +142,6 @@ open class MercadoPagoCheckout: NSObject {
             self.showPayerCostScreen()
         case .SCREEN_REVIEW_AND_CONFIRM:
             self.showReviewAndConfirmScreen()
-        case .SCREEN_REVIEW_AND_CONFIRM_ONE_TAP:
-            self.showReviewAndConfirmScreenForOneTap()
         case .SCREEN_SECURITY_CODE:
             self.showSecurityCodeScreen()
         case .SERVICE_POST_PAYMENT:
