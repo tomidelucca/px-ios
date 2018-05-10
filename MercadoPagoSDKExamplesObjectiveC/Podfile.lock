@@ -99,16 +99,20 @@ PODS:
 
 DEPENDENCIES:
   - MercadoPagoPXTracking (= 2.1.2)
-  - MercadoPagoServices (= 1.0.8)
+  - MercadoPagoServices (from `../../px-ios_services`)
   - MLUI (= 4.0.0)
+
+EXTERNAL SOURCES:
+  MercadoPagoServices:
+    :path: ../../px-ios_services
 
 SPEC CHECKSUMS:
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MercadoPagoPXTracking: 844e3fa9a8b7cb9eedff4d2bf5f696a25b6b57d6
-  MercadoPagoServices: b5fa6e7cf3f36998b441ff4a29974747ec379eb5
+  MercadoPagoServices: b15bffc50fa4a13b42f07ff38da1ffec5902bee3
   MLUI: 2e2d756b4763b22783fa3c0d01aa765b13ce214f
 
-PODFILE CHECKSUM: 8d9e36e6b3581b3e1c72c86e40482b373a2a81e6
+PODFILE CHECKSUM: bbdcaafb9d2b6a77764169667588afd4cd512af4
 
 COCOAPODS: 1.4.0
