@@ -21,6 +21,7 @@ class OneTapFlow: NSObject {
         exitCheckoutCallback = exitCheckout
         viewModel = OneTapFlowViewModel(paymentData: paymentData, checkoutPreference: checkoutPreference, search: search, paymentOptionSelected: paymentOptionSelected)
     }
+
     deinit {
         #if DEBUG
             print("DEINIT FLOW - \(self)")
@@ -42,17 +43,17 @@ class OneTapFlow: NSObject {
         }
     }
 
-    // Cancelar one tap - Cambiar medio de pago
+    // Cancel one tap and go to checkout
     func cancel() {
         cancelOneTapCallback()
     }
 
-    // Finalizar el flujo de one tap - Seguir con el checkout
+    // Finish one tap and continue with checkout
     func finish() {
         finishOneTapCallback(viewModel.paymentData)
     }
 
-    // Salir del flujo - Desde una pantalla de error, etc.
+    // Exit checkout
     func exit() {
         exitCheckoutCallback()
     }
@@ -70,21 +71,18 @@ extension OneTapFlow {
         if search.hasCheckoutDefaultOption() {
             // Check if can autoselect plugin
             let paymentMethodPluginsFound = paymentMethodPlugins.filter { (paymentMethodPlugin: PXPaymentMethodPlugin) -> Bool in
-                return paymentMethodPlugin.getId() == search.checkoutExpressOption
+                return paymentMethodPlugin.getId() == search.oneTap?.getPaymentOptionId()
             }
-            if !paymentMethodPluginsFound.isEmpty {
-                selectedPaymentOption = paymentMethodPluginsFound[0]
+            if let paymentMethodPlugin = paymentMethodPluginsFound.first {
+                selectedPaymentOption = paymentMethodPlugin
             } else {
                 // Check if can autoselect customer card
                 let customOptionsFound = search.customerPaymentMethods!.filter { (cardInformation: CardInformation) -> Bool in
-                    return cardInformation.getCardId() == search.checkoutExpressOption
+                    return cardInformation.getCardId() == search.oneTap?.getPaymentOptionId()
                 }
-                if !customOptionsFound.isEmpty, let customerPaymentOption = customOptionsFound[0] as? PaymentMethodOption {
-                    // Checks if card has installments
-                    if customerPaymentOption.isCard() {
-                        if !Array.isNullOrEmpty(search.defaultInstallments) {
-                            selectedPaymentOption = customerPaymentOption
-                        }
+                if let customerPaymentOption = customOptionsFound.first as? PaymentMethodOption {
+                    if search.oneTap?.oneTapCard?.getSelectedPayerCost() != nil {
+                        selectedPaymentOption = customerPaymentOption
                     }
                 }}
         }

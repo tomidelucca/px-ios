@@ -49,6 +49,15 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
+
+        self.callbackCancel = { [weak self] in
+            self?.viewModel.trackCancelEvent()
+            self?.navigationController?.popViewController(animated: true)
+        }
+    }
+
+    override func trackInfo() {
+        self.viewModel.trackInfo()
     }
 
     func update(viewModel: PXReviewViewModel) {
@@ -190,6 +199,7 @@ extension PXReviewViewController {
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
             if let reviewViewModel = self?.viewModel {
+                self?.viewModel.trackChangePaymentMethodEvent()
                 self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
             }
         })
@@ -279,21 +289,8 @@ extension PXReviewViewController {
 // MARK: Actions.
 extension PXReviewViewController: PXTermsAndConditionViewDelegate {
 
-    fileprivate func trackConfirmActionEvent() {
-        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: viewModel.paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: viewModel.paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: viewModel.preference.getAmount().stringValue]
-
-        if let customerCard = viewModel.paymentOptionSelected as? CustomerPaymentMethod {
-            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
-        }
-        if let installments = viewModel.paymentData.payerCost?.installments {
-            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
-        }
-
-        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
-    }
-
     fileprivate func confirmPayment() {
-        trackConfirmActionEvent()
+        self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
         self.hideBackButton()
         self.callbackConfirm(self.viewModel.paymentData)

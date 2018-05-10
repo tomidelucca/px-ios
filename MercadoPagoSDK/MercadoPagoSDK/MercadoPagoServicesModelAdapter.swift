@@ -579,18 +579,39 @@ extension MercadoPagoServicesAdapter {
             paymentMethodSearch.defaultOption = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxDefaultOption)
         }
 
-        // Esto es temporal hasta que se defina la respuesta de back
-        paymentMethodSearch.checkoutExpressOption = pxPaymentMethodSearch.checkoutExpressOption
+        if let pxOneTap = pxPaymentMethodSearch.oneTap {
+            paymentMethodSearch.oneTap = getOneTapItemFromPXOneTapItem(pxOneTap)
+        }
+        return paymentMethodSearch
+    }
 
-        if let pxPayerCosts = pxPaymentMethodSearch.defaultInstallments {
-            paymentMethodSearch.defaultInstallments = []
-            for pxPayerCost in pxPayerCosts {
-                let payerCost = getPayerCostFromPXPayerCost(pxPayerCost)
-                paymentMethodSearch.defaultInstallments = Array.safeAppend(paymentMethodSearch.defaultInstallments, payerCost)
-            }
+    open func getOneTapItemFromPXOneTapItem(_ pxOneTapItem: PXOneTapItem) -> OneTapItem {
+        let paymentMethodId = pxOneTapItem.paymentMethodId
+        let paymentTypeId = pxOneTapItem.paymentTypeId
+        var oneTapCard: OneTapCard? = nil
+        if let pxOneTapCard = pxOneTapItem.oneTapCard {
+            oneTapCard = getOneTapCardFromPXOneTapCard(pxOneTapCard)
         }
 
-        return paymentMethodSearch
+        let oneTapItem = OneTapItem(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard)
+        return oneTapItem
+    }
+
+    open func getOneTapCardFromPXOneTapCard(_ pxOneTapCard: PXOneTapCard) -> OneTapCard {
+        let cardId = pxOneTapCard.cardId
+        let cardDescription = pxOneTapCard.cardDescription
+        let issuer = getIssuerFromPXIssuer(pxOneTapCard.issuer)
+        let lastFourDigits = pxOneTapCard.lastFourDigits
+        let installments = pxOneTapCard.installments ?? 1
+        var payerCosts: [PayerCost] = []
+        if let pxPayerCosts = pxOneTapCard.payerCosts {
+            for pxPayerCost in pxPayerCosts {
+                let payerCost = getPayerCostFromPXPayerCost(pxPayerCost)
+                payerCosts = Array.safeAppend(payerCosts, payerCost)
+            }
+        }
+        let oneTapCard = OneTapCard(cardId: cardId, cardDescription: cardDescription, issuer: issuer, lastFourDigits: lastFourDigits, installments: installments, payerCosts: payerCosts)
+        return oneTapCard
     }
 
     open func getCustomerPaymentMethodFromPXCustomOptionSearchItem(_ pxCustomOptionSearchItem: PXCustomOptionSearchItem) -> CustomerPaymentMethod {

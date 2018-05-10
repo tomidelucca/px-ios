@@ -32,7 +32,9 @@ class OneTapFlowViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         super.init()
 
-        updateCheckoutModel(payerCosts: search.defaultInstallments)
+        if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
+            updateCheckoutModel(payerCost: payerCost)
+        }
     }
     public func nextStep() -> Steps {
         if needReviewAndConfirmForOneTap() {
@@ -56,8 +58,8 @@ extension OneTapFlowViewModel {
         return SecurityCodeViewModel(paymentMethod: paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
     }
 
-    func reviewConfirmViewModel() -> PXReviewViewModel {
-        return PXReviewViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentOptionSelected: paymentOptionSelected, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
+    func reviewConfirmViewModel() -> PXOneTapViewModel {
+        return PXOneTapViewModel(checkoutPreference: checkoutPreference, paymentData: paymentData, paymentOptionSelected: paymentOptionSelected, discount: paymentData.discount, reviewScreenPreference: reviewScreenPreference)
     }
 }
 
@@ -73,18 +75,8 @@ extension OneTapFlowViewModel {
     }
 
     public func updateCheckoutModel(payerCost: PayerCost) {
-        self.paymentData.updatePaymentDataWith(payerCost: payerCost)
-        self.paymentData.cleanToken()
-    }
-
-    public func updateCheckoutModel(payerCosts: [PayerCost]?) {
-        guard let payerCosts = payerCosts else {
-            return
-        }
-        // Guarda todas las payerCosts que vengan de backend en one tap. En v1 solamente viene una
-        self.payerCosts = payerCosts
-        if let first = payerCosts.first, payerCosts.count == 1, paymentOptionSelected.isCard() {
-            self.paymentData.updatePaymentDataWith(payerCost: first)
+        if paymentOptionSelected.isCard() {
+            self.paymentData.updatePaymentDataWith(payerCost: payerCost)
             self.paymentData.cleanToken()
         }
     }
