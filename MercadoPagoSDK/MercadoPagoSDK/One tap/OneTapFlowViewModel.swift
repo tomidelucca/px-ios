@@ -51,11 +51,15 @@ class OneTapFlowViewModel: NSObject {
 extension OneTapFlowViewModel {
     public func savedCardSecurityCodeViewModel() -> SecurityCodeViewModel {
         guard let cardInformation = self.paymentOptionSelected as? CardInformation else {
-            fatalError("Cannot conver payment option selected to CardInformation")
+            fatalError("Cannot convert payment option selected to CardInformation")
+        }
+
+        guard let paymentMethod = paymentData.paymentMethod else {
+            fatalError("Don't have paymentData to open Security View Controller")
         }
 
         let reason = SecurityCodeViewModel.Reason.SAVED_CARD
-        return SecurityCodeViewModel(paymentMethod: paymentData.paymentMethod!, cardInfo: cardInformation, reason: reason)
+        return SecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason)
     }
 
     func reviewConfirmViewModel() -> PXOneTapViewModel {

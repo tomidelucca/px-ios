@@ -18,7 +18,7 @@ extension OneTapFlow {
             self?.cancel()
 
             if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
-                MercadoPagoCheckoutViewModel.changePaymentMethodCallback!()
+                MercadoPagoCheckoutViewModel.changePaymentMethodCallback?()
             }
             return
 
