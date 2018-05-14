@@ -49,11 +49,6 @@ class PXReviewViewController: PXComponentContainerViewController {
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
         self.checkFloatingButtonVisibility()
-
-        self.callbackCancel = { [weak self] in
-            self?.viewModel.trackCancelEvent()
-            self?.navigationController?.popViewController(animated: true)
-        }
     }
 
     override func trackInfo() {
