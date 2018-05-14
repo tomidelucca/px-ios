@@ -70,7 +70,7 @@ open class MercadoPagoContext: NSObject {
         //Colombia
         "MCO": ["language": "es-CO", "currency": "COP", "termsconditions": "https://www.mercadopago.com.co/ayuda/terminos-y-condiciones_299"],
         //Venezuela
-        "MLV": ["language": "es", "currency": "VEF", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
+        "MLV": ["language": "es", "currency": "VES", "termsconditions": "https://www.mercadopago.com.ve/ayuda/terminos-y-condiciones_299"]
     ]
 
     public enum Site: String {
