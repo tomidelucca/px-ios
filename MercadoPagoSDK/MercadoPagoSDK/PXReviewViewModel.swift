@@ -226,13 +226,6 @@ extension PXReviewViewModel {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
                 title = text.toAttributedString()
-            } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
-                // This is for one tap. Review screen comes before getting the token.
-                // Text from backend comes like this: "Terminada en ..."
-                if let first = card.customerPaymentMethodDescription.first {
-                    let text: String = paymentMethodName + " " + String(describing: first).lowercased() + card.customerPaymentMethodDescription.dropFirst()
-                    title = text.toAttributedString()
-                }
             }
         } else {
             title = paymentMethodName.toAttributedString()

@@ -36,3 +36,57 @@ final class PXOneTapViewModel: PXReviewViewModel {
         MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: properties)
     }
 }
+
+// One tap implementations.
+extension PXOneTapViewModel {
+
+    func getPaymentMethodComponent(withAction: PXComponentAction?) -> PXPaymentMethodComponent? {
+
+        guard let pm = paymentData.getPaymentMethod() else {
+            return nil
+        }
+
+        let issuer = paymentData.getIssuer()
+        let paymentMethodName = pm.name ?? ""
+        let paymentMethodIssuerName = issuer?.name ?? ""
+
+        let image = PXImageService.getIconImageFor(paymentMethod: pm)
+        var title = NSAttributedString(string: "")
+        var subtitle: NSAttributedString? = nil
+        var accreditationTime: NSAttributedString? = nil
+        var action = withAction
+        let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
+        let lightLabelColor = ThemeManager.shared.labelTintColor()
+        let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
+
+        if pm.isCard {
+            if let lastFourDigits = (paymentData.token?.lastFourDigits) {
+                let text = paymentMethodName + " ... " + lastFourDigits
+                title = text.toAttributedString()
+            } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
+                if let lastFourDigits = card.getCardLastForDigits() {
+                    let text: String = paymentMethodName + " ... " + lastFourDigits
+                    title = text.toAttributedString()
+                }
+            }
+        } else {
+            title = paymentMethodName.toAttributedString()
+            if paymentOptionSelected.getComment().isNotEmpty {
+                accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
+            }
+        }
+
+        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
+            subtitle = paymentMethodIssuerName.toAttributedString()
+        }
+
+        if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
+            action = nil
+        }
+
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)
+
+        return PXPaymentMethodComponent(props: props)
+    }
+
+}

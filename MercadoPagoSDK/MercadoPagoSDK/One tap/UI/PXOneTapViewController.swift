@@ -98,7 +98,6 @@ extension PXOneTapViewController {
         addElasticHeader(headerBackgroundColor: ThemeManager.shared.whiteColor(), navigationCustomTitle: "", textColor: ThemeManager.shared.labelTintColor())
 
         self.view.layoutIfNeeded()
-
         super.refreshContentViewSize()
     }
 }
@@ -122,7 +121,7 @@ extension PXOneTapViewController {
                 self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
             }
         })
-        if let paymentMethodComponent = viewModel.buildPaymentMethodComponent(withAction: action) {
+        if let paymentMethodComponent = viewModel.getPaymentMethodComponent(withAction: action) {
             return paymentMethodComponent.render()
         }
 
