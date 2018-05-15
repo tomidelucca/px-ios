@@ -73,19 +73,18 @@ extension PXFooterRenderer {
 
         let fooView = PXFooterView()
 
-        var topView: UIView = fooView
         fooView.translatesAutoresizingMaskIntoConstraints = false
-        fooView.backgroundColor = .pxWhite
+        fooView.backgroundColor = .clear
 
         if let principalAction = footer.props.buttonAction {
             let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
             fooView.principalButton = principalButton
             fooView.addSubview(principalButton)
-            PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinTop(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinLeft(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.setHeight(owner: fooView, height: BUTTON_HEIGHT+PXLayout.XXL_MARGIN).isActive = true
             PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
-            topView = principalButton
         }
 
         return fooView

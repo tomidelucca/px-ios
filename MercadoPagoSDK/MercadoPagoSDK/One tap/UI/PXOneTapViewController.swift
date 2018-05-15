@@ -92,9 +92,7 @@ extension PXOneTapViewController {
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.pinBottom(view: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
-
         self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
         // Add elastic header.
         addElasticHeader(headerBackgroundColor: ThemeManager.shared.whiteColor(), navigationCustomTitle: "", textColor: ThemeManager.shared.labelTintColor())
