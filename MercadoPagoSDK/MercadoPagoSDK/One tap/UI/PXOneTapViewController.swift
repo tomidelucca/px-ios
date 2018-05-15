@@ -17,7 +17,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
 
     // MARK: Definitions
     lazy var itemViews = [UIView]()
-    fileprivate var viewModel: PXReviewViewModel!
+    fileprivate var viewModel: PXOneTapViewModel
     private var footerView: UIView!
 
     var callbackPaymentData: ((PaymentData) -> Void)
@@ -25,7 +25,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     var callbackExit: (() -> Void)
 
     // MARK: Lifecycle - Publics
-    init(viewModel: PXReviewViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel, callbackPaymentData : @escaping ((PaymentData) -> Void), callbackConfirm: @escaping ((PaymentData) -> Void), callbackExit: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
@@ -47,7 +47,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
         self.viewModel.trackInfo()
     }
 
-    func update(viewModel: PXReviewViewModel) {
+    func update(viewModel: PXOneTapViewModel) {
         self.viewModel = viewModel
     }
 }
@@ -95,16 +95,9 @@ extension PXOneTapViewController {
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
         // Add elastic header.
-        /*
-            addElasticHeader(headerBackgroundColor: summaryView.backgroundColor, navigationCustomTitle: PXReviewTitleComponentProps.DEFAULT_TITLE.localized, textColor: ThemeManager.shared.getTitleColorForReviewConfirmNavigation())
-         */
+        addElasticHeader(headerBackgroundColor: ThemeManager.shared.whiteColor(), navigationCustomTitle: "", textColor: ThemeManager.shared.labelTintColor())
 
         self.view.layoutIfNeeded()
-
-        /*
-            PXLayout.pinFirstSubviewToTop(view: self.contentView)?.isActive = true
-            PXLayout.pinLastSubviewToBottom(view: self.contentView)?.isActive = true
-        */
 
         super.refreshContentViewSize()
     }

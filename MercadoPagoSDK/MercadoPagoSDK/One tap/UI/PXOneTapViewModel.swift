@@ -11,6 +11,7 @@ import MercadoPagoPXTracking
 
 final class PXOneTapViewModel: PXReviewViewModel {
 
+    // Tracking overrides.
     override var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP }
     override var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP }
 
