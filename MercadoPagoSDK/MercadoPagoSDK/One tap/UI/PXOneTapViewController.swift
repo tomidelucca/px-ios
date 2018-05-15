@@ -83,14 +83,13 @@ extension PXOneTapViewController {
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.setHeight(owner: paymentMethodView, height: 80).isActive = true
+            self.view.layoutIfNeeded()
         }
 
         //Add Footer payment button
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.pinBottom(view: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
         self.view.layoutIfNeeded()
 

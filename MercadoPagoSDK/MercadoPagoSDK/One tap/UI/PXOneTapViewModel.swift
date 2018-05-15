@@ -46,14 +46,12 @@ extension PXOneTapViewModel {
             return nil
         }
 
-        let issuer = paymentData.getIssuer()
         let paymentMethodName = pm.name ?? ""
-        let paymentMethodIssuerName = issuer?.name ?? ""
-
         let image = PXImageService.getIconImageFor(paymentMethod: pm)
         var title = NSAttributedString(string: "")
         var subtitle: NSAttributedString? = nil
-        var accreditationTime: NSAttributedString? = nil
+        var cftText: NSAttributedString? = nil
+        var noInterestText: NSAttributedString? = nil
         var action = withAction
         let backgroundColor = ThemeManager.shared.whiteColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()
@@ -61,32 +59,43 @@ extension PXOneTapViewModel {
 
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                let text = paymentMethodName + " ... " + lastFourDigits
+                let text = "\(paymentMethodName) .... \(lastFourDigits)"
                 title = text.toAttributedString()
             } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
                 if let lastFourDigits = card.getCardLastForDigits() {
-                    let text: String = paymentMethodName + " ... " + lastFourDigits
+                    let text: String = "\(paymentMethodName) .... \(lastFourDigits)"
                     title = text.toAttributedString()
                 }
             }
         } else {
             title = paymentMethodName.toAttributedString()
-            if paymentOptionSelected.getComment().isNotEmpty {
-                accreditationTime = Utils.getAccreditationTimeAttributedString(from: paymentOptionSelected.getComment())
-            }
         }
 
-        if paymentMethodIssuerName.lowercased() != paymentMethodName.lowercased() && !paymentMethodIssuerName.isEmpty {
-            subtitle = paymentMethodIssuerName.toAttributedString()
+        if let payerCost = paymentData.getPayerCost() {
+            // Installments.
+            let numberOfInstallments: Int = payerCost.installments
+            let installmentAmount: Double = payerCost.installmentAmount
+            let currency: Currency = MercadoPagoContext.getCurrency()
+            let amountFormatted: String = Utils.getAmountFormatted(amount: installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
+            let subtitleDisplayText = "\(numberOfInstallments)x \(amountFormatted)"
+            subtitle = subtitleDisplayText.toAttributedString()
+
+            // Interest.
+            if !payerCost.hasInstallmentsRate() {
+                 noInterestText = "Sin interés".localized.toAttributedString()
+            }
+
+            // CFT.
+            if payerCost.hasCFTValue(), let cftValue = payerCost.getCFTValue() {
+                cftText = cftValue.toAttributedString()
+            }
         }
 
         if !self.reviewScreenPreference.isChangeMethodOptionEnabled() {
             action = nil
         }
 
-        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: nil, descriptionDetail: accreditationTime, disclaimer: nil, action: action, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)
-
+        let props = PXPaymentMethodProps(paymentMethodIcon: image, title: title, subtitle: subtitle, descriptionTitle: noInterestText, descriptionDetail: cftText, disclaimer: nil, action: action, backgroundColor: backgroundColor, lightLabelColor: lightLabelColor, boldLabelColor: boldLabelColor)
         return PXPaymentMethodComponent(props: props)
     }
-
 }
