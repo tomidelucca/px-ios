@@ -55,7 +55,7 @@ extension PXOneTapViewModel {
         var subtitle: NSAttributedString? = nil
         var accreditationTime: NSAttributedString? = nil
         var action = withAction
-        let backgroundColor = ThemeManager.shared.detailedBackgroundColor()
+        let backgroundColor = ThemeManager.shared.whiteColor()
         let lightLabelColor = ThemeManager.shared.labelTintColor()
         let boldLabelColor = ThemeManager.shared.boldLabelTintColor()
 

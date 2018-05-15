@@ -80,17 +80,19 @@ extension PXOneTapViewController {
 
         // Add payment method view.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            paymentMethodView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToBottom(paymentMethodView)
-            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+            PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.setHeight(owner: paymentMethodView, height: 80).isActive = true
         }
 
-        //Add Footer
+        //Add Footer payment button
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
+        PXLayout.pinBottom(view: footerView).isActive = true
+        PXLayout.centerHorizontally(view: footerView).isActive = true
+
         self.view.layoutIfNeeded()
         PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
 
@@ -122,9 +124,8 @@ extension PXOneTapViewController {
             }
         })
         if let paymentMethodComponent = viewModel.getPaymentMethodComponent(withAction: action) {
-            return paymentMethodComponent.render()
+            return paymentMethodComponent.oneTapRender()
         }
-
         return nil
     }
 
@@ -137,18 +138,12 @@ extension PXOneTapViewController {
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)
-        return footerComponent.render()
-    }
-
-    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
-        let termsAndConditionView = PXTermsAndConditionView()
-        return termsAndConditionView
+        return footerComponent.oneTapRender()
     }
 }
 
 // MARK: Actions.
-extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
-
+extension PXOneTapViewController {
     fileprivate func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
@@ -158,11 +153,5 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func cancelPayment() {
         self.callbackExit()
-    }
-
-    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
-        webVC.title = title
-        self.navigationController?.pushViewController(webVC, animated: true)
     }
 }

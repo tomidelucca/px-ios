@@ -21,6 +21,8 @@ class PXPaymentMethodComponentRenderer: NSObject {
     let DESCRIPTION_DETAIL_FONT_SIZE: CGFloat = PXLayout.XXS_FONT
     let DISCLAIMER_FONT_SIZE: CGFloat = PXLayout.XXXS_FONT
 
+    let margin = PXLayout.S_MARGIN
+
     func render(component: PXPaymentMethodComponent) -> PXPaymentMethodView {
         let pmBodyView = PXPaymentMethodView()
         pmBodyView.backgroundColor = component.props.backgroundColor
@@ -126,6 +128,80 @@ class PXPaymentMethodComponentRenderer: NSObject {
 
         return pmBodyView
     }
+}
+
+extension PXPaymentMethodComponentRenderer {
+
+    func oneTapRender(component: PXPaymentMethodComponent) -> PXOneTapPaymentMethodView {
+
+        let pmView = PXOneTapPaymentMethodView()
+        pmView.backgroundColor = component.props.backgroundColor
+        pmView.translatesAutoresizingMaskIntoConstraints = false
+
+        //Icon
+        let paymentMethodIcon = component.getPaymentMethodIconComponent()
+        pmView.paymentMethodIcon = paymentMethodIcon.render()
+        pmView.paymentMethodIcon!.layer.cornerRadius = IMAGE_WIDTH/2
+        pmView.addSubview(pmView.paymentMethodIcon!)
+        PXLayout.pinLeft(view: pmView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmView.paymentMethodIcon!, height: IMAGE_HEIGHT).isActive = true
+        PXLayout.setWidth(owner: pmView.paymentMethodIcon!, width: IMAGE_WIDTH).isActive = true
+        PXLayout.centerVertically(view: pmView.paymentMethodIcon!).isActive = true
+
+        //Title
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        pmView.amountTitle = title
+        pmView.addSubview(title)
+        title.attributedText = component.props.title
+        title.font = Utils.getFont(size: PXLayout.XS_FONT)
+        title.textColor = component.props.boldLabelColor
+        title.textAlignment = .left
+        title.numberOfLines = 0
+        PXLayout.put(view: pmView.amountTitle!, rightOf: pmView.paymentMethodIcon!, withMargin: margin).isActive = true
+        PXLayout.pinRight(view: pmView.amountTitle!, withMargin: margin).isActive = true
+        PXLayout.setHeight(owner: pmView.amountTitle!, height: 20).isActive = true
+
+        if let detailText = component.props.subtitle {
+            let detailLabel = UILabel()
+            detailLabel.translatesAutoresizingMaskIntoConstraints = false
+            pmView.addSubview(detailLabel)
+            pmView.amountDetail = detailLabel
+            detailLabel.attributedText = detailText
+            detailLabel.font = Utils.getFont(size: PXLayout.XXS_FONT)
+            detailLabel.textColor = component.props.lightLabelColor
+            detailLabel.textAlignment = .left
+            PXLayout.setHeight(owner: detailLabel, height: 20).isActive = true
+            PXLayout.pinLeft(view: pmView.amountDetail!, to: pmView.amountTitle!).isActive = true
+            PXLayout.pinRight(view: pmView.amountDetail!, to: pmView.amountTitle!).isActive = true
+        }
+
+        if pmView.amountDetail != nil {
+            PXLayout.pinTop(view: pmView.amountTitle!, to: pmView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+            PXLayout.pinBottom(view: pmView.amountDetail!, to: pmView.paymentMethodIcon!, withMargin: PXLayout.XXXS_MARGIN).isActive = true
+        } else {
+            PXLayout.centerVertically(view: pmView.amountTitle!, to: pmView.paymentMethodIcon!).isActive = true
+
+        }
+
+        // Border color.
+        pmView.layer.borderWidth = 1
+        pmView.layer.borderColor = ThemeManager.shared.lightTintColor().cgColor
+        pmView.layer.cornerRadius = 4
+
+        return pmView
+    }
+}
+
+class PXOneTapPaymentMethodView: PXBodyView {
+    var paymentMethodIcon: UIView?
+    var amountTitle: UILabel?
+    var amountDetail: UILabel?
+    var installmentsIcon: UIView?
+    var paymentMethodDescription: UILabel?
+    var paymentMethodDetail: UILabel?
+    var disclaimerLabel: UILabel?
+    var actionButton: PXSecondaryButton?
 }
 
 class PXPaymentMethodView: PXBodyView {

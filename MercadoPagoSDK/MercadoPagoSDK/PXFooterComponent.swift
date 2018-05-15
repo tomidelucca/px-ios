@@ -18,6 +18,10 @@ class PXFooterComponent: NSObject, PXComponentizable {
     func render() -> UIView {
         return PXFooterRenderer().render(self)
     }
+
+    func oneTapRender() -> UIView {
+        return PXFooterRenderer().oneTapRender(self)
+    }
 }
 
 class PXFooterProps: NSObject {

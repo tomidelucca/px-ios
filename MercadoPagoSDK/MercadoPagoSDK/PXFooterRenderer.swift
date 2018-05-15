@@ -67,6 +67,31 @@ class PXFooterRenderer: NSObject {
     }
 }
 
+extension PXFooterRenderer {
+
+    func oneTapRender(_ footer: PXFooterComponent) -> PXFooterView {
+
+        let fooView = PXFooterView()
+
+        var topView: UIView = fooView
+        fooView.translatesAutoresizingMaskIntoConstraints = false
+        fooView.backgroundColor = .pxWhite
+
+        if let principalAction = footer.props.buttonAction {
+            let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
+            fooView.principalButton = principalButton
+            fooView.addSubview(principalButton)
+            PXLayout.pinTop(view: principalButton, to: topView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinLeft(view: principalButton, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: principalButton, to: fooView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
+            topView = principalButton
+        }
+
+        return fooView
+    }
+}
+
 class PXFooterView: UIView {
     public var principalButton: PXPrimaryButton?
     public var linkButton: PXSecondaryButton?

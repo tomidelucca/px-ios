@@ -25,6 +25,10 @@ public class PXPaymentMethodComponent: NSObject, PXComponentizable {
     public func render() -> UIView {
         return PXPaymentMethodComponentRenderer().render(component: self)
     }
+
+    public func oneTapRender() -> UIView {
+        return PXPaymentMethodComponentRenderer().oneTapRender(component: self)
+    }
 }
 
 class PXPaymentMethodProps: NSObject {
