@@ -66,7 +66,12 @@ extension OneTapFlow {
     ///   - search: payment method search item
     ///   - paymentMethodPlugins: payment Methods plugins that can be show
     /// - Returns: selected payment option if possible
-    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin]) -> PaymentMethodOption? {
+    static func autoSelectOneTapOption(search: PaymentMethodSearch, paymentMethodPlugins: [PXPaymentMethodPlugin], forceTest: Bool = false) -> PaymentMethodOption? {
+
+        if forceTest {
+            return MockPaymentOption()
+        }
+
         var selectedPaymentOption: PaymentMethodOption?
         if search.hasCheckoutDefaultOption() {
             // Check if can autoselect plugin
@@ -87,5 +92,37 @@ extension OneTapFlow {
                 }}
         }
         return selectedPaymentOption
+    }
+}
+
+// TODO: Only for test flow. Remove before merge.
+class MockPaymentOption: PaymentMethodOption {
+
+    func getId() -> String {
+        return "rapipago"
+    }
+
+    func getDescription() -> String {
+        return "Rapipago mocked payment method"
+    }
+
+    func getComment() -> String {
+        return ""
+    }
+
+    func hasChildren() -> Bool {
+        return false
+    }
+
+    func getChildren() -> [PaymentMethodOption]? {
+        return nil
+    }
+
+    func isCard() -> Bool {
+        return false
+    }
+
+    func isCustomerPaymentMethod() -> Bool {
+        return false
     }
 }
