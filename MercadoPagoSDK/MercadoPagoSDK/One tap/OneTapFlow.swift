@@ -95,7 +95,7 @@ extension OneTapFlow {
     }
 }
 
-// TODO: For test one tap v2. frontend / Remove before merge.
+// TODO: Only for test flow. Remove before merge.
 class MockPaymentOption: PaymentMethodOption {
 
     func getId() -> String {

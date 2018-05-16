@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PXFooterView: UIView {
+final class PXFooterView: UIView {
     public var principalButton: PXPrimaryButton?
     public var linkButton: PXSecondaryButton?
 }
