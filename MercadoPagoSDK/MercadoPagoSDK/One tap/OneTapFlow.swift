@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class OneTapFlow: PXFlow {
+final class OneTapFlow: PXFlow {
 
     let viewModel: OneTapFlowViewModel
     let pxNavigationHandler: PXNavigationHandler

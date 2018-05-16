@@ -20,7 +20,7 @@ protocol PXFlow {
     func exitCheckout()
 }
 
-protocol PXFlowViewModel {
+protocol PXFlowModel {
     associatedtype Steps
     func nextStep() -> Steps
 }
