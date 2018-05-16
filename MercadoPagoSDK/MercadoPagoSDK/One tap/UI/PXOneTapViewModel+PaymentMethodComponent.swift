@@ -28,11 +28,11 @@ extension PXOneTapViewModel {
 
         if pm.isCard {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
-                let text = "\(paymentMethodName) .... \(lastFourDigits)"
+                let text = "\(paymentMethodName) ···· \(lastFourDigits)"
                 title = text.toAttributedString()
             } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
                 if let lastFourDigits = card.getCardLastForDigits() {
-                    let text: String = "\(paymentMethodName) .... \(lastFourDigits)"
+                    let text: String = "\(paymentMethodName) ···· \(lastFourDigits)"
                     title = text.toAttributedString()
                 }
             }
