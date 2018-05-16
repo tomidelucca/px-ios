@@ -9,7 +9,7 @@
 import UIKit
 
 class PXFooterComponent: NSObject, PXComponentizable {
-  var props: PXFooterProps
+    var props: PXFooterProps
 
     init(props: PXFooterProps) {
         self.props = props
@@ -21,16 +21,5 @@ class PXFooterComponent: NSObject, PXComponentizable {
 
     func oneTapRender() -> UIView {
         return PXFooterRenderer().oneTapRender(self)
-    }
-}
-
-class PXFooterProps: NSObject {
-    var buttonAction: PXComponentAction?
-    var linkAction: PXComponentAction?
-    var primaryColor: UIColor?
-    init(buttonAction: PXComponentAction? = nil, linkAction: PXComponentAction? = nil, primaryColor: UIColor? = .pxBlueMp) {
-        self.buttonAction = buttonAction
-        self.linkAction = linkAction
-        self.primaryColor = primaryColor
     }
 }

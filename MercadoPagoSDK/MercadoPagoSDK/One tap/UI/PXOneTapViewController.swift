@@ -10,6 +10,7 @@ import UIKit
 import MercadoPagoPXTracking
 
 final class PXOneTapViewController: PXComponentContainerViewController {
+
     // MARK: Tracking
     override var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP }
     override var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP }
@@ -39,7 +40,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupUI()
-        self.view.layoutIfNeeded()
     }
 
     override func trackInfo() {
@@ -67,7 +67,7 @@ extension PXOneTapViewController {
     fileprivate func renderViews() {
         self.contentView.prepareForRender()
 
-        // Add payment method view.
+        // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
@@ -77,7 +77,7 @@ extension PXOneTapViewController {
             self.view.layoutIfNeeded()
         }
 
-        // Add Footer payment button.
+        // Add footer payment button.
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
@@ -99,10 +99,7 @@ extension PXOneTapViewController {
 
     fileprivate func getFooterView() -> UIView {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
+            self?.confirmPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXFooterRenderer: NSObject {
+final class PXFooterRenderer: NSObject {
 
     let BUTTON_HEIGHT: CGFloat = 50.0
 
@@ -65,29 +65,4 @@ class PXFooterRenderer: NSObject {
         linkButton.add(for: .touchUpInside, footerAction.action)
         return linkButton
     }
-}
-
-// MARK: - OneTap
-extension PXFooterRenderer {
-    func oneTapRender(_ footer: PXFooterComponent) -> PXFooterView {
-        let fooView = PXFooterView()
-        fooView.translatesAutoresizingMaskIntoConstraints = false
-        fooView.backgroundColor = .clear
-        if let principalAction = footer.props.buttonAction {
-            let principalButton = self.buildPrincipalButton(with: principalAction, color: footer.props.primaryColor)
-            fooView.principalButton = principalButton
-            fooView.addSubview(principalButton)
-            PXLayout.pinTop(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinLeft(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: principalButton, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.setHeight(owner: fooView, height: BUTTON_HEIGHT+PXLayout.XXL_MARGIN).isActive = true
-            PXLayout.setHeight(owner: principalButton, height: BUTTON_HEIGHT).isActive = true
-        }
-        return fooView
-    }
-}
-
-class PXFooterView: UIView {
-    public var principalButton: PXPrimaryButton?
-    public var linkButton: PXSecondaryButton?
 }
