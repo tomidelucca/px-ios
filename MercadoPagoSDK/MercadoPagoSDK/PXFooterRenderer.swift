@@ -67,7 +67,7 @@ class PXFooterRenderer: NSObject {
     }
 }
 
-// MARK:- OneTap
+// MARK: - OneTap
 extension PXFooterRenderer {
     func oneTapRender(_ footer: PXFooterComponent) -> PXFooterView {
         let fooView = PXFooterView()

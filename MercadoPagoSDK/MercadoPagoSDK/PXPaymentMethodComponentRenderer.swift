@@ -132,7 +132,6 @@ class PXPaymentMethodComponentRenderer: NSObject {
 extension PXPaymentMethodComponentRenderer {
 
     func oneTapRender(component: PXPaymentMethodComponent) -> PXOneTapPaymentMethodView {
-
         let arrowImage: UIImage? = MercadoPago.getImage("oneTapArrow")
         var defaultHeight: CGFloat = 80
         let leftRightMargin = PXLayout.M_MARGIN
@@ -219,7 +218,7 @@ extension PXPaymentMethodComponentRenderer {
                 cftLabel.translatesAutoresizingMaskIntoConstraints = false
                 pmView.addSubview(cftLabel)
                 cftLabel.attributedText = cftAttr
-                cftLabel.font = Utils.getFont(size:PXLayout.M_FONT)
+                cftLabel.font = Utils.getFont(size: PXLayout.M_FONT)
                 cftLabel.textColor = cftColor
                 cftLabel.textAlignment = .left
                 PXLayout.setHeight(owner: cftLabel, height: PXLayout.M_FONT).isActive = true

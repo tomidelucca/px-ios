@@ -10,7 +10,6 @@ import UIKit
 import MercadoPagoPXTracking
 
 final class PXOneTapViewController: PXComponentContainerViewController {
-
     // MARK: Tracking
     override var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP }
     override var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP }
@@ -18,7 +17,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Definitions
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
-    private var footerView: UIView!
+    private lazy var footerView: UIView = UIView()
 
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
@@ -52,7 +51,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     }
 }
 
-// MARK: UI Methods
+// MARK: UI Methods.
 extension PXOneTapViewController {
 
     fileprivate func setupUI() {
@@ -66,61 +65,33 @@ extension PXOneTapViewController {
     }
 
     fileprivate func renderViews() {
-
         self.contentView.prepareForRender()
-
-        // Add item views
-        itemViews = buildItemComponentsViews()
-        for itemView in itemViews {
-            contentView.addSubviewToBottom(itemView)
-            PXLayout.centerHorizontally(view: itemView).isActive = true
-            PXLayout.matchWidth(ofView: itemView).isActive = true
-            itemView.addSeparatorLineToBottom(height: 1)
-        }
 
         // Add payment method view.
         if let paymentMethodView = getPaymentMethodComponentView() {
             contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
+            let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
+            paymentMethodView.addGestureRecognizer(paymentMethodTapAction)
             self.view.layoutIfNeeded()
         }
 
-        //Add Footer payment button
+        // Add Footer payment button.
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
-        self.view.layoutIfNeeded()
-
-        // Add elastic header.
-        addElasticHeader(headerBackgroundColor: ThemeManager.shared.whiteColor(), navigationCustomTitle: "", textColor: ThemeManager.shared.labelTintColor())
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
     }
 }
 
-// MARK: Component Builders
+// MARK: Components Builders.
 extension PXOneTapViewController {
-
-    fileprivate func buildItemComponentsViews() -> [UIView] {
-        var itemViews = [UIView]()
-        let itemComponents = viewModel.buildItemComponents()
-        for items in itemComponents {
-            itemViews.append(items.render())
-        }
-        return itemViews
-    }
-
     fileprivate func getPaymentMethodComponentView() -> UIView? {
-        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
-            if let reviewViewModel = self?.viewModel {
-                self?.viewModel.trackChangePaymentMethodEvent()
-                self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
-            }
-        })
-        if let paymentMethodComponent = viewModel.getPaymentMethodComponent(withAction: action) {
+        if let paymentMethodComponent = viewModel.getPaymentMethodComponent() {
             return paymentMethodComponent.oneTapRender()
         }
         return nil
@@ -139,8 +110,13 @@ extension PXOneTapViewController {
     }
 }
 
-// MARK: Actions.
+// MARK: User Actions.
 extension PXOneTapViewController {
+    @objc func shouldChangePaymentMethod() {
+        viewModel.trackChangePaymentMethodEvent()
+        callbackPaymentData(viewModel.getClearPaymentData())
+    }
+
     fileprivate func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
         self.hideNavBar()
