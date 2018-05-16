@@ -18,7 +18,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     // MARK: Definitions
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
-    private var footerView: UIView!
+    private lazy var footerView: UIView = UIView()
 
     var callbackPaymentData: ((PaymentData) -> Void)
     var callbackConfirm: ((PaymentData) -> Void)
@@ -40,7 +40,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupUI()
-        self.view.layoutIfNeeded()
     }
 
     override func trackInfo() {
@@ -52,7 +51,7 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     }
 }
 
-// MARK: UI Methods
+// MARK: UI Methods.
 extension PXOneTapViewController {
 
     fileprivate func setupUI() {
@@ -66,88 +65,54 @@ extension PXOneTapViewController {
     }
 
     fileprivate func renderViews() {
-
         self.contentView.prepareForRender()
 
-        // Add item views
-        itemViews = buildItemComponentsViews()
-        for itemView in itemViews {
-            contentView.addSubviewToBottom(itemView)
-            PXLayout.centerHorizontally(view: itemView).isActive = true
-            PXLayout.matchWidth(ofView: itemView).isActive = true
-            itemView.addSeparatorLineToBottom(height: 1)
-        }
-
-        // Add payment method view.
+        // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            paymentMethodView.addSeparatorLineToBottom(height: 1)
             contentView.addSubviewToBottom(paymentMethodView)
-            PXLayout.matchWidth(ofView: paymentMethodView).isActive = true
-            PXLayout.centerHorizontally(view: paymentMethodView).isActive = true
+            PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
+            PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
+            let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
+            paymentMethodView.addGestureRecognizer(paymentMethodTapAction)
+            self.view.layoutIfNeeded()
         }
 
-        //Add Footer
+        // Add footer payment button.
         footerView = getFooterView()
         contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
-        PXLayout.centerHorizontally(view: footerView, to: contentView).isActive = true
-        self.view.layoutIfNeeded()
-        PXLayout.setHeight(owner: footerView, height: footerView.frame.height).isActive = true
-
-        // Add elastic header.
-        addElasticHeader(headerBackgroundColor: ThemeManager.shared.whiteColor(), navigationCustomTitle: "", textColor: ThemeManager.shared.labelTintColor())
+        PXLayout.centerHorizontally(view: footerView).isActive = true
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
     }
 }
 
-// MARK: Component Builders
+// MARK: Components Builders.
 extension PXOneTapViewController {
-
-    fileprivate func buildItemComponentsViews() -> [UIView] {
-        var itemViews = [UIView]()
-        let itemComponents = viewModel.buildItemComponents()
-        for items in itemComponents {
-            itemViews.append(items.render())
-        }
-        return itemViews
-    }
-
     fileprivate func getPaymentMethodComponentView() -> UIView? {
-        let action = PXComponentAction(label: "review_change_payment_method_action".localized_beta, action: { [weak self] in
-            if let reviewViewModel = self?.viewModel {
-                self?.viewModel.trackChangePaymentMethodEvent()
-                self?.callbackPaymentData(reviewViewModel.getClearPaymentData())
-            }
-        })
-        if let paymentMethodComponent = viewModel.getPaymentMethodComponent(withAction: action) {
-            return paymentMethodComponent.render()
+        if let paymentMethodComponent = viewModel.getPaymentMethodComponent() {
+            return paymentMethodComponent.oneTapRender()
         }
-
         return nil
     }
 
     fileprivate func getFooterView() -> UIView {
         let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
-            guard let strongSelf = self else {
-                return
-            }
-            strongSelf.confirmPayment()
+            self?.confirmPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
         let footerComponent = PXFooterComponent(props: footerProps)
-        return footerComponent.render()
-    }
-
-    fileprivate func getTermsAndConditionView() -> PXTermsAndConditionView {
-        let termsAndConditionView = PXTermsAndConditionView()
-        return termsAndConditionView
+        return footerComponent.oneTapRender()
     }
 }
 
-// MARK: Actions.
-extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
+// MARK: User Actions.
+extension PXOneTapViewController {
+    @objc func shouldChangePaymentMethod() {
+        viewModel.trackChangePaymentMethodEvent()
+        callbackPaymentData(viewModel.getClearPaymentData())
+    }
 
     fileprivate func confirmPayment() {
         self.viewModel.trackConfirmActionEvent()
@@ -158,11 +123,5 @@ extension PXOneTapViewController: PXTermsAndConditionViewDelegate {
 
     fileprivate func cancelPayment() {
         self.callbackExit()
-    }
-
-    func shouldOpenTermsCondition(_ title: String, screenName: String, url: URL) {
-        let webVC = WebViewController(url: url, screenName: screenName, navigationBarTitle: title)
-        webVC.title = title
-        self.navigationController?.pushViewController(webVC, animated: true)
     }
 }
