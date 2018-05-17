@@ -16,3 +16,10 @@ public protocol PXComponentizable {
 public protocol PXCustomComponentizable {
     func render(store: PXCheckoutStore, theme: PXTheme) -> UIView?
 }
+
+@objc
+public protocol PXXibComponentizable {
+    func xibName() -> String
+    func containerView() -> UIView
+    func render() -> UIView
+}
