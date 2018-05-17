@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias PXSummaryRowProps = (title: String, subTitle: String?, rightText: String)
+typealias PXSummaryRowProps = (title: String, subTitle: String?, rightText: String, backgroundColor: UIColor?)
 
 final class PXSummaryRowComponent: NSObject, PXComponentizable {
     private var props: PXSummaryRowProps

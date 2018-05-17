@@ -77,12 +77,12 @@ extension PXOneTapViewController {
             self.view.layoutIfNeeded()
         }
 
-        let rowView = PXSummaryRowComponent(props: (title: "AySA", subTitle: "Factura agua", rightText: "$ 1200")).oneTapRender()
+        let rowView = PXSummaryRowComponent(props: (title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil)).oneTapRender()
         contentView.addSubviewToBottom(rowView)
         PXLayout.pinLeft(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: rowView, withMargin: PXLayout.M_MARGIN).isActive = true
 
-        let rowView2 = PXSummaryRowComponent(props: (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400")).oneTapRender()
+        let rowView2 = PXSummaryRowComponent(props: (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)).oneTapRender()
         contentView.addSubviewToBottom(rowView2)
         PXLayout.pinLeft(view: rowView2, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.pinRight(view: rowView2, withMargin: PXLayout.M_MARGIN).isActive = true

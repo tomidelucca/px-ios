@@ -62,9 +62,10 @@ extension PXOneTapSummaryRowView {
     }
 
     private func setupStyles() {
+        contentView.backgroundColor = .clear
         titleLabel.textColor = ThemeManager.shared.labelTintColor()
         amountLabel.textColor = ThemeManager.shared.labelTintColor()
         subtitleLabel.textColor = ThemeManager.shared.greyColor()
-        contentView.backgroundColor = ThemeManager.shared.lightTintColor()
+        contentView.backgroundColor = props?.backgroundColor
     }
 }
