@@ -91,6 +91,7 @@ extension PXOneTapViewController {
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
+        //summaryView?.hide() //TODO: Use after Eden merge.
     }
 }
 
@@ -125,11 +126,9 @@ extension PXOneTapViewController {
 // MARK: User Actions.
 extension PXOneTapViewController {
     @objc func shouldChangePaymentMethod() {
-        summaryView?.toggle() // Only for test toggle
-        /*
+        // summaryView?.toggle() //TODO: Use after Eden merge.
         viewModel.trackChangePaymentMethodEvent()
         callbackPaymentData(viewModel.getClearPaymentData())
-         */
     }
 
     fileprivate func confirmPayment() {

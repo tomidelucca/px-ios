@@ -65,29 +65,35 @@ extension PXSmallSummaryView {
 // MARK: Toggle expand/colapse support.
 extension PXSmallSummaryView {
     func toggle() {
-        if frame.height == 0 {
+        if let heighConst = self.constraintForAnimation?.constant, frame.height == 0 && heighConst == 0 {
             expand()
         } else {
             colapse()
         }
     }
 
+    func hide() {
+        let colapseFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: 0)
+        frame = colapseFrame
+        constraintForAnimation?.constant = 0
+    }
+
     private func expand() {
-        let newFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: heightForAnimation)
+        let expandFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: heightForAnimation)
         UIView.animate(withDuration: 0.5) { [weak self] in
             if let height = self?.heightForAnimation {
-                self?.frame = newFrame
+                self?.frame = expandFrame
                 self?.constraintForAnimation?.constant = height
             }
         }
     }
 
     private func colapse() {
-        let newFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: 0)
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            self?.frame = newFrame
-        }) { _ in
+        let colapseFrame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: 0)
+        UIView.animate(withDuration: 0.4, animations: { [weak self] in
+            self?.frame = colapseFrame
+        }, completion: { _ in
             self.constraintForAnimation?.constant = 0
-        }
+        })
     }
 }
