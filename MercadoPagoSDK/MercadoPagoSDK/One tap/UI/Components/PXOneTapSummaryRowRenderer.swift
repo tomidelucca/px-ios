@@ -1,5 +1,5 @@
 //
-//  PXOneTapSummaryRowView.swift
+//  PXOneTapSummaryRowRenderer.swift
 //  MercadoPagoSDK
 //
 //  Created by Juan sebastian Sanzone on 16/5/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class PXOneTapSummaryRowView: PXXibComponent {
+final class PXOneTapSummaryRowRenderer: PXXibRenderer {
     private var props: PXSummaryRowProps?
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,7 +19,7 @@ final class PXOneTapSummaryRowView: PXXibComponent {
     init(withProps: PXSummaryRowProps) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         props = withProps
-        loadXibComponent(xibComponentizableClass: self)
+        loadXib(rendererComponentizableClass: self)
     }
 
     override init(frame: CGRect) {
@@ -31,23 +31,32 @@ final class PXOneTapSummaryRowView: PXXibComponent {
     }
 }
 
-extension PXOneTapSummaryRowView: PXXibComponentizable {
-    func xibName() -> String {
+// PXXibComponentizable renderer mandatory protocol.
+extension PXOneTapSummaryRowRenderer {
+    override func xibName() -> String {
         return "PXOneTapSummaryRowView"
     }
 
-    func containerView() -> UIView {
+    override func containerView() -> UIView {
         return contentView
     }
 
-    func render() -> UIView {
+    override func render() -> UIView {
         setupStyles()
         populateProps()
         return self
     }
 }
 
-extension PXOneTapSummaryRowView {
+extension PXOneTapSummaryRowRenderer {
+    private func setupStyles() {
+        contentView.backgroundColor = .clear
+        titleLabel.textColor = ThemeManager.shared.labelTintColor()
+        amountLabel.textColor = ThemeManager.shared.labelTintColor()
+        subtitleLabel.textColor = ThemeManager.shared.greyColor()
+        contentView.backgroundColor = props?.backgroundColor
+    }
+
     private func populateProps() {
         if let componentProps = props {
             subtitleLabel.text = nil
@@ -59,13 +68,5 @@ extension PXOneTapSummaryRowView {
                 subtitleHeightConstraint.constant = 0
             }
         }
-    }
-
-    private func setupStyles() {
-        contentView.backgroundColor = .clear
-        titleLabel.textColor = ThemeManager.shared.labelTintColor()
-        amountLabel.textColor = ThemeManager.shared.labelTintColor()
-        subtitleLabel.textColor = ThemeManager.shared.greyColor()
-        contentView.backgroundColor = props?.backgroundColor
     }
 }

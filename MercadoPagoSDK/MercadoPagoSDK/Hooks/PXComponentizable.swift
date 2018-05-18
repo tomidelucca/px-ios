@@ -10,6 +10,7 @@ import Foundation
 @objc
 public protocol PXComponentizable {
     func render() -> UIView
+    @objc optional func oneTapRender() -> UIView
 }
 
 @objc
