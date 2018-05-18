@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PXOneTapSummaryModalViewController: UIViewController {
+final class PXOneTapSummaryModalViewController: UIViewController {
 
     private var props: [PXSummaryRowProps]?
 
