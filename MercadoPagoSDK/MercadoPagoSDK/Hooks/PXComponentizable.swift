@@ -19,7 +19,8 @@ public protocol PXCustomComponentizable {
 }
 
 @objc
-public protocol PXXibComponentizable {
+public
+protocol PXXibComponentizable {
     func xibName() -> String
     func containerView() -> UIView
     func render() -> UIView

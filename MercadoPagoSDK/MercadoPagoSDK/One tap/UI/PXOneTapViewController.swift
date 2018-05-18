@@ -67,6 +67,18 @@ extension PXOneTapViewController {
     fileprivate func renderViews() {
         self.contentView.prepareForRender()
 
+        // Chevron fake action. // TODO: Remove after Eden merge.
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.backgroundColor = .white
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.setTitle("Tap me", for: .normal)
+        contentView.addSubviewToBottom(button, withMargin: PXLayout.M_MARGIN)
+        PXLayout.pinLeft(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.pinRight(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
+        PXLayout.setHeight(owner: button, height: 44).isActive = true
+        let chevronAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
+        button.addGestureRecognizer(chevronAction)
+
         // Add small summary.
         if let smallSummaryView = getSmallSummaryView() {
             contentView.addSubviewToBottom(smallSummaryView)
@@ -91,7 +103,7 @@ extension PXOneTapViewController {
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
-        //summaryView?.hide() //TODO: Use after Eden merge.
+        summaryView?.hide() //TODO: Use after Eden merge.
     }
 }
 
@@ -125,8 +137,16 @@ extension PXOneTapViewController {
 
 // MARK: User Actions.
 extension PXOneTapViewController {
+
+    @objc func shouldOpenSummary() {
+        //summaryView?.toggle() //TODO: Use after Eden merge.
+        let summaryViewProps: [PXSummaryRowProps] = [(title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil), (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)]
+        let summaryViewController = PXOneTapSummaryModalViewController()
+        summaryViewController.setProps(summaryProps: summaryViewProps)
+        PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle")
+    }
+
     @objc func shouldChangePaymentMethod() {
-        // summaryView?.toggle() //TODO: Use after Eden merge.
         viewModel.trackChangePaymentMethodEvent()
         callbackPaymentData(viewModel.getClearPaymentData())
     }

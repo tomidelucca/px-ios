@@ -249,6 +249,10 @@
 		23A07FCC20482FEB0074CB64 /* PXSummaryComponentProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */; };
 		23A07FCF204837AB0074CB64 /* PXSummaryFullComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */; };
 		23A366A9200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */; };
+		23AC323F20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */; };
+		23AC324020AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */; };
+		23AC324120AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
+		23AC324220AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */; };
 		23BC73851F0E84FB00B19C1A /* CauseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC73841F0E84FB00B19C1A /* CauseTest.swift */; };
@@ -917,6 +921,8 @@
 		23A07FCB20482FEB0074CB64 /* PXSummaryComponentProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryComponentProps.swift; sourceTree = "<group>"; };
 		23A07FCE204837AB0074CB64 /* PXSummaryFullComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSummaryFullComponentView.swift; sourceTree = "<group>"; };
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
+		23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXOneTapSummaryModalViewController.swift; sourceTree = "<group>"; };
+		23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PXOneTapSummaryModalViewController.xib; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
 		23BDC9202073DF3500678B0F /* Double+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Format.swift"; sourceTree = "<group>"; };
@@ -1751,6 +1757,8 @@
 				231EB53020ABBAD20022D8DF /* PXOneTapViewModel+PaymentMethodComponent.swift */,
 				23625A3620AB06380069AE30 /* PXOneTapViewController.swift */,
 				23C3893B20AC4574001EFDA9 /* PXOneTapPaymentMethodView.swift */,
+				23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */,
+				23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */,
 				2351EEEB20AD9CA400741028 /* Components */,
 			);
 			path = UI;
@@ -2800,6 +2808,7 @@
 				151A941A1DBFBBC700A5557B /* PaymentSearchCollectionViewCell.xib in Resources */,
 				15B8B1BB1E71DEAE0065DF50 /* AddCouponViewController.xib in Resources */,
 				4BEFBF901F06BB20003EA94E /* PayerCostCFTTableViewCell.xib in Resources */,
+				23AC324120AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */,
 				4BAA55F01DB0019200501061 /* PayerCostRowTableViewCell.xib in Resources */,
 				4BAA56061DB57D1B00501061 /* IssuerRowTableViewCell.xib in Resources */,
 				76FD247B1C5BFEA1008C5DC0 /* CardBackView.xib in Resources */,
@@ -2812,6 +2821,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23AC324220AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */,
 				76FD24801C5BFEA1008C5DC0 /* CardFormViewController.xib in Resources */,
 				FC73AB47202B87AD00537C9F /* Localizable_pt.plist in Resources */,
 				766012F21CF284A600897F9D /* WebViewController.xib in Resources */,
@@ -3065,6 +3075,7 @@
 				4BEF81001E538CCE00797CD1 /* PaymentResultScreenPreference.swift in Sources */,
 				81ACC81B1F9A88F700206F7B /* PXResultViewController.swift in Sources */,
 				812BA9BE1FC8B21F00FF32C2 /* PXPaymentMethodComponent.swift in Sources */,
+				23AC323F20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */,
 				23ECADC51EF1C7CC003E4539 /* ApiUtil.swift in Sources */,
 				7656CA1D1C7646600043BDB2 /* InstructionAction.swift in Sources */,
 				0F98837B1AD2AB6000F750F0 /* Issuer.swift in Sources */,
@@ -3361,6 +3372,7 @@
 				0F9883331AD2AB3C00F750F0 /* CustomServer.swift in Sources */,
 				7622E3291DF5EF0B00490C4E /* AdditionalStepCardTableViewCell.swift in Sources */,
 				8138737A1FA8D2BC002095D6 /* PXResultViewController.swift in Sources */,
+				23AC324020AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */,
 				1553AF341E36454B00E36C62 /* MercadoPagoCheckout.swift in Sources */,
 				FC7BD8B41FD6B8AF00D5B2C7 /* PXResourceProvider.swift in Sources */,
 				813B412B2051C3DB00B6D886 /* PXBusinessResultViewModel.swift in Sources */,
