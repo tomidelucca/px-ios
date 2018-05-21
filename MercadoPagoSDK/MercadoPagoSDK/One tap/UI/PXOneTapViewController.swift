@@ -67,6 +67,12 @@ extension PXOneTapViewController {
     fileprivate func renderViews() {
         self.contentView.prepareForRender()
 
+        if let itemView = getItemComponentView() {
+            contentView.addSubviewToBottom(itemView, withMargin: 48)
+            PXLayout.centerHorizontally(view: itemView).isActive = true
+            PXLayout.matchWidth(ofView: itemView).isActive = true
+        }
+
         // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
             contentView.addSubviewToBottom(paymentMethodView)
@@ -90,6 +96,14 @@ extension PXOneTapViewController {
 
 // MARK: Components Builders.
 extension PXOneTapViewController {
+
+    fileprivate func getItemComponentView() -> UIView? {
+        if let oneTapItemComponent = viewModel.getItemComponent() {
+            return oneTapItemComponent.render()
+        }
+        return nil
+    }
+
     fileprivate func getPaymentMethodComponentView() -> UIView? {
         if let paymentMethodComponent = viewModel.getPaymentMethodComponent() {
             return paymentMethodComponent.oneTapRender()

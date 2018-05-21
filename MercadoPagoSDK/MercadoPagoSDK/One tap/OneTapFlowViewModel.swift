@@ -22,14 +22,15 @@ class OneTapFlowViewModel: NSObject {
     var payerCosts: [PayerCost]?
 
     let mpESCManager: MercadoPagoESC = MercadoPagoESCImplementation()
-    let reviewScreenPreference = ReviewScreenPreference()
+    let reviewScreenPreference: ReviewScreenPreference
     let mercadoPagoServicesAdapter = MercadoPagoServicesAdapter(servicePreference: MercadoPagoCheckoutViewModel.servicePreference)
 
-    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption) {
+    init(paymentData: PaymentData, checkoutPreference: CheckoutPreference, search: PaymentMethodSearch, paymentOptionSelected: PaymentMethodOption, reviewScreenPreference: ReviewScreenPreference = ReviewScreenPreference()) {
         self.paymentData = paymentData.copy() as? PaymentData ?? paymentData
         self.checkoutPreference = checkoutPreference
         self.search = search
         self.paymentOptionSelected = paymentOptionSelected
+        self.reviewScreenPreference = reviewScreenPreference
         super.init()
 
         if let payerCost = search.oneTap?.oneTapCard?.getSelectedPayerCost() {
