@@ -600,6 +600,7 @@
 		81F090E220177EDD008A69C1 /* PXContainedActionButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E020177EDA008A69C1 /* PXContainedActionButtonComponent.swift */; };
 		81F090E4201784BE008A69C1 /* PXContainedActionButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */; };
 		81F090E5201784BE008A69C1 /* PXContainedActionButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F090E3201784BE008A69C1 /* PXContainedActionButtonRenderer.swift */; };
+		8C312BD8603545234BBC9857 /* Pods_MercadoPagoSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CBC6F9326B38C688FC679A4 /* Pods_MercadoPagoSDKTests.framework */; };
 		C5D27F451EEF155500768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		C5D27F461EEF289400768C1C /* PaymentVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D27F441EEF155500768C1C /* PaymentVaultViewModel.swift */; };
 		CC8AA1501DC5612300503910 /* UILabel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8AA14F1DC5612300503910 /* UILabel+Additions.swift */; };
@@ -1193,6 +1194,7 @@
 			files = (
 				4B0E72AA1FA8F9E8006A3853 /* MercadoPagoPXTracking.framework in Frameworks */,
 				4B0E72A81FA8F9E4006A3853 /* MercadoPagoServices.framework in Frameworks */,
+				8C312BD8603545234BBC9857 /* Pods_MercadoPagoSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2807,7 +2809,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\necho \"Swiftlint disabled\"\n#swiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		531F38B15A5AD3D6E3AC8F5C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

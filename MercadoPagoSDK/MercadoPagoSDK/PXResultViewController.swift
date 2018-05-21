@@ -160,7 +160,9 @@ class PXResultViewController: PXComponentContainerViewController {
         self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.showsHorizontalScrollIndicator = false
         self.view.layoutIfNeeded()
-        renderViews()
+        if contentView.getSubviews().isEmpty {
+            renderViews()
+        }
     }
 }
 
