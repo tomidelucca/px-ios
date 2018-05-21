@@ -104,7 +104,7 @@
 //    [self.mpCheckout setTheme: meliExampleTheme];
 
     // CDP color.
-    [self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
+    //[self.mpCheckout setDefaultColor:[UIColor colorWithRed:0.49 green:0.17 blue:0.55 alpha:1.0]];
     
     //[self setHooks];
     
