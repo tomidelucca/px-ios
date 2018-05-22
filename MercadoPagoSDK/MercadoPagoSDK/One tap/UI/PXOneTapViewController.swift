@@ -77,7 +77,7 @@ extension PXOneTapViewController {
 
         // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.M_MARGIN)
+            contentView.addSubviewToBottom(paymentMethodView)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
@@ -112,7 +112,7 @@ extension PXOneTapViewController {
     }
 
     private func getFooterView() -> UIView {
-        let payAction = PXComponentAction(label: "Confirmar".localized) { [weak self] in
+        let payAction = PXComponentAction(label: "Pagar".localized) { [weak self] in
             self?.confirmPayment()
         }
         let footerProps = PXFooterProps(buttonAction: payAction)
