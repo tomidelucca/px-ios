@@ -251,7 +251,7 @@ open class CheckoutPreference: NSObject {
         for item in self.items {
             amount = amount + (Double(item.quantity) * item.unitPrice)
         }
-        return amount
+        return CurrenciesUtil.getRoundedAmount(amount: amount)
     }
 
     /*open func getTitle() -> String {

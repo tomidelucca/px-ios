@@ -85,9 +85,15 @@ open class DiscountCoupon: NSObject {
         }
         if json["amount_off"] != nil && !(json["amount_off"]! is NSNull) {
             discount.amount_off = String( describing: json["amount_off"]  as! NSNumber)
+            if let amountOff = Double(discount.amount_off) {
+                discount.amount_off = String(CurrenciesUtil.getRoundedAmount(amount: amountOff))
+            }
         }
         if json["coupon_amount"] != nil && !(json["coupon_amount"]! is NSNull) {
             discount.coupon_amount = String( describing: json["coupon_amount"]  as! NSNumber)
+            if let couponAmount = Double(discount.coupon_amount) {
+                discount.coupon_amount = String(CurrenciesUtil.getRoundedAmount(amount: couponAmount))
+            }
         }
         if json["currency_id"] != nil && !(json["currency_id"]! is NSNull) {
             discount.currency_id = json["currency_id"] as? String

@@ -56,4 +56,11 @@ open class CurrenciesUtil {
         return (currencyId != nil && currencyId?.characters.count > 0) ? self.currenciesList[currencyId!] : nil
     }
 
+    static func getRoundedAmount(amount: Double) -> Double {
+        if MercadoPagoContext.getSite() == MercadoPagoContext.Site.MLV.rawValue {
+            let divisor = pow(10.0, Double(2))
+            return (amount * divisor).rounded() / divisor
+        }
+        return amount
+    }
 }

@@ -82,7 +82,8 @@
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-f74de17e-1dd5-4652-8213-ec5aa1b3f8f8" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+    dc = nil;
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-b3d856f6-375e-4f8c-9573-ad28ab8fac95" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -207,7 +208,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"241261722-fd934d99-cb91-48b9-880b-781a4dd2252f"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"242626852-728309b1-4933-4ef6-a426-0f4ce5b506fa"];
 }
 
 -(void)setPaymentResultScreenPreference {
