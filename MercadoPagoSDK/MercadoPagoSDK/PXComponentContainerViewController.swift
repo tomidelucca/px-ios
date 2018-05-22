@@ -90,7 +90,7 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
         for view in contentView.getSubviews() {
             height += view.frame.height
         }
-
+        height += contentView.getCarryMarginY()
         contentView.fixHeight(height: height)
         scrollView.contentSize = CGSize(width: PXLayout.getScreenWidth(), height: height)
         self.view.layoutIfNeeded()
