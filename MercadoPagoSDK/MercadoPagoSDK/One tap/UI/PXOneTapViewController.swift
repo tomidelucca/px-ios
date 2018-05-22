@@ -71,8 +71,8 @@ extension PXOneTapViewController {
             contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
-            //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
-            //itemView.addGestureRecognizer(tapGesture)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
+            itemView.addGestureRecognizer(tapGesture)
         }
 
         // Add payment method.
@@ -86,7 +86,7 @@ extension PXOneTapViewController {
 
         // Add footer payment button.
         footerView = getFooterView()
-        contentView.addSubviewToBottom(footerView, withMargin: 24)
+        contentView.addSubviewToBottom(footerView)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
