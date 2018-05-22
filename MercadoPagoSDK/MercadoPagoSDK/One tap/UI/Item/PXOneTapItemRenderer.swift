@@ -32,7 +32,6 @@ final class PXOneTapItemRenderer {
 
         // Item icon
         if let itemImage = itemView.itemImage {
-
             itemImage.image = imageObj
             itemImage.layer.cornerRadius = PXOneTapItemRenderer.IMAGE_HEIGHT/2
             itemImage.layer.borderWidth = 3
@@ -61,31 +60,42 @@ final class PXOneTapItemRenderer {
             PXLayout.matchWidth(ofView: amountWithoutDiscount, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
         }
 
+        itemView.totalView = UIView(frame: .zero)
+
         // Item amount
-        itemView.totalAmount = buildItemAmount(with: itemComponent.props.totalAmount, labelColor: ThemeManager.shared.boldLabelTintColor())
+        let totalAmount = buildItemAmount(with: itemComponent.props.totalAmount, labelColor: ThemeManager.shared.boldLabelTintColor())
 
-        if let totalAmount = itemView.totalAmount {
-            itemView.addSubviewToBottom(totalAmount, withMargin: PXLayout.XXS_MARGIN)
-            PXLayout.setWidth(owner: totalAmount, width: totalAmount.intrinsicContentSize.width).isActive = true
-            PXLayout.centerHorizontally(view: totalAmount).isActive = true
-        }
+        if let totalAmount = totalAmount {
+            totalAmount.translatesAutoresizingMaskIntoConstraints = false
+            itemView.totalView?.addSubview(totalAmount)
+            itemView.totalView?.layoutIfNeeded()
 
-        itemView.pinLastSubviewToBottom(withMargin: PXLayout.M_MARGIN)?.isActive = true
+            PXLayout.pinTop(view: totalAmount).isActive = true
+            PXLayout.pinLeft(view: totalAmount).isActive = true
 
-        // Arrow image.
-        itemView.arrow = UIImageView(image: arrow)
+            // Arrow image.
+            let arrow = UIImageView(image: self.arrow)
 
-        if let arrow = itemView.arrow {
             let transformation = CGAffineTransform.identity.rotated(by: CGFloat(Double.pi / 2))
             arrow.transform = transformation
             arrow.contentMode = .scaleAspectFit
-            itemView.addSubview(arrow)
+            arrow.translatesAutoresizingMaskIntoConstraints = false
+            itemView.totalView?.addSubview(arrow)
             PXLayout.setHeight(owner: arrow, height: PXLayout.XS_MARGIN).isActive = true
             PXLayout.setWidth(owner: arrow, width: PXLayout.XXS_MARGIN).isActive = true
-            PXLayout.centerVertically(view: arrow, to: itemView.totalAmount).isActive = true
-            PXLayout.pinRight(view: arrow, to: itemView.totalAmount, withMargin: -PXLayout.S_MARGIN).isActive = true
+            PXLayout.centerVertically(view: arrow, to: totalAmount).isActive = true
+            PXLayout.pinRight(view: arrow, to: totalAmount, withMargin: -PXLayout.S_MARGIN).isActive = true
         }
 
+        if let totalView = itemView.totalView {
+            let widthSubviews = totalView.subviews.reduce(0) {$0 + $1.frame.width}
+            PXLayout.setWidth(owner: totalView, width: widthSubviews + PXLayout.S_MARGIN).isActive = true
+            itemView.addSubviewToBottom(totalView, withMargin: PXLayout.XXS_MARGIN)
+            PXLayout.centerHorizontally(view: totalView).isActive = true
+            PXLayout.setHeight(owner: totalView, height: PXOneTapItemRenderer.AMOUNT_FONT_SIZE).isActive = true
+        }
+
+        itemView.pinLastSubviewToBottom(withMargin: PXLayout.ZERO_MARGIN)?.isActive = true
         return itemView
     }
 }
@@ -107,9 +117,7 @@ extension PXOneTapItemRenderer {
         }
 
         let font = Utils.getLightFont(size: PXOneTapItemRenderer.AMOUNT_FONT_SIZE)
-
         let unitPrice = buildAttributedTotalAmount(amount: amount, color: labelColor, fontSize: font.pointSize)
-
         return buildLabel(attributedText: unitPrice, color: labelColor, font: font)
     }
 
@@ -119,11 +127,9 @@ extension PXOneTapItemRenderer {
         }
 
         let font = Utils.getFont(size: PXOneTapItemRenderer.AMOUNT_WITHOUT_DISCOUNT)
-
         let totalWithoutDiscount = NSMutableAttributedString(attributedString: buildAttributedTotalAmountWithoutDiscount(amount: amount, color: labelColor, font: font))
         let discountDescription = NSMutableAttributedString(string: " - " + title, attributes: [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: ThemeManager.shared.noTaxAndDiscountLabelTintColor()])
         totalWithoutDiscount.append(discountDescription)
-
         return buildLabel(attributedText: totalWithoutDiscount, color: labelColor, font: font)
     }
 
