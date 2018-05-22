@@ -18,7 +18,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
     private lazy var footerView: UIView = UIView()
-    private var summaryView: PXSmallSummaryView?
 
     // MARK: Callbacks
     var callbackPaymentData: ((PaymentData) -> Void)
@@ -72,8 +71,8 @@ extension PXOneTapViewController {
             contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
             PXLayout.centerHorizontally(view: itemView).isActive = true
             PXLayout.matchWidth(ofView: itemView).isActive = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
-            itemView.addGestureRecognizer(tapGesture)
+            //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
+            //itemView.addGestureRecognizer(tapGesture)
         }
 
         // Add payment method.
@@ -87,13 +86,12 @@ extension PXOneTapViewController {
 
         // Add footer payment button.
         footerView = getFooterView()
-        contentView.addSubviewToBottom(footerView)
+        contentView.addSubviewToBottom(footerView, withMargin: 24)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
-        summaryView?.hide() //TODO: Use after Eden merge.
     }
 }
 
@@ -127,7 +125,6 @@ extension PXOneTapViewController {
 extension PXOneTapViewController {
 
     @objc func shouldOpenSummary() {
-        //summaryView?.toggle() //TODO: Use after Eden merge.
         let summaryViewProps: [PXSummaryRowProps] = [(title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil), (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)]
         let summaryViewController = PXOneTapSummaryModalViewController()
         summaryViewController.setProps(summaryProps: summaryViewProps)
