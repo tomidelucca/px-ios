@@ -83,7 +83,7 @@
     dc.concept = @"Descuento de patito";
     dc.amount = 300;
     dc = nil;
-    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-b3d856f6-375e-4f8c-9573-ad28ab8fac95" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
+    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey:@"TEST-4763b824-93d7-4ca2-a7f7-93539c3ee5bd" checkoutPreference:self.pref paymentData:self.paymentData paymentResult:self.paymentResult discount:nil navigationController:self.navigationController];
 
     // Setear PaymentResultScreenPreference
     [self setPaymentResultScreenPreference];
@@ -208,7 +208,7 @@
 }
 
 -(void)setCheckoutPref_WithId {
-    self.pref = [[CheckoutPreference alloc] initWith_id: @"242626852-728309b1-4933-4ef6-a426-0f4ce5b506fa"];
+    self.pref = [[CheckoutPreference alloc] initWith_id: @"243966003-5dedb2d9-e139-4329-8b82-c7a156a3d67a"];
 }
 
 -(void)setPaymentResultScreenPreference {
