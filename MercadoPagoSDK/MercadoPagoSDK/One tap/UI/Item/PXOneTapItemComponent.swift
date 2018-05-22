@@ -9,13 +9,14 @@
 import Foundation
 
 final class PXOneTapItemComponent: PXComponentizable {
-    public func render() -> UIView {
-        return PXOneTapItemRenderer().oneTapRender(self)
-    }
 
     var props: PXOneTapItemComponentProps
 
     init(props: PXOneTapItemComponentProps) {
         self.props = props
+    }
+
+    public func render() -> UIView {
+        return PXOneTapItemRenderer().oneTapRender(self)
     }
 }

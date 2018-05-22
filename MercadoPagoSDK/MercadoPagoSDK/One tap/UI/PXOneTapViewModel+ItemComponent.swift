@@ -16,7 +16,7 @@ extension PXOneTapViewModel {
     }
 
     private func getAmountWithoutDiscount() -> Double? {
-        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let _ = paymentData.discount {
+        if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), paymentData.discount != nil {
              if let payerCost = paymentData.getPayerCost() {
                 return payerCost.totalAmount
              } else {
@@ -28,7 +28,7 @@ extension PXOneTapViewModel {
 
     private func getDiscountDescription() -> String? {
         if MercadoPagoCheckoutViewModel.flowPreference.isDiscountEnable(), let discount = paymentData.discount {
-            return discount.getDiscountDescription() + " OFF"
+            return "\(discount.getDiscountDescription()) OFF"
         }
         return nil
     }
