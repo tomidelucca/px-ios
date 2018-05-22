@@ -18,7 +18,6 @@ final class PXOneTapViewController: PXComponentContainerViewController {
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
     private lazy var footerView: UIView = UIView()
-    private var summaryView: PXSmallSummaryView?
 
     // MARK: Callbacks
     var callbackPaymentData: ((PaymentData) -> Void)
@@ -67,23 +66,13 @@ extension PXOneTapViewController {
     fileprivate func renderViews() {
         self.contentView.prepareForRender()
 
-        // Chevron fake action. // TODO: Remove after Eden merge.
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.backgroundColor = .white
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.setTitle("Tap me", for: .normal)
-        contentView.addSubviewToBottom(button, withMargin: PXLayout.M_MARGIN)
-        PXLayout.pinLeft(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.pinRight(view: button, withMargin: PXLayout.M_MARGIN).isActive = true
-        PXLayout.setHeight(owner: button, height: 44).isActive = true
-        let chevronAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
-        button.addGestureRecognizer(chevronAction)
-
-        // Add small summary.
-        if let smallSummaryView = getSmallSummaryView() {
-            contentView.addSubviewToBottom(smallSummaryView)
-            PXLayout.pinLeft(view: smallSummaryView, withMargin: PXLayout.M_MARGIN).isActive = true
-            PXLayout.pinRight(view: smallSummaryView, withMargin: PXLayout.M_MARGIN).isActive = true
+        // Add item-price view.
+        if let itemView = getItemComponentView() {
+            contentView.addSubviewToBottom(itemView, withMargin: PXLayout.XXL_MARGIN)
+            PXLayout.centerHorizontally(view: itemView).isActive = true
+            PXLayout.matchWidth(ofView: itemView).isActive = true
+            //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.shouldOpenSummary))
+            //itemView.addGestureRecognizer(tapGesture)
         }
 
         // Add payment method.
@@ -97,23 +86,20 @@ extension PXOneTapViewController {
 
         // Add footer payment button.
         footerView = getFooterView()
-        contentView.addSubviewToBottom(footerView)
+        contentView.addSubviewToBottom(footerView, withMargin: 24)
         PXLayout.matchWidth(ofView: footerView).isActive = true
         PXLayout.centerHorizontally(view: footerView).isActive = true
 
         self.view.layoutIfNeeded()
         super.refreshContentViewSize()
-        summaryView?.hide() //TODO: Use after Eden merge.
     }
 }
 
 // MARK: Components Builders.
 extension PXOneTapViewController {
-    private func getSmallSummaryView() -> UIView? {
-        let summaryViewProps: [PXSummaryRowProps] = [(title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil), (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)]
-        if let smallSummaryView = PXSmallSummaryView(withProps: summaryViewProps, backgroundColor: ThemeManager.shared.lightTintColor()).oneTapRender() as? PXSmallSummaryView {
-            summaryView = smallSummaryView
-            return summaryView
+    private func getItemComponentView() -> UIView? {
+        if let oneTapItemComponent = viewModel.getItemComponent() {
+            return oneTapItemComponent.render()
         }
         return nil
     }
@@ -139,7 +125,6 @@ extension PXOneTapViewController {
 extension PXOneTapViewController {
 
     @objc func shouldOpenSummary() {
-        //summaryView?.toggle() //TODO: Use after Eden merge.
         let summaryViewProps: [PXSummaryRowProps] = [(title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil), (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)]
         let summaryViewController = PXOneTapSummaryModalViewController()
         summaryViewController.setProps(summaryProps: summaryViewProps)
