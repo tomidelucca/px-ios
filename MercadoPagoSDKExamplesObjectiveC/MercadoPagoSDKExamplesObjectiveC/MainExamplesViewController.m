@@ -87,9 +87,6 @@
     dc.concept = @"Descuento de patito";
     dc.amountWithoutDiscount = 500;
     //dc = nil;
-    
-    self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
-
     [MPXTracker.sharedInstance setTrackListener:[MLMyMPPXTrackListener new]];
 
     self.pref.preferenceId = @"243966003-d0be0be0-6fd8-4769-bf2f-7f2d979655f5";

@@ -57,8 +57,6 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
     fileprivate var tintColor = true
     fileprivate var loadingGroups = true
 
-    fileprivate let TOTAL_ROW_HEIGHT: CGFloat = 42.0
-
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
 
     fileprivate var defaultOptionSelected = false
@@ -197,6 +195,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
         let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
 
+        oldAmount.append(" ".toAttributedString())
         oldAmount.append(attributedAmount)
 
 
