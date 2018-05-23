@@ -137,13 +137,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.hideNavBar()
-
-        if let leftBarButtonItem = self.navigationItem.leftBarButtonItem {
-            leftBarButtonItem.action = #selector(invokeCallbackCancelShowingNavBar)
-        }
-
         self.navigationController!.navigationBar.shadowImage = nil
         self.extendedLayoutIncludesOpaqueBars = true
 
