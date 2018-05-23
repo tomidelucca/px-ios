@@ -77,7 +77,7 @@ extension PXOneTapViewController {
 
         // Add payment method.
         if let paymentMethodView = getPaymentMethodComponentView() {
-            contentView.addSubviewToBottom(paymentMethodView)
+            contentView.addSubviewToBottom(paymentMethodView, withMargin: PXLayout.M_MARGIN)
             PXLayout.pinLeft(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             PXLayout.pinRight(view: paymentMethodView, withMargin: PXLayout.M_MARGIN).isActive = true
             let paymentMethodTapAction = UITapGestureRecognizer(target: self, action: #selector(self.shouldChangePaymentMethod))
@@ -123,12 +123,12 @@ extension PXOneTapViewController {
 
 // MARK: User Actions.
 extension PXOneTapViewController {
-
     @objc func shouldOpenSummary() {
-        let summaryViewProps: [PXSummaryRowProps] = [(title: "AySA", subTitle: "Factura agua", rightText: "$ 1200", backgroundColor: nil), (title: "Edenor", subTitle: "Pago de luz mensual", rightText: "$ 400", backgroundColor: nil)]
-        let summaryViewController = PXOneTapSummaryModalViewController()
-        summaryViewController.setProps(summaryProps: summaryViewProps)
-        PXComponentFactory.Modal.show(viewController: summaryViewController, title: "Detalle")
+        if let summaryProps = viewModel.getSummaryProps(), summaryProps.count > 0 {
+            let summaryViewController = PXOneTapSummaryModalViewController()
+            summaryViewController.setProps(summaryProps: viewModel.getSummaryProps())
+            PXComponentFactory.Modal.show(viewController: summaryViewController, title: nil)
+        }
     }
 
     @objc func shouldChangePaymentMethod() {
