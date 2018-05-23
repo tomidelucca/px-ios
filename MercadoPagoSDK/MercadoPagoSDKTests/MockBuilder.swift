@@ -253,11 +253,12 @@ open class MockBuilder: NSObject {
         return MockPaymentPluginViewController()
     }
 
-    class func buildPaymentMethodSearch(groups: [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, customOptions: [CardInformation]? = nil) -> PaymentMethodSearch {
+    class func buildPaymentMethodSearch(groups: [PaymentMethodSearchItem]? = nil, paymentMethods: [PaymentMethod]? = nil, customOptions: [CardInformation]? = nil, oneTapItem: OneTapItem? = nil) -> PaymentMethodSearch {
         let paymentMethodSearch = PaymentMethodSearch()
         paymentMethodSearch.groups = groups
         paymentMethodSearch.paymentMethods = paymentMethods
         paymentMethodSearch.customerPaymentMethods = customOptions
+        paymentMethodSearch.oneTap = oneTapItem
         return paymentMethodSearch
     }
 

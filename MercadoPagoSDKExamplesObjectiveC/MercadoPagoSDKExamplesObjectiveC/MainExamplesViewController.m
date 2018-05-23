@@ -85,7 +85,7 @@
     dc.amount_off = [externalDiscount stringValue];
     dc.currency_id = @"ARS";
     dc.concept = @"Descuento de patito";
-    dc.amountWithoutDiscount = 60;
+    dc.amountWithoutDiscount = 500;
     //dc = nil;
     
     self.pref.preferenceId = @"241261700-459d4126-903c-4bad-bc05-82e5f13fa7d3";
@@ -108,7 +108,7 @@
     
     //[self setHooks];
     
-    //[self setPaymentMethodPlugins];
+    [self setPaymentMethodPlugins];
 
     //[self setPaymentPlugin];
 
@@ -148,17 +148,17 @@
 
     PaymentPluginViewController *makePaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentPlugin"];
 
-    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"bitcoin_payment" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
+    PXPaymentMethodPlugin * bitcoinPaymentMethodPlugin = [[PXPaymentMethodPlugin alloc] initWithPaymentMethodPluginId:@"account_money" name:@"Bitcoin" image:[UIImage imageNamed:@"bitcoin_payment"] description:@"" paymentPlugin:makePaymentComponent];
 
     // Payment method config plugin component.
     PaymentMethodPluginConfigViewController *configPaymentComponent = [storyboard instantiateViewControllerWithIdentifier:@"paymentMethodConfigPlugin"];
 
-    [bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
+    //[bitcoinPaymentMethodPlugin setPaymentMethodConfigWithPlugin:configPaymentComponent];
 
     NSMutableArray *paymentMethodPlugins = [[NSMutableArray alloc] init];
     [paymentMethodPlugins addObject:bitcoinPaymentMethodPlugin];
 
-    //[self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
+    [self.mpCheckout setPaymentMethodPluginsWithPlugins:paymentMethodPlugins];
 
     [self.mpCheckout setPaymentPluginWithPaymentPlugin:makePaymentComponent];
 }
@@ -353,7 +353,7 @@
 
         //        UIViewController *vc = [[[MercadoPagoCheckout alloc] initWithCheckoutPreference:self.pref paymentData:paymentData navigationController:self.navigationController] getRootViewController];
         //
-        [self.mpCheckout updateReviewAndConfirm];
+        //[self.mpCheckout updateReviewAndConfirm];
 
     }];
 }

@@ -579,7 +579,39 @@ extension MercadoPagoServicesAdapter {
             paymentMethodSearch.defaultOption = getPaymentMethodSearchItemFromPXPaymentMethodSearchItem(pxDefaultOption)
         }
 
+        if let pxOneTap = pxPaymentMethodSearch.oneTap {
+            paymentMethodSearch.oneTap = getOneTapItemFromPXOneTapItem(pxOneTap)
+        }
         return paymentMethodSearch
+    }
+
+    open func getOneTapItemFromPXOneTapItem(_ pxOneTapItem: PXOneTapItem) -> OneTapItem {
+        let paymentMethodId = pxOneTapItem.paymentMethodId
+        let paymentTypeId = pxOneTapItem.paymentTypeId
+        var oneTapCard: OneTapCard? = nil
+        if let pxOneTapCard = pxOneTapItem.oneTapCard {
+            oneTapCard = getOneTapCardFromPXOneTapCard(pxOneTapCard)
+        }
+
+        let oneTapItem = OneTapItem(paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, oneTapCard: oneTapCard)
+        return oneTapItem
+    }
+
+    open func getOneTapCardFromPXOneTapCard(_ pxOneTapCard: PXOneTapCard) -> OneTapCard {
+        let cardId = pxOneTapCard.cardId
+        let cardDescription = pxOneTapCard.cardDescription
+        let issuer = getIssuerFromPXIssuer(pxOneTapCard.issuer)
+        let lastFourDigits = pxOneTapCard.lastFourDigits
+        let installments = pxOneTapCard.installments ?? 1
+        var payerCosts: [PayerCost] = []
+        if let pxPayerCosts = pxOneTapCard.payerCosts {
+            for pxPayerCost in pxPayerCosts {
+                let payerCost = getPayerCostFromPXPayerCost(pxPayerCost)
+                payerCosts = Array.safeAppend(payerCosts, payerCost)
+            }
+        }
+        let oneTapCard = OneTapCard(cardId: cardId, cardDescription: cardDescription, issuer: issuer, lastFourDigits: lastFourDigits, installments: installments, payerCosts: payerCosts)
+        return oneTapCard
     }
 
     open func getCustomerPaymentMethodFromPXCustomOptionSearchItem(_ pxCustomOptionSearchItem: PXCustomOptionSearchItem) -> CustomerPaymentMethod {

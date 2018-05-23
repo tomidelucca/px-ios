@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import MercadoPagoPXTracking
 
-final class PXReviewViewModel: NSObject {
+class PXReviewViewModel: NSObject {
+
+    var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM }
+    var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM }
 
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
@@ -27,6 +31,28 @@ final class PXReviewViewModel: NSObject {
         self.paymentOptionSelected = paymentOptionSelected
         self.reviewScreenPreference = reviewScreenPreference
         super.init()
+    }
+
+    // MARK: Tracking logic
+    func trackConfirmActionEvent() {
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: preference.getAmount().stringValue]
+
+        if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
+            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
+        }
+        if let installments = paymentData.payerCost?.installments {
+            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
+        }
+
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName, properties: properties)
+    }
+
+    func trackInfo() {
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName)
+    }
+
+    func trackChangePaymentMethodEvent() {
+        // No tracking for change payment method event in review view controller for now
     }
 }
 
@@ -101,7 +127,7 @@ extension PXReviewViewModel {
     }
 
     func getClearPaymentData() -> PaymentData {
-        let newPaymentData: PaymentData = paymentData
+        let newPaymentData: PaymentData = paymentData.copy() as? PaymentData ?? paymentData
         newPaymentData.clearCollectedData()
         return newPaymentData
     }
@@ -200,6 +226,13 @@ extension PXReviewViewModel {
             if let lastFourDigits = (paymentData.token?.lastFourDigits) {
                 let text = paymentMethodName + " " + "terminada en ".localized + lastFourDigits
                 title = text.toAttributedString()
+            } else if let card = paymentOptionSelected as? CustomerPaymentMethod {
+                // This is for one tap. Review screen comes before getting the token.
+                // Text from backend comes like this: "Terminada en ..."
+                if let first = card.customerPaymentMethodDescription.first {
+                    let text: String = paymentMethodName + " " + String(describing: first).lowercased() + card.customerPaymentMethodDescription.dropFirst()
+                    title = text.toAttributedString()
+                }
             }
         } else {
             title = paymentMethodName.toAttributedString()
@@ -348,5 +381,30 @@ extension PXReviewViewModel {
         }
         return nil
     }
+}
 
+final class PXOneTapViewModel: PXReviewViewModel {
+    override var screenName: String { return TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM_ONE_TAP }
+    override var screenId: String { return TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM_ONE_TAP }
+
+    override func trackChangePaymentMethodEvent() {
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_ONE_TAP_CHANGE_PAYMENT_METHOD, screenId: screenId, screenName: screenName)
+    }
+
+    override func trackConfirmActionEvent() {
+        MPXTracker.sharedInstance.trackActionEvent(action: TrackingUtil.ACTION_CHECKOUT_CONFIRMED, screenId: screenId, screenName: screenName)
+    }
+
+    override func trackInfo() {
+        var properties: [String: String] = [TrackingUtil.METADATA_PAYMENT_METHOD_ID: paymentData.paymentMethod?.paymentMethodId ?? "", TrackingUtil.METADATA_PAYMENT_TYPE_ID: paymentData.paymentMethod?.paymentTypeId ?? "", TrackingUtil.METADATA_AMOUNT_ID: preference.getAmount().stringValue]
+
+        if let customerCard = paymentOptionSelected as? CustomerPaymentMethod {
+            properties[TrackingUtil.METADATA_CARD_ID] = customerCard.customerPaymentMethodId
+        }
+        if let installments = paymentData.payerCost?.installments {
+            properties[TrackingUtil.METADATA_INSTALLMENTS] = installments.stringValue
+        }
+
+        MPXTracker.sharedInstance.trackScreen(screenId: screenId, screenName: screenName, properties: properties)
+    }
 }

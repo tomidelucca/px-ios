@@ -258,9 +258,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         } else if isCouponSection(section: indexPath.section) {
             if let coupon = self.viewModel.discount {
 
-
                 PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: coupon), title: coupon.getDescription())
-
 
             } else {
                 let step = AddCouponViewController(amount: self.viewModel.amount, email: self.viewModel.email, mercadoPagoServicesAdapter: self.viewModel.mercadoPagoServicesAdapter, callback: { (coupon) in
