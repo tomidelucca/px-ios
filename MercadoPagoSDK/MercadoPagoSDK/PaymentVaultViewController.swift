@@ -156,8 +156,59 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
             temporalView.isUserInteractionEnabled = false
             self.view.addSubview(temporalView)
         }
+        renderViews()
+
         self.hideLoading()
+
+
     }
+
+    fileprivate func renderViews() {
+        // Add floating button
+        var floatingButtonView: UIView!
+        floatingButtonView = getFloatingButtonView()
+        self.view.addSubview(floatingButtonView)
+        PXLayout.setHeight(owner: floatingButtonView, height: 82 + PXLayout.getSafeAreaBottomInset()/2).isActive = true
+        PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
+        PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
+        PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+    }
+
+    fileprivate func getFloatingButtonView() -> UIView {
+
+
+        let amountFontSize: CGFloat = PXLayout.M_FONT
+        let centsFontSize: CGFloat = PXLayout.XXXS_FONT
+        let currency = MercadoPagoContext.getCurrency()
+
+
+        let oldAmount = Utils.getAttributedAmount((self.viewModel.discount?.amountWithoutDiscount)!, currency: currency, color: UIColor.red, fontSize: PXLayout.XXS_FONT, baselineOffset: 4)
+
+        oldAmount.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSRange(location: 0, length: oldAmount.length))
+
+
+
+
+        let currencySymbol = currency.getCurrencySymbolOrDefault()
+        let thousandSeparator = currency.getThousandsSeparatorOrDefault()
+        let decimalSeparator = currency.getDecimalSeparatorOrDefault()
+
+        let discountAmount = self.viewModel.discount?.amount_off.toAttributedString()
+
+        let attributedAmount = Utils.getAttributedAmount(self.viewModel.amount, thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator, currencySymbol: currencySymbol, color: .black, fontSize: amountFontSize, centsFontSize: centsFontSize, baselineOffset: 3, smallSymbol: false)
+
+        oldAmount.append(attributedAmount)
+
+
+        let action = PXComponentAction(label: "Descuento") {
+            PXComponentFactory.Modal.show(viewController: CouponDetailViewController.init(coupon: self.viewModel.discount!), title: self.viewModel.discount?.getDescription())
+        }
+        let props = PXTotalRowProps(title: "Total".toAttributedString(), value: oldAmount, action: action, actionValue:  discountAmount)
+        let total = PXTotalRowComponent(props: props)
+        let totalView = total.render()
+        return totalView
+    }
+
 
     fileprivate func cardFormCallbackCancel() -> (() -> Void) {
         return { () -> Void in
