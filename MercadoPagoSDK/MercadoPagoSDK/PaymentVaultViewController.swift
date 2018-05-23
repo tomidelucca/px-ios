@@ -161,7 +161,17 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
 
     }
 
+    func getCollectionViewPinBottomContraint() -> NSLayoutConstraint? {
+        let filteredConstraints = self.view.constraints.filter { $0.identifier == "collection_view_pin_bottom" }
+        if let bottomContraint = filteredConstraints.first {
+            return bottomContraint
+        }
+        return nil
+    }
+
     fileprivate func renderViews() {
+        getCollectionViewPinBottomContraint()?.isActive = false
+
         // Add floating total row
         var floatingButtonView: UIView!
         floatingButtonView = getFloatingButtonView()
@@ -170,6 +180,7 @@ open class PaymentVaultViewController: MercadoPagoUIScrollViewController, UIColl
         PXLayout.matchWidth(ofView: floatingButtonView).isActive = true
         PXLayout.centerHorizontally(view: floatingButtonView).isActive = true
         PXLayout.pinBottom(view: floatingButtonView, to: view, withMargin: 0).isActive = true
+        PXLayout.put(view: floatingButtonView, onBottomOf: self.collectionSearch).isActive = true
     }
 
     fileprivate func getFloatingButtonView() -> UIView {
