@@ -10,11 +10,6 @@ import XCTest
 
 class CurrencyUtilTest: BaseTest {
 
-    override func setUp() {
-        super.setUp()
-        MercadoPagoContext.setSiteID(MercadoPagoContext.Site.MLV.rawValue)
-    }
-
     func test_whenThirdDecimalBelowFiveThenRoundDownWithOneDigit() {
         let amount: Double = 5.432
         let roundedAmount: Double = CurrenciesUtil.getRoundedAmount(amount: amount)
