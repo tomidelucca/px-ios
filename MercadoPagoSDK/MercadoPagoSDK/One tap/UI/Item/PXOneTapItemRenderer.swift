@@ -75,9 +75,6 @@ final class PXOneTapItemRenderer {
 
             // Arrow image.
             let arrow = UIImageView(image: self.arrow)
-
-            let transformation = CGAffineTransform.identity.rotated(by: CGFloat(Double.pi / 2))
-            arrow.transform = transformation
             arrow.contentMode = .scaleAspectFit
             arrow.translatesAutoresizingMaskIntoConstraints = false
             itemView.totalView?.addSubview(arrow)

@@ -253,6 +253,8 @@
 		23AC324020AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */; };
 		23AC324120AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
 		23AC324220AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */; };
+		23BABFFC20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */; };
+		23BABFFD20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */; };
 		23BC737C1F0D53F700B19C1A /* ApiException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FA9291F06D2E2002F7E39 /* ApiException.swift */; };
 		23BC737F1F0D71D500B19C1A /* ApiExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */; };
 		23BC73851F0E84FB00B19C1A /* CauseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BC73841F0E84FB00B19C1A /* CauseTest.swift */; };
@@ -933,6 +935,7 @@
 		23A366A8200CDA1C00E69FD7 /* ThemeManager+NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThemeManager+NavigationController.swift"; sourceTree = "<group>"; };
 		23AC323D20AF20F2008AC134 /* PXOneTapSummaryModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXOneTapSummaryModalViewController.swift; sourceTree = "<group>"; };
 		23AC323E20AF20F2008AC134 /* PXOneTapSummaryModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PXOneTapSummaryModalViewController.xib; sourceTree = "<group>"; };
+		23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXOneTapViewModel+Summary.swift"; sourceTree = "<group>"; };
 		23BC737E1F0D71D500B19C1A /* ApiExceptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiExceptionTest.swift; sourceTree = "<group>"; };
 		23BC73841F0E84FB00B19C1A /* CauseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CauseTest.swift; sourceTree = "<group>"; };
 		23BDC9202073DF3500678B0F /* Double+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Format.swift"; sourceTree = "<group>"; };
@@ -1770,6 +1773,7 @@
 			children = (
 				4B08AC9320AC9A4C008AF845 /* Item */,
 				23625A3220AB05550069AE30 /* PXOneTapViewModel.swift */,
+				23BABFFB20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift */,
 				231EB53020ABBAD20022D8DF /* PXOneTapViewModel+PaymentMethodComponent.swift */,
 				23625A3620AB06380069AE30 /* PXOneTapViewController.swift */,
 				23C3893B20AC4574001EFDA9 /* PXOneTapPaymentMethodView.swift */,
@@ -3046,6 +3050,7 @@
 				4B08AC8820AC6E7D008AF845 /* PXOneTapItemRenderer.swift in Sources */,
 				232FA92A1F06D2E2002F7E39 /* ApiException.swift in Sources */,
 				15AE1DA91F608BB500B0DAF8 /* SummaryType.swift in Sources */,
+				23BABFFC20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */,
 				233E0D822007DE5F00A8FCE4 /* PXThemeObjects.swift in Sources */,
 				4BAA55FF1DB503E600501061 /* IssuerRowTableViewCell.swift in Sources */,
 				4BEF80F61E53308C00797CD1 /* PaymentResult.swift in Sources */,
@@ -3317,6 +3322,7 @@
 				4B161A26200545550009A7D9 /* PXInstructionsActionRenderer.swift in Sources */,
 				4B161A27200545550009A7D9 /* ReviewScreenPreference.swift in Sources */,
 				156A6DD81F7019A200B17A20 /* CardFormViewModel.swift in Sources */,
+				23BABFFD20B4FA68007B6687 /* PXOneTapViewModel+Summary.swift in Sources */,
 				4BA2934020659220000BC40D /* PXTrackingStore.swift in Sources */,
 				4B2823951E2E82B1004C02E9 /* UIImage+Additions.swift in Sources */,
 				4BFAC0FC1E2E8A0D005EB383 /* DecorationPreference.swift in Sources */,
