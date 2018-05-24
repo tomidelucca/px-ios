@@ -39,6 +39,8 @@ final class OneTapFlow: PXFlow {
             self.showReviewAndConfirmScreenForOneTap()
         case .screenSecurityCode:
             self.showSecurityCodeScreen()
+        case .serviceCreateESCCardToken:
+            self.createCardToken()
         case .finish:
             self.finishFlow()
         }

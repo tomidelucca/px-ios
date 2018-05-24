@@ -13,6 +13,7 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         case finish
         case screenReviewOneTap
         case screenSecurityCode
+        case serviceCreateESCCardToken
     }
 
     var paymentData: PaymentData
@@ -44,6 +45,9 @@ class OneTapFlowViewModel: NSObject, PXFlowModel {
         }
         if needSecurityCode() {
             return .screenSecurityCode
+        }
+        if needCreateESCToken() {
+            return .serviceCreateESCCardToken
         }
         return .finish
     }
@@ -128,6 +132,18 @@ extension OneTapFlowViewModel {
             return true
         }
         return false
+    }
+
+    func needCreateESCToken() -> Bool {
+
+        guard let pm = self.paymentData.getPaymentMethod() else {
+            return false
+        }
+
+        let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
+        let savedCardWithESC = !paymentData.hasToken() && pm.isCard && hasSavedESC() && hasInstallmentsIfNeeded
+
+        return savedCardWithESC
     }
 
     func hasSavedESC() -> Bool {
