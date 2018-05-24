@@ -17,7 +17,7 @@ extension OneTapFlow {
             if let search = self?.viewModel.search {
                 search.deleteCheckoutDefaultOption()
             }
-            self?.cancel()
+            self?.cancelFlow()
 
             if !paymentData.hasPaymentMethod() && MercadoPagoCheckoutViewModel.changePaymentMethodCallback != nil {
                 MercadoPagoCheckoutViewModel.changePaymentMethodCallback?()
@@ -29,7 +29,7 @@ extension OneTapFlow {
 
                 if MercadoPagoCheckoutViewModel.paymentDataConfirmCallback != nil {
                     MercadoPagoCheckoutViewModel.paymentDataCallback = MercadoPagoCheckoutViewModel.paymentDataConfirmCallback
-                    self.finish()
+                    self.finishFlow()
                 } else {
                     self.executeNextStep()
                 }
@@ -38,7 +38,7 @@ extension OneTapFlow {
             guard let strongSelf = self else {
                 return
             }
-            strongSelf.cancel()
+            strongSelf.cancelFlow()
         })
 
         self.pxNavigationHandler.pushViewController(viewController: reviewVC, animated: true)
